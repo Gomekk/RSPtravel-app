@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#FFFFFF">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -24,7 +24,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%}
+html,body{margin:0;min-height:100%;touch-action:manipulation;-webkit-text-size-adjust:100%}
 body{color:var(--ink);font-family:var(--body);font-weight:500;font-size:15px;line-height:1.55;
   background:linear-gradient(165deg,#FFFFFF 0%,#F1F2F6 45%,#D2D7E2 100%) fixed}
 /* 背景：中央からの放射光と、四隅のドット */
@@ -36,7 +36,7 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   -webkit-mask-image:radial-gradient(circle at 0 0,#000,transparent 150px),radial-gradient(circle at 100% 0,#000,transparent 150px),radial-gradient(circle at 0 100%,#000,transparent 170px),radial-gradient(circle at 100% 100%,#000,transparent 170px);
   mask-image:radial-gradient(circle at 0 0,#000,transparent 150px),radial-gradient(circle at 100% 0,#000,transparent 150px),radial-gradient(circle at 0 100%,#000,transparent 170px),radial-gradient(circle at 100% 100%,#000,transparent 170px)}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
-input,select{font:inherit;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;outline:none}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;outline:none}
 input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(232,177,42,.2)}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .num{font-family:var(--disp);font-weight:400;letter-spacing:.01em;font-variant-numeric:tabular-nums}
@@ -253,7 +253,7 @@ header::after{content:"";position:absolute;left:16px;right:16px;bottom:4px;heigh
 .trip .gem.a{top:-7px;left:34px;background:var(--aqua)}
 .trip .gem.r{bottom:-7px;right:34px;background:var(--gold)}
 .trip .tb{position:absolute;top:-22px;right:-10px;width:76px;height:76px;background:var(--burst-glow-gold) center/contain no-repeat;filter:drop-shadow(0 0 8px rgba(232,177,42,.6));animation:spin 18s linear infinite}
-.trip .tb2{position:absolute;top:22px;right:18px;width:34px;height:34px;background:var(--bolt-red) center/contain no-repeat}
+.trip .tb2{position:absolute;top:22px;right:18px;width:34px;height:34px;background:var(--bolt-green) center/contain no-repeat;transform:scaleX(-1) rotate(-10deg)}
 .trip .t{padding-right:58px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .dayflag{background:var(--crimson);color:#fff}
@@ -268,7 +268,7 @@ header::after{content:"";position:absolute;left:16px;right:16px;bottom:4px;heigh
 /* ボタン */
 .big::before{content:"";position:absolute;left:-6px;top:50%;width:54px;height:54px;margin-top:-27px;transform:skewX(6deg) rotate(-18deg);background:var(--hand-guu) center/contain no-repeat;opacity:.9}
 .big>span{position:relative;text-shadow:0 1px 0 rgba(255,255,255,.7);padding-left:30px}
-.big .bz{position:absolute;right:10px;top:8px;width:26px;height:26px;background:var(--bolt-aqua) center/contain no-repeat;transform:skewX(6deg)}
+.big .bz{position:absolute;right:10px;top:8px;width:26px;height:26px;background:var(--bolt-pink) center/contain no-repeat;transform:skewX(6deg) scaleX(-1)}
 .sub{position:relative;overflow:hidden;box-shadow:0 5px 0 var(--ink),0 0 18px rgba(31,179,191,.45);background:linear-gradient(180deg,#fff 60%,#DDF7F9)}
 .sub::before{content:"";display:block;width:30px;height:30px;margin:0 auto 4px;background:var(--bolt-aqua) center/contain no-repeat}
 
@@ -334,8 +334,8 @@ nav button[aria-current="page"]::before{background:linear-gradient(90deg,var(--c
 /* ===== 段階2：券・特権 ===== */
 .card{background:rgba(255,255,255,.9);border:2px solid var(--ink);border-radius:14px;padding:12px 14px;margin-bottom:10px}
 .tic{display:inline-flex;align-items:center;font-family:var(--disp);font-size:10.5px;line-height:1.5;padding:0 6px;border-radius:6px;border:1.5px solid var(--ink);white-space:nowrap}
-.tic.n{background:var(--metal);color:var(--ink)}
-.tic.s{background:var(--crimson);color:#fff;box-shadow:0 0 8px rgba(226,54,79,.45)}
+.tic.n{background:var(--crimson);color:#fff;box-shadow:0 0 8px rgba(226,54,79,.45)}
+.tic.s{background:var(--metal);color:var(--ink);box-shadow:0 0 8px rgba(232,177,42,.5)}
 .rank .n .tic{margin-left:2px}
 .tkrow{display:flex;align-items:center;gap:6px;padding:9px 0;border-bottom:1.5px solid var(--line)}
 .tkrow:last-child{border-bottom:0}
@@ -409,8 +409,8 @@ ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:7
 .dbtns{position:relative;z-index:1;display:flex;flex-direction:column;gap:6px;margin-top:10px}
 .dbtns button{font-weight:900;font-size:12.5px;padding:8px 6px;border-radius:10px;border:2px solid var(--ink);background:#fff;box-shadow:0 3px 0 var(--ink)}
 .dbtns button:active{transform:translateY(3px);box-shadow:none}
-.dbtns button.n{background:var(--metal)}
-.dbtns button.s{background:var(--crimson);color:#fff}
+.dbtns button.n{background:var(--crimson);color:#fff}
+.dbtns button.s{background:var(--metal);color:var(--ink)}
 .dbtns button:disabled{opacity:.35;box-shadow:none}
 .dbtns.big{margin:14px 0 4px}
 .dbtns.big button{font-size:15px;padding:13px}
@@ -558,8 +558,98 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .jmap .tl.on rect{animation:tilepop 3s ease-in-out infinite}
 @keyframes tilepop{50%{opacity:.82}}
 
+:root{--priv-1:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Crect%20x%3D%225%22%20y%3D%2212%22%20width%3D%2221%22%20height%3D%2229%22%20rx%3D%223.5%22%20fill%3D%22%23FFE38A%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22%20transform%3D%22rotate%28-12%2015%2026%29%22/%3E%3Crect%20x%3D%2220%22%20y%3D%227%22%20width%3D%2221%22%20height%3D%2229%22%20rx%3D%223.5%22%20fill%3D%22%23E2364F%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22%20transform%3D%22rotate%289%2030%2021%29%22/%3E%3Cpath%20d%3D%22M27%2016h8M27%2021h6M27%2026h7%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20transform%3D%22rotate%289%2030%2021%29%22/%3E%3Cpath%20d%3D%22M8%206l3%203M4%2012l4%201%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E");--priv-2:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Crect%20x%3D%2221%22%20y%3D%2213%22%20width%3D%2218%22%20height%3D%2226%22%20rx%3D%223%22%20fill%3D%22%23E2364F%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22%20transform%3D%22rotate%2814%2030%2026%29%22/%3E%3Cpath%20d%3D%22M4%2030c0-6%204-10%209-10h7c2%200%203%201.6%202%203.2l-1%201.4h5c2%200%203%202.4%201.4%203.6L22%2033c-2%201.6-4.4%202.4-7%202.4H9%22%20fill%3D%22%23FFE38A%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M9%2014l-5-4M14%2010l-2-6M19%2011l2-6%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M40%208l4-2M42%2014l5%200%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E");--priv-3:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2225%22%20r%3D%225.5%22%20fill%3D%22%239BF1F4%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M1%2041c0-5%203.6-8%208-8s8%203%208%208z%22%20fill%3D%22%239BF1F4%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2225%22%20r%3D%225.5%22%20fill%3D%22%239BF1F4%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M16%2041c0-5%203.6-8%208-8s8%203%208%208z%22%20fill%3D%22%239BF1F4%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2239%22%20cy%3D%2225%22%20r%3D%225.5%22%20fill%3D%22%239BF1F4%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M31%2041c0-5%203.6-8%208-8s8%203%208%208z%22%20fill%3D%22%239BF1F4%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2215%22%20y%3D%223%22%20width%3D%2218%22%20height%3D%2212%22%20rx%3D%226%22%20fill%3D%22%23E8B12A%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Ctext%20x%3D%2224%22%20y%3D%2212.5%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%20Black%2CArial%22%20font-weight%3D%22900%22%20font-size%3D%229%22%20fill%3D%22%231B1838%22%3E%2B1%3C/text%3E%3C/svg%3E");--priv-4:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2226%22%20r%3D%2215%22%20fill%3D%22%23FFE38A%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2226%22%20r%3D%2210.5%22%20fill%3D%22none%22%20stroke%3D%22%23C98E12%22%20stroke-width%3D%221.6%22/%3E%3Cpath%20d%3D%22M14%2018l6%208%206-8M20%2026v10M15%2028h10M15%2032h10%22%20fill%3D%22none%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2236%22%20cy%3D%2212%22%20r%3D%229%22%20fill%3D%22%23fff%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M31%207l10%2010M41%207L31%2017%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%223.2%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E");--priv-5:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22a%22%20x%3D%22-50%25%22%20y%3D%22-50%25%22%20width%3D%22200%25%22%20height%3D%22200%25%22%3E%3CfeGaussianBlur%20stdDeviation%3D%223.2%22/%3E%3C/filter%3E%3C/defs%3E%3Crect%20x%3D%2212%22%20y%3D%228%22%20width%3D%2224%22%20height%3D%2232%22%20rx%3D%224%22%20fill%3D%22%238B3CFF%22%20filter%3D%22url%28%23a%29%22%20opacity%3D%22.9%22/%3E%3Crect%20x%3D%2214%22%20y%3D%2210%22%20width%3D%2220%22%20height%3D%2228%22%20rx%3D%223.5%22%20fill%3D%22%23B48CFF%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%222.4%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M24%2017c5%200%206%206%202%207-3%20.8-5-2-3-4%22%20fill%3D%22none%22%20stroke%3D%22%234B1C99%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M18%2031c3-3%209-3%2012%200%22%20fill%3D%22none%22%20stroke%3D%22%234B1C99%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M8%2014c-2%203-2%206%200%209M40%2014c2%203%202%206%200%209M6%2032c2%202%204%203%206%203M42%2032c-2%202-4%203-6%203%22%20fill%3D%22none%22%20stroke%3D%22%238B3CFF%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E");}
+
+/* ===== 歴代（改） ===== */
+.trophies{display:flex;flex-direction:column;gap:4px;padding:8px 2px 10px;border-bottom:2px solid var(--ink);margin-bottom:4px}
+.trophies span{display:flex;align-items:center;gap:8px;font-weight:900;font-size:13px}
+.trophies i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);background:var(--pc);flex:none}
+.trophies b{min-width:84px}
+.trophies em{font-style:normal;flex:1;letter-spacing:-1px}
+.trophies small{color:var(--mute)}
+.hw b{padding:2px 9px;border-radius:8px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 16%,#fff);font-weight:900}
+.showall{display:block;width:100%;margin-top:6px;padding:8px;font-size:12.5px;font-weight:900;color:var(--ink);border-top:1.5px dashed var(--line)}
+.mapf button.pc[aria-pressed="true"]{background:color-mix(in srgb,var(--pc) 24%,#fff);border-color:var(--ink)}
+.jmap .tl{cursor:pointer}
+.prefc{box-shadow:inset 6px 0 0 var(--sc)}
+.prefc>b{display:block;font-weight:900}
+.prefc>small{display:block;font-size:11px;color:var(--mute);font-weight:700;margin-bottom:4px}
+.rules .rh{font-family:var(--disp);font-weight:400;font-size:17px;margin:18px 0 6px;padding:6px 10px;border-radius:8px;background:var(--ink);color:#fff}
+.rules .rc{font-size:12px;font-weight:900;color:var(--mute);margin-top:12px}
+.rules .ra{font-family:var(--disp);font-size:14px;margin-top:2px;color:#C98E12}
+.rules .rp{margin:3px 0;font-size:14px;line-height:1.7}
+.roster .rh2{font-family:var(--disp);font-size:15px;margin-bottom:4px}
+.roster .rr{display:flex;align-items:center;gap:8px;padding:5px 0;border-top:1px dashed var(--line);font-size:12.5px;font-weight:900}
+.roster .rr .num{width:18px;text-align:center;color:var(--mute)}
+.roster .rr b{margin-left:auto;padding:1px 8px;border-radius:7px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 16%,#fff)}
+.roster .rr small{color:var(--mute);min-width:70px;text-align:right}
+/* ===== フィードバック対応 ===== */
+.pico{display:inline-block;flex:none;width:44px;height:44px;background:var(--pi) center/contain no-repeat;filter:drop-shadow(0 2px 0 rgba(27,24,56,.15))}
+.privcard .pico{width:52px;height:52px;margin-left:4px}
+.privcard .pno{font-family:var(--disp);font-size:13px;color:var(--mute)}
+.privcard .pnm{font-family:var(--disp);font-weight:400;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.privcard .pb small{display:flex;align-items:center;gap:4px}
+.todaypriv .pico{width:40px;height:40px;margin-left:2px}
+.pstat{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 12px}
+.pstat span{display:inline-flex;align-items:center;gap:4px;padding:3px 8px 3px 3px;border-radius:10px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 14%,#fff);font-size:12px;font-weight:900}
+.pstat .pico{width:24px;height:24px}
+.pstat b{font-weight:900}
+.p4box{border-color:var(--ink);background:linear-gradient(100deg,#FFF6D6,#fff 70%)}
+.pico.big4{width:40px;height:40px}
+.h2{flex-wrap:wrap;row-gap:2px}
+.h2 small{white-space:nowrap}
+.ttl{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.ttl small{display:block;font-size:11px;color:var(--mute);font-weight:900}
+.ttl b{font-size:20px}
+.ttl .btn{flex:none;padding:10px 14px}
+.tvrow{display:grid;grid-template-columns:76px 1fr 96px 32px;gap:6px;margin-bottom:6px}
+.tvrow select,.tvrow input{padding:9px 8px;min-width:0}
+.delbtn{flex:none;font-size:12px;font-weight:900;padding:6px 9px;border-radius:9px;border:2px solid var(--crimson);color:var(--crimson);background:#fff}
+.pend .delbtn{margin-left:2px}
+button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointer}
+.fold-i{margin-left:auto;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:3px 10px;border-radius:99px;border:1.5px solid var(--line);background:#fff}
+.stdprice{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 10px;margin:-4px 0 10px;padding:6px 12px;border-radius:12px;background:#fff;border:2px dashed #9AA1B4}
+.stdprice span{font-size:12px;font-weight:900;color:var(--mute)}
+.stdprice b{font-size:18px}
+.stdprice small{font-size:11px;color:var(--mute);font-weight:700}
+.rank{grid-template-columns:46px minmax(0,1fr) auto auto}
+.rank .n{min-width:0;flex-wrap:nowrap}
+.rank .n .nm{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank .tk2{display:flex;flex-direction:column;gap:3px;align-items:stretch}
+.rank .tk2 .tic{display:flex;justify-content:center;min-width:46px;font-size:10.5px;font-weight:400;gap:0}
+.rank .m{grid-column:2/5}
+.trip .tbtns{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}
+.trip .tedit{display:none}
+.mini.fin{background:var(--ink);color:#fff}
+.trip .s:last-of-type{padding-right:0}
+.trip{padding-bottom:52px}
+.done-card{position:relative;margin:8px 0 18px;padding:18px 16px;border-radius:16px;background:rgba(255,255,255,.85);border:2px solid var(--ink);text-align:center}
+.done-card small{font-size:12px;font-weight:900;color:var(--mute)}
+.done-card .t{font-family:var(--disp);font-size:24px;margin:4px 0 12px}
+.done-card .champ{display:inline-flex;flex-direction:column;align-items:center;padding:12px 26px;border-radius:14px;border:2.5px solid var(--ink);background:color-mix(in srgb,var(--c) 18%,#fff);box-shadow:0 0 24px color-mix(in srgb,var(--c) 70%,transparent)}
+.done-card .champ span{font-weight:900;font-size:13px}
+.done-card .champ b{font-family:var(--disp);font-weight:400;font-size:30px;color:var(--c);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill}
+.done-card .champ em{font-style:normal;font-family:var(--disp);font-size:18px}
+.mini-rank{display:flex;flex-direction:column;gap:4px;margin:14px auto 0;max-width:300px}
+.mini-rank span{display:flex;align-items:center;gap:8px;font-weight:900;font-size:13px}
+.mini-rank i{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ink)}
+.mini-rank em{margin-left:auto;font-style:normal}
+.linkbtn{margin-top:12px;font-size:12px;font-weight:900;color:var(--mute);text-decoration:underline}
+.warn{font-size:12.5px;font-weight:900;color:var(--crimson);background:#FFE7EA;border-radius:10px;padding:8px 10px}
+.stickybar{position:sticky;top:calc(var(--safe-t) + 72px);z-index:15;margin:0 -16px 10px;padding:6px 16px 4px;background:linear-gradient(rgba(255,255,255,.97) 80%,rgba(255,255,255,0))}
+.stickybar .filter{margin:0;padding:2px 0 6px}
+.viewing{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:900;margin-bottom:6px;padding:6px 10px;border-radius:10px;background:#FFF6D6;border:1.5px solid var(--ink)}
+.sortsw{display:inline-flex;border:2px solid var(--ink);border-radius:10px;overflow:hidden;margin-bottom:4px}
+.sortsw button{font-size:12px;font-weight:900;padding:5px 12px;background:#fff}
+.sortsw button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.row.won{border:2px solid var(--pc);box-shadow:inset 5px 0 0 var(--pc)}
+.btn.solo{flex:1.3;background:#fff;color:var(--ink);border-color:var(--aqua);box-shadow:0 4px 0 var(--aqua)}
+.btn.solo.on{background:var(--aqua);color:#fff}
+.solohint{color:#108C96}
+.abar .btn{padding:12px 0;font-size:13px}
+.sl small{font-size:10.5px;margin-left:6px;color:var(--crimson)}
 :root{--hand-guu:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23C8182F%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%23FF3B55%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2220%22%20y%3D%2240%22%20width%3D%2261%22%20height%3D%2254%22%20rx%3D%2216%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2222%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2236%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2250%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2264%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2214%22%20y%3D%2258%22%20width%3D%2248%22%20height%3D%2214%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");--hand-choki:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23D19A1A%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%23F5B820%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2224%22%20y%3D%222%22%20width%3D%2213%22%20height%3D%2258%22%20rx%3D%226.5%22%20transform%3D%22rotate%28-12%2030%2060%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2240%22%20y%3D%220%22%20width%3D%2213%22%20height%3D%2260%22%20rx%3D%226.5%22%20transform%3D%22rotate%2810%2046%2060%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2220%22%20y%3D%2244%22%20width%3D%2261%22%20height%3D%2250%22%20rx%3D%2215%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2251%22%20y%3D%2240%22%20width%3D%2214%22%20height%3D%2220%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2265%22%20y%3D%2240%22%20width%3D%2214%22%20height%3D%2220%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2216%22%20y%3D%2260%22%20width%3D%2244%22%20height%3D%2213%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");--hand-paa:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2322A0AA%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%2318C6D2%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2223%22%20y%3D%2214%22%20width%3D%2213%22%20height%3D%2246%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2237%22%20y%3D%224%22%20width%3D%2213%22%20height%3D%2256%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2251%22%20y%3D%226%22%20width%3D%2213%22%20height%3D%2254%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2265%22%20y%3D%2216%22%20width%3D%2213%22%20height%3D%2244%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2212%22%20y%3D%2246%22%20width%3D%2214%22%20height%3D%2240%22%20rx%3D%227%22%20transform%3D%22rotate%28-34%2022%2084%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2220%22%20y%3D%2244%22%20width%3D%2261%22%20height%3D%2250%22%20rx%3D%2215%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");}
-:root{--burst-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23F5C842%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23E2364F%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%231FB3BF%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-glow-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E8B12A%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C-1.4%2055.6%2C22.0%2071.0%2C-0.6%2067.0%2C24.6%2088.0%2C12.0%2075.3%2C33.1%2086.7%2C34.8%2075.1%2C45.0%20107.7%2C50.0%2077.0%2C55.4%20102.5%2C71.8%2068.3%2C62.2%2084.2%2C84.2%2063.0%2C69.4%2069.1%2C96.1%2055.2%2C76.3%2050.0%2C89.5%2045.5%2C72.6%2032.9%2C91.3%2033.1%2C75.2%2011.7%2C88.3%2031.3%2C62.5%20-0.7%2C71.0%2028.2%2C54.3%20-1.3%2C50.0%2028.3%2C45.7%2013.8%2C35.0%2025.2%2C33.4%2019.4%2C19.4%2037.2%2C30.8%2027.6%2C-4.0%2044.2%2C20.7%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E2364F%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C6.4%2056.0%2C19.8%2065.9%2C11.5%2065.6%2C26.6%2078.9%2C21.1%2069.4%2C37.0%20104.3%2C27.5%2072.5%2C45.5%20101.8%2C50.0%2075.1%2C55.0%2094.4%2C68.4%2071.6%2C64.4%2080.4%2C80.4%2066.4%2C74.5%2065.7%2C87.8%2054.5%2C72.8%2050.0%2C89.6%2045.4%2C73.1%2031.9%2C93.6%2033.2%2C75.1%2017.0%2C83.0%2031.7%2C62.2%209.1%2C66.9%2019.5%2C56.1%209.6%2C50.0%2023.3%2C44.7%207.0%2C32.2%2027.0%2C34.6%2017.6%2C17.6%2034.4%2C26.7%2031.3%2C4.8%2044.6%2C23.0%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231FB3BF%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C1.7%2054.8%2C25.8%2066.0%2C11.3%2066.6%2C25.2%2077.8%2C22.2%2071.6%2C35.5%20102.5%2C28.3%2071.2%2C45.8%20100.1%2C50.0%2076.7%2C55.3%2087.0%2C65.3%2070.6%2C63.7%2087.5%2C87.5%2064.2%2C71.2%2070.4%2C99.3%2054.4%2C72.0%2050.0%2C93.9%2045.7%2C71.5%2031.2%2C95.4%2033.1%2C75.3%2014.1%2C85.9%2026.0%2C66.0%206.8%2C67.9%2022.0%2C55.6%208.8%2C50.0%2026.6%2C45.4%201.6%2C29.9%2026.4%2C34.3%2016.4%2C16.4%2037.9%2C31.9%2033.0%2C9.0%2045.5%2C27.5%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--bolt-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--glint-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23F5C842%22/%3E%3C/svg%3E");--glint-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23E2364F%22/%3E%3C/svg%3E");--glint-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%231FB3BF%22/%3E%3C/svg%3E");--zig-ink:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2010%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolygon%20points%3D%220%2C0%2010%2C10%2020%2C0%22%20fill%3D%22%231B1838%22/%3E%3C/svg%3E")}
+:root{--burst-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23F5C842%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23E2364F%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%231FB3BF%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-glow-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E8B12A%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C-1.4%2055.6%2C22.0%2071.0%2C-0.6%2067.0%2C24.6%2088.0%2C12.0%2075.3%2C33.1%2086.7%2C34.8%2075.1%2C45.0%20107.7%2C50.0%2077.0%2C55.4%20102.5%2C71.8%2068.3%2C62.2%2084.2%2C84.2%2063.0%2C69.4%2069.1%2C96.1%2055.2%2C76.3%2050.0%2C89.5%2045.5%2C72.6%2032.9%2C91.3%2033.1%2C75.2%2011.7%2C88.3%2031.3%2C62.5%20-0.7%2C71.0%2028.2%2C54.3%20-1.3%2C50.0%2028.3%2C45.7%2013.8%2C35.0%2025.2%2C33.4%2019.4%2C19.4%2037.2%2C30.8%2027.6%2C-4.0%2044.2%2C20.7%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E2364F%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C6.4%2056.0%2C19.8%2065.9%2C11.5%2065.6%2C26.6%2078.9%2C21.1%2069.4%2C37.0%20104.3%2C27.5%2072.5%2C45.5%20101.8%2C50.0%2075.1%2C55.0%2094.4%2C68.4%2071.6%2C64.4%2080.4%2C80.4%2066.4%2C74.5%2065.7%2C87.8%2054.5%2C72.8%2050.0%2C89.6%2045.4%2C73.1%2031.9%2C93.6%2033.2%2C75.1%2017.0%2C83.0%2031.7%2C62.2%209.1%2C66.9%2019.5%2C56.1%209.6%2C50.0%2023.3%2C44.7%207.0%2C32.2%2027.0%2C34.6%2017.6%2C17.6%2034.4%2C26.7%2031.3%2C4.8%2044.6%2C23.0%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231FB3BF%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C1.7%2054.8%2C25.8%2066.0%2C11.3%2066.6%2C25.2%2077.8%2C22.2%2071.6%2C35.5%20102.5%2C28.3%2071.2%2C45.8%20100.1%2C50.0%2076.7%2C55.3%2087.0%2C65.3%2070.6%2C63.7%2087.5%2C87.5%2064.2%2C71.2%2070.4%2C99.3%2054.4%2C72.0%2050.0%2C93.9%2045.7%2C71.5%2031.2%2C95.4%2033.1%2C75.3%2014.1%2C85.9%2026.0%2C66.0%206.8%2C67.9%2022.0%2C55.6%208.8%2C50.0%2026.6%2C45.4%201.6%2C29.9%2026.4%2C34.3%2016.4%2C16.4%2037.9%2C31.9%2033.0%2C9.0%2045.5%2C27.5%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--bolt-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-pink:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23FF6FB5%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23FF6FB5%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-green:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%233DBE6C%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%233DBE6C%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--glint-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23F5C842%22/%3E%3C/svg%3E");--glint-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23E2364F%22/%3E%3C/svg%3E");--glint-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%231FB3BF%22/%3E%3C/svg%3E");--zig-ink:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2010%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolygon%20points%3D%220%2C0%2010%2C10%2020%2C0%22%20fill%3D%22%231B1838%22/%3E%3C/svg%3E")}
 </style>
 </head>
 <body>
@@ -573,9 +663,9 @@ details.sgroup[open]>summary{margin-bottom:6px}
 <main id="view"><div class="loading">読み込み中…</div></main>
 <nav id="tabs">
   <button data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>ホーム</button>
+  <button data-tab="tickets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 0 0 4v4h18v-4a2 2 0 0 1 0-4V4H3z" transform="translate(0 2)"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>免除・特権</button>
   <button data-tab="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>支払い</button>
   <button data-tab="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>集計</button>
-  <button data-tab="tickets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 0 0 4v4h18v-4a2 2 0 0 1 0-4V4H3z" transform="translate(0 2)"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>券・特権</button>
   <button data-tab="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>歴代</button>
 </nav>
 
@@ -598,6 +688,7 @@ const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settin
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
+const PRAISE = ["男気最高！", "かっこいい!!", "これぞ男の中の男", "漢（おとこ）を見せた！", "財布が泣いても心は晴天", "惚れてまうやろ！", "男気、炸裂！", "ごちそうさまです！！", "背中で語る男", "伝説の一撃", "神降臨", "その男気、一生忘れない", "粋だねぇ！", "全員の拍手を浴びよ", "太っ腹すぎる！", "男気の化身", "これが王の支払い", "今日のMVP確定"];
 const MQ = `<span><i class="g"></i><b>じゃんけん</b></span><span><i class="c"></i><b>ぽん！</b></span><span><i class="p"></i><b>男気を見せろ</b></span><span><i class="g"></i><b>最初はグー</b></span><span><i class="c"></i><b>あいこでしょ</b></span><span><i class="p"></i><b>払うは誉れ</b></span>`;
 const PRIVS = {
   1: { name: "免除券被せ", desc: "免除券・super免除券を、他の人と重ねて使える", span: "全期間" },
@@ -609,6 +700,16 @@ const PRIVS = {
 const PRIV4_LIMIT = { 1: 4000, 2: 6000, 3: 8000 };
 
 const $ = s => document.querySelector(s);
+const num = v => { const n = parseInt(String(v ?? "").replace(/[^\d-]/g, ""), 10); return Number.isFinite(n) ? n : 0; };
+const fmtNum = v => { const d = String(v ?? "").replace(/[^\d]/g, ""); return d ? Number(d).toLocaleString("ja-JP") : ""; };
+document.addEventListener("input", e => {
+  const el = e.target;
+  if (!el.classList || !el.classList.contains("yen-in")) return;
+  const fromEnd = el.value.length - (el.selectionStart ?? el.value.length);
+  el.value = fmtNum(el.value);
+  const p = Math.max(0, el.value.length - fromEnd);
+  try { el.setSelectionRange(p, p); } catch (_) {}
+}, true);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
@@ -726,31 +827,45 @@ const soon = (t, s) => `<div class="soon"><b>${t}</b>${s}</div>`;
 function viewHome(t){
   if (!db.players.length) return `<div class="empty"><b>まずはプレイヤー登録</b>右上の歯車から、旅のメンバーを登録してください。<div class="btns"><button class="btn" data-act="players">プレイヤーを登録する</button></div></div>`;
   if (!t) return `<div class="empty"><b>新しい旅へ</b>年・季節・場所・期間・参加者を決めて、旅を始めましょう。<div class="btns"><button class="btn" data-act="trips">旅を始める</button></div></div>`;
+  if (t.completed){
+    const rk = standings(t).filter(r => typeof r.rank === "number");
+    const w = rk[0];
+    return `<div class="done-card framed"><span class="tb" aria-hidden="true"></span><small>第${t.no}回・SEASON ${t.season}・旅は完了しました</small><div class="t">${esc(t.name)}</div>
+      ${w && w.paid > 0 ? `<div class="champ" style="--c:${pcolor(w.id)}"><span>👑 優勝</span><b>${esc(pname(w.id))}</b><em class="num">${yen(w.paid)}</em></div>` : ""}
+      <div class="mini-rank">${rk.map(r => `<span><b class="num">${r.rank}</b><i style="background:${pcolor(r.id)}"></i>${esc(pname(r.id))}<em class="num">${yen(r.paid)}</em></span>`).join("")}</div>
+      <div class="btns"><button class="btn ghost" data-act="settle">精算を見る</button><button class="btn" data-act="trips">新しい旅を始める</button></div>
+      <button class="linkbtn" data-act="reopenTrip">完了を取り消す</button></div>`;
+  }
   const day = dayOf(t), lj = liveJanken(t);
   const rows = standings(t);
   const pending = tripPays(t).filter(p => !p.payer_id);
   const champ = t.champion_out ? `<span class="tag gold">3連覇達成者 ${esc(pname(t.champion_out))}</span>` : "";
   let h = `<div class="trip framed"><i class="gem a"></i><i class="gem r"></i><span class="tb" aria-hidden="true"></span><span class="tb2" aria-hidden="true"></span><div class="t">${esc(t.name)}</div>
     <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・SEASON ${t.season}${isFinal(t) ? ` <span class="tic s">FINAL</span>` : ""}・${t.members.length}人 ${champ}</div>
-    ${t.start_date ? `<div class="s">${periodText(t)}</div>` : ""}<button class="mini tedit" data-act="editTrip">編集</button></div>`;
+    ${t.start_date ? `<div class="s">${periodText(t)}</div>` : ""}<div class="tbtns"><button class="mini" data-act="editTrip">編集</button><button class="mini fin" data-act="completeTrip">旅を完了する</button></div></div>`;
   h += `<div class="marquee" aria-hidden="true"><div class="mq">${MQ}${MQ}</div></div>`;
   h += reminderCards(t);
   const tp = day && tripPrivs(t).find(p => p.day === day);
-  if (tp) h += `<div class="todaypriv"><span class="pk">${KANJI[tp.kind]}</span><div><b>今日の特権：${esc(pname(tp.player_id))}</b><span>${PRIVS[tp.kind].name}</span></div></div>`;
+  if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><b>今日の特権：${esc(pname(tp.player_id))}</b><span>特権${KANJI[tp.kind]}「${PRIVS[tp.kind].name}」</span></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
   h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="bz" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>`;
   if (pending.length){
-    h += `<div class="h2 red">未決着<small>${pending.length}件</small></div>`;
-    h += pending.slice(0, 5).map(p => `<div class="pend"><div class="l"><b>${esc(p.label)}</b><span>${esc(p.category)}・${yen(p.amount)}</span></div><button class="chipbtn" data-play="${p.id}">じゃんけん</button></div>`).join("");
+    const open = localStorage.getItem("ojk:pendOpen") !== "0";
+    h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
+    if (open) h += pending.map(p => `<div class="pend"><div class="l"><b>${esc(p.label)}</b><span>${esc(p.category)}・${yen(p.amount)}</span></div><button class="chipbtn" data-play="${p.id}">じゃんけん</button><button class="delbtn" data-delpay="${p.id}" aria-label="削除">削除</button></div>`).join("");
   }
-  const total = tripPays(t).filter(p => p.payer_id).reduce((s, p) => s + p.amount, 0);
-  h += `<div class="h2">序列<small>合計 ${yen(total)}</small></div>`;
+  const paidPays = tripPays(t).filter(p => p.payer_id);
+  const total = paidPays.reduce((s, p) => s + p.amount, 0);
+  const n = activeMembers(t).length || 1;
+  h += `<div class="h2">序列<small>合計 ${yen(total)}</small></div><div class="stdprice"><span>標準旅行価格</span><b class="num">${yen(total / n)}</b><small>合計 ÷ ${n}人（割り勘した場合の1人分）</small></div>`;
   h += rows.map(r => {
     const diff = r.paid - r.std;
+    const nn = tcount(t, r.id, "normal"), ss = tcount(t, r.id, "super");
     return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""}" style="--c:${pcolor(r.id)}">
       <div class="r">${r.rank}</div>
-      <div class="n">${esc(pname(r.id))}${r.id === me ? `<span class="mine">自分</span>` : ""}${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}${ticketPills(t, r.id)}</div>
+      <div class="n"><span class="nm">${esc(pname(r.id))}</span>${r.id === me ? `<span class="mine">自分</span>` : ""}${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
+      <div class="tk2">${nn ? `<span class="tic n">免×${nn}</span>` : ""}${ss ? `<span class="tic s">S×${ss}</span>` : ""}</div>
       <div class="a">${yen(r.paid)}</div>
       <div class="m"><span>標準との差 <b class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</b></span><span>支払 ${r.wins}/${r.joins}回</span><span>運転 ${r.drives}回</span></div>
     </div>`;
@@ -758,23 +873,29 @@ function viewHome(t){
   return h;
 }
 
-function viewList(t){
+let listSort = "amount", listTripId = null;
+function viewList(cur){
+  const t = (listTripId && db.trips.find(x => x.id === listTripId)) || cur;
   if (!t) return `<div class="empty"><b>今の旅がありません</b>ホームの「旅を始める」から作成してください。</div>`;
   const cats = categoriesFor(t);
   const all = tripPays(t);
-  const pays = listFilter === "all" ? all : all.filter(p => p.category === listFilter);
-  let h = `<div class="filter">${["all", ...cats].map(c => `<button data-filter="${esc(c)}" aria-pressed="${listFilter === c}">${c === "all" ? "すべて" : esc(c)}</button>`).join("")}</div>`;
+  let pays = listFilter === "all" ? all : all.filter(p => p.category === listFilter);
+  if (listSort === "amount") pays = pays.slice().sort((a, b) => b.amount - a.amount || a.seq - b.seq);
+  let h = `<div class="stickybar">${t !== cur ? `<div class="viewing">第${t.no}回 ${esc(t.name)}を表示中<button class="mini" data-act="listBack">今の旅に戻る</button></div>` : ""}
+    <div class="filter">${["all", ...cats].map(c => `<button data-filter="${esc(c)}" aria-pressed="${listFilter === c}">${c === "all" ? "すべて" : esc(c)}</button>`).join("")}</div>
+    <div class="sortsw"><button data-sort="amount" aria-pressed="${listSort === "amount"}">金額順</button><button data-sort="seq" aria-pressed="${listSort === "seq"}">発生順</button></div></div>`;
   if (!all.length) h += `<div class="empty"><b>まだ支払いがありません</b>ホームの「じゃんけん開始」から記録します。</div>`;
   else if (!pays.length) h += `<div class="empty">この区分の支払いはありません</div>`;
-  h += pays.map(p => `<button class="row" data-edit="${p.id}">
+  h += pays.map(p => `<button class="row ${p.payer_id ? "won" : ""}" data-edit="${p.id}" ${p.payer_id ? `style="--pc:${pcolor(p.payer_id)}"` : ""}>
       <span class="q">${p.seq}</span><span class="l">${esc(p.label)}</span><span class="a">${yen(p.amount)}</span>
-      <span class="m"><span class="tag">${esc(p.category)}</span>${p.payer_id ? `<span class="who"><span class="dot" style="background:${pcolor(p.payer_id)}"></span>${esc(pname(p.payer_id))}</span>` : `<span style="color:#FF8A9A">未決着</span>`}<span>${(p.participants || []).length}人</span></span>
+      <span class="m"><span class="tag">${esc(p.category)}</span>${p.payer_id ? `<span class="who"><span class="dot" style="background:${pcolor(p.payer_id)}"></span>${esc(pname(p.payer_id))}</span>` : `<span style="color:var(--crimson)">未決着</span>`}<span>${(p.participants || []).length}人</span></span>
     </button>`).join("");
   const drives = db.drives.filter(d => d.trip_id === t.id).sort((a, b) => a.created_at.localeCompare(b.created_at));
-  h += `<div class="h2 aqua">運転の記録<small>${drives.length}回</small></div>`;
-  h += drives.length ? drives.map((d, i) => `<div class="plist"><span class="dot" style="background:${pcolor(d.player_id)}"></span><b>${esc(pname(d.player_id))}</b><span class="note" style="margin:0">${fmtTime(d.created_at)}</span><button class="mini" data-deldrive="${d.id}">削除</button></div>`).join("") : `<div class="note">ホームの「運転」から記録します。</div>`;
+  h += `<div class="h2 aqua">運転の記録<small>${drives.length}回・記録した時間順</small></div>`;
+  h += drives.length ? drives.map(d => `<div class="plist"><span class="dot" style="background:${pcolor(d.player_id)}"></span><b>${esc(pname(d.player_id))}</b><span class="note" style="margin:0">${d.source === "import" ? "過去データ" : fmtTime(d.created_at)}</span><button class="mini" data-deldrive="${d.id}">削除</button></div>`).join("") : `<div class="note">ホームの「運転」から記録します。</div>`;
   return h;
 }
+
 const fmtTime = iso => { const d = new Date(iso); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`; };
 
 function bindView(){
@@ -782,11 +903,18 @@ function bindView(){
   v.querySelectorAll("[data-act]").forEach(b => b.onclick = () => ({
     players: openPlayers, trips: () => editTrip(null), editTrip: () => editTrip(curTrip().id), newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id),
     privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
+    completeTrip: () => openCompleteTrip(curTrip()), reopenTrip: () => reopenTrip(curTrip()), listBack: () => { listTripId = null; render(); },
+    togglePend: () => { localStorage.setItem("ojk:pendOpen", localStorage.getItem("ojk:pendOpen") === "0" ? "1" : "0"); render(); },
+    travelTotal: () => openTravelTotal(curTrip()), resetTickets: () => resetTickets(curTrip()), rouletteReset: () => resetRoulette(curTrip(), rouletteDay),
+    showAllHonor: () => { honorAll = !honorAll; render(); },
     saveTravel: () => saveTravelTotal(curTrip()), roulette: () => openRoulette(curTrip(), rouletteDay), grantRoulette: () => grantRoulette(curTrip(), rouletteDay)
   })[b.dataset.act]());
   v.querySelectorAll("[data-rdone]").forEach(b => b.onclick = () => { localStorage.setItem("ojk:done:" + b.dataset.rdone, "1"); render(); });
   v.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { statScope = b.dataset.scope; render(); });
   v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { mapMode = "all"; render(); });
+  v.querySelectorAll("[data-mapwin]").forEach(b => b.onclick = () => { mapMode = "winner"; render(); });
+  v.querySelectorAll("[data-mapplayer]").forEach(b => b.onclick = () => { mapMode = "player"; mapPlayer = b.dataset.mapplayer; render(); });
+  v.querySelectorAll("[data-pref]").forEach(g => g.onclick = () => openPrefSheet(g.dataset.pref));
   v.querySelectorAll("[data-mapseason]").forEach(b => b.onclick = () => { mapMode = "season"; mapSeason = Number(b.dataset.mapseason); render(); });
   v.querySelectorAll("[data-tripopen]").forEach(b => b.onclick = () => openTripSheet(b.dataset.tripopen));
   v.querySelectorAll("[data-adj]").forEach(b => b.onclick = () => adjustTicket(curTrip(), ...b.dataset.adj.split("|")));
@@ -797,6 +925,8 @@ function bindView(){
   v.querySelectorAll("[data-pred]").forEach(inp => inp.onchange = () => savePrediction(curTrip(), inp.dataset.pred, inp.value));
   v.querySelectorAll("[data-play]").forEach(b => b.onclick = () => startFromPayment(b.dataset.play));
   v.querySelectorAll("[data-filter]").forEach(b => b.onclick = () => { listFilter = b.dataset.filter; render(); });
+  v.querySelectorAll("[data-sort]").forEach(b => b.onclick = () => { listSort = b.dataset.sort; render(); });
+  v.querySelectorAll("[data-delpay]").forEach(b => b.onclick = () => deletePending(b.dataset.delpay));
   v.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openEditPayment(b.dataset.edit));
   v.querySelectorAll("[data-deldrive]").forEach(b => b.onclick = async () => {
     if (!confirm("この運転の記録を削除しますか？")) return;
@@ -829,7 +959,8 @@ const catChips = (t, cur) => `<div class="chips">${categoriesFor(t).map(c => `<b
 /* ---------- 自分 ---------- */
 function openMe(){
   if (!db.players.length){ openPlayers(); return; }
-  const s = openSheet("この端末の自分", `<p class="note">この端末を使う人を選んでください。一斉宣言や通知で使います（この端末にだけ保存されます）。</p>${chipPlayers(db.players.map(p => p.id), [me])}<div class="btns"><button class="btn" id="meOk">決定</button></div>`);
+  const s = openSheet("この端末の自分", `<p class="note">この端末を使う人を選んでください。一斉宣言や通知で使います（この端末にだけ保存されます）。</p>${chipPlayers(db.players.map(p => p.id), [me])}<div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="meOk">決定</button></div>`);
+  s.querySelector("[data-back]").onclick = openSettings;
   bindChips(s, "data-p", false);
   $("#meOk").onclick = () => { const [id] = picked(s, "data-p"); if (!id) return; me = id; localStorage.setItem("ojk:me", id); closeSheet(); render(); toast(`${pname(id)}として使います`); };
 }
@@ -840,11 +971,11 @@ function openSettings(){
   const s = openSheet("設定", `<div class="menu">
     <button data-m="me">この端末の自分<span>${esc(player(me)?.name || "未設定")}</span></button>
     <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
-    <button data-m="thr">一斉宣言を出す金額<span>${yen(threshold())}以上</span></button>
+    <button data-m="thr">免除券使用確認の基準額<span>${yen(threshold())}以上</span></button>
     <button data-m="ntf">通知<span>受け取り・時刻の設定</span></button>
-    <button data-m="imp">過去データの取り込み<span>ファイルを選ぶ</span></button>
+    <button data-m="rule">実施要綱<span>いつでも確認</span></button>
   </div><p class="note" style="margin-top:14px">通知・要綱の設定は段階4で追加します。</p>`);
-  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, imp: openImport, ntf: openNotify })[b.dataset.m]());
+  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, rule: openRules, ntf: openNotify })[b.dataset.m]());
 }
 
 function openPlayers(){
@@ -892,12 +1023,13 @@ function openTrips(){
   s.querySelectorAll("[data-cur]").forEach(b => b.onclick = async () => { if (await putSetting("current_trip", b.dataset.cur)){ await loadTable("app_settings"); render(); openTrips(); toast("今の旅を切り替えました"); } });
 }
 const PREFS = ["北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"];
-const PLACE_ALIAS = { 函館: "北海道", 札幌: "北海道", 小樽: "北海道", 屋久島: "鹿児島", 奄美: "鹿児島", 石垣: "沖縄", 宮古島: "沖縄", 那覇: "沖縄", 金沢: "石川", 仙台: "宮城", 名古屋: "愛知", 横浜: "神奈川", 博多: "福岡", 別府: "大分", 箱根: "神奈川", 軽井沢: "長野", 伊勢: "三重", 日光: "栃木" };
+const ABROAD = ["韓国", "ハワイ"];
+const PLACE_ALIAS = { ソウル: "韓国", 釜山: "韓国", プサン: "韓国", 済州島: "韓国", ホノルル: "ハワイ", オアフ島: "ハワイ", ワイキキ: "ハワイ", 函館: "北海道", 札幌: "北海道", 小樽: "北海道", 屋久島: "鹿児島", 奄美: "鹿児島", 石垣: "沖縄", 宮古島: "沖縄", 那覇: "沖縄", 金沢: "石川", 仙台: "宮城", 名古屋: "愛知", 横浜: "神奈川", 博多: "福岡", 別府: "大分", 箱根: "神奈川", 軽井沢: "長野", 伊勢: "三重", 日光: "栃木" };
 function parsePrefs(place){
   const out = [];
   String(place || "").split(/[・、,，\/／\s（）()]+/).map(x => x.trim()).filter(Boolean).forEach(w => {
     const k = w.replace(/(都|府|県)$/, "");
-    const p = PREFS.includes(k) ? k : PREFS.includes(w) ? w : PLACE_ALIAS[w] || PLACE_ALIAS[k];
+    const p = PREFS.includes(k) ? k : PREFS.includes(w) || ABROAD.includes(w) ? w : PLACE_ALIAS[w] || PLACE_ALIAS[k];
     if (p && !out.includes(p)) out.push(p);
   });
   return out;
@@ -984,44 +1116,52 @@ function openNewJanken(){
   let cat = day ? `${day}日目` : categoriesFor(t)[0];
   const members = activeMembers(t);
   const s = openSheet("じゃんけん開始", `
+    ${privStatusHtml(t)}
     <label class="f"><span>内訳</span><input id="jl" placeholder="例：昼ご飯(稲庭うどん)" maxlength="40"></label>
-    <label class="f"><span>金額（全員分の合計）</span><input id="ja" type="number" inputmode="numeric" placeholder="0"></label>
+    <label class="f"><span>金額（全員分の合計）</span><input id="ja" class="yen-in" inputmode="numeric" placeholder="0" autocomplete="off"></label>
     <div class="f"><span>カテゴリー</span>${catChips(t, cat)}</div>
-    <div class="toggle"><div>人数分に分ける<small id="splitInfo">旅費・宿泊費は参加人数ぶんじゃんけん</small></div><button type="button" class="sw" id="jsp" role="switch" aria-checked="false" aria-label="人数分に分ける"></button></div>
+    <div class="toggle"><div>人数分に分ける<small id="splitInfo">旅費・宿泊費は参加人数分じゃんけん</small></div><button type="button" class="sw" id="jsp" role="switch" aria-checked="false" aria-label="人数分に分ける"></button></div>
     <div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(members, members)}</div>
     ${t.champion_out ? `<p class="note">3連覇達成者の${esc(pname(t.champion_out))}は参加しません。</p>` : ""}
-    ${privOf(t, 4) ? `<p class="note">特権四：${esc(pname(privOf(t, 4).player_id))}は${yen(PRIV4_LIMIT[privOf(t, 4).day] || 8000)}以下のじゃんけんに自動で不参加になります。</p>` : ""}
+    ${priv4Box(t)}
     <div id="p3box"></div>
     <label class="f"><span>立替えた人（事前予約などで先に払った人）</span><select id="jadv"><option value="">なし（決まった人がその場で払う）</option>${t.members.map(id => `<option value="${id}">${esc(pname(id))}</option>`).join("")}</select></label>
     <div class="btns"><button class="btn" id="jgo">開始</button></div>`);
   const p3 = bindPriv3(s, t, () => cat);
   const sw = $("#jsp");
-  const info = () => { const n = picked(s, "data-p").length, a = parseInt($("#ja").value, 10) || 0; $("#splitInfo").textContent = sw.getAttribute("aria-checked") === "true" ? `${n}回に分けて、1回 ${yen(Math.floor(a / Math.max(n, 1)))}` : "旅費・宿泊費は参加人数ぶんじゃんけん"; };
-  sw.onclick = () => { sw.setAttribute("aria-checked", String(sw.getAttribute("aria-checked") !== "true")); info(); };
+  const split = () => sw.getAttribute("aria-checked") === "true";
+  const info = () => {
+    const a = num($("#ja").value);
+    let n = picked(s, "data-p").length;
+    $("#splitInfo").textContent = split() ? `${n}回に分けて、1回 ${yen(Math.floor(a / Math.max(n, 1)))}` : "旅費・宿泊費は参加人数分じゃんけん";
+    applyPriv4(s, t, split() ? Math.floor(a / Math.max(members.length, 1)) : a);
+  };
+  sw.onclick = () => { sw.setAttribute("aria-checked", String(!split())); info(); };
   bindChips(s, "data-cat", false, () => { cat = picked(s, "data-cat")[0]; sw.setAttribute("aria-checked", String(SPLIT_KINDS.includes(cat))); info(); p3.refresh(); });
   bindChips(s, "data-p", true, info);
-  $("#ja").oninput = info;
-  $("#jgo").onclick = async () => {
-    const label = $("#jl").value.trim(), amount = parseInt($("#ja").value, 10) || 0, parts = picked(s, "data-p");
+  $("#ja").addEventListener("input", info);
+  $("#jgo").onclick = () => {
+    const label = $("#jl").value.trim(), amount = num($("#ja").value), parts = picked(s, "data-p");
     if (!label){ toast("内訳を入力してください"); return; }
     if (amount <= 0){ toast("金額を入力してください"); return; }
     if (parts.length < 2){ toast("参加者を2人以上にしてください"); return; }
-    $("#jgo").disabled = true;
-    if (sw.getAttribute("aria-checked") === "true"){
-      const n = parts.length, base = Math.floor(amount / n), rest = amount - base * n;
-      const group = crypto.randomUUID(), seq0 = nextSeq(t);
-      const rows = Array.from({length: n}, (_, i) => ({ trip_id: t.id, seq: seq0 + i, label: `${label} ${i+1}/${n}`, amount: base + (i < rest ? 1 : 0), category: cat, participants: parts, split_group: group, advanced_by: $("#jadv").value || null }));
-      const res = await q(sb.from("payments").insert(rows).select(), "登録");
-      if (!res){ $("#jgo").disabled = false; return; }
-      await loadTable("payments");
-      const first = res.sort((a, b) => a.seq - b.seq)[0];
-      closeSheet(); render(); toast(`${n}回に分けて登録しました`);
-      startFromPayment(first.id);
-    } else {
-      const j = await createJanken({ trip_id: t.id, label, amount, category: cat, participants: parts, advanced_by: $("#jadv").value || null }, { priv3: p3.on() });
-      $("#jgo").disabled = false;
-      if (j){ closeSheet(); openArena(j.id); }
-    }
+    const adv = $("#jadv").value || null, usep3 = p3.on(), isSplit = split();
+    rouletteGuard(t, cat, async () => {
+      if (isSplit){
+        const n = parts.length, base = Math.floor(amount / n), rest = amount - base * n;
+        const group = crypto.randomUUID(), seq0 = nextSeq(t);
+        const rows = Array.from({length: n}, (_, i) => ({ trip_id: t.id, seq: seq0 + i, label: `${label} ${i+1}/${n}`, amount: base + (i < rest ? 1 : 0), category: cat, participants: parts, split_group: group, advanced_by: adv }));
+        const res = await q(sb.from("payments").insert(rows).select(), "登録");
+        if (!res) return;
+        await loadTable("payments");
+        const first = res.sort((a, b) => a.seq - b.seq)[0];
+        closeSheet(); render(); toast(`${n}回に分けて登録しました`);
+        startFromPayment(first.id);
+      } else {
+        const j = await createJanken({ trip_id: t.id, label, amount, category: cat, participants: parts, advanced_by: adv }, { priv3: usep3 });
+        if (j){ closeSheet(); openArena(j.id); }
+      }
+    });
   };
   setTimeout(() => $("#jl").focus(), 250);
 }
@@ -1070,14 +1210,35 @@ async function startFromPayment(pid){
   const p = db.payments.find(x => x.id === pid), t = curTrip();
   if (!p || !t) return;
   if (liveJanken(t)){ toast("先に進行中のじゃんけんを終わらせてください"); openArena(liveJanken(t).id); return; }
-  const s = openSheet(esc(p.label), `<p class="note">${esc(p.category)}・${yen(p.amount)}</p><div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(activeMembers(t), (p.participants || []).filter(id => activeMembers(t).includes(id)))}</div>${privOf(t, 4) ? `<p class="note">特権四：${esc(pname(privOf(t, 4).player_id))}は${yen(PRIV4_LIMIT[privOf(t, 4).day] || 8000)}以下のじゃんけんに自動で不参加になります。</p>` : ""}<div id="p3box"></div><div class="btns"><button class="btn" id="jgo">開始</button></div>`);
+  const s = openSheet(esc(p.label), `${privStatusHtml(t)}<p class="note">${esc(p.category)}・${yen(p.amount)}</p><div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(activeMembers(t), (p.participants || []).filter(id => activeMembers(t).includes(id)))}</div>${priv4Box(t)}<div id="p3box"></div><div class="btns"><button class="btn" id="jgo">開始</button></div>`);
   bindChips(s, "data-p", true);
+  applyPriv4(s, t, p.amount);
   const p3 = bindPriv3(s, t, () => p.category);
-  $("#jgo").onclick = async () => {
+  $("#jgo").onclick = () => {
     const parts = picked(s, "data-p");
     if (parts.length < 2){ toast("参加者を2人以上にしてください"); return; }
-    const j = await createJanken({ trip_id: t.id, payment_id: p.id, label: p.label, amount: p.amount, category: p.category, participants: parts, advanced_by: p.advanced_by || null }, { priv3: p3.on() });
-    if (j){ closeSheet(); openArena(j.id); }
+    const usep3 = p3.on();
+    rouletteGuard(t, p.category, async () => {
+      const j = await createJanken({ trip_id: t.id, payment_id: p.id, label: p.label, amount: p.amount, category: p.category, participants: parts, advanced_by: p.advanced_by || null }, { priv3: usep3 });
+      if (j){ closeSheet(); openArena(j.id); }
+    });
+  };
+}
+/* 宿泊費のじゃんけん前に、その日のルーレットのsuper免除券が付与されているか確認（第十四条） */
+function rouletteGuard(t, cat, go){
+  const d = dayOf(t);
+  if (cat !== "宿" || !d) return go();
+  const granted = db.tickets.some(x => x.trip_id === t.id && (x.source || "").startsWith(`ルーレット：${d}日目`));
+  if (granted) return go();
+  const rk = setting(`roulette:${t.id}:${d}`), holder = rk ? rankHolder(t, rk) : null;
+  const s = openSheet("super免除券の付与がまだです", `<p class="note">宿泊費のじゃんけんの前に、${d}日目のルーレットで決まった順位の人へsuper免除券を付与します（第十四条）。付与するまで、宿泊費のじゃんけんは始められません。</p>
+    ${rk ? `<div class="rres"><span class="num">${rk}</span><div>位が獲得<small>今の${rk}位：${holder ? esc(pname(holder)) : "該当なし"}</small></div></div>` : ""}
+    <div class="btns">${rk ? `<button class="btn" id="rgG" ${holder ? "" : "disabled"}>付与してから始める</button>` : `<button class="btn" id="rgR">ルーレットを回す</button>`}</div>`);
+  const r = s.querySelector("#rgR"); if (r) r.onclick = () => openRoulette(t, d, () => rouletteGuard(t, cat, go));
+  const g = s.querySelector("#rgG"); if (g) g.onclick = async () => {
+    if (await q(sb.from("tickets").insert({ trip_id: t.id, player_id: holder, kind: "super", source: `ルーレット：${d}日目・${rk}位` }), "付与")){
+      await loadTable("tickets"); flash("super免除券 獲得！", pname(holder)); go();
+    }
   };
 }
 
@@ -1145,7 +1306,7 @@ function drawArena(){
     cards = c.map(u => `<button class="fighter" data-win="${u.pid}|${u.kind}" style="--c:${pcolor(u.pid)}"><i class="gem"></i><div class="fn">${esc(pname(u.pid))}</div><div class="dstat ok">${u.kind === "super" ? "super免除券" : "免除券"}</div><div class="st">勝ったらタップ</div></button>`).join("");
     bar = `<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
   } else {
-    hint = done ? "決着！" : `<b>負けた人</b>をタップ　残り <b class="num">${alive.length}</b> 人`;
+    hint = done ? "決着！" : soloMode ? `<b class="solohint">1人勝ちした人</b>をタップ（ほかの全員が1機減ります）` : `<b>負けた人</b>をタップ　残り <b class="num">${alive.length}</b> 人`;
     cards = j.participants.map(id => {
       const l = j.lives[id] || 0, m = j.max_lives[id] || 1, isS = supers.includes(id);
       const badge = isS ? `<span class="tic s">super使用</span>` : exempt.includes(id) ? `<span class="tic n">${exDone.includes(id) ? "免除券 発動済み" : "免除券 使用中"}</span>` : "";
@@ -1155,7 +1316,7 @@ function drawArena(){
         <div class="st">${l > 0 ? `残機 ${l}` : ""}</div>${l <= 0 ? `<span class="stamp">${isS ? "免除" : "抜け"}</span>` : ""}</button>`;
     }).join("");
     const canUse = !j.history.length && !done && j.participants.some(id => !supers.includes(id) && tcount(t, id) > 0);
-    bar = `<button class="btn ghost" id="aUndo" ${j.history.length ? "" : "disabled"}>1つ戻す</button>${canUse ? `<button class="btn ghost" id="aUse">券を使う</button>` : ""}<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
+    bar = `<button class="btn solo ${soloMode ? "on" : ""}" id="aSolo" ${done ? "disabled" : ""}>1人勝ち</button><button class="btn ghost" id="aUndo" ${j.history.length ? "" : "disabled"}>戻す</button>${canUse ? `<button class="btn ghost" id="aUse">券</button>` : ""}<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
   }
   const used = j.tickets_used || [];
   const strip = [
@@ -1172,7 +1333,7 @@ function drawArena(){
     <div class="verdict" id="verdict" ${done ? "" : "hidden"} style="--c:${done ? pcolor(alive[0]) : "#fff"}">
       <span class="vb"></span><span class="sp a"></span><span class="sp b"></span><span class="sp c"></span><span class="sp d"></span><span class="bl l"></span><span class="bl r"></span>
       <div class="k">決着</div><div class="p">${done ? esc(pname(alive[0])) : ""}</div>
-      <div class="y"><span class="num">${yen(j.amount)}</span><br>男気を見せる</div>
+      <div class="y"><span class="num">${yen(j.amount)}</span><br>${PRAISE[[...j.id].reduce((a, c) => a + c.charCodeAt(0), (j.history || []).length) % PRAISE.length]}</div>
       <div class="btns"><button class="btn ghost" id="vBack">1つ戻す</button><button class="btn" id="vOk">確定</button></div>
     </div>`;
   a.querySelectorAll("[data-f]").forEach(b => b.onclick = () => lose(j, b.dataset.f, b));
@@ -1181,7 +1342,7 @@ function drawArena(){
   a.querySelectorAll("[data-win]").forEach(b => b.onclick = () => { const [pid, kind] = b.dataset.win.split("|"); resolveConflict(j, { pid, kind }); });
   const on = (id, fn) => { const el = a.querySelector("#" + id); if (el) el.onclick = fn; };
   on("aUndo", () => undo(j)); on("vBack", () => undo(j)); on("aMin", closeArena); on("aStop", () => stop(j));
-  on("vOk", () => settle(j, alive[0])); on("aUse", () => openManualUse(j)); on("aForce", () => openForce(j));
+  on("vOk", () => settle(j, alive[0])); on("aSolo", () => { soloMode = !soloMode; drawArena(); }); on("aUse", () => openManualUse(j)); on("aForce", () => openForce(j));
 }
 async function patchJanken(j, patch){
   busy = true;
@@ -1191,11 +1352,9 @@ async function patchJanken(j, patch){
   if (!ok){ await loadTable("jankens"); syncArena(); }
   return ok;
 }
-const snap = j => ({ l: j.lives, e: j.exempt_done || [] });
-async function lose(j, id, el){
-  if (busy) return;
-  el.classList.add("hit"); if (navigator.vibrate) navigator.vibrate(30);
-  const lives = { ...j.lives, [id]: Math.max(0, (j.lives[id] || 0) - 1) };
+const snap = j => ({ l: j.lives, e: j.exempt_done || [], s: j.solos || [] });
+let soloMode = false;
+async function applyLives(j, lives, extra = {}){
   const alive = j.participants.filter(x => lives[x] > 0);
   const exempt = j.exempt || [], exDone = j.exempt_done || [];
   if (alive.length === 1 && exempt.includes(alive[0]) && !exDone.includes(alive[0])){
@@ -1203,16 +1362,28 @@ async function lose(j, id, el){
     j.participants.forEach(x => { reset[x] = (j.supers || []).includes(x) ? 0 : (j.max_lives[x] || 1); });
     seenReset[j.id] = exDone.length + 1;
     flash(`${pname(alive[0])}の免除券発動！`, "全員でやり直し");
-    await patchJanken(j, { lives: reset, history: [...j.history, snap(j)], exempt_done: [...exDone, alive[0]] });
+    await patchJanken(j, { lives: reset, history: [...j.history, snap(j)], exempt_done: [...exDone, alive[0]], ...extra });
     return;
   }
-  await patchJanken(j, { lives, history: [...j.history, snap(j)] });
+  await patchJanken(j, { lives, history: [...j.history, snap(j)], ...extra });
+}
+async function lose(j, id, el){
+  if (busy) return;
+  el.classList.add("hit"); if (navigator.vibrate) navigator.vibrate(30);
+  if (soloMode){ soloMode = false; return soloWin(j, id); }
+  await applyLives(j, { ...j.lives, [id]: Math.max(0, (j.lives[id] || 0) - 1) });
+}
+async function soloWin(j, id){
+  const lives = { ...j.lives };
+  j.participants.forEach(x => { if (x !== id && (lives[x] || 0) > 0) lives[x]--; });
+  flash("1人勝ち！", pname(id));
+  await applyLives(j, lives, { solos: [...(j.solos || []), id] });
 }
 async function undo(j){
   if (busy || !j.history.length) return;
   const last = j.history[j.history.length - 1];
   const patch = { history: j.history.slice(0, -1) };
-  if (last && last.l){ patch.lives = last.l; patch.exempt_done = last.e || []; seenReset[j.id] = patch.exempt_done.length; }
+  if (last && last.l){ patch.lives = last.l; patch.exempt_done = last.e || []; patch.solos = last.s || []; seenReset[j.id] = patch.exempt_done.length; }
   else patch.lives = last;
   await patchJanken(j, patch);
 }
@@ -1295,7 +1466,13 @@ function openForce(j){
 }
 async function stop(j){
   if (!confirm("このじゃんけんを中止しますか？（支払いは記録されません）")) return;
-  if (await q(sb.from("jankens").update({ status: "cancel" }).eq("id", j.id), "中止")){ await loadTable("jankens"); closeArena(); toast("中止しました"); }
+  if (!(await q(sb.from("jankens").update({ status: "cancel" }).eq("id", j.id), "中止"))) return;
+  const t = tripOfJ(j);
+  const p3 = j.priv3_by && privOf(t, 3);
+  if (p3){ const det = [...(p3.uses_detail || [])]; const k = det.lastIndexOf(travelType(j.category)); if (k >= 0) det.splice(k, 1); await q(sb.from("privileges").update({ uses: Math.max(0, (p3.uses || 0) - 1), uses_detail: det }).eq("id", p3.id), "記録"); }
+  const forced = Object.values(j.proxy || {}).filter(v => v === "特権五").length, p5 = privOf(t, 5);
+  if (forced && p5) await q(sb.from("privileges").update({ uses: Math.max(0, (p5.uses || 0) - forced) }).eq("id", p5.id), "記録");
+  await Promise.all([loadTable("jankens"), loadTable("privileges")]); closeArena(); toast((p3 || forced) ? "中止しました（使った特権は元に戻しました）" : "中止しました");
 }
 async function settle(j, payer){
   if (busy) return; busy = true;
@@ -1323,12 +1500,12 @@ function nextSplit(pid){
 
 /* ---------- 支払いの編集 ---------- */
 function openEditPayment(id){
-  const p = db.payments.find(x => x.id === id), t = curTrip();
+  const p = db.payments.find(x => x.id === id), t = p && db.trips.find(x => x.id === p.trip_id);
   if (!p || !t) return;
   let cat = p.category;
   const s = openSheet("支払いを編集", `
     <label class="f"><span>内訳</span><input id="el" value="${esc(p.label)}"></label>
-    <div class="two"><label class="f"><span>金額</span><input id="ea" type="number" inputmode="numeric" value="${p.amount}"></label>
+    <div class="two"><label class="f"><span>金額</span><input id="ea" class="yen-in" inputmode="numeric" value="${fmtNum(p.amount)}" autocomplete="off"></label>
     <label class="f"><span>支払順</span><input id="eq" type="number" inputmode="numeric" value="${p.seq}"></label></div>
     <div class="f"><span>カテゴリー</span>${catChips(t, cat)}</div>
     <div class="f"><span>払った人</span>${chipPlayers(t.members, p.payer_id ? [p.payer_id] : [], "data-payer")}</div>
@@ -1341,7 +1518,7 @@ function openEditPayment(id){
   bindChips(s, "data-p", true);
   const pl = $("#eplay"); if (pl) pl.onclick = () => startFromPayment(p.id);
   $("#esave").onclick = async () => {
-    const row = { label: $("#el").value.trim(), amount: parseInt($("#ea").value, 10) || 0, seq: parseInt($("#eq").value, 10) || p.seq, category: cat, payer_id: picked(s, "data-payer")[0] || null, participants: picked(s, "data-p"), advanced_by: $("#eadv").value || null };
+    const row = { label: $("#el").value.trim(), amount: num($("#ea").value), seq: parseInt($("#eq").value, 10) || p.seq, category: cat, payer_id: picked(s, "data-payer")[0] || null, participants: picked(s, "data-p"), advanced_by: $("#eadv").value || null };
     if (!row.label){ toast("内訳を入力してください"); return; }
     if (row.payer_id && !row.participants.includes(row.payer_id)) row.participants.push(row.payer_id);
     if (await q(sb.from("payments").update(row).eq("id", p.id), "保存")){ await loadTable("payments"); closeSheet(); render(); toast("保存しました"); }
@@ -1383,13 +1560,13 @@ function initialPlan(t){
   const prior = tripsSorted().filter(x => x.season === t.season && x.no < t.no);
   if (!prior.length) return { first: true, items: [] };
   const st = deptStats(prior), ok = activeMembers(t), items = [];
-  DEPTS.forEach(d => leaders(st, d).forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "normal", source: `初期：${d}部門1位` })));
   leaders(st, "総合").forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "super", source: "初期：シーズン累計1位" }));
   const pv = prevTrip(t), w = pv && tripWinner(pv);
   if (w && ok.includes(w)){
-    items.push({ player_id: w, kind: "normal", source: "初期：前回優勝" });
     items.push({ player_id: w, kind: "super", source: "初期：前回優勝" });
+    items.push({ player_id: w, kind: "normal", source: "初期：前回優勝" });
   }
+  DEPTS.forEach(d => leaders(st, d).forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "normal", source: `初期：${d}部門1位` })));
   return { first: false, items };
 }
 async function giveInitial(t){
@@ -1420,11 +1597,11 @@ function viewTickets(t){
   h += ids.map(id => `<div class="tkrow"><span class="dot" style="background:${pcolor(id)}"></span><b>${esc(pname(id))}</b>
     <span class="tkc"><span class="tic n">免</span><button class="pm" data-adj="${id}|normal|-" aria-label="減らす">−</button><span class="num">${tcount(t, id, "normal")}</span><button class="pm" data-adj="${id}|normal|+" aria-label="増やす">＋</button></span>
     <span class="tkc"><span class="tic s">S</span><button class="pm" data-adj="${id}|super|-" aria-label="減らす">−</button><span class="num">${tcount(t, id, "super")}</span><button class="pm" data-adj="${id}|super|+" aria-label="増やす">＋</button></span></div>`).join("");
-  h += `</div>`;
+  h += `<div class="btns" style="margin-top:10px"><button class="btn danger" data-act="resetTickets">全員の券をリセット</button></div></div>`;
 
   const plan = initialPlan(t), given = db.tickets.filter(x => x.trip_id === t.id && (x.source || "").startsWith("初期"));
   h += `<div class="h2 red">旅の初めの配布<small>第十二条・第十八条</small></div><div class="card">`;
-  if (plan.first) h += `<p class="note" style="margin:0">シーズン${t.season}最初の旅なので、配布はありません（リセット扱い）。</p>`;
+  if (plan.first) h += `<p class="note" style="margin:0">SEASON ${t.season}最初の旅なので、配布はありません（リセット扱い）。</p>`;
   else {
     h += plan.items.length ? `<ul class="plan">${plan.items.map(x => `<li><span class="dot" style="background:${pcolor(x.player_id)}"></span>${esc(pname(x.player_id))}<span class="tic ${x.kind === "super" ? "s" : "n"}">${x.kind === "super" ? "super" : "免除券"}</span><small>${esc(x.source.replace("初期：", ""))}</small></li>`).join("")}</ul>` : `<p class="note">配布の対象者がいません。</p>`;
     h += `<div class="btns"><button class="btn" data-act="initTickets">${given.length ? "配布し直す" : "この内容で配布する"}</button></div>${given.length ? `<p class="note" style="margin:8px 0 0">配布済み：${given.length}枚</p>` : ""}`;
@@ -1436,7 +1613,7 @@ function viewTickets(t){
     const p = tripPrivs(t).find(x => x.day === d);
     if (p){
       const m = PRIVS[p.kind], left = m.max ? `残り${m.max - (p.uses || 0)}回` : m.span;
-      h += `<div class="privcard" style="--c:${pcolor(p.player_id)}"><span class="pk">${KANJI[p.kind]}</span><div class="pb"><small>${d}日目</small><b>${esc(pname(p.player_id))}：${m.name}</b><span>${m.desc}</span><em>${left}${p.kind === 3 && (p.uses_detail || []).length ? `（使用済み：${p.uses_detail.join("・")}）` : ""}</em>
+      h += `<div class="privcard" style="--c:${pcolor(p.player_id)}"><span class="pico" style="--pi:var(--priv-${p.kind})"></span><div class="pb"><small>${d}日目・<i class="dotc" style="background:${pcolor(p.player_id)}"></i>${esc(pname(p.player_id))}</small><span class="pno">特権${KANJI[p.kind]}</span><b class="pnm">${m.name}</b><span>${m.desc}</span><em>${left}${p.kind === 3 && (p.uses_detail || []).length ? `（使用済み：${p.uses_detail.join("・")}）` : ""}</em>
         <div class="pa">${p.kind === 2 && (p.uses || 0) < 1 ? `<button class="mini" data-steal="1">強奪を実行</button>` : ""}<button class="mini" data-privdel="${p.id}">取り消す</button></div></div></div>`;
     } else h += `<button class="privcard empty-p" data-privday="${d}"><span class="pk">？</span><div class="pb"><small>${d}日目</small><b>${d === day ? "今日の特権を宣言する" : "宣言する"}</b><span>${d === 1 ? "1日目は前回優勝者" : "朝一の宣言時点で1位の人"}が獲得</span></div></button>`;
   }
@@ -1444,24 +1621,86 @@ function viewTickets(t){
   const rk = setting(`roulette:${t.id}:${rouletteDay}`);
   const granted = db.tickets.filter(x => x.trip_id === t.id && (x.source || "").startsWith(`ルーレット：${rouletteDay}日目`));
   h += `<div class="h2">super免除券ルーレット<small>第十四条・1日1枚以上</small></div><div class="card">
-    <div class="filter" style="margin:0 0 10px;padding:0">${Array.from({length: t.days}, (_, i) => `<button data-rday="${i+1}" aria-pressed="${rouletteDay === i+1}">${i+1}日目</button>`).join("")}</div>`;
+    <div class="filter" style="margin:0 0 10px;padding:0">${Array.from({length: t.days}, (_, i) => `<button data-rday="${i+1}" aria-pressed="${rouletteDay === i+1}">${i+1}日目${setting(`roulette:${t.id}:${i+1}`) ? " ✓" : ""}</button>`).join("")}</div>`;
   if (rk){
     const holder = rankHolder(t, rk);
-    h += `<div class="rres"><span class="num">${rk}</span><div>位が獲得<small>旅費・宿泊費のじゃんけん前の時点でこの順位の人に配ります</small></div></div>
-      <p class="note">今の${rk}位：<b style="color:var(--ink)">${holder ? esc(pname(holder)) : "該当なし"}</b>${granted.length ? `／この日の付与済み：${granted.map(x => esc(pname(x.player_id))).join("、")}` : ""}</p>
-      <div class="btns"><button class="btn ghost" data-act="roulette">回し直す</button><button class="btn" data-act="grantRoulette" ${holder ? "" : "disabled"}>${holder ? esc(pname(holder)) : ""}に付与</button></div>`;
+    h += `<div class="rres"><span class="num">${rk}</span><div>位が獲得<small>宿泊費のじゃんけん前の時点でこの順位の人に配ります</small></div></div>
+      <p class="note">今の${rk}位：<b style="color:var(--ink)">${holder ? esc(pname(holder)) : "該当なし"}</b>${granted.length ? `／${rouletteDay}日目の付与済み：${granted.map(x => esc(pname(x.player_id))).join("、")}` : ""}</p>
+      <div class="btns"><button class="btn ghost" data-act="rouletteReset">${rouletteDay}日目をリセット</button><button class="btn" data-act="grantRoulette" ${holder ? "" : "disabled"}>${holder ? esc(pname(holder)) : ""}に付与</button></div>`;
   } else h += `<p class="note">各日の一番最初に回して、super免除券を獲得する順位を決めます。</p><div class="btns"><button class="btn" data-act="roulette">${rouletteDay}日目のルーレットを回す</button></div>`;
   h += `</div>`;
 
-  const res = prizeResults(t);
+  const res = prizeResults(t), ready = !!t.travel_total;
   h += `<div class="h2 red">ピタリ賞・ニアピン賞<small>第十七条</small></div><div class="card">
-    <label class="f"><span>旅費総額（前回4位の予約者が提示）</span><div style="display:flex;gap:8px"><input id="ttotal" type="number" inputmode="numeric" value="${t.travel_total ?? ""}" placeholder="0"><button class="mini" data-act="saveTravel">保存</button></div></label>
-    <p class="note">旅費総額の提示後に、全員が「自分の最終支払額」を予想します。判定は100円単位（100円未満は切り捨て）。ピタリ賞（一致）は全額、ニアピン賞（ピタリ±1,000円以内）は半額が免除され、残りのメンバーで均等に負担します。順位は変わりません。</p>
-    ${res.map(r => `<div class="predrow"><span class="dot" style="background:${pcolor(r.id)}"></span><b>${esc(pname(r.id))}</b><input type="number" inputmode="numeric" data-pred="${r.id}" value="${r.pred ?? ""}" placeholder="予想額"><span class="pr">${r.pred == null ? "" : `<small>今の差 ${signed(r.paid - r.pred)}</small>${r.prize ? `<span class="tic ${r.prize === "ピタリ賞" ? "s" : "n"}">${r.prize}</span>` : ""}`}</span></div>`).join("")}
+    <div class="ttl"><div><small>旅費総額（前回4位の予約者が提示）</small><b class="num">${ready ? yen(t.travel_total) : "未入力"}</b></div><button class="btn" data-act="travelTotal">${ready ? "内訳を見る・追加" : "旅費総額を入力"}</button></div>
+    <p class="note">${ready ? "全員が「自分の最終支払額」を予想します。" : "旅費総額が入力されるまで、予想は入力できません。"}判定は100円単位（100円未満は切り捨て）。ピタリ賞（一致）は全額、ニアピン賞（ピタリ±1,000円以内）は半額が免除され、残りのメンバーで均等に負担します。順位は変わりません。</p>
+    ${res.map(r => `<div class="predrow"><span class="dot" style="background:${pcolor(r.id)}"></span><b>${esc(pname(r.id))}</b><input class="yen-in" inputmode="numeric" data-pred="${r.id}" value="${r.pred == null ? "" : fmtNum(r.pred)}" placeholder="${ready ? "予想額" : "総額の入力待ち"}" ${ready ? "" : "disabled"} autocomplete="off"><span class="pr">${r.pred == null ? "" : `<small>今の差 ${signed(r.paid - r.pred)}</small>${r.prize ? `<span class="tic ${r.prize === "ピタリ賞" ? "s" : "n"}">${r.prize}</span>` : ""}`}</span></div>`).join("")}
   </div>`;
 
   h += `<div class="h2 aqua">精算<small>立替え・賞の免除を反映</small></div><div class="card"><p class="note" style="margin-top:0">誰が誰にいくら払えばよいかを計算します。立替えた人は、支払い一覧の各支払いで設定できます。</p><div class="btns" style="margin-top:6px"><button class="btn" data-act="settle">精算を見る</button></div></div>`;
   return h;
+}
+async function resetTickets(t){
+  const own = db.tickets.filter(x => x.trip_id === t.id && x.status === "own");
+  if (!own.length){ toast("リセットする券がありません"); return; }
+  if (!confirm(`全員の所持している券（${own.length}枚）をすべて削除しますか？`)) return;
+  if (await q(sb.from("tickets").delete().in("id", own.map(x => x.id)), "リセット")){ await loadTable("tickets"); render(); toast("全員の券をリセットしました"); }
+}
+async function resetRoulette(t, day){
+  const g = db.tickets.filter(x => x.trip_id === t.id && x.status === "own" && (x.source || "").startsWith(`ルーレット：${day}日目`));
+  if (!confirm(`${day}日目のルーレット結果をリセットしますか？${g.length ? `\n付与済みのsuper免除券${g.length}枚も取り消します。` : ""}`)) return;
+  if (g.length) await q(sb.from("tickets").delete().in("id", g.map(x => x.id)), "リセット");
+  const { error } = await sb.from("app_settings").delete().eq("key", `roulette:${t.id}:${day}`);
+  if (error){ fail(error, "リセット"); return; }
+  await Promise.all([loadTable("tickets"), loadTable("app_settings")]); render(); toast(`${day}日目のルーレットをリセットしました`);
+}
+
+/* ---------- 旅費総額の入力（内訳を未決着のじゃんけんに登録） ---------- */
+const TRAVEL_CATS = ["新幹線", "飛行機", "宿", "車"];
+function openTravelTotal(t){
+  const reg = tripPays(t).filter(p => p.source === "travel");
+  const groups = {};
+  reg.forEach(p => { const k = p.split_group || p.id; (groups[k] = groups[k] || { label: p.label.replace(/ \d+\/\d+$/, ""), category: p.category, total: 0, n: 0 }); groups[k].total += p.amount; groups[k].n++; });
+  const rowHtml = (i, c = "新幹線", l = "") => `<div class="tvrow" data-row="${i}"><select data-k="cat">${TRAVEL_CATS.map(x => `<option ${x === c ? "selected" : ""}>${x}</option>`).join("")}</select><input data-k="label" placeholder="例：${c}(行き)" value="${esc(l)}"><input data-k="amt" class="yen-in" inputmode="numeric" placeholder="金額" autocomplete="off"><button class="delbtn" data-rm="${i}" aria-label="この行を消す">×</button></div>`;
+  let n = 0;
+  const s = openSheet("旅費総額を入力", `
+    <p class="note">事前に予約した旅費（新幹線・飛行機・宿・車）の内訳を入力します。合計が旅費総額になり、内訳は未決着のじゃんけんに登録されます。新幹線・飛行機・宿は参加人数分に分かれ、車は1回のじゃんけんです（第七条）。</p>
+    ${Object.keys(groups).length ? `<div class="card" style="margin-bottom:12px"><small class="note" style="display:block;margin:0 0 6px">登録済み</small>${Object.values(groups).map(g => `<div class="rec"><span>${esc(g.category)}・${esc(g.label)}${g.n > 1 ? `（${g.n}回）` : ""}</span><b class="num">${yen(g.total)}</b></div>`).join("")}</div>` : ""}
+    <div id="tvrows">${rowHtml(n++, "新幹線", "新幹線(行き)")}${rowHtml(n++, "新幹線", "新幹線(帰り)")}${rowHtml(n++, "宿", "宿①")}</div>
+    <button class="mini" id="tvadd" style="margin:4px 0 12px">＋ 行を追加</button>
+    <label class="f"><span>予約して立替えた人</span><select id="tvadv">${t.members.map(id => `<option value="${id}" ${id === me ? "selected" : ""}>${esc(pname(id))}</option>`).join("")}</select></label>
+    <div class="ttl"><div><small>今回入力した合計</small><b class="num" id="tvsum">¥0</b></div><div><small>旅費総額（登録済み含む）</small><b class="num" id="tvall">${yen(reg.reduce((a, p) => a + p.amount, 0))}</b></div></div>
+    <div class="btns"><button class="btn" id="tvgo">登録して全員に知らせる</button></div>`);
+  const rows = () => [...s.querySelectorAll(".tvrow")].map(r => ({ category: r.querySelector('[data-k="cat"]').value, label: r.querySelector('[data-k="label"]').value.trim(), amount: num(r.querySelector('[data-k="amt"]').value) }));
+  const regSum = reg.reduce((a, p) => a + p.amount, 0);
+  const upd = () => { const sum = rows().reduce((a, r) => a + r.amount, 0); $("#tvsum").textContent = yen(sum); $("#tvall").textContent = yen(regSum + sum); };
+  const bindRows = () => {
+    s.querySelectorAll("[data-rm]").forEach(b => b.onclick = () => { b.closest(".tvrow").remove(); upd(); });
+    s.querySelectorAll('.tvrow input, .tvrow select').forEach(x => x.oninput = upd);
+  };
+  bindRows();
+  $("#tvadd").onclick = () => { $("#tvrows").insertAdjacentHTML("beforeend", rowHtml(n++)); bindRows(); };
+  $("#tvgo").onclick = async () => {
+    const items = rows().filter(r => r.amount > 0);
+    if (!items.length){ toast("金額を入力してください"); return; }
+    if (items.some(r => !r.label)){ toast("内訳を入力してください"); return; }
+    const parts = activeMembers(t), adv = $("#tvadv").value || null;
+    let seq = nextSeq(t); const ins = [];
+    items.forEach(r => {
+      if (r.category === "車") ins.push({ trip_id: t.id, seq: seq++, label: r.label, amount: r.amount, category: r.category, participants: parts, advanced_by: adv, source: "travel" });
+      else {
+        const k = parts.length, base = Math.floor(r.amount / k), rest = r.amount - base * k, g = crypto.randomUUID();
+        for (let i = 0; i < k; i++) ins.push({ trip_id: t.id, seq: seq++, label: `${r.label} ${i + 1}/${k}`, amount: base + (i < rest ? 1 : 0), category: r.category, participants: parts, split_group: g, advanced_by: adv, source: "travel" });
+      }
+    });
+    $("#tvgo").disabled = true;
+    if (!(await q(sb.from("payments").insert(ins), "登録"))){ $("#tvgo").disabled = false; return; }
+    const total = regSum + items.reduce((a, r) => a + r.amount, 0);
+    await q(sb.from("trips").update({ travel_total: total }).eq("id", t.id), "保存");
+    await Promise.all([loadTable("payments"), loadTable("trips")]);
+    pushCall({ type: "prize_start", trip_id: t.id });
+    closeSheet(); render(); flash(`旅費総額 ${yen(total)}`, "全員に知らせました。予想を入力しよう");
+  };
 }
 
 /* ---------- 特権 ---------- */
@@ -1478,7 +1717,7 @@ function openPrivDeclare(t, day){
   let kind = null;
   const s = openSheet(`${day}日目の特権`, `<p class="note">${day === 1 ? "1日目は前回優勝者" : "宣言する時点（朝一）で1位の人"}が、1つ選んで宣言します。${cand ? `候補：<b style="color:var(--ink)">${esc(pname(cand))}</b>` : ""}</p>
     <div class="f"><span>獲得した人</span>${chipPlayers(activeMembers(t), cand ? [cand] : [])}</div>
-    <div class="f"><span>特権</span><div class="privpick">${[1,2,3,4,5].map(k => `<button type="button" data-pk="${k}" ${usedKinds.includes(k) ? "disabled" : ""} aria-pressed="false"><span class="pk">${KANJI[k]}</span><span><b>${PRIVS[k].name}${usedKinds.includes(k) ? "（獲得済み）" : ""}</b><small>${PRIVS[k].desc}（${PRIVS[k].span}）</small></span></button>`).join("")}</div></div>
+    <div class="f"><span>特権</span><div class="privpick">${[1,2,3,4,5].map(k => `<button type="button" data-pk="${k}" ${usedKinds.includes(k) ? "disabled" : ""} aria-pressed="false"><span class="pico" style="--pi:var(--priv-${k})"></span><span><b>特権${KANJI[k]}「${PRIVS[k].name}」${usedKinds.includes(k) ? "（獲得済み）" : ""}</b><small>${PRIVS[k].desc}（${PRIVS[k].span}）</small></span></button>`).join("")}</div></div>
     <div class="btns"><button class="btn" id="pgo">宣言する</button></div>`);
   bindChips(s, "data-p", false);
   s.querySelectorAll("[data-pk]").forEach(b => b.onclick = () => { kind = Number(b.dataset.pk); s.querySelectorAll("[data-pk]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
@@ -1518,7 +1757,7 @@ function rankHolder(t, r){
   const hit = rows.find(x => x.rank === Number(r));
   return hit ? hit.id : (rows[Number(r) - 1] || {}).id || null;
 }
-function openRoulette(t, day){
+function openRoulette(t, day, onDone){
   const n = activeMembers(t).length;
   const s = openSheet(`${day}日目のルーレット`, `<div class="wheel"><span class="num" id="rn">?</span><small>位が獲得</small></div><div class="btns"><button class="btn" id="rgo">回す</button></div>`);
   $("#rgo").onclick = () => {
@@ -1532,7 +1771,7 @@ function openRoulette(t, day){
       else {
         el.textContent = final; el.classList.add("hitn");
         if (navigator.vibrate) navigator.vibrate(80);
-        setTimeout(async () => { if (await putSetting(`roulette:${t.id}:${day}`, final)){ await loadTable("app_settings"); closeSheet(); render(); flash(`${final}位が獲得！`, `${day}日目のsuper免除券`); } }, 900);
+        setTimeout(async () => { if (await putSetting(`roulette:${t.id}:${day}`, final)){ await loadTable("app_settings"); flash(`${final}位が獲得！`, `${day}日目のsuper免除券`); if (onDone) onDone(); else { closeSheet(); render(); } } }, 900);
       }
     };
     step();
@@ -1565,7 +1804,7 @@ async function saveTravelTotal(t){
   if (await q(sb.from("trips").update({ travel_total: Number.isFinite(v) ? v : null }).eq("id", t.id), "保存")){ await loadTable("trips"); render(); toast("旅費総額を保存しました。全員で予想を入力してください"); if (Number.isFinite(v)) pushCall({ type: "prize_start", trip_id: t.id }); }
 }
 async function savePrediction(t, pid, val){
-  const v = parseInt(val, 10);
+  const v = String(val).trim() ? num(val) : NaN;
   if (await q(sb.from("predictions").upsert({ trip_id: t.id, player_id: pid, amount: Number.isFinite(v) ? v : null }, { onConflict: "trip_id,player_id" }), "保存")){ await loadTable("predictions"); render(); toast(`${pname(pid)}の予想を保存しました`); }
 }
 
@@ -1601,9 +1840,9 @@ function openSettlement(t){
 
 /* ---------- 設定：一斉宣言の金額 ---------- */
 function openThreshold(){
-  openSheet("一斉宣言を出す金額", `<p class="note">この金額以上のじゃんけんで、免除券を持っている人に一斉宣言を求めます。これ未満でも、じゃんけん画面の「券を使う」から使えます。</p>
-    <label class="f"><span>金額</span><input id="thv" type="number" inputmode="numeric" value="${threshold()}"></label><div class="btns"><button class="btn" id="thok">保存</button></div>`);
-  $("#thok").onclick = async () => { const v = parseInt($("#thv").value, 10); if (!(v > 0)){ toast("金額を入力してください"); return; } if (await putSetting("declare_threshold", v)){ await loadTable("app_settings"); closeSheet(); render(); toast(`${yen(v)}以上で一斉宣言します`); } };
+  openSheet("免除券使用確認の基準額", `<p class="note">この金額以上のじゃんけんで、免除券を持っている人に使うかどうかの一斉宣言を求めます。これ未満でも、じゃんけん画面の「券を使う」から使えます。</p>
+    <label class="f"><span>基準額</span><input id="thv" class="yen-in" inputmode="numeric" value="${fmtNum(threshold())}" autocomplete="off"></label><div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="thok">保存</button></div>`).querySelector("[data-back]").onclick = openSettings;
+  $("#thok").onclick = async () => { const v = num($("#thv").value); if (!(v > 0)){ toast("金額を入力してください"); return; } if (await putSetting("declare_threshold", v)){ await loadTable("app_settings"); closeSheet(); render(); toast(`${yen(v)}以上で一斉宣言します`); } };
 }
 
 /* ===================== 段階3：集計・歴代・地図 ===================== */
@@ -1689,7 +1928,7 @@ function computeStats(trips){
   const ids = allMembers(trips);
   const S = {}; ids.forEach(id => S[id] = { paid: 0, wins: 0, joins: 0, drives: 0, std: 0, max: 0, cats: {}, catJ: {}, catW: {}, bandJ: [0, 0, 0], bandW: [0, 0, 0], sizeJ: {}, sizeW: {},
     firstJ: 0, firstW: 0, dayFirstJ: 0, dayFirstW: 0, streakW: 0, streakL: 0, curW: 0, curL: 0, duelJ: 0, duelW: 0, vs: {}, oneOut: 0, oneOutJ: 0,
-    tUse: 0, sUse: 0, sSaved: 0, exFire: 0, exHit: 0, extra: 0, timeAmt: [0, 0, 0], dayMax: 0, dayMin: null, leadPays: 0, trips: 0, tops: 0, points: 0 });
+    tUse: 0, sUse: 0, soloW: 0, soloJ: 0, sSaved: 0, exFire: 0, exHit: 0, extra: 0, timeAmt: [0, 0, 0], dayMax: 0, dayMin: null, leadPays: 0, trips: 0, tops: 0, points: 0 });
   const series = {}; ids.forEach(id => series[id] = []);
   const rankSeries = {}; ids.forEach(id => rankSeries[id] = []);
   const diffSeries = {}; ids.forEach(id => diffSeries[id] = []);
@@ -1757,6 +1996,8 @@ function computeStats(trips){
       const hist = [...(j.history || []).map(h => h && h.l ? h.l : h), j.lives].filter(Boolean);
       const parts = j.participants.filter(id => S[id] && !(j.supers || []).includes(id));
       if (j.priv3_by) parts.forEach(id => { if (id !== j.priv3_by) S[id].extra++; });
+      parts.forEach(id => S[id].soloJ++);
+      (j.solos || []).forEach(id => { if (S[id]) S[id].soloW++; });
       (j.exempt_done || []).forEach(id => { if (S[id]){ S[id].exFire++; if (j.payer_id === id) S[id].exHit++; } });
       // 1回目で抜けた
       if (hist.length >= 2){
@@ -1797,13 +2038,12 @@ function viewStats(t){
   const trips = scopeTrips();
   const st = computeStats(trips);
   const ids = st.ids.filter(id => st.S[id].joins > 0 || st.S[id].paid > 0);
-  let h = `<div class="filter scope">${[["trip", "今回の旅"], ["season", t ? `SEASON ${t.season}` : "シーズン"], ["all", "全期間"]].map(([k, l]) => `<button data-scope="${k}" aria-pressed="${statScope === k}">${l}</button>`).join("")}</div>`;
+  let h = `<div class="stickybar"><div class="filter scope">${[["trip", "今回の旅"], ["season", t ? `SEASON ${t.season}` : "シーズン"], ["all", "全期間"]].map(([k, l]) => `<button data-scope="${k}" aria-pressed="${statScope === k}">${l}</button>`).join("")}</div></div>`;
   if (!st.steps) return h + `<div class="empty"><b>まだ支払いがありません</b>じゃんけんを記録すると、グラフと統計が表示されます。</div>`;
   const total = ids.reduce((s, id) => s + st.S[id].paid, 0);
   const sortedIds = ids.slice().sort((a, b) => st.S[b].paid - st.S[a].paid);
   h += `<div class="kpis"><div><small>支払い件数</small><b class="num">${st.steps}</b></div><div><small>総額</small><b class="num">${yen(total)}</b></div><div><small>首位交代</small><b class="num">${st.leadChanges}回</b></div></div>`;
-  h += `<div class="h2">累計支払額の推移<small>◆＝首位交代</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.series[id] })), st.steps, { fmt: v => v >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v), marks: st.leadMarks, bands: st.bands, label: "累計支払額の推移" })}${legend(sortedIds)}</div>`;
-  h += `<div class="h2 red">順位の推移</div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.rankSeries[id] })), st.steps, { invert: true, min: 1, max: ids.length, ticks: ids.map((_, i) => i + 1), fmt: v => v + "位", step: true, h: 150, bands: st.bands, label: "順位の推移" })}${legend(sortedIds)}</div>`;
+  h += `<div class="h2">累計支払額の推移${statScope === "trip" ? "<small>◆＝首位交代</small>" : ""}</div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.series[id] })), st.steps, { fmt: v => v >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v), marks: statScope === "trip" ? st.leadMarks : [], bands: st.bands, label: "累計支払額の推移" })}${legend(sortedIds)}</div>`;
   h += `<div class="h2 aqua">標準との差の推移<small>割り勘より何円多く払ったか</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.diffSeries[id] })), st.steps, { zero: true, fmt: v => (v > 0 ? "+" : "") + (Math.abs(v) >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v)), bands: st.bands, label: "標準との差の推移" })}${legend(sortedIds)}</div>`;
   const cats = categoriesFor({ days: Math.max(3, ...trips.map(x => x.days || 3)) });
   h += `<div class="h2">カテゴリー別</div><div class="card">${stackBars(sortedIds, Object.fromEntries(ids.map(id => [id, st.S[id].cats])), cats)}</div>`;
@@ -1814,19 +2054,15 @@ function viewStats(t){
   const rate = (w, j) => j ? w / j : NaN;
   const groups = [
     ["基本", [
-      ["支払額", id => S[id].paid, yen], ["支払回数", id => S[id].wins, v => v + "回"], ["参加回数", id => S[id].joins, v => v + "回"], ["運転回数", id => S[id].drives, v => v + "回"],
-      ["勝率（支払＋運転）", id => rate(S[id].wins + S[id].drives, S[id].joins), pct], ["支払率", id => rate(S[id].wins, S[id].joins), pct],
-      ["最高支払額", id => S[id].max, yen], ["平均支払額", id => S[id].wins ? S[id].paid / S[id].wins : NaN, yen]
+      ["支払額", id => S[id].paid, yen], ["支払回数", id => S[id].wins, v => v + "回"], ["参加回数", id => S[id].joins, v => v + "回"],
+      ["勝率（支払＋運転）", id => rate(S[id].wins + S[id].drives, S[id].joins), pct], ["運転回数", id => S[id].drives, v => v + "回"], ["支払率", id => rate(S[id].wins, S[id].joins), pct],
+      ["最高支払額", id => S[id].max, yen], ["1じゃんけん当たり平均支払額", id => S[id].wins ? S[id].paid / S[id].wins : NaN, yen]
     ]],
-    ["運", [
-      ["期待支払額（割り勘相当）", id => S[id].std, yen], ["運の悪さ（実際−期待）", id => S[id].paid - S[id].std, signed],
-      ["運の悪さ率（実際÷期待）", id => S[id].std ? S[id].paid / S[id].std : NaN, v => Number.isFinite(v) ? v.toFixed(2) + "倍" : "—"]
-    ]],
-    ["連続", [["最大連続支払", id => S[id].streakW, v => v + "連続"], ["最長逃げ切り（連続で払わず）", id => S[id].streakL, v => v + "連続"]]],
+    ["連続", [["最大連続支払<small>※運転を除く</small>", id => S[id].streakW, v => v + "連続"], ["最長逃げ切り（連続で払わず）", id => S[id].streakL, v => v + "連続"]]],
     ["場面別の支払率", [
       ["旅の初戦", id => rate(S[id].firstW, S[id].firstJ), pct], ["その日最初のじゃんけん", id => rate(S[id].dayFirstW, S[id].dayFirstJ), pct],
       ["3,000円未満", id => rate(S[id].bandW[0], S[id].bandJ[0]), pct], ["3,000〜9,999円", id => rate(S[id].bandW[1], S[id].bandJ[1]), pct], ["高額（1万円以上）", id => rate(S[id].bandW[2], S[id].bandJ[2]), pct],
-      ...[3, 4, 5, 6].filter(n => ids.some(id => S[id].sizeJ[n])).map(n => [`${n}人でのじゃんけん`, id => rate(S[id].sizeW[n] || 0, S[id].sizeJ[n] || 0), pct])
+      ...Array.from({ length: Math.max(2, ...trips.map(x => activeMembers(x).length)) - 1 }, (_, i) => Math.max(2, ...trips.map(x => activeMembers(x).length)) - i).map(n => [`${n}人でのじゃんけん`, id => rate(S[id].sizeW[n] || 0, S[id].sizeJ[n] || 0), pct])
     ]],
     ["カテゴリー別の支払率", cats.filter(c => ids.some(id => S[id].catJ[c])).map(c => [c, id => rate(S[id].catW[c] || 0, S[id].catJ[c] || 0), pct])],
     ["首位争い", [
@@ -1834,7 +2070,8 @@ function viewStats(t){
     ]],
     ["時間帯別の支払額", [["朝（〜11時）", id => S[id].timeAmt[0], yen], ["昼（11〜17時）", id => S[id].timeAmt[1], yen], ["夜（17時〜）", id => S[id].timeAmt[2], yen]]],
     ["じゃんけんの中身（アプリ記録分）", [
-      ["一騎打ちの回数", id => S[id].duelJ, v => v + "回"], ["一騎打ちで払った率", id => rate(S[id].duelW, S[id].duelJ), pct],
+      ["一騎打ちの回数", id => S[id].duelJ, v => v + "回"], ["一騎打ちで払った率", id => rate(S[id].duelW, S[id].duelJ), pct], ["__vs"],
+      ["1人勝ちの回数", id => S[id].soloW, v => v + "回"], ["1人勝ち率", id => rate(S[id].soloW, S[id].soloJ), pct],
       ["1回目で抜けた率", id => rate(S[id].oneOut, S[id].oneOutJ), pct], ["一機追加をくらった回数", id => S[id].extra, v => v + "回"]
     ]],
     ["券", [
@@ -1849,6 +2086,7 @@ function viewStats(t){
     if (!rows.length) return;
     h += `<details class="sgroup" ${gi === 0 ? "open" : ""}><summary class="sgt">${gname}</summary>`;
     rows.forEach(([label, fn, fmt]) => {
+      if (label === "__vs"){ h += vsTable(ids, S); return; }
       const vals = ids.map(id => ({ id, v: fn(id) })).filter(x => Number.isFinite(x.v));
       if (!vals.length || vals.every(x => x.v === 0)) return;
       vals.sort((a, b) => b.v - a.v);
@@ -1858,11 +2096,6 @@ function viewStats(t){
     });
     h += `</details>`;
   });
-  // 一騎打ちの相性
-  const vsIds = ids.filter(id => Object.keys(S[id].vs).length);
-  if (vsIds.length){
-    h += `<div class="sgroup"><div class="sgt">一騎打ちの相性（払った回数／一騎打ち数）</div><div class="vs"><table><tr><th></th>${vsIds.map(id => `<th><i style="background:${pcolor(id)}"></i>${esc(pname(id))}</th>`).join("")}</tr>${vsIds.map(a => `<tr><th><i style="background:${pcolor(a)}"></i>${esc(pname(a))}</th>${vsIds.map(b => { const r = S[a].vs[b]; return `<td>${a === b ? "—" : r ? `${r.w}/${r.j}` : ""}</td>`; }).join("")}</tr>`).join("")}</table></div></div>`;
-  }
   if (st.maxComeback.id || st.biggestDrop.id){
     h += `<div class="sgroup"><div class="sgt">記録</div>${st.maxComeback.id ? `<div class="rec"><span>最大の逆転</span><b>${esc(pname(st.maxComeback.id))}　${yen(st.maxComeback.amt)}差から首位へ</b></div>` : ""}${st.biggestDrop.id ? `<div class="rec"><span>首位からの最大転落</span><b>${esc(pname(st.biggestDrop.id))}　首位から${yen(st.biggestDrop.amt)}差</b></div>` : ""}</div>`;
   }
@@ -1870,31 +2103,32 @@ function viewStats(t){
     const pr = prizeResults(t).filter(r => r.pred != null);
     if (pr.length) h += `<div class="sgroup"><div class="sgt">ピタリ賞・ニアピン賞の予想誤差</div>${pr.sort((a, b) => Math.abs(a.paid - a.pred) - Math.abs(b.paid - b.pred)).map(r => `<div class="rec"><span><i class="dotc" style="background:${pcolor(r.id)}"></i>${esc(pname(r.id))}</span><b>${signed(r.paid - r.pred)}${r.prize ? `　${r.prize}` : ""}</b></div>`).join("")}</div>`;
   }
-  h += `<p class="note">参加者・券・残機・時刻が必要な項目は、アプリで記録した分だけで集計しています。</p>`;
   return h;
 }
 
+function vsTable(ids, S){
+  const vsIds = ids.filter(id => Object.keys(S[id].vs).length);
+  if (!vsIds.length) return "";
+  return `<div class="srank"><div class="sl">一騎打ちの相性（払った回数／一騎打ち数）</div><div class="vs"><table><tr><th></th>${vsIds.map(id => `<th><i style="background:${pcolor(id)}"></i>${esc(pname(id))}</th>`).join("")}</tr>${vsIds.map(a => `<tr><th><i style="background:${pcolor(a)}"></i>${esc(pname(a))}</th>${vsIds.map(b => { const r = S[a].vs[b]; return `<td>${a === b ? "—" : r ? `${r.w}/${r.j}` : ""}</td>`; }).join("")}</tr>`).join("")}</table></div></div>`;
+}
 /* ---------- 歴代タブ ---------- */
+let honorAll = false, mapPlayer = null;
 function viewHistory(t){
   const trips = tripsSorted();
   if (!trips.length) return `<div class="empty"><b>まだ旅がありません</b>ホームの「旅を始める」から最初の旅を作成しましょう。</div>`;
   const peats = threePeats();
-  let h = `<div class="h2">歴代1位名簿</div><div class="card honor">`;
-  h += trips.slice().reverse().map(x => {
-    const r = tripRanks(x)[0];
-    return `<button class="hrow" data-tripopen="${x.id}"><span class="hn num">${x.no}</span><span class="hm"><b>${esc(x.name)}</b><small>SEASON ${x.season}${isFinal(x) ? " FINAL" : ""}${x.id === setting("current_trip") ? "・今の旅" : ""}${peats.some(p => p.trip.id === x.id) ? "・3連覇達成" : ""}</small></span>${r && r.paid > 0 ? `<span class="hw"><i style="background:${pcolor(r.id)}"></i>${esc(pname(r.id))}<small class="num">${yen(r.paid)}</small></span>` : `<span class="hw muted">—</span>`}</button>`;
-  }).join("");
-  h += `</div>`;
-
-  // 順位スコア
   const ids = allMembers(trips);
-  const pts = Object.fromEntries(ids.map(id => [id, 0]));
-  const rankS = Object.fromEntries(ids.map(id => [id, []]));
-  trips.forEach(x => { const rk = tripRanks(x); ids.forEach(id => { const r = rk.find(y => y.id === id); rankS[id].push(r ? r.rank : null); if (r) pts[id] += r.pts; }); });
-  const byPts = ids.slice().sort((a, b) => pts[b] - pts[a]);
-  h += `<div class="h2 red">順位スコア<small>1位4点・2位3点・3位2点・4位1点</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: rankS[id] })), trips.length, { invert: true, min: 1, max: Math.max(4, ...ids.map(id => Math.max(0, ...rankS[id].filter(Boolean)))), ticks: [1, 2, 3, 4], fmt: v => v + "位", h: 160, label: "回ごとの順位" })}
-    <div class="xlab">${trips.map(x => `<span>${x.no}</span>`).join("")}</div>
-    <div class="ptbl">${byPts.map((id, i) => `<div><span class="num r">${i + 1}</span><i style="background:${pcolor(id)}"></i><b>${esc(pname(id))}</b><span class="num">${pts[id]}点</span></div>`).join("")}</div></div>`;
+  const wins = Object.fromEntries(ids.map(id => [id, 0]));
+  trips.forEach(x => { const w = tripWinner(x); if (w && wins[w] !== undefined) wins[w]++; });
+  let h = `<div class="h2">歴代1位名簿<small>全シーズン通算</small></div><div class="card honor">
+    <div class="trophies">${ids.slice().sort((a, b) => wins[b] - wins[a]).map(id => `<span style="--pc:${pcolor(id)}"><i></i><b>${esc(pname(id))}</b><em>${wins[id] ? "🏆".repeat(wins[id]) : "—"}</em><small class="num">${wins[id]}回</small></span>`).join("")}</div>`;
+  const list = trips.slice().reverse(), shown = honorAll ? list : list.slice(0, 5);
+  h += shown.map(x => {
+    const r = tripRanks(x)[0];
+    return `<button class="hrow" data-tripopen="${x.id}"><span class="hn num">${x.no}</span><span class="hm"><b>${esc(x.name)}</b><small>SEASON ${x.season}${isFinal(x) ? " FINAL" : ""}${x.id === setting("current_trip") ? "・今の旅" : ""}${peats.some(p => p.trip.id === x.id) ? "・3連覇達成" : ""}</small></span>${r && r.paid > 0 ? `<span class="hw" style="--pc:${pcolor(r.id)}"><b>${esc(pname(r.id))}</b><small class="num">${yen(r.paid)}</small></span>` : `<span class="hw muted">—</span>`}</button>`;
+  }).join("");
+  if (list.length > 5) h += `<button class="showall" data-act="showAllHonor">${honorAll ? "直近5回だけ表示" : `すべて表示（全${list.length}回）`}</button>`;
+  h += `</div>`;
 
   // シーズン成績
   const seasons = [...new Set(trips.map(x => x.season))].sort((a, b) => b - a);
@@ -1905,54 +2139,92 @@ function viewHistory(t){
     ts.forEach(x => tripRanks(x).forEach(r => { if (sp[r.id]){ sp[r.id].pts += r.pts; sp[r.id].paid += r.paid; if (r.rank === 1 && r.paid > 0) sp[r.id].tops++; } }));
     const ord = sid.slice().sort((a, b) => sp[b].paid - sp[a].paid);
     const pk = peats.find(p => p.trip.season === sn);
-    h += `<div class="card season" style="--sc:${seasonColor(sn)}"><div class="sh"><b>SEASON ${sn}</b><small>${ts.length}回（第${ts[0].no}〜${ts[ts.length - 1].no}回）</small>${pk ? `<span class="tic n">3連覇：${esc(pname(pk.id))}</span>` : ""}</div>
-      ${ord.map((id, i) => `<div class="srow2"><span class="num r">${i + 1}</span><i style="background:${pcolor(id)}"></i><b>${esc(pname(id))}</b><span>${"👑".repeat(sp[id].tops)}</span><span class="num">${yen(sp[id].paid)}</span><small>${sp[id].pts}点</small></div>`).join("")}</div>`;
+    h += `<div class="card season" style="--sc:${seasonColor(sn)}"><div class="sh"><b>SEASON ${sn}</b><small>${ts.length}回（第${ts[0].no}〜${ts[ts.length - 1].no}回）</small>${pk ? `<span class="tic s">3連覇：${esc(pname(pk.id))}</span>` : ""}</div>
+      ${ord.map((id, i) => `<div class="srow2"><span class="num r">${i + 1}</span><i style="background:${pcolor(id)}"></i><b>${esc(pname(id))}</b><span>${"🏆".repeat(sp[id].tops)}</span><span class="num">${yen(sp[id].paid)}</span><small>${sp[id].pts}点</small></div>`).join("")}</div>`;
   });
 
   // 地図
   const allSeasons = [...new Set(trips.map(x => x.season))].sort((a, b) => a - b);
   if (mapSeason == null || !allSeasons.includes(mapSeason)) mapSeason = t ? t.season : allSeasons[allSeasons.length - 1];
-  h += `<div class="h2">行った都道府県</div><div class="card">
-    <div class="filter" style="margin:0 0 8px;padding:0"><button data-mapmode="all" aria-pressed="${mapMode === "all"}">全体</button>${allSeasons.map(sn => `<button data-mapseason="${sn}" aria-pressed="${mapMode === "season" && mapSeason === sn}">SEASON ${sn}</button>`).join("")}</div>
+  const winners = [...new Set(trips.map(tripWinner).filter(Boolean))];
+  h += `<div class="h2">過去の旅行先<small>タップで旅の詳細</small></div><div class="card">
+    <div class="filter mapf" style="margin:0 0 6px;padding:0"><button data-mapmode="all" aria-pressed="${mapMode === "all"}">全体</button>${allSeasons.map(sn => `<button data-mapseason="${sn}" aria-pressed="${mapMode === "season" && mapSeason === sn}">SEASON ${sn}</button>`).join("")}<button data-mapwin="1" aria-pressed="${mapMode === "winner"}">優勝者別</button></div>
+    <div class="filter mapf" style="margin:0 0 8px;padding:0">${winners.map(id => `<button class="pc" style="--pc:${pcolor(id)}" data-mapplayer="${id}" aria-pressed="${mapMode === "player" && mapPlayer === id}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div>
     ${japanMap(trips)}</div>`;
+
+  // 順位スコア（一番下）
+  const pts = Object.fromEntries(ids.map(id => [id, 0]));
+  const rankS = Object.fromEntries(ids.map(id => [id, []]));
+  trips.forEach(x => { const rk = tripRanks(x); ids.forEach(id => { const r = rk.find(y => y.id === id); rankS[id].push(r ? r.rank : null); if (r) pts[id] += r.pts; }); });
+  const byPts = ids.slice().sort((a, b) => pts[b] - pts[a]);
+  h += `<div class="h2 red">順位スコア<small>1位4点・2位3点・3位2点・4位1点</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: rankS[id] })), trips.length, { invert: true, min: 1, max: Math.max(4, ...ids.map(id => Math.max(0, ...rankS[id].filter(Boolean)))), ticks: [1, 2, 3, 4], fmt: v => v + "位", h: 160, label: "回ごとの順位" })}
+    <div class="xlab">${trips.map(x => `<span>${x.no}</span>`).join("")}</div>
+    <div class="ptbl">${byPts.map((id, i) => `<div><span class="num r">${i + 1}</span><i style="background:${pcolor(id)}"></i><b>${esc(pname(id))}</b><span class="num">${pts[id]}点</span></div>`).join("")}</div></div>`;
   return h;
 }
 function openTripSheet(id){
   const x = db.trips.find(y => y.id === id); if (!x) return;
   const rk = tripRanks(x), cur = setting("current_trip") === id;
-  const s = openSheet(`第${x.no}回 ${esc(x.name)}`, `<p class="note">SEASON ${x.season}${x.start_date ? `・${periodText(x)}` : ""}・${x.members.length}人${(x.prefectures || []).length ? `・${x.prefectures.join("・")}` : ""}</p>
+  const s = openSheet(`第${x.no}回 ${esc(x.name)}`, `<p class="note">SEASON ${x.season}${isFinal(x) ? " FINAL" : ""}${x.start_date ? `・${periodText(x)}` : ""}・${x.members.length}人${(x.prefectures || []).length ? `・${x.prefectures.join("・")}` : ""}${x.completed ? "・完了" : ""}</p>
     ${rk.map(r => `<div class="srow2"><span class="num r">${r.rank}</span><i style="background:${pcolor(r.id)}"></i><b>${esc(pname(r.id))}</b><span></span><span class="num">${yen(r.paid)}</span><small>${r.pts}点</small></div>`).join("") || `<p class="note">支払いの記録がありません。</p>`}
-    <div class="btns">${cur ? "" : `<button class="btn ghost" id="tcur">今の旅にする</button>`}<button class="btn" id="tedit">編集</button></div>`);
+    <div class="btns"><button class="btn ghost" id="tpay">支払いを見る</button>${cur ? "" : `<button class="btn ghost" id="tcur">今の旅にする</button>`}<button class="btn" id="tedit">編集</button></div>`);
   const c = s.querySelector("#tcur");
   if (c) c.onclick = async () => { if (await putSetting("current_trip", id)){ await loadTable("app_settings"); closeSheet(); render(); toast(`「${x.name}」を今の旅にしました`); } };
   s.querySelector("#tedit").onclick = () => editTrip(id);
+  s.querySelector("#tpay").onclick = () => { closeSheet(); showTripPayments(id); };
+}
+function showTripPayments(id){
+  listTripId = id === setting("current_trip") ? null : id; listFilter = "all"; tab = "list"; render(); window.scrollTo(0, 0);
+}
+function openPrefSheet(p){
+  const trips = tripsSorted().filter(x => (x.prefectures && x.prefectures.length ? x.prefectures : parsePrefs(x.place || x.name)).includes(p));
+  if (!trips.length){ toast(`${p}にはまだ行っていません`); return; }
+  const s = openSheet(esc(p), trips.map(x => {
+    const rk = tripRanks(x);
+    return `<div class="card prefc" style="--sc:${seasonColor(x.season)}"><b>第${x.no}回 ${esc(x.name)}</b><small>SEASON ${x.season}${x.start_date ? `・${periodText(x)}` : ""}</small>
+      ${rk.map(r => `<div class="srow2"><span class="num r">${r.rank}</span><i style="background:${pcolor(r.id)}"></i><b>${esc(pname(r.id))}</b><span>${r.rank === 1 && r.paid > 0 ? "🏆" : ""}</span><span class="num">${yen(r.paid)}</span></div>`).join("")}
+      <div class="btns" style="margin-top:8px"><button class="btn ghost" data-gopay="${x.id}">支払いを見る</button></div></div>`;
+  }).join(""));
+  s.querySelectorAll("[data-gopay]").forEach(b => b.onclick = () => { closeSheet(); showTripPayments(b.dataset.gopay); });
 }
 
-/* ---------- 日本地図（タイル） ---------- */
+/* ---------- 地図（タイル） ---------- */
 const TILE = {"北海道":[11,0,2],"青森":[12,2],"秋田":[11,3],"岩手":[12,3],"山形":[11,4],"宮城":[12,4],"石川":[8,5],"富山":[9,5],"新潟":[10,5],"福島":[11,5],
   "福井":[7,6],"岐阜":[8,6],"長野":[9,6],"群馬":[10,6],"栃木":[11,6],"茨城":[12,6],
   "島根":[3,7],"鳥取":[4,7],"兵庫":[5,7],"京都":[6,7],"滋賀":[7,7],"愛知":[8,7],"山梨":[9,7],"埼玉":[10,7],"東京":[11,7],"千葉":[12,7],
   "山口":[2,8],"広島":[3,8],"岡山":[4,8],"大阪":[5,8],"奈良":[6,8],"三重":[7,8],"静岡":[9,8],"神奈川":[11,8],
   "福岡":[1,9],"大分":[2,9],"愛媛":[3,9],"香川":[4,9],"和歌山":[6,9],
-  "佐賀":[0,9],"長崎":[0,10],"熊本":[1,10],"宮崎":[2,10],"高知":[3,10],"徳島":[4,10],"鹿児島":[1,11],"沖縄":[0,13]};
+  "佐賀":[0,9],"長崎":[0,10],"熊本":[1,10],"宮崎":[2,10],"高知":[3,10],"徳島":[4,10],"鹿児島":[1,11],"沖縄":[0,13],
+  "韓国":[0,6,1,"x"],"ハワイ":[11,12,2,"x"]};
 function japanMap(trips){
   const visits = {};
   trips.forEach(x => (x.prefectures && x.prefectures.length ? x.prefectures : parsePrefs(x.place || x.name)).forEach(p => { (visits[p] = visits[p] || []).push(x); }));
-  const show = p => (visits[p] || []).filter(x => mapMode === "all" || x.season === mapSeason);
+  const colorOf = p => {
+    const v = visits[p] || [];
+    if (mapMode === "all") return v.length ? seasonColor(v[0].season) : null;
+    if (mapMode === "season"){ const w = v.filter(x => x.season === mapSeason); return w.length ? seasonColor(mapSeason) : null; }
+    const won = v.map(x => { const r = tripRanks(x)[0]; return r && r.paid > 0 ? r : null; }).filter(Boolean);
+    if (mapMode === "player"){ return won.some(r => r.id === mapPlayer) ? pcolor(mapPlayer) : null; }
+    if (!won.length) return null;
+    return pcolor(won.sort((a, b) => b.paid - a.paid)[0].id);
+  };
   const Z = 26, G = 3;
   let cells = "";
-  Object.entries(TILE).forEach(([p, [cx, cy, w]]) => {
-    const sz = (w || 1) * Z + ((w || 1) - 1) * G, x = cx * (Z + G), y = cy * (Z + G);
-    const v = show(p), col = v.length ? seasonColor(v[0].season) : null;
-    cells += `<g class="tl ${v.length ? "on" : ""}"><rect x="${x}" y="${y}" width="${sz}" height="${sz}" rx="5" fill="${col || "#fff"}" stroke="var(--ink)" stroke-width="${v.length ? 2 : 1}" ${v.length ? `style="filter:drop-shadow(0 0 4px ${col})"` : ""}/>
-      <text x="${x + sz / 2}" y="${y + sz / 2 + 3.5}" text-anchor="middle" class="tt ${v.length ? "on" : ""}">${p.length > 2 && !w ? p.slice(0, 2) : p}</text>${v.length > 1 ? `<text x="${x + sz - 3}" y="${y + 9}" text-anchor="end" class="tc">${v.length}</text>` : ""}</g>`;
+  Object.entries(TILE).forEach(([p, [cx, cy, w, ex]]) => {
+    const ww = w || 1, sz = ww * Z + (ww - 1) * G, hh = ex ? Z : sz, x = cx * (Z + G), y = cy * (Z + G);
+    const col = colorOf(p), cnt = (visits[p] || []).length;
+    cells += `<g class="tl ${col ? "on" : ""}" data-pref="${p}"><rect x="${x}" y="${y}" width="${sz}" height="${hh}" rx="${ex ? 13 : 5}" fill="${col || "#fff"}" stroke="var(--ink)" stroke-width="${col ? 2 : 1}" ${ex ? 'stroke-dasharray="3 2"' : ""} ${col ? `style="filter:drop-shadow(0 0 4px ${col})"` : ""}/>
+      <text x="${x + sz / 2}" y="${y + hh / 2 + 3.5}" text-anchor="middle" class="tt ${col ? "on" : ""}">${p.length > 2 && !w ? p.slice(0, 2) : p}</text>${cnt > 1 ? `<text x="${x + sz - 3}" y="${y + 9}" text-anchor="end" class="tc">${cnt}</text>` : ""}</g>`;
   });
   const W = 13 * (Z + G), H = 14 * (Z + G);
-  const visited = Object.keys(TILE).filter(p => show(p).length);
-  const seasonsShown = [...new Set(visited.flatMap(p => show(p).map(x => x.season)))].sort((a, b) => a - b);
-  return `<div class="jmap"><svg viewBox="-4 -4 ${W + 8} ${H + 8}" role="img" aria-label="行った都道府県の地図">${cells}</svg></div>
-    <p class="note" style="margin:6px 0 0">${visited.length}／47都道府県${mapMode === "all" ? "（最初に行ったシーズンの色）" : ""}</p>
-    <div class="legend">${seasonsShown.map(sn => `<span><i style="background:${seasonColor(sn)}"></i>SEASON ${sn}</span>`).join("")}</div>`;
+  const on = Object.keys(TILE).filter(p => colorOf(p));
+  const dom = on.filter(p => !TILE[p][3]).length, abroad = on.filter(p => TILE[p][3]).length;
+  let leg = "";
+  if (mapMode === "all" || mapMode === "season"){ const ss = [...new Set(on.flatMap(p => (visits[p] || []).map(x => x.season)))].filter(sn => mapMode === "all" || sn === mapSeason).sort((a, b) => a - b); leg = ss.map(sn => `<span><i style="background:${seasonColor(sn)}"></i>SEASON ${sn}</span>`).join(""); }
+  else { const ps = [...new Set(on.map(p => colorOf(p)))]; leg = db.players.filter(pl => ps.includes(pl.color)).map(pl => `<span><i style="background:${pl.color}"></i>${esc(pl.name)}</span>`).join(""); }
+  return `<div class="jmap"><svg viewBox="-4 -4 ${W + 8} ${H + 8}" role="img" aria-label="過去の旅行先の地図">${cells}</svg></div>
+    <p class="note" style="margin:6px 0 0">${dom}／47都道府県${abroad ? `・海外${abroad}` : ""}${mapMode === "all" ? "（最初に行ったシーズンの色）" : mapMode === "winner" ? "（その旅の優勝者の色。複数回は支払額が多い方）" : mapMode === "player" ? `（${esc(pname(mapPlayer))}が優勝した旅先）` : ""}</p>
+    <div class="legend">${leg}</div>`;
 }
 
 /* ---------- 過去データの取り込み ---------- */
@@ -2074,7 +2346,8 @@ async function openNotify(){
     <div class="f"><span>通知の時刻（全員共通・旅行中の日だけ届きます）</span></div>
     ${Object.keys(NOTIFY_DEF).map(k => `<label class="ntime"><span>${NOTIFY_LABEL[k]}</span><input type="time" data-nt="${k}" value="${tm[k]}"></label>`).join("")}
     <p class="note">1万円以上のじゃんけんの一斉宣言と、旅費総額が提示されたときのピタリ賞の予想は、その場ですぐに届きます。</p>
-    <div class="btns"><button class="btn" id="nSave">時刻を保存</button></div>`);
+    <div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="nSave">時刻を保存</button></div>`);
+  s.querySelector("[data-back]").onclick = openSettings;
   const on = (id, fn) => { const el = s.querySelector("#" + id); if (el) el.onclick = fn; };
   on("nOn", async () => { if (await subscribePush()) openNotify(); });
   on("nOff", async () => { await unsubscribePush(); openNotify(); });
@@ -2091,10 +2364,61 @@ function reminderCards(t){
   const now = new Date(), hm = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
   const tm = notifyTimes(), list = [];
   if (day < last) list.push(["night", "🌙", day === 1 ? "行きの旅費と宿泊費のじゃんけん" : "宿泊費のじゃんけん", "今夜のうちに決めましょう（第八条）"]);
-  if (day === last) list.push(["lastday", "🧳", "帰りの旅費と車代のじゃんけん", "旅行終了の直前に（第八条）"], ["prize", "🎯", "ピタリ賞・ニアピン賞の判定", "全部の支払いが終わったら、券・特権タブで確認"]);
-  if (day === 1 && !t.travel_total) list.unshift(["start", "🎯", "旅費総額の提示とピタリ賞の予想", "前回4位の予約者が旅費総額を入力（券・特権タブ）"]);
+  if (day === last) list.push(["lastday", "🧳", "帰りの旅費と車代のじゃんけん", "旅行終了の直前に（第八条）"], ["prize", "🎯", "ピタリ賞・ニアピン賞の判定", "全部の支払いが終わったら、免除・特権タブで確認"]);
+  if (day === 1 && !t.travel_total) list.unshift(["start", "🎯", "旅費総額の提示とピタリ賞の予想", "前回4位の予約者が旅費総額を入力（免除・特権タブ）"]);
   return list.filter(([k]) => (k === "start" || hm >= tm[k]) && !localStorage.getItem(`ojk:done:${t.id}:${day}:${k}`))
     .map(([k, ic, b, sm]) => `<div class="remind"><span class="ri">${ic}</span><div><b>${b}</b><span>${sm}</span></div><button class="mini" data-rdone="${t.id}:${day}:${k}">完了</button></div>`).join("");
+}
+
+/* ---------- 旅の完了 ---------- */
+function openCompleteTrip(t){
+  const pending = tripPays(t).filter(p => !p.payer_id);
+  const rk = standings(t).filter(r => typeof r.rank === "number");
+  const s = openSheet("旅を完了する", `<p class="note">完了すると、ホームが結果表示に変わり、次の旅を始められるようになります。あとから「完了を取り消す」で戻せます。</p>
+    ${pending.length ? `<p class="warn">未決着のじゃんけんが${pending.length}件あります。完了しても記録は残りますが、集計には入りません。</p>` : ""}
+    ${rk.map(r => `<div class="srow2"><span class="num r">${r.rank}</span><i style="background:${pcolor(r.id)}"></i><b>${esc(pname(r.id))}</b><span></span><span class="num">${yen(r.paid)}</span></div>`).join("")}
+    <div class="btns"><button class="btn" id="cgo">完了する</button></div>`);
+  $("#cgo").onclick = async () => {
+    if (await q(sb.from("trips").update({ completed: true, completed_at: new Date().toISOString() }).eq("id", t.id), "完了")){
+      await loadTable("trips"); closeSheet(); render();
+      const w = rk[0]; flash("旅が完了！", w && w.paid > 0 ? `優勝：${pname(w.id)}（${yen(w.paid)}）` : "おつかれさまでした");
+    }
+  };
+}
+async function reopenTrip(t){
+  if (!confirm("旅の完了を取り消して、旅行中に戻しますか？")) return;
+  if (await q(sb.from("trips").update({ completed: false, completed_at: null }).eq("id", t.id), "取り消し")){ await loadTable("trips"); render(); }
+}
+async function deletePending(id){
+  const p = db.payments.find(x => x.id === id); if (!p) return;
+  if (!confirm(`未決着の「${p.label}」を削除しますか？`)) return;
+  if (await q(sb.from("payments").delete().eq("id", id), "削除")){ await loadTable("payments"); render(); toast("削除しました"); }
+}
+
+/* ---------- じゃんけん開始 ---------- */
+function privStatusHtml(t){
+  const ps = tripPrivs(t); if (!ps.length) return "";
+  return `<div class="pstat">${ps.map(p => `<span style="--pc:${pcolor(p.player_id)}"><i class="pico" style="--pi:var(--priv-${p.kind})"></i>特権${KANJI[p.kind]}<b>${esc(pname(p.player_id))}</b></span>`).join("")}</div>`;
+}
+function priv4Box(t){
+  const p = privOf(t, 4); if (!p) return "";
+  return `<div class="toggle p4box"><div>特権四：${esc(pname(p.player_id))}は${yen(PRIV4_LIMIT[p.day] || 8000)}以下に不参加<small id="p4info">金額を入れると自動で参加から外れます</small></div><span class="pico big4" style="--pi:var(--priv-4)"></span></div>`;
+}
+function applyPriv4(s, t, amountOne){
+  const p = privOf(t, 4); if (!p) return;
+  const lim = PRIV4_LIMIT[p.day] || 8000, chip = s.querySelector(`[data-p="${p.player_id}"]`);
+  const out = amountOne > 0 && amountOne <= lim;
+  if (chip){ chip.setAttribute("aria-pressed", String(!out)); chip.disabled = out; }
+  const info = s.querySelector("#p4info");
+  if (info) info.textContent = amountOne > 0 ? (out ? `今回は${yen(amountOne)}なので不参加です` : `今回は${yen(amountOne)}なので参加します`) : "金額を入れると自動で参加から外れます";
+}
+
+const RULES_HTML = "<h4 class=\"rh\">第一編 総則</h4><div class=\"rc\">(目的)</div><div class=\"ra\">第一条</div><p class=\"rp\">本要綱は、男気じゃんけん旅の公正化を図るとともに、各種事務処理の能率化を促進し、もって旅行の健全な実施に資することを目的とする。また、普段の生活では経験することのできない非日常感を味わうことで、より一層の健康、心の幸福感を得ようとするものである。</p><div class=\"rc\">(定義)</div><div class=\"ra\">第二条</div><p class=\"rp\">この旅における「じゃんけん」は、旅中で発生する支払い及び運転全てに適用されるものとする。ただし、参加者に運転免許を取得していない者がいる場合は、この限りでない。なお、詳細な用語の定義は下記のとおりとする。</p><p class=\"rp\">一 旅費: 事前に予約した移動交通費、宿泊費、車に係る費用とする。</p><p class=\"rp\">二 旅中: 新幹線の場合には改札、飛行機の場合には保安検査場を始点及び終点とする。</p><p class=\"rp\">三 一機追加: じゃんけんで負けた場合に、即時復帰する制度のこと。</p><div class=\"rc\">(参加者)</div><div class=\"ra\">第三条</div><p class=\"rp\">参加人数は基本四人とし、都度、一から二人程度の追加人員を招集することができる。</p><p class=\"rp\">2 前項の規定により追加招集を行うときは、金銭的余裕のある人を選定することとし、必ず本人の同意を得なければならない。</p><p class=\"rp\">3 三連覇の者が出た場合の取扱いについては、第十八条で後述する。</p><div class=\"rc\">(実施時期)</div><div class=\"ra\">第四条</div><p class=\"rp\">一年間のうちに二回実施することとする。夏及び冬の開催を基本とするが、参加者の都合に応じて、臨機応変に定めることができる。</p><div class=\"rc\">(役割分担)</div><div class=\"ra\">第五条</div><p class=\"rp\">参加者は、前条の趣旨に従い、次に掲げる事項について役割を振り分けた上で実施すること。ただし、参加人数の都合上やむを得ない場合には、この限りでない。</p><p class=\"rp\">一 宿泊先、移動手段等の予約(立替え払いで対応すること。)</p><p class=\"rp\">二 支払実績額及び勝率等の記録</p><p class=\"rp\">三 写真撮影</p><div class=\"rc\">(事前協議)</div><div class=\"ra\">第六条</div><p class=\"rp\">本要綱に定める事項について、旅中に変更することはできない。ただし、疑義が生じた場合には、参加者全員で協議の上、調整を図ること。</p><h4 class=\"rh\">第二編 旅行中</h4><div class=\"rc\">(金額設定)</div><div class=\"ra\">第七条</div><p class=\"rp\">参加者全員分の合計額を一度にじゃんけんで決めるものとする。ただし、目的地までの旅費(車代を除く)、宿泊費に限り、一人当たりの金額で計算をし、参加者の人数分だけじゃんけんを取り行うこととする。</p><p class=\"rp\">2 参加者が個人的な支払いをすることは認められず、その場合には、全員が当該個人と同等額の支払をするよう調整を図ること。</p><div class=\"rc\">(支払時期)</div><div class=\"ra\">第八条</div><p class=\"rp\">原則、支払が発生する毎にじゃんけんを行う。ただし、目的地までの旅費に関しては、次のとおり規定する。</p><p class=\"rp\">一 行きの旅費は、一泊目の夜</p><p class=\"rp\">二 帰りの旅費及び車代(高速代を含む)は、旅行終了直前</p><p class=\"rp\">三 宿泊費は、当該宿泊日の夜</p><div class=\"rc\">(支払方法)</div><div class=\"ra\">第九条</div><p class=\"rp\">現地の対応する決済方法に応じ、参加者内で立替えや両替等により臨機応変に支払うこと。ただし、事前予約により立替えた分については、振込みまたは現金での支払いとする。</p><div class=\"rc\">(運転)</div><div class=\"ra\">第十条</div><p class=\"rp\">運転の義務が発生する範囲は、移動距離を問わず、車が停止しかつ参加者のうち二人以上が同時に降車する時までとする。</p><div class=\"rc\">(上下関係)</div><div class=\"ra\">第十一条</div><p class=\"rp\">旅中に限り、支払実績額の多い順に序列を発生させることとする。各時点で一位の者が一番偉いため、決定権及び優先順位は、序列に従うこと。(本要綱において「参加者全員で協議すること」と規定しているものを除く。) なお、一位の特権制度は第十六条にて規定。</p><div class=\"rc\">(免除制度)</div><div class=\"ra\">第十二条</div><p class=\"rp\">免除制度として、免除券及びsuper免除券(以下、免除券等という。)が発行され、総合優勝者にはsuper免除券を一枚を、全十部門(1日目、2日目、3日目、飛行機、新幹線、宿、車、おみや代、無駄枠、支払勝率)において一位の者には各一枚ずつ免除券を初期配布する。</p><p class=\"rp\">2 免除券の効果は、支払いが確定した際に、再度参加者全員でじゃんけんをやり直すことができるものとする。</p><p class=\"rp\">3 super免除券の効果は、一件の支払につき、じゃんけん自体への参加を免除されるものとする。</p><div class=\"ra\">第十三条</div><p class=\"rp\">前条における免除券等の使用は、必ずじゃんけんが開始する前に申し出なければならず、支払いが確定しなかった場合でも返却はされない。なお、何れの免除券等を使用するかは一斉に宣言することとし、参加者内で事前に調整することは認められない。</p><p class=\"rp\">2 複数人での同時使用は禁止とし、申告が重複した場合には、じゃんけんで勝った者が使用を認められる。ただし、免除券とsuper免除券が重複した場合には、super免除券が優先される。</p><div class=\"ra\">第十四条</div><p class=\"rp\">super免除券は、一日に最低一枚発行しなければならない。発行方法は、旅費又は宿泊費のじゃんけん前時点での一定順位の者に与えられることとする。なお、獲得順位の決め方は、各日の一番最初にルーレットで決定する。追加での発行は全員で協議の上決定する。発行枚数に上限は設定しないが、その数量は厳格に管理しなければならない。</p><div class=\"rc\">(無駄枠)</div><div class=\"ra\">第十五条</div><p class=\"rp\">旅程に上限一回まで、無駄な物への支払い(以下、無駄枠という。)を予定し組み込むことができる。</p><div class=\"rc\">(イベント)</div><div class=\"ra\">第十六条</div><p class=\"rp\">支払に係るイベントとして、特権制度を次とおり規定する。特権は朝一で宣言するものとし、さらにどの規定にも優先される(特権使用者の免除券等併用は不可)。</p><p class=\"rp\">なお、特権を獲得出来る者は、一日目は前回優勝者、二日目以降は前日終了時点(合計)での一位の者とする。</p><p class=\"rp\">また、一度獲得された特権はその時点で獲得できなくなる。</p><p class=\"rp\">一 免除券及びsuper免除券を他の者と重ねて使用することができる。（旅費全期間中適用）</p><p class=\"rp\">二 免除券又はsuper免除券を他の参加者から一枚奪うことができる。なお、所持者のみでじゃんけんを行い、負けた人から任意に奪うこととする。（一回限り）</p><p class=\"rp\">三 任意のじゃんけん二回（旅費及びその他のジャンケンで各一回ずつ）において、自分以外の全ての人に一機追加を付与する。（旅費全期間中適用）</p><p class=\"rp\">四 特定金額以下の支払は全て参加を免除される。なお、特定金額は特権発動日により変動し、一日目は四千円、二日目は六千円、三日目は八千円とする。（旅費全期間中適用）</p><p class=\"rp\">五 自分以外の免除券等所持者のみでじゃんけんを行わせ、負けた人にそれを強制使用させることができる。なお、super免除券も対象となるが、いずれの免除券を使用するかは、所持者本人の選択とする。（旅費全期間中適用、上限6回）</p><div class=\"ra\">第十七条</div><p class=\"rp\">ピタリ賞及びニアピン賞を次のとおり規定する。宣言タイミングは前回四位の者が旅費総額を提示した時点とし、全支払じゃんけんが終了後の自分の支払金額との差異で判定する。ただし、順位変動は行われないものとする。</p><p class=\"rp\">一 ピタリ賞は、百円単位とし、支払確定額の全額が免除される。免除分は残りの参加メンバーに均等に割り振られる。</p><p class=\"rp\">二 ニアピン賞は、ピタリ賞±千円とし、支払確定額の半額が免除される。免除分は残りの参加メンバーに均等に割り振られる。</p><h4 class=\"rh\">第三編 旅行後</h4><div class=\"rc\">(勝利特典)</div><div class=\"ra\">第十八条</div><p class=\"rp\">各回毎に、支払実績額が最も多い者には、次に掲げる特典が与えられる。</p><p class=\"rp\">一 次回目的地の決定権</p><p class=\"rp\">二 免除券、super免除券 各一枚ずつ</p><p class=\"rp\">三 次回旅行へ向けた打合せに係る食事代全額の免除</p><div class=\"ra\">第十九条</div><p class=\"rp\">三連覇(連続する三つの旅において一位)を成し遂げた場合、次回の旅に限り、全額費用負担が免除される。なお、海外も可とする。</p><div class=\"rc\">(打合せ)</div><div class=\"ra\">第二十条</div><p class=\"rp\">次回旅行前に、必ず一度以上、参加者全員で打ち合わせを行うこととする。なお、打合せの幹事は直近最下位の者が行わなければならない。</p><div class=\"ra\">第二十一条</div><p class=\"rp\">次回旅行の予約・手配は、最下位の者が行うこととする。</p>";
+function openRules(){
+  const trips = tripsSorted();
+  const roster = trips.map(x => { const r = tripRanks(x)[0]; return r && r.paid > 0 ? `<div class="rr"><span class="num">${x.no}</span>${esc(x.name)}<b style="--pc:${pcolor(r.id)}">${esc(pname(r.id))}</b><small class="num">${yen(r.paid)}</small></div>` : ""; }).join("");
+  const s = openSheet("男気じゃんけん旅 実施要綱", `${roster ? `<div class="card roster"><div class="rh2">👑 歴代1位名簿</div>${roster}</div>` : ""}<div class="rules">${RULES_HTML}</div><div class="btns"><button class="btn ghost" data-back>戻る</button></div>`);
+  s.querySelector("[data-back]").onclick = openSettings;
 }
 
 /* ---------- 起動 ---------- */
