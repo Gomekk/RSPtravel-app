@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151B3D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="男気じゃんけん旅">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<title>男気じゃんけん旅</title>
+<style>
+:root{
+  --night:#151B3D; --deep:#1D2452; --panel:#26306A; --line:#3A4585;
+  --gold:#E8B931; --crimson:#E2364F; --aqua:#3FC1C9; --bone:#F3F1FA; --mute:#9BA3D0;
+  --disp:"Dela Gothic One","Hiragino Kaku Gothic StdN","Hiragino Sans",sans-serif;
+  --body:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans",system-ui,sans-serif;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--night);color:var(--bone);font-family:var(--body);font-weight:500;font-size:15px;line-height:1.55;
+  background-image:radial-gradient(ellipse 120% 60% at 50% -10%,#2B3780 0%,transparent 60%),repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px);background-attachment:fixed}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+input,select{font:inherit;color:var(--bone);background:var(--deep);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;outline:none}
+input:focus,select:focus{border-color:var(--gold)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.num{font-family:var(--disp);font-weight:400;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+
+/* ---------- 枠 ---------- */
+header{position:sticky;top:0;z-index:20;padding:calc(var(--safe-t) + 10px) 16px 10px;display:flex;align-items:center;gap:10px;background:linear-gradient(var(--night) 70%,transparent)}
+.logo{font-family:var(--disp);font-size:19px;line-height:1;letter-spacing:.02em}
+.logo small{display:block;font-family:var(--body);font-size:11px;color:var(--mute);font-weight:700;margin-top:5px;letter-spacing:0}
+header .sp{flex:1}
+.me{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:6px 10px 6px 6px;border-radius:99px;background:var(--deep);border:1px solid var(--line)}
+.dot{width:16px;height:16px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25)}
+.gear{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--deep);border:1px solid var(--line)}
+main{padding:4px 16px calc(var(--safe-b) + 96px);max-width:560px;margin:0 auto}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(21,27,61,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:6px 4px calc(var(--safe-b) + 6px)}
+nav button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:700;color:var(--mute);padding:6px 0}
+nav button svg{width:22px;height:22px}
+nav button[aria-current="page"]{color:var(--gold)}
+
+/* ---------- ホーム ---------- */
+.trip{margin:6px 0 18px}
+.trip .t{font-family:var(--disp);font-size:26px;line-height:1.2}
+.trip .s{color:var(--mute);font-size:13px;font-weight:700;margin-top:4px}
+.dayflag{display:inline-block;background:var(--gold);color:var(--night);font-family:var(--disp);font-size:13px;padding:3px 9px;border-radius:6px;margin-right:6px;transform:skewX(-8deg)}
+.live{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;margin-bottom:14px;border-radius:14px;background:var(--crimson);color:#fff;animation:pulse 1.6s ease-in-out infinite}
+.live b{font-family:var(--disp);font-weight:400;font-size:15px}
+.live span{font-size:12px;opacity:.9}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(226,54,79,.25)}}
+.acts{display:grid;grid-template-columns:1fr 92px;gap:10px;margin-bottom:22px}
+.big{position:relative;overflow:hidden;font-family:var(--disp);font-size:22px;padding:18px 0;border-radius:16px;background:var(--gold);color:var(--night);box-shadow:0 5px 0 #A9811A;transform:skewX(-6deg)}
+.big>span{display:inline-block;transform:skewX(6deg)}
+.big:active{transform:skewX(-6deg) translateY(4px);box-shadow:0 1px 0 #A9811A}
+.sub{font-family:var(--disp);font-size:15px;border-radius:16px;background:var(--panel);border:1.5px solid var(--line);box-shadow:0 5px 0 #11163A}
+.sub:active{transform:translateY(4px);box-shadow:0 1px 0 #11163A}
+.h2{font-family:var(--disp);font-size:16px;margin:24px 0 10px;display:flex;align-items:baseline;gap:8px}
+.h2 small{font-family:var(--body);font-size:12px;color:var(--mute);font-weight:700}
+.rank{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:4px 10px;padding:12px 14px 12px 8px;border-radius:14px;background:var(--deep);margin-bottom:8px;border-left:5px solid var(--c,var(--line))}
+.rank .r{font-family:var(--disp);font-size:30px;text-align:center;line-height:1;color:var(--mute)}
+.rank.top{background:linear-gradient(100deg,#3A3270,var(--deep) 70%)}
+.rank.top .r{color:var(--gold);text-shadow:0 0 18px rgba(232,185,49,.5)}
+.rank .n{font-weight:900;font-size:16px;display:flex;align-items:center;gap:6px}
+.rank .n .mine{font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;background:var(--aqua);color:var(--night)}
+.rank .a{font-family:var(--disp);font-size:20px;text-align:right}
+.rank .m{grid-column:2/4;font-size:12px;color:var(--mute);font-weight:700;display:flex;flex-wrap:wrap;gap:2px 12px}
+.plus{color:#FF8A9A}.minus{color:var(--aqua)}
+.pend{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;border:1.5px dashed var(--line);margin-bottom:8px}
+.pend .l{flex:1;min-width:0}
+.pend .l b{display:block;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pend .l span{font-size:12px;color:var(--mute);font-weight:700}
+.chipbtn{flex:none;font-family:var(--disp);font-size:13px;padding:8px 12px;border-radius:10px;background:var(--crimson);color:#fff}
+
+/* ---------- 一覧 ---------- */
+.row{display:grid;grid-template-columns:30px 1fr auto;gap:2px 10px;align-items:center;width:100%;text-align:left;padding:11px 4px;border-bottom:1px solid rgba(58,69,133,.6)}
+.row .q{font-family:var(--disp);font-size:13px;color:var(--mute);text-align:center}
+.row .l{font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .a{font-family:var(--disp);font-size:16px;text-align:right}
+.row .m{grid-column:2/4;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);font-weight:700}
+.tag{font-size:11px;font-weight:700;padding:1px 7px;border-radius:5px;background:var(--panel);color:var(--bone)}
+.who{display:inline-flex;align-items:center;gap:5px;color:var(--bone)}
+.who .dot{width:10px;height:10px}
+.filter{display:flex;gap:6px;overflow-x:auto;margin:0 -16px 8px;padding:2px 16px 8px;scrollbar-width:none}
+.filter::-webkit-scrollbar{display:none}
+.filter button{flex:none;font-size:12px;font-weight:700;padding:6px 11px;border-radius:99px;background:var(--deep);border:1px solid var(--line)}
+.filter button[aria-pressed="true"]{background:var(--gold);color:var(--night);border-color:var(--gold)}
+.empty{text-align:center;color:var(--mute);font-weight:700;padding:36px 12px;border:1.5px dashed var(--line);border-radius:16px}
+.empty b{display:block;font-family:var(--disp);font-weight:400;color:var(--bone);font-size:18px;margin-bottom:6px}
+.soon{text-align:center;padding:60px 16px;color:var(--mute);font-weight:700}
+.soon b{display:block;font-family:var(--disp);font-weight:400;font-size:24px;color:var(--bone);margin-bottom:8px}
+
+/* ---------- シート ---------- */
+.sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(8,10,30,.6);opacity:0;pointer-events:none;transition:opacity .2s}
+.sheet.on{opacity:1;pointer-events:auto}
+.sheet .in{width:100%;max-width:560px;max-height:92vh;overflow-y:auto;background:var(--deep);border-radius:20px 20px 0 0;border-top:3px solid var(--gold);padding:18px 18px calc(var(--safe-b) + 20px);transform:translateY(30px);transition:transform .22s}
+.sheet.on .in{transform:none}
+.sheet h3{font-family:var(--disp);font-weight:400;font-size:20px;margin:0 0 14px;display:flex;align-items:center;gap:8px}
+.sheet h3 .x{margin-left:auto;font-family:var(--body);font-size:13px;color:var(--mute);font-weight:700;padding:6px}
+.f{display:block;margin-bottom:12px}
+.f>span{display:block;font-size:12px;font-weight:700;color:var(--mute);margin-bottom:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:13px;padding:8px 12px;border-radius:10px;background:var(--night);border:1.5px solid var(--line)}
+.chips button[aria-pressed="true"]{border-color:var(--gold);background:#3A3270}
+.chips button[aria-pressed="false"] .dot{opacity:.35}
+.chips button:disabled{opacity:.4}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border-radius:12px;background:var(--night);margin-bottom:12px;font-weight:700}
+.toggle small{display:block;font-size:12px;color:var(--mute)}
+.sw{position:relative;width:48px;height:28px;flex:none;border-radius:99px;background:var(--line);transition:background .15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--bone);transition:transform .15s}
+.sw[aria-checked="true"]{background:var(--gold)}
+.sw[aria-checked="true"]::after{transform:translateX(20px)}
+.btns{display:flex;gap:10px;margin-top:18px}
+.btn{flex:1;font-weight:900;padding:13px 0;border-radius:12px;background:var(--gold);color:var(--night)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--bone)}
+.btn.danger{background:transparent;border:1.5px solid var(--crimson);color:#FF8A9A}
+.btn:disabled{opacity:.5}
+.note{font-size:12px;color:var(--mute);font-weight:700;margin:4px 0 12px}
+.menu button{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 4px;border-bottom:1px solid var(--line);font-weight:700;text-align:left}
+.menu button span{color:var(--mute);font-size:12px}
+.plist{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.plist b{flex:1}
+.mini{font-size:12px;font-weight:700;padding:6px 10px;border-radius:8px;border:1px solid var(--line)}
+.colors{display:flex;flex-wrap:wrap;gap:8px}
+.colors button{width:34px;height:34px;border-radius:50%;border:3px solid transparent}
+.colors button[aria-pressed="true"]{border-color:var(--bone)}
+
+/* ---------- じゃんけん画面 ---------- */
+.arena{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;background:var(--night);padding:calc(var(--safe-t) + 12px) 16px calc(var(--safe-b) + 14px);
+  background-image:radial-gradient(circle at 50% 120%,rgba(226,54,79,.35),transparent 55%),repeating-linear-gradient(-45deg,transparent 0 18px,rgba(232,185,49,.04) 18px 19px)}
+.arena[hidden]{display:none}
+.atop{display:flex;align-items:flex-start;gap:10px}
+.atop .lbl{flex:1;min-width:0}
+.atop .lbl b{display:block;font-family:var(--disp);font-weight:400;font-size:22px;line-height:1.25;word-break:break-all}
+.atop .lbl span{font-size:12px;font-weight:700;color:var(--mute)}
+.atop .amt{font-family:var(--disp);font-size:28px;color:var(--gold);white-space:nowrap}
+.hint{text-align:center;font-weight:700;font-size:13px;color:var(--mute);margin:14px 0 10px}
+.hint b{color:var(--bone)}
+.fighters{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start;overflow-y:auto;padding-bottom:8px}
+.fighter{position:relative;overflow:hidden;text-align:left;padding:14px 12px 12px;border-radius:16px;background:linear-gradient(160deg,var(--panel),var(--deep));border:2px solid var(--c);min-height:132px;transition:transform .12s,opacity .25s,filter .25s}
+.fighter::before{content:"";position:absolute;inset:0 0 auto;height:5px;background:var(--c)}
+.fighter:active{transform:scale(.96)}
+.fighter .fn{font-weight:900;font-size:17px;line-height:1.3}
+.fighter .lives{display:flex;gap:5px;margin-top:10px}
+.fighter .lives i{width:22px;height:14px;transform:skewX(-14deg);background:var(--c);border-radius:2px;box-shadow:0 0 10px var(--c)}
+.fighter .lives i.lost{background:transparent;box-shadow:inset 0 0 0 2px var(--line)}
+.fighter .st{position:absolute;right:10px;bottom:10px;font-family:var(--disp);font-size:11px;color:var(--mute)}
+.fighter.out{opacity:.45;filter:grayscale(.8)}
+.fighter.out::after{content:"抜け";position:absolute;right:-6px;top:22px;transform:rotate(-14deg);font-family:var(--disp);font-size:24px;color:var(--aqua);border:3px solid var(--aqua);border-radius:8px;padding:0 10px;opacity:.9}
+.fighter.hit{animation:hit .35s}
+@keyframes hit{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-3px)}}
+.abar{display:flex;gap:10px}
+.abar .btn{flex:1}
+.verdict{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:rgba(10,12,34,.9);z-index:2}
+.verdict[hidden]{display:none}
+.verdict .k{font-family:var(--disp);font-size:20px;color:var(--gold);letter-spacing:.3em;animation:fadein .4s both}
+.verdict .p{font-family:var(--disp);font-size:clamp(44px,13vw,72px);line-height:1.15;margin:10px 0 6px;color:var(--c);text-shadow:0 0 30px var(--c);animation:slam .5s cubic-bezier(.2,1.6,.4,1) .15s both;word-break:break-all}
+.verdict .y{font-weight:900;font-size:16px;animation:fadein .4s .45s both}
+.verdict .y .num{font-size:26px;color:var(--gold)}
+.verdict .btns{width:100%;max-width:360px;margin-top:30px;animation:fadein .4s .6s both}
+@keyframes slam{from{transform:scale(2.6) rotate(-6deg);opacity:0}}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}}
+
+.toast{position:fixed;left:50%;bottom:calc(var(--safe-b) + 86px);z-index:90;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--bone);color:var(--night);font-weight:900;font-size:14px;padding:10px 16px;border-radius:12px;transition:all .2s;max-width:88vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.loading{text-align:center;padding:80px 0;color:var(--mute);font-family:var(--disp)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">男気じゃんけん旅<small id="tripsub"></small></div>
+  <div class="sp"></div>
+  <button class="me" id="meBtn" aria-label="この端末の自分を選ぶ"><span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span></button>
+  <button class="gear" id="gearBtn" aria-label="設定"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+</header>
+<main id="view"><div class="loading">読み込み中…</div></main>
+<nav id="tabs">
+  <button data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>ホーム</button>
+  <button data-tab="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>支払い</button>
+  <button data-tab="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>集計</button>
+  <button data-tab="tickets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 0 0 4v4h18v-4a2 2 0 0 1 0-4V4H3z" transform="translate(0 2)"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>券・特権</button>
+  <button data-tab="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>歴代</button>
+</nav>
+
+<div class="arena" id="arena" hidden></div>
+<div class="sheet" id="sheet"><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+(() => {
+"use strict";
+const SUPABASE_URL = "https://mspzgfkommmuucjvdvbm.supabase.co";
+const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+
+const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
+const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
+const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#F3F1FA"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings"];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
+const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
+const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
+
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [] };
+let tab = "home", listFilter = "all", loaded = false;
+let me = localStorage.getItem("ojk:me") || "";
+
+/* ---------- 便利関数 ---------- */
+const player = id => db.players.find(p => p.id === id);
+const pname = id => (player(id) || {}).name || "（不明）";
+const pcolor = id => (player(id) || {}).color || "#3A4585";
+const setting = k => (db.app_settings.find(s => s.key === k) || {}).value;
+const curTrip = () => db.trips.find(t => t.id === setting("current_trip")) || null;
+const tripPays = t => t ? db.payments.filter(p => p.trip_id === t.id).sort((a, b) => a.seq - b.seq) : [];
+const liveJanken = t => t ? db.jankens.find(j => j.trip_id === t.id && j.status === "live") : null;
+const dayOf = t => {
+  if (!t || !t.start_date) return null;
+  const d = Math.floor((new Date(todayStr()) - new Date(t.start_date)) / 864e5) + 1;
+  return d >= 1 && d <= t.days ? d : null;
+};
+const categoriesFor = t => [...Array.from({length: (t && t.days) || 3}, (_, i) => `${i+1}日目`), ...KINDS];
+const activeMembers = t => (t ? t.members : []).filter(id => id !== t.champion_out);
+
+function toast(msg, ms = 2200){
+  const el = $("#toast"); el.textContent = msg; el.classList.add("on");
+  clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), ms);
+}
+const fail = (e, what) => { console.error(e); toast(`${what}できませんでした：${(e && e.message) || e}`, 4000); };
+
+/* ---------- データ ---------- */
+async function loadTable(t){
+  const { data, error } = await sb.from(t).select("*");
+  if (error) throw error;
+  db[t] = data || [];
+}
+async function loadAll(){
+  await Promise.all(TABLES.map(loadTable));
+  loaded = true;
+}
+let reloadTimer = {};
+function subscribe(){
+  sb.channel("ojk-all")
+    .on("postgres_changes", { event: "*", schema: "public" }, payload => {
+      const t = payload.table;
+      if (!TABLES.includes(t)) return;
+      clearTimeout(reloadTimer[t]);
+      reloadTimer[t] = setTimeout(async () => {
+        try { await loadTable(t); render(); if (t === "jankens") syncArena(); } catch (e) { console.error(e); }
+      }, 120);
+    })
+    .subscribe();
+}
+async function q(promise, what){
+  const { data, error } = await promise;
+  if (error){ fail(error, what); return null; }
+  return data ?? true;
+}
+async function putSetting(key, value){
+  return q(sb.from("app_settings").upsert({ key, value }), "保存");
+}
+
+/* ---------- 集計（ホームの序列） ---------- */
+function standings(t){
+  const pays = tripPays(t).filter(p => p.payer_id);
+  const rows = (t ? t.members : []).map(id => ({ id, paid: 0, std: 0, wins: 0, joins: 0, drives: 0 }));
+  const by = Object.fromEntries(rows.map(r => [r.id, r]));
+  pays.forEach(p => {
+    const parts = p.participants || [];
+    parts.forEach(id => { if (by[id]){ by[id].joins++; by[id].std += p.amount / parts.length; } });
+    if (by[p.payer_id]){ by[p.payer_id].paid += p.amount; by[p.payer_id].wins++; }
+  });
+  db.drives.filter(d => t && d.trip_id === t.id).forEach(d => { if (by[d.player_id]) by[d.player_id].drives++; });
+  const out = t ? t.champion_out : null;
+  rows.sort((a, b) => (a.id === out) - (b.id === out) || b.paid - a.paid);
+  let rank = 0, prev = null;
+  rows.forEach((r, i) => { if (r.id === out){ r.rank = "–"; return; } if (r.paid !== prev){ rank = i + 1; prev = r.paid; } r.rank = rank; });
+  return rows;
+}
+
+/* ---------- 描画 ---------- */
+function render(){
+  const v = $("#view");
+  const t = curTrip();
+  $("#tripsub").textContent = t ? t.name : "";
+  const mp = player(me);
+  $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span>${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
+  if (!loaded){ v.innerHTML = `<div class="loading">読み込み中…</div>`; return; }
+  v.innerHTML = tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
+    : tab === "stats" ? soon("集計", "グラフと〇〇数・〇〇率は段階3で追加します")
+    : tab === "tickets" ? soon("券・特権", "免除券・特権・ルーレットは段階2で追加します")
+    : soon("歴代", "歴代名簿・シーズン・地図は段階3で追加します");
+  bindView();
+}
+const soon = (t, s) => `<div class="soon"><b>${t}</b>${s}</div>`;
+
+function viewHome(t){
+  if (!db.players.length) return `<div class="empty"><b>まずはプレイヤー登録</b>右上の歯車から、旅のメンバーを登録してください。<div class="btns"><button class="btn" data-act="players">プレイヤーを登録する</button></div></div>`;
+  if (!t) return `<div class="empty"><b>旅を作成しましょう</b>歯車の「旅」から、今回の旅を作成して「今の旅」に選んでください。<div class="btns"><button class="btn" data-act="trips">旅を作成する</button></div></div>`;
+  const day = dayOf(t), lj = liveJanken(t);
+  const rows = standings(t);
+  const pending = tripPays(t).filter(p => !p.payer_id);
+  const champ = t.champion_out ? `<span class="tag" style="background:var(--gold);color:var(--night)">3連覇達成者 ${esc(pname(t.champion_out))}</span>` : "";
+  let h = `<div class="trip"><div class="t">${esc(t.name)}</div>
+    <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・シーズン${t.season}・${t.members.length}人 ${champ}</div></div>`;
+  if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span></button><button class="sub" data-act="drive">運転</button></div>`;
+  if (pending.length){
+    h += `<div class="h2">未決着<small>${pending.length}件</small></div>`;
+    h += pending.slice(0, 5).map(p => `<div class="pend"><div class="l"><b>${esc(p.label)}</b><span>${esc(p.category)}・${yen(p.amount)}</span></div><button class="chipbtn" data-play="${p.id}">じゃんけん</button></div>`).join("");
+  }
+  const total = tripPays(t).filter(p => p.payer_id).reduce((s, p) => s + p.amount, 0);
+  h += `<div class="h2">序列<small>合計 ${yen(total)}</small></div>`;
+  h += rows.map(r => {
+    const diff = r.paid - r.std;
+    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""}" style="--c:${pcolor(r.id)}">
+      <div class="r">${r.rank}</div>
+      <div class="n">${esc(pname(r.id))}${r.id === me ? `<span class="mine">自分</span>` : ""}${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
+      <div class="a">${yen(r.paid)}</div>
+      <div class="m"><span>標準との差 <b class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</b></span><span>支払 ${r.wins}/${r.joins}回</span><span>運転 ${r.drives}回</span></div>
+    </div>`;
+  }).join("");
+  return h;
+}
+
+function viewList(t){
+  if (!t) return `<div class="empty"><b>今の旅がありません</b>歯車の「旅」から作成してください。</div>`;
+  const cats = categoriesFor(t);
+  const all = tripPays(t);
+  const pays = listFilter === "all" ? all : all.filter(p => p.category === listFilter);
+  let h = `<div class="filter">${["all", ...cats].map(c => `<button data-filter="${esc(c)}" aria-pressed="${listFilter === c}">${c === "all" ? "すべて" : esc(c)}</button>`).join("")}</div>`;
+  if (!all.length) h += `<div class="empty"><b>まだ支払いがありません</b>ホームの「じゃんけん開始」から記録します。</div>`;
+  else if (!pays.length) h += `<div class="empty">この区分の支払いはありません</div>`;
+  h += pays.map(p => `<button class="row" data-edit="${p.id}">
+      <span class="q">${p.seq}</span><span class="l">${esc(p.label)}</span><span class="a">${yen(p.amount)}</span>
+      <span class="m"><span class="tag">${esc(p.category)}</span>${p.payer_id ? `<span class="who"><span class="dot" style="background:${pcolor(p.payer_id)}"></span>${esc(pname(p.payer_id))}</span>` : `<span style="color:#FF8A9A">未決着</span>`}<span>${(p.participants || []).length}人</span></span>
+    </button>`).join("");
+  const drives = db.drives.filter(d => d.trip_id === t.id).sort((a, b) => a.created_at.localeCompare(b.created_at));
+  h += `<div class="h2">運転の記録<small>${drives.length}回</small></div>`;
+  h += drives.length ? drives.map((d, i) => `<div class="plist"><span class="dot" style="background:${pcolor(d.player_id)}"></span><b>${esc(pname(d.player_id))}</b><span class="note" style="margin:0">${fmtTime(d.created_at)}</span><button class="mini" data-deldrive="${d.id}">削除</button></div>`).join("") : `<div class="note">ホームの「運転」から記録します。</div>`;
+  return h;
+}
+const fmtTime = iso => { const d = new Date(iso); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`; };
+
+function bindView(){
+  const v = $("#view");
+  v.querySelectorAll("[data-act]").forEach(b => b.onclick = () => ({
+    players: openPlayers, trips: openTrips, newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id)
+  })[b.dataset.act]());
+  v.querySelectorAll("[data-play]").forEach(b => b.onclick = () => startFromPayment(b.dataset.play));
+  v.querySelectorAll("[data-filter]").forEach(b => b.onclick = () => { listFilter = b.dataset.filter; render(); });
+  v.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openEditPayment(b.dataset.edit));
+  v.querySelectorAll("[data-deldrive]").forEach(b => b.onclick = async () => {
+    if (!confirm("この運転の記録を削除しますか？")) return;
+    if (await q(sb.from("drives").delete().eq("id", b.dataset.deldrive), "削除")){ await loadTable("drives"); render(); }
+  });
+}
+
+/* ---------- シート ---------- */
+function openSheet(title, html){
+  $("#sheetIn").innerHTML = `<h3>${title}<button class="x" data-close>閉じる</button></h3>${html}`;
+  $("#sheet").classList.add("on");
+  $("#sheetIn").querySelectorAll("[data-close]").forEach(b => b.onclick = closeSheet);
+  return $("#sheetIn");
+}
+function closeSheet(){ $("#sheet").classList.remove("on"); }
+$("#sheet").addEventListener("click", e => { if (e.target.id === "sheet") closeSheet(); });
+
+const chipPlayers = (ids, selected, attr = "data-p") => `<div class="chips">${ids.map(id => `<button type="button" ${attr}="${id}" aria-pressed="${selected.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div>`;
+function bindChips(root, attr, multi, onChange){
+  root.querySelectorAll(`[${attr}]`).forEach(b => b.onclick = () => {
+    if (!multi) root.querySelectorAll(`[${attr}]`).forEach(x => x.setAttribute("aria-pressed", "false"));
+    b.setAttribute("aria-pressed", multi ? String(b.getAttribute("aria-pressed") !== "true") : "true");
+    onChange && onChange();
+  });
+}
+const picked = (root, attr) => [...root.querySelectorAll(`[${attr}][aria-pressed="true"]`)].map(b => b.getAttribute(attr));
+const catChips = (t, cur) => `<div class="chips">${categoriesFor(t).map(c => `<button type="button" data-cat="${esc(c)}" aria-pressed="${c === cur}">${esc(c)}</button>`).join("")}</div>`;
+
+/* ---------- 自分 ---------- */
+function openMe(){
+  if (!db.players.length){ openPlayers(); return; }
+  const s = openSheet("この端末の自分", `<p class="note">この端末を使う人を選んでください。一斉宣言や通知で使います（この端末にだけ保存されます）。</p>${chipPlayers(db.players.map(p => p.id), [me])}<div class="btns"><button class="btn" id="meOk">決定</button></div>`);
+  bindChips(s, "data-p", false);
+  $("#meOk").onclick = () => { const [id] = picked(s, "data-p"); if (!id) return; me = id; localStorage.setItem("ojk:me", id); closeSheet(); render(); toast(`${pname(id)}として使います`); };
+}
+
+/* ---------- 設定 ---------- */
+function openSettings(){
+  const t = curTrip();
+  const s = openSheet("設定", `<div class="menu">
+    <button data-m="me">この端末の自分<span>${esc(player(me)?.name || "未設定")}</span></button>
+    <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
+    <button data-m="trips">旅<span>${esc(t ? t.name : "未選択")}</span></button>
+  </div><p class="note" style="margin-top:14px">券・特権、通知、要綱の設定は次の段階で追加します。</p>`);
+  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, trips: openTrips })[b.dataset.m]());
+}
+
+function openPlayers(){
+  const list = [...db.players].sort((a, b) => a.sort - b.sort || a.created_at.localeCompare(b.created_at));
+  const s = openSheet("プレイヤー", `${list.map(p => `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}</b><button class="mini" data-pe="${p.id}">編集</button></div>`).join("") || `<p class="note">まだ登録がありません。</p>`}
+    <div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="addP">追加する</button></div>`);
+  s.querySelector("[data-back]").onclick = openSettings;
+  $("#addP").onclick = () => editPlayer(null);
+  s.querySelectorAll("[data-pe]").forEach(b => b.onclick = () => editPlayer(b.dataset.pe));
+}
+function editPlayer(id){
+  const p = id ? player(id) : null;
+  let color = p ? p.color : COLORS[db.players.length % COLORS.length];
+  const s = openSheet(p ? "プレイヤーを編集" : "プレイヤーを追加", `
+    <label class="f"><span>ニックネーム</span><input id="pn" value="${esc(p ? p.name : "")}" maxlength="12" placeholder="例：くろごめ"></label>
+    <div class="f"><span>カラー</span><div class="colors">${COLORS.map(c => `<button type="button" data-c="${c}" style="background:${c}" aria-pressed="${c === color}" aria-label="${c}"></button>`).join("")}</div></div>
+    <div class="btns">${p ? `<button class="btn danger" id="pdel">削除</button>` : `<button class="btn ghost" data-back>戻る</button>`}<button class="btn" id="psave">保存</button></div>`);
+  s.querySelectorAll("[data-c]").forEach(b => b.onclick = () => { color = b.dataset.c; s.querySelectorAll("[data-c]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+  const back = s.querySelector("[data-back]"); if (back) back.onclick = openPlayers;
+  $("#psave").onclick = async () => {
+    const name = $("#pn").value.trim(); if (!name){ toast("ニックネームを入力してください"); return; }
+    const ok = p ? await q(sb.from("players").update({ name, color }).eq("id", p.id), "保存")
+                 : await q(sb.from("players").insert({ name, color, sort: db.players.length }), "保存");
+    if (ok){ await loadTable("players"); render(); openPlayers(); toast("保存しました"); }
+  };
+  const del = $("#pdel");
+  if (del) del.onclick = async () => {
+    if (db.payments.some(x => x.payer_id === p.id || (x.participants || []).includes(p.id))){ toast("支払いの記録があるプレイヤーは削除できません", 3200); return; }
+    if (!confirm(`${p.name}を削除しますか？`)) return;
+    if (await q(sb.from("players").delete().eq("id", p.id), "削除")){ await loadTable("players"); render(); openPlayers(); }
+  };
+}
+
+function openTrips(){
+  const cur = setting("current_trip");
+  const list = [...db.trips].sort((a, b) => b.no - a.no);
+  const s = openSheet("旅", `${list.map(t => `<div class="plist"><b>第${t.no}回 ${esc(t.name)}${t.id === cur ? ` <span class="tag" style="background:var(--gold);color:var(--night)">今の旅</span>` : ""}</b>${t.id === cur ? "" : `<button class="mini" data-cur="${t.id}">今の旅にする</button>`}<button class="mini" data-te="${t.id}">編集</button></div>`).join("") || `<p class="note">まだ旅がありません。</p>`}
+    <div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="addT">旅を作成</button></div>`);
+  s.querySelector("[data-back]").onclick = openSettings;
+  $("#addT").onclick = () => editTrip(null);
+  s.querySelectorAll("[data-te]").forEach(b => b.onclick = () => editTrip(b.dataset.te));
+  s.querySelectorAll("[data-cur]").forEach(b => b.onclick = async () => { if (await putSetting("current_trip", b.dataset.cur)){ await loadTable("app_settings"); render(); openTrips(); toast("今の旅を切り替えました"); } });
+}
+function editTrip(id){
+  if (!db.players.length){ toast("先にプレイヤーを登録してください"); openPlayers(); return; }
+  const t = id ? db.trips.find(x => x.id === id) : null;
+  const last = [...db.trips].sort((a, b) => b.no - a.no)[0];
+  const members = t ? t.members : db.players.map(p => p.id);
+  const s = openSheet(t ? "旅を編集" : "旅を作成", `
+    <div class="two"><label class="f"><span>開催回</span><input id="tno" type="number" inputmode="numeric" value="${t ? t.no : (last ? last.no + 1 : 0)}"></label>
+    <label class="f"><span>シーズン</span><input id="tse" type="number" inputmode="numeric" value="${t ? t.season : (last ? last.season : 1)}"></label></div>
+    <label class="f"><span>名称</span><input id="tna" value="${esc(t ? t.name : "")}" placeholder="例：2027冬 長崎・佐賀"></label>
+    <div class="two"><label class="f"><span>開始日</span><input id="tsd" type="date" value="${t ? (t.start_date || "") : ""}"></label>
+    <label class="f"><span>日数</span><input id="tdy" type="number" inputmode="numeric" min="1" max="9" value="${t ? t.days : 3}"></label></div>
+    <div class="f"><span>参加者</span>${chipPlayers(db.players.map(p => p.id), members)}</div>
+    <div class="f"><span>3連覇達成者（この旅はじゃんけんに参加しない）</span><select id="tch"><option value="">なし</option>${db.players.map(p => `<option value="${p.id}" ${t && t.champion_out === p.id ? "selected" : ""}>${esc(p.name)}</option>`).join("")}</select></div>
+    <label class="f"><span>行った都道府県（読点区切り。地図は段階3で表示）</span><input id="tpr" value="${esc(t ? (t.prefectures || []).join("、") : "")}" placeholder="例：長崎、佐賀"></label>
+    <div class="btns">${t ? `<button class="btn danger" id="tdel">削除</button>` : `<button class="btn ghost" data-back>戻る</button>`}<button class="btn" id="tsave">保存</button></div>`);
+  bindChips(s, "data-p", true);
+  const back = s.querySelector("[data-back]"); if (back) back.onclick = openTrips;
+  $("#tsave").onclick = async () => {
+    const row = {
+      no: parseInt($("#tno").value, 10) || 0, season: parseInt($("#tse").value, 10) || 1,
+      name: $("#tna").value.trim(), start_date: $("#tsd").value || null,
+      days: Math.max(1, Math.min(9, parseInt($("#tdy").value, 10) || 3)),
+      members: picked(s, "data-p"), champion_out: $("#tch").value || null,
+      prefectures: $("#tpr").value.split(/[、,，\s]+/).map(x => x.trim()).filter(Boolean)
+    };
+    if (!row.name){ toast("名称を入力してください"); return; }
+    if (row.members.length < 2){ toast("参加者を2人以上選んでください"); return; }
+    let ok;
+    if (t) ok = await q(sb.from("trips").update(row).eq("id", t.id), "保存");
+    else {
+      const res = await q(sb.from("trips").insert(row).select().single(), "保存");
+      ok = res && await putSetting("current_trip", res.id);
+    }
+    if (ok){ await Promise.all([loadTable("trips"), loadTable("app_settings")]); render(); openTrips(); toast(t ? "保存しました" : "旅を作成して、今の旅にしました"); }
+  };
+  const del = $("#tdel");
+  if (del) del.onclick = async () => {
+    if (!confirm(`「${t.name}」と、その支払い・運転の記録をすべて削除しますか？`)) return;
+    if (await q(sb.from("trips").delete().eq("id", t.id), "削除")){ await Promise.all(["trips", "payments", "drives", "jankens"].map(loadTable)); render(); openTrips(); }
+  };
+}
+
+/* ---------- 運転 ---------- */
+function openDrive(){
+  const t = curTrip(); if (!t) return;
+  const s = openSheet("誰が運転する？", `<p class="note">じゃんけんで運転が決まった人をタップ。勝率の計算に入ります。</p>${chipPlayers(activeMembers(t), [])}`);
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = async () => {
+    if (await q(sb.from("drives").insert({ trip_id: t.id, player_id: b.dataset.p }), "記録")){
+      await loadTable("drives"); closeSheet(); render(); toast(`運転：${pname(b.dataset.p)}`);
+    }
+  });
+}
+
+/* ---------- じゃんけん：準備 ---------- */
+function openNewJanken(){
+  const t = curTrip(); if (!t) return;
+  if (liveJanken(t)){ toast("進行中のじゃんけんがあります"); openArena(liveJanken(t).id); return; }
+  const day = dayOf(t);
+  let cat = day ? `${day}日目` : categoriesFor(t)[0];
+  const members = activeMembers(t);
+  const s = openSheet("じゃんけん開始", `
+    <label class="f"><span>内訳</span><input id="jl" placeholder="例：昼ご飯(稲庭うどん)" maxlength="40"></label>
+    <label class="f"><span>金額（全員分の合計）</span><input id="ja" type="number" inputmode="numeric" placeholder="0"></label>
+    <div class="f"><span>カテゴリー</span>${catChips(t, cat)}</div>
+    <div class="toggle"><div>人数分に分ける<small id="splitInfo">旅費・宿泊費は参加人数ぶんじゃんけん</small></div><button type="button" class="sw" id="jsp" role="switch" aria-checked="false" aria-label="人数分に分ける"></button></div>
+    <div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(members, members)}</div>
+    ${t.champion_out ? `<p class="note">3連覇達成者の${esc(pname(t.champion_out))}は参加しません。</p>` : ""}
+    <div class="btns"><button class="btn" id="jgo">開始</button></div>`);
+  const sw = $("#jsp");
+  const info = () => { const n = picked(s, "data-p").length, a = parseInt($("#ja").value, 10) || 0; $("#splitInfo").textContent = sw.getAttribute("aria-checked") === "true" ? `${n}回に分けて、1回 ${yen(Math.floor(a / Math.max(n, 1)))}` : "旅費・宿泊費は参加人数ぶんじゃんけん"; };
+  sw.onclick = () => { sw.setAttribute("aria-checked", String(sw.getAttribute("aria-checked") !== "true")); info(); };
+  bindChips(s, "data-cat", false, () => { cat = picked(s, "data-cat")[0]; sw.setAttribute("aria-checked", String(SPLIT_KINDS.includes(cat))); info(); });
+  bindChips(s, "data-p", true, info);
+  $("#ja").oninput = info;
+  $("#jgo").onclick = async () => {
+    const label = $("#jl").value.trim(), amount = parseInt($("#ja").value, 10) || 0, parts = picked(s, "data-p");
+    if (!label){ toast("内訳を入力してください"); return; }
+    if (amount <= 0){ toast("金額を入力してください"); return; }
+    if (parts.length < 2){ toast("参加者を2人以上にしてください"); return; }
+    $("#jgo").disabled = true;
+    if (sw.getAttribute("aria-checked") === "true"){
+      const n = parts.length, base = Math.floor(amount / n), rest = amount - base * n;
+      const group = crypto.randomUUID(), seq0 = nextSeq(t);
+      const rows = Array.from({length: n}, (_, i) => ({ trip_id: t.id, seq: seq0 + i, label: `${label} ${i+1}/${n}`, amount: base + (i < rest ? 1 : 0), category: cat, participants: parts, split_group: group }));
+      const res = await q(sb.from("payments").insert(rows).select(), "登録");
+      if (!res){ $("#jgo").disabled = false; return; }
+      await loadTable("payments");
+      const first = res.sort((a, b) => a.seq - b.seq)[0];
+      closeSheet(); render(); toast(`${n}回に分けて登録しました`);
+      startFromPayment(first.id);
+    } else {
+      const j = await createJanken({ trip_id: t.id, label, amount, category: cat, participants: parts });
+      $("#jgo").disabled = false;
+      if (j){ closeSheet(); openArena(j.id); }
+    }
+  };
+  setTimeout(() => $("#jl").focus(), 250);
+}
+const nextSeq = t => tripPays(t).reduce((m, p) => Math.max(m, p.seq), 0) + 1;
+
+async function createJanken(base){
+  const lives = Object.fromEntries(base.participants.map(id => [id, 1]));
+  const res = await q(sb.from("jankens").insert({ ...base, lives, max_lives: lives, history: [], status: "live", started_by: me || null }).select().single(), "開始");
+  if (res){ await loadTable("jankens"); render(); }
+  return res;
+}
+async function startFromPayment(pid){
+  const p = db.payments.find(x => x.id === pid), t = curTrip();
+  if (!p || !t) return;
+  if (liveJanken(t)){ toast("先に進行中のじゃんけんを終わらせてください"); openArena(liveJanken(t).id); return; }
+  const s = openSheet(esc(p.label), `<p class="note">${esc(p.category)}・${yen(p.amount)}</p><div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(activeMembers(t), (p.participants || []).filter(id => activeMembers(t).includes(id)))}</div><div class="btns"><button class="btn" id="jgo">開始</button></div>`);
+  bindChips(s, "data-p", true);
+  $("#jgo").onclick = async () => {
+    const parts = picked(s, "data-p");
+    if (parts.length < 2){ toast("参加者を2人以上にしてください"); return; }
+    const j = await createJanken({ trip_id: t.id, payment_id: p.id, label: p.label, amount: p.amount, category: p.category, participants: parts });
+    if (j){ closeSheet(); openArena(j.id); }
+  };
+}
+
+/* ---------- じゃんけん：進行 ---------- */
+let arenaId = null, busy = false;
+function openArena(id){ arenaId = id; $("#arena").hidden = false; document.body.style.overflow = "hidden"; drawArena(); }
+function closeArena(){ arenaId = null; $("#arena").hidden = true; document.body.style.overflow = ""; render(); }
+function syncArena(){
+  if (!arenaId) return;
+  const j = db.jankens.find(x => x.id === arenaId);
+  if (!j || j.status !== "live"){ closeArena(); if (j && j.status === "done") toast(`決着：${pname(j.payer_id)}が支払い`); return; }
+  drawArena();
+}
+function drawArena(){
+  const j = db.jankens.find(x => x.id === arenaId); if (!j) return closeArena();
+  const alive = j.participants.filter(id => (j.lives[id] || 0) > 0);
+  const done = alive.length === 1;
+  const a = $("#arena");
+  a.innerHTML = `
+    <div class="atop"><div class="lbl"><b>${esc(j.label)}</b><span>${esc(j.category)}・${j.participants.length}人参加</span></div><div class="amt num">${yen(j.amount)}</div></div>
+    <div class="hint">${done ? "決着！" : `<b>負けた人</b>をタップ　残り <b class="num">${alive.length}</b> 人`}</div>
+    <div class="fighters">${j.participants.map(id => {
+      const l = j.lives[id] || 0, m = j.max_lives[id] || 1;
+      return `<button class="fighter ${l <= 0 ? "out" : ""}" data-f="${id}" style="--c:${pcolor(id)}" ${l <= 0 || done ? "disabled" : ""}>
+        <div class="fn">${esc(pname(id))}</div>
+        <div class="lives">${Array.from({length: m}, (_, i) => `<i class="${i < l ? "" : "lost"}"></i>`).join("")}</div>
+        <div class="st">${l > 0 ? `残機 ${l}` : ""}</div></button>`;
+    }).join("")}</div>
+    <div class="abar"><button class="btn ghost" id="aUndo" ${j.history.length ? "" : "disabled"}>1つ戻す</button><button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button></div>
+    <div class="verdict" id="verdict" ${done ? "" : "hidden"} style="--c:${done ? pcolor(alive[0]) : "#fff"}">
+      <div class="k">決着</div><div class="p">${done ? esc(pname(alive[0])) : ""}</div>
+      <div class="y"><span class="num">${yen(j.amount)}</span><br>男気を見せる</div>
+      <div class="btns"><button class="btn ghost" id="vBack">1つ戻す</button><button class="btn" id="vOk">確定</button></div>
+    </div>`;
+  a.querySelectorAll("[data-f]").forEach(b => b.onclick = () => lose(j, b.dataset.f, b));
+  $("#aUndo").onclick = () => undo(j);
+  $("#vBack").onclick = () => undo(j);
+  $("#aMin").onclick = closeArena;
+  $("#aStop").onclick = () => stop(j);
+  $("#vOk").onclick = () => settle(j, alive[0]);
+}
+async function patchJanken(j, patch){
+  busy = true;
+  Object.assign(j, patch); drawArena();
+  const ok = await q(sb.from("jankens").update({ ...patch, updated_at: new Date().toISOString() }).eq("id", j.id), "保存");
+  busy = false;
+  if (!ok){ await loadTable("jankens"); syncArena(); }
+  return ok;
+}
+async function lose(j, id, el){
+  if (busy) return;
+  el.classList.add("hit"); if (navigator.vibrate) navigator.vibrate(30);
+  const lives = { ...j.lives, [id]: Math.max(0, (j.lives[id] || 0) - 1) };
+  await patchJanken(j, { lives, history: [...j.history, j.lives] });
+}
+async function undo(j){
+  if (busy || !j.history.length) return;
+  const history = j.history.slice(0, -1);
+  await patchJanken(j, { lives: j.history[j.history.length - 1], history });
+}
+async function stop(j){
+  if (!confirm("このじゃんけんを中止しますか？（支払いは記録されません）")) return;
+  if (await q(sb.from("jankens").update({ status: "cancel" }).eq("id", j.id), "中止")){ await loadTable("jankens"); closeArena(); toast("中止しました"); }
+}
+async function settle(j, payer){
+  if (busy) return; busy = true;
+  const t = db.trips.find(x => x.id === j.trip_id);
+  let ok;
+  if (j.payment_id) ok = await q(sb.from("payments").update({ payer_id: payer, participants: j.participants }).eq("id", j.payment_id), "確定");
+  else ok = await q(sb.from("payments").insert({ trip_id: j.trip_id, seq: nextSeq(t), label: j.label, amount: j.amount, category: j.category, payer_id: payer, participants: j.participants }), "確定");
+  if (ok) ok = await q(sb.from("jankens").update({ status: "done", payer_id: payer }).eq("id", j.id), "確定");
+  busy = false;
+  if (!ok) return;
+  await Promise.all([loadTable("payments"), loadTable("jankens")]);
+  closeArena();
+  toast(`${pname(payer)}が ${yen(j.amount)} を支払い`);
+  const next = j.payment_id && nextSplit(j.payment_id);
+  if (next && confirm(`続けて「${next.label}」のじゃんけんをしますか？`)) startFromPayment(next.id);
+}
+function nextSplit(pid){
+  const p = db.payments.find(x => x.id === pid);
+  if (!p || !p.split_group) return null;
+  return db.payments.filter(x => x.split_group === p.split_group && !x.payer_id).sort((a, b) => a.seq - b.seq)[0] || null;
+}
+
+/* ---------- 支払いの編集 ---------- */
+function openEditPayment(id){
+  const p = db.payments.find(x => x.id === id), t = curTrip();
+  if (!p || !t) return;
+  let cat = p.category;
+  const s = openSheet("支払いを編集", `
+    <label class="f"><span>内訳</span><input id="el" value="${esc(p.label)}"></label>
+    <div class="two"><label class="f"><span>金額</span><input id="ea" type="number" inputmode="numeric" value="${p.amount}"></label>
+    <label class="f"><span>支払順</span><input id="eq" type="number" inputmode="numeric" value="${p.seq}"></label></div>
+    <div class="f"><span>カテゴリー</span>${catChips(t, cat)}</div>
+    <div class="f"><span>払った人</span>${chipPlayers(t.members, p.payer_id ? [p.payer_id] : [], "data-payer")}</div>
+    <div class="f"><span>参加者</span>${chipPlayers(t.members, p.participants || [])}</div>
+    <div class="btns"><button class="btn danger" id="edel">削除</button>${p.payer_id ? "" : `<button class="btn ghost" id="eplay">じゃんけん</button>`}<button class="btn" id="esave">保存</button></div>`);
+  bindChips(s, "data-cat", false, () => cat = picked(s, "data-cat")[0]);
+  bindChips(s, "data-payer", false);
+  bindChips(s, "data-p", true);
+  const pl = $("#eplay"); if (pl) pl.onclick = () => startFromPayment(p.id);
+  $("#esave").onclick = async () => {
+    const row = { label: $("#el").value.trim(), amount: parseInt($("#ea").value, 10) || 0, seq: parseInt($("#eq").value, 10) || p.seq, category: cat, payer_id: picked(s, "data-payer")[0] || null, participants: picked(s, "data-p") };
+    if (!row.label){ toast("内訳を入力してください"); return; }
+    if (row.payer_id && !row.participants.includes(row.payer_id)) row.participants.push(row.payer_id);
+    if (await q(sb.from("payments").update(row).eq("id", p.id), "保存")){ await loadTable("payments"); closeSheet(); render(); toast("保存しました"); }
+  };
+  $("#edel").onclick = async () => {
+    if (!confirm(`「${p.label}」を削除しますか？`)) return;
+    if (await q(sb.from("payments").delete().eq("id", p.id), "削除")){ await loadTable("payments"); closeSheet(); render(); }
+  };
+}
+
+/* ---------- 起動 ---------- */
+document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
+$("#gearBtn").onclick = openSettings;
+$("#meBtn").onclick = openMe;
+document.addEventListener("visibilitychange", async () => {
+  if (document.hidden) return;
+  try { await loadAll(); render(); syncArena(); } catch (e) { console.error(e); }
+});
+(async () => {
+  try { await loadAll(); }
+  catch (e) { $("#view").innerHTML = `<div class="empty"><b>データを読み込めませんでした</b>${esc(e.message || e)}<br>Supabaseでテーブルを作成したか確認してください。</div>`; return; }
+  render(); subscribe();
+  if (db.players.length && !player(me)) openMe();
+})();
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+})();
+</script>
+</body>
+</html>
