@@ -101,7 +101,7 @@ nav button[aria-current="page"]::before{content:"";position:absolute;top:-8px;le
 .chipbtn:active{transform:translateY(3px);box-shadow:none}
 
 /* ---------- 一覧 ---------- */
-.row{display:grid;grid-template-columns:30px 1fr auto;gap:2px 10px;align-items:center;width:100%;text-align:left;padding:11px 10px 11px 4px;border-radius:12px;background:rgba(255,255,255,.7);margin-bottom:6px;border:1.5px solid var(--line)}
+.row{display:grid;grid-template-columns:30px 1fr auto;gap:0 10px;align-items:center;width:100%;text-align:left;padding:6px 10px 6px 4px;line-height:1.4;border-radius:12px;background:rgba(255,255,255,.7);margin-bottom:6px;border:1.5px solid var(--line)}
 .row .q{font-family:var(--disp);font-size:13px;color:#A3A9BA;text-align:center}
 .row .l{font-weight:900;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .row .a{font-family:var(--disp);font-size:16px;text-align:right}
@@ -374,10 +374,11 @@ ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:7
 .rres .num{font-size:52px;line-height:1;color:var(--crimson);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;filter:drop-shadow(0 0 10px rgba(226,54,79,.5))}
 .rres small{display:block;font-size:12px;color:var(--mute);font-weight:700}
 .rres div{font-weight:900}
-.wheel{display:flex;flex-direction:column;align-items:center;justify-content:center;width:200px;height:200px;margin:6px auto 0;background:var(--burst-glow-gold) center/contain no-repeat;animation:spin 6s linear infinite}
-.wheel .num{font-size:78px;line-height:1;color:var(--ink);animation:spin 6s linear infinite reverse}
-.wheel small{font-weight:900;animation:spin 6s linear infinite reverse}
-.wheel .num.tick{animation:pop .12s,spin 6s linear infinite reverse}
+.wheel{position:relative;z-index:0;display:flex;flex-direction:column;align-items:center;justify-content:center;width:200px;height:200px;margin:6px auto 0}
+.wheel::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--burst-glow-gold) center/contain no-repeat;animation:spin 6s linear infinite}
+.wheel .num{font-size:78px;line-height:1;color:var(--ink)}
+.wheel small{font-weight:900}
+.wheel .num.tick{animation:pop .12s}
 .wheel .num.hitn{color:var(--crimson);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;font-size:96px}
 @keyframes pop{from{transform:scale(1.35)}}
 .predrow{display:grid;grid-template-columns:16px 1fr 110px;gap:4px 8px;align-items:center;padding:8px 0;border-bottom:1.5px solid var(--line)}
@@ -583,6 +584,49 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .roster .rr .num{width:18px;text-align:center;color:var(--mute)}
 .roster .rr b{margin-left:auto;padding:1px 8px;border-radius:7px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 16%,#fff)}
 .roster .rr small{color:var(--mute);min-width:70px;text-align:right}
+/* ===== フィードバック2 ===== */
+.artlink{display:inline;padding:0 2px;margin:0 1px;font:inherit;font-weight:900;color:#1F8FBF;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;background:none;border:0;cursor:pointer}
+.artpop{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(27,24,56,.5);opacity:0;pointer-events:none;transition:opacity .15s}
+.artpop.on{opacity:1;pointer-events:auto}
+.artin{width:100%;max-width:480px;max-height:80vh;overflow-y:auto;background:#fff;border:2.5px solid var(--ink);border-radius:18px;padding:14px 16px 16px;box-shadow:0 0 30px rgba(232,177,42,.5)}
+.arth{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.arth b{font-family:var(--disp);font-weight:400;font-size:20px;color:#C98E12}
+.artx{width:36px;height:36px;border-radius:10px;border:2px solid var(--ink);font-size:20px;font-weight:900;line-height:1}
+.big .kr{position:absolute;width:14px;height:14px;background:var(--glint-gold) center/contain no-repeat;animation:twk 1.8s ease-in-out infinite}
+.big .kr.k1{right:16px;top:9px;background-image:var(--glint-red)}
+.big .kr.k2{right:38px;top:20px;width:10px;height:10px;background-image:#fff;background-image:var(--glint-aqua);animation-delay:.5s}
+.big .kr.k3{right:12px;bottom:10px;width:11px;height:11px;animation-delay:1s}
+@keyframes twk{0%,100%{transform:scale(.5) rotate(0);opacity:.5}50%{transform:scale(1.2) rotate(90deg);opacity:1}}
+.pcard{display:flex;align-items:center;gap:10px;padding:8px 10px;margin-bottom:8px;border-radius:12px;border:2.5px solid var(--pc);background:color-mix(in srgb,var(--pc) 10%,#fff)}
+.pcard .pico{width:42px;height:42px}
+.pcard .pcb{flex:1;min-width:0;display:flex;flex-direction:column}
+.pcard .pno{font-size:11.5px;font-weight:900;color:var(--mute)}
+.pcard .pno b{color:var(--ink)}
+.pcard .pnm{font-family:var(--disp);font-weight:400;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard small{font-size:11.5px;color:var(--mute);font-weight:700;line-height:1.4}
+.arena .fighters{flex:0 1 auto}
+.arena .abar{margin-top:auto}
+.solobtn{display:block;flex:none;width:100%;margin:2px 0 12px;padding:12px;border-radius:14px;font-family:var(--disp);font-size:17px;background:#fff;color:var(--ink);border:2.5px solid var(--aqua);box-shadow:0 4px 0 var(--aqua),0 0 16px rgba(31,179,191,.4)}
+.solobtn.on{background:var(--aqua);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+.solobtn:active{transform:translateY(4px);box-shadow:none}
+.privpick .pno,.todaypriv .pno{font-size:11px;font-weight:900;color:var(--mute)}
+.privpick .pnm,.todaypriv .pnm{font-family:var(--disp);font-weight:400;font-size:16px;white-space:nowrap}
+.todaypriv .who{font-weight:900;color:var(--ink)}
+.ttl2{margin-bottom:8px}
+.ttl2>small{display:block;font-size:11px;color:var(--mute);font-weight:900;white-space:nowrap;letter-spacing:-.02em}
+.ttr{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ttr b.num{font-size:22px}
+.ttr .per{display:block;font-size:12px;font-weight:900;color:var(--mute)}
+.ttr .per b.num{font-size:14px;color:var(--ink)}
+.ttr .btn{flex:none;padding:10px 14px}
+.sv.none{display:block;color:var(--mute);font-size:12px}
+.vs table{width:100%;table-layout:fixed}
+.vs th,.vs td{padding:6px 2px;font-size:12px}
+.vs i{width:9px;height:9px;margin-right:2px;vertical-align:0}
+.hscroll{display:flex;flex-direction:column;gap:10px}
+.hscroll.multi{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -18px;padding:0 18px 6px;gap:12px}
+.hscroll.multi>.card{flex:0 0 86%;scroll-snap-align:center;margin:0}
+.tcount{margin-left:8px;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:2px 8px;border-radius:99px;border:1.5px solid var(--line)}
 /* ===== フィードバック対応 ===== */
 .pico{display:inline-block;flex:none;width:44px;height:44px;background:var(--pi) center/contain no-repeat;filter:drop-shadow(0 2px 0 rgba(27,24,56,.15))}
 .privcard .pico{width:52px;height:52px;margin-left:4px}
@@ -666,7 +710,7 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
   <button data-tab="tickets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 0 0 4v4h18v-4a2 2 0 0 1 0-4V4H3z" transform="translate(0 2)"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>免除・特権</button>
   <button data-tab="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>支払い</button>
   <button data-tab="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>集計</button>
-  <button data-tab="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>歴代</button>
+  <button data-tab="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>ヒストリー</button>
 </nav>
 
 <div class="arena" id="arena" hidden></div>
@@ -816,10 +860,10 @@ function render(){
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span>${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
   document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
   if (!loaded){ v.innerHTML = `<div class="loading">読み込み中…</div>`; return; }
-  v.innerHTML = tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
+  v.innerHTML = artLinks(tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
     : tab === "stats" ? viewStats(t)
     : tab === "tickets" ? viewTickets(t)
-    : viewHistory(t);
+    : viewHistory(t));
   bindView();
 }
 const soon = (t, s) => `<div class="soon"><b>${t}</b>${s}</div>`;
@@ -846,10 +890,10 @@ function viewHome(t){
   h += `<div class="marquee" aria-hidden="true"><div class="mq">${MQ}${MQ}</div></div>`;
   h += reminderCards(t);
   const tp = day && tripPrivs(t).find(p => p.day === day);
-  if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><b>今日の特権：${esc(pname(tp.player_id))}</b><span>特権${KANJI[tp.kind]}「${PRIVS[tp.kind].name}」</span></div></div>`;
+  if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><span>今日の特権・<b class="who">${esc(pname(tp.player_id))}</b></span><small class="pno">特権${KANJI[tp.kind]}</small><b class="pnm">${PRIVS[tp.kind].name}</b></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="bz" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -870,6 +914,14 @@ function viewHome(t){
       <div class="m"><span>標準との差 <b class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</b></span><span>支払 ${r.wins}/${r.joins}回</span><span>運転 ${r.drives}回</span></div>
     </div>`;
   }).join("");
+  const res = prizeResults(t), ready = !!t.travel_total;
+  h += `<div class="h2 red">ピタリ賞・ニアピン賞<small>第十七条</small></div><div class="card">
+    <div class="ttl2"><small>旅費総額（前回4位の予約者が提示）</small><div class="ttr"><div><b class="num">${ready ? yen(t.travel_total) : "未入力"}</b>${ready ? `<span class="per">1人あたり <b class="num">${yen(t.travel_total / Math.max(1, activeMembers(t).length))}</b></span>` : ""}</div><button class="btn" data-act="travelTotal">${ready ? "内訳・追加" : "旅費総額を入力"}</button></div></div>
+    <p class="note">${ready ? "全員が「自分の最終支払額」を予想します。" : "旅費総額が入力されるまで、予想は入力できません。"}判定は100円単位（100円未満は切り捨て）。ピタリ賞（一致）は全額、ニアピン賞（ピタリ±1,000円以内）は半額が免除され、残りのメンバーで均等に負担します。順位は変わりません。</p>
+    ${res.map(r => `<div class="predrow"><span class="dot" style="background:${pcolor(r.id)}"></span><b>${esc(pname(r.id))}</b><input class="yen-in" inputmode="numeric" data-pred="${r.id}" value="${r.pred == null ? "" : fmtNum(r.pred)}" placeholder="${ready ? "予想額" : "総額の入力待ち"}" ${ready ? "" : "disabled"} autocomplete="off"><span class="pr">${r.pred == null ? "" : `<small>今の差 ${signed(r.paid - r.pred)}</small>${r.prize ? `<span class="tic ${r.prize === "ピタリ賞" ? "s" : "n"}">${r.prize}</span>` : ""}`}</span></div>`).join("")}
+  </div>`;
+
+  h += `<div class="h2 aqua">精算<small>立替え・賞の免除を反映</small></div><div class="card"><p class="note" style="margin-top:0">誰が誰にいくら払えばよいかを計算します。立替えた人は、支払い一覧の各支払いで設定できます。</p><div class="btns" style="margin-top:6px"><button class="btn" data-act="settle">精算を見る</button></div></div>`;
   return h;
 }
 
@@ -910,6 +962,7 @@ function bindView(){
     saveTravel: () => saveTravelTotal(curTrip()), roulette: () => openRoulette(curTrip(), rouletteDay), grantRoulette: () => grantRoulette(curTrip(), rouletteDay)
   })[b.dataset.act]());
   v.querySelectorAll("[data-rdone]").forEach(b => b.onclick = () => { localStorage.setItem("ojk:done:" + b.dataset.rdone, "1"); render(); });
+  v.querySelectorAll("details.sgroup").forEach(d => d.addEventListener("toggle", () => { d.open ? statOpen.add(d.dataset.g) : statOpen.delete(d.dataset.g); }));
   v.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { statScope = b.dataset.scope; render(); });
   v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { mapMode = "all"; render(); });
   v.querySelectorAll("[data-mapwin]").forEach(b => b.onclick = () => { mapMode = "winner"; render(); });
@@ -935,9 +988,9 @@ function bindView(){
 }
 
 /* ---------- シート ---------- */
-function openSheet(title, html){
+function openSheet(title, html, noLinks){
   openSheet.n = ((openSheet.n || 0) + 1) % 3;
-  $("#sheetIn").innerHTML = `<h3 class="hd${openSheet.n}">${title}<button class="x" data-close>閉じる</button></h3>${html}`;
+  $("#sheetIn").innerHTML = `<h3 class="hd${openSheet.n}">${title}<button class="x" data-close>閉じる</button></h3>${noLinks ? html : artLinks(html)}`;
   $("#sheet").classList.add("on");
   $("#sheetIn").querySelectorAll("[data-close]").forEach(b => b.onclick = closeSheet);
   return $("#sheetIn");
@@ -974,7 +1027,7 @@ function openSettings(){
     <button data-m="thr">免除券使用確認の基準額<span>${yen(threshold())}以上</span></button>
     <button data-m="ntf">通知<span>受け取り・時刻の設定</span></button>
     <button data-m="rule">実施要綱<span>いつでも確認</span></button>
-  </div><p class="note" style="margin-top:14px">通知・要綱の設定は段階4で追加します。</p>`);
+  </div>`);
   s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, rule: openRules, ntf: openNotify })[b.dataset.m]());
 }
 
@@ -1116,28 +1169,26 @@ function openNewJanken(){
   let cat = day ? `${day}日目` : categoriesFor(t)[0];
   const members = activeMembers(t);
   const s = openSheet("じゃんけん開始", `
-    ${privStatusHtml(t)}
     <label class="f"><span>内訳</span><input id="jl" placeholder="例：昼ご飯(稲庭うどん)" maxlength="40"></label>
     <label class="f"><span>金額（全員分の合計）</span><input id="ja" class="yen-in" inputmode="numeric" placeholder="0" autocomplete="off"></label>
     <div class="f"><span>カテゴリー</span>${catChips(t, cat)}</div>
     <div class="toggle"><div>人数分に分ける<small id="splitInfo">旅費・宿泊費は参加人数分じゃんけん</small></div><button type="button" class="sw" id="jsp" role="switch" aria-checked="false" aria-label="人数分に分ける"></button></div>
     <div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(members, members)}</div>
     ${t.champion_out ? `<p class="note">3連覇達成者の${esc(pname(t.champion_out))}は参加しません。</p>` : ""}
-    ${priv4Box(t)}
-    <div id="p3box"></div>
+    <div id="privarea"></div>
     <label class="f"><span>立替えた人（事前予約などで先に払った人）</span><select id="jadv"><option value="">なし（決まった人がその場で払う）</option>${t.members.map(id => `<option value="${id}">${esc(pname(id))}</option>`).join("")}</select></label>
     <div class="btns"><button class="btn" id="jgo">開始</button></div>`);
-  const p3 = bindPriv3(s, t, () => cat);
+  const pa = privArea(s, t, () => cat);
   const sw = $("#jsp");
   const split = () => sw.getAttribute("aria-checked") === "true";
   const info = () => {
     const a = num($("#ja").value);
     let n = picked(s, "data-p").length;
     $("#splitInfo").textContent = split() ? `${n}回に分けて、1回 ${yen(Math.floor(a / Math.max(n, 1)))}` : "旅費・宿泊費は参加人数分じゃんけん";
-    applyPriv4(s, t, split() ? Math.floor(a / Math.max(members.length, 1)) : a);
+    pa.amount(split() ? Math.floor(a / Math.max(members.length, 1)) : a);
   };
   sw.onclick = () => { sw.setAttribute("aria-checked", String(!split())); info(); };
-  bindChips(s, "data-cat", false, () => { cat = picked(s, "data-cat")[0]; sw.setAttribute("aria-checked", String(SPLIT_KINDS.includes(cat))); info(); p3.refresh(); });
+  bindChips(s, "data-cat", false, () => { cat = picked(s, "data-cat")[0]; sw.setAttribute("aria-checked", String(SPLIT_KINDS.includes(cat))); info(); });
   bindChips(s, "data-p", true, info);
   $("#ja").addEventListener("input", info);
   $("#jgo").onclick = () => {
@@ -1145,7 +1196,7 @@ function openNewJanken(){
     if (!label){ toast("内訳を入力してください"); return; }
     if (amount <= 0){ toast("金額を入力してください"); return; }
     if (parts.length < 2){ toast("参加者を2人以上にしてください"); return; }
-    const adv = $("#jadv").value || null, usep3 = p3.on(), isSplit = split();
+    const adv = $("#jadv").value || null, usep3 = pa.p3(), isSplit = split();
     rouletteGuard(t, cat, async () => {
       if (isSplit){
         const n = parts.length, base = Math.floor(amount / n), rest = amount - base * n;
@@ -1210,14 +1261,14 @@ async function startFromPayment(pid){
   const p = db.payments.find(x => x.id === pid), t = curTrip();
   if (!p || !t) return;
   if (liveJanken(t)){ toast("先に進行中のじゃんけんを終わらせてください"); openArena(liveJanken(t).id); return; }
-  const s = openSheet(esc(p.label), `${privStatusHtml(t)}<p class="note">${esc(p.category)}・${yen(p.amount)}</p><div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(activeMembers(t), (p.participants || []).filter(id => activeMembers(t).includes(id)))}</div>${priv4Box(t)}<div id="p3box"></div><div class="btns"><button class="btn" id="jgo">開始</button></div>`);
+  const s = openSheet(esc(p.label), `<p class="note">${esc(p.category)}・${yen(p.amount)}</p><div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(activeMembers(t), (p.participants || []).filter(id => activeMembers(t).includes(id)))}</div><div id="privarea"></div><div class="btns"><button class="btn" id="jgo">開始</button></div>`);
   bindChips(s, "data-p", true);
-  applyPriv4(s, t, p.amount);
-  const p3 = bindPriv3(s, t, () => p.category);
+  const pa = privArea(s, t, () => p.category);
+  pa.amount(p.amount);
   $("#jgo").onclick = () => {
     const parts = picked(s, "data-p");
     if (parts.length < 2){ toast("参加者を2人以上にしてください"); return; }
-    const usep3 = p3.on();
+    const usep3 = pa.p3();
     rouletteGuard(t, p.category, async () => {
       const j = await createJanken({ trip_id: t.id, payment_id: p.id, label: p.label, amount: p.amount, category: p.category, participants: parts, advanced_by: p.advanced_by || null }, { priv3: usep3 });
       if (j){ closeSheet(); openArena(j.id); }
@@ -1316,7 +1367,7 @@ function drawArena(){
         <div class="st">${l > 0 ? `残機 ${l}` : ""}</div>${l <= 0 ? `<span class="stamp">${isS ? "免除" : "抜け"}</span>` : ""}</button>`;
     }).join("");
     const canUse = !j.history.length && !done && j.participants.some(id => !supers.includes(id) && tcount(t, id) > 0);
-    bar = `<button class="btn solo ${soloMode ? "on" : ""}" id="aSolo" ${done ? "disabled" : ""}>1人勝ち</button><button class="btn ghost" id="aUndo" ${j.history.length ? "" : "disabled"}>戻す</button>${canUse ? `<button class="btn ghost" id="aUse">券</button>` : ""}<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
+    bar = `<button class="btn ghost" id="aUndo" ${j.history.length ? "" : "disabled"}>戻す</button>${canUse ? `<button class="btn ghost" id="aUse">券</button>` : ""}<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
   }
   const used = j.tickets_used || [];
   const strip = [
@@ -1329,6 +1380,7 @@ function drawArena(){
     ${strip.length ? `<div class="astrip">${strip.map(x => `<span>${x}</span>`).join("")}</div>` : ""}
     <div class="hint">${hint}</div>
     <div class="fighters">${cards}</div>
+    ${phase === "play" && !done ? `<button class="solobtn ${soloMode ? "on" : ""}" id="aSolo">${soloMode ? "1人勝ちした人をタップ（やめる）" : "✊ 1人勝ち"}</button>` : ""}
     <div class="abar">${bar}</div>
     <div class="verdict" id="verdict" ${done ? "" : "hidden"} style="--c:${done ? pcolor(alive[0]) : "#fff"}">
       <span class="vb"></span><span class="sp a"></span><span class="sp b"></span><span class="sp c"></span><span class="sp d"></span><span class="bl l"></span><span class="bl r"></span>
@@ -1347,10 +1399,18 @@ function drawArena(){
 async function patchJanken(j, patch){
   busy = true;
   Object.assign(j, patch); drawArena();
-  const ok = await q(sb.from("jankens").update({ ...patch, updated_at: new Date().toISOString() }).eq("id", j.id), "保存");
+  const body = { ...patch, updated_at: new Date().toISOString() };
+  let { error } = await sb.from("jankens").update(body).eq("id", j.id);
+  // 古いテーブル（列が足りない）でも動くよう、無い列は外して保存し直す
+  for (let i = 0; error && i < 3; i++){
+    const m = /'(\w+)' column/.exec(error.message || "");
+    if (!m || !(m[1] in body)) break;
+    delete body[m[1]];
+    ({ error } = await sb.from("jankens").update(body).eq("id", j.id));
+  }
   busy = false;
-  if (!ok){ await loadTable("jankens"); syncArena(); }
-  return ok;
+  if (error){ fail(error, "保存"); await loadTable("jankens"); syncArena(); return false; }
+  return true;
 }
 const snap = j => ({ l: j.lives, e: j.exempt_done || [], s: j.solos || [] });
 let soloMode = false;
@@ -1561,12 +1621,12 @@ function initialPlan(t){
   if (!prior.length) return { first: true, items: [] };
   const st = deptStats(prior), ok = activeMembers(t), items = [];
   leaders(st, "総合").forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "super", source: "初期：シーズン累計1位" }));
+  DEPTS.forEach(d => leaders(st, d).forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "normal", source: `初期：${d}部門1位` })));
   const pv = prevTrip(t), w = pv && tripWinner(pv);
   if (w && ok.includes(w)){
     items.push({ player_id: w, kind: "super", source: "初期：前回優勝" });
     items.push({ player_id: w, kind: "normal", source: "初期：前回優勝" });
   }
-  DEPTS.forEach(d => leaders(st, d).forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "normal", source: `初期：${d}部門1位` })));
   return { first: false, items };
 }
 async function giveInitial(t){
@@ -1630,14 +1690,6 @@ function viewTickets(t){
   } else h += `<p class="note">各日の一番最初に回して、super免除券を獲得する順位を決めます。</p><div class="btns"><button class="btn" data-act="roulette">${rouletteDay}日目のルーレットを回す</button></div>`;
   h += `</div>`;
 
-  const res = prizeResults(t), ready = !!t.travel_total;
-  h += `<div class="h2 red">ピタリ賞・ニアピン賞<small>第十七条</small></div><div class="card">
-    <div class="ttl"><div><small>旅費総額（前回4位の予約者が提示）</small><b class="num">${ready ? yen(t.travel_total) : "未入力"}</b></div><button class="btn" data-act="travelTotal">${ready ? "内訳を見る・追加" : "旅費総額を入力"}</button></div>
-    <p class="note">${ready ? "全員が「自分の最終支払額」を予想します。" : "旅費総額が入力されるまで、予想は入力できません。"}判定は100円単位（100円未満は切り捨て）。ピタリ賞（一致）は全額、ニアピン賞（ピタリ±1,000円以内）は半額が免除され、残りのメンバーで均等に負担します。順位は変わりません。</p>
-    ${res.map(r => `<div class="predrow"><span class="dot" style="background:${pcolor(r.id)}"></span><b>${esc(pname(r.id))}</b><input class="yen-in" inputmode="numeric" data-pred="${r.id}" value="${r.pred == null ? "" : fmtNum(r.pred)}" placeholder="${ready ? "予想額" : "総額の入力待ち"}" ${ready ? "" : "disabled"} autocomplete="off"><span class="pr">${r.pred == null ? "" : `<small>今の差 ${signed(r.paid - r.pred)}</small>${r.prize ? `<span class="tic ${r.prize === "ピタリ賞" ? "s" : "n"}">${r.prize}</span>` : ""}`}</span></div>`).join("")}
-  </div>`;
-
-  h += `<div class="h2 aqua">精算<small>立替え・賞の免除を反映</small></div><div class="card"><p class="note" style="margin-top:0">誰が誰にいくら払えばよいかを計算します。立替えた人は、支払い一覧の各支払いで設定できます。</p><div class="btns" style="margin-top:6px"><button class="btn" data-act="settle">精算を見る</button></div></div>`;
   return h;
 }
 async function resetTickets(t){
@@ -1717,7 +1769,7 @@ function openPrivDeclare(t, day){
   let kind = null;
   const s = openSheet(`${day}日目の特権`, `<p class="note">${day === 1 ? "1日目は前回優勝者" : "宣言する時点（朝一）で1位の人"}が、1つ選んで宣言します。${cand ? `候補：<b style="color:var(--ink)">${esc(pname(cand))}</b>` : ""}</p>
     <div class="f"><span>獲得した人</span>${chipPlayers(activeMembers(t), cand ? [cand] : [])}</div>
-    <div class="f"><span>特権</span><div class="privpick">${[1,2,3,4,5].map(k => `<button type="button" data-pk="${k}" ${usedKinds.includes(k) ? "disabled" : ""} aria-pressed="false"><span class="pico" style="--pi:var(--priv-${k})"></span><span><b>特権${KANJI[k]}「${PRIVS[k].name}」${usedKinds.includes(k) ? "（獲得済み）" : ""}</b><small>${PRIVS[k].desc}（${PRIVS[k].span}）</small></span></button>`).join("")}</div></div>
+    <div class="f"><span>特権</span><div class="privpick">${[1,2,3,4,5].map(k => `<button type="button" data-pk="${k}" ${usedKinds.includes(k) ? "disabled" : ""} aria-pressed="false"><span class="pico" style="--pi:var(--priv-${k})"></span><span><small class="pno">特権${KANJI[k]}${usedKinds.includes(k) ? "（獲得済み）" : ""}</small><b class="pnm">${PRIVS[k].name}</b><small>${PRIVS[k].desc}（${PRIVS[k].span}）</small></span></button>`).join("")}</div></div>
     <div class="btns"><button class="btn" id="pgo">宣言する</button></div>`);
   bindChips(s, "data-p", false);
   s.querySelectorAll("[data-pk]").forEach(b => b.onclick = () => { kind = Number(b.dataset.pk); s.querySelectorAll("[data-pk]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
@@ -1846,6 +1898,7 @@ function openThreshold(){
 }
 
 /* ===================== 段階3：集計・歴代・地図 ===================== */
+const statOpen = new Set();
 let statScope = "trip", mapMode = "all", mapSeason = null, statFocus = null;
 const SEASON_COLORS = ["#E8B12A", "#E2364F", "#1FB3BF", "#8B6CFF", "#3DBE6C", "#FF8A3D", "#FF6FB5", "#5A6378"];
 const seasonColor = n => SEASON_COLORS[(Math.max(1, n) - 1) % SEASON_COLORS.length];
@@ -2044,10 +2097,10 @@ function viewStats(t){
   const sortedIds = ids.slice().sort((a, b) => st.S[b].paid - st.S[a].paid);
   h += `<div class="kpis"><div><small>支払い件数</small><b class="num">${st.steps}</b></div><div><small>総額</small><b class="num">${yen(total)}</b></div><div><small>首位交代</small><b class="num">${st.leadChanges}回</b></div></div>`;
   h += `<div class="h2">累計支払額の推移${statScope === "trip" ? "<small>◆＝首位交代</small>" : ""}</div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.series[id] })), st.steps, { fmt: v => v >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v), marks: statScope === "trip" ? st.leadMarks : [], bands: st.bands, label: "累計支払額の推移" })}${legend(sortedIds)}</div>`;
-  h += `<div class="h2 aqua">標準との差の推移<small>割り勘より何円多く払ったか</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.diffSeries[id] })), st.steps, { zero: true, fmt: v => (v > 0 ? "+" : "") + (Math.abs(v) >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v)), bands: st.bands, label: "標準との差の推移" })}${legend(sortedIds)}</div>`;
   const cats = categoriesFor({ days: Math.max(3, ...trips.map(x => x.days || 3)) });
   h += `<div class="h2">カテゴリー別</div><div class="card">${stackBars(sortedIds, Object.fromEntries(ids.map(id => [id, st.S[id].cats])), cats)}</div>`;
   h += `<div class="h2 red">支払いの割合</div><div class="card">${donut(sortedIds.map(id => ({ label: pname(id), v: st.S[id].paid, c: pcolor(id) })))}</div>`;
+  h += `<div class="h2 aqua">標準との差の推移<small>割り勘より何円多く払ったか</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.diffSeries[id] })), st.steps, { zero: true, fmt: v => (v > 0 ? "+" : "") + (Math.abs(v) >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v)), bands: st.bands, label: "標準との差の推移" })}${legend(sortedIds)}</div>`;
 
   // 〇〇数・〇〇率
   const S = st.S;
@@ -2084,10 +2137,12 @@ function viewStats(t){
   h += `<div class="h2 aqua">〇〇数・〇〇率<small>各項目の1位に王冠</small></div>`;
   groups.forEach(([gname, rows], gi) => {
     if (!rows.length) return;
-    h += `<details class="sgroup" ${gi === 0 ? "open" : ""}><summary class="sgt">${gname}</summary>`;
+    h += `<details class="sgroup" data-g="${gname}" ${statOpen.has(gname) ? "open" : ""}><summary class="sgt">${gname}</summary>`;
     rows.forEach(([label, fn, fmt]) => {
       if (label === "__vs"){ h += vsTable(ids, S); return; }
       const vals = ids.map(id => ({ id, v: fn(id) })).filter(x => Number.isFinite(x.v));
+      const always = /人でのじゃんけん|1人勝ち/.test(label);
+      if (always && (!vals.length || vals.every(x => x.v === 0))){ h += `<div class="srank"><div class="sl">${label}</div><div class="sv none">まだ記録がありません</div></div>`; return; }
       if (!vals.length || vals.every(x => x.v === 0)) return;
       vals.sort((a, b) => b.v - a.v);
       const maxAbs = Math.max(...vals.map(x => Math.abs(x.v))) || 1;
@@ -2109,7 +2164,8 @@ function viewStats(t){
 function vsTable(ids, S){
   const vsIds = ids.filter(id => Object.keys(S[id].vs).length);
   if (!vsIds.length) return "";
-  return `<div class="srank"><div class="sl">一騎打ちの相性（払った回数／一騎打ち数）</div><div class="vs"><table><tr><th></th>${vsIds.map(id => `<th><i style="background:${pcolor(id)}"></i>${esc(pname(id))}</th>`).join("")}</tr>${vsIds.map(a => `<tr><th><i style="background:${pcolor(a)}"></i>${esc(pname(a))}</th>${vsIds.map(b => { const r = S[a].vs[b]; return `<td>${a === b ? "—" : r ? `${r.w}/${r.j}` : ""}</td>`; }).join("")}</tr>`).join("")}</table></div></div>`;
+  const n2 = id => esc([...pname(id)].slice(0, 2).join(""));
+  return `<div class="srank"><div class="sl">一騎打ちの相性（行の人が払った回数／一騎打ち数）</div><div class="vs"><table><tr><th></th>${vsIds.map(id => `<th><i style="background:${pcolor(id)}"></i>${n2(id)}</th>`).join("")}</tr>${vsIds.map(a => `<tr><th><i style="background:${pcolor(a)}"></i>${n2(a)}</th>${vsIds.map(b => { const r = S[a].vs[b]; return `<td>${a === b ? "—" : r ? `${r.w}/${r.j}` : ""}</td>`; }).join("")}</tr>`).join("")}</table></div></div>`;
 }
 /* ---------- 歴代タブ ---------- */
 let honorAll = false, mapPlayer = null;
@@ -2149,7 +2205,6 @@ function viewHistory(t){
   const winners = [...new Set(trips.map(tripWinner).filter(Boolean))];
   h += `<div class="h2">過去の旅行先<small>タップで旅の詳細</small></div><div class="card">
     <div class="filter mapf" style="margin:0 0 6px;padding:0"><button data-mapmode="all" aria-pressed="${mapMode === "all"}">全体</button>${allSeasons.map(sn => `<button data-mapseason="${sn}" aria-pressed="${mapMode === "season" && mapSeason === sn}">SEASON ${sn}</button>`).join("")}<button data-mapwin="1" aria-pressed="${mapMode === "winner"}">優勝者別</button></div>
-    <div class="filter mapf" style="margin:0 0 8px;padding:0">${winners.map(id => `<button class="pc" style="--pc:${pcolor(id)}" data-mapplayer="${id}" aria-pressed="${mapMode === "player" && mapPlayer === id}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div>
     ${japanMap(trips)}</div>`;
 
   // 順位スコア（一番下）
@@ -2179,12 +2234,14 @@ function showTripPayments(id){
 function openPrefSheet(p){
   const trips = tripsSorted().filter(x => (x.prefectures && x.prefectures.length ? x.prefectures : parsePrefs(x.place || x.name)).includes(p));
   if (!trips.length){ toast(`${p}にはまだ行っていません`); return; }
-  const s = openSheet(esc(p), trips.map(x => {
+  const top = x => { const r = tripRanks(x)[0]; return r ? r.paid : 0; };
+  trips.sort((a, b) => top(b) - top(a));
+  const s = openSheet(`${esc(p)}<span class="tcount">全${trips.length}回旅行</span>`, `<div class="hscroll ${trips.length > 1 ? "multi" : ""}">${trips.map(x => {
     const rk = tripRanks(x);
     return `<div class="card prefc" style="--sc:${seasonColor(x.season)}"><b>第${x.no}回 ${esc(x.name)}</b><small>SEASON ${x.season}${x.start_date ? `・${periodText(x)}` : ""}</small>
       ${rk.map(r => `<div class="srow2"><span class="num r">${r.rank}</span><i style="background:${pcolor(r.id)}"></i><b>${esc(pname(r.id))}</b><span>${r.rank === 1 && r.paid > 0 ? "🏆" : ""}</span><span class="num">${yen(r.paid)}</span></div>`).join("")}
       <div class="btns" style="margin-top:8px"><button class="btn ghost" data-gopay="${x.id}">支払いを見る</button></div></div>`;
-  }).join(""));
+  }).join("")}</div>${trips.length > 1 ? `<p class="note" style="text-align:center">← 横にスクロールして、ほかの回も見られます →</p>` : ""}`);
   s.querySelectorAll("[data-gopay]").forEach(b => b.onclick = () => { closeSheet(); showTripPayments(b.dataset.gopay); });
 }
 
@@ -2396,30 +2453,57 @@ async function deletePending(id){
 }
 
 /* ---------- じゃんけん開始 ---------- */
-function privStatusHtml(t){
-  const ps = tripPrivs(t); if (!ps.length) return "";
-  return `<div class="pstat">${ps.map(p => `<span style="--pc:${pcolor(p.player_id)}"><i class="pico" style="--pi:var(--priv-${p.kind})"></i>特権${KANJI[p.kind]}<b>${esc(pname(p.player_id))}</b></span>`).join("")}</div>`;
+/* 特権カード（じゃんけん開始画面）：アイコン・持ち主のカラー枠・名前。三はスイッチ、四は自動不参加の表示付き */
+function privArea(s, t, getCat){
+  const box = s.querySelector("#privarea");
+  let on3 = false, amt = 0;
+  const draw = () => {
+    if (!box) return;
+    const ps = tripPrivs(t);
+    box.innerHTML = ps.length ? `<div class="f"><span>特権</span></div>` + ps.map(p => {
+      const m = PRIVS[p.kind], who = esc(pname(p.player_id));
+      let extra = `<small>${m.desc}</small>`, ctl = "";
+      if (p.kind === 3){
+        const type = travelType(getCat()), used = p.uses_detail || [];
+        const can = (p.uses || 0) < 2 && !used.includes(type);
+        if (!can) on3 = false;
+        extra = `<small>${can ? `${who}以外に一機追加。${type}枠で使えます（残り${2 - (p.uses || 0)}回）` : `${type}枠は使用済みです`}</small>`;
+        ctl = `<button type="button" class="sw" id="p3sw" role="switch" aria-checked="${on3}" ${can ? "" : "disabled"} aria-label="特権三を使う"></button>`;
+      } else if (p.kind === 4){
+        const lim = PRIV4_LIMIT[p.day] || 8000, out = amt > 0 && amt <= lim;
+        extra = `<small>${yen(lim)}以下に不参加。${amt > 0 ? (out ? `今回は${yen(amt)}なので不参加` : `今回は${yen(amt)}なので参加`) : "金額を入れると自動で判定"}</small>`;
+      }
+      return `<div class="pcard" style="--pc:${pcolor(p.player_id)}"><span class="pico" style="--pi:var(--priv-${p.kind})"></span><div class="pcb"><span class="pno">特権${KANJI[p.kind]}・<b>${who}</b></span><b class="pnm">${m.name}</b>${extra}</div>${ctl}</div>`;
+    }).join("") : "";
+    const sw = box.querySelector("#p3sw"); if (sw) sw.onclick = () => { on3 = !on3; sw.setAttribute("aria-checked", String(on3)); };
+  };
+  draw();
+  return {
+    refresh: draw,
+    amount: v => {
+      amt = v; draw();
+      const p = privOf(t, 4); if (!p) return;
+      const chip = s.querySelector(`[data-p="${p.player_id}"]`), out = v > 0 && v <= (PRIV4_LIMIT[p.day] || 8000);
+      if (chip){ chip.setAttribute("aria-pressed", String(!out)); chip.disabled = out; }
+    },
+    p3: () => on3 ? (privOf(t, 3) || {}).player_id || null : null
+  };
 }
-function priv4Box(t){
-  const p = privOf(t, 4); if (!p) return "";
-  return `<div class="toggle p4box"><div>特権四：${esc(pname(p.player_id))}は${yen(PRIV4_LIMIT[p.day] || 8000)}以下に不参加<small id="p4info">金額を入れると自動で参加から外れます</small></div><span class="pico big4" style="--pi:var(--priv-4)"></span></div>`;
-}
-function applyPriv4(s, t, amountOne){
-  const p = privOf(t, 4); if (!p) return;
-  const lim = PRIV4_LIMIT[p.day] || 8000, chip = s.querySelector(`[data-p="${p.player_id}"]`);
-  const out = amountOne > 0 && amountOne <= lim;
-  if (chip){ chip.setAttribute("aria-pressed", String(!out)); chip.disabled = out; }
-  const info = s.querySelector("#p4info");
-  if (info) info.textContent = amountOne > 0 ? (out ? `今回は${yen(amountOne)}なので不参加です` : `今回は${yen(amountOne)}なので参加します`) : "金額を入れると自動で参加から外れます";
-}
-
 const RULES_HTML = "<h4 class=\"rh\">第一編 総則</h4><div class=\"rc\">(目的)</div><div class=\"ra\">第一条</div><p class=\"rp\">本要綱は、男気じゃんけん旅の公正化を図るとともに、各種事務処理の能率化を促進し、もって旅行の健全な実施に資することを目的とする。また、普段の生活では経験することのできない非日常感を味わうことで、より一層の健康、心の幸福感を得ようとするものである。</p><div class=\"rc\">(定義)</div><div class=\"ra\">第二条</div><p class=\"rp\">この旅における「じゃんけん」は、旅中で発生する支払い及び運転全てに適用されるものとする。ただし、参加者に運転免許を取得していない者がいる場合は、この限りでない。なお、詳細な用語の定義は下記のとおりとする。</p><p class=\"rp\">一 旅費: 事前に予約した移動交通費、宿泊費、車に係る費用とする。</p><p class=\"rp\">二 旅中: 新幹線の場合には改札、飛行機の場合には保安検査場を始点及び終点とする。</p><p class=\"rp\">三 一機追加: じゃんけんで負けた場合に、即時復帰する制度のこと。</p><div class=\"rc\">(参加者)</div><div class=\"ra\">第三条</div><p class=\"rp\">参加人数は基本四人とし、都度、一から二人程度の追加人員を招集することができる。</p><p class=\"rp\">2 前項の規定により追加招集を行うときは、金銭的余裕のある人を選定することとし、必ず本人の同意を得なければならない。</p><p class=\"rp\">3 三連覇の者が出た場合の取扱いについては、第十八条で後述する。</p><div class=\"rc\">(実施時期)</div><div class=\"ra\">第四条</div><p class=\"rp\">一年間のうちに二回実施することとする。夏及び冬の開催を基本とするが、参加者の都合に応じて、臨機応変に定めることができる。</p><div class=\"rc\">(役割分担)</div><div class=\"ra\">第五条</div><p class=\"rp\">参加者は、前条の趣旨に従い、次に掲げる事項について役割を振り分けた上で実施すること。ただし、参加人数の都合上やむを得ない場合には、この限りでない。</p><p class=\"rp\">一 宿泊先、移動手段等の予約(立替え払いで対応すること。)</p><p class=\"rp\">二 支払実績額及び勝率等の記録</p><p class=\"rp\">三 写真撮影</p><div class=\"rc\">(事前協議)</div><div class=\"ra\">第六条</div><p class=\"rp\">本要綱に定める事項について、旅中に変更することはできない。ただし、疑義が生じた場合には、参加者全員で協議の上、調整を図ること。</p><h4 class=\"rh\">第二編 旅行中</h4><div class=\"rc\">(金額設定)</div><div class=\"ra\">第七条</div><p class=\"rp\">参加者全員分の合計額を一度にじゃんけんで決めるものとする。ただし、目的地までの旅費(車代を除く)、宿泊費に限り、一人当たりの金額で計算をし、参加者の人数分だけじゃんけんを取り行うこととする。</p><p class=\"rp\">2 参加者が個人的な支払いをすることは認められず、その場合には、全員が当該個人と同等額の支払をするよう調整を図ること。</p><div class=\"rc\">(支払時期)</div><div class=\"ra\">第八条</div><p class=\"rp\">原則、支払が発生する毎にじゃんけんを行う。ただし、目的地までの旅費に関しては、次のとおり規定する。</p><p class=\"rp\">一 行きの旅費は、一泊目の夜</p><p class=\"rp\">二 帰りの旅費及び車代(高速代を含む)は、旅行終了直前</p><p class=\"rp\">三 宿泊費は、当該宿泊日の夜</p><div class=\"rc\">(支払方法)</div><div class=\"ra\">第九条</div><p class=\"rp\">現地の対応する決済方法に応じ、参加者内で立替えや両替等により臨機応変に支払うこと。ただし、事前予約により立替えた分については、振込みまたは現金での支払いとする。</p><div class=\"rc\">(運転)</div><div class=\"ra\">第十条</div><p class=\"rp\">運転の義務が発生する範囲は、移動距離を問わず、車が停止しかつ参加者のうち二人以上が同時に降車する時までとする。</p><div class=\"rc\">(上下関係)</div><div class=\"ra\">第十一条</div><p class=\"rp\">旅中に限り、支払実績額の多い順に序列を発生させることとする。各時点で一位の者が一番偉いため、決定権及び優先順位は、序列に従うこと。(本要綱において「参加者全員で協議すること」と規定しているものを除く。) なお、一位の特権制度は第十六条にて規定。</p><div class=\"rc\">(免除制度)</div><div class=\"ra\">第十二条</div><p class=\"rp\">免除制度として、免除券及びsuper免除券(以下、免除券等という。)が発行され、総合優勝者にはsuper免除券を一枚を、全十部門(1日目、2日目、3日目、飛行機、新幹線、宿、車、おみや代、無駄枠、支払勝率)において一位の者には各一枚ずつ免除券を初期配布する。</p><p class=\"rp\">2 免除券の効果は、支払いが確定した際に、再度参加者全員でじゃんけんをやり直すことができるものとする。</p><p class=\"rp\">3 super免除券の効果は、一件の支払につき、じゃんけん自体への参加を免除されるものとする。</p><div class=\"ra\">第十三条</div><p class=\"rp\">前条における免除券等の使用は、必ずじゃんけんが開始する前に申し出なければならず、支払いが確定しなかった場合でも返却はされない。なお、何れの免除券等を使用するかは一斉に宣言することとし、参加者内で事前に調整することは認められない。</p><p class=\"rp\">2 複数人での同時使用は禁止とし、申告が重複した場合には、じゃんけんで勝った者が使用を認められる。ただし、免除券とsuper免除券が重複した場合には、super免除券が優先される。</p><div class=\"ra\">第十四条</div><p class=\"rp\">super免除券は、一日に最低一枚発行しなければならない。発行方法は、旅費又は宿泊費のじゃんけん前時点での一定順位の者に与えられることとする。なお、獲得順位の決め方は、各日の一番最初にルーレットで決定する。追加での発行は全員で協議の上決定する。発行枚数に上限は設定しないが、その数量は厳格に管理しなければならない。</p><div class=\"rc\">(無駄枠)</div><div class=\"ra\">第十五条</div><p class=\"rp\">旅程に上限一回まで、無駄な物への支払い(以下、無駄枠という。)を予定し組み込むことができる。</p><div class=\"rc\">(イベント)</div><div class=\"ra\">第十六条</div><p class=\"rp\">支払に係るイベントとして、特権制度を次とおり規定する。特権は朝一で宣言するものとし、さらにどの規定にも優先される(特権使用者の免除券等併用は不可)。</p><p class=\"rp\">なお、特権を獲得出来る者は、一日目は前回優勝者、二日目以降は前日終了時点(合計)での一位の者とする。</p><p class=\"rp\">また、一度獲得された特権はその時点で獲得できなくなる。</p><p class=\"rp\">一 免除券及びsuper免除券を他の者と重ねて使用することができる。（旅費全期間中適用）</p><p class=\"rp\">二 免除券又はsuper免除券を他の参加者から一枚奪うことができる。なお、所持者のみでじゃんけんを行い、負けた人から任意に奪うこととする。（一回限り）</p><p class=\"rp\">三 任意のじゃんけん二回（旅費及びその他のジャンケンで各一回ずつ）において、自分以外の全ての人に一機追加を付与する。（旅費全期間中適用）</p><p class=\"rp\">四 特定金額以下の支払は全て参加を免除される。なお、特定金額は特権発動日により変動し、一日目は四千円、二日目は六千円、三日目は八千円とする。（旅費全期間中適用）</p><p class=\"rp\">五 自分以外の免除券等所持者のみでじゃんけんを行わせ、負けた人にそれを強制使用させることができる。なお、super免除券も対象となるが、いずれの免除券を使用するかは、所持者本人の選択とする。（旅費全期間中適用、上限6回）</p><div class=\"ra\">第十七条</div><p class=\"rp\">ピタリ賞及びニアピン賞を次のとおり規定する。宣言タイミングは前回四位の者が旅費総額を提示した時点とし、全支払じゃんけんが終了後の自分の支払金額との差異で判定する。ただし、順位変動は行われないものとする。</p><p class=\"rp\">一 ピタリ賞は、百円単位とし、支払確定額の全額が免除される。免除分は残りの参加メンバーに均等に割り振られる。</p><p class=\"rp\">二 ニアピン賞は、ピタリ賞±千円とし、支払確定額の半額が免除される。免除分は残りの参加メンバーに均等に割り振られる。</p><h4 class=\"rh\">第三編 旅行後</h4><div class=\"rc\">(勝利特典)</div><div class=\"ra\">第十八条</div><p class=\"rp\">各回毎に、支払実績額が最も多い者には、次に掲げる特典が与えられる。</p><p class=\"rp\">一 次回目的地の決定権</p><p class=\"rp\">二 免除券、super免除券 各一枚ずつ</p><p class=\"rp\">三 次回旅行へ向けた打合せに係る食事代全額の免除</p><div class=\"ra\">第十九条</div><p class=\"rp\">三連覇(連続する三つの旅において一位)を成し遂げた場合、次回の旅に限り、全額費用負担が免除される。なお、海外も可とする。</p><div class=\"rc\">(打合せ)</div><div class=\"ra\">第二十条</div><p class=\"rp\">次回旅行前に、必ず一度以上、参加者全員で打ち合わせを行うこととする。なお、打合せの幹事は直近最下位の者が行わなければならない。</p><div class=\"ra\">第二十一条</div><p class=\"rp\">次回旅行の予約・手配は、最下位の者が行うこととする。</p>";
+const ARTICLES = {"一": "<div class=\"rc\">(目的)</div><p class=\"rp\">本要綱は、男気じゃんけん旅の公正化を図るとともに、各種事務処理の能率化を促進し、もって旅行の健全な実施に資することを目的とする。また、普段の生活では経験することのできない非日常感を味わうことで、より一層の健康、心の幸福感を得ようとするものである。</p>", "二": "<div class=\"rc\">(定義)</div><p class=\"rp\">この旅における「じゃんけん」は、旅中で発生する支払い及び運転全てに適用されるものとする。ただし、参加者に運転免許を取得していない者がいる場合は、この限りでない。なお、詳細な用語の定義は下記のとおりとする。</p><p class=\"rp\">一 旅費: 事前に予約した移動交通費、宿泊費、車に係る費用とする。</p><p class=\"rp\">二 旅中: 新幹線の場合には改札、飛行機の場合には保安検査場を始点及び終点とする。</p><p class=\"rp\">三 一機追加: じゃんけんで負けた場合に、即時復帰する制度のこと。</p>", "三": "<div class=\"rc\">(参加者)</div><p class=\"rp\">参加人数は基本四人とし、都度、一から二人程度の追加人員を招集することができる。</p><p class=\"rp\">2 前項の規定により追加招集を行うときは、金銭的余裕のある人を選定することとし、必ず本人の同意を得なければならない。</p><p class=\"rp\">3 三連覇の者が出た場合の取扱いについては、第十八条で後述する。</p>", "四": "<div class=\"rc\">(実施時期)</div><p class=\"rp\">一年間のうちに二回実施することとする。夏及び冬の開催を基本とするが、参加者の都合に応じて、臨機応変に定めることができる。</p>", "五": "<div class=\"rc\">(役割分担)</div><p class=\"rp\">参加者は、前条の趣旨に従い、次に掲げる事項について役割を振り分けた上で実施すること。ただし、参加人数の都合上やむを得ない場合には、この限りでない。</p><p class=\"rp\">一 宿泊先、移動手段等の予約(立替え払いで対応すること。)</p><p class=\"rp\">二 支払実績額及び勝率等の記録</p><p class=\"rp\">三 写真撮影</p>", "六": "<div class=\"rc\">(事前協議)</div><p class=\"rp\">本要綱に定める事項について、旅中に変更することはできない。ただし、疑義が生じた場合には、参加者全員で協議の上、調整を図ること。</p>", "七": "<div class=\"rc\">(金額設定)</div><p class=\"rp\">参加者全員分の合計額を一度にじゃんけんで決めるものとする。ただし、目的地までの旅費(車代を除く)、宿泊費に限り、一人当たりの金額で計算をし、参加者の人数分だけじゃんけんを取り行うこととする。</p><p class=\"rp\">2 参加者が個人的な支払いをすることは認められず、その場合には、全員が当該個人と同等額の支払をするよう調整を図ること。</p>", "八": "<div class=\"rc\">(支払時期)</div><p class=\"rp\">原則、支払が発生する毎にじゃんけんを行う。ただし、目的地までの旅費に関しては、次のとおり規定する。</p><p class=\"rp\">一 行きの旅費は、一泊目の夜</p><p class=\"rp\">二 帰りの旅費及び車代(高速代を含む)は、旅行終了直前</p><p class=\"rp\">三 宿泊費は、当該宿泊日の夜</p>", "九": "<div class=\"rc\">(支払方法)</div><p class=\"rp\">現地の対応する決済方法に応じ、参加者内で立替えや両替等により臨機応変に支払うこと。ただし、事前予約により立替えた分については、振込みまたは現金での支払いとする。</p>", "十": "<div class=\"rc\">(運転)</div><p class=\"rp\">運転の義務が発生する範囲は、移動距離を問わず、車が停止しかつ参加者のうち二人以上が同時に降車する時までとする。</p>", "十一": "<div class=\"rc\">(上下関係)</div><p class=\"rp\">旅中に限り、支払実績額の多い順に序列を発生させることとする。各時点で一位の者が一番偉いため、決定権及び優先順位は、序列に従うこと。(本要綱において「参加者全員で協議すること」と規定しているものを除く。) なお、一位の特権制度は第十六条にて規定。</p>", "十二": "<div class=\"rc\">(免除制度)</div><p class=\"rp\">免除制度として、免除券及びsuper免除券(以下、免除券等という。)が発行され、総合優勝者にはsuper免除券を一枚を、全十部門(1日目、2日目、3日目、飛行機、新幹線、宿、車、おみや代、無駄枠、支払勝率)において一位の者には各一枚ずつ免除券を初期配布する。</p><p class=\"rp\">2 免除券の効果は、支払いが確定した際に、再度参加者全員でじゃんけんをやり直すことができるものとする。</p><p class=\"rp\">3 super免除券の効果は、一件の支払につき、じゃんけん自体への参加を免除されるものとする。</p>", "十三": "<p class=\"rp\">前条における免除券等の使用は、必ずじゃんけんが開始する前に申し出なければならず、支払いが確定しなかった場合でも返却はされない。なお、何れの免除券等を使用するかは一斉に宣言することとし、参加者内で事前に調整することは認められない。</p><p class=\"rp\">2 複数人での同時使用は禁止とし、申告が重複した場合には、じゃんけんで勝った者が使用を認められる。ただし、免除券とsuper免除券が重複した場合には、super免除券が優先される。</p>", "十四": "<p class=\"rp\">super免除券は、一日に最低一枚発行しなければならない。発行方法は、旅費又は宿泊費のじゃんけん前時点での一定順位の者に与えられることとする。なお、獲得順位の決め方は、各日の一番最初にルーレットで決定する。追加での発行は全員で協議の上決定する。発行枚数に上限は設定しないが、その数量は厳格に管理しなければならない。</p>", "十五": "<div class=\"rc\">(無駄枠)</div><p class=\"rp\">旅程に上限一回まで、無駄な物への支払い(以下、無駄枠という。)を予定し組み込むことができる。</p>", "十六": "<div class=\"rc\">(イベント)</div><p class=\"rp\">支払に係るイベントとして、特権制度を次とおり規定する。特権は朝一で宣言するものとし、さらにどの規定にも優先される(特権使用者の免除券等併用は不可)。</p><p class=\"rp\">なお、特権を獲得出来る者は、一日目は前回優勝者、二日目以降は前日終了時点(合計)での一位の者とする。</p><p class=\"rp\">また、一度獲得された特権はその時点で獲得できなくなる。</p><p class=\"rp\">一 免除券及びsuper免除券を他の者と重ねて使用することができる。（旅費全期間中適用）</p><p class=\"rp\">二 免除券又はsuper免除券を他の参加者から一枚奪うことができる。なお、所持者のみでじゃんけんを行い、負けた人から任意に奪うこととする。（一回限り）</p><p class=\"rp\">三 任意のじゃんけん二回（旅費及びその他のジャンケンで各一回ずつ）において、自分以外の全ての人に一機追加を付与する。（旅費全期間中適用）</p><p class=\"rp\">四 特定金額以下の支払は全て参加を免除される。なお、特定金額は特権発動日により変動し、一日目は四千円、二日目は六千円、三日目は八千円とする。（旅費全期間中適用）</p><p class=\"rp\">五 自分以外の免除券等所持者のみでじゃんけんを行わせ、負けた人にそれを強制使用させることができる。なお、super免除券も対象となるが、いずれの免除券を使用するかは、所持者本人の選択とする。（旅費全期間中適用、上限6回）</p>", "十七": "<p class=\"rp\">ピタリ賞及びニアピン賞を次のとおり規定する。宣言タイミングは前回四位の者が旅費総額を提示した時点とし、全支払じゃんけんが終了後の自分の支払金額との差異で判定する。ただし、順位変動は行われないものとする。</p><p class=\"rp\">一 ピタリ賞は、百円単位とし、支払確定額の全額が免除される。免除分は残りの参加メンバーに均等に割り振られる。</p><p class=\"rp\">二 ニアピン賞は、ピタリ賞±千円とし、支払確定額の半額が免除される。免除分は残りの参加メンバーに均等に割り振られる。</p>", "十八": "<div class=\"rc\">(勝利特典)</div><p class=\"rp\">各回毎に、支払実績額が最も多い者には、次に掲げる特典が与えられる。</p><p class=\"rp\">一 次回目的地の決定権</p><p class=\"rp\">二 免除券、super免除券 各一枚ずつ</p><p class=\"rp\">三 次回旅行へ向けた打合せに係る食事代全額の免除</p>", "十九": "<p class=\"rp\">三連覇(連続する三つの旅において一位)を成し遂げた場合、次回の旅に限り、全額費用負担が免除される。なお、海外も可とする。</p>", "二十": "<div class=\"rc\">(打合せ)</div><p class=\"rp\">次回旅行前に、必ず一度以上、参加者全員で打ち合わせを行うこととする。なお、打合せの幹事は直近最下位の者が行わなければならない。</p>", "二十一": "<p class=\"rp\">次回旅行の予約・手配は、最下位の者が行うこととする。</p>"};
 function openRules(){
-  const trips = tripsSorted();
-  const roster = trips.map(x => { const r = tripRanks(x)[0]; return r && r.paid > 0 ? `<div class="rr"><span class="num">${x.no}</span>${esc(x.name)}<b style="--pc:${pcolor(r.id)}">${esc(pname(r.id))}</b><small class="num">${yen(r.paid)}</small></div>` : ""; }).join("");
-  const s = openSheet("男気じゃんけん旅 実施要綱", `${roster ? `<div class="card roster"><div class="rh2">👑 歴代1位名簿</div>${roster}</div>` : ""}<div class="rules">${RULES_HTML}</div><div class="btns"><button class="btn ghost" data-back>戻る</button></div>`);
-  s.querySelector("[data-back]").onclick = openSettings;
+  const s = openSheet("実施要綱", `<div class="btns" style="margin:-4px 0 8px"><button class="btn ghost" data-back>← 設定に戻る</button></div><div class="rules">${RULES_HTML}</div><div class="btns"><button class="btn ghost" data-back>戻る</button></div>`, true);
+  s.querySelectorAll("[data-back]").forEach(b => b.onclick = openSettings);
 }
+/* 第〇条のリンク：押すと該当条項をポップアップ表示（シートの上に重ねる） */
+const artLinks = html => String(html).replace(/第([一二三四五六七八九十]+)条/g, (m, k) => ARTICLES[k] ? `<button type="button" class="artlink" data-art="${k}">${m}</button>` : m);
+function openArticle(k){
+  let el = $("#artpop");
+  if (!el){ el = document.createElement("div"); el.id = "artpop"; el.className = "artpop"; document.body.appendChild(el); el.addEventListener("click", e => { if (e.target === el || e.target.closest("[data-artclose]")) el.classList.remove("on"); }); }
+  el.innerHTML = `<div class="artin" role="dialog" aria-modal="true"><div class="arth"><b>第${k}条</b><button class="artx" data-artclose aria-label="閉じる">×</button></div><div class="rules">${ARTICLES[k]}</div></div>`;
+  el.classList.add("on");
+}
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-art]"); if (b){ e.preventDefault(); e.stopPropagation(); openArticle(b.dataset.art); } }, true);
 
 /* ---------- 起動 ---------- */
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
