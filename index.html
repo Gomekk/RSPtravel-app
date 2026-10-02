@@ -459,6 +459,95 @@ ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:7
 .todaypriv.ask .pk::before{background-image:var(--burst-glow-gold)}
 .pend .chipbtn{animation:nudge 2.2s ease-in-out infinite}
 @keyframes nudge{0%,80%,100%{transform:none}85%{transform:translateX(-3px) rotate(-3deg)}90%{transform:translateX(3px) rotate(3deg)}}
+
+/* ===== 段階3：集計・歴代 ===== */
+.scope{margin-top:4px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 6px}
+.kpis div{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:8px 10px;text-align:center}
+.kpis small{display:block;font-size:11px;font-weight:900;color:var(--mute)}
+.kpis b{font-size:18px}
+.chartcard{padding:10px 8px 8px}
+svg.chart{display:block;width:100%;height:auto;overflow:visible}
+svg.chart .grid{stroke:#E1E4EC;stroke-width:1}
+svg.chart .zero{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:4 3}
+svg.chart .band{stroke:#C9CED9;stroke-width:1;stroke-dasharray:3 3}
+svg.chart .ax{font-size:9.5px;font-weight:700;fill:var(--mute);font-family:var(--body)}
+svg.chart .ln{filter:drop-shadow(0 0 3px rgba(255,255,255,.9))}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;padding:0 4px}
+.legend span{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:900}
+.legend i{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink)}
+.stack .srow{display:grid;grid-template-columns:86px 1fr auto;align-items:center;gap:8px;margin-bottom:8px}
+.stack .sn{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stack .sn i,.srank .nm i,.srow2 i,.ptbl i,.hw i,.vs i,.dotc{display:inline-block;width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ink);flex:none}
+.sbar{display:flex;height:20px;border-radius:5px;overflow:hidden;border:2px solid var(--ink);min-width:4px}
+.sbar i{display:block;height:100%;border-right:1px solid rgba(27,24,56,.35)}
+.stack b{font-size:13px}
+.donut{display:flex;align-items:center;gap:12px}
+.donut svg{width:150px;flex:none}
+.donut .dc1{font-size:11px;font-weight:900;fill:var(--mute);font-family:var(--body)}
+.donut .dc2{font-size:13px;fill:var(--ink);font-family:var(--disp)}
+.donut .dl{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.donut .dl span{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:900}
+.donut .dl i{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--ink)}
+.donut .dl b{margin-left:auto;font-family:var(--disp);font-weight:400}
+.sgroup{background:rgba(255,255,255,.9);border:2px solid var(--ink);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.sgt{font-family:var(--disp);font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.sgt::before{content:"";width:16px;height:16px;background:var(--hand-choki) center/contain no-repeat}
+.sgroup:nth-of-type(3n+1) .sgt::before{background-image:var(--hand-guu)}
+.sgroup:nth-of-type(3n+2) .sgt::before{background-image:var(--hand-paa)}
+.srank{padding:8px 0;border-top:1px dashed var(--line)}
+.srank:first-of-type{border-top:0}
+.srank .sl{font-size:12px;font-weight:900;color:var(--mute);margin-bottom:4px}
+.sv{display:grid;grid-template-columns:18px 84px 1fr auto;align-items:center;gap:6px;font-size:12.5px;font-weight:900;margin:2px 0}
+.sv .sp2{font-size:12px;text-align:center}
+.sv .nm{display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv .br{height:8px;border-radius:4px;background:#EEF0F5;overflow:hidden}
+.sv .br i{display:block;height:100%;border-radius:4px}
+.sv b{font-size:13px;min-width:62px;text-align:right}
+.sv.best b{color:var(--crimson)}
+details.sgroup>summary{list-style:none;cursor:pointer;margin-bottom:0}
+details.sgroup>summary::-webkit-details-marker{display:none}
+details.sgroup>summary::after{content:"＋";margin-left:auto;font-family:var(--body);font-weight:900;color:var(--mute)}
+details.sgroup[open]>summary::after{content:"−"}
+details.sgroup[open]>summary{margin-bottom:6px}
+.vs{overflow-x:auto}
+.vs table{border-collapse:collapse;font-size:12px;font-weight:900}
+.vs th,.vs td{padding:6px 8px;border:1px solid var(--line);text-align:center;white-space:nowrap}
+.vs th{background:#F6F7FA}
+.rec{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px dashed var(--line);font-size:13px}
+.rec:first-of-type{border-top:0}
+.rec span{color:var(--mute);font-weight:900;display:inline-flex;align-items:center;gap:5px}
+.rec b{font-weight:900;text-align:right}
+.honor{padding:4px 10px}
+.hrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 2px;border-bottom:1.5px solid var(--line)}
+.hrow:last-child{border-bottom:0}
+.hn{flex:none;width:34px;height:34px;display:grid;place-items:center;font-size:16px;background:var(--burst-glow-gold) center/contain no-repeat}
+.hm{flex:1;min-width:0;display:flex;flex-direction:column}
+.hm b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm small{font-size:11px;color:var(--mute);font-weight:700}
+.hw{display:flex;flex-direction:column;align-items:flex-end;font-weight:900;font-size:13px}
+.hw small{font-size:12px;color:var(--mute)}
+.hw i{display:none}
+.hw.muted{color:var(--mute)}
+.xlab{display:flex;justify-content:space-between;padding:0 10px 0 44px;font-family:var(--disp);font-size:10px;color:var(--mute)}
+.ptbl{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:10px}
+.ptbl div,.srow2{display:flex;align-items:center;gap:6px;font-weight:900;font-size:13px}
+.ptbl b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ptbl .r,.srow2 .r{width:18px;text-align:center;color:var(--mute);font-size:14px}
+.season{box-shadow:inset 6px 0 0 var(--sc)}
+.season .sh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.season .sh b{font-family:var(--disp);font-weight:400;font-size:17px;color:var(--ink);text-shadow:0 0 10px var(--sc)}
+.season .sh small{font-size:11px;color:var(--mute);font-weight:700}
+.srow2{padding:6px 0;border-top:1px dashed var(--line)}
+.srow2 b{flex:1;min-width:0}
+.srow2 small{font-size:11px;color:var(--mute);width:34px;text-align:right}
+.jmap svg{display:block;width:100%;height:auto}
+.jmap .tt{font-size:8.5px;font-weight:900;fill:#9AA1B4;font-family:var(--body)}
+.jmap .tt.on{fill:var(--ink)}
+.jmap .tc{font-size:8px;font-family:var(--disp);fill:var(--ink)}
+.jmap .tl.on rect{animation:tilepop 3s ease-in-out infinite}
+@keyframes tilepop{50%{opacity:.82}}
+
 :root{--hand-guu:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23C8182F%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%23FF3B55%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2220%22%20y%3D%2240%22%20width%3D%2261%22%20height%3D%2254%22%20rx%3D%2216%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2222%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2236%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2250%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2264%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2214%22%20y%3D%2258%22%20width%3D%2248%22%20height%3D%2214%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");--hand-choki:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23D19A1A%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%23F5B820%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2224%22%20y%3D%222%22%20width%3D%2213%22%20height%3D%2258%22%20rx%3D%226.5%22%20transform%3D%22rotate%28-12%2030%2060%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2240%22%20y%3D%220%22%20width%3D%2213%22%20height%3D%2260%22%20rx%3D%226.5%22%20transform%3D%22rotate%2810%2046%2060%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2220%22%20y%3D%2244%22%20width%3D%2261%22%20height%3D%2250%22%20rx%3D%2215%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2251%22%20y%3D%2240%22%20width%3D%2214%22%20height%3D%2220%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2265%22%20y%3D%2240%22%20width%3D%2214%22%20height%3D%2220%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2216%22%20y%3D%2260%22%20width%3D%2244%22%20height%3D%2213%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");--hand-paa:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2322A0AA%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%2318C6D2%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2223%22%20y%3D%2214%22%20width%3D%2213%22%20height%3D%2246%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2237%22%20y%3D%224%22%20width%3D%2213%22%20height%3D%2256%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2251%22%20y%3D%226%22%20width%3D%2213%22%20height%3D%2254%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2265%22%20y%3D%2216%22%20width%3D%2213%22%20height%3D%2244%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2212%22%20y%3D%2246%22%20width%3D%2214%22%20height%3D%2240%22%20rx%3D%227%22%20transform%3D%22rotate%28-34%2022%2084%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2220%22%20y%3D%2244%22%20width%3D%2261%22%20height%3D%2250%22%20rx%3D%2215%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");}
 :root{--burst-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23F5C842%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23E2364F%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%231FB3BF%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-glow-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E8B12A%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C-1.4%2055.6%2C22.0%2071.0%2C-0.6%2067.0%2C24.6%2088.0%2C12.0%2075.3%2C33.1%2086.7%2C34.8%2075.1%2C45.0%20107.7%2C50.0%2077.0%2C55.4%20102.5%2C71.8%2068.3%2C62.2%2084.2%2C84.2%2063.0%2C69.4%2069.1%2C96.1%2055.2%2C76.3%2050.0%2C89.5%2045.5%2C72.6%2032.9%2C91.3%2033.1%2C75.2%2011.7%2C88.3%2031.3%2C62.5%20-0.7%2C71.0%2028.2%2C54.3%20-1.3%2C50.0%2028.3%2C45.7%2013.8%2C35.0%2025.2%2C33.4%2019.4%2C19.4%2037.2%2C30.8%2027.6%2C-4.0%2044.2%2C20.7%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E2364F%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C6.4%2056.0%2C19.8%2065.9%2C11.5%2065.6%2C26.6%2078.9%2C21.1%2069.4%2C37.0%20104.3%2C27.5%2072.5%2C45.5%20101.8%2C50.0%2075.1%2C55.0%2094.4%2C68.4%2071.6%2C64.4%2080.4%2C80.4%2066.4%2C74.5%2065.7%2C87.8%2054.5%2C72.8%2050.0%2C89.6%2045.4%2C73.1%2031.9%2C93.6%2033.2%2C75.1%2017.0%2C83.0%2031.7%2C62.2%209.1%2C66.9%2019.5%2C56.1%209.6%2C50.0%2023.3%2C44.7%207.0%2C32.2%2027.0%2C34.6%2017.6%2C17.6%2034.4%2C26.7%2031.3%2C4.8%2044.6%2C23.0%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231FB3BF%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C1.7%2054.8%2C25.8%2066.0%2C11.3%2066.6%2C25.2%2077.8%2C22.2%2071.6%2C35.5%20102.5%2C28.3%2071.2%2C45.8%20100.1%2C50.0%2076.7%2C55.3%2087.0%2C65.3%2070.6%2C63.7%2087.5%2C87.5%2064.2%2C71.2%2070.4%2C99.3%2054.4%2C72.0%2050.0%2C93.9%2045.7%2C71.5%2031.2%2C95.4%2033.1%2C75.3%2014.1%2C85.9%2026.0%2C66.0%206.8%2C67.9%2022.0%2C55.6%208.8%2C50.0%2026.6%2C45.4%201.6%2C29.9%2026.4%2C34.3%2016.4%2C16.4%2037.9%2C31.9%2033.0%2C9.0%2045.5%2C27.5%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--bolt-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--glint-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23F5C842%22/%3E%3C/svg%3E");--glint-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23E2364F%22/%3E%3C/svg%3E");--glint-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%231FB3BF%22/%3E%3C/svg%3E");--zig-ink:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2010%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolygon%20points%3D%220%2C0%2010%2C10%2020%2C0%22%20fill%3D%22%231B1838%22/%3E%3C/svg%3E")}
 </style>
@@ -617,9 +706,9 @@ function render(){
   document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
   if (!loaded){ v.innerHTML = `<div class="loading">読み込み中…</div>`; return; }
   v.innerHTML = tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
-    : tab === "stats" ? soon("集計", "グラフと〇〇数・〇〇率は段階3で追加します")
+    : tab === "stats" ? viewStats(t)
     : tab === "tickets" ? viewTickets(t)
-    : soon("歴代", "歴代名簿・シーズン・地図は段階3で追加します");
+    : viewHistory(t);
   bindView();
 }
 const soon = (t, s) => `<div class="soon"><b>${t}</b>${s}</div>`;
@@ -684,6 +773,10 @@ function bindView(){
     privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
     saveTravel: () => saveTravelTotal(curTrip()), roulette: () => openRoulette(curTrip(), rouletteDay), grantRoulette: () => grantRoulette(curTrip(), rouletteDay)
   })[b.dataset.act]());
+  v.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { statScope = b.dataset.scope; render(); });
+  v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { mapMode = "all"; render(); });
+  v.querySelectorAll("[data-mapseason]").forEach(b => b.onclick = () => { mapMode = "season"; mapSeason = Number(b.dataset.mapseason); render(); });
+  v.querySelectorAll("[data-tripopen]").forEach(b => b.onclick = () => openTripSheet(b.dataset.tripopen));
   v.querySelectorAll("[data-adj]").forEach(b => b.onclick = () => adjustTicket(curTrip(), ...b.dataset.adj.split("|")));
   v.querySelectorAll("[data-privday]").forEach(b => b.onclick = () => openPrivDeclare(curTrip(), Number(b.dataset.privday)));
   v.querySelectorAll("[data-privdel]").forEach(b => b.onclick = () => deletePriv(b.dataset.privdel));
@@ -1496,6 +1589,355 @@ function openThreshold(){
   openSheet("一斉宣言を出す金額", `<p class="note">この金額以上のじゃんけんで、免除券を持っている人に一斉宣言を求めます。これ未満でも、じゃんけん画面の「券を使う」から使えます。</p>
     <label class="f"><span>金額</span><input id="thv" type="number" inputmode="numeric" value="${threshold()}"></label><div class="btns"><button class="btn" id="thok">保存</button></div>`);
   $("#thok").onclick = async () => { const v = parseInt($("#thv").value, 10); if (!(v > 0)){ toast("金額を入力してください"); return; } if (await putSetting("declare_threshold", v)){ await loadTable("app_settings"); closeSheet(); render(); toast(`${yen(v)}以上で一斉宣言します`); } };
+}
+
+/* ===================== 段階3：集計・歴代・地図 ===================== */
+let statScope = "trip", mapMode = "all", mapSeason = null, statFocus = null;
+const SEASON_COLORS = ["#E8B12A", "#E2364F", "#1FB3BF", "#8B6CFF", "#3DBE6C", "#FF8A3D", "#FF6FB5", "#5A6378"];
+const seasonColor = n => SEASON_COLORS[(Math.max(1, n) - 1) % SEASON_COLORS.length];
+const pct = v => Number.isFinite(v) ? (v * 100).toFixed(1) + "%" : "—";
+const scopeTrips = () => {
+  const t = curTrip(), all = tripsSorted();
+  if (statScope === "all" || !t) return all;
+  if (statScope === "season") return all.filter(x => x.season === t.season);
+  return [t];
+};
+const allMembers = trips => { const s = []; trips.forEach(t => t.members.forEach(id => { if (!s.includes(id) && player(id)) s.push(id); })); return s; };
+const payDate = p => { const d = new Date(p.created_at); return isNaN(d) ? null : d; };
+
+/* ---------- 順位スコア ---------- */
+function tripRanks(t){
+  const rows = standings(t).filter(r => typeof r.rank === "number");
+  return rows.map(r => ({ id: r.id, rank: r.rank, paid: r.paid, pts: Math.max(0, 5 - r.rank) }));
+}
+function threePeats(){
+  const out = []; let prev = null, streak = 0;
+  tripsSorted().forEach(t => {
+    const w = tripWinner(t);
+    if (w && w === prev) streak++; else streak = w ? 1 : 0;
+    prev = w;
+    if (streak === 3) out.push({ id: w, trip: t });
+  });
+  return out;
+}
+
+/* ---------- SVGチャート ---------- */
+function lineChart(series, n, opt = {}){
+  const W = 340, H = opt.h || 190, L = opt.left || 44, Rr = 10, T = 12, B = 22;
+  const vals = series.flatMap(s => s.pts.filter(v => v != null));
+  let lo = opt.min ?? Math.min(0, ...vals), hi = opt.max ?? Math.max(1, ...vals);
+  if (lo === hi) hi = lo + 1;
+  const x = i => L + (n <= 1 ? 0 : i * (W - L - Rr) / (n - 1));
+  const y = v => opt.invert ? T + (v - lo) / (hi - lo) * (H - T - B) : H - B - (v - lo) / (hi - lo) * (H - T - B);
+  const ticks = opt.ticks || [lo, (lo + hi) / 2, hi];
+  let g = ticks.map(v => `<line x1="${L}" x2="${W - Rr}" y1="${y(v)}" y2="${y(v)}" class="grid"/><text x="${L - 6}" y="${y(v) + 4}" class="ax" text-anchor="end">${opt.fmt ? opt.fmt(v) : v}</text>`).join("");
+  if (opt.zero && lo < 0 && hi > 0) g += `<line x1="${L}" x2="${W - Rr}" y1="${y(0)}" y2="${y(0)}" class="zero"/>`;
+  (opt.bands || []).forEach(b => g += `<line x1="${x(b.i)}" x2="${x(b.i)}" y1="${T}" y2="${H - B}" class="band"/><text x="${x(b.i) + 3}" y="${H - 6}" class="ax">${esc(b.label)}</text>`);
+  const lines = series.map(s => {
+    const d = s.pts.map((v, i) => v == null ? null : `${x(i).toFixed(1)},${y(v).toFixed(1)}`).filter(Boolean);
+    if (!d.length) return "";
+    const path = opt.step ? s.pts.map((v, i) => v == null ? "" : (i ? `H${x(i).toFixed(1)}V${y(v).toFixed(1)}` : `M${x(i).toFixed(1)},${y(v).toFixed(1)}`)).join("") : "M" + d.join("L");
+    const last = s.pts.length - 1;
+    return `<path d="${path}" fill="none" stroke="${s.color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" class="ln"/>` +
+      (s.pts[last] != null ? `<circle cx="${x(last)}" cy="${y(s.pts[last])}" r="4.5" fill="${s.color}" stroke="var(--ink)" stroke-width="1.5"/>` : "");
+  }).join("");
+  const marks = (opt.marks || []).map(m => `<g transform="translate(${x(m.i)},${y(m.v)})"><path d="M0,-8L2.4,-2.4L8,0L2.4,2.4L0,8L-2.4,2.4L-8,0L-2.4,-2.4Z" fill="${m.color}" stroke="var(--ink)" stroke-width="1"/></g>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.label || "グラフ")}">${g}${lines}${marks}</svg>`;
+}
+function legend(ids){ return `<div class="legend">${ids.map(id => `<span><i style="background:${pcolor(id)}"></i>${esc(pname(id))}</span>`).join("")}</div>`; }
+function donut(items){
+  const total = items.reduce((s, x) => s + x.v, 0) || 1;
+  let a = -Math.PI / 2, out = "";
+  items.filter(x => x.v > 0).forEach(x => {
+    const da = x.v / total * Math.PI * 2, a2 = a + da, r = 62, ri = 36, cx = 80, cy = 80;
+    const p = (ang, rr) => `${(cx + rr * Math.cos(ang)).toFixed(2)},${(cy + rr * Math.sin(ang)).toFixed(2)}`;
+    const big = da > Math.PI ? 1 : 0;
+    out += da >= Math.PI * 2 - 1e-6 ? `<circle cx="80" cy="80" r="49" fill="none" stroke="${x.c}" stroke-width="26"/>` :
+      `<path d="M${p(a, r)}A${r},${r} 0 ${big} 1 ${p(a2, r)}L${p(a2, ri)}A${ri},${ri} 0 ${big} 0 ${p(a, ri)}Z" fill="${x.c}" stroke="var(--ink)" stroke-width="1.5"/>`;
+    a = a2;
+  });
+  return `<div class="donut"><svg viewBox="0 0 160 160" role="img" aria-label="割合">${out}<text x="80" y="76" text-anchor="middle" class="dc1">合計</text><text x="80" y="96" text-anchor="middle" class="dc2">${yen(total)}</text></svg>
+    <div class="dl">${items.filter(x => x.v > 0).sort((a, b) => b.v - a.v).map(x => `<span><i style="background:${x.c}"></i>${esc(x.label)}<b>${(x.v / total * 100).toFixed(1)}%</b></span>`).join("")}</div></div>`;
+}
+const CAT_COLORS = { "1日目": "#FFD15C", "2日目": "#FFB020", "3日目": "#E8890C", "飛行機": "#3FC1C9", "新幹線": "#1F8FBF", "宿": "#8B6CFF", "車": "#5A6378", "おみや代": "#FF6FB5", "無駄枠": "#E2364F" };
+const catColor = c => CAT_COLORS[c] || "#B9BFCC";
+function stackBars(ids, data, cats){
+  const max = Math.max(1, ...ids.map(id => cats.reduce((s, c) => s + (data[id][c] || 0), 0)));
+  return `<div class="stack">${ids.map(id => {
+    const tot = cats.reduce((s, c) => s + (data[id][c] || 0), 0);
+    return `<div class="srow"><span class="sn"><i style="background:${pcolor(id)}"></i>${esc(pname(id))}</span><div class="sbar" style="width:${(tot / max * 100).toFixed(1)}%">${cats.map(c => data[id][c] ? `<i style="flex:${data[id][c]};background:${catColor(c)}" title="${esc(c)}"></i>` : "").join("")}</div><b class="num">${yen(tot)}</b></div>`;
+  }).join("")}</div><div class="legend">${cats.filter(c => ids.some(id => data[id][c])).map(c => `<span><i style="background:${catColor(c)}"></i>${esc(c)}</span>`).join("")}</div>`;
+}
+
+/* ---------- 統計の計算 ---------- */
+function computeStats(trips){
+  const ids = allMembers(trips);
+  const S = {}; ids.forEach(id => S[id] = { paid: 0, wins: 0, joins: 0, drives: 0, std: 0, max: 0, cats: {}, catJ: {}, catW: {}, bandJ: [0, 0, 0], bandW: [0, 0, 0], sizeJ: {}, sizeW: {},
+    firstJ: 0, firstW: 0, dayFirstJ: 0, dayFirstW: 0, streakW: 0, streakL: 0, curW: 0, curL: 0, duelJ: 0, duelW: 0, vs: {}, oneOut: 0, oneOutJ: 0,
+    tUse: 0, sUse: 0, sSaved: 0, exFire: 0, exHit: 0, extra: 0, timeAmt: [0, 0, 0], dayMax: 0, dayMin: null, leadPays: 0, trips: 0, tops: 0, points: 0 });
+  const series = {}; ids.forEach(id => series[id] = []);
+  const rankSeries = {}; ids.forEach(id => rankSeries[id] = []);
+  const diffSeries = {}; ids.forEach(id => diffSeries[id] = []);
+  const cum = Object.fromEntries(ids.map(id => [id, 0])), cumStd = Object.fromEntries(ids.map(id => [id, 0]));
+  let leader = null, leadChanges = 0, steps = 0, maxComeback = { amt: 0, id: null };
+  const leadMarks = [], bands = [];
+  let biggestDrop = { amt: 0, id: null };
+  trips.forEach((t, ti) => {
+    if (trips.length > 1) bands.push({ i: steps, label: `第${t.no}回` });
+    const pays = tripPays(t).filter(p => p.payer_id);
+    const dayAmt = {};
+    let lastDay = null;
+    pays.forEach((p, pi) => {
+      const parts = (p.participants || []).filter(id => S[id]);
+      const n = parts.length || 1;
+      const band = p.amount >= 10000 ? 2 : p.amount >= 3000 ? 1 : 0;
+      const d = payDate(p), dkey = d ? d.toDateString() : p.category;
+      const isDayFirst = dkey !== lastDay; lastDay = dkey;
+      parts.forEach(id => {
+        const s = S[id]; s.joins++; s.std += p.amount / n; cumStd[id] += p.amount / n;
+        s.catJ[p.category] = (s.catJ[p.category] || 0) + 1; s.bandJ[band]++; s.sizeJ[n] = (s.sizeJ[n] || 0) + 1;
+        if (pi === 0) s.firstJ++;
+        if (isDayFirst) s.dayFirstJ++;
+        if (id === p.payer_id){ s.curW++; s.curL = 0; s.streakW = Math.max(s.streakW, s.curW); }
+        else { s.curL++; s.curW = 0; s.streakL = Math.max(s.streakL, s.curL); }
+      });
+      const w = S[p.payer_id];
+      if (w){
+        w.paid += p.amount; w.wins++; w.max = Math.max(w.max, p.amount);
+        w.cats[p.category] = (w.cats[p.category] || 0) + p.amount; w.catW[p.category] = (w.catW[p.category] || 0) + 1;
+        w.bandW[band]++; w.sizeW[n] = (w.sizeW[n] || 0) + 1;
+        if (pi === 0) w.firstW++;
+        if (isDayFirst) w.dayFirstW++;
+        cum[p.payer_id] += p.amount;
+        if (d){ const h = d.getHours(); w.timeAmt[h < 11 ? 0 : h < 17 ? 1 : 2] += p.amount; }
+        dayAmt[p.payer_id] = dayAmt[p.payer_id] || {}; dayAmt[p.payer_id][dkey] = (dayAmt[p.payer_id][dkey] || 0) + p.amount;
+      }
+      (p.tickets_used || []).forEach(u => { if (S[u.pid]){ if (u.kind === "super"){ S[u.pid].sUse++; S[u.pid].sSaved += p.amount / (n + 1); } else S[u.pid].tUse++; } });
+      // 首位の推移
+      const top = ids.slice().sort((a, b) => cum[b] - cum[a])[0];
+      const prevRanks = ids.map(id => [id, (rankSeries[id].slice(-1)[0])]);
+      if (cum[top] > 0 && top !== leader){
+        if (leader){ leadChanges++; leadMarks.push({ i: steps, v: cum[top], color: pcolor(top) });
+          const gap = cum[top] - cum[leader]; }
+        leader = top;
+      }
+      if (leader && S[leader]) S[leader].leadPays++;
+      const sorted = ids.slice().sort((a, b) => cum[b] - cum[a]);
+      ids.forEach(id => {
+        series[id].push(cum[id]); diffSeries[id].push(Math.round(cum[id] - cumStd[id]));
+        rankSeries[id].push(sorted.indexOf(id) + 1);
+      });
+      prevRanks.forEach(([id, r]) => { if (r && rankSeries[id].slice(-1)[0] < r){ /* 順位上昇 */ } });
+      steps++;
+    });
+    ids.forEach(id => {
+      if (!dayAmt[id] && !t.members.includes(id)) return;
+      const days = Object.values(dayAmt[id] || {});
+      if (days.length){ S[id].dayMax = Math.max(S[id].dayMax, ...days); }
+    });
+    tripRanks(t).forEach(r => { if (S[r.id]){ S[r.id].trips++; S[r.id].points += r.pts; if (r.rank === 1 && r.paid > 0) S[r.id].tops++; } });
+    db.drives.filter(x => x.trip_id === t.id).forEach(x => { if (S[x.player_id]) S[x.player_id].drives++; });
+    // じゃんけんの進行データ（アプリで記録した分）
+    db.jankens.filter(j => j.trip_id === t.id && j.status === "done").forEach(j => {
+      const hist = [...(j.history || []).map(h => h && h.l ? h.l : h), j.lives].filter(Boolean);
+      const parts = j.participants.filter(id => S[id] && !(j.supers || []).includes(id));
+      if (j.priv3_by) parts.forEach(id => { if (id !== j.priv3_by) S[id].extra++; });
+      (j.exempt_done || []).forEach(id => { if (S[id]){ S[id].exFire++; if (j.payer_id === id) S[id].exHit++; } });
+      // 1回目で抜けた
+      if (hist.length >= 2){
+        parts.forEach(id => { S[id].oneOutJ++; if ((hist[0][id] || 0) > 0 && (hist[1][id] || 0) === 0 && j.payer_id !== id) S[id].oneOut++; });
+      }
+      // 一騎打ち（残り2人になった場面）
+      for (let k = hist.length - 1; k >= 0; k--){
+        const alive = parts.filter(id => (hist[k][id] || 0) > 0);
+        if (alive.length === 2){
+          alive.forEach(id => { S[id].duelJ++; const op = alive.find(x => x !== id); S[id].vs[op] = S[id].vs[op] || { j: 0, w: 0 }; S[id].vs[op].j++; if (j.payer_id === id){ S[id].duelW++; S[id].vs[op].w++; } });
+          break;
+        }
+      }
+    });
+  });
+  // 最大の逆転：一番大きく離されていた差から首位に立った額
+  ids.forEach(id => {
+    let worst = 0;
+    series[id].forEach((v, i) => {
+      const topv = Math.max(...ids.map(x => series[x][i]));
+      worst = Math.max(worst, topv - v);
+      if (topv === v && v > 0 && worst > maxComeback.amt){ maxComeback = { amt: worst, id }; }
+    });
+    let peak = 0; let wasTop = false;
+    series[id].forEach((v, i) => {
+      const topv = Math.max(...ids.map(x => series[x][i]));
+      if (topv === v && v > 0){ wasTop = true; peak = 0; }
+      if (wasTop) peak = Math.max(peak, topv - v);
+    });
+    if (peak > biggestDrop.amt) biggestDrop = { amt: peak, id };
+  });
+  return { ids, S, series, rankSeries, diffSeries, steps, leadChanges, leadMarks, bands, maxComeback, biggestDrop };
+}
+
+/* ---------- 集計タブ ---------- */
+function viewStats(t){
+  if (!db.trips.length) return `<div class="empty"><b>まだ旅がありません</b>旅の記録がたまると、ここに集計が並びます。</div>`;
+  const trips = scopeTrips();
+  const st = computeStats(trips);
+  const ids = st.ids.filter(id => st.S[id].joins > 0 || st.S[id].paid > 0);
+  let h = `<div class="filter scope">${[["trip", "今回の旅"], ["season", t ? `SEASON ${t.season}` : "シーズン"], ["all", "全期間"]].map(([k, l]) => `<button data-scope="${k}" aria-pressed="${statScope === k}">${l}</button>`).join("")}</div>`;
+  if (!st.steps) return h + `<div class="empty"><b>まだ支払いがありません</b>じゃんけんを記録すると、グラフと統計が表示されます。</div>`;
+  const total = ids.reduce((s, id) => s + st.S[id].paid, 0);
+  const sortedIds = ids.slice().sort((a, b) => st.S[b].paid - st.S[a].paid);
+  h += `<div class="kpis"><div><small>支払い件数</small><b class="num">${st.steps}</b></div><div><small>総額</small><b class="num">${yen(total)}</b></div><div><small>首位交代</small><b class="num">${st.leadChanges}回</b></div></div>`;
+  h += `<div class="h2">累計支払額の推移<small>◆＝首位交代</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.series[id] })), st.steps, { fmt: v => v >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v), marks: st.leadMarks, bands: st.bands, label: "累計支払額の推移" })}${legend(sortedIds)}</div>`;
+  h += `<div class="h2 red">順位の推移</div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.rankSeries[id] })), st.steps, { invert: true, min: 1, max: ids.length, ticks: ids.map((_, i) => i + 1), fmt: v => v + "位", step: true, h: 150, bands: st.bands, label: "順位の推移" })}${legend(sortedIds)}</div>`;
+  h += `<div class="h2 aqua">標準との差の推移<small>割り勘より何円多く払ったか</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: st.diffSeries[id] })), st.steps, { zero: true, fmt: v => (v > 0 ? "+" : "") + (Math.abs(v) >= 10000 ? Math.round(v / 1000) / 10 + "万" : Math.round(v)), bands: st.bands, label: "標準との差の推移" })}${legend(sortedIds)}</div>`;
+  const cats = categoriesFor({ days: Math.max(3, ...trips.map(x => x.days || 3)) });
+  h += `<div class="h2">カテゴリー別</div><div class="card">${stackBars(sortedIds, Object.fromEntries(ids.map(id => [id, st.S[id].cats])), cats)}</div>`;
+  h += `<div class="h2 red">支払いの割合</div><div class="card">${donut(sortedIds.map(id => ({ label: pname(id), v: st.S[id].paid, c: pcolor(id) })))}</div>`;
+
+  // 〇〇数・〇〇率
+  const S = st.S;
+  const rate = (w, j) => j ? w / j : NaN;
+  const groups = [
+    ["基本", [
+      ["支払額", id => S[id].paid, yen], ["支払回数", id => S[id].wins, v => v + "回"], ["参加回数", id => S[id].joins, v => v + "回"], ["運転回数", id => S[id].drives, v => v + "回"],
+      ["勝率（支払＋運転）", id => rate(S[id].wins + S[id].drives, S[id].joins), pct], ["支払率", id => rate(S[id].wins, S[id].joins), pct],
+      ["最高支払額", id => S[id].max, yen], ["平均支払額", id => S[id].wins ? S[id].paid / S[id].wins : NaN, yen]
+    ]],
+    ["運", [
+      ["期待支払額（割り勘相当）", id => S[id].std, yen], ["運の悪さ（実際−期待）", id => S[id].paid - S[id].std, signed],
+      ["運の悪さ率（実際÷期待）", id => S[id].std ? S[id].paid / S[id].std : NaN, v => Number.isFinite(v) ? v.toFixed(2) + "倍" : "—"]
+    ]],
+    ["連続", [["最大連続支払", id => S[id].streakW, v => v + "連続"], ["最長逃げ切り（連続で払わず）", id => S[id].streakL, v => v + "連続"]]],
+    ["場面別の支払率", [
+      ["旅の初戦", id => rate(S[id].firstW, S[id].firstJ), pct], ["その日最初のじゃんけん", id => rate(S[id].dayFirstW, S[id].dayFirstJ), pct],
+      ["3,000円未満", id => rate(S[id].bandW[0], S[id].bandJ[0]), pct], ["3,000〜9,999円", id => rate(S[id].bandW[1], S[id].bandJ[1]), pct], ["高額（1万円以上）", id => rate(S[id].bandW[2], S[id].bandJ[2]), pct],
+      ...[3, 4, 5, 6].filter(n => ids.some(id => S[id].sizeJ[n])).map(n => [`${n}人でのじゃんけん`, id => rate(S[id].sizeW[n] || 0, S[id].sizeJ[n] || 0), pct])
+    ]],
+    ["カテゴリー別の支払率", cats.filter(c => ids.some(id => S[id].catJ[c])).map(c => [c, id => rate(S[id].catW[c] || 0, S[id].catJ[c] || 0), pct])],
+    ["首位争い", [
+      ["首位だった割合", id => S[id].leadPays / st.steps, pct], ["1日で一番払った額", id => S[id].dayMax, yen]
+    ]],
+    ["時間帯別の支払額", [["朝（〜11時）", id => S[id].timeAmt[0], yen], ["昼（11〜17時）", id => S[id].timeAmt[1], yen], ["夜（17時〜）", id => S[id].timeAmt[2], yen]]],
+    ["じゃんけんの中身（アプリ記録分）", [
+      ["一騎打ちの回数", id => S[id].duelJ, v => v + "回"], ["一騎打ちで払った率", id => rate(S[id].duelW, S[id].duelJ), pct],
+      ["1回目で抜けた率", id => rate(S[id].oneOut, S[id].oneOutJ), pct], ["一機追加をくらった回数", id => S[id].extra, v => v + "回"]
+    ]],
+    ["券", [
+      ["免除券の使用", id => S[id].tUse, v => v + "回"], ["免除券の発動（やり直し）", id => S[id].exFire, v => v + "回"],
+      ["発動したのに結局払った率", id => rate(S[id].exHit, S[id].exFire), pct], ["super免除券の使用", id => S[id].sUse, v => v + "回"],
+      ["superで逃れた額（割り勘相当）", id => S[id].sSaved, yen]
+    ]]
+  ];
+  if (statScope !== "trip") groups.push(["旅単位", [["優勝回数", id => S[id].tops, v => v + "回"], ["順位スコア", id => S[id].points, v => v + "点"], ["参加した旅", id => S[id].trips, v => v + "回"]]]);
+  h += `<div class="h2 aqua">〇〇数・〇〇率<small>各項目の1位に王冠</small></div>`;
+  groups.forEach(([gname, rows], gi) => {
+    if (!rows.length) return;
+    h += `<details class="sgroup" ${gi === 0 ? "open" : ""}><summary class="sgt">${gname}</summary>`;
+    rows.forEach(([label, fn, fmt]) => {
+      const vals = ids.map(id => ({ id, v: fn(id) })).filter(x => Number.isFinite(x.v));
+      if (!vals.length || vals.every(x => x.v === 0)) return;
+      vals.sort((a, b) => b.v - a.v);
+      const maxAbs = Math.max(...vals.map(x => Math.abs(x.v))) || 1;
+      const top = vals[0].v;
+      h += `<div class="srank"><div class="sl">${label}</div>${vals.map((x, i) => `<div class="sv ${x.v === top && top !== 0 ? "best" : ""}"><span class="sp2">${x.v === top && top !== 0 ? "👑" : ""}</span><span class="nm"><i style="background:${pcolor(x.id)}"></i>${esc(pname(x.id))}</span><span class="br"><i style="width:${(Math.abs(x.v) / maxAbs * 100).toFixed(1)}%;background:${pcolor(x.id)}"></i></span><b class="num">${fmt(x.v)}</b></div>`).join("")}</div>`;
+    });
+    h += `</details>`;
+  });
+  // 一騎打ちの相性
+  const vsIds = ids.filter(id => Object.keys(S[id].vs).length);
+  if (vsIds.length){
+    h += `<div class="sgroup"><div class="sgt">一騎打ちの相性（払った回数／一騎打ち数）</div><div class="vs"><table><tr><th></th>${vsIds.map(id => `<th><i style="background:${pcolor(id)}"></i>${esc(pname(id))}</th>`).join("")}</tr>${vsIds.map(a => `<tr><th><i style="background:${pcolor(a)}"></i>${esc(pname(a))}</th>${vsIds.map(b => { const r = S[a].vs[b]; return `<td>${a === b ? "—" : r ? `${r.w}/${r.j}` : ""}</td>`; }).join("")}</tr>`).join("")}</table></div></div>`;
+  }
+  if (st.maxComeback.id || st.biggestDrop.id){
+    h += `<div class="sgroup"><div class="sgt">記録</div>${st.maxComeback.id ? `<div class="rec"><span>最大の逆転</span><b>${esc(pname(st.maxComeback.id))}　${yen(st.maxComeback.amt)}差から首位へ</b></div>` : ""}${st.biggestDrop.id ? `<div class="rec"><span>首位からの最大転落</span><b>${esc(pname(st.biggestDrop.id))}　首位から${yen(st.biggestDrop.amt)}差</b></div>` : ""}</div>`;
+  }
+  if (statScope === "trip" && t){
+    const pr = prizeResults(t).filter(r => r.pred != null);
+    if (pr.length) h += `<div class="sgroup"><div class="sgt">ピタリ賞・ニアピン賞の予想誤差</div>${pr.sort((a, b) => Math.abs(a.paid - a.pred) - Math.abs(b.paid - b.pred)).map(r => `<div class="rec"><span><i class="dotc" style="background:${pcolor(r.id)}"></i>${esc(pname(r.id))}</span><b>${signed(r.paid - r.pred)}${r.prize ? `　${r.prize}` : ""}</b></div>`).join("")}</div>`;
+  }
+  h += `<p class="note">参加者・券・残機・時刻が必要な項目は、アプリで記録した分だけで集計しています。</p>`;
+  return h;
+}
+
+/* ---------- 歴代タブ ---------- */
+function viewHistory(t){
+  const trips = tripsSorted();
+  if (!trips.length) return `<div class="empty"><b>まだ旅がありません</b>ホームの「旅を始める」から最初の旅を作成しましょう。</div>`;
+  const peats = threePeats();
+  let h = `<div class="h2">歴代1位名簿</div><div class="card honor">`;
+  h += trips.slice().reverse().map(x => {
+    const r = tripRanks(x)[0];
+    return `<button class="hrow" data-tripopen="${x.id}"><span class="hn num">${x.no}</span><span class="hm"><b>${esc(x.name)}</b><small>SEASON ${x.season}${x.id === setting("current_trip") ? "・今の旅" : ""}${peats.some(p => p.trip.id === x.id) ? "・3連覇達成" : ""}</small></span>${r && r.paid > 0 ? `<span class="hw"><i style="background:${pcolor(r.id)}"></i>${esc(pname(r.id))}<small class="num">${yen(r.paid)}</small></span>` : `<span class="hw muted">—</span>`}</button>`;
+  }).join("");
+  h += `</div>`;
+
+  // 順位スコア
+  const ids = allMembers(trips);
+  const pts = Object.fromEntries(ids.map(id => [id, 0]));
+  const rankS = Object.fromEntries(ids.map(id => [id, []]));
+  trips.forEach(x => { const rk = tripRanks(x); ids.forEach(id => { const r = rk.find(y => y.id === id); rankS[id].push(r ? r.rank : null); if (r) pts[id] += r.pts; }); });
+  const byPts = ids.slice().sort((a, b) => pts[b] - pts[a]);
+  h += `<div class="h2 red">順位スコア<small>1位4点・2位3点・3位2点・4位1点</small></div><div class="card chartcard">${lineChart(ids.map(id => ({ color: pcolor(id), pts: rankS[id] })), trips.length, { invert: true, min: 1, max: Math.max(4, ...ids.map(id => Math.max(0, ...rankS[id].filter(Boolean)))), ticks: [1, 2, 3, 4], fmt: v => v + "位", h: 160, label: "回ごとの順位" })}
+    <div class="xlab">${trips.map(x => `<span>${x.no}</span>`).join("")}</div>
+    <div class="ptbl">${byPts.map((id, i) => `<div><span class="num r">${i + 1}</span><i style="background:${pcolor(id)}"></i><b>${esc(pname(id))}</b><span class="num">${pts[id]}点</span></div>`).join("")}</div></div>`;
+
+  // シーズン成績
+  const seasons = [...new Set(trips.map(x => x.season))].sort((a, b) => b - a);
+  h += `<div class="h2 aqua">シーズン成績</div>`;
+  seasons.forEach(sn => {
+    const ts = trips.filter(x => x.season === sn), sid = allMembers(ts);
+    const sp = Object.fromEntries(sid.map(id => [id, { pts: 0, paid: 0, tops: 0 }]));
+    ts.forEach(x => tripRanks(x).forEach(r => { if (sp[r.id]){ sp[r.id].pts += r.pts; sp[r.id].paid += r.paid; if (r.rank === 1 && r.paid > 0) sp[r.id].tops++; } }));
+    const ord = sid.slice().sort((a, b) => sp[b].paid - sp[a].paid);
+    const pk = peats.find(p => p.trip.season === sn);
+    h += `<div class="card season" style="--sc:${seasonColor(sn)}"><div class="sh"><b>SEASON ${sn}</b><small>${ts.length}回（第${ts[0].no}〜${ts[ts.length - 1].no}回）</small>${pk ? `<span class="tic n">3連覇：${esc(pname(pk.id))}</span>` : ""}</div>
+      ${ord.map((id, i) => `<div class="srow2"><span class="num r">${i + 1}</span><i style="background:${pcolor(id)}"></i><b>${esc(pname(id))}</b><span>${"👑".repeat(sp[id].tops)}</span><span class="num">${yen(sp[id].paid)}</span><small>${sp[id].pts}点</small></div>`).join("")}</div>`;
+  });
+
+  // 地図
+  const allSeasons = [...new Set(trips.map(x => x.season))].sort((a, b) => a - b);
+  if (mapSeason == null || !allSeasons.includes(mapSeason)) mapSeason = t ? t.season : allSeasons[allSeasons.length - 1];
+  h += `<div class="h2">行った都道府県</div><div class="card">
+    <div class="filter" style="margin:0 0 8px;padding:0"><button data-mapmode="all" aria-pressed="${mapMode === "all"}">全体</button>${allSeasons.map(sn => `<button data-mapseason="${sn}" aria-pressed="${mapMode === "season" && mapSeason === sn}">SEASON ${sn}</button>`).join("")}</div>
+    ${japanMap(trips)}</div>`;
+  return h;
+}
+function openTripSheet(id){
+  const x = db.trips.find(y => y.id === id); if (!x) return;
+  const rk = tripRanks(x), cur = setting("current_trip") === id;
+  const s = openSheet(`第${x.no}回 ${esc(x.name)}`, `<p class="note">SEASON ${x.season}${x.start_date ? `・${periodText(x)}` : ""}・${x.members.length}人${(x.prefectures || []).length ? `・${x.prefectures.join("・")}` : ""}</p>
+    ${rk.map(r => `<div class="srow2"><span class="num r">${r.rank}</span><i style="background:${pcolor(r.id)}"></i><b>${esc(pname(r.id))}</b><span></span><span class="num">${yen(r.paid)}</span><small>${r.pts}点</small></div>`).join("") || `<p class="note">支払いの記録がありません。</p>`}
+    <div class="btns">${cur ? "" : `<button class="btn ghost" id="tcur">今の旅にする</button>`}<button class="btn" id="tedit">編集</button></div>`);
+  const c = s.querySelector("#tcur");
+  if (c) c.onclick = async () => { if (await putSetting("current_trip", id)){ await loadTable("app_settings"); closeSheet(); render(); toast(`「${x.name}」を今の旅にしました`); } };
+  s.querySelector("#tedit").onclick = () => editTrip(id);
+}
+
+/* ---------- 日本地図（タイル） ---------- */
+const TILE = {"北海道":[11,0,2],"青森":[12,2],"秋田":[11,3],"岩手":[12,3],"山形":[11,4],"宮城":[12,4],"石川":[8,5],"富山":[9,5],"新潟":[10,5],"福島":[11,5],
+  "福井":[7,6],"岐阜":[8,6],"長野":[9,6],"群馬":[10,6],"栃木":[11,6],"茨城":[12,6],
+  "島根":[3,7],"鳥取":[4,7],"兵庫":[5,7],"京都":[6,7],"滋賀":[7,7],"愛知":[8,7],"山梨":[9,7],"埼玉":[10,7],"東京":[11,7],"千葉":[12,7],
+  "山口":[2,8],"広島":[3,8],"岡山":[4,8],"大阪":[5,8],"奈良":[6,8],"三重":[7,8],"静岡":[9,8],"神奈川":[11,8],
+  "福岡":[1,9],"大分":[2,9],"愛媛":[3,9],"香川":[4,9],"和歌山":[6,9],
+  "佐賀":[0,9],"長崎":[0,10],"熊本":[1,10],"宮崎":[2,10],"高知":[3,10],"徳島":[4,10],"鹿児島":[1,11],"沖縄":[0,13]};
+function japanMap(trips){
+  const visits = {};
+  trips.forEach(x => (x.prefectures && x.prefectures.length ? x.prefectures : parsePrefs(x.place || x.name)).forEach(p => { (visits[p] = visits[p] || []).push(x); }));
+  const show = p => (visits[p] || []).filter(x => mapMode === "all" || x.season === mapSeason);
+  const Z = 26, G = 3;
+  let cells = "";
+  Object.entries(TILE).forEach(([p, [cx, cy, w]]) => {
+    const sz = (w || 1) * Z + ((w || 1) - 1) * G, x = cx * (Z + G), y = cy * (Z + G);
+    const v = show(p), col = v.length ? seasonColor(v[0].season) : null;
+    cells += `<g class="tl ${v.length ? "on" : ""}"><rect x="${x}" y="${y}" width="${sz}" height="${sz}" rx="5" fill="${col || "#fff"}" stroke="var(--ink)" stroke-width="${v.length ? 2 : 1}" ${v.length ? `style="filter:drop-shadow(0 0 4px ${col})"` : ""}/>
+      <text x="${x + sz / 2}" y="${y + sz / 2 + 3.5}" text-anchor="middle" class="tt ${v.length ? "on" : ""}">${p.length > 2 && !w ? p.slice(0, 2) : p}</text>${v.length > 1 ? `<text x="${x + sz - 3}" y="${y + 9}" text-anchor="end" class="tc">${v.length}</text>` : ""}</g>`;
+  });
+  const W = 13 * (Z + G), H = 14 * (Z + G);
+  const visited = Object.keys(TILE).filter(p => show(p).length);
+  const seasonsShown = [...new Set(visited.flatMap(p => show(p).map(x => x.season)))].sort((a, b) => a - b);
+  return `<div class="jmap"><svg viewBox="-4 -4 ${W + 8} ${H + 8}" role="img" aria-label="行った都道府県の地図">${cells}</svg></div>
+    <p class="note" style="margin:6px 0 0">${visited.length}／47都道府県${mapMode === "all" ? "（最初に行ったシーズンの色）" : ""}</p>
+    <div class="legend">${seasonsShown.map(sn => `<span><i style="background:${seasonColor(sn)}"></i>SEASON ${sn}</span>`).join("")}</div>`;
 }
 
 /* ---------- 起動 ---------- */
