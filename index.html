@@ -157,6 +157,9 @@ nav button[aria-current="page"]::before{content:"";position:absolute;top:-8px;le
 .colors{display:flex;flex-wrap:wrap;gap:8px}
 .colors button{width:36px;height:36px;border-radius:50%;border:2px solid var(--ink)}
 .colors button[aria-pressed="true"]{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--gold)}
+.colors button{position:relative}
+.colors button:disabled{opacity:.45;cursor:not-allowed}
+.colors button:disabled::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:4px;margin-left:-2px;border-radius:2px;background:var(--crimson);transform:rotate(45deg);box-shadow:0 0 0 1.5px #fff}
 
 /* ---------- じゃんけん画面 ---------- */
 .arena{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;padding:calc(var(--safe-t) + 12px) 16px calc(var(--safe-b) + 14px);
@@ -686,15 +689,18 @@ function openPlayers(){
 }
 function editPlayer(id){
   const p = id ? player(id) : null;
-  let color = p ? p.color : COLORS[db.players.length % COLORS.length];
+  const taken = db.players.filter(x => !p || x.id !== p.id).map(x => (x.color || "").toUpperCase());
+  let color = p ? p.color : (COLORS.find(c => !taken.includes(c.toUpperCase())) || COLORS[0]);
   const s = openSheet(p ? "プレイヤーを編集" : "プレイヤーを追加", `
     <label class="f"><span>ニックネーム</span><input id="pn" value="${esc(p ? p.name : "")}" maxlength="12" placeholder="例：くろごめ"></label>
-    <div class="f"><span>カラー</span><div class="colors">${COLORS.map(c => `<button type="button" data-c="${c}" style="background:${c}" aria-pressed="${c === color}" aria-label="${c}"></button>`).join("")}</div></div>
+    <div class="f"><span>カラー</span><div class="colors">${COLORS.map(c => { const used = taken.includes(c.toUpperCase()); return `<button type="button" data-c="${c}" style="background:${c}" aria-pressed="${c === color}" aria-label="${used ? "使用中の色" : c}" ${used ? "disabled" : ""}></button>`; }).join("")}</div>
+    ${taken.length ? `<p class="note">斜線の色は、ほかのプレイヤーが使っています。</p>` : ""}</div>
     <div class="btns">${p ? `<button class="btn danger" id="pdel">削除</button>` : `<button class="btn ghost" data-back>戻る</button>`}<button class="btn" id="psave">保存</button></div>`);
   s.querySelectorAll("[data-c]").forEach(b => b.onclick = () => { color = b.dataset.c; s.querySelectorAll("[data-c]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
   const back = s.querySelector("[data-back]"); if (back) back.onclick = openPlayers;
   $("#psave").onclick = async () => {
     const name = $("#pn").value.trim(); if (!name){ toast("ニックネームを入力してください"); return; }
+    if (taken.includes((color || "").toUpperCase())){ toast("その色はほかのプレイヤーが使っています"); return; }
     const ok = p ? await q(sb.from("players").update({ name, color }).eq("id", p.id), "保存")
                  : await q(sb.from("players").insert({ name, color, sort: db.players.length }), "保存");
     if (ok){ await loadTable("players"); render(); openPlayers(); toast("保存しました"); }
@@ -1231,7 +1237,7 @@ function viewTickets(t){
       const m = PRIVS[p.kind], left = m.max ? `残り${m.max - (p.uses || 0)}回` : m.span;
       h += `<div class="privcard" style="--c:${pcolor(p.player_id)}"><span class="pk">${KANJI[p.kind]}</span><div class="pb"><small>${d}日目</small><b>${esc(pname(p.player_id))}：${m.name}</b><span>${m.desc}</span><em>${left}${p.kind === 3 && (p.uses_detail || []).length ? `（使用済み：${p.uses_detail.join("・")}）` : ""}</em>
         <div class="pa">${p.kind === 2 && (p.uses || 0) < 1 ? `<button class="mini" data-steal="1">強奪を実行</button>` : ""}<button class="mini" data-privdel="${p.id}">取り消す</button></div></div></div>`;
-    } else h += `<button class="privcard empty-p" data-privday="${d}"><span class="pk">？</span><div class="pb"><small>${d}日目</small><b>${d === day ? "今日の特権を宣言する" : "宣言する"}</b><span>${d === 1 ? "1日目は前回優勝者" : "前日終了時点の1位"}が獲得</span></div></button>`;
+    } else h += `<button class="privcard empty-p" data-privday="${d}"><span class="pk">？</span><div class="pb"><small>${d}日目</small><b>${d === day ? "今日の特権を宣言する" : "宣言する"}</b><span>${d === 1 ? "1日目は前回優勝者" : "朝一の宣言時点で1位の人"}が獲得</span></div></button>`;
   }
 
   const rk = setting(`roulette:${t.id}:${rouletteDay}`);
@@ -1249,7 +1255,7 @@ function viewTickets(t){
   const res = prizeResults(t);
   h += `<div class="h2 red">ピタリ賞・ニアピン賞<small>第十七条</small></div><div class="card">
     <label class="f"><span>旅費総額（前回4位の予約者が提示）</span><div style="display:flex;gap:8px"><input id="ttotal" type="number" inputmode="numeric" value="${t.travel_total ?? ""}" placeholder="0"><button class="mini" data-act="saveTravel">保存</button></div></label>
-    <p class="note">旅費総額の提示後に、全員が「自分の最終支払額」を予想します。ピタリ賞（100円単位で一致）は全額、ニアピン賞（±1,000円以内）は半額が免除され、残りのメンバーで均等に負担します。順位は変わりません。</p>
+    <p class="note">旅費総額の提示後に、全員が「自分の最終支払額」を予想します。判定は100円単位（100円未満は切り捨て）。ピタリ賞（一致）は全額、ニアピン賞（ピタリ±1,000円以内）は半額が免除され、残りのメンバーで均等に負担します。順位は変わりません。</p>
     ${res.map(r => `<div class="predrow"><span class="dot" style="background:${pcolor(r.id)}"></span><b>${esc(pname(r.id))}</b><input type="number" inputmode="numeric" data-pred="${r.id}" value="${r.pred ?? ""}" placeholder="予想額"><span class="pr">${r.pred == null ? "" : `<small>今の差 ${signed(r.paid - r.pred)}</small>${r.prize ? `<span class="tic ${r.prize === "ピタリ賞" ? "s" : "n"}">${r.prize}</span>` : ""}`}</span></div>`).join("")}
   </div>`;
 
@@ -1260,13 +1266,7 @@ function viewTickets(t){
 /* ---------- 特権 ---------- */
 function privCandidate(t, day){
   if (day === 1){ const pv = prevTrip(t); return pv ? tripWinner(pv) : null; }
-  if (!t.start_date) return null;
-  const cutoff = new Date(t.start_date + "T00:00:00"); cutoff.setDate(cutoff.getDate() + day - 1);
-  const paid = {};
-  tripPays(t).filter(p => p.payer_id && new Date(p.created_at) < cutoff).forEach(p => paid[p.payer_id] = (paid[p.payer_id] || 0) + p.amount);
-  let best = null, bv = 0;
-  Object.entries(paid).forEach(([id, v]) => { if (v > bv && id !== t.champion_out){ bv = v; best = id; } });
-  return best;
+  return tripWinner(t); // 2日目以降は、宣言する時点（朝一）の1位
 }
 function openPrivDeclare(t, day){
   if (!t) return;
@@ -1275,7 +1275,7 @@ function openPrivDeclare(t, day){
   const usedKinds = tripPrivs(t).map(p => p.kind);
   const cand = privCandidate(t, day);
   let kind = null;
-  const s = openSheet(`${day}日目の特権`, `<p class="note">${day === 1 ? "1日目は前回優勝者" : "前日終了時点で1位の人"}が、朝一で1つ選んで宣言します。${cand ? `候補：<b style="color:var(--ink)">${esc(pname(cand))}</b>` : ""}</p>
+  const s = openSheet(`${day}日目の特権`, `<p class="note">${day === 1 ? "1日目は前回優勝者" : "宣言する時点（朝一）で1位の人"}が、1つ選んで宣言します。${cand ? `候補：<b style="color:var(--ink)">${esc(pname(cand))}</b>` : ""}</p>
     <div class="f"><span>獲得した人</span>${chipPlayers(activeMembers(t), cand ? [cand] : [])}</div>
     <div class="f"><span>特権</span><div class="privpick">${[1,2,3,4,5].map(k => `<button type="button" data-pk="${k}" ${usedKinds.includes(k) ? "disabled" : ""} aria-pressed="false"><span class="pk">${KANJI[k]}</span><span><b>${PRIVS[k].name}${usedKinds.includes(k) ? "（獲得済み）" : ""}</b><small>${PRIVS[k].desc}（${PRIVS[k].span}）</small></span></button>`).join("")}</div></div>
     <div class="btns"><button class="btn" id="pgo">宣言する</button></div>`);
@@ -1353,8 +1353,9 @@ function prizeResults(t){
     const pr = db.predictions.find(p => p.trip_id === t.id && p.player_id === id);
     if (!pr || pr.amount == null) return { id, pred: null, paid: paid[id] || 0, exempt: 0 };
     const v = paid[id] || 0, diff = v - pr.amount;
-    const pitari = Math.round(v / 100) === Math.round(pr.amount / 100);
-    const near = !pitari && Math.abs(diff) <= 1000;
+    const v100 = Math.floor(v / 100) * 100, p100 = Math.floor(pr.amount / 100) * 100;  // 判定は100円単位（100円未満は切り捨て）
+    const pitari = v100 === p100;
+    const near = !pitari && Math.abs(v100 - p100) <= 1000;
     return { id, pred: pr.amount, paid: v, diff, prize: pitari ? "ピタリ賞" : near ? "ニアピン賞" : null, exempt: pitari ? v : near ? Math.round(v / 2) : 0 };
   });
 }
