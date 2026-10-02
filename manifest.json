@@ -1,6 +1,6 @@
 {
   "name": "男気じゃんけん旅",
-  "short_name": "男気じゃんけん",
+  "short_name": "男気じゃんけん旅",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
