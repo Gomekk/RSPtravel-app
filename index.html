@@ -460,6 +460,16 @@ ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:7
 .pend .chipbtn{animation:nudge 2.2s ease-in-out infinite}
 @keyframes nudge{0%,80%,100%{transform:none}85%{transform:translateX(-3px) rotate(-3deg)}90%{transform:translateX(3px) rotate(3deg)}}
 
+/* ===== 通知・リマインド ===== */
+.remind{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:-4px 0 14px;border-radius:12px;background:linear-gradient(100deg,#FFF3D6,#fff 70%);border:2px solid var(--ink);animation:remindin .5s cubic-bezier(.2,1.5,.4,1) both}
+.remind .ri{font-size:24px;animation:bob 1.4s ease-in-out infinite}
+.remind div{flex:1;min-width:0;display:flex;flex-direction:column}
+.remind b{font-weight:900;font-size:14px}
+.remind div span{font-size:12px;color:var(--mute);font-weight:700}
+@keyframes remindin{from{transform:translateY(-8px) scale(.96);opacity:0}}
+.ntime{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1.5px solid var(--line);font-weight:900;font-size:13px}
+.ntime input{width:auto;flex:none;-webkit-appearance:none;appearance:none;min-height:40px;padding:6px 10px}
+
 /* ===== 段階3：集計・歴代 ===== */
 .scope{margin-top:4px}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 6px}
@@ -724,6 +734,7 @@ function viewHome(t){
     <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・SEASON ${t.season}${isFinal(t) ? ` <span class="tic s">FINAL</span>` : ""}・${t.members.length}人 ${champ}</div>
     ${t.start_date ? `<div class="s">${periodText(t)}</div>` : ""}<button class="mini tedit" data-act="editTrip">編集</button></div>`;
   h += `<div class="marquee" aria-hidden="true"><div class="mq">${MQ}${MQ}</div></div>`;
+  h += reminderCards(t);
   const tp = day && tripPrivs(t).find(p => p.day === day);
   if (tp) h += `<div class="todaypriv"><span class="pk">${KANJI[tp.kind]}</span><div><b>今日の特権：${esc(pname(tp.player_id))}</b><span>${PRIVS[tp.kind].name}</span></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
@@ -773,6 +784,7 @@ function bindView(){
     privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
     saveTravel: () => saveTravelTotal(curTrip()), roulette: () => openRoulette(curTrip(), rouletteDay), grantRoulette: () => grantRoulette(curTrip(), rouletteDay)
   })[b.dataset.act]());
+  v.querySelectorAll("[data-rdone]").forEach(b => b.onclick = () => { localStorage.setItem("ojk:done:" + b.dataset.rdone, "1"); render(); });
   v.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { statScope = b.dataset.scope; render(); });
   v.querySelectorAll("[data-mapmode]").forEach(b => b.onclick = () => { mapMode = "all"; render(); });
   v.querySelectorAll("[data-mapseason]").forEach(b => b.onclick = () => { mapMode = "season"; mapSeason = Number(b.dataset.mapseason); render(); });
@@ -829,9 +841,10 @@ function openSettings(){
     <button data-m="me">この端末の自分<span>${esc(player(me)?.name || "未設定")}</span></button>
     <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
     <button data-m="thr">一斉宣言を出す金額<span>${yen(threshold())}以上</span></button>
+    <button data-m="ntf">通知<span>受け取り・時刻の設定</span></button>
     <button data-m="imp">過去データの取り込み<span>ファイルを選ぶ</span></button>
   </div><p class="note" style="margin-top:14px">通知・要綱の設定は段階4で追加します。</p>`);
-  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, imp: openImport })[b.dataset.m]());
+  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, imp: openImport, ntf: openNotify })[b.dataset.m]());
 }
 
 function openPlayers(){
@@ -1028,6 +1041,7 @@ async function createJanken(base, opts = {}){
   const row = { ...base, participants: parts, lives, max_lives: lives, history: [], status: "live", started_by: me || null,
     phase: needDeclare ? "declare" : "play", declare, proxy: {}, exempt: [], exempt_done: [], supers: [], tickets_used: [], priv3_by: opts.priv3 || null };
   const res = await q(sb.from("jankens").insert(row).select().single(), "開始");
+  if (res && needDeclare) pushCall({ type: "declare", janken_id: res.id });
   if (res && opts.priv3){
     const p = privOf(t, 3);
     await q(sb.from("privileges").update({ uses: (p.uses || 0) + 1, uses_detail: [...(p.uses_detail || []), travelType(base.category)] }).eq("id", p.id), "記録");
@@ -1548,7 +1562,7 @@ function prizeResults(t){
 }
 async function saveTravelTotal(t){
   const v = parseInt($("#ttotal").value, 10);
-  if (await q(sb.from("trips").update({ travel_total: Number.isFinite(v) ? v : null }).eq("id", t.id), "保存")){ await loadTable("trips"); render(); toast("旅費総額を保存しました。全員で予想を入力してください"); }
+  if (await q(sb.from("trips").update({ travel_total: Number.isFinite(v) ? v : null }).eq("id", t.id), "保存")){ await loadTable("trips"); render(); toast("旅費総額を保存しました。全員で予想を入力してください"); if (Number.isFinite(v)) pushCall({ type: "prize_start", trip_id: t.id }); }
 }
 async function savePrediction(t, pid, val){
   const v = parseInt(val, 10);
@@ -2014,6 +2028,73 @@ function threePeatHolder(){
   if (prev.length < 3 || prev.some(x => x.season !== prev[0].season)) return null;
   const w = prev.map(tripWinner);
   return w[0] && w.every(x => x === w[0]) ? w[0] : null;
+}
+
+/* ---------- 通知 ---------- */
+const VAPID_PUBLIC = "BO1pVt9eZaAXcECHLvNzs6sQaq7zaSFBOtRZcl2v5XQG27Mu5TmOESc8I1MEunPPwF0UOoiXQOi0b5FMHCvuYv0";
+const NOTIFY_DEF = { morning: "08:00", night: "20:00", lastday: "15:00", prize: "21:00" };
+const NOTIFY_LABEL = { morning: "朝：特権の宣言・ルーレット", night: "夜：宿泊費（1日目は行きの旅費も）", lastday: "最終日：帰りの旅費・車代", prize: "最終日：ピタリ賞・ニアピン賞の判定" };
+const notifyTimes = () => ({ ...NOTIFY_DEF, ...(setting("notify_times") || {}) });
+function pushCall(body){
+  fetch(SUPABASE_URL + "/functions/v1/ojk-push", { method: "POST", headers: { "Content-Type": "application/json", apikey: SUPABASE_KEY }, body: JSON.stringify(body) }).catch(() => {});
+}
+const b64u = s => { const p = "=".repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from([...r].map(c => c.charCodeAt(0))); };
+const isStandalone = () => window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+async function pushState(){
+  if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) return isStandalone() ? "unsupported" : "browser";
+  if (Notification.permission === "denied") return "denied";
+  try { const reg = await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription(); return sub ? "on" : "off"; } catch (e) { return "off"; }
+}
+async function subscribePush(){
+  if (!player(me)){ toast("先に「自分」を選んでください"); openMe(); return false; }
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== "granted"){ toast("通知が許可されませんでした", 3000); return false; }
+    const reg = await navigator.serviceWorker.ready;
+    const sub = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(VAPID_PUBLIC) });
+    const j = sub.toJSON();
+    const ok = await q(sb.from("push_subs").upsert({ player_id: me, endpoint: j.endpoint, subscription: j }, { onConflict: "endpoint" }), "登録");
+    if (ok) toast("この端末で通知を受け取ります");
+    return !!ok;
+  } catch (e) { fail(e, "通知の登録"); return false; }
+}
+async function unsubscribePush(){
+  try {
+    const reg = await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription();
+    if (sub){ await q(sb.from("push_subs").delete().eq("endpoint", sub.endpoint), "解除"); await sub.unsubscribe(); }
+    toast("この端末の通知を止めました");
+  } catch (e) { fail(e, "通知の解除"); }
+}
+async function openNotify(){
+  const st = await pushState(), tm = notifyTimes();
+  const msg = { on: "この端末で受け取っています", off: "まだ受け取っていません", denied: "iPhoneの設定で通知が拒否されています（設定 → 通知 → 男気じゃんけん旅 で許可してください）", browser: "ホーム画面に追加したアプリから開くと、通知を受け取れます（Safariのままでは受け取れません）", unsupported: "この端末は通知に対応していません（iOS 16.4以降が必要です）" }[st];
+  const s = openSheet("通知", `
+    <div class="card" style="margin-bottom:14px"><b style="font-weight:900">この端末：</b><span class="note" style="display:block;margin:4px 0 0">${msg}</span>
+      <div class="btns" style="margin-top:12px">${st === "on" ? `<button class="btn ghost" id="nOff">止める</button><button class="btn" id="nTest">テスト通知</button>` : st === "off" ? `<button class="btn" id="nOn">通知を受け取る</button>` : ""}</div></div>
+    <div class="f"><span>通知の時刻（全員共通・旅行中の日だけ届きます）</span></div>
+    ${Object.keys(NOTIFY_DEF).map(k => `<label class="ntime"><span>${NOTIFY_LABEL[k]}</span><input type="time" data-nt="${k}" value="${tm[k]}"></label>`).join("")}
+    <p class="note">1万円以上のじゃんけんの一斉宣言と、旅費総額が提示されたときのピタリ賞の予想は、その場ですぐに届きます。</p>
+    <div class="btns"><button class="btn" id="nSave">時刻を保存</button></div>`);
+  const on = (id, fn) => { const el = s.querySelector("#" + id); if (el) el.onclick = fn; };
+  on("nOn", async () => { if (await subscribePush()) openNotify(); });
+  on("nOff", async () => { await unsubscribePush(); openNotify(); });
+  on("nTest", () => { pushCall({ type: "test", player_id: me }); toast("テスト通知を送りました。数秒で届きます"); });
+  on("nSave", async () => {
+    const v = {}; s.querySelectorAll("[data-nt]").forEach(i => v[i.dataset.nt] = i.value || NOTIFY_DEF[i.dataset.nt]);
+    if (await putSetting("notify_times", v)){ await loadTable("app_settings"); closeSheet(); render(); toast("通知の時刻を保存しました"); }
+  });
+}
+/* ホームのリマインドカード（その日の時刻を過ぎたら表示。「完了」で消せる） */
+function reminderCards(t){
+  const day = dayOf(t); if (!day) return "";
+  const end = tripEnd(t), last = Math.round((new Date(end) - new Date(t.start_date)) / 864e5) + 1;
+  const now = new Date(), hm = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+  const tm = notifyTimes(), list = [];
+  if (day < last) list.push(["night", "🌙", day === 1 ? "行きの旅費と宿泊費のじゃんけん" : "宿泊費のじゃんけん", "今夜のうちに決めましょう（第八条）"]);
+  if (day === last) list.push(["lastday", "🧳", "帰りの旅費と車代のじゃんけん", "旅行終了の直前に（第八条）"], ["prize", "🎯", "ピタリ賞・ニアピン賞の判定", "全部の支払いが終わったら、券・特権タブで確認"]);
+  if (day === 1 && !t.travel_total) list.unshift(["start", "🎯", "旅費総額の提示とピタリ賞の予想", "前回4位の予約者が旅費総額を入力（券・特権タブ）"]);
+  return list.filter(([k]) => (k === "start" || hm >= tm[k]) && !localStorage.getItem(`ojk:done:${t.id}:${day}:${k}`))
+    .map(([k, ic, b, sm]) => `<div class="remind"><span class="ri">${ic}</span><div><b>${b}</b><span>${sm}</span></div><button class="mini" data-rdone="${t.id}:${day}:${k}">完了</button></div>`).join("");
 }
 
 /* ---------- 起動 ---------- */
