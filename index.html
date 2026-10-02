@@ -721,7 +721,7 @@ function viewHome(t){
   const pending = tripPays(t).filter(p => !p.payer_id);
   const champ = t.champion_out ? `<span class="tag gold">3連覇達成者 ${esc(pname(t.champion_out))}</span>` : "";
   let h = `<div class="trip framed"><i class="gem a"></i><i class="gem r"></i><span class="tb" aria-hidden="true"></span><span class="tb2" aria-hidden="true"></span><div class="t">${esc(t.name)}</div>
-    <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・SEASON ${t.season}・${t.members.length}人 ${champ}</div>
+    <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・SEASON ${t.season}${isFinal(t) ? ` <span class="tic s">FINAL</span>` : ""}・${t.members.length}人 ${champ}</div>
     ${t.start_date ? `<div class="s">${periodText(t)}</div>` : ""}<button class="mini tedit" data-act="editTrip">編集</button></div>`;
   h += `<div class="marquee" aria-hidden="true"><div class="mq">${MQ}${MQ}</div></div>`;
   const tp = day && tripPrivs(t).find(p => p.day === day);
@@ -829,8 +829,9 @@ function openSettings(){
     <button data-m="me">この端末の自分<span>${esc(player(me)?.name || "未設定")}</span></button>
     <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
     <button data-m="thr">一斉宣言を出す金額<span>${yen(threshold())}以上</span></button>
+    <button data-m="imp">過去データの取り込み<span>ファイルを選ぶ</span></button>
   </div><p class="note" style="margin-top:14px">通知・要綱の設定は段階4で追加します。</p>`);
-  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold })[b.dataset.m]());
+  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, imp: openImport })[b.dataset.m]());
 }
 
 function openPlayers(){
@@ -881,7 +882,7 @@ const PREFS = ["北海道","青森","岩手","宮城","秋田","山形","福島"
 const PLACE_ALIAS = { 函館: "北海道", 札幌: "北海道", 小樽: "北海道", 屋久島: "鹿児島", 奄美: "鹿児島", 石垣: "沖縄", 宮古島: "沖縄", 那覇: "沖縄", 金沢: "石川", 仙台: "宮城", 名古屋: "愛知", 横浜: "神奈川", 博多: "福岡", 別府: "大分", 箱根: "神奈川", 軽井沢: "長野", 伊勢: "三重", 日光: "栃木" };
 function parsePrefs(place){
   const out = [];
-  String(place || "").split(/[・、,，\/／\s]+/).map(x => x.trim()).filter(Boolean).forEach(w => {
+  String(place || "").split(/[・、,，\/／\s（）()]+/).map(x => x.trim()).filter(Boolean).forEach(w => {
     const k = w.replace(/(都|府|県)$/, "");
     const p = PREFS.includes(k) ? k : PREFS.includes(w) ? w : PLACE_ALIAS[w] || PLACE_ALIAS[k];
     if (p && !out.includes(p)) out.push(p);
@@ -909,7 +910,7 @@ function editTrip(id){
     <label class="f"><span>場所（都道府県名で書くと地図に反映されます）</span><input id="tpl" value="${esc(t ? (t.place || t.name || "") : "")}" placeholder="例：長崎・佐賀"></label>
     <div class="f"><span>旅行期間</span><div class="period"><input id="tsd" type="date" value="${t ? (t.start_date || "") : ""}"><span>〜</span><input id="ted" type="date" value="${t ? (tripEnd(t) || "") : ""}"></div><p class="note" id="tpd" style="margin:6px 0 0"></p></div>
     <div class="f"><span>参加者</span>${chipPlayers(db.players.map(p => p.id), members)}</div>
-    <div class="f"><span>3連覇達成者（この旅はじゃんけんに参加しない）</span><select id="tch"><option value="">なし</option>${db.players.map(p => `<option value="${p.id}" ${t && t.champion_out === p.id ? "selected" : ""}>${esc(p.name)}</option>`).join("")}</select></div>
+    <div class="f"><span>3連覇達成者（この旅はじゃんけんに参加しない）</span><select id="tch"><option value="">なし</option>${db.players.map(p => `<option value="${p.id}" ${(t ? t.champion_out : threePeatHolder()) === p.id ? "selected" : ""}>${esc(p.name)}</option>`).join("")}</select>${!t && threePeatHolder() ? `<p class="note" style="margin:6px 0 0">${esc(pname(threePeatHolder()))}が3連覇中のため、この旅はシーズン${season}のファイナルです。</p>` : ""}</div>
     <div class="btns">${t ? `<button class="btn danger" id="tdel">削除</button>` : ""}<button class="btn" id="tsave">${t ? "保存" : "旅を始める"}</button></div>`);
   bindChips(s, "data-p", true);
   bindChips(s, "data-term", false, () => { term = picked(s, "data-term")[0] || ""; });
@@ -1709,7 +1710,7 @@ function computeStats(trips){
         if (pi === 0) w.firstW++;
         if (isDayFirst) w.dayFirstW++;
         cum[p.payer_id] += p.amount;
-        if (d){ const h = d.getHours(); w.timeAmt[h < 11 ? 0 : h < 17 ? 1 : 2] += p.amount; }
+        if (d && p.source !== "import"){ const h = d.getHours(); w.timeAmt[h < 11 ? 0 : h < 17 ? 1 : 2] += p.amount; }
         dayAmt[p.payer_id] = dayAmt[p.payer_id] || {}; dayAmt[p.payer_id][dkey] = (dayAmt[p.payer_id][dkey] || 0) + p.amount;
       }
       (p.tickets_used || []).forEach(u => { if (S[u.pid]){ if (u.kind === "super"){ S[u.pid].sUse++; S[u.pid].sSaved += p.amount / (n + 1); } else S[u.pid].tUse++; } });
@@ -1867,7 +1868,7 @@ function viewHistory(t){
   let h = `<div class="h2">歴代1位名簿</div><div class="card honor">`;
   h += trips.slice().reverse().map(x => {
     const r = tripRanks(x)[0];
-    return `<button class="hrow" data-tripopen="${x.id}"><span class="hn num">${x.no}</span><span class="hm"><b>${esc(x.name)}</b><small>SEASON ${x.season}${x.id === setting("current_trip") ? "・今の旅" : ""}${peats.some(p => p.trip.id === x.id) ? "・3連覇達成" : ""}</small></span>${r && r.paid > 0 ? `<span class="hw"><i style="background:${pcolor(r.id)}"></i>${esc(pname(r.id))}<small class="num">${yen(r.paid)}</small></span>` : `<span class="hw muted">—</span>`}</button>`;
+    return `<button class="hrow" data-tripopen="${x.id}"><span class="hn num">${x.no}</span><span class="hm"><b>${esc(x.name)}</b><small>SEASON ${x.season}${isFinal(x) ? " FINAL" : ""}${x.id === setting("current_trip") ? "・今の旅" : ""}${peats.some(p => p.trip.id === x.id) ? "・3連覇達成" : ""}</small></span>${r && r.paid > 0 ? `<span class="hw"><i style="background:${pcolor(r.id)}"></i>${esc(pname(r.id))}<small class="num">${yen(r.paid)}</small></span>` : `<span class="hw muted">—</span>`}</button>`;
   }).join("");
   h += `</div>`;
 
@@ -1938,6 +1939,81 @@ function japanMap(trips){
   return `<div class="jmap"><svg viewBox="-4 -4 ${W + 8} ${H + 8}" role="img" aria-label="行った都道府県の地図">${cells}</svg></div>
     <p class="note" style="margin:6px 0 0">${visited.length}／47都道府県${mapMode === "all" ? "（最初に行ったシーズンの色）" : ""}</p>
     <div class="legend">${seasonsShown.map(sn => `<span><i style="background:${seasonColor(sn)}"></i>SEASON ${sn}</span>`).join("")}</div>`;
+}
+
+/* ---------- 過去データの取り込み ---------- */
+function guessPlayer(name){
+  const ps = db.players;
+  const exact = ps.find(p => p.name === name); if (exact) return exact.id;
+  const inc = ps.find(p => name.includes(p.name) || p.name.includes(name)); if (inc) return inc.id;
+  const pre = ps.find(p => p.name.slice(0, 2) === name.slice(0, 2)); return pre ? pre.id : "";
+}
+function openImport(){
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = ".json,application/json"; inp.hidden = true; document.body.appendChild(inp);
+  inp.onchange = async () => {
+    const f = inp.files && inp.files[0]; inp.remove(); if (!f) return;
+    let d; try { d = JSON.parse(await f.text()); } catch (e) { toast("読み込めませんでした（ファイルの形式が違います）", 3000); return; }
+    if (!d || d.app !== "ojk-import" || !Array.isArray(d.trips)){ toast("取り込み用のファイルではありません", 3000); return; }
+    openImportMap(d);
+  };
+  inp.click();
+}
+function openImportMap(d){
+  const names = [...new Set(d.trips.flatMap(t => [...t.members, ...t.payments.map(p => p.payer)]))];
+  const exists = new Set(db.trips.map(t => t.no));
+  const s = openSheet("過去データの取り込み", `
+    <p class="note">ファイルの名前を、登録済みのプレイヤーに対応させてください。いない人は「新しく登録」で追加されます。</p>
+    ${names.map((n, i) => `<label class="f"><span>${esc(n)}</span><select data-map="${i}"><option value="">新しく登録する</option>${db.players.map(p => `<option value="${p.id}" ${guessPlayer(n) === p.id ? "selected" : ""}>${esc(p.name)}</option>`).join("")}</select></label>`).join("")}
+    <div class="h2" style="margin-top:8px">取り込む旅</div>
+    ${d.trips.map(t => `<div class="plist"><b>第${t.no}回 ${t.year}${t.term} ${esc(t.place)}</b><span class="note" style="margin:0">${t.payments.length}件${exists.has(t.no) ? "・登録済みのため飛ばす" : ""}</span></div>`).join("")}
+    <div class="btns"><button class="btn" id="impgo">取り込む</button></div>`);
+  $("#impgo").onclick = async () => {
+    const map = {}; const btn = $("#impgo"); btn.disabled = true; btn.textContent = "取り込み中…";
+    try {
+      const used = db.players.map(p => (p.color || "").toUpperCase());
+      for (let i = 0; i < names.length; i++){
+        let id = s.querySelector(`[data-map="${i}"]`).value;
+        if (!id){
+          const color = COLORS.find(c => !used.includes(c.toUpperCase())) || COLORS[i % COLORS.length]; used.push(color.toUpperCase());
+          const res = await q(sb.from("players").insert({ name: names[i], color, sort: db.players.length + i }).select().single(), "登録");
+          if (!res) throw new Error("プレイヤーを登録できませんでした");
+          id = res.id;
+        }
+        map[names[i]] = id;
+      }
+      let added = 0;
+      for (const t of d.trips){
+        if (exists.has(t.no)) continue;
+        const members = t.members.map(n => map[n]);
+        const row = { no: t.no, season: t.season, year: t.year, term: t.term, place: t.place, name: `${t.year}${t.term} ${t.place}`,
+          start_date: t.start_date, end_date: t.end_date, days: Math.round((new Date(t.end_date) - new Date(t.start_date)) / 864e5) + 1,
+          members, champion_out: null, prefectures: parsePrefs(t.place) };
+        const tr = await q(sb.from("trips").insert(row).select().single(), "取り込み"); if (!tr) throw new Error(`第${t.no}回を登録できませんでした`);
+        const pays = t.payments.map(p => ({ trip_id: tr.id, seq: p.seq, label: p.label, amount: p.amount, category: p.category, payer_id: map[p.payer], participants: members, created_at: p.created_at, source: "import" }));
+        for (let k = 0; k < pays.length; k += 100) if (!(await q(sb.from("payments").insert(pays.slice(k, k + 100)), "取り込み"))) throw new Error(`第${t.no}回の支払いを登録できませんでした`);
+        const drv = Object.entries(t.drives || {}).flatMap(([n, c]) => Array.from({ length: c }, () => ({ trip_id: tr.id, player_id: map[n], created_at: `${t.start_date}T12:00:00+09:00`, source: "import" })));
+        if (drv.length && !(await q(sb.from("drives").insert(drv), "取り込み"))) throw new Error(`第${t.no}回の運転を登録できませんでした`);
+        added++;
+      }
+      await Promise.all(TABLES.map(loadTable));
+      if (!curTrip()){ const last = tripsSorted().pop(); if (last){ await putSetting("current_trip", last.id); await loadTable("app_settings"); } }
+      closeSheet(); render(); flash("取り込み完了！", `${added}回分の旅を登録しました`);
+    } catch (e) { toast((e && e.message) || "取り込みに失敗しました", 4000); btn.disabled = false; btn.textContent = "取り込む"; await Promise.all(TABLES.map(loadTable)); render(); }
+  };
+}
+/* シーズンファイナル：同じシーズンで直前3回が同じ優勝者 */
+function isFinal(t){
+  const prev = tripsSorted().filter(x => x.no < t.no).slice(-3);
+  if (prev.length < 3 || prev.some(x => x.season !== t.season)) return false;
+  const w = prev.map(tripWinner);
+  return w[0] && w.every(x => x === w[0]);
+}
+function threePeatHolder(){
+  const prev = tripsSorted().slice(-3);
+  if (prev.length < 3 || prev.some(x => x.season !== prev[0].season)) return null;
+  const w = prev.map(tripWinner);
+  return w[0] && w.every(x => x === w[0]) ? w[0] : null;
 }
 
 /* ---------- 起動 ---------- */
