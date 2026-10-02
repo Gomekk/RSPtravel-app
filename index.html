@@ -133,6 +133,16 @@ nav button[aria-current="page"]::before{content:"";position:absolute;top:-8px;le
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips button{display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:13px;padding:8px 12px;border-radius:10px;background:#fff;border:2px solid var(--line)}
 .chips button[aria-pressed="true"]{border-color:var(--ink);background:#FFF6D6;box-shadow:0 0 12px rgba(232,177,42,.5)}
+.chips button.pc[aria-pressed="true"]{background:color-mix(in srgb,var(--pc) 24%,#fff);box-shadow:none;color:var(--ink)}
+.stepper{display:flex;align-items:center;justify-content:space-between;gap:6px;border:2px solid var(--line);border-radius:10px;background:#fff;padding:4px}
+.stepper button{width:34px;height:34px;border-radius:8px;border:2px solid var(--ink);background:#fff;font-weight:900}
+.stepper b{font-size:14px;letter-spacing:.04em;white-space:nowrap}
+.chips.terms{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.chips.terms button{justify-content:center;padding:11px 0}
+.period{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px}
+.period input{padding:9px 8px;font-size:14px;min-width:0}
+.period span{font-weight:900;color:var(--mute)}
+.trip .tedit{position:absolute;right:12px;bottom:12px}
 .chips button[aria-pressed="false"]{color:var(--mute)}
 .chips button[aria-pressed="false"] .dot{opacity:.35}
 .chips button:disabled{opacity:.4}
@@ -214,7 +224,7 @@ nav button[aria-current="page"]::before{content:"";position:absolute;top:-8px;le
 .deco .g6{top:62%;left:6px;width:10px;height:10px;background-image:var(--glint-red)}
 .deco .b1{top:66px;left:-14px;width:70px;height:70px;background-image:var(--bolt-red);opacity:.55;transform:rotate(-8deg)}
 .deco .b2{bottom:84px;right:-16px;width:80px;height:80px;background-image:var(--bolt-aqua);opacity:.55;transform:rotate(170deg)}
-.deco .s1{top:-26px;right:-26px;width:110px;height:110px;background-image:var(--burst-glow-red);opacity:.28}
+.deco .s1{top:120px;right:-18px;width:86px;height:86px;background-image:var(--hand-paa);opacity:.32;transform:rotate(-24deg)}
 .deco .s2{bottom:40px;left:-40px;width:130px;height:130px;background-image:var(--burst-glow-aqua);opacity:.22}
 
 header::after{content:"";position:absolute;left:16px;right:16px;bottom:4px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--crimson) 0 33%,var(--gold) 33% 66%,var(--aqua) 66%)}
@@ -246,11 +256,13 @@ header::after{content:"";position:absolute;left:16px;right:16px;bottom:4px;heigh
 /* 進行中バナー */
 .live{position:relative;overflow:hidden;padding-left:52px}
 .live::before{content:"";position:absolute;left:10px;top:50%;width:34px;height:34px;margin-top:-17px;background:var(--bolt-gold) center/contain no-repeat;filter:drop-shadow(0 0 4px rgba(255,255,255,.8))}
-.live::after{content:"";position:absolute;right:-18px;top:-18px;width:80px;height:80px;background:var(--burst-glow-gold) center/contain no-repeat;opacity:.55;animation:spin 8s linear infinite}
+.live::after{content:"";position:absolute;right:6px;top:50%;width:54px;height:54px;margin-top:-27px;background:var(--hand-choki) center/contain no-repeat;animation:wobble 1.2s ease-in-out infinite}
+@keyframes wobble{50%{transform:rotate(-14deg) scale(1.08)}}
+.live{padding-right:66px}
 
 /* ボタン */
-.big::before{content:"";position:absolute;left:-30px;top:50%;width:66px;height:66px;margin-top:-33px;background:var(--burst-glow-red) center/contain no-repeat;opacity:.9}
-.big>span{position:relative;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.big::before{content:"";position:absolute;left:-6px;top:50%;width:54px;height:54px;margin-top:-27px;transform:skewX(6deg) rotate(-18deg);background:var(--hand-guu) center/contain no-repeat;opacity:.9}
+.big>span{position:relative;text-shadow:0 1px 0 rgba(255,255,255,.7);padding-left:30px}
 .big .bz{position:absolute;right:10px;top:8px;width:26px;height:26px;background:var(--bolt-aqua) center/contain no-repeat;transform:skewX(6deg)}
 .sub{position:relative;overflow:hidden;box-shadow:0 5px 0 var(--ink),0 0 18px rgba(31,179,191,.45);background:linear-gradient(180deg,#fff 60%,#DDF7F9)}
 .sub::before{content:"";display:block;width:30px;height:30px;margin:0 auto 4px;background:var(--bolt-aqua) center/contain no-repeat}
@@ -280,14 +292,14 @@ nav button[aria-current="page"]::before{background:linear-gradient(90deg,var(--c
 
 /* シート */
 .sheet .in::before{width:60px;margin-left:-30px;background:linear-gradient(90deg,var(--crimson) 0 33%,var(--gold) 33% 66%,var(--aqua) 66%)}
-.sheet h3::before{content:"";width:22px;height:22px;flex:none;background:var(--burst-red) center/contain no-repeat}
+.sheet h3::before{content:"";width:28px;height:28px;flex:none;background:var(--hand-choki) center/contain no-repeat;transform:rotate(-10deg)}
 
 /* 空の状態 */
 .empty::before,.soon::before{content:"";display:block;width:56px;height:56px;margin:0 auto 10px;background:var(--burst-glow-gold) center/contain no-repeat;animation:spin 16s linear infinite}
 
 /* じゃんけん画面 */
 .atop{position:relative;overflow:visible}
-.atop::before{content:"";position:absolute;left:-10px;top:-12px;width:34px;height:34px;background:var(--burst-red) center/contain no-repeat}
+.atop::before{content:"";position:absolute;left:-12px;top:-16px;width:40px;height:40px;background:var(--hand-paa) center/contain no-repeat;transform:rotate(-20deg)}
 .atop::after{content:"";position:absolute;right:-8px;bottom:-14px;width:34px;height:34px;background:var(--bolt-aqua) center/contain no-repeat}
 .arena .deco-a{position:absolute;inset:0;pointer-events:none;z-index:0}
 .arena>*{position:relative;z-index:1}
@@ -344,7 +356,7 @@ ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:7
 .todaypriv b{font-weight:900;font-size:14px}
 .todaypriv span{font-size:12px;color:var(--mute);font-weight:700}
 .todaypriv.ask{background:linear-gradient(100deg,#FFE7EA,#fff 70%);border-style:dashed}
-.todaypriv.ask .pk{background-image:var(--burst-glow-red)}
+.todaypriv.ask .pk{background-image:var(--burst-glow-gold)}
 .privpick{display:flex;flex-direction:column;gap:8px}
 .privpick button{display:flex;gap:10px;align-items:center;text-align:left;padding:8px 10px;border-radius:12px;border:2px solid var(--line);background:#fff}
 .privpick button span:last-child{display:flex;flex-direction:column}
@@ -402,6 +414,45 @@ ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:7
 .flash span{font-weight:900;font-size:15px;max-width:90vw}
 @keyframes flashout{0%,75%{opacity:1}100%{opacity:0}}
 
+
+/* ===== わちゃわちゃ ===== */
+.deco .fh{width:44px;height:44px;opacity:.5;animation:floaty var(--fd,6s) ease-in-out infinite}
+.deco .f1{top:30%;left:-6px;background-image:var(--hand-guu);--fd:5.2s}
+.deco .f2{top:56%;right:-4px;background-image:var(--hand-choki);--fd:6.4s;animation-delay:-2s}
+.deco .f3{bottom:22%;left:8%;background-image:var(--hand-paa);--fd:7s;animation-delay:-4s;width:36px;height:36px}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-12deg)}50%{transform:translateY(-26px) rotate(14deg)}}
+.deco .pt{bottom:-20px;width:var(--sz);height:var(--sz);background-image:var(--img);animation:rise var(--d) linear var(--dl) infinite}
+@keyframes rise{0%{transform:translateY(0) rotate(0) scale(.6);opacity:0}10%{opacity:.9}100%{transform:translateY(-105vh) rotate(360deg) scale(1.1);opacity:0}}
+.marquee{position:relative;overflow:hidden;margin:-4px -16px 16px;padding:7px 0;background:var(--ink);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-1.5deg)}
+.marquee .mq{display:flex;width:max-content;animation:mq 16s linear infinite}
+.marquee span{display:inline-flex;align-items:center;gap:10px;padding-right:22px;font-family:var(--disp);font-size:15px;color:#fff;white-space:nowrap}
+.marquee span:nth-child(3n+1) b{color:var(--gold)}
+.marquee span:nth-child(3n+2) b{color:#FF5A6E}
+.marquee span:nth-child(3n) b{color:#3FE0E8}
+.marquee b{font-weight:400}
+.marquee i{display:inline-block;width:26px;height:26px;background:center/contain no-repeat;animation:bob 1s ease-in-out infinite}
+.marquee i.g{background-image:var(--hand-guu)}.marquee i.c{background-image:var(--hand-choki);animation-delay:.33s}.marquee i.p{background-image:var(--hand-paa);animation-delay:.66s}
+@keyframes mq{to{transform:translateX(-50%)}}
+@keyframes bob{50%{transform:translateY(-4px) rotate(-12deg)}}
+.big{animation:wiggle 4.5s ease-in-out infinite}
+@keyframes wiggle{0%,86%,100%{transform:skewX(-6deg)}89%{transform:skewX(-6deg) rotate(-2deg) scale(1.03)}92%{transform:skewX(-6deg) rotate(2deg) scale(1.03)}95%{transform:skewX(-6deg) rotate(-1deg)}}
+.big:active{animation:none}
+.big::before{animation:punch 1.6s ease-in-out infinite}
+@keyframes punch{0%,100%{transform:skewX(6deg) rotate(-18deg) translateX(0)}50%{transform:skewX(6deg) rotate(-6deg) translateX(6px) scale(1.12)}}
+.h2::before{animation:dspin 3.5s ease-in-out infinite}
+@keyframes dspin{0%,70%{transform:rotate(45deg)}85%{transform:rotate(225deg) scale(1.2)}100%{transform:rotate(405deg)}}
+.dayflag{animation:flagpop 2.4s ease-in-out infinite}
+@keyframes flagpop{0%,80%,100%{transform:skewX(-8deg) scale(1)}88%{transform:skewX(-8deg) scale(1.15)}}
+.rank.top{animation:topglow 2s ease-in-out infinite}
+@keyframes topglow{50%{box-shadow:inset 6px 0 0 var(--c),0 0 34px rgba(232,177,42,.85)}}
+.rank.top .a{animation:amtpulse 2s ease-in-out infinite}
+@keyframes amtpulse{50%{transform:scale(1.06);text-shadow:0 0 12px rgba(232,177,42,.8)}}
+.todaypriv .pk{position:relative;background:none!important;z-index:0}
+.todaypriv .pk::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--burst-glow-aqua) center/contain no-repeat;animation:spin 10s linear infinite}
+.todaypriv.ask .pk::before{background-image:var(--burst-glow-gold)}
+.pend .chipbtn{animation:nudge 2.2s ease-in-out infinite}
+@keyframes nudge{0%,80%,100%{transform:none}85%{transform:translateX(-3px) rotate(-3deg)}90%{transform:translateX(3px) rotate(3deg)}}
+:root{--hand-guu:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23C8182F%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%23FF3B55%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2220%22%20y%3D%2240%22%20width%3D%2261%22%20height%3D%2254%22%20rx%3D%2216%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2222%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2236%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2250%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2264%22%20y%3D%2232%22%20width%3D%2214%22%20height%3D%2224%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2214%22%20y%3D%2258%22%20width%3D%2248%22%20height%3D%2214%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");--hand-choki:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23D19A1A%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%23F5B820%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2224%22%20y%3D%222%22%20width%3D%2213%22%20height%3D%2258%22%20rx%3D%226.5%22%20transform%3D%22rotate%28-12%2030%2060%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2240%22%20y%3D%220%22%20width%3D%2213%22%20height%3D%2260%22%20rx%3D%226.5%22%20transform%3D%22rotate%2810%2046%2060%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2220%22%20y%3D%2244%22%20width%3D%2261%22%20height%3D%2250%22%20rx%3D%2215%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2251%22%20y%3D%2240%22%20width%3D%2214%22%20height%3D%2220%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2265%22%20y%3D%2240%22%20width%3D%2214%22%20height%3D%2220%22%20rx%3D%227%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2216%22%20y%3D%2260%22%20width%3D%2244%22%20height%3D%2213%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");--hand-paa:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22-12%20-12%20112%20124%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2322A0AA%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22f%22%20x%3D%22-40%25%22%20y%3D%22-40%25%22%20width%3D%22180%25%22%20height%3D%22180%25%22%3E%3CfeGaussianBlur%20in%3D%22SourceGraphic%22%20stdDeviation%3D%224%22%20result%3D%22b%22/%3E%3CfeFlood%20flood-color%3D%22%2318C6D2%22%20flood-opacity%3D%22.8%22/%3E%3CfeComposite%20in2%3D%22b%22%20operator%3D%22in%22%20result%3D%22gl%22/%3E%3CfeMerge%3E%3CfeMergeNode%20in%3D%22gl%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cg%20filter%3D%22url%28%23f%29%22%3E%3Crect%20x%3D%2223%22%20y%3D%2214%22%20width%3D%2213%22%20height%3D%2246%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2237%22%20y%3D%224%22%20width%3D%2213%22%20height%3D%2256%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2251%22%20y%3D%226%22%20width%3D%2213%22%20height%3D%2254%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2265%22%20y%3D%2216%22%20width%3D%2213%22%20height%3D%2244%22%20rx%3D%226.5%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2212%22%20y%3D%2246%22%20width%3D%2214%22%20height%3D%2240%22%20rx%3D%227%22%20transform%3D%22rotate%28-34%2022%2084%29%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3Crect%20x%3D%2220%22%20y%3D%2244%22%20width%3D%2261%22%20height%3D%2250%22%20rx%3D%2215%22%20fill%3D%22url%28%23g%29%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/g%3E%3C/svg%3E");}
 :root{--burst-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23F5C842%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23E2364F%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%231FB3BF%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-glow-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E8B12A%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C-1.4%2055.6%2C22.0%2071.0%2C-0.6%2067.0%2C24.6%2088.0%2C12.0%2075.3%2C33.1%2086.7%2C34.8%2075.1%2C45.0%20107.7%2C50.0%2077.0%2C55.4%20102.5%2C71.8%2068.3%2C62.2%2084.2%2C84.2%2063.0%2C69.4%2069.1%2C96.1%2055.2%2C76.3%2050.0%2C89.5%2045.5%2C72.6%2032.9%2C91.3%2033.1%2C75.2%2011.7%2C88.3%2031.3%2C62.5%20-0.7%2C71.0%2028.2%2C54.3%20-1.3%2C50.0%2028.3%2C45.7%2013.8%2C35.0%2025.2%2C33.4%2019.4%2C19.4%2037.2%2C30.8%2027.6%2C-4.0%2044.2%2C20.7%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E2364F%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C6.4%2056.0%2C19.8%2065.9%2C11.5%2065.6%2C26.6%2078.9%2C21.1%2069.4%2C37.0%20104.3%2C27.5%2072.5%2C45.5%20101.8%2C50.0%2075.1%2C55.0%2094.4%2C68.4%2071.6%2C64.4%2080.4%2C80.4%2066.4%2C74.5%2065.7%2C87.8%2054.5%2C72.8%2050.0%2C89.6%2045.4%2C73.1%2031.9%2C93.6%2033.2%2C75.1%2017.0%2C83.0%2031.7%2C62.2%209.1%2C66.9%2019.5%2C56.1%209.6%2C50.0%2023.3%2C44.7%207.0%2C32.2%2027.0%2C34.6%2017.6%2C17.6%2034.4%2C26.7%2031.3%2C4.8%2044.6%2C23.0%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231FB3BF%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C1.7%2054.8%2C25.8%2066.0%2C11.3%2066.6%2C25.2%2077.8%2C22.2%2071.6%2C35.5%20102.5%2C28.3%2071.2%2C45.8%20100.1%2C50.0%2076.7%2C55.3%2087.0%2C65.3%2070.6%2C63.7%2087.5%2C87.5%2064.2%2C71.2%2070.4%2C99.3%2054.4%2C72.0%2050.0%2C93.9%2045.7%2C71.5%2031.2%2C95.4%2033.1%2C75.3%2014.1%2C85.9%2026.0%2C66.0%206.8%2C67.9%2022.0%2C55.6%208.8%2C50.0%2026.6%2C45.4%201.6%2C29.9%2026.4%2C34.3%2016.4%2C16.4%2037.9%2C31.9%2033.0%2C9.0%2045.5%2C27.5%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--bolt-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--glint-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23F5C842%22/%3E%3C/svg%3E");--glint-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23E2364F%22/%3E%3C/svg%3E");--glint-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%231FB3BF%22/%3E%3C/svg%3E");--zig-ink:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2010%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolygon%20points%3D%220%2C0%2010%2C10%2020%2C0%22%20fill%3D%22%231B1838%22/%3E%3C/svg%3E")}
 </style>
 </head>
@@ -412,7 +463,7 @@ ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:7
   <button class="me" id="meBtn" aria-label="この端末の自分を選ぶ"><span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span></button>
   <button class="gear" id="gearBtn" aria-label="設定"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 </header>
-<div class="deco" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="b1"></i><i class="b2"></i><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="g4"></i><i class="g5"></i><i class="g6"></i></div>
+<div class="deco" aria-hidden="true"><i class="fh f1"></i><i class="fh f2"></i><i class="fh f3"></i><i class="pt" style="left:82%;--d:6.3s;--dl:-3.6s;--sz:16px;--img:var(--glint-gold)"></i><i class="pt" style="left:62%;--d:8.9s;--dl:-2.5s;--sz:8px;--img:var(--glint-gold)"></i><i class="pt" style="left:17%;--d:6.9s;--dl:-8.7s;--sz:14px;--img:var(--glint-aqua)"></i><i class="pt" style="left:16%;--d:7.9s;--dl:-0.1s;--sz:11px;--img:var(--glint-red)"></i><i class="pt" style="left:38%;--d:5.9s;--dl:-8.7s;--sz:14px;--img:var(--glint-gold)"></i><i class="pt" style="left:12%;--d:5.7s;--dl:-6.2s;--sz:10px;--img:var(--glint-gold)"></i><i class="pt" style="left:3%;--d:9.9s;--dl:-0.1s;--sz:11px;--img:var(--glint-gold)"></i><i class="pt" style="left:24%;--d:6.4s;--dl:-9.6s;--sz:16px;--img:var(--glint-aqua)"></i><i class="pt" style="left:83%;--d:6.0s;--dl:-9.4s;--sz:11px;--img:var(--glint-red)"></i><i class="pt" style="left:41%;--d:5.1s;--dl:-4.1s;--sz:10px;--img:var(--glint-red)"></i><i class="pt" style="left:11%;--d:6.7s;--dl:-8.2s;--sz:8px;--img:var(--glint-aqua)"></i><i class="pt" style="left:89%;--d:8.5s;--dl:-0.7s;--sz:13px;--img:var(--glint-red)"></i><i class="pt" style="left:64%;--d:8.5s;--dl:-1.8s;--sz:15px;--img:var(--glint-aqua)"></i><i class="pt" style="left:25%;--d:5.3s;--dl:-9.8s;--sz:8px;--img:var(--glint-aqua)"></i><i class="s1"></i><i class="s2"></i><i class="b1"></i><i class="b2"></i><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="g4"></i><i class="g5"></i><i class="g6"></i></div>
 <main id="view"><div class="loading">読み込み中…</div></main>
 <nav id="tabs">
   <button data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>ホーム</button>
@@ -441,6 +492,7 @@ const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settin
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
+const MQ = `<span><i class="g"></i><b>じゃんけん</b></span><span><i class="c"></i><b>ぽん！</b></span><span><i class="p"></i><b>男気を見せろ</b></span><span><i class="g"></i><b>最初はグー</b></span><span><i class="c"></i><b>あいこでしょ</b></span><span><i class="p"></i><b>払うは誉れ</b></span>`;
 const PRIVS = {
   1: { name: "免除券被せ", desc: "免除券・super免除券を、他の人と重ねて使える", span: "全期間" },
   2: { name: "免除券強奪", desc: "所持者だけでじゃんけんし、負けた人から券を1枚奪う", span: "1回限り", max: 1 },
@@ -567,13 +619,15 @@ const soon = (t, s) => `<div class="soon"><b>${t}</b>${s}</div>`;
 
 function viewHome(t){
   if (!db.players.length) return `<div class="empty"><b>まずはプレイヤー登録</b>右上の歯車から、旅のメンバーを登録してください。<div class="btns"><button class="btn" data-act="players">プレイヤーを登録する</button></div></div>`;
-  if (!t) return `<div class="empty"><b>旅を作成しましょう</b>歯車の「旅」から、今回の旅を作成して「今の旅」に選んでください。<div class="btns"><button class="btn" data-act="trips">旅を作成する</button></div></div>`;
+  if (!t) return `<div class="empty"><b>新しい旅へ</b>年・季節・場所・期間・参加者を決めて、旅を始めましょう。<div class="btns"><button class="btn" data-act="trips">旅を始める</button></div></div>`;
   const day = dayOf(t), lj = liveJanken(t);
   const rows = standings(t);
   const pending = tripPays(t).filter(p => !p.payer_id);
   const champ = t.champion_out ? `<span class="tag gold">3連覇達成者 ${esc(pname(t.champion_out))}</span>` : "";
   let h = `<div class="trip framed"><i class="gem a"></i><i class="gem r"></i><span class="tb" aria-hidden="true"></span><span class="tb2" aria-hidden="true"></span><div class="t">${esc(t.name)}</div>
-    <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・シーズン${t.season}・${t.members.length}人 ${champ}</div></div>`;
+    <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・SEASON ${t.season}・${t.members.length}人 ${champ}</div>
+    ${t.start_date ? `<div class="s">${periodText(t)}</div>` : ""}<button class="mini tedit" data-act="editTrip">編集</button></div>`;
+  h += `<div class="marquee" aria-hidden="true"><div class="mq">${MQ}${MQ}</div></div>`;
   const tp = day && tripPrivs(t).find(p => p.day === day);
   if (tp) h += `<div class="todaypriv"><span class="pk">${KANJI[tp.kind]}</span><div><b>今日の特権：${esc(pname(tp.player_id))}</b><span>${PRIVS[tp.kind].name}</span></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
@@ -598,7 +652,7 @@ function viewHome(t){
 }
 
 function viewList(t){
-  if (!t) return `<div class="empty"><b>今の旅がありません</b>歯車の「旅」から作成してください。</div>`;
+  if (!t) return `<div class="empty"><b>今の旅がありません</b>ホームの「旅を始める」から作成してください。</div>`;
   const cats = categoriesFor(t);
   const all = tripPays(t);
   const pays = listFilter === "all" ? all : all.filter(p => p.category === listFilter);
@@ -619,7 +673,7 @@ const fmtTime = iso => { const d = new Date(iso); return `${d.getMonth()+1}/${d.
 function bindView(){
   const v = $("#view");
   v.querySelectorAll("[data-act]").forEach(b => b.onclick = () => ({
-    players: openPlayers, trips: openTrips, newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id),
+    players: openPlayers, trips: () => editTrip(null), editTrip: () => editTrip(curTrip().id), newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id),
     privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
     saveTravel: () => saveTravelTotal(curTrip()), roulette: () => openRoulette(curTrip(), rouletteDay), grantRoulette: () => grantRoulette(curTrip(), rouletteDay)
   })[b.dataset.act]());
@@ -648,7 +702,7 @@ function openSheet(title, html){
 function closeSheet(){ $("#sheet").classList.remove("on"); }
 $("#sheet").addEventListener("click", e => { if (e.target.id === "sheet") closeSheet(); });
 
-const chipPlayers = (ids, selected, attr = "data-p") => `<div class="chips">${ids.map(id => `<button type="button" ${attr}="${id}" aria-pressed="${selected.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div>`;
+const chipPlayers = (ids, selected, attr = "data-p") => `<div class="chips">${ids.map(id => `<button type="button" class="pc" style="--pc:${pcolor(id)}" ${attr}="${id}" aria-pressed="${selected.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div>`;
 function bindChips(root, attr, multi, onChange){
   root.querySelectorAll(`[${attr}]`).forEach(b => b.onclick = () => {
     if (!multi) root.querySelectorAll(`[${attr}]`).forEach(x => x.setAttribute("aria-pressed", "false"));
@@ -673,10 +727,9 @@ function openSettings(){
   const s = openSheet("設定", `<div class="menu">
     <button data-m="me">この端末の自分<span>${esc(player(me)?.name || "未設定")}</span></button>
     <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
-    <button data-m="trips">旅<span>${esc(t ? t.name : "未選択")}</span></button>
     <button data-m="thr">一斉宣言を出す金額<span>${yen(threshold())}以上</span></button>
   </div><p class="note" style="margin-top:14px">通知・要綱の設定は段階4で追加します。</p>`);
-  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, trips: openTrips, thr: openThreshold })[b.dataset.m]());
+  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold })[b.dataset.m]());
 }
 
 function openPlayers(){
@@ -723,45 +776,77 @@ function openTrips(){
   s.querySelectorAll("[data-te]").forEach(b => b.onclick = () => editTrip(b.dataset.te));
   s.querySelectorAll("[data-cur]").forEach(b => b.onclick = async () => { if (await putSetting("current_trip", b.dataset.cur)){ await loadTable("app_settings"); render(); openTrips(); toast("今の旅を切り替えました"); } });
 }
+const PREFS = ["北海道","青森","岩手","宮城","秋田","山形","福島","茨城","栃木","群馬","埼玉","千葉","東京","神奈川","新潟","富山","石川","福井","山梨","長野","岐阜","静岡","愛知","三重","滋賀","京都","大阪","兵庫","奈良","和歌山","鳥取","島根","岡山","広島","山口","徳島","香川","愛媛","高知","福岡","佐賀","長崎","熊本","大分","宮崎","鹿児島","沖縄"];
+const PLACE_ALIAS = { 函館: "北海道", 札幌: "北海道", 小樽: "北海道", 屋久島: "鹿児島", 奄美: "鹿児島", 石垣: "沖縄", 宮古島: "沖縄", 那覇: "沖縄", 金沢: "石川", 仙台: "宮城", 名古屋: "愛知", 横浜: "神奈川", 博多: "福岡", 別府: "大分", 箱根: "神奈川", 軽井沢: "長野", 伊勢: "三重", 日光: "栃木" };
+function parsePrefs(place){
+  const out = [];
+  String(place || "").split(/[・、,，\/／\s]+/).map(x => x.trim()).filter(Boolean).forEach(w => {
+    const k = w.replace(/(都|府|県)$/, "");
+    const p = PREFS.includes(k) ? k : PREFS.includes(w) ? w : PLACE_ALIAS[w] || PLACE_ALIAS[k];
+    if (p && !out.includes(p)) out.push(p);
+  });
+  return out;
+}
+const TERMS = ["春", "夏", "秋", "冬"];
+const fmtMD = d => { if (!d) return ""; const x = new Date(d + "T00:00:00"); return `${x.getMonth() + 1}月${x.getDate()}日`; };
+const tripEnd = t => t.end_date || (t.start_date ? (() => { const x = new Date(t.start_date + "T00:00:00"); x.setDate(x.getDate() + (t.days || 1) - 1); return x.toISOString().slice(0, 10); })() : null);
+const periodText = t => t.start_date ? `${fmtMD(t.start_date)}〜${fmtMD(tripEnd(t))}` : "";
 function editTrip(id){
   if (!db.players.length){ toast("先にプレイヤーを登録してください"); openPlayers(); return; }
   const t = id ? db.trips.find(x => x.id === id) : null;
   const last = [...db.trips].sort((a, b) => b.no - a.no)[0];
-  const members = t ? t.members : db.players.map(p => p.id);
-  const s = openSheet(t ? "旅を編集" : "旅を作成", `
-    <div class="two"><label class="f"><span>開催回</span><input id="tno" type="number" inputmode="numeric" value="${t ? t.no : (last ? last.no + 1 : 0)}"></label>
-    <label class="f"><span>シーズン</span><input id="tse" type="number" inputmode="numeric" value="${t ? t.season : (last ? last.season : 1)}"></label></div>
-    <label class="f"><span>名称</span><input id="tna" value="${esc(t ? t.name : "")}" placeholder="例：2027冬 長崎・佐賀"></label>
-    <div class="two"><label class="f"><span>開始日</span><input id="tsd" type="date" value="${t ? (t.start_date || "") : ""}"></label>
-    <label class="f"><span>日数</span><input id="tdy" type="number" inputmode="numeric" min="1" max="9" value="${t ? t.days : 3}"></label></div>
+  const members = t ? t.members : (last ? last.members : db.players.map(p => p.id));
+  const no = t ? t.no : (last ? last.no + 1 : 0);
+  let season = t ? t.season : (Number(setting("last_season")) || (last ? last.season : 1));
+  let term = t ? (t.term || "") : "";
+  const year = t ? (t.year || "") : new Date().getFullYear();
+  const s = openSheet(t ? "旅を編集" : "旅を始める", `
+    <div class="two"><label class="f"><span>開催回（自動）</span><input id="tno" value="第${no}回" disabled></label>
+    <div class="f"><span>シーズン</span><div class="stepper"><button type="button" data-st="-" aria-label="シーズンを減らす">−</button><b class="num">SEASON <span id="tse">${season}</span></b><button type="button" data-st="+" aria-label="シーズンを増やす">＋</button></div></div></div>
+    <div class="two"><label class="f"><span>年</span><input id="tyr" type="number" inputmode="numeric" value="${year}"></label>
+    <div class="f"><span>季節</span><div class="chips terms">${TERMS.map(x => `<button type="button" data-term="${x}" aria-pressed="${x === term}">${x}</button>`).join("")}</div></div></div>
+    <label class="f"><span>場所（都道府県名で書くと地図に反映されます）</span><input id="tpl" value="${esc(t ? (t.place || t.name || "") : "")}" placeholder="例：長崎・佐賀"></label>
+    <div class="f"><span>旅行期間</span><div class="period"><input id="tsd" type="date" value="${t ? (t.start_date || "") : ""}"><span>〜</span><input id="ted" type="date" value="${t ? (tripEnd(t) || "") : ""}"></div><p class="note" id="tpd" style="margin:6px 0 0"></p></div>
     <div class="f"><span>参加者</span>${chipPlayers(db.players.map(p => p.id), members)}</div>
     <div class="f"><span>3連覇達成者（この旅はじゃんけんに参加しない）</span><select id="tch"><option value="">なし</option>${db.players.map(p => `<option value="${p.id}" ${t && t.champion_out === p.id ? "selected" : ""}>${esc(p.name)}</option>`).join("")}</select></div>
-    <label class="f"><span>行った都道府県（読点区切り。地図は段階3で表示）</span><input id="tpr" value="${esc(t ? (t.prefectures || []).join("、") : "")}" placeholder="例：長崎、佐賀"></label>
-    <div class="btns">${t ? `<button class="btn danger" id="tdel">削除</button>` : `<button class="btn ghost" data-back>戻る</button>`}<button class="btn" id="tsave">保存</button></div>`);
+    <div class="btns">${t ? `<button class="btn danger" id="tdel">削除</button>` : ""}<button class="btn" id="tsave">${t ? "保存" : "旅を始める"}</button></div>`);
   bindChips(s, "data-p", true);
-  const back = s.querySelector("[data-back]"); if (back) back.onclick = openTrips;
+  bindChips(s, "data-term", false, () => { term = picked(s, "data-term")[0] || ""; });
+  s.querySelectorAll("[data-st]").forEach(b => b.onclick = () => { season = Math.max(1, season + (b.dataset.st === "+" ? 1 : -1)); $("#tse").textContent = season; });
+  const showPeriod = () => {
+    const a = $("#tsd").value, b = $("#ted").value, pr = parsePrefs($("#tpl").value);
+    const parts = [];
+    if (a && b){ const n = Math.round((new Date(b) - new Date(a)) / 864e5) + 1; parts.push(n >= 1 ? `${fmtMD(a)}〜${fmtMD(b)}（${n}日間）` : "終了日が開始日より前です"); }
+    if (pr.length) parts.push(`地図：${pr.join("・")}`);
+    $("#tpd").textContent = parts.join("　");
+  };
+  $("#tsd").onchange = () => { if (!$("#ted").value || $("#ted").value < $("#tsd").value){ const x = new Date($("#tsd").value + "T00:00:00"); x.setDate(x.getDate() + 2); $("#ted").value = x.toISOString().slice(0, 10); } showPeriod(); };
+  $("#ted").onchange = showPeriod; $("#tpl").oninput = showPeriod; showPeriod();
   $("#tsave").onclick = async () => {
+    const yr = parseInt($("#tyr").value, 10), place = $("#tpl").value.trim(), sd = $("#tsd").value || null, ed = $("#ted").value || sd;
+    if (!place){ toast("場所を入力してください"); return; }
+    if (!term){ toast("季節を選んでください"); return; }
+    if (sd && ed < sd){ toast("終了日が開始日より前になっています"); return; }
     const row = {
-      no: parseInt($("#tno").value, 10) || 0, season: parseInt($("#tse").value, 10) || 1,
-      name: $("#tna").value.trim(), start_date: $("#tsd").value || null,
-      days: Math.max(1, Math.min(9, parseInt($("#tdy").value, 10) || 3)),
-      members: picked(s, "data-p"), champion_out: $("#tch").value || null,
-      prefectures: $("#tpr").value.split(/[、,，\s]+/).map(x => x.trim()).filter(Boolean)
+      no, season, year: Number.isFinite(yr) ? yr : null, term, place, name: `${Number.isFinite(yr) ? yr : ""}${term} ${place}`.trim(),
+      start_date: sd, end_date: ed, days: sd ? Math.round((new Date(ed) - new Date(sd)) / 864e5) + 1 : 3,
+      members: picked(s, "data-p"), champion_out: $("#tch").value || null, prefectures: parsePrefs(place)
     };
-    if (!row.name){ toast("名称を入力してください"); return; }
     if (row.members.length < 2){ toast("参加者を2人以上選んでください"); return; }
     let ok;
     if (t) ok = await q(sb.from("trips").update(row).eq("id", t.id), "保存");
-    else {
-      const res = await q(sb.from("trips").insert(row).select().single(), "保存");
-      ok = res && await putSetting("current_trip", res.id);
-    }
-    if (ok){ await Promise.all([loadTable("trips"), loadTable("app_settings")]); render(); openTrips(); toast(t ? "保存しました" : "旅を作成して、今の旅にしました"); }
+    else { const res = await q(sb.from("trips").insert(row).select().single(), "保存"); ok = res && await putSetting("current_trip", res.id); }
+    if (ok) await putSetting("last_season", season);
+    if (ok){ await Promise.all([loadTable("trips"), loadTable("app_settings")]); closeSheet(); render(); toast(t ? "保存しました" : "旅を始めました！"); }
   };
   const del = $("#tdel");
   if (del) del.onclick = async () => {
-    if (!confirm(`「${t.name}」と、その支払い・運転の記録をすべて削除しますか？`)) return;
-    if (await q(sb.from("trips").delete().eq("id", t.id), "削除")){ await Promise.all(["trips", "payments", "drives", "jankens"].map(loadTable)); render(); openTrips(); }
+    if (!confirm(`「${t.name}」と、その支払い・運転・券などの記録をすべて削除しますか？`)) return;
+    if (!(await q(sb.from("trips").delete().eq("id", t.id), "削除"))) return;
+    await Promise.all(TABLES.map(loadTable));
+    const rest = [...db.trips].sort((a, b) => b.no - a.no)[0];
+    await putSetting("current_trip", rest ? rest.id : null); await loadTable("app_settings");
+    closeSheet(); render();
   };
 }
 
@@ -1212,7 +1297,7 @@ async function adjustTicket(t, pid, kind, dir){
   }
 }
 function viewTickets(t){
-  if (!t) return `<div class="empty"><b>今の旅がありません</b>歯車の「旅」から作成してください。</div>`;
+  if (!t) return `<div class="empty"><b>今の旅がありません</b>ホームの「旅を始める」から作成してください。</div>`;
   const ids = activeMembers(t), day = dayOf(t);
   if (rouletteDay == null || rouletteDay > t.days) rouletteDay = day || 1;
   let h = `<div class="h2">所持している券<small>旅ごとにリセット</small></div><div class="card">`;
