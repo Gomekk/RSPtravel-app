@@ -644,7 +644,14 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .rtx{width:100%;font-size:15px;line-height:1.6;padding:10px;border:2px solid var(--line);border-radius:10px;min-height:50vh}
 .dbtns .cnt{display:block;font-size:11px;font-weight:700;opacity:.9}
 .lcount{margin-left:8px;font-size:12px;font-weight:900;color:var(--mute)}
-.row .q small{font-size:10px;font-family:var(--body);font-weight:900}
+.row .q.qt{display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.row .q.qt b{font-family:var(--disp);font-weight:400;font-size:13px;color:var(--ink)}
+.row .q.qt small{font-size:9.5px;font-family:var(--body);font-weight:900;white-space:nowrap}
+.row{grid-template-columns:38px 1fr auto}
+.h2l{display:flex;flex-direction:column;align-items:center;line-height:1.5}
+.h2l>b{font-size:15px}
+.rank .n{position:relative}
+.rank .n .mine{position:absolute;left:0;top:-14px;font-size:9px;line-height:1.3;padding:0 5px;border-radius:4px}
 /* ===== フィードバック対応 ===== */
 .pico{display:inline-block;flex:none;width:44px;height:44px;background:var(--pi) center/contain no-repeat;filter:drop-shadow(0 2px 0 rgba(27,24,56,.15))}
 .privcard .pico{width:52px;height:52px;margin-left:4px}
@@ -927,7 +934,7 @@ function viewHome(t){
     const nn = tcount(t, r.id, "normal"), ss = tcount(t, r.id, "super");
     return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""}" style="--c:${pcolor(r.id)}">
       <div class="r">${r.rank}</div>
-      <div class="n"><span class="nm">${esc(pname(r.id))}</span>${r.id === me ? `<span class="mine">自分</span>` : ""}${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
+      <div class="n">${r.id === me ? `<span class="mine">自分</span>` : ""}<span class="nm">${esc(pname(r.id))}</span>${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
       <div class="tk2"><span class="tic n ${nn ? "" : "zero"}">免×${nn}</span><span class="tic s ${ss ? "" : "zero"}">S×${ss}</span></div>
       <div class="a">${yen(r.paid)}</div>
       <div class="m"><span>標準との差 <b class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</b></span><span>支払 ${r.wins}/${r.joins}回</span><span>運転 ${r.drives}回</span></div>
@@ -956,7 +963,7 @@ function viewList(cur){
   let pays = listFilter === "all" ? all : all.filter(p => p.category === listFilter);
   if (listSort === "amount") pays = pays.slice().sort((a, b) => b.amount - a.amount || a.seq - b.seq);
   else if (multi) pays = pays.slice().sort((a, b) => ((db.trips.find(x => x.id === a.trip_id) || {}).no - (db.trips.find(x => x.id === b.trip_id) || {}).no) || a.seq - b.seq);
-  const tripNo = p => (db.trips.find(x => x.id === p.trip_id) || {}).no;
+  const tripTag = p => { const x = db.trips.find(y => y.id === p.trip_id) || {}; return `<b>${x.season}-${x.no}</b><small>${x.year ? String(x.year).slice(-2) + "'" : ""}${x.term || ""}</small>`; };
   let h = `<div class="stickybar">${one ? `<div class="viewing">第${one.no}回 ${esc(one.name)}を表示中<button class="mini" data-act="listBack">今の旅に戻る</button></div>` :
     `<div class="filter scope">${[["trip", "今回の旅"], ["season", `SEASON ${t.season}`], ["all", "全期間"]].map(([k, l]) => `<button data-lscope="${k}" aria-pressed="${listScope === k}">${l}</button>`).join("")}</div>`}
     <div class="filter">${["all", ...cats].map(c => `<button data-filter="${esc(c)}" aria-pressed="${listFilter === c}">${c === "all" ? "すべて" : esc(c)}</button>`).join("")}</div>
@@ -964,7 +971,7 @@ function viewList(cur){
   if (!all.length) h += `<div class="empty"><b>まだ支払いがありません</b>ホームの「じゃんけん開始」から記録します。</div>`;
   else if (!pays.length) h += `<div class="empty">この区分の支払いはありません</div>`;
   h += pays.map(p => `<button class="row ${p.payer_id ? "won" : ""}" data-edit="${p.id}" ${p.payer_id ? `style="--pc:${pcolor(p.payer_id)}"` : ""}>
-      <span class="q">${multi ? `<small>${tripNo(p)}回</small>` : p.seq}</span><span class="l">${esc(p.label)}</span><span class="a">${yen(p.amount)}</span>
+      <span class="q ${multi ? "qt" : ""}">${multi ? tripTag(p) : p.seq}</span><span class="l">${esc(p.label)}</span><span class="a">${yen(p.amount)}</span>
       <span class="m"><span class="tag">${esc(p.category)}</span>${p.payer_id ? `<span class="who"><span class="dot" style="background:${pcolor(p.payer_id)}"></span>${esc(pname(p.payer_id))}</span>` : `<span style="color:var(--crimson)">未決着</span>`}<span>${(p.participants || []).length}人</span></span>
     </button>`).join("");
   const drives = db.drives.filter(d => trips.some(x => x.id === d.trip_id)).sort((a, b) => a.created_at.localeCompare(b.created_at));
@@ -1077,7 +1084,7 @@ function openMe(){
   const cl = claims(), isHost = !!me && me === hostId();
   const s = openSheet("この端末の自分", `<p class="note">この端末を使う人を選んでください。1人のプレイヤーは1台の端末でしか使えません。</p>
     <div class="chips">${db.players.map(p => { const other = claimedByOther(p.id); return `<button type="button" class="pc" style="--pc:${p.color}" data-p="${p.id}" aria-pressed="${p.id === me}" ${other ? "disabled" : ""}><span class="dot" style="background:${p.color}"></span>${esc(p.name)}${other ? `<small class="inuse">使用中</small>` : ""}</button>`; }).join("")}</div>
-    ${isHost && Object.keys(cl).some(id => claimedByOther(id)) ? `<div class="card hostc" style="margin-top:12px"><b class="hc">ホスト：ログインの解除</b><p class="note" style="margin:2px 0 6px">端末をなくしたときなどに、別の端末のログインを解除できます。</p>${Object.keys(cl).filter(id => claimedByOther(id) && player(id)).map(id => `<div class="plist"><span class="dot" style="background:${pcolor(id)}"></span><b>${esc(pname(id))}</b><button class="mini" data-release="${id}">解除</button></div>`).join("")}</div>` : ""}
+    ${isHost && Object.keys(cl).some(id => claimedByOther(id)) ? `<div class="card hostc" style="margin-top:12px"><b class="hc">オーナー：ログインの解除</b><p class="note" style="margin:2px 0 6px">端末をなくしたときなどに、別の端末のログインを解除できます。</p>${Object.keys(cl).filter(id => claimedByOther(id) && player(id)).map(id => `<div class="plist"><span class="dot" style="background:${pcolor(id)}"></span><b>${esc(pname(id))}</b><button class="mini" data-release="${id}">解除</button></div>`).join("")}</div>` : ""}
     <div class="btns"><button class="btn ghost" data-back>戻る</button>${me ? `<button class="btn danger" id="meOut">ログアウト</button>` : ""}<button class="btn" id="meOk">決定</button></div>`);
   s.querySelector("[data-back]").onclick = openSettings;
   bindChips(s, "data-p", false);
@@ -1424,7 +1431,7 @@ function drawArena(){
   let hint, cards, bar;
   if (phase === "declare"){
     const pend = j.participants.filter(id => j.declare[id] === null).length;
-    hint = `<b>免除券の宣言</b>　残り <b class="num">${pend}</b> 人がそろうと一斉オープン`;
+    hint = `<span class="h2l"><b>免除券の宣言</b><span>残り <b class="num">${pend}</b> 人がそろうと一斉オープン</span></span>`;
     cards = j.participants.map(id => {
       const st = j.declare[id];
       const hasN = tcount(t, id, "normal"), hasS = tcount(t, id, "super");
@@ -1559,13 +1566,14 @@ async function reveal(id){
   const rest = users.filter(u => !(p1 && u.pid === p1.player_id));
   let cands = rest.some(u => u.kind === "super") ? rest.filter(u => u.kind === "super") : rest;
   if (cands.length > 1){ await patchJanken(jById(id), { phase: "conflict", conflict: { cands, free } }); return; }
-  await applyTickets(jById(id), [...free, ...cands]);
+  const blocked = rest.filter(u => !cands.includes(u));
+  await applyTickets(jById(id), [...free, ...cands], blocked.length ? `superが優先のため、${blocked.map(u => pname(u.pid)).join("・")}の免除券は使えません（券は手元に残ります）` : "");
 }
 async function resolveConflict(j, winner){
   const free = (j.conflict && j.conflict.free) || [];
   await applyTickets(j, [...free, winner]);
 }
-async function applyTickets(j, list){
+async function applyTickets(j, list, note){
   const t = tripOfJ(j);
   const exempt = [...(j.exempt || [])], supers = [...(j.supers || [])], lives = { ...j.lives }, used = [...(j.tickets_used || [])];
   for (const u of list){
@@ -1578,6 +1586,7 @@ async function applyTickets(j, list){
   seenPhase[j.id] = "play";
   await patchJanken(j, { phase: "play", conflict: null, exempt, supers, lives, tickets_used: used });
   flash(list.length ? "一斉オープン！" : "一斉オープン", list.length ? list.map(u => `${pname(u.pid)}：${u.kind === "super" ? "super免除券" : "免除券"}`).join("　") : "誰も使いませんでした");
+  if (note) setTimeout(() => toast(note, 4000), 1900);
 }
 function openManualUse(j){
   const t = tripOfJ(j), p1 = privOf(t, 1);
@@ -1590,7 +1599,7 @@ function openManualUse(j){
     const kind = b.dataset.k;
     if (!tcount(t, pid, kind)){ toast("その券を持っていません"); return; }
     const others = (j.tickets_used || []).filter(u => !(p1 && u.pid === p1.player_id));
-    if (others.length && !(p1 && pid === p1.player_id)){ toast("免除券等の同時使用はできません（第十三条）", 3000); return; }
+    if (others.length && !(p1 && pid === p1.player_id)){ toast(others.some(u => u.kind === "super") ? "superが使われているため、免除券は使えません" : "免除券等の同時使用はできません（第十三条）", 3000); return; }
     closeSheet(); await applyTickets(jById(j.id), [{ pid, kind }]);
   });
 }
@@ -2600,25 +2609,25 @@ const canEditRules = () => !!me && (me === hostId() || (ruleEditors()[me] && new
 function openRules(){
   const host = hostId(), isHost = !!me && me === host;
   const req = setting("rule_requests") || {}, eds = ruleEditors(), now = new Date();
-  const mgr = isHost ? `<div class="card hostc"><b class="hc">ホスト：編集権限の管理</b><p class="note" style="margin:2px 0 8px">付与すると24時間だけ編集できます。</p>
+  const mgr = isHost ? `<div class="card hostc"><b class="hc">オーナー：編集権限の管理</b><p class="note" style="margin:2px 0 8px">付与すると1時間だけ編集できます。</p>
     ${db.players.filter(p => p.id !== host).map(p => { const until = eds[p.id] && new Date(eds[p.id]) > now ? new Date(eds[p.id]) : null; return `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}${req[p.id] ? ` <span class="tic n">リクエスト中</span>` : ""}</b>${until ? `<small class="note" style="margin:0">${until.getMonth() + 1}/${until.getDate()} ${String(until.getHours()).padStart(2, "0")}:${String(until.getMinutes()).padStart(2, "0")}まで</small><button class="mini" data-revoke="${p.id}">取り消す</button>` : `<button class="mini" data-grant="${p.id}">権限を付与</button>`}</div>`; }).join("")}</div>` : "";
   const s = openSheet("実施要綱", `<div class="btns" style="margin:-4px 0 10px"><button class="btn ghost" data-back>← 戻る</button><button class="btn" id="redit">編集</button></div>${mgr}<div class="rules">${parseRules().html}</div><div class="btns"><button class="btn ghost" data-back>戻る</button></div>`, true);
   s.querySelectorAll("[data-back]").forEach(b => b.onclick = openSettings);
   $("#redit").onclick = () => {
     if (!player(me)){ toast("先に「自分」を選んでください"); openMe(); return; }
     if (canEditRules()) return openRulesEdit();
-    if (!host){ toast("ホスト（ごめ）がプレイヤーに登録されていません", 3000); return; }
-    if (!confirm(`ホスト権限です。ホスト（${pname(host)}）にリクエストしますか？`)) return;
+    if (!host){ toast("オーナー（ごめ）がプレイヤーに登録されていません", 3000); return; }
+    if (!confirm(`オーナー権限です。オーナー（${pname(host)}）に編集権限の付与をリクエストしますか？\n※許可された場合、一時的（1時間）に編集ができるようになります。`)) return;
     putSetting("rule_requests", { ...(setting("rule_requests") || {}), [me]: new Date().toISOString() }).then(async ok => {
       if (!ok) return; await loadTable("app_settings");
-      pushCall({ type: "rule_request", from: me, host }); toast("ホストにリクエストを送りました");
+      pushCall({ type: "rule_request", from: me, host }); toast("オーナーにリクエストを送りました");
     });
   };
   s.querySelectorAll("[data-grant]").forEach(b => b.onclick = async () => {
-    const pid = b.dataset.grant, until = new Date(Date.now() + 24 * 3600e3).toISOString();
+    const pid = b.dataset.grant, until = new Date(Date.now() + 3600e3).toISOString();
     const rq = { ...(setting("rule_requests") || {}) }; delete rq[pid];
     if (await putSetting("rule_editors", { ...ruleEditors(), [pid]: until }) && await putSetting("rule_requests", rq)){
-      await loadTable("app_settings"); pushCall({ type: "rule_grant", to: pid }); toast(`${pname(pid)}に24時間の編集権限を付与しました`); openRules();
+      await loadTable("app_settings"); pushCall({ type: "rule_grant", to: pid }); toast(`${pname(pid)}に1時間の編集権限を付与しました`); openRules();
     }
   });
   s.querySelectorAll("[data-revoke]").forEach(b => b.onclick = async () => {
