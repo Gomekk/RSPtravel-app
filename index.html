@@ -153,7 +153,7 @@ nav button[aria-current="page"]::before{content:"";position:absolute;top:-8px;le
 .menu button span{color:var(--mute);font-size:12px;font-weight:700}
 .plist{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1.5px solid var(--line)}
 .plist b{flex:1}
-.mini{font-size:12px;font-weight:900;padding:6px 10px;border-radius:8px;border:2px solid var(--ink);background:#fff}
+.mini{white-space:nowrap;flex:none;font-size:12px;font-weight:900;padding:6px 10px;border-radius:8px;border:2px solid var(--ink);background:#fff}
 .colors{display:flex;flex-wrap:wrap;gap:8px}
 .colors button{width:36px;height:36px;border-radius:50%;border:2px solid var(--ink)}
 .colors button[aria-pressed="true"]{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--gold)}
@@ -215,9 +215,18 @@ nav button[aria-current="page"]::before{content:"";position:absolute;top:-8px;le
 .deco .s2{bottom:40px;left:-40px;width:130px;height:130px;background-image:var(--burst-glow-aqua);opacity:.22}
 
 header::after{content:"";position:absolute;left:16px;right:16px;bottom:4px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--crimson) 0 33%,var(--gold) 33% 66%,var(--aqua) 66%)}
-.logo{position:relative;padding-left:30px}
-.logo::before{content:"";position:absolute;left:-2px;top:-5px;width:28px;height:28px;background:var(--burst-red) center/contain no-repeat}
-.logo small{margin-left:-30px}
+.logo{white-space:nowrap}
+
+/* 電気が走る動き */
+@keyframes zap{0%,100%{opacity:1;filter:drop-shadow(0 0 4px rgba(255,255,255,.9))}8%{opacity:.35}10%{opacity:1}12%{opacity:.5}14%{opacity:1}52%{opacity:1}54%{opacity:.4}56%{opacity:1;filter:drop-shadow(0 0 10px rgba(255,255,255,1))}}
+.deco .b1,.deco .b2,.trip .tb2,.big .bz,.sub::before,.live::before,.atop::after,.verdict .bl{animation:zap 2.4s steps(1,end) infinite}
+.deco .b2,.big .bz{animation-delay:.9s}
+.trip .tb2,.verdict .bl.r{animation-delay:1.5s}
+@keyframes zigrun{to{background-position:24px 0}}
+.h2::after{animation:zigrun 1.2s linear infinite}
+@keyframes glintpulse{50%{transform:scale(.55) rotate(45deg);opacity:.55}}
+.deco .g1,.deco .g3,.deco .g5{animation:glintpulse 2.2s ease-in-out infinite}
+.deco .g2,.deco .g4,.deco .g6{animation:glintpulse 2.8s ease-in-out .7s infinite}
 
 /* 旅カード */
 .trip{overflow:visible}
@@ -299,6 +308,97 @@ nav button[aria-current="page"]::before{background:linear-gradient(90deg,var(--c
 @keyframes twinkle{50%{transform:scale(.4) rotate(45deg);opacity:.5}}
 .toast{border-color:var(--crimson);box-shadow:0 0 16px rgba(226,54,79,.45)}
 
+
+/* ===== 段階2：券・特権 ===== */
+.card{background:rgba(255,255,255,.9);border:2px solid var(--ink);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.tic{display:inline-flex;align-items:center;font-family:var(--disp);font-size:10.5px;line-height:1.5;padding:0 6px;border-radius:6px;border:1.5px solid var(--ink);white-space:nowrap}
+.tic.n{background:var(--metal);color:var(--ink)}
+.tic.s{background:var(--crimson);color:#fff;box-shadow:0 0 8px rgba(226,54,79,.45)}
+.rank .n .tic{margin-left:2px}
+.tkrow{display:flex;align-items:center;gap:6px;padding:9px 0;border-bottom:1.5px solid var(--line)}
+.tkrow:last-child{border-bottom:0}
+.tkrow b{flex:1;min-width:0;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tkrow .tkc{display:flex;align-items:center;gap:3px}
+.tkrow .tkc+.tkc{margin-left:6px}
+.tkrow .num{min-width:16px;text-align:center;font-size:16px}
+.pm{width:26px;height:26px;border-radius:7px;border:2px solid var(--ink);background:#fff;font-weight:900;line-height:1;font-size:13px}
+.pm:active{transform:translateY(2px)}
+ul.plan{list-style:none;margin:0;padding:0}
+ul.plan li{display:flex;align-items:center;gap:8px;padding:6px 0;font-weight:900;border-bottom:1px dashed var(--line)}
+ul.plan li small{margin-left:auto;font-size:11px;color:var(--mute);font-weight:700}
+.privcard{position:relative;display:flex;gap:12px;width:100%;text-align:left;align-items:flex-start;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:inset 6px 0 0 var(--c,var(--aqua))}
+.privcard .pk,.todaypriv .pk,.privpick .pk{flex:none;display:grid;place-items:center;width:44px;height:44px;font-family:var(--disp);font-size:22px;color:var(--ink);background:var(--burst-glow-aqua) center/contain no-repeat;margin-left:4px}
+.privcard .pb{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.privcard .pb small{font-size:11px;font-weight:900;color:var(--mute)}
+.privcard .pb b{font-weight:900}
+.privcard .pb span{font-size:12px;color:var(--mute);font-weight:700}
+.privcard .pb em{font-style:normal;font-size:12px;font-weight:900;color:#108C96}
+.privcard .pa{display:flex;gap:6px;margin-top:6px}
+.privcard.empty-p{border-style:dashed;background:rgba(255,255,255,.6);box-shadow:none}
+.privcard.empty-p .pk{background-image:var(--burst-glow-gold)}
+.todaypriv{display:flex;align-items:center;gap:10px;width:100%;text-align:left;margin:-6px 0 14px;padding:8px 12px;border-radius:12px;background:linear-gradient(100deg,#DDF7F9,#fff 70%);border:2px solid var(--ink)}
+.todaypriv div{display:flex;flex-direction:column}
+.todaypriv b{font-weight:900;font-size:14px}
+.todaypriv span{font-size:12px;color:var(--mute);font-weight:700}
+.todaypriv.ask{background:linear-gradient(100deg,#FFE7EA,#fff 70%);border-style:dashed}
+.todaypriv.ask .pk{background-image:var(--burst-glow-red)}
+.privpick{display:flex;flex-direction:column;gap:8px}
+.privpick button{display:flex;gap:10px;align-items:center;text-align:left;padding:8px 10px;border-radius:12px;border:2px solid var(--line);background:#fff}
+.privpick button span:last-child{display:flex;flex-direction:column}
+.privpick button small{font-size:11.5px;color:var(--mute);font-weight:700}
+.privpick button[aria-pressed="true"]{border-color:var(--ink);background:#FFF6D6;box-shadow:0 0 12px rgba(232,177,42,.5)}
+.privpick button:disabled{opacity:.4}
+.rres{display:flex;align-items:center;gap:12px}
+.rres .num{font-size:52px;line-height:1;color:var(--crimson);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;filter:drop-shadow(0 0 10px rgba(226,54,79,.5))}
+.rres small{display:block;font-size:12px;color:var(--mute);font-weight:700}
+.rres div{font-weight:900}
+.wheel{display:flex;flex-direction:column;align-items:center;justify-content:center;width:200px;height:200px;margin:6px auto 0;background:var(--burst-glow-gold) center/contain no-repeat;animation:spin 6s linear infinite}
+.wheel .num{font-size:78px;line-height:1;color:var(--ink);animation:spin 6s linear infinite reverse}
+.wheel small{font-weight:900;animation:spin 6s linear infinite reverse}
+.wheel .num.tick{animation:pop .12s,spin 6s linear infinite reverse}
+.wheel .num.hitn{color:var(--crimson);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;font-size:96px}
+@keyframes pop{from{transform:scale(1.35)}}
+.predrow{display:grid;grid-template-columns:16px 1fr 110px;gap:4px 8px;align-items:center;padding:8px 0;border-bottom:1.5px solid var(--line)}
+.predrow input{padding:8px 10px}
+.predrow .pr{grid-column:2/4;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);font-weight:700}
+.predrow .pr:empty{display:none}
+.stbl{width:100%;border-collapse:collapse;font-size:13px}
+.stbl th{font-size:11px;color:var(--mute);font-weight:900;text-align:right;padding:6px 4px;border-bottom:2px solid var(--ink)}
+.stbl th:first-child,.stbl td:first-child{text-align:left}
+.stbl td{padding:8px 4px;border-bottom:1px solid var(--line);font-weight:900;text-align:right}
+.stbl td .dot{display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px}
+.stbl .num{font-size:14px}
+.txrow{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:8px;border-radius:12px;border:2px solid var(--ink);background:#fff;font-weight:900}
+.txrow span{display:inline-flex;align-items:center;gap:5px}
+.txrow .dot{width:12px;height:12px}
+.txrow .arrow{color:var(--crimson);font-family:var(--disp)}
+.txrow b{margin-left:auto;font-size:17px}
+
+/* じゃんけん画面：宣言 */
+.astrip{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.astrip span{font-size:11.5px;font-weight:900;padding:3px 8px;border-radius:8px;background:#fff;border:1.5px solid var(--ink)}
+.fighter .tics{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;min-height:18px}
+.fighter.decl{min-height:0;display:flex;flex-direction:column}
+.dstat{position:relative;z-index:1;margin-top:10px;font-family:var(--disp);font-size:15px;color:var(--mute)}
+.dstat small{display:block;font-family:var(--body);font-size:11px;font-weight:900;color:var(--crimson)}
+.dstat.ok{color:#108C96}
+.dstat.wait{color:var(--crimson);animation:blink 1.2s steps(2,end) infinite}
+@keyframes blink{50%{opacity:.35}}
+.dbtns{position:relative;z-index:1;display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.dbtns button{font-weight:900;font-size:12.5px;padding:8px 6px;border-radius:10px;border:2px solid var(--ink);background:#fff;box-shadow:0 3px 0 var(--ink)}
+.dbtns button:active{transform:translateY(3px);box-shadow:none}
+.dbtns button.n{background:var(--metal)}
+.dbtns button.s{background:var(--crimson);color:#fff}
+.dbtns button:disabled{opacity:.35;box-shadow:none}
+.dbtns.big{margin:14px 0 4px}
+.dbtns.big button{font-size:15px;padding:13px}
+.flash{position:fixed;inset:0;z-index:95;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none;text-align:center;padding:24px;
+  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.95) 0,rgba(255,255,255,.75) 40%,rgba(255,255,255,0) 75%);animation:flashout 1.9s forwards}
+.flash::before{content:"";position:absolute;left:50%;top:50%;width:min(110vw,560px);height:min(110vw,560px);transform:translate(-50%,-50%);background:var(--burst-glow-red) center/contain no-repeat;opacity:.45;animation:spinc 6s linear infinite;z-index:-1}
+.flash b{font-family:var(--disp);font-weight:400;font-size:clamp(28px,9vw,44px);line-height:1.2;color:var(--gold);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;filter:drop-shadow(0 0 14px rgba(232,177,42,.8));animation:slam .45s cubic-bezier(.2,1.6,.4,1) both}
+.flash span{font-weight:900;font-size:15px;max-width:90vw}
+@keyframes flashout{0%,75%{opacity:1}100%{opacity:0}}
+
 :root{--burst-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23F5C842%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%23E2364F%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolygon%20points%3D%2250.0%2C5.0%2056.7%2C20.4%2070.2%2C8.1%2069.2%2C26.0%2088.7%2C19.2%2074.2%2C38.3%2091.3%2C40.6%2082.4%2C50.0%2094.1%2C60.1%2075.3%2C62.2%2092.0%2C83.5%2068.6%2C73.3%2072.5%2C96.7%2056.6%2C79.1%2050.0%2C99.6%2043.9%2C76.8%2028.5%2C94.6%2029.6%2C75.5%2012.3%2C80.1%2021.4%2C63.8%201.3%2C61.1%2023.1%2C50.0%200.3%2C38.7%2022.4%2C36.7%2014.3%2C21.5%2033.4%2C29.2%2027.3%2C3.0%2043.4%2C20.9%22%20fill%3D%22%231FB3BF%22%20stroke%3D%22%231B1838%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E");--burst-glow-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FFE38A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E8B12A%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C-1.4%2055.6%2C22.0%2071.0%2C-0.6%2067.0%2C24.6%2088.0%2C12.0%2075.3%2C33.1%2086.7%2C34.8%2075.1%2C45.0%20107.7%2C50.0%2077.0%2C55.4%20102.5%2C71.8%2068.3%2C62.2%2084.2%2C84.2%2063.0%2C69.4%2069.1%2C96.1%2055.2%2C76.3%2050.0%2C89.5%2045.5%2C72.6%2032.9%2C91.3%2033.1%2C75.2%2011.7%2C88.3%2031.3%2C62.5%20-0.7%2C71.0%2028.2%2C54.3%20-1.3%2C50.0%2028.3%2C45.7%2013.8%2C35.0%2025.2%2C33.4%2019.4%2C19.4%2037.2%2C30.8%2027.6%2C-4.0%2044.2%2C20.7%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%23FF8A9A%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23E2364F%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C6.4%2056.0%2C19.8%2065.9%2C11.5%2065.6%2C26.6%2078.9%2C21.1%2069.4%2C37.0%20104.3%2C27.5%2072.5%2C45.5%20101.8%2C50.0%2075.1%2C55.0%2094.4%2C68.4%2071.6%2C64.4%2080.4%2C80.4%2066.4%2C74.5%2065.7%2C87.8%2054.5%2C72.8%2050.0%2C89.6%2045.4%2C73.1%2031.9%2C93.6%2033.2%2C75.1%2017.0%2C83.0%2031.7%2C62.2%209.1%2C66.9%2019.5%2C56.1%209.6%2C50.0%2023.3%2C44.7%207.0%2C32.2%2027.0%2C34.6%2017.6%2C17.6%2034.4%2C26.7%2031.3%2C4.8%2044.6%2C23.0%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--burst-glow-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23fff%22/%3E%3Cstop%20offset%3D%22.45%22%20stop-color%3D%22%239BF1F4%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231FB3BF%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpolygon%20points%3D%2250.0%2C1.7%2054.8%2C25.8%2066.0%2C11.3%2066.6%2C25.2%2077.8%2C22.2%2071.6%2C35.5%20102.5%2C28.3%2071.2%2C45.8%20100.1%2C50.0%2076.7%2C55.3%2087.0%2C65.3%2070.6%2C63.7%2087.5%2C87.5%2064.2%2C71.2%2070.4%2C99.3%2054.4%2C72.0%2050.0%2C93.9%2045.7%2C71.5%2031.2%2C95.4%2033.1%2C75.3%2014.1%2C85.9%2026.0%2C66.0%206.8%2C67.9%2022.0%2C55.6%208.8%2C50.0%2026.6%2C45.4%201.6%2C29.9%2026.4%2C34.3%2016.4%2C16.4%2037.9%2C31.9%2033.0%2C9.0%2045.5%2C27.5%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E");--bolt-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23F5C842%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23E2364F%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--bolt-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%2212%22%20stroke-linejoin%3D%22miter%22%20opacity%3D%22.45%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%231FB3BF%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22miter%22/%3E%3Cpolyline%20points%3D%228%2C4%2046%2C30%2030%2C38%2070%2C62%2052%2C70%2094%2C96%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222%22/%3E%3C/svg%3E");--glint-gold:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23F5C842%22/%3E%3C/svg%3E");--glint-red:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%23E2364F%22/%3E%3C/svg%3E");--glint-aqua:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M20%200Q20%2020%2040%2020Q20%2020%2020%2040Q20%2020%200%2020Q20%2020%2020%200Z%22%20fill%3D%22%231FB3BF%22/%3E%3C/svg%3E");--zig-ink:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2020%2010%22%20preserveAspectRatio%3D%22none%22%3E%3Cpolygon%20points%3D%220%2C0%2010%2C10%2020%2C0%22%20fill%3D%22%231B1838%22/%3E%3C/svg%3E")}
 </style>
 </head>
@@ -334,7 +434,18 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
 const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#5A6378"];
-const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions"];
+const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
+const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
+const KANJI = ["", "一", "二", "三", "四", "五"];
+const PRIVS = {
+  1: { name: "免除券被せ", desc: "免除券・super免除券を、他の人と重ねて使える", span: "全期間" },
+  2: { name: "免除券強奪", desc: "所持者だけでじゃんけんし、負けた人から券を1枚奪う", span: "1回限り", max: 1 },
+  3: { name: "一機追加付与", desc: "任意のじゃんけん2回（旅費・その他で各1回）で、自分以外の全員に1機追加", span: "旅行中2回", max: 2 },
+  4: { name: "特定金額免除", desc: "一定額以下の支払いに不参加（発動日が1日目4,000円・2日目6,000円・3日目8,000円）", span: "全期間" },
+  5: { name: "免除券強制使用", desc: "自分以外の所持者でじゃんけんさせ、負けた人に券を使わせる", span: "上限6回", max: 6 }
+};
+const PRIV4_LIMIT = { 1: 4000, 2: 6000, 3: 8000 };
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -342,7 +453,7 @@ const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
 const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
 
-const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [] };
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [] };
 let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
@@ -361,6 +472,22 @@ const dayOf = t => {
 };
 const categoriesFor = t => [...Array.from({length: (t && t.days) || 3}, (_, i) => `${i+1}日目`), ...KINDS];
 const activeMembers = t => (t ? t.members : []).filter(id => id !== t.champion_out);
+const ownTickets = (t, pid, kind) => db.tickets.filter(x => t && x.trip_id === t.id && x.player_id === pid && x.status === "own" && (!kind || x.kind === kind)).sort((a, b) => a.created_at.localeCompare(b.created_at));
+const tcount = (t, pid, kind) => ownTickets(t, pid, kind).length;
+const tripPrivs = t => t ? db.privileges.filter(p => p.trip_id === t.id).sort((a, b) => a.day - b.day) : [];
+const privOf = (t, kind) => tripPrivs(t).find(p => p.kind === kind) || null;
+const threshold = () => { const v = Number(setting("declare_threshold")); return Number.isFinite(v) && v > 0 ? v : 10000; };
+const travelType = cat => TRAVEL_KINDS.includes(cat) ? "旅費" : "その他";
+const tripsSorted = () => [...db.trips].sort((a, b) => a.no - b.no);
+const prevTrip = t => tripsSorted().filter(x => x.no < t.no).pop() || null;
+const jById = id => db.jankens.find(x => x.id === id);
+const tripOfJ = j => db.trips.find(x => x.id === j.trip_id);
+function priv4Out(t, amount){
+  const p = privOf(t, 4); if (!p) return null;
+  const lim = PRIV4_LIMIT[p.day] || PRIV4_LIMIT[3];
+  return amount <= lim ? p.player_id : null;
+}
+const ticketPills = (t, id) => { const n = tcount(t, id, "normal"), s = tcount(t, id, "super"); return `${n ? `<span class="tic n">免×${n}</span>` : ""}${s ? `<span class="tic s">S×${s}</span>` : ""}`; };
 
 function toast(msg, ms = 2200){
   const el = $("#toast"); el.textContent = msg; el.classList.add("on");
@@ -429,7 +556,7 @@ function render(){
   if (!loaded){ v.innerHTML = `<div class="loading">読み込み中…</div>`; return; }
   v.innerHTML = tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
     : tab === "stats" ? soon("集計", "グラフと〇〇数・〇〇率は段階3で追加します")
-    : tab === "tickets" ? soon("券・特権", "免除券・特権・ルーレットは段階2で追加します")
+    : tab === "tickets" ? viewTickets(t)
     : soon("歴代", "歴代名簿・シーズン・地図は段階3で追加します");
   bindView();
 }
@@ -444,6 +571,9 @@ function viewHome(t){
   const champ = t.champion_out ? `<span class="tag gold">3連覇達成者 ${esc(pname(t.champion_out))}</span>` : "";
   let h = `<div class="trip framed"><i class="gem a"></i><i class="gem r"></i><span class="tb" aria-hidden="true"></span><span class="tb2" aria-hidden="true"></span><div class="t">${esc(t.name)}</div>
     <div class="s">${day ? `<span class="dayflag">${day}日目</span>` : ""}第${t.no}回・シーズン${t.season}・${t.members.length}人 ${champ}</div></div>`;
+  const tp = day && tripPrivs(t).find(p => p.day === day);
+  if (tp) h += `<div class="todaypriv"><span class="pk">${KANJI[tp.kind]}</span><div><b>今日の特権：${esc(pname(tp.player_id))}</b><span>${PRIVS[tp.kind].name}</span></div></div>`;
+  else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
   h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="bz" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>`;
   if (pending.length){
@@ -456,7 +586,7 @@ function viewHome(t){
     const diff = r.paid - r.std;
     return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""}" style="--c:${pcolor(r.id)}">
       <div class="r">${r.rank}</div>
-      <div class="n">${esc(pname(r.id))}${r.id === me ? `<span class="mine">自分</span>` : ""}${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
+      <div class="n">${esc(pname(r.id))}${r.id === me ? `<span class="mine">自分</span>` : ""}${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}${ticketPills(t, r.id)}</div>
       <div class="a">${yen(r.paid)}</div>
       <div class="m"><span>標準との差 <b class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</b></span><span>支払 ${r.wins}/${r.joins}回</span><span>運転 ${r.drives}回</span></div>
     </div>`;
@@ -486,8 +616,16 @@ const fmtTime = iso => { const d = new Date(iso); return `${d.getMonth()+1}/${d.
 function bindView(){
   const v = $("#view");
   v.querySelectorAll("[data-act]").forEach(b => b.onclick = () => ({
-    players: openPlayers, trips: openTrips, newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id)
+    players: openPlayers, trips: openTrips, newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id),
+    privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
+    saveTravel: () => saveTravelTotal(curTrip()), roulette: () => openRoulette(curTrip(), rouletteDay), grantRoulette: () => grantRoulette(curTrip(), rouletteDay)
   })[b.dataset.act]());
+  v.querySelectorAll("[data-adj]").forEach(b => b.onclick = () => adjustTicket(curTrip(), ...b.dataset.adj.split("|")));
+  v.querySelectorAll("[data-privday]").forEach(b => b.onclick = () => openPrivDeclare(curTrip(), Number(b.dataset.privday)));
+  v.querySelectorAll("[data-privdel]").forEach(b => b.onclick = () => deletePriv(b.dataset.privdel));
+  v.querySelectorAll("[data-steal]").forEach(b => b.onclick = () => openSteal(curTrip()));
+  v.querySelectorAll("[data-rday]").forEach(b => b.onclick = () => { rouletteDay = Number(b.dataset.rday); render(); });
+  v.querySelectorAll("[data-pred]").forEach(inp => inp.onchange = () => savePrediction(curTrip(), inp.dataset.pred, inp.value));
   v.querySelectorAll("[data-play]").forEach(b => b.onclick = () => startFromPayment(b.dataset.play));
   v.querySelectorAll("[data-filter]").forEach(b => b.onclick = () => { listFilter = b.dataset.filter; render(); });
   v.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openEditPayment(b.dataset.edit));
@@ -533,8 +671,9 @@ function openSettings(){
     <button data-m="me">この端末の自分<span>${esc(player(me)?.name || "未設定")}</span></button>
     <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
     <button data-m="trips">旅<span>${esc(t ? t.name : "未選択")}</span></button>
-  </div><p class="note" style="margin-top:14px">券・特権、通知、要綱の設定は次の段階で追加します。</p>`);
-  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, trips: openTrips })[b.dataset.m]());
+    <button data-m="thr">一斉宣言を出す金額<span>${yen(threshold())}以上</span></button>
+  </div><p class="note" style="margin-top:14px">通知・要綱の設定は段階4で追加します。</p>`);
+  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, trips: openTrips, thr: openThreshold })[b.dataset.m]());
 }
 
 function openPlayers(){
@@ -645,11 +784,15 @@ function openNewJanken(){
     <div class="toggle"><div>人数分に分ける<small id="splitInfo">旅費・宿泊費は参加人数ぶんじゃんけん</small></div><button type="button" class="sw" id="jsp" role="switch" aria-checked="false" aria-label="人数分に分ける"></button></div>
     <div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(members, members)}</div>
     ${t.champion_out ? `<p class="note">3連覇達成者の${esc(pname(t.champion_out))}は参加しません。</p>` : ""}
+    ${privOf(t, 4) ? `<p class="note">特権四：${esc(pname(privOf(t, 4).player_id))}は${yen(PRIV4_LIMIT[privOf(t, 4).day] || 8000)}以下のじゃんけんに自動で不参加になります。</p>` : ""}
+    <div id="p3box"></div>
+    <label class="f"><span>立替えた人（事前予約などで先に払った人）</span><select id="jadv"><option value="">なし（決まった人がその場で払う）</option>${t.members.map(id => `<option value="${id}">${esc(pname(id))}</option>`).join("")}</select></label>
     <div class="btns"><button class="btn" id="jgo">開始</button></div>`);
+  const p3 = bindPriv3(s, t, () => cat);
   const sw = $("#jsp");
   const info = () => { const n = picked(s, "data-p").length, a = parseInt($("#ja").value, 10) || 0; $("#splitInfo").textContent = sw.getAttribute("aria-checked") === "true" ? `${n}回に分けて、1回 ${yen(Math.floor(a / Math.max(n, 1)))}` : "旅費・宿泊費は参加人数ぶんじゃんけん"; };
   sw.onclick = () => { sw.setAttribute("aria-checked", String(sw.getAttribute("aria-checked") !== "true")); info(); };
-  bindChips(s, "data-cat", false, () => { cat = picked(s, "data-cat")[0]; sw.setAttribute("aria-checked", String(SPLIT_KINDS.includes(cat))); info(); });
+  bindChips(s, "data-cat", false, () => { cat = picked(s, "data-cat")[0]; sw.setAttribute("aria-checked", String(SPLIT_KINDS.includes(cat))); info(); p3.refresh(); });
   bindChips(s, "data-p", true, info);
   $("#ja").oninput = info;
   $("#jgo").onclick = async () => {
@@ -661,7 +804,7 @@ function openNewJanken(){
     if (sw.getAttribute("aria-checked") === "true"){
       const n = parts.length, base = Math.floor(amount / n), rest = amount - base * n;
       const group = crypto.randomUUID(), seq0 = nextSeq(t);
-      const rows = Array.from({length: n}, (_, i) => ({ trip_id: t.id, seq: seq0 + i, label: `${label} ${i+1}/${n}`, amount: base + (i < rest ? 1 : 0), category: cat, participants: parts, split_group: group }));
+      const rows = Array.from({length: n}, (_, i) => ({ trip_id: t.id, seq: seq0 + i, label: `${label} ${i+1}/${n}`, amount: base + (i < rest ? 1 : 0), category: cat, participants: parts, split_group: group, advanced_by: $("#jadv").value || null }));
       const res = await q(sb.from("payments").insert(rows).select(), "登録");
       if (!res){ $("#jgo").disabled = false; return; }
       await loadTable("payments");
@@ -669,7 +812,7 @@ function openNewJanken(){
       closeSheet(); render(); toast(`${n}回に分けて登録しました`);
       startFromPayment(first.id);
     } else {
-      const j = await createJanken({ trip_id: t.id, label, amount, category: cat, participants: parts });
+      const j = await createJanken({ trip_id: t.id, label, amount, category: cat, participants: parts, advanced_by: $("#jadv").value || null }, { priv3: p3.on() });
       $("#jgo").disabled = false;
       if (j){ closeSheet(); openArena(j.id); }
     }
@@ -678,22 +821,55 @@ function openNewJanken(){
 }
 const nextSeq = t => tripPays(t).reduce((m, p) => Math.max(m, p.seq), 0) + 1;
 
-async function createJanken(base){
-  const lives = Object.fromEntries(base.participants.map(id => [id, 1]));
-  const res = await q(sb.from("jankens").insert({ ...base, lives, max_lives: lives, history: [], status: "live", started_by: me || null }).select().single(), "開始");
+async function createJanken(base, opts = {}){
+  const t = db.trips.find(x => x.id === base.trip_id);
+  const out4 = priv4Out(t, base.amount);
+  let parts = base.participants;
+  if (out4 && parts.includes(out4)){ parts = parts.filter(id => id !== out4); toast(`特権四：${pname(out4)}は不参加です`, 2600); }
+  if (parts.length < 2){ toast("参加者が2人未満になりました"); return null; }
+  const lives = {};
+  parts.forEach(id => { lives[id] = opts.priv3 && id !== opts.priv3 ? 2 : 1; });
+  const holders = parts.filter(id => tcount(t, id) > 0);
+  const needDeclare = base.amount >= threshold() && holders.length > 0;
+  const declare = needDeclare ? Object.fromEntries(parts.map(id => [id, holders.includes(id) ? null : "none"])) : {};
+  const row = { ...base, participants: parts, lives, max_lives: lives, history: [], status: "live", started_by: me || null,
+    phase: needDeclare ? "declare" : "play", declare, proxy: {}, exempt: [], exempt_done: [], supers: [], tickets_used: [], priv3_by: opts.priv3 || null };
+  const res = await q(sb.from("jankens").insert(row).select().single(), "開始");
+  if (res && opts.priv3){
+    const p = privOf(t, 3);
+    await q(sb.from("privileges").update({ uses: (p.uses || 0) + 1, uses_detail: [...(p.uses_detail || []), travelType(base.category)] }).eq("id", p.id), "記録");
+    await loadTable("privileges");
+  }
   if (res){ await loadTable("jankens"); render(); }
   return res;
+}
+function bindPriv3(s, t, getCat){
+  let on = false;
+  const box = s.querySelector("#p3box");
+  const refresh = () => {
+    const p = privOf(t, 3);
+    if (!p || !box){ if (box) box.innerHTML = ""; return; }
+    const type = travelType(getCat()), used = p.uses_detail || [];
+    const can = (p.uses || 0) < 2 && !used.includes(type);
+    if (!can) on = false;
+    box.innerHTML = `<div class="toggle"><div>特権三：${esc(pname(p.player_id))}以外に一機追加<small>${can ? `${type}枠で使えます（残り${2 - (p.uses || 0)}回）` : `${type}枠は使用済みです`}</small></div><button type="button" class="sw" id="p3sw" role="switch" aria-checked="${on}" ${can ? "" : "disabled"} aria-label="特権三を使う"></button></div>`;
+    const sw = box.querySelector("#p3sw");
+    sw.onclick = () => { on = !on; sw.setAttribute("aria-checked", String(on)); };
+  };
+  refresh();
+  return { refresh, on: () => on ? privOf(t, 3).player_id : null };
 }
 async function startFromPayment(pid){
   const p = db.payments.find(x => x.id === pid), t = curTrip();
   if (!p || !t) return;
   if (liveJanken(t)){ toast("先に進行中のじゃんけんを終わらせてください"); openArena(liveJanken(t).id); return; }
-  const s = openSheet(esc(p.label), `<p class="note">${esc(p.category)}・${yen(p.amount)}</p><div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(activeMembers(t), (p.participants || []).filter(id => activeMembers(t).includes(id)))}</div><div class="btns"><button class="btn" id="jgo">開始</button></div>`);
+  const s = openSheet(esc(p.label), `<p class="note">${esc(p.category)}・${yen(p.amount)}</p><div class="f"><span>参加者（抜ける人をタップで外す）</span>${chipPlayers(activeMembers(t), (p.participants || []).filter(id => activeMembers(t).includes(id)))}</div>${privOf(t, 4) ? `<p class="note">特権四：${esc(pname(privOf(t, 4).player_id))}は${yen(PRIV4_LIMIT[privOf(t, 4).day] || 8000)}以下のじゃんけんに自動で不参加になります。</p>` : ""}<div id="p3box"></div><div class="btns"><button class="btn" id="jgo">開始</button></div>`);
   bindChips(s, "data-p", true);
+  const p3 = bindPriv3(s, t, () => p.category);
   $("#jgo").onclick = async () => {
     const parts = picked(s, "data-p");
     if (parts.length < 2){ toast("参加者を2人以上にしてください"); return; }
-    const j = await createJanken({ trip_id: t.id, payment_id: p.id, label: p.label, amount: p.amount, category: p.category, participants: parts });
+    const j = await createJanken({ trip_id: t.id, payment_id: p.id, label: p.label, amount: p.amount, category: p.category, participants: parts, advanced_by: p.advanced_by || null }, { priv3: p3.on() });
     if (j){ closeSheet(); openArena(j.id); }
   };
 }
@@ -702,28 +878,90 @@ async function startFromPayment(pid){
 let arenaId = null, busy = false;
 function openArena(id){ arenaId = id; $("#arena").hidden = false; document.body.style.overflow = "hidden"; drawArena(); }
 function closeArena(){ arenaId = null; $("#arena").hidden = true; document.body.style.overflow = ""; render(); }
+const seenReset = {}, seenPhase = {};
 function syncArena(){
   if (!arenaId) return;
-  const j = db.jankens.find(x => x.id === arenaId);
+  const j = jById(arenaId);
   if (!j || j.status !== "live"){ closeArena(); if (j && j.status === "done") toast(`決着：${pname(j.payer_id)}が支払い`); return; }
+  const n = (j.exempt_done || []).length;
+  if (seenReset[j.id] !== undefined && n > seenReset[j.id]) flash(`${pname(j.exempt_done[n - 1])}の免除券発動！`, "やり直し");
+  seenReset[j.id] = n;
+  if (seenPhase[j.id] && seenPhase[j.id] !== "play" && j.phase === "play"){
+    const u = j.tickets_used || [];
+    flash("一斉オープン！", u.length ? u.map(x => `${pname(x.pid)}：${x.kind === "super" ? "super免除券" : "免除券"}`).join("　") : "誰も使いませんでした");
+  }
+  seenPhase[j.id] = j.phase;
   drawArena();
 }
+function flash(big, small){
+  const el = document.createElement("div");
+  el.className = "flash";
+  el.innerHTML = `<b>${esc(big)}</b><span>${esc(small || "")}</span>`;
+  document.body.appendChild(el);
+  if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
+  setTimeout(() => el.remove(), 1900);
+}
+const declStatus = (j, id) => {
+  const v = (j.declare || {})[id];
+  if (v === undefined || v === "none") return (j.declare || {})[id] === "none" && j.phase === "declare" ? "nonholder" : "none";
+  return v === null ? "pending" : "done";
+};
 function drawArena(){
-  const j = db.jankens.find(x => x.id === arenaId); if (!j) return closeArena();
+  const j = jById(arenaId); if (!j) return closeArena();
+  const t = tripOfJ(j);
+  seenReset[j.id] = seenReset[j.id] ?? (j.exempt_done || []).length;
+  seenPhase[j.id] = seenPhase[j.id] || j.phase;
+  const supers = j.supers || [], exempt = j.exempt || [], exDone = j.exempt_done || [];
   const alive = j.participants.filter(id => (j.lives[id] || 0) > 0);
-  const done = alive.length === 1;
+  const phase = j.phase || "play";
+  const done = phase === "play" && alive.length === 1;
+  const p1 = privOf(t, 1), p5 = privOf(t, 5);
   const a = $("#arena");
-  a.innerHTML = `
-    <div class="atop"><div class="lbl"><b>${esc(j.label)}</b><span>${esc(j.category)}・${j.participants.length}人参加</span></div><div class="amt num">${yen(j.amount)}</div></div>
-    <div class="hint">${done ? "決着！" : `<b>負けた人</b>をタップ　残り <b class="num">${alive.length}</b> 人`}</div>
-    <div class="fighters">${j.participants.map(id => {
-      const l = j.lives[id] || 0, m = j.max_lives[id] || 1;
+  let hint, cards, bar;
+  if (phase === "declare"){
+    const pend = j.participants.filter(id => j.declare[id] === null).length;
+    hint = `<b>免除券の宣言</b>　残り <b class="num">${pend}</b> 人がそろうと一斉オープン`;
+    cards = j.participants.map(id => {
+      const st = j.declare[id];
+      const hasN = tcount(t, id, "normal"), hasS = tcount(t, id, "super");
+      let body;
+      if (st === "none" && !(hasN || hasS)) body = `<div class="dstat">券なし</div>`;
+      else if (st !== null) body = `<div class="dstat ok">宣言済み${j.proxy && j.proxy[id] ? `<small>${j.proxy[id] === "特権五" ? "特権五で強制" : `代理：${esc(pname(j.proxy[id]))}`}</small>` : ""}</div>`;
+      else if (id === me) body = `<div class="dbtns"><button data-dec="${id}|none">使わない</button><button class="n" data-dec="${id}|normal" ${hasN ? "" : "disabled"}>免除券を使う（${hasN}）</button><button class="s" data-dec="${id}|super" ${hasS ? "" : "disabled"}>superを使う（${hasS}）</button></div>`;
+      else body = `<div class="dstat wait">未宣言</div><div class="dbtns"><button data-proxy="${id}">代理で宣言</button></div>`;
+      return `<div class="fighter decl" style="--c:${pcolor(id)}"><i class="gem"></i><div class="fn">${esc(pname(id))}</div><div class="tics">${ticketPills(t, id)}</div>${body}</div>`;
+    }).join("");
+    bar = `${p5 && j.participants.includes(p5.player_id) && (p5.uses || 0) < 6 ? `<button class="btn" id="aForce">特権五</button>` : ""}<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
+  } else if (phase === "conflict"){
+    const c = (j.conflict && j.conflict.cands) || [];
+    hint = `<b>重複！</b>　同時に使えるのは1人だけ。じゃんけんで勝った人をタップ`;
+    cards = c.map(u => `<button class="fighter" data-win="${u.pid}|${u.kind}" style="--c:${pcolor(u.pid)}"><i class="gem"></i><div class="fn">${esc(pname(u.pid))}</div><div class="dstat ok">${u.kind === "super" ? "super免除券" : "免除券"}</div><div class="st">勝ったらタップ</div></button>`).join("");
+    bar = `<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
+  } else {
+    hint = done ? "決着！" : `<b>負けた人</b>をタップ　残り <b class="num">${alive.length}</b> 人`;
+    cards = j.participants.map(id => {
+      const l = j.lives[id] || 0, m = j.max_lives[id] || 1, isS = supers.includes(id);
+      const badge = isS ? `<span class="tic s">super使用</span>` : exempt.includes(id) ? `<span class="tic n">${exDone.includes(id) ? "免除券 発動済み" : "免除券 使用中"}</span>` : "";
       return `<button class="fighter ${l <= 0 ? "out" : ""}" data-f="${id}" style="--c:${pcolor(id)}" ${l <= 0 || done ? "disabled" : ""}>
-        <i class="gem"></i><div class="fn">${esc(pname(id))}</div>
-        <div class="lives">${Array.from({length: m}, (_, i) => `<i class="${i < l ? "" : "lost"}"></i>`).join("")}</div>
-        <div class="st">${l > 0 ? `残機 ${l}` : ""}</div>${l <= 0 ? `<span class="stamp">抜け</span>` : ""}</button>`;
-    }).join("")}</div>
-    <div class="abar"><button class="btn ghost" id="aUndo" ${j.history.length ? "" : "disabled"}>1つ戻す</button><button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button></div>
+        <i class="gem"></i><div class="fn">${esc(pname(id))}</div><div class="tics">${badge || ticketPills(t, id)}</div>
+        <div class="lives">${isS ? "" : Array.from({length: m}, (_, i) => `<i class="${i < l ? "" : "lost"}"></i>`).join("")}</div>
+        <div class="st">${l > 0 ? `残機 ${l}` : ""}</div>${l <= 0 ? `<span class="stamp">${isS ? "免除" : "抜け"}</span>` : ""}</button>`;
+    }).join("");
+    const canUse = !j.history.length && !done && j.participants.some(id => !supers.includes(id) && tcount(t, id) > 0);
+    bar = `<button class="btn ghost" id="aUndo" ${j.history.length ? "" : "disabled"}>1つ戻す</button>${canUse ? `<button class="btn ghost" id="aUse">券を使う</button>` : ""}<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
+  }
+  const used = j.tickets_used || [];
+  const strip = [
+    j.priv3_by ? `特権三：${esc(pname(j.priv3_by))}以外は2機` : "",
+    used.length ? `宣言オープン：${used.map(u => `${esc(pname(u.pid))}＝${u.kind === "super" ? "super" : "免除券"}`).join("、")}` : (phase === "play" && Object.keys(j.declare || {}).length ? "宣言オープン：使用者なし" : ""),
+    p1 && j.participants.includes(p1.player_id) ? `特権一：${esc(pname(p1.player_id))}は重ねて使用可` : ""
+  ].filter(Boolean);
+  a.innerHTML = `
+    <div class="atop"><div class="lbl"><b>${esc(j.label)}</b><span>${esc(j.category)}・${j.participants.length - supers.length}人参加</span></div><div class="amt num">${yen(j.amount)}</div></div>
+    ${strip.length ? `<div class="astrip">${strip.map(x => `<span>${x}</span>`).join("")}</div>` : ""}
+    <div class="hint">${hint}</div>
+    <div class="fighters">${cards}</div>
+    <div class="abar">${bar}</div>
     <div class="verdict" id="verdict" ${done ? "" : "hidden"} style="--c:${done ? pcolor(alive[0]) : "#fff"}">
       <span class="vb"></span><span class="sp a"></span><span class="sp b"></span><span class="sp c"></span><span class="sp d"></span><span class="bl l"></span><span class="bl r"></span>
       <div class="k">決着</div><div class="p">${done ? esc(pname(alive[0])) : ""}</div>
@@ -731,11 +969,12 @@ function drawArena(){
       <div class="btns"><button class="btn ghost" id="vBack">1つ戻す</button><button class="btn" id="vOk">確定</button></div>
     </div>`;
   a.querySelectorAll("[data-f]").forEach(b => b.onclick = () => lose(j, b.dataset.f, b));
-  $("#aUndo").onclick = () => undo(j);
-  $("#vBack").onclick = () => undo(j);
-  $("#aMin").onclick = closeArena;
-  $("#aStop").onclick = () => stop(j);
-  $("#vOk").onclick = () => settle(j, alive[0]);
+  a.querySelectorAll("[data-dec]").forEach(b => b.onclick = () => { const [pid, kind] = b.dataset.dec.split("|"); declareTicket(j, pid, kind, null); });
+  a.querySelectorAll("[data-proxy]").forEach(b => b.onclick = () => openProxy(j, b.dataset.proxy));
+  a.querySelectorAll("[data-win]").forEach(b => b.onclick = () => { const [pid, kind] = b.dataset.win.split("|"); resolveConflict(j, { pid, kind }); });
+  const on = (id, fn) => { const el = a.querySelector("#" + id); if (el) el.onclick = fn; };
+  on("aUndo", () => undo(j)); on("vBack", () => undo(j)); on("aMin", closeArena); on("aStop", () => stop(j));
+  on("vOk", () => settle(j, alive[0])); on("aUse", () => openManualUse(j)); on("aForce", () => openForce(j));
 }
 async function patchJanken(j, patch){
   busy = true;
@@ -745,16 +984,107 @@ async function patchJanken(j, patch){
   if (!ok){ await loadTable("jankens"); syncArena(); }
   return ok;
 }
+const snap = j => ({ l: j.lives, e: j.exempt_done || [] });
 async function lose(j, id, el){
   if (busy) return;
   el.classList.add("hit"); if (navigator.vibrate) navigator.vibrate(30);
   const lives = { ...j.lives, [id]: Math.max(0, (j.lives[id] || 0) - 1) };
-  await patchJanken(j, { lives, history: [...j.history, j.lives] });
+  const alive = j.participants.filter(x => lives[x] > 0);
+  const exempt = j.exempt || [], exDone = j.exempt_done || [];
+  if (alive.length === 1 && exempt.includes(alive[0]) && !exDone.includes(alive[0])){
+    const reset = {};
+    j.participants.forEach(x => { reset[x] = (j.supers || []).includes(x) ? 0 : (j.max_lives[x] || 1); });
+    seenReset[j.id] = exDone.length + 1;
+    flash(`${pname(alive[0])}の免除券発動！`, "全員でやり直し");
+    await patchJanken(j, { lives: reset, history: [...j.history, snap(j)], exempt_done: [...exDone, alive[0]] });
+    return;
+  }
+  await patchJanken(j, { lives, history: [...j.history, snap(j)] });
 }
 async function undo(j){
   if (busy || !j.history.length) return;
-  const history = j.history.slice(0, -1);
-  await patchJanken(j, { lives: j.history[j.history.length - 1], history });
+  const last = j.history[j.history.length - 1];
+  const patch = { history: j.history.slice(0, -1) };
+  if (last && last.l){ patch.lives = last.l; patch.exempt_done = last.e || []; seenReset[j.id] = patch.exempt_done.length; }
+  else patch.lives = last;
+  await patchJanken(j, patch);
+}
+
+/* ---------- 一斉宣言 ---------- */
+async function declareTicket(j, pid, kind, proxyBy){
+  if (busy) return;
+  const declare = { ...j.declare, [pid]: kind };
+  const proxy = proxyBy ? { ...(j.proxy || {}), [pid]: proxyBy } : (j.proxy || {});
+  const ok = await patchJanken(j, { declare, proxy });
+  if (ok && Object.values(declare).every(v => v !== null)) await reveal(j.id);
+}
+function openProxy(j, pid){
+  const t = tripOfJ(j);
+  const hasN = tcount(t, pid, "normal"), hasS = tcount(t, pid, "super");
+  const s = openSheet(`${esc(pname(pid))}の代理宣言`, `<p class="note">本人のスマホが使えないときに、代わりに宣言します。代理で宣言したことは全員の画面に表示されます。</p>
+    <div class="dbtns big"><button data-k="none">使わない</button><button class="n" data-k="normal" ${hasN ? "" : "disabled"}>免除券を使う（${hasN}）</button><button class="s" data-k="super" ${hasS ? "" : "disabled"}>superを使う（${hasS}）</button></div>`);
+  s.querySelectorAll("[data-k]").forEach(b => b.onclick = () => { closeSheet(); const jj = jById(j.id); if (jj && jj.declare[pid] === null) declareTicket(jj, pid, b.dataset.k, me || "代理"); });
+}
+async function reveal(id){
+  const { data, error } = await sb.from("jankens").update({ phase: "reveal" }).eq("id", id).eq("phase", "declare").select();
+  if (error || !data || !data.length) return;
+  const j = data[0]; Object.assign(jById(id) || {}, j);
+  const t = tripOfJ(j), p1 = privOf(t, 1);
+  const users = Object.entries(j.declare).filter(([, k]) => k && k !== "none").map(([pid, kind]) => ({ pid, kind }));
+  const free = users.filter(u => p1 && u.pid === p1.player_id);
+  const rest = users.filter(u => !(p1 && u.pid === p1.player_id));
+  let cands = rest.some(u => u.kind === "super") ? rest.filter(u => u.kind === "super") : rest;
+  if (cands.length > 1){ await patchJanken(jById(id), { phase: "conflict", conflict: { cands, free } }); return; }
+  await applyTickets(jById(id), [...free, ...cands]);
+}
+async function resolveConflict(j, winner){
+  const free = (j.conflict && j.conflict.free) || [];
+  await applyTickets(j, [...free, winner]);
+}
+async function applyTickets(j, list){
+  const t = tripOfJ(j);
+  const exempt = [...(j.exempt || [])], supers = [...(j.supers || [])], lives = { ...j.lives }, used = [...(j.tickets_used || [])];
+  for (const u of list){
+    const tk = ownTickets(t, u.pid, u.kind)[0]; if (!tk) continue;
+    if (!(await q(sb.from("tickets").update({ status: "used", janken_id: j.id }).eq("id", tk.id), "記録"))) continue;
+    used.push(u);
+    if (u.kind === "super"){ supers.push(u.pid); lives[u.pid] = 0; } else exempt.push(u.pid);
+  }
+  await loadTable("tickets");
+  seenPhase[j.id] = "play";
+  await patchJanken(j, { phase: "play", conflict: null, exempt, supers, lives, tickets_used: used });
+  flash(list.length ? "一斉オープン！" : "一斉オープン", list.length ? list.map(u => `${pname(u.pid)}：${u.kind === "super" ? "super免除券" : "免除券"}`).join("　") : "誰も使いませんでした");
+}
+function openManualUse(j){
+  const t = tripOfJ(j), p1 = privOf(t, 1);
+  const holders = j.participants.filter(id => !(j.supers || []).includes(id) && tcount(t, id) > 0);
+  const s = openSheet("券を使う", `<p class="note">じゃんけんを始める前に宣言してください。一度使った券は返ってきません。</p>${chipPlayers(holders, [])}
+    <div class="dbtns big"><button class="n" data-k="normal">免除券を使う</button><button class="s" data-k="super">superを使う</button></div>`);
+  bindChips(s, "data-p", false);
+  s.querySelectorAll("[data-k]").forEach(b => b.onclick = async () => {
+    const [pid] = picked(s, "data-p"); if (!pid){ toast("使う人を選んでください"); return; }
+    const kind = b.dataset.k;
+    if (!tcount(t, pid, kind)){ toast("その券を持っていません"); return; }
+    const others = (j.tickets_used || []).filter(u => !(p1 && u.pid === p1.player_id));
+    if (others.length && !(p1 && pid === p1.player_id)){ toast("免除券等の同時使用はできません（第十三条）", 3000); return; }
+    closeSheet(); await applyTickets(jById(j.id), [{ pid, kind }]);
+  });
+}
+function openForce(j){
+  const t = tripOfJ(j), p5 = privOf(t, 5);
+  const targets = j.participants.filter(id => id !== p5.player_id && j.declare[id] === null && tcount(t, id) > 0);
+  if (!targets.length){ toast("強制使用できる相手（未宣言の所持者）がいません"); return; }
+  const s = openSheet("特権五：免除券強制使用", `<p class="note">${esc(pname(p5.player_id))}以外の所持者でじゃんけんし、負けた人を選んでください。使う券の種類は本人が選びます。（残り${6 - (p5.uses || 0)}回）</p>${chipPlayers(targets, [])}
+    <div class="dbtns big"><button class="n" data-k="normal">免除券を使わせる</button><button class="s" data-k="super">superを使わせる</button></div>`);
+  bindChips(s, "data-p", false);
+  s.querySelectorAll("[data-k]").forEach(b => b.onclick = async () => {
+    const [pid] = picked(s, "data-p"); if (!pid){ toast("負けた人を選んでください"); return; }
+    if (!tcount(t, pid, b.dataset.k)){ toast("その券を持っていません"); return; }
+    closeSheet();
+    await q(sb.from("privileges").update({ uses: (p5.uses || 0) + 1 }).eq("id", p5.id), "記録");
+    await loadTable("privileges");
+    const jj = jById(j.id); if (jj && jj.declare[pid] === null) declareTicket(jj, pid, b.dataset.k, "特権五");
+  });
 }
 async function stop(j){
   if (!confirm("このじゃんけんを中止しますか？（支払いは記録されません）")) return;
@@ -764,8 +1094,11 @@ async function settle(j, payer){
   if (busy) return; busy = true;
   const t = db.trips.find(x => x.id === j.trip_id);
   let ok;
-  if (j.payment_id) ok = await q(sb.from("payments").update({ payer_id: payer, participants: j.participants }).eq("id", j.payment_id), "確定");
-  else ok = await q(sb.from("payments").insert({ trip_id: j.trip_id, seq: nextSeq(t), label: j.label, amount: j.amount, category: j.category, payer_id: payer, participants: j.participants }), "確定");
+  const parts = j.participants.filter(id => !(j.supers || []).includes(id));
+  const extra = { tickets_used: j.tickets_used || [] };
+  if (j.advanced_by) extra.advanced_by = j.advanced_by;
+  if (j.payment_id) ok = await q(sb.from("payments").update({ payer_id: payer, participants: parts, ...extra }).eq("id", j.payment_id), "確定");
+  else ok = await q(sb.from("payments").insert({ trip_id: j.trip_id, seq: nextSeq(t), label: j.label, amount: j.amount, category: j.category, payer_id: payer, participants: parts, ...extra }), "確定");
   if (ok) ok = await q(sb.from("jankens").update({ status: "done", payer_id: payer }).eq("id", j.id), "確定");
   busy = false;
   if (!ok) return;
@@ -793,13 +1126,15 @@ function openEditPayment(id){
     <div class="f"><span>カテゴリー</span>${catChips(t, cat)}</div>
     <div class="f"><span>払った人</span>${chipPlayers(t.members, p.payer_id ? [p.payer_id] : [], "data-payer")}</div>
     <div class="f"><span>参加者</span>${chipPlayers(t.members, p.participants || [])}</div>
+    <label class="f"><span>立替えた人</span><select id="eadv"><option value="">なし</option>${t.members.map(id => `<option value="${id}" ${p.advanced_by === id ? "selected" : ""}>${esc(pname(id))}</option>`).join("")}</select></label>
+    ${(p.tickets_used || []).length ? `<p class="note">使われた券：${p.tickets_used.map(u => `${esc(pname(u.pid))}（${u.kind === "super" ? "super免除券" : "免除券"}）`).join("、")}</p>` : ""}
     <div class="btns"><button class="btn danger" id="edel">削除</button>${p.payer_id ? "" : `<button class="btn ghost" id="eplay">じゃんけん</button>`}<button class="btn" id="esave">保存</button></div>`);
   bindChips(s, "data-cat", false, () => cat = picked(s, "data-cat")[0]);
   bindChips(s, "data-payer", false);
   bindChips(s, "data-p", true);
   const pl = $("#eplay"); if (pl) pl.onclick = () => startFromPayment(p.id);
   $("#esave").onclick = async () => {
-    const row = { label: $("#el").value.trim(), amount: parseInt($("#ea").value, 10) || 0, seq: parseInt($("#eq").value, 10) || p.seq, category: cat, payer_id: picked(s, "data-payer")[0] || null, participants: picked(s, "data-p") };
+    const row = { label: $("#el").value.trim(), amount: parseInt($("#ea").value, 10) || 0, seq: parseInt($("#eq").value, 10) || p.seq, category: cat, payer_id: picked(s, "data-payer")[0] || null, participants: picked(s, "data-p"), advanced_by: $("#eadv").value || null };
     if (!row.label){ toast("内訳を入力してください"); return; }
     if (row.payer_id && !row.participants.includes(row.payer_id)) row.participants.push(row.payer_id);
     if (await q(sb.from("payments").update(row).eq("id", p.id), "保存")){ await loadTable("payments"); closeSheet(); render(); toast("保存しました"); }
@@ -808,6 +1143,265 @@ function openEditPayment(id){
     if (!confirm(`「${p.label}」を削除しますか？`)) return;
     if (await q(sb.from("payments").delete().eq("id", p.id), "削除")){ await loadTable("payments"); closeSheet(); render(); }
   };
+}
+
+/* ---------- 券・特権タブ ---------- */
+let rouletteDay = null;
+function tripWinner(t){
+  const rows = standings(t).filter(r => typeof r.rank === "number");
+  return rows.length && rows[0].paid > 0 ? rows[0].id : null;
+}
+function deptStats(trips){
+  const st = {};
+  const get = id => st[id] || (st[id] = { cats: {}, total: 0, wins: 0, joins: 0, drives: 0 });
+  trips.forEach(t => {
+    tripPays(t).filter(p => p.payer_id).forEach(p => {
+      (p.participants || []).forEach(id => get(id).joins++);
+      const s = get(p.payer_id); s.wins++; s.total += p.amount; s.cats[p.category] = (s.cats[p.category] || 0) + p.amount;
+    });
+    db.drives.filter(d => d.trip_id === t.id).forEach(d => get(d.player_id).drives++);
+  });
+  return st;
+}
+function leaders(st, dept){
+  let best = 0, ids = [];
+  for (const [id, s] of Object.entries(st)){
+    const v = dept === "支払勝率" ? (s.joins ? (s.wins + s.drives) / s.joins : 0) : dept === "総合" ? s.total : (s.cats[dept] || 0);
+    if (v <= 0) continue;
+    if (v > best + 1e-9){ best = v; ids = [id]; } else if (Math.abs(v - best) < 1e-9) ids.push(id);
+  }
+  return ids;
+}
+function initialPlan(t){
+  const prior = tripsSorted().filter(x => x.season === t.season && x.no < t.no);
+  if (!prior.length) return { first: true, items: [] };
+  const st = deptStats(prior), ok = activeMembers(t), items = [];
+  DEPTS.forEach(d => leaders(st, d).forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "normal", source: `初期：${d}部門1位` })));
+  leaders(st, "総合").forEach(id => ok.includes(id) && items.push({ player_id: id, kind: "super", source: "初期：シーズン累計1位" }));
+  const pv = prevTrip(t), w = pv && tripWinner(pv);
+  if (w && ok.includes(w)){
+    items.push({ player_id: w, kind: "normal", source: "初期：前回優勝" });
+    items.push({ player_id: w, kind: "super", source: "初期：前回優勝" });
+  }
+  return { first: false, items };
+}
+async function giveInitial(t){
+  const plan = initialPlan(t);
+  if (plan.first){ toast("シーズン最初の旅は配布なしです"); return; }
+  const old = db.tickets.filter(x => x.trip_id === t.id && (x.source || "").startsWith("初期"));
+  if (old.some(x => x.status === "used")){ toast("初期配布の券がすでに使われているため、配布し直せません", 3200); return; }
+  if (old.length && !confirm("初期配布をやり直しますか？（今の初期配布分は消えます）")) return;
+  if (old.length && !(await q(sb.from("tickets").delete().in("id", old.map(x => x.id)), "配布"))) return;
+  if (plan.items.length && !(await q(sb.from("tickets").insert(plan.items.map(x => ({ ...x, trip_id: t.id }))), "配布"))) return;
+  await loadTable("tickets"); render();
+  toast(`${plan.items.length}枚を配布しました`);
+}
+async function adjustTicket(t, pid, kind, dir){
+  if (dir === "+"){
+    if (await q(sb.from("tickets").insert({ trip_id: t.id, player_id: pid, kind, source: "手動で追加" }), "追加")){ await loadTable("tickets"); render(); }
+  } else {
+    const tk = ownTickets(t, pid, kind).pop(); if (!tk) return;
+    if (!confirm(`${pname(pid)}の${kind === "super" ? "super免除券" : "免除券"}を1枚減らしますか？`)) return;
+    if (await q(sb.from("tickets").delete().eq("id", tk.id), "削除")){ await loadTable("tickets"); render(); }
+  }
+}
+function viewTickets(t){
+  if (!t) return `<div class="empty"><b>今の旅がありません</b>歯車の「旅」から作成してください。</div>`;
+  const ids = activeMembers(t), day = dayOf(t);
+  if (rouletteDay == null || rouletteDay > t.days) rouletteDay = day || 1;
+  let h = `<div class="h2">所持している券<small>旅ごとにリセット</small></div><div class="card">`;
+  h += ids.map(id => `<div class="tkrow"><span class="dot" style="background:${pcolor(id)}"></span><b>${esc(pname(id))}</b>
+    <span class="tkc"><span class="tic n">免</span><button class="pm" data-adj="${id}|normal|-" aria-label="減らす">−</button><span class="num">${tcount(t, id, "normal")}</span><button class="pm" data-adj="${id}|normal|+" aria-label="増やす">＋</button></span>
+    <span class="tkc"><span class="tic s">S</span><button class="pm" data-adj="${id}|super|-" aria-label="減らす">−</button><span class="num">${tcount(t, id, "super")}</span><button class="pm" data-adj="${id}|super|+" aria-label="増やす">＋</button></span></div>`).join("");
+  h += `</div>`;
+
+  const plan = initialPlan(t), given = db.tickets.filter(x => x.trip_id === t.id && (x.source || "").startsWith("初期"));
+  h += `<div class="h2 red">旅の初めの配布<small>第十二条・第十八条</small></div><div class="card">`;
+  if (plan.first) h += `<p class="note" style="margin:0">シーズン${t.season}最初の旅なので、配布はありません（リセット扱い）。</p>`;
+  else {
+    h += plan.items.length ? `<ul class="plan">${plan.items.map(x => `<li><span class="dot" style="background:${pcolor(x.player_id)}"></span>${esc(pname(x.player_id))}<span class="tic ${x.kind === "super" ? "s" : "n"}">${x.kind === "super" ? "super" : "免除券"}</span><small>${esc(x.source.replace("初期：", ""))}</small></li>`).join("")}</ul>` : `<p class="note">配布の対象者がいません。</p>`;
+    h += `<div class="btns"><button class="btn" data-act="initTickets">${given.length ? "配布し直す" : "この内容で配布する"}</button></div>${given.length ? `<p class="note" style="margin:8px 0 0">配布済み：${given.length}枚</p>` : ""}`;
+  }
+  h += `</div>`;
+
+  h += `<div class="h2 aqua">特権<small>毎朝宣言・一度出た特権は選べない</small></div>`;
+  for (let d = 1; d <= t.days; d++){
+    const p = tripPrivs(t).find(x => x.day === d);
+    if (p){
+      const m = PRIVS[p.kind], left = m.max ? `残り${m.max - (p.uses || 0)}回` : m.span;
+      h += `<div class="privcard" style="--c:${pcolor(p.player_id)}"><span class="pk">${KANJI[p.kind]}</span><div class="pb"><small>${d}日目</small><b>${esc(pname(p.player_id))}：${m.name}</b><span>${m.desc}</span><em>${left}${p.kind === 3 && (p.uses_detail || []).length ? `（使用済み：${p.uses_detail.join("・")}）` : ""}</em>
+        <div class="pa">${p.kind === 2 && (p.uses || 0) < 1 ? `<button class="mini" data-steal="1">強奪を実行</button>` : ""}<button class="mini" data-privdel="${p.id}">取り消す</button></div></div></div>`;
+    } else h += `<button class="privcard empty-p" data-privday="${d}"><span class="pk">？</span><div class="pb"><small>${d}日目</small><b>${d === day ? "今日の特権を宣言する" : "宣言する"}</b><span>${d === 1 ? "1日目は前回優勝者" : "前日終了時点の1位"}が獲得</span></div></button>`;
+  }
+
+  const rk = setting(`roulette:${t.id}:${rouletteDay}`);
+  const granted = db.tickets.filter(x => x.trip_id === t.id && (x.source || "").startsWith(`ルーレット：${rouletteDay}日目`));
+  h += `<div class="h2">super免除券ルーレット<small>第十四条・1日1枚以上</small></div><div class="card">
+    <div class="filter" style="margin:0 0 10px;padding:0">${Array.from({length: t.days}, (_, i) => `<button data-rday="${i+1}" aria-pressed="${rouletteDay === i+1}">${i+1}日目</button>`).join("")}</div>`;
+  if (rk){
+    const holder = rankHolder(t, rk);
+    h += `<div class="rres"><span class="num">${rk}</span><div>位が獲得<small>旅費・宿泊費のじゃんけん前の時点でこの順位の人に配ります</small></div></div>
+      <p class="note">今の${rk}位：<b style="color:var(--ink)">${holder ? esc(pname(holder)) : "該当なし"}</b>${granted.length ? `／この日の付与済み：${granted.map(x => esc(pname(x.player_id))).join("、")}` : ""}</p>
+      <div class="btns"><button class="btn ghost" data-act="roulette">回し直す</button><button class="btn" data-act="grantRoulette" ${holder ? "" : "disabled"}>${holder ? esc(pname(holder)) : ""}に付与</button></div>`;
+  } else h += `<p class="note">各日の一番最初に回して、super免除券を獲得する順位を決めます。</p><div class="btns"><button class="btn" data-act="roulette">${rouletteDay}日目のルーレットを回す</button></div>`;
+  h += `</div>`;
+
+  const res = prizeResults(t);
+  h += `<div class="h2 red">ピタリ賞・ニアピン賞<small>第十七条</small></div><div class="card">
+    <label class="f"><span>旅費総額（前回4位の予約者が提示）</span><div style="display:flex;gap:8px"><input id="ttotal" type="number" inputmode="numeric" value="${t.travel_total ?? ""}" placeholder="0"><button class="mini" data-act="saveTravel">保存</button></div></label>
+    <p class="note">旅費総額の提示後に、全員が「自分の最終支払額」を予想します。ピタリ賞（100円単位で一致）は全額、ニアピン賞（±1,000円以内）は半額が免除され、残りのメンバーで均等に負担します。順位は変わりません。</p>
+    ${res.map(r => `<div class="predrow"><span class="dot" style="background:${pcolor(r.id)}"></span><b>${esc(pname(r.id))}</b><input type="number" inputmode="numeric" data-pred="${r.id}" value="${r.pred ?? ""}" placeholder="予想額"><span class="pr">${r.pred == null ? "" : `<small>今の差 ${signed(r.paid - r.pred)}</small>${r.prize ? `<span class="tic ${r.prize === "ピタリ賞" ? "s" : "n"}">${r.prize}</span>` : ""}`}</span></div>`).join("")}
+  </div>`;
+
+  h += `<div class="h2 aqua">精算<small>立替え・賞の免除を反映</small></div><div class="card"><p class="note" style="margin-top:0">誰が誰にいくら払えばよいかを計算します。立替えた人は、支払い一覧の各支払いで設定できます。</p><div class="btns" style="margin-top:6px"><button class="btn" data-act="settle">精算を見る</button></div></div>`;
+  return h;
+}
+
+/* ---------- 特権 ---------- */
+function privCandidate(t, day){
+  if (day === 1){ const pv = prevTrip(t); return pv ? tripWinner(pv) : null; }
+  if (!t.start_date) return null;
+  const cutoff = new Date(t.start_date + "T00:00:00"); cutoff.setDate(cutoff.getDate() + day - 1);
+  const paid = {};
+  tripPays(t).filter(p => p.payer_id && new Date(p.created_at) < cutoff).forEach(p => paid[p.payer_id] = (paid[p.payer_id] || 0) + p.amount);
+  let best = null, bv = 0;
+  Object.entries(paid).forEach(([id, v]) => { if (v > bv && id !== t.champion_out){ bv = v; best = id; } });
+  return best;
+}
+function openPrivDeclare(t, day){
+  if (!t) return;
+  day = day || 1;
+  if (tripPrivs(t).some(p => p.day === day)){ toast(`${day}日目の特権は宣言済みです`); return; }
+  const usedKinds = tripPrivs(t).map(p => p.kind);
+  const cand = privCandidate(t, day);
+  let kind = null;
+  const s = openSheet(`${day}日目の特権`, `<p class="note">${day === 1 ? "1日目は前回優勝者" : "前日終了時点で1位の人"}が、朝一で1つ選んで宣言します。${cand ? `候補：<b style="color:var(--ink)">${esc(pname(cand))}</b>` : ""}</p>
+    <div class="f"><span>獲得した人</span>${chipPlayers(activeMembers(t), cand ? [cand] : [])}</div>
+    <div class="f"><span>特権</span><div class="privpick">${[1,2,3,4,5].map(k => `<button type="button" data-pk="${k}" ${usedKinds.includes(k) ? "disabled" : ""} aria-pressed="false"><span class="pk">${KANJI[k]}</span><span><b>${PRIVS[k].name}${usedKinds.includes(k) ? "（獲得済み）" : ""}</b><small>${PRIVS[k].desc}（${PRIVS[k].span}）</small></span></button>`).join("")}</div></div>
+    <div class="btns"><button class="btn" id="pgo">宣言する</button></div>`);
+  bindChips(s, "data-p", false);
+  s.querySelectorAll("[data-pk]").forEach(b => b.onclick = () => { kind = Number(b.dataset.pk); s.querySelectorAll("[data-pk]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+  $("#pgo").onclick = async () => {
+    const [pid] = picked(s, "data-p");
+    if (!pid || !kind){ toast("獲得した人と特権を選んでください"); return; }
+    if (await q(sb.from("privileges").insert({ trip_id: t.id, day, player_id: pid, kind }), "宣言")){
+      await loadTable("privileges"); closeSheet(); render();
+      flash(`特権${KANJI[kind]}「${PRIVS[kind].name}」`, `${pname(pid)}が宣言`);
+    }
+  };
+}
+async function deletePriv(id){
+  if (!confirm("この特権の宣言を取り消しますか？")) return;
+  if (await q(sb.from("privileges").delete().eq("id", id), "取り消し")){ await loadTable("privileges"); render(); }
+}
+function openSteal(t){
+  const p2 = privOf(t, 2); if (!p2) return;
+  const targets = activeMembers(t).filter(id => id !== p2.player_id && tcount(t, id) > 0);
+  if (!targets.length){ toast("券を持っている人がいません"); return; }
+  const s = openSheet("特権二：免除券強奪", `<p class="note">券の所持者だけでじゃんけんし、負けた人を選んでください。${esc(pname(p2.player_id))}が奪う券を選びます。</p>${chipPlayers(targets, [])}
+    <div class="dbtns big"><button class="n" data-k="normal">免除券を奪う</button><button class="s" data-k="super">superを奪う</button></div>`);
+  bindChips(s, "data-p", false);
+  s.querySelectorAll("[data-k]").forEach(b => b.onclick = async () => {
+    const [pid] = picked(s, "data-p"); if (!pid){ toast("負けた人を選んでください"); return; }
+    const tk = ownTickets(t, pid, b.dataset.k)[0]; if (!tk){ toast("その券を持っていません"); return; }
+    if (!(await q(sb.from("tickets").update({ player_id: p2.player_id, source: `強奪：${pname(pid)}から` }).eq("id", tk.id), "強奪"))) return;
+    await q(sb.from("privileges").update({ uses: 1 }).eq("id", p2.id), "記録");
+    await Promise.all([loadTable("tickets"), loadTable("privileges")]);
+    closeSheet(); render(); flash("強奪成功！", `${pname(p2.player_id)}が${pname(pid)}から奪った`);
+  });
+}
+
+/* ---------- ルーレット ---------- */
+function rankHolder(t, r){
+  const rows = standings(t).filter(x => typeof x.rank === "number");
+  const hit = rows.find(x => x.rank === Number(r));
+  return hit ? hit.id : (rows[Number(r) - 1] || {}).id || null;
+}
+function openRoulette(t, day){
+  const n = activeMembers(t).length;
+  const s = openSheet(`${day}日目のルーレット`, `<div class="wheel"><span class="num" id="rn">?</span><small>位が獲得</small></div><div class="btns"><button class="btn" id="rgo">回す</button></div>`);
+  $("#rgo").onclick = () => {
+    $("#rgo").disabled = true;
+    const final = 1 + Math.floor(Math.random() * n);
+    let i = 0, delay = 50; const el = $("#rn");
+    const step = () => {
+      el.textContent = (i % n) + 1; i++; delay *= 1.12;
+      el.classList.remove("tick"); void el.offsetWidth; el.classList.add("tick");
+      if (delay < 420) setTimeout(step, delay);
+      else {
+        el.textContent = final; el.classList.add("hitn");
+        if (navigator.vibrate) navigator.vibrate(80);
+        setTimeout(async () => { if (await putSetting(`roulette:${t.id}:${day}`, final)){ await loadTable("app_settings"); closeSheet(); render(); flash(`${final}位が獲得！`, `${day}日目のsuper免除券`); } }, 900);
+      }
+    };
+    step();
+  };
+}
+async function grantRoulette(t, day){
+  const r = setting(`roulette:${t.id}:${day}`), pid = rankHolder(t, r);
+  if (!pid) return;
+  if (!confirm(`${pname(pid)}（今の${r}位）にsuper免除券を1枚付与しますか？`)) return;
+  if (await q(sb.from("tickets").insert({ trip_id: t.id, player_id: pid, kind: "super", source: `ルーレット：${day}日目・${r}位` }), "付与")){
+    await loadTable("tickets"); render(); flash("super免除券 獲得！", pname(pid));
+  }
+}
+
+/* ---------- ピタリ賞・ニアピン賞 ---------- */
+function prizeResults(t){
+  const paid = Object.fromEntries(standings(t).map(r => [r.id, r.paid]));
+  return activeMembers(t).map(id => {
+    const pr = db.predictions.find(p => p.trip_id === t.id && p.player_id === id);
+    if (!pr || pr.amount == null) return { id, pred: null, paid: paid[id] || 0, exempt: 0 };
+    const v = paid[id] || 0, diff = v - pr.amount;
+    const pitari = Math.round(v / 100) === Math.round(pr.amount / 100);
+    const near = !pitari && Math.abs(diff) <= 1000;
+    return { id, pred: pr.amount, paid: v, diff, prize: pitari ? "ピタリ賞" : near ? "ニアピン賞" : null, exempt: pitari ? v : near ? Math.round(v / 2) : 0 };
+  });
+}
+async function saveTravelTotal(t){
+  const v = parseInt($("#ttotal").value, 10);
+  if (await q(sb.from("trips").update({ travel_total: Number.isFinite(v) ? v : null }).eq("id", t.id), "保存")){ await loadTable("trips"); render(); toast("旅費総額を保存しました。全員で予想を入力してください"); }
+}
+async function savePrediction(t, pid, val){
+  const v = parseInt(val, 10);
+  if (await q(sb.from("predictions").upsert({ trip_id: t.id, player_id: pid, amount: Number.isFinite(v) ? v : null }, { onConflict: "trip_id,player_id" }), "保存")){ await loadTable("predictions"); render(); toast(`${pname(pid)}の予想を保存しました`); }
+}
+
+/* ---------- 精算 ---------- */
+function settlement(t){
+  const ids = activeMembers(t), rows = standings(t);
+  const burden = Object.fromEntries(t.members.map(id => [id, (rows.find(r => r.id === id) || {}).paid || 0]));
+  const prizes = prizeResults(t).filter(r => r.exempt > 0);
+  prizes.forEach(r => { burden[r.id] -= r.exempt; const others = ids.filter(x => x !== r.id); others.forEach(x => burden[x] += r.exempt / others.length); });
+  const outlay = Object.fromEntries(t.members.map(id => [id, 0]));
+  tripPays(t).filter(p => p.payer_id).forEach(p => { const who = p.advanced_by || p.payer_id; outlay[who] = (outlay[who] || 0) + p.amount; });
+  const bal = t.members.map(id => ({ id, v: Math.round(outlay[id] - burden[id]) }));
+  const cred = bal.filter(b => b.v > 0).sort((a, b) => b.v - a.v), debt = bal.filter(b => b.v < 0).map(b => ({ ...b, v: -b.v })).sort((a, b) => b.v - a.v);
+  const tx = []; let i = 0, k = 0;
+  while (i < debt.length && k < cred.length){
+    const m = Math.min(debt[i].v, cred[k].v);
+    if (m > 0) tx.push({ from: debt[i].id, to: cred[k].id, amt: m });
+    debt[i].v -= m; cred[k].v -= m;
+    if (debt[i].v <= 0) i++; if (cred[k].v <= 0) k++;
+  }
+  return { burden, outlay, tx, prizes };
+}
+function openSettlement(t){
+  const st = settlement(t);
+  openSheet("精算", `
+    <table class="stbl"><thead><tr><th>メンバー</th><th>男気の支払額</th><th>最終負担</th><th>実際に出した額</th></tr></thead><tbody>
+    ${t.members.map(id => `<tr><td><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</td><td class="num">${yen((standings(t).find(r => r.id === id) || {}).paid)}</td><td class="num">${yen(st.burden[id])}</td><td class="num">${yen(st.outlay[id])}</td></tr>`).join("")}
+    </tbody></table>
+    ${st.prizes.length ? `<p class="note">賞：${st.prizes.map(r => `${esc(pname(r.id))} ${r.prize}（${yen(r.exempt)}免除）`).join("、")}</p>` : ""}
+    <div class="h2" style="margin-top:18px">送金<small>${st.tx.length}件</small></div>
+    ${st.tx.length ? st.tx.map(x => `<div class="txrow"><span><span class="dot" style="background:${pcolor(x.from)}"></span>${esc(pname(x.from))}</span><span class="arrow">→</span><span><span class="dot" style="background:${pcolor(x.to)}"></span>${esc(pname(x.to))}</span><b class="num">${yen(x.amt)}</b></div>`).join("") : `<p class="note">送金は不要です。立替えや賞の免除がなければ、じゃんけんで決まった人がその場で払って完了です。</p>`}`);
+}
+
+/* ---------- 設定：一斉宣言の金額 ---------- */
+function openThreshold(){
+  openSheet("一斉宣言を出す金額", `<p class="note">この金額以上のじゃんけんで、免除券を持っている人に一斉宣言を求めます。これ未満でも、じゃんけん画面の「券を使う」から使えます。</p>
+    <label class="f"><span>金額</span><input id="thv" type="number" inputmode="numeric" value="${threshold()}"></label><div class="btns"><button class="btn" id="thok">保存</button></div>`);
+  $("#thok").onclick = async () => { const v = parseInt($("#thv").value, 10); if (!(v > 0)){ toast("金額を入力してください"); return; } if (await putSetting("declare_threshold", v)){ await loadTable("app_settings"); closeSheet(); render(); toast(`${yen(v)}以上で一斉宣言します`); } };
 }
 
 /* ---------- 起動 ---------- */
