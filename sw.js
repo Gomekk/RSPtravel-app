@@ -1,6 +1,6 @@
 // 男気じゃんけん旅 Service Worker
 // 画面ファイルは常にネットから最新を取り、オフラインのときだけ保存済みを使う。Supabaseなど外部への通信には手を出さない
-const CACHE = "ojk-v7";
+const CACHE = "ojk-v8";
 const FILES = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
