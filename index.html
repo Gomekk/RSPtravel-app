@@ -1636,14 +1636,17 @@ function openForce(j){
   });
 }
 async function stop(j){
-  if (!confirm("このじゃんけんを中止しますか？（支払いは記録されません）")) return;
+  if (!confirm("このじゃんけんを中止しますか？\n支払いは記録されず、このじゃんけんで使った特権・免除券・superは使っていないことになります。")) return;
   if (!(await q(sb.from("jankens").update({ status: "cancel" }).eq("id", j.id), "中止"))) return;
   const t = tripOfJ(j);
   const p3 = j.priv3_by && privOf(t, 3);
   if (p3){ const det = [...(p3.uses_detail || [])]; const k = det.lastIndexOf(travelType(j.category)); if (k >= 0) det.splice(k, 1); await q(sb.from("privileges").update({ uses: Math.max(0, (p3.uses || 0) - 1), uses_detail: det }).eq("id", p3.id), "記録"); }
   const forced = Object.values(j.proxy || {}).filter(v => v === "特権五").length, p5 = privOf(t, 5);
   if (forced && p5) await q(sb.from("privileges").update({ uses: Math.max(0, (p5.uses || 0) - forced) }).eq("id", p5.id), "記録");
-  await Promise.all([loadTable("jankens"), loadTable("privileges")]); closeArena(); toast((p3 || forced) ? "中止しました（使った特権は元に戻しました）" : "中止しました");
+  const usedTk = db.tickets.filter(x => x.janken_id === j.id && x.status === "used");
+  if (usedTk.length) await q(sb.from("tickets").update({ status: "own", janken_id: null }).in("id", usedTk.map(x => x.id)), "記録");
+  await Promise.all([loadTable("jankens"), loadTable("privileges"), loadTable("tickets")]); closeArena();
+  toast((p3 || forced || usedTk.length) ? "中止しました（使った特権・免除券・superは元に戻しました）" : "中止しました", 3000);
 }
 async function settle(j, payer){
   if (busy) return; busy = true;
