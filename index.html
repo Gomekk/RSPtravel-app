@@ -629,6 +629,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .hscroll.multi>.card{flex:0 0 86%;scroll-snap-align:center;margin:0}
 .tcount{margin-left:8px;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:2px 8px;border-radius:99px;border:1.5px solid var(--line)}
 /* ===== フィードバック3 ===== */
+.mapinfo{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.mapnote{font-size:10.5px;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis}
 .gear{position:relative}
 .gear.alert::after,.bang{content:"!";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--crimson);color:#fff;font-family:var(--disp);font-size:12px;font-style:normal;line-height:1;border:2px solid #fff;box-shadow:0 0 8px rgba(226,54,79,.7);animation:bangpulse 1.2s ease-in-out infinite}
 .gear.alert::after{position:absolute;top:-6px;right:-6px}
@@ -2104,7 +2106,7 @@ function computeStats(trips){
   const leadMarks = [], bands = [];
   let biggestDrop = { amt: 0, id: null };
   trips.forEach((t, ti) => {
-    if (trips.length > 1) bands.push({ i: steps, label: `第${t.no}回` });
+    if (trips.length > 1) bands.push({ i: steps, label: `${t.season}-${t.no}` });
     const pays = tripPays(t).filter(p => p.payer_id);
     const dayAmt = {};
     let lastDay = null;
@@ -2394,7 +2396,7 @@ function japanMap(trips){
   if (mapMode === "all" || mapMode === "season"){ const ss = [...new Set(on.flatMap(p => (visits[p] || []).map(x => x.season)))].filter(sn => mapMode === "all" || sn === mapSeason).sort((a, b) => a - b); leg = ss.map(sn => `<span><i style="background:${seasonColor(sn)}"></i>SEASON ${sn}</span>`).join(""); }
   else { const ps = [...new Set(on.map(p => colorOf(p)))]; leg = db.players.filter(pl => ps.includes(pl.color)).map(pl => `<span><i style="background:${pl.color}"></i>${esc(pl.name)}</span>`).join(""); }
   return `<div class="jmap"><svg viewBox="-4 -4 ${W + 8} ${H + 8}" role="img" aria-label="過去の旅行先の地図">${cells}</svg></div>
-    <p class="note" style="margin:6px 0 0">${dom}／47都道府県${abroad ? `・海外${abroad}` : ""}${mapMode === "all" ? "（最初に行ったシーズンの色）" : mapMode === "winner" ? "（その旅の優勝者の色。複数回は支払額が多い方）" : mapMode === "player" ? `（${esc(pname(mapPlayer))}が優勝した旅先）` : ""}</p>
+    <p class="note mapinfo" style="margin:6px 0 0">${dom}／47都道府県${abroad ? `・海外${abroad}` : ""}${mapMode === "winner" ? `<span class="mapnote">複数回訪れた場所：優勝金額が高いプレイヤー色</span>` : ""}</p>
     <div class="legend">${leg}</div>`;
 }
 
