@@ -2688,7 +2688,7 @@ document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab =
 $("#gearBtn").onclick = openSettings;
 async function shareLink(){
   const url = location.origin + location.pathname;
-  const data = { title: "男気じゃんけん旅", text: "男気じゃんけん旅のアプリはこちら", url };
+  const data = { url };  // URLだけを渡すと、共有シートの「コピー」でリンクだけが保存される
   try {
     if (navigator.share){ await navigator.share(data); return; }
     await navigator.clipboard.writeText(url); toast("リンクをコピーしました");
