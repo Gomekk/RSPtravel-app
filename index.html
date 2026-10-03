@@ -629,6 +629,12 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .hscroll.multi>.card{flex:0 0 86%;scroll-snap-align:center;margin:0}
 .tcount{margin-left:8px;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:2px 8px;border-radius:99px;border:1.5px solid var(--line)}
 /* ===== フィードバック3 ===== */
+.gear{position:relative}
+.gear.alert::after,.bang{content:"!";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--crimson);color:#fff;font-family:var(--disp);font-size:12px;font-style:normal;line-height:1;border:2px solid #fff;box-shadow:0 0 8px rgba(226,54,79,.7);animation:bangpulse 1.2s ease-in-out infinite}
+.gear.alert::after{position:absolute;top:-6px;right:-6px}
+.bang{margin:0 auto 0 6px}
+@keyframes bangpulse{50%{transform:scale(1.18)}}
+.rank .n .mine{color:#fff;text-shadow:0 0 2px rgba(0,0,0,.35)}
 .chips .inuse{font-size:10px;font-weight:900;color:#fff;background:var(--mute);border-radius:6px;padding:1px 5px;margin-left:2px}
 .solobtn{border:3px solid transparent;background:linear-gradient(#fff,#fff) padding-box,repeating-linear-gradient(115deg,var(--crimson) 0 18px,var(--gold) 18px 36px,var(--aqua) 36px 54px) border-box;background-size:auto,200% 100%;box-shadow:0 4px 0 var(--ink),0 0 16px rgba(232,177,42,.45);animation:solostripe 3s linear infinite}
 @keyframes solostripe{to{background-position:0 0,-108px 0}}
@@ -881,6 +887,7 @@ function render(){
   const v = $("#view");
   const t = curTrip();
   $("#tripsub").textContent = t ? t.name : "";
+  $("#gearBtn").classList.toggle("alert", ruleAlert());
   const mp = player(me);
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span>${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
   document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
@@ -934,7 +941,7 @@ function viewHome(t){
     const nn = tcount(t, r.id, "normal"), ss = tcount(t, r.id, "super");
     return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""}" style="--c:${pcolor(r.id)}">
       <div class="r">${r.rank}</div>
-      <div class="n">${r.id === me ? `<span class="mine">自分</span>` : ""}<span class="nm">${esc(pname(r.id))}</span>${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
+      <div class="n">${r.id === me ? `<span class="mine" style="background:${pcolor(me)}">自分</span>` : ""}<span class="nm">${esc(pname(r.id))}</span>${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
       <div class="tk2"><span class="tic n ${nn ? "" : "zero"}">免×${nn}</span><span class="tic s ${ss ? "" : "zero"}">S×${ss}</span></div>
       <div class="a">${yen(r.paid)}</div>
       <div class="m"><span>標準との差 <b class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</b></span><span>支払 ${r.wins}/${r.joins}回</span><span>運転 ${r.drives}回</span></div>
@@ -1117,7 +1124,7 @@ function openSettings(){
     <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
     <button data-m="thr">免除券使用確認の基準額<span>${yen(threshold())}以上</span></button>
     <button data-m="ntf">通知<span>受け取り・時刻の設定</span></button>
-    <button data-m="rule">実施要綱<span>確認</span></button>
+    <button data-m="rule">実施要綱${ruleAlert() ? `<i class="bang">!</i>` : ""}<span>確認</span></button>
   </div>`);
   s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, rule: openRules, ntf: openNotify })[b.dataset.m]());
 }
@@ -1445,7 +1452,8 @@ function drawArena(){
     bar = `${p5 && j.participants.includes(p5.player_id) && (p5.uses || 0) < 6 ? `<button class="btn" id="aForce">特権五</button>` : ""}<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
   } else if (phase === "conflict"){
     const c = (j.conflict && j.conflict.cands) || [];
-    hint = `<span class="dup"><b>重複！</b>じゃんけんの勝者をタップ</span>`;
+    const cp1 = j.conflict && j.conflict.p1u;
+    hint = `<span class="h2l"><span class="dup"><b>重複！</b>じゃんけんの勝者をタップ</span>${cp1 && c.some(u => u.pid === cp1.pid) ? `<span style="font-size:12px">特権一：${esc(pname(cp1.pid))}は負けても使えます</span>` : ""}</span>`;
     cards = c.map(u => `<button class="fighter" data-win="${u.pid}|${u.kind}" style="--c:${pcolor(u.pid)}"><i class="gem"></i><div class="fn">${esc(pname(u.pid))}</div><div class="dstat ok">${u.kind === "super" ? "super免除券" : "免除券"}</div><div class="st">勝ったらタップ</div></button>`).join("");
     bar = `<button class="btn ghost" id="aMin">閉じる</button><button class="btn danger" id="aStop">中止</button>`;
   } else {
@@ -1562,16 +1570,23 @@ async function reveal(id){
   const j = data[0]; Object.assign(jById(id) || {}, j);
   const t = tripOfJ(j), p1 = privOf(t, 1);
   const users = Object.entries(j.declare).filter(([, k]) => k && k !== "none").map(([pid, kind]) => ({ pid, kind }));
-  const free = users.filter(u => p1 && u.pid === p1.player_id);
-  const rest = users.filter(u => !(p1 && u.pid === p1.player_id));
-  let cands = rest.some(u => u.kind === "super") ? rest.filter(u => u.kind === "super") : rest;
-  if (cands.length > 1){ await patchJanken(jById(id), { phase: "conflict", conflict: { cands, free } }); return; }
-  const blocked = rest.filter(u => !cands.includes(u));
-  await applyTickets(jById(id), [...free, ...cands], blocked.length ? `superが優先のため、${blocked.map(u => pname(u.pid)).join("・")}の免除券は使えません（券は手元に残ります）` : "");
+  // 重なったら：superが優先。同じ種類どうしはじゃんけんで1人。
+  // 特権一の持ち主がじゃんけんに勝てば持ち主だけ、負けても持ち主は使える（勝者と両方）。
+  const p1u = p1 ? users.find(u => u.pid === p1.player_id) || null : null;
+  const cands = users.some(u => u.kind === "super") ? users.filter(u => u.kind === "super") : users;
+  if (cands.length > 1){ await patchJanken(jById(id), { phase: "conflict", conflict: { cands, p1u } }); return; }
+  await finishTickets(jById(id), users, cands[0] || null, p1u, false);
 }
 async function resolveConflict(j, winner){
-  const free = (j.conflict && j.conflict.free) || [];
-  await applyTickets(j, [...free, winner]);
+  const users = Object.entries(j.declare || {}).filter(([, k]) => k && k !== "none").map(([pid, kind]) => ({ pid, kind }));
+  await finishTickets(j, users, winner, (j.conflict && j.conflict.p1u) || null, true);
+}
+async function finishTickets(j, users, winner, p1u, hadJanken){
+  const list = winner ? [winner] : [];
+  if (p1u && !list.some(u => u.pid === p1u.pid)) list.push(p1u);
+  const blocked = users.filter(u => !list.some(x => x.pid === u.pid));
+  const why = !hadJanken ? "superが優先のため" : blocked.some(u => u.kind === "normal") && winner && winner.kind === "super" ? "superが優先・じゃんけんの結果" : "じゃんけんの結果";
+  await applyTickets(j, list, blocked.length ? `${why}、${blocked.map(u => pname(u.pid)).join("・")}の${blocked.every(u => u.kind === "super") ? "super" : "券"}は使えません（券は手元に残ります）` : "");
 }
 async function applyTickets(j, list, note){
   const t = tripOfJ(j);
@@ -1599,6 +1614,7 @@ function openManualUse(j){
     const kind = b.dataset.k;
     if (!tcount(t, pid, kind)){ toast("その券を持っていません"); return; }
     const others = (j.tickets_used || []).filter(u => !(p1 && u.pid === p1.player_id));
+    if (kind === "normal" && p1 && (j.tickets_used || []).some(u => u.pid === p1.player_id && u.kind === "super") && pid !== p1.player_id){ toast("特権一の持ち主がsuperを使っているため、免除券は使えません", 3000); return; }
     if (others.length && !(p1 && pid === p1.player_id)){ toast(others.some(u => u.kind === "super") ? "superが使われているため、免除券は使えません" : "免除券等の同時使用はできません（第十三条）", 3000); return; }
     closeSheet(); await applyTickets(jById(j.id), [{ pid, kind }]);
   });
@@ -2605,6 +2621,7 @@ function parseRules(){
 }
 const hostId = () => setting("host_player") || (db.players.find(p => p.name === "ごめ") || db.players.find(p => p.name.includes("ごめ")) || {}).id || null;
 const ruleEditors = () => setting("rule_editors") || {};
+const ruleAlert = () => { try { return !!me && me === hostId() && Object.keys(setting("rule_requests") || {}).length > 0; } catch (e) { return false; } };
 const canEditRules = () => !!me && (me === hostId() || (ruleEditors()[me] && new Date(ruleEditors()[me]) > new Date()));
 function openRules(){
   const host = hostId(), isHost = !!me && me === host;
