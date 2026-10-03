@@ -629,6 +629,12 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .hscroll.multi>.card{flex:0 0 86%;scroll-snap-align:center;margin:0}
 .tcount{margin-left:8px;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:2px 8px;border-radius:99px;border:1.5px solid var(--line)}
 /* ===== フィードバック3 ===== */
+.sharebtn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--mute);border:1.5px solid var(--line)}
+.sharebtn svg{width:15px;height:15px}
+.sharebtn:active{background:var(--paper)}
+header{gap:8px}
+.me{max-width:112px}
+.me span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mapinfo{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
 .mapnote{font-size:10.5px;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis}
 .gear{position:relative}
@@ -1127,8 +1133,9 @@ function openSettings(){
     <button data-m="thr">免除券使用確認の基準額<span>${yen(threshold())}以上</span></button>
     <button data-m="ntf">通知<span>受け取り・時刻の設定</span></button>
     <button data-m="rule">実施要綱${ruleAlert() ? `<i class="bang">!</i>` : ""}<span>確認</span></button>
+    <button data-m="share">リンクの共有<span>仲間に送る</span></button>
   </div>`);
-  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, rule: openRules, ntf: openNotify })[b.dataset.m]());
+  s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, rule: openRules, ntf: openNotify, share: shareLink })[b.dataset.m]());
 }
 
 function openPlayers(){
@@ -2679,6 +2686,17 @@ document.addEventListener("click", e => { const b = e.target.closest && e.target
 /* ---------- 起動 ---------- */
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
 $("#gearBtn").onclick = openSettings;
+async function shareLink(){
+  const url = location.origin + location.pathname;
+  const data = { title: "男気じゃんけん旅", text: "男気じゃんけん旅のアプリはこちら", url };
+  try {
+    if (navigator.share){ await navigator.share(data); return; }
+    await navigator.clipboard.writeText(url); toast("リンクをコピーしました");
+  } catch (e) {
+    if (e && e.name === "AbortError") return;
+    try { await navigator.clipboard.writeText(url); toast("リンクをコピーしました"); } catch (_) { prompt("このリンクを共有してください", url); }
+  }
+}
 $("#meBtn").onclick = openMe;
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
