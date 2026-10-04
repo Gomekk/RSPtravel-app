@@ -728,6 +728,91 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nseat .grip{font-style:normal;font-size:10px;color:var(--mute);letter-spacing:-2px;margin-left:2px}
 .nseat.drag{z-index:5;box-shadow:0 8px 18px rgba(27,24,56,.25);border-color:var(--ink)}
 .nseat.over{outline:3px dashed var(--ink);outline-offset:2px}
+/* ===== NEU 1画面レイアウト ===== */
+.arena.neu{height:100dvh;overflow:hidden;gap:8px;padding:calc(var(--safe-t) + 8px) 12px calc(var(--safe-b) + 10px);
+  background:repeating-conic-gradient(from 0deg at 50% 42%,rgba(139,108,255,.07) 0 6deg,transparent 6deg 12deg,rgba(31,179,191,.07) 12deg 18deg,transparent 18deg 24deg),radial-gradient(circle at 50% 38%,rgba(139,108,255,.22),transparent 60%),linear-gradient(170deg,#FFFFFF,#ECEEF3 55%,#D2D7E2)}
+.arena.neu>*{position:relative;z-index:1}
+.nbg{position:absolute!important;inset:0;z-index:0!important;pointer-events:none;overflow:hidden}
+.nbg i{position:absolute;font-style:normal;font-size:26px;opacity:.13;animation:nfloat 9s ease-in-out infinite}
+.nbg i:nth-child(1){left:6%;top:20%;color:#1B1838}.nbg i:nth-child(2){left:84%;top:16%;color:#E2364F;animation-delay:-2s}
+.nbg i:nth-child(3){left:10%;top:62%;color:#1B1838;animation-delay:-4s}.nbg i:nth-child(4){left:88%;top:58%;color:#E2364F;animation-delay:-6s}
+.nbg i:nth-child(5){left:48%;top:8%;color:#E8B12A;opacity:.3;animation-delay:-1s}.nbg i:nth-child(6){left:30%;top:86%;color:#E2364F;animation-delay:-3s}
+.nbg i:nth-child(7){left:70%;top:84%;color:#1B1838;animation-delay:-5s}.nbg i:nth-child(8){left:52%;top:46%;color:#8B3CFF;opacity:.08;font-size:120px;animation-duration:14s}
+@keyframes nfloat{50%{transform:translateY(-18px) rotate(14deg)}}
+.ntop{display:flex;align-items:center;gap:8px;margin:0;flex:none}
+.ntop .nt{font-family:var(--disp);font-weight:400;font-size:26px;letter-spacing:.08em;background:linear-gradient(90deg,#E2364F,#8B3CFF,#1FB3BF,#E2364F);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nshine 4s linear infinite;filter:drop-shadow(0 2px 0 rgba(27,24,56,.15))}
+@keyframes nshine{to{background-position:300% 0}}
+.nrd{font-family:var(--disp);font-size:12px;padding:2px 8px;border-radius:6px;background:var(--ink);color:#fff;transform:skewX(-8deg)}
+.ndk{flex:1;font-size:11px;font-weight:900;color:var(--mute)}
+.nmini{width:32px;height:32px;border-radius:9px;border:2px solid var(--ink);background:#fff;font-weight:900;font-size:16px;line-height:1}
+.nseats2{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 2px}
+.np{position:relative;display:flex;flex-direction:column;align-items:center;min-width:62px;max-width:96px;padding:5px 6px 3px;border-radius:10px;background:#fff;border:2px solid var(--line);box-shadow:inset 0 3px 0 var(--pc)}
+.np b{font-size:11.5px;font-weight:900;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np .nc{font-size:10px;letter-spacing:1px;line-height:1.1}
+.np .nc i{font-style:normal;color:#D3D8E3}.np .nc i.on{color:#E8B12A;text-shadow:0 0 1px #1B1838}
+.np small{font-size:9.5px;color:var(--mute);font-weight:900}
+.np .tg{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;font-weight:900;padding:0 5px;border-radius:5px;background:var(--pc);color:#fff;white-space:nowrap}
+.np .tg.dl{left:auto;right:-4px;transform:none;background:var(--ink)}
+.np .tg.now{background:var(--crimson)}
+.np.on{border-color:var(--ink);background:color-mix(in srgb,var(--pc) 24%,#fff);transform:scale(1.08);animation:npon 1.2s ease-in-out infinite}
+@keyframes npon{50%{box-shadow:inset 0 3px 0 var(--pc),0 0 18px color-mix(in srgb,var(--pc) 80%,transparent)}}
+.np.nx{border-color:var(--pc)}
+.np.out{opacity:.4;filter:grayscale(1);transform:scale(.9)}
+.nar{font-family:var(--disp);font-size:18px;color:var(--mute);animation:narrow 1s ease-in-out infinite}
+.nar.ccw{transform:scaleX(-1)}
+@keyframes narrow{50%{opacity:.35}}
+.nstage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;gap:10px}
+.ngauge{position:relative;height:min(100%,38vh,240px);aspect-ratio:1/1;display:grid;place-items:center}
+.ngauge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ngauge .trk{fill:#fff;stroke:#E6E8EE;stroke-width:12}
+.ngauge .bar{fill:none;stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.2,1.2,.4,1),stroke .3s;filter:drop-shadow(0 0 6px currentColor)}
+.ngauge .dash{fill:none;stroke:#1B1838;stroke-width:2;stroke-dasharray:3 9;opacity:.35;transform-origin:80px 80px}
+.ngauge .dash.cw{animation:spin 12s linear infinite}.ngauge .dash.ccw{animation:spin 12s linear infinite reverse}
+.ngauge .nv{position:relative;display:flex;flex-direction:column;align-items:center;line-height:1}
+.ngauge .nv small{font-size:11px;font-weight:900;color:var(--mute)}
+.ngauge .nv b{font-size:clamp(46px,11vh,84px);color:var(--ink);margin:2px 0}
+.ngauge.bump .nv b{animation:nbump .5s cubic-bezier(.2,1.8,.4,1)}
+@keyframes nbump{0%{transform:scale(1.5)}100%{transform:scale(1)}}
+.nburst{position:absolute;inset:-6%;border-radius:50%;background:var(--burst-glow-gold) center/contain no-repeat;animation:nburst .7s ease-out forwards;pointer-events:none}
+@keyframes nburst{from{transform:scale(.4) rotate(0);opacity:1}to{transform:scale(1.25) rotate(40deg);opacity:0}}
+.nstage.hot .nv b{color:#E8890C;animation:nshake .5s ease-in-out infinite}
+.nstage.max .nv b{color:var(--crimson);text-shadow:0 0 18px rgba(226,54,79,.6)}
+@keyframes nshake{25%{transform:translateX(-2px) rotate(-1deg)}75%{transform:translateX(2px) rotate(1deg)}}
+.nside{display:flex;flex-direction:column;align-items:center;gap:2px}
+.ndir{font-family:var(--disp);font-size:30px;line-height:1;color:#8B3CFF;display:inline-block}
+.ndir.cw{animation:spin 2.4s linear infinite}.ndir.ccw{animation:spin 2.4s linear infinite reverse}
+.nside>small{font-size:10px;font-weight:900;color:var(--mute)}
+.nlast2{display:flex;flex-direction:column;align-items:center;margin-top:6px}
+.nlast2 .ncard{width:54px;height:76px;border-width:2px;box-shadow:0 3px 0 var(--ink);animation:ndrop .4s cubic-bezier(.2,1.6,.4,1)}
+.nlast2 .ncard b{font-size:20px}.nlast2 .ncard small{font-size:8px}.nlast2 .ncard i{font-size:15px}.nlast2 .ncard.inst b{font-size:10px}
+.nlast2>small{font-size:10px;font-weight:900;color:var(--mute);margin-top:2px}
+@keyframes ndrop{from{transform:translateY(-30px) rotate(-20deg);opacity:0}}
+.nlogw{flex:none;margin:0;padding:4px 10px 5px}
+.nlog{max-height:46px}
+.nbottom{flex:none;display:flex;flex-direction:column;gap:6px}
+.nturn{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:5px}
+.nturn .req{font-family:var(--body);font-size:11px;font-weight:900;padding:1px 8px;border-radius:99px;background:var(--crimson);color:#fff}
+.nturn.mine span:first-child{animation:nbeat 1s ease-in-out infinite}
+@keyframes nbeat{50%{transform:scale(1.08)}}
+.nhand{margin:0;gap:8px}
+.nslot.ok{animation:nbob 2s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes nbob{50%{transform:translateY(-5px)}}
+.nslot .ncard{height:clamp(84px,13.5vh,118px);width:clamp(62px,9.6vh,84px)}
+.nslot .ncard b{font-size:clamp(24px,4vh,34px)}
+.nslot .ncard.inst b{font-size:clamp(12px,1.8vh,15px)}
+.nslot .ncard.c101 b{font-size:clamp(22px,3.6vh,30px)}
+.nslot.ok .ncard{box-shadow:0 4px 0 var(--ink),0 0 14px rgba(232,177,42,.45)}
+.nbtns{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:6px}
+.nb{position:relative;padding:11px 4px;border-radius:12px;font-weight:900;font-size:13.5px;border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink);background:#fff}
+.nb:active{transform:translateY(3px);box-shadow:none}
+.nb:disabled{opacity:.4}
+.nb small{display:block;font-size:10px;color:var(--mute)}
+.nb.end{background:var(--metal)}
+.nb.lose{color:var(--crimson);border-color:var(--crimson);box-shadow:0 3px 0 var(--crimson)}
+.nb.lose.pulse{background:var(--crimson);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+.nwait{text-align:center;font-size:12px;font-weight:900;color:var(--mute);padding:6px}
+.nover .ob{position:absolute;left:50%;top:44%;width:min(120vw,620px);height:min(120vw,620px);transform:translate(-50%,-50%);background:var(--burst-glow-gold) center/contain no-repeat;opacity:.5;animation:spinc 18s linear infinite;pointer-events:none}
+.nover>*:not(.ob){position:relative}
 /* ===== フィードバック3 ===== */
 .sharebtn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--mute);border:1.5px solid var(--line)}
 .sharebtn svg{width:15px;height:15px}
@@ -2997,8 +3082,9 @@ function openNeuNew(){
 
 /* ---------- 対戦画面 ---------- */
 let neuId = null, neuSel = null;
-function openNeu(id){ neuId = id; neuSel = null; $("#neu").hidden = false; document.body.style.overflow = "hidden"; drawNeu(); }
+function openNeu(id){ neuId = id; neuSel = null; neuPrevTotal = null; $("#neu").hidden = false; document.body.style.overflow = "hidden"; drawNeu(); }
 function closeNeu(){ neuId = null; $("#neu").hidden = true; document.body.style.overflow = ""; render(); }
+let neuPrevTotal = null;
 function drawNeu(){
   if (!neuId) return;
   const g = neuById(neuId); if (!g) return closeNeu();
@@ -3006,57 +3092,63 @@ function drawNeu(){
   const myTurn = g.status === "playing" && t.pid === me;
   const deckN = (g.deck || []).length, canDraw = myTurn && t.drawn < t.played && (deckN + (g.discard || []).length) > 0;
   const last = (g.discard || [])[(g.discard || []).length - 1];
-  const nextP = g.status === "playing" && t.pid ? (t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, t.pid, g.dir)) : null;
-  // 今の人から、回る順に並べる
-  const ring = []; if (g.status === "playing" && t.pid){ let p = t.pid; const n = neuAlive(g).length; for (let k = 0; k < n; k++){ ring.push(p); p = neuNext(g, p, g.dir); } }
-  const orderStrip = ring.length ? `<div class="nring"><span class="nrl">${g.dir === 1 ? "↻ 時計回り" : "↺ 逆回り"}</span>${ring.map((p, k) => `<span class="nrp ${k === 0 ? "now" : k === 1 ? "nx" : ""}" style="--pc:${pcolor(p)}">${k === 0 ? "<em>今</em>" : k === 1 ? "<em>次</em>" : ""}${esc(pname(p))}</span>`).join(`<i class="nra">→</i>`)}<i class="nra">→</i><span class="nrp loop" style="--pc:${pcolor(ring[0])}">${esc(pname(ring[0]))}</span></div>${t.shot ? `<p class="note" style="margin:4px 0 0;text-align:center">SHOTで${esc(pname(t.shot))}が指名されています</p>` : ""}` : "";
-  const seats = g.players.map((p, si) => {
-    const c = g.chips[p] || 0, out = c <= 0, on = g.status === "playing" && t.pid === p;
-    return `<div class="nseat2 ${on ? "on" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">
-      <span class="seatno">${si + 1}</span>${p === g.dealer ? `<em class="dealer">親</em>` : ""}${p === nextP ? `<em class="nxb">次</em>` : ""}<b>${esc(pname(p))}</b>
-      <span class="nchips">${out ? "脱落" : "●".repeat(c) + `<i>${"●".repeat(Math.max(0, 3 - c))}</i>`}</span>
-      <small>${out ? "" : `手札${(g.hands[p] || []).length}枚`}${on && t.need === 2 ? "・2回" : ""}</small></div>`;
-  }).join("");
-  let center = `<div class="ntotal ${g.total >= 90 ? "hot" : ""} ${g.total === NEU_LIMIT ? "max" : ""}"><small>合計</small><b class="num" id="ntot">${g.total}</b><small>／101</small></div>
-    <div class="nmeta"><span>山札 ${deckN}枚</span>${last ? `<span class="nlast">直前：${neuCardHtml(last, 'data-mini="1"')}</span>` : ""}</div>`;
-  let me2 = "";
+  const playing = g.status === "playing" && t.pid;
+  const nextP = playing ? (t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, t.pid, g.dir)) : null;
+  // 回る順に並べた席（今の人が先頭）。脱落者は最後にグレーで
+  const ring = []; if (playing){ let p = t.pid; const n = neuAlive(g).length; for (let k = 0; k < n; k++){ ring.push(p); p = neuNext(g, p, g.dir); } }
+  else ring.push(...neuAlive(g));
+  const outs = g.players.filter(p => (g.chips[p] || 0) <= 0);
+  const pill = (p, k) => {
+    const c = g.chips[p] || 0, out = c <= 0, on = playing && t.pid === p;
+    return `<div class="np ${on ? "on" : ""} ${p === nextP ? "nx" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">
+      ${on ? `<em class="tg now">今</em>` : p === nextP ? `<em class="tg">次</em>` : ""}${p === g.dealer ? `<em class="tg dl">親</em>` : ""}
+      <b>${esc(pname(p))}</b><span class="nc">${out ? "脱落" : `<i class="on">${"●".repeat(c)}</i><i>${"●".repeat(Math.max(0, 3 - c))}</i>`}</span>${out ? "" : `<small>${(g.hands[p] || []).length}枚</small>`}</div>`;
+  };
+  const seats = ring.map(pill).join(`<span class="nar">›</span>`) + outs.map(pill).join("");
+  // 合計のゲージ
+  const pct = Math.max(0, Math.min(1, g.total / NEU_LIMIT)), C = 2 * Math.PI * 62;
+  const gcol = g.total >= NEU_LIMIT ? "#E2364F" : g.total >= 90 ? "#FF8A3D" : g.total >= 70 ? "#E8B12A" : "#1FB3BF";
+  const bump = neuPrevTotal !== null && neuPrevTotal !== g.total && neuPrevTotal !== undefined;
+  neuPrevTotal = g.total;
+  // 直近の流れ：1周分
+  const logs = g.log || [], lap = Math.max(1, neuAlive(g).length);
+  let from = logs.length, ends = 0;
+  for (let k = logs.length - 1; k >= 0; k--){ const m = logs[k].m || ""; if (m.includes("のターン終了")){ if (ends >= lap) break; ends++; } from = k; if (m.includes("回戦スタート")) break; }
+  const lg = logs.slice(from).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  let bottom = "";
   if (g.status === "playing"){
-    const who = t.pid === me ? "あなたの番" : `${esc(pname(t.pid))}の番`;
-    const req = t.need === 2 ? `（2回出す：${t.played}/2）` : "";
-    me2 += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}">${who}${req}</div>`;
+    const who = t.pid === me ? "あなたの番！" : `${esc(pname(t.pid))}の番`;
+    const req = t.need === 2 ? `<span class="req">2回出す ${t.played}/2</span>` : "";
+    bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span>${req}</div>`;
     if (mine){
-      me2 += `<div class="nhand">${mine.length ? mine.map((c, i) => { const ok = myTurn && neuLegal(g, c); return `<button class="nslot ${ok ? "" : "ng"}" data-play="${i}" ${ok ? "" : "disabled"}>${neuCardHtml(c)}</button>`; }).join("") : `<p class="note">手札がありません</p>`}</div>`;
+      bottom += `<div class="nhand">${mine.length ? mine.map((c, i) => { const ok = myTurn && neuLegal(g, c); return `<button class="nslot ${ok ? "ok" : "ng"}" style="--d:${i * .25}s" data-play="${i}" ${ok ? "" : "disabled"}>${neuCardHtml(c)}</button>`; }).join("") : `<p class="note">手札がありません</p>`}</div>`;
       if (myTurn){
         const any = mine.some(c => neuLegal(g, c));
-        me2 += `<div class="nbtns"><button class="btn ghost" id="nDraw" ${canDraw ? "" : "disabled"}>山札から引く${t.played ? `（${t.drawn}/${t.played}）` : ""}</button><button class="btn" id="nEnd" ${t.done ? "" : "disabled"}>ターン終了</button></div>
-          <button class="nlose ${!any && !t.done ? "pulse" : ""}" id="nLose">負けを宣言する</button>`;
-        if (!any && !t.done) me2 += `<p class="note" style="text-align:center;margin:6px 0 0">出せるカードがありません</p>`;
-      }
-    } else me2 += `<p class="note" style="text-align:center">観戦中です（この対戦に参加していません）</p>`;
+        bottom += `<div class="nbtns"><button class="nb draw" id="nDraw" ${canDraw ? "" : "disabled"}>引く${t.played ? `<small>${t.drawn}/${t.played}</small>` : ""}</button><button class="nb end" id="nEnd" ${t.done ? "" : "disabled"}>ターン終了</button><button class="nb lose ${!any && !t.done ? "pulse" : ""}" id="nLose">負け宣言</button></div>`;
+      } else bottom += `<div class="nwait">ほかの人の番です。スマホを置いて待とう</div>`;
+    } else bottom += `<div class="nwait">観戦中（この対戦に参加していません）</div>`;
   }
   let over = "";
   if (g.status === "round_over" || g.status === "finished"){
     const fin = g.status === "finished";
-    over = `<div class="nover" style="--c:${pcolor(fin ? g.winner : g.loser)}"><div class="k">${fin ? "優勝" : `第${g.round}回戦 終了`}</div>
+    over = `<div class="nover" style="--c:${pcolor(fin ? g.winner : g.loser)}"><span class="ob"></span><div class="k">${fin ? "優勝" : `第${g.round}回戦 終了`}</div>
       <div class="p">${esc(pname(fin ? g.winner : g.loser))}</div>
       <div class="y">${fin ? "最後まで生き残った！" : `チップを1枚失った${(g.chips[g.loser] || 0) <= 0 ? "…脱落" : `（残り${g.chips[g.loser]}枚）`}`}</div>
       <div class="btns">${fin ? `<button class="btn" id="nClose2">閉じる</button>` : `<button class="btn" id="nNext">次の回戦へ</button>`}</div></div>`;
   }
-  // 直近の流れ：今の人までの1周分（生き残っている人数分のターン）だけ表示
-  const logs = g.log || [], lap = Math.max(1, neuAlive(g).length);
-  let from = logs.length, ends = 0;
-  for (let k = logs.length - 1; k >= 0; k--){
-    const m = logs[k].m || "";
-    if (m.includes("のターン終了")){ if (ends >= lap) break; ends++; }
-    from = k;
-    if (m.includes("回戦スタート")) break;
-  }
-  const lg = logs.slice(from).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
-  el.innerHTML = `<div class="ntop"><b class="nt">NEU</b><span>第${g.round}回戦</span><button class="mini" id="nMenu">…</button><button class="mini" id="nClose">閉じる</button></div>
-    <div class="nseats">${seats}</div>${orderStrip}
-    <div class="ncenter">${center}</div>
+  el.innerHTML = `<div class="nbg" aria-hidden="true"><i>♠</i><i>♦</i><i>♣</i><i>♥</i><i>★</i><i>♦</i><i>♠</i><i>♥</i></div>
+    <div class="ntop"><b class="nt">NEU</b><span class="nrd">ROUND ${g.round}</span><span class="ndk">山札 ${deckN}</span><button class="nmini" id="nMenu" aria-label="メニュー">…</button><button class="nmini" id="nClose" aria-label="閉じる">×</button></div>
+    <div class="nseats2">${seats}</div>
+    <div class="nstage ${g.total >= 90 ? "hot" : ""} ${g.total >= NEU_LIMIT ? "max" : ""}">
+      <div class="ngauge ${bump ? "bump" : ""}">
+        <svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="74" class="dash ${g.dir === 1 ? "cw" : "ccw"}"/><circle cx="80" cy="80" r="62" class="trk"/><circle cx="80" cy="80" r="62" class="bar" style="stroke:${gcol};stroke-dasharray:${C};stroke-dashoffset:${C * (1 - pct)}"/></svg>
+        <div class="nv"><small>合計</small><b class="num" id="ntot">${g.total}</b><small>/ 101</small></div>
+        ${bump ? `<span class="nburst"></span>` : ""}
+      </div>
+      <div class="nside"><span class="ndir ${g.dir === 1 ? "cw" : "ccw"}">${g.dir === 1 ? "↻" : "↺"}</span><small>${g.dir === 1 ? "時計回り" : "逆回り"}</small>${last ? `<div class="nlast2">${neuCardHtml(last)}<small>直前</small></div>` : ""}</div>
+    </div>
     <div class="nlogw"><div class="nlogh">直近の流れ<small>1周分</small></div><ul class="nlog">${lg}</ul></div>
-    <div class="nmine">${me2}</div>${over}`;
+    <div class="nbottom">${bottom}</div>${over}`;
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   on("nClose", closeNeu); on("nClose2", closeNeu); on("nMenu", () => neuMenu(g));
   on("nDraw", () => neuDraw(g)); on("nEnd", () => neuEnd(g)); on("nLose", () => neuLose(g)); on("nNext", () => neuNextRound(g));
