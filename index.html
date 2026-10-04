@@ -630,6 +630,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .tcount{margin-left:8px;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:2px 8px;border-radius:99px;border:1.5px solid var(--line)}
 /* ===== NEU ===== */
 .neuico{position:relative}
+.neuico:disabled{filter:grayscale(1);opacity:.35;animation:none;cursor:not-allowed}
 .neuico .gdot{position:absolute;top:0;right:0;width:10px;height:10px;border-radius:50%;background:#8B3CFF;border:2px solid #fff;animation:bangpulse 1.2s ease-in-out infinite}
 .glist{display:flex;flex-direction:column;gap:10px}
 .gcard{display:grid;grid-template-columns:56px 1fr;grid-template-rows:auto auto;gap:6px 12px;align-items:center;padding:12px;border-radius:14px;background:#fff;border:2px solid var(--ink)}
@@ -700,7 +701,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nslot{padding:0;border:0;background:none;transition:transform .12s}
 .nslot:active{transform:translateY(-6px) scale(1.04)}
 .nslot.ng{opacity:.4;filter:grayscale(.6)}
-.ncard{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:84px;height:118px;border-radius:12px;border:2.5px solid var(--ink);background:#fff;box-shadow:0 4px 0 var(--ink);overflow:hidden}
+.ncard{container-type:inline-size;position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:84px;height:118px;border-radius:12px;border:2.5px solid var(--ink);background:#fff;box-shadow:0 4px 0 var(--ink);overflow:hidden}
 .ncard::before{content:"";position:absolute;inset:5px;border-radius:8px;border:1.5px dashed rgba(27,24,56,.18)}
 .ncard b{font-family:var(--disp);font-weight:400;font-size:34px;line-height:1.05}
 .ncard small{font-size:10.5px;font-weight:900;color:var(--mute)}
@@ -710,7 +711,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .ncard.c101{background:var(--metal)}.ncard.c101 b{font-size:30px}.ncard.c101 small{color:var(--ink)}
 .ncard.inst{background:linear-gradient(170deg,#EFE8FF,#fff)}
 .ncard.inst i{font-style:normal;font-family:var(--disp);font-size:24px;line-height:1;color:#6B3CE0}
-.ncard.inst b{font-size:15px;letter-spacing:.04em}
+.ncard.inst b{font-size:15cqw;letter-spacing:0;white-space:nowrap}
+.ncard.i-double b{font-size:12.5cqw}
 .ncard.i-double i{color:var(--crimson)}.ncard.i-shot i{color:#E8890C}.ncard.i-turn i{color:#108C96}
 .nbtns{display:flex;gap:10px}
 .nbtns .btn{flex:1}
@@ -784,7 +786,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nside>small{font-size:10px;font-weight:900;color:var(--mute)}
 .nlast2{display:flex;flex-direction:column;align-items:center;margin-top:6px}
 .nlast2 .ncard{width:54px;height:76px;border-width:2px;box-shadow:0 3px 0 var(--ink);animation:ndrop .4s cubic-bezier(.2,1.6,.4,1)}
-.nlast2 .ncard b{font-size:20px}.nlast2 .ncard small{font-size:8px}.nlast2 .ncard i{font-size:15px}.nlast2 .ncard.inst b{font-size:10px}
+.nlast2 .ncard b{font-size:20px}.nlast2 .ncard small{font-size:8px}.nlast2 .ncard i{font-size:15px}.nlast2 .ncard.inst b{font-size:15cqw}.nlast2 .ncard.i-double b{font-size:12.5cqw}
 .nlast2>small{font-size:10px;font-weight:900;color:var(--mute);margin-top:2px}
 @keyframes ndrop{from{transform:translateY(-30px) rotate(-20deg);opacity:0}}
 .nlogw{flex:none;margin:0;padding:4px 10px 5px}
@@ -799,7 +801,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 @keyframes nbob{50%{transform:translateY(-5px)}}
 .nslot .ncard{height:clamp(84px,13.5vh,118px);width:clamp(62px,9.6vh,84px)}
 .nslot .ncard b{font-size:clamp(24px,4vh,34px)}
-.nslot .ncard.inst b{font-size:clamp(12px,1.8vh,15px)}
+.nslot .ncard.inst b{font-size:15cqw}
+.nslot .ncard.i-double b{font-size:12.5cqw}
 .nslot .ncard.c101 b{font-size:clamp(22px,3.6vh,30px)}
 .nslot.ok .ncard{box-shadow:0 4px 0 var(--ink),0 0 14px rgba(232,177,42,.45)}
 .nbtns{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:6px}
@@ -813,6 +816,49 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nwait{text-align:center;font-size:12px;font-weight:900;color:var(--mute);padding:6px}
 .nover .ob{position:absolute;left:50%;top:44%;width:min(120vw,620px);height:min(120vw,620px);transform:translate(-50%,-50%);background:var(--burst-glow-gold) center/contain no-repeat;opacity:.5;animation:spinc 18s linear infinite;pointer-events:none}
 .nover>*:not(.ob){position:relative}
+/* ===== NEU 固有演出 ===== */
+.neufx{position:fixed!important;inset:0;z-index:45!important;display:grid;place-items:center;pointer-events:none;overflow:hidden}
+.neufx .fxw{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px}
+.neufx .fxt{font-family:var(--disp);font-size:64px;line-height:1;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill}
+.neufx small{font-weight:900;font-size:15px;padding:2px 12px;border-radius:99px;background:#fff;border:2px solid var(--ink)}
+.fx-pass{background:linear-gradient(90deg,transparent,rgba(31,179,191,.25),transparent);animation:fxfade 1.5s forwards}
+.fx-pass .fxt{color:#1FB3BF;animation:fxslide 1.5s cubic-bezier(.2,.9,.3,1) forwards}
+.fx-pass .fxa{font-family:var(--disp);font-size:34px;color:#1FB3BF;letter-spacing:-4px;animation:fxslide 1.5s .08s cubic-bezier(.2,.9,.3,1) forwards}
+@keyframes fxslide{0%{transform:translateX(-120vw)}35%,65%{transform:translateX(0)}100%{transform:translateX(120vw)}}
+.fx-turn{background:radial-gradient(circle,rgba(139,108,255,.28),transparent 65%);animation:fxfade 1.5s forwards}
+.fx-turn .fxr{font-family:var(--disp);font-size:150px;line-height:1;color:#8B3CFF;animation:fxspin 1.2s cubic-bezier(.3,1.4,.5,1) forwards;filter:drop-shadow(0 0 16px rgba(139,108,255,.8))}
+.fx-turn .fxt{color:#fff;font-size:46px;margin-top:-30px;animation:slam .45s .2s cubic-bezier(.2,1.6,.4,1) both;-webkit-text-stroke-color:#5B2EC9}
+@keyframes fxspin{from{transform:rotate(-540deg) scale(.2)}to{transform:rotate(0) scale(1)}}
+.fx-shot{animation:fxfade 1.7s forwards}
+.fx-shot .fxc{position:relative;width:170px;height:170px;animation:fxaim 1s cubic-bezier(.3,1.3,.5,1) forwards}
+.fx-shot .fxc i{position:absolute;inset:0;border-radius:50%;border:4px solid #E8890C}
+.fx-shot .fxc i:nth-child(2){inset:30%;border-color:#E2364F}
+.fx-shot .fxc i:nth-child(3){inset:-10%;border:none;background:linear-gradient(#E8890C,#E8890C) 50% 0/4px 100% no-repeat,linear-gradient(#E8890C,#E8890C) 0 50%/100% 4px no-repeat}
+.fx-shot .fxt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#FF8A3D;font-size:52px;animation:slam .4s .6s cubic-bezier(.2,1.6,.4,1) both}
+.fx-shot b{position:absolute;top:calc(50% + 60px);left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--disp);font-weight:400;font-size:26px;color:var(--pc);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;animation:fadein .3s .8s both}
+@keyframes fxaim{0%{transform:scale(3) rotate(90deg);opacity:0}60%{transform:scale(.9) rotate(0);opacity:1}100%{transform:scale(1)}}
+.fx-double{background:radial-gradient(circle,rgba(226,54,79,.22),transparent 65%);animation:fxfade 1.5s forwards}
+.fx-double .fxt{position:absolute;color:#E2364F;font-size:110px}
+.fx-double .e1{animation:fxdbl1 1s cubic-bezier(.2,1.6,.4,1) both}
+.fx-double .e2{opacity:.45;animation:fxdbl2 1s .12s ease-out both}
+.fx-double .fxs{font-family:var(--disp);font-size:36px;color:#fff;-webkit-text-stroke:2px #E2364F;paint-order:stroke fill;margin-top:130px;animation:slam .4s .3s cubic-bezier(.2,1.6,.4,1) both}
+.fx-double small{animation:fadein .3s .5s both}
+@keyframes fxdbl1{0%{transform:scale(3);opacity:0}50%{transform:scale(.9);opacity:1}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes fxdbl2{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+.fx-101{background:radial-gradient(circle,rgba(255,227,138,.9),rgba(232,177,42,.35) 40%,transparent 70%);animation:fxfade 1.9s forwards}
+.fx-101 .fxboom{position:absolute;left:50%;top:50%;width:150vmin;height:150vmin;transform:translate(-50%,-50%);background:var(--burst-glow-red) center/contain no-repeat;animation:fxboom 1.6s ease-out forwards}
+.fx-101 .fxt{position:relative;font-size:96px;background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:3px var(--ink);filter:drop-shadow(0 0 22px rgba(226,54,79,.8));animation:fx101 1s cubic-bezier(.2,1.8,.4,1) both}
+.fx-101 small{position:relative;animation:fadein .3s .4s both}
+@keyframes fxboom{0%{transform:translate(-50%,-50%) scale(.1) rotate(0);opacity:1}100%{transform:translate(-50%,-50%) scale(1.2) rotate(60deg);opacity:0}}
+@keyframes fx101{0%{transform:scale(4) rotate(-20deg);opacity:0}60%{transform:scale(.85) rotate(4deg);opacity:1}100%{transform:scale(1)}}
+.arena.neu.quake{animation:quake .6s}
+@keyframes quake{10%,50%,90%{transform:translate(-6px,3px)}30%,70%{transform:translate(6px,-3px)}}
+.fx-minus{background:radial-gradient(circle,rgba(31,179,191,.25),transparent 60%);animation:fxfade 1.2s forwards}
+.fx-minus .fxt{color:#9BF1F4;-webkit-text-stroke-color:#108C96;animation:fxdrop .9s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes fxdrop{from{transform:translateY(-60px);opacity:0}}
+.fx-50 .fxt{color:#F5C842;font-size:84px;animation:fx101 .8s cubic-bezier(.2,1.8,.4,1) both}
+.fx-50{animation:fxfade 1.3s forwards}
+@keyframes fxfade{0%,75%{opacity:1}100%{opacity:0}}
 /* ===== フィードバック3 ===== */
 .sharebtn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--mute);border:1.5px solid var(--line)}
 .sharebtn svg{width:15px;height:15px}
@@ -844,6 +890,7 @@ header{gap:8px}
 .hostc{box-shadow:inset 6px 0 0 var(--gold)}
 .hostc .hc{font-family:var(--disp);font-weight:400}
 .rtx{width:100%;font-size:15px;line-height:1.6;padding:10px;border:2px solid var(--line);border-radius:10px;min-height:50vh}
+.mini.danger-mini{color:var(--crimson);border-color:var(--crimson);margin-right:4px}
 .dbtns .cnt{display:block;font-size:11px;font-weight:700;opacity:.9}
 .lcount{margin-left:8px;font-size:12px;font-weight:900;color:var(--mute)}
 .row .q.qt{display:flex;flex-direction:column;align-items:center;line-height:1.15}
@@ -936,7 +983,7 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 <nav id="tabs">
   <button data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>ホーム</button>
   <button data-tab="tickets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 0 0 4v4h18v-4a2 2 0 0 1 0-4V4H3z" transform="translate(0 2)"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>免除・特権</button>
-  <button data-tab="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>支払い</button>
+  <button data-tab="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9.5 6h11M9.5 12h11M9.5 18h11"/><circle cx="4.5" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg>支払い</button>
   <button data-tab="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>集計</button>
   <button data-tab="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>ヒストリー</button>
 </nav>
@@ -1088,6 +1135,8 @@ function render(){
   $("#tripsub").textContent = t ? t.name : "";
   $("#gearBtn").classList.toggle("alert", ruleAlert());
   $("#neuIco").hidden = !loaded || !db.players.length;
+  $("#neuIco").disabled = !player(me);
+  $("#neuIco").title = player(me) ? "ゲーム一覧" : "自分を選ぶと遊べます";
   $("#neuIco .gdot").hidden = !neuActive();
   const mp = player(me);
   const nlen = mp ? [...mp.name].length : 0, nfs = nlen <= 4 ? 12 : nlen <= 5 ? 11 : nlen <= 6 ? 10 : nlen <= 8 ? 9 : 8;
@@ -2887,7 +2936,7 @@ function openRules(){
   const host = hostId(), isHost = !!me && me === host;
   const req = setting("rule_requests") || {}, eds = ruleEditors(), now = new Date();
   const mgr = isHost ? `<div class="card hostc"><b class="hc">オーナー：編集権限の管理</b><p class="note" style="margin:2px 0 8px">付与すると1時間だけ編集できます。</p>
-    ${db.players.filter(p => p.id !== host).map(p => { const until = eds[p.id] && new Date(eds[p.id]) > now ? new Date(eds[p.id]) : null; return `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}${req[p.id] ? ` <span class="tic n">リクエスト中</span>` : ""}</b>${until ? `<small class="note" style="margin:0">${until.getMonth() + 1}/${until.getDate()} ${String(until.getHours()).padStart(2, "0")}:${String(until.getMinutes()).padStart(2, "0")}まで</small><button class="mini" data-revoke="${p.id}">取り消す</button>` : `<button class="mini" data-grant="${p.id}">権限を付与</button>`}</div>`; }).join("")}</div>` : "";
+    ${db.players.filter(p => p.id !== host).map(p => { const until = eds[p.id] && new Date(eds[p.id]) > now ? new Date(eds[p.id]) : null; return `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}${req[p.id] ? ` <span class="tic n">リクエスト中</span>` : ""}</b>${until ? `<small class="note" style="margin:0">${String(until.getHours()).padStart(2, "0")}:${String(until.getMinutes()).padStart(2, "0")}まで</small><button class="mini danger-mini" data-revoke="${p.id}">権限を終了</button>` : `${req[p.id] ? `<button class="mini danger-mini" data-reject="${p.id}">拒否</button>` : ""}<button class="mini" data-grant="${p.id}">${req[p.id] ? "許可" : "権限を付与"}</button>`}</div>`; }).join("")}</div>` : "";
   const s = openSheet("実施要綱", `<div class="btns" style="margin:-4px 0 10px"><button class="btn ghost" data-back>← 戻る</button><button class="btn" id="redit">編集</button></div>${mgr}<div class="rules">${parseRules().html}</div><div class="btns"><button class="btn ghost" data-back>戻る</button></div>`, true);
   s.querySelectorAll("[data-back]").forEach(b => b.onclick = openSettings);
   $("#redit").onclick = () => {
@@ -2908,8 +2957,16 @@ function openRules(){
     }
   });
   s.querySelectorAll("[data-revoke]").forEach(b => b.onclick = async () => {
-    const e = { ...ruleEditors() }; delete e[b.dataset.revoke];
-    if (await putSetting("rule_editors", e)){ await loadTable("app_settings"); openRules(); }
+    const pid = b.dataset.revoke;
+    if (!confirm(`${pname(pid)}の編集権限を今すぐ終了しますか？`)) return;
+    const e = { ...ruleEditors() }; delete e[pid];
+    if (await putSetting("rule_editors", e)){ await loadTable("app_settings"); pushCall({ type: "rule_end", to: pid }); toast(`${pname(pid)}の編集権限を終了しました`); openRules(); }
+  });
+  s.querySelectorAll("[data-reject]").forEach(b => b.onclick = async () => {
+    const pid = b.dataset.reject;
+    if (!confirm(`${pname(pid)}のリクエストを拒否しますか？`)) return;
+    const rq = { ...(setting("rule_requests") || {}) }; delete rq[pid];
+    if (await putSetting("rule_requests", rq)){ await loadTable("app_settings"); pushCall({ type: "rule_reject", to: pid }); toast(`${pname(pid)}のリクエストを拒否しました`); openRules(); }
   });
 }
 function openRulesEdit(){
@@ -3084,7 +3141,7 @@ function openNeuNew(){
 let neuId = null, neuSel = null;
 function openNeu(id){ neuId = id; neuSel = null; neuPrevTotal = null; $("#neu").hidden = false; document.body.style.overflow = "hidden"; drawNeu(); }
 function closeNeu(){ neuId = null; $("#neu").hidden = true; document.body.style.overflow = ""; render(); }
-let neuPrevTotal = null;
+let neuPrevTotal = null, neuPrevDisc = null, neuPrevGame = null;
 function drawNeu(){
   if (!neuId) return;
   const g = neuById(neuId); if (!g) return closeNeu();
@@ -3109,6 +3166,9 @@ function drawNeu(){
   const pct = Math.max(0, Math.min(1, g.total / NEU_LIMIT)), C = 2 * Math.PI * 62;
   const gcol = g.total >= NEU_LIMIT ? "#E2364F" : g.total >= 90 ? "#FF8A3D" : g.total >= 70 ? "#E8B12A" : "#1FB3BF";
   const bump = neuPrevTotal !== null && neuPrevTotal !== g.total && neuPrevTotal !== undefined;
+  const dl = (g.discard || []).length;
+  const fxCard = neuPrevGame === g.id && neuPrevDisc !== null && dl > neuPrevDisc ? g.discard[dl - 1] : null;
+  neuPrevDisc = dl; neuPrevGame = g.id;
   neuPrevTotal = g.total;
   // 直近の流れ：1周分
   const logs = g.log || [], lap = Math.max(1, neuAlive(g).length);
@@ -3153,6 +3213,27 @@ function drawNeu(){
   on("nClose", closeNeu); on("nClose2", closeNeu); on("nMenu", () => neuMenu(g));
   on("nDraw", () => neuDraw(g)); on("nEnd", () => neuEnd(g)); on("nLose", () => neuLose(g)); on("nNext", () => neuNextRound(g));
   el.querySelectorAll("[data-play]").forEach(b => b.onclick = () => neuPlay(g, Number(b.dataset.play)));
+  if (fxCard) neuFx(fxCard, g);
+}
+/* 特殊カード・101の固有演出（全員の画面で再生） */
+function neuFx(c, g){
+  const el = $("#neu"); if (!el) return;
+  const fx = document.createElement("div");
+  const who = (g.log || []).slice(-1)[0];
+  let html = "", cls = "", ms = 1500;
+  if (c === "PASS"){ cls = "fx-pass"; html = `<div class="fxw"><span class="fxt">PASS</span><span class="fxa">→→→</span></div>`; }
+  else if (c === "TURN"){ cls = "fx-turn"; html = `<div class="fxw"><span class="fxr">${g.dir === 1 ? "↻" : "↺"}</span><span class="fxt">TURN!</span><small>${g.dir === 1 ? "時計回りに" : "逆回りに"}</small></div>`; }
+  else if (c === "SHOT"){ const tg = g.turn && g.turn.shot; cls = "fx-shot"; html = `<div class="fxw"><span class="fxc"><i></i><i></i><i></i></span><span class="fxt">SHOT!</span>${tg ? `<b style="--pc:${pcolor(tg)}">→ ${esc(pname(tg))}</b>` : ""}</div>`; ms = 1700; }
+  else if (c === "DOUBLE"){ cls = "fx-double"; html = `<div class="fxw"><span class="fxt e1">×2</span><span class="fxt e2">×2</span><span class="fxs">DOUBLE!</span><small>次の人は2回</small></div>`; }
+  else if (c === "X101"){ cls = "fx-101"; html = `<div class="fxw"><span class="fxboom"></span><span class="fxt">101!!</span><small>一気に限界へ</small></div>`; ms = 1900; el.classList.add("quake"); setTimeout(() => el.classList.remove("quake"), 700); }
+  else if (c === "m10" || c === "m1"){ cls = "fx-minus"; html = `<div class="fxw"><span class="fxt">${c === "m10" ? "−10" : "−1"}</span><small>クールダウン</small></div>`; ms = 1200; }
+  else if (c === "n50"){ cls = "fx-50"; html = `<div class="fxw"><span class="fxt">+50</span><small>どーん！</small></div>`; ms = 1300; }
+  else return;
+  fx.className = "neufx " + cls; fx.innerHTML = html;
+  document.querySelectorAll(".neufx").forEach(x => x.remove());
+  document.body.appendChild(fx);  // 画面の描き直しで消えないよう、対戦画面の外に重ねる
+  if (navigator.vibrate) navigator.vibrate(c === "X101" ? [60, 40, 120] : 40);
+  setTimeout(() => fx.remove(), ms);
 }
 function neuMenu(g){
   const s = openSheet("NEUのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
@@ -3249,7 +3330,7 @@ async function shareLink(){
 $("#meBtn").onclick = openMe;
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
-  try { await loadAll(); render(); syncArena(); } catch (e) { console.error(e); }
+  try { await loadAll(); render(); syncArena(); drawNeu(); } catch (e) { console.error(e); }
 });
 (async () => {
   try { await loadAll(); }
