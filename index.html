@@ -874,6 +874,84 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .fx-50 .fxt{color:#F5C842;font-size:84px;animation:fx101 .8s cubic-bezier(.2,1.8,.4,1) both}
 .fx-50{animation:fxfade 1.3s forwards}
 @keyframes fxfade{0%,75%{opacity:1}100%{opacity:0}}
+/* ===== キャントストップ ===== */
+.ntop .nt.cst{font-size:22px;letter-spacing:.02em;background:linear-gradient(90deg,#1FB3BF,#E8B12A,#E2364F,#1FB3BF);background-size:300% 100%;-webkit-background-clip:text;background-clip:text}
+.gic.csi{background:radial-gradient(circle at 30% 25%,#1F5F8B,#1B1838);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(31,179,191,.55);overflow:hidden}
+.gic.csi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
+.cstars{font-size:11px;color:#E8B12A;letter-spacing:1px;text-shadow:0 0 1px #1B1838}
+.cstars i{font-style:normal;color:#D3D8E3;text-shadow:none}
+.cboard{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:repeat(11,1fr);gap:3px;align-items:end;padding:6px;border-radius:14px;background:rgba(255,255,255,.75);border:2px solid var(--ink)}
+.ccol{display:flex;flex-direction:column;align-items:stretch;height:100%;justify-content:flex-end;min-width:0}
+.cstack{position:relative;display:flex;flex-direction:column;gap:2px;flex:0 1 auto;min-height:0}
+.cc{position:relative;height:clamp(12px,calc((100dvh - 470px) / 13),24px);border-radius:4px;background:#EEF0F5;border:1px solid #D3D8E3;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1px;padding:1px}
+.cc.top{background:#FFF3C4;border-color:#E8B12A}
+.ccol.act .cc{background:#F4EEFF}
+.cc .mk{width:8px;height:8px;border-radius:50%;background:var(--pc);border:1px solid #1B1838}
+.cc .tmp{position:absolute;inset:-2px;border-radius:5px;border:3px solid var(--pc);background:color-mix(in srgb,var(--pc) 35%,transparent);box-shadow:0 0 8px var(--pc);animation:ctmp 1s ease-in-out infinite}
+@keyframes ctmp{50%{transform:scale(1.12)}}
+.ccol .cn{text-align:center;font-family:var(--disp);font-weight:400;font-size:12px;margin-top:3px}
+.ccol.won .cc{background:color-mix(in srgb,var(--oc) 55%,#fff);border-color:var(--oc)}
+.ccol.won .cc .mk{opacity:.35;filter:grayscale(1)}
+.ccol.won .cn{color:var(--oc)}
+.crown{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:13px;animation:bob 1.4s ease-in-out infinite}
+.req2{font-family:var(--body);font-size:11px;font-weight:900;padding:1px 8px;border-radius:99px;background:var(--ink);color:#fff}
+.cdice{display:flex;justify-content:center;gap:10px;min-height:44px;align-items:center}
+.die{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:42px;height:42px;padding:6px;border-radius:9px;background:#fff;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink)}
+.die i{border-radius:50%}.die i.on{background:var(--ink)}
+.die:nth-child(odd) i.on{background:var(--crimson)}
+.cdice.roll .die{animation:droll .6s cubic-bezier(.2,1.4,.4,1)}
+.cdice.roll .die:nth-child(2){animation-delay:.05s}.cdice.roll .die:nth-child(3){animation-delay:.1s}.cdice.roll .die:nth-child(4){animation-delay:.15s}
+@keyframes droll{0%{transform:translateY(-40px) rotate(-200deg) scale(.6);opacity:0}100%{transform:none;opacity:1}}
+.copts{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:6px}
+.copt{display:flex;align-items:baseline;justify-content:center;gap:4px;padding:10px 6px;border-radius:12px;background:#fff;border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink),0 0 12px rgba(31,179,191,.35);font-weight:900}
+.copt b{font-family:var(--disp);font-weight:400;font-size:22px;color:#108C96}
+.copt i{font-style:normal;font-size:11px;color:var(--mute)}
+.copt small{font-size:10px;color:var(--mute)}
+.copt:active{transform:translateY(3px);box-shadow:none}
+.copt:disabled{opacity:.6;box-shadow:none}
+.cbust{text-align:center;font-family:var(--disp);font-size:26px;color:var(--crimson);animation:nshake .4s ease-in-out 3}
+.cbust small{display:block;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute)}
+.nbtns.one{grid-template-columns:1fr}.nbtns.two{grid-template-columns:1fr 1fr}
+.nb.big2{font-size:18px;padding:14px}
+/* ===== セブンブリッジ ===== */
+.ntop .nt.sbt{font-size:20px;letter-spacing:.02em;background:linear-gradient(90deg,#E2364F,#1B1838,#E8B12A,#E2364F);background-size:300% 100%;-webkit-background-clip:text;background-clip:text}
+.gic.sbi{background:radial-gradient(circle at 30% 25%,#7A1730,#1B1838);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(226,54,79,.55);overflow:hidden}
+.gic.sbi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
+.pcd{container-type:normal;position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:34px;height:48px;border-radius:6px;background:#fff;border:2px solid var(--ink);box-shadow:0 2px 0 var(--ink);color:var(--ink);line-height:1;flex:none}
+.pcd b{font-family:var(--disp);font-weight:400;font-size:15px}
+.pcd i{font-style:normal;font-size:15px}
+.pcd.red{color:var(--crimson)}
+.pcd.joker{background:var(--metal)}.pcd.joker b{font-size:16px}.pcd.joker small{font-size:6px;font-weight:900}
+.pcd.empty{border-style:dashed;color:var(--mute);font-size:10px;box-shadow:none}
+.sbmelds{flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;padding:6px;border-radius:14px;background:rgba(255,255,255,.75);border:2px solid var(--ink)}
+.meld{display:flex;gap:0;padding:3px 5px 3px 3px;border-radius:9px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 12%,#fff)}
+.meld .pcd{width:26px;height:38px;margin-right:-6px;border-width:1.5px}.meld .pcd b{font-size:12px}.meld .pcd i{font-size:11px}
+.meld .pcd:last-child{margin-right:0}
+.meld.pick{animation:pulse 1.2s ease-in-out infinite;border-style:dashed}
+.meld:disabled{opacity:1}
+.sbmid{flex:none;display:flex;justify-content:center}
+.sbpile{display:flex;align-items:center;gap:16px}
+.deckc{display:flex;flex-direction:column;align-items:center;justify-content:center;width:44px;height:60px;border-radius:7px;border:2px solid var(--ink);background:repeating-linear-gradient(45deg,#8B3CFF 0 5px,#5B2EC9 5px 10px);color:#fff;box-shadow:0 3px 0 var(--ink)}
+.deckc span{font-size:9px;font-weight:900}.deckc b{font-size:16px}
+.disc{display:flex;flex-direction:column;align-items:center;gap:2px}
+.disc .pcd{width:44px;height:60px}.disc .pcd b{font-size:20px}.disc .pcd i{font-size:18px}
+.disc small{font-size:10px;font-weight:900;color:var(--mute)}
+.sbclaim{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:6px 8px;border-radius:12px;background:#FFF3C4;border:2px solid var(--ink);font-size:12px;font-weight:900;animation:pulse 1s ease-in-out infinite}
+.sbclaim .pcd{width:24px;height:32px;vertical-align:middle;margin:0 2px}.sbclaim .pcd b{font-size:11px}.sbclaim .pcd i{font-size:10px}
+.sbclaim em{font-style:normal;font-family:var(--disp);font-size:20px;color:var(--crimson);min-width:20px;text-align:center}
+.sbclaim .nb{padding:8px 16px;font-size:15px}
+.sbclaim .nb.pon{background:var(--crimson);color:#fff}.sbclaim .nb.chi{background:var(--aqua);color:#fff}
+.sbclaim small{padding:1px 8px;border-radius:99px;background:var(--pc);color:#fff}
+.sbhand{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+.hc{padding:0;border:0;background:none;transition:transform .12s}
+.hc .pcd{width:40px;height:56px}.hc .pcd b{font-size:17px}.hc .pcd i{font-size:16px}
+.hc.sel{transform:translateY(-10px)}
+.hc.sel .pcd{box-shadow:0 2px 0 var(--ink),0 0 14px rgba(232,177,42,.9);border-color:#C98E12}
+.nbtns.three{grid-template-columns:1fr 1.2fr 1fr}
+.nb.on{background:var(--aqua);color:#fff}
+.sbres{display:flex;flex-direction:column;gap:6px;margin-top:10px;min-width:240px}
+.sbres span{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:10px;background:#fff;border:2px solid var(--pc);font-weight:900}
+.sbres b{flex:1;text-align:left}.sbres em{font-style:normal;color:var(--crimson);font-size:13px}.sbres strong{font-size:16px}
 /* ===== フィードバック3 ===== */
 .sheet h3 .ht{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sheet h3 .x{flex:none;white-space:nowrap}
@@ -1009,6 +1087,8 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 
 <div class="arena" id="arena" hidden></div>
 <div class="arena neu" id="neu" hidden></div>
+<div class="arena neu cs" id="cs" hidden></div>
+<div class="arena neu sbg" id="sbg" hidden></div>
 <div class="sheet" id="sheet"><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -1023,7 +1103,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
 const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#5A6378"];
-const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games"];
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
@@ -1054,7 +1134,7 @@ const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
 const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
 
-const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [] };
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [] };
 let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
@@ -1099,7 +1179,7 @@ const fail = (e, what) => { console.error(e); toast(`${what}できませんで�
 /* ---------- データ ---------- */
 async function loadTable(t){
   const { data, error } = await sb.from(t).select("*");
-  if (error && t === "neu_games"){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
+  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
   if (error) throw error;
   db[t] = data || [];
 }
@@ -1115,7 +1195,7 @@ function subscribe(){
       if (!TABLES.includes(t)) return;
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); } catch (e) { console.error(e); }
+        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -1157,7 +1237,7 @@ function render(){
   $("#neuIco").hidden = !loaded || !db.players.length;
   $("#neuIco").disabled = !player(me);
   $("#neuIco").title = player(me) ? "ゲーム一覧" : "自分を選ぶと遊べます";
-  $("#neuIco .gdot").hidden = !neuActive();
+  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive();
   const mp = player(me);
   const nlen = mp ? [...mp.name].length : 0, nfs = nlen <= 4 ? 12 : nlen <= 5 ? 11 : nlen <= 6 ? 10 : nlen <= 8 ? 9 : 8;
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span style="font-size:${nfs}px">${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
@@ -1198,9 +1278,9 @@ function viewHome(t){
   if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><span>今日の特権・<b class="who">${esc(pname(tp.player_id))}</b></span><small class="pno">特権${KANJI[tp.kind]}</small><b class="pnm">${PRIVS[tp.kind].name}</b></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
-  const ng = neuActive();
+  const ng = neuActive(), cg = csActive(), bg = sbActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中${ng.status === "playing" && ng.turn && ng.turn.pid === me ? "・あなたの番！" : ""}</b><small>第${ng.round}回戦・合計${ng.total}・タップで入る</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中${cg.turn && cg.turn.pid === me ? "・あなたの番！" : ""}</b><small>タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中${bg.turn && bg.turn.pid === me ? "・あなたの番！" : ""}</b><small>第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -1269,6 +1349,8 @@ function bindView(){
     players: openPlayers, trips: () => editTrip(null), editTrip: () => editTrip(curTrip().id), newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id),
     privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
     openNeu: () => { const g = neuActive(); if (g) openNeu(g.id); }, newNeu: openNeuNew,
+    openCs: () => { const g = csActive(); if (g) openCs(g.id); },
+    openSb: () => { const g = sbActive(); if (g) openSb(g.id); },
     completeTrip: () => openCompleteTrip(curTrip()), reopenTrip: () => reopenTrip(curTrip()), listBack: () => { listTripId = null; render(); },
     togglePend: () => { localStorage.setItem("ojk:pendOpen", localStorage.getItem("ojk:pendOpen") === "0" ? "1" : "0"); render(); },
     travelTotal: () => openTravelTotal(curTrip()), resetTickets: () => resetTickets(curTrip()), rouletteReset: () => resetRoulette(curTrip(), rouletteDay),
@@ -3089,7 +3171,18 @@ const GAMES = [
       <text x="32" y="35" text-anchor="middle" font-family="Dela Gothic One,Arial Black,Arial" font-size="10.5" fill="url(#gN)" stroke="#1B1838" stroke-width=".5">101</text>
       <circle cx="52" cy="12" r="3" fill="#E8B12A"/><circle cx="10" cy="20" r="2" fill="#1FB3BF"/><path d="M50 50l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#E2364F"/></svg></span>`,
     count: () => neuGames().filter(x => x.status === "finished").length,
-    active: () => neuActive(), start: () => openNeuNew(), open: g => openNeu(g.id) }
+    active: () => neuActive(), start: () => openNeuNew(), open: g => openNeu(g.id) },
+  { id: "cs", name: "キャントストップ", desc: "ダイス4個でレーンを登る。振り続けるか、止めて確定するか。3本制覇で勝ち", players: "2〜6人", time: "20〜30分",
+    icon: `<span class="gic csi"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="30" width="7" height="22" rx="2" fill="#1FB3BF" stroke="#fff" stroke-width="1.5"/><rect x="20" y="20" width="7" height="32" rx="2" fill="#E8B12A" stroke="#fff" stroke-width="1.5"/><rect x="30" y="10" width="7" height="42" rx="2" fill="#E2364F" stroke="#fff" stroke-width="1.5"/><path d="M33.5 4l2 4 4 .6-3 2.8.8 4.2-3.8-2-3.8 2 .8-4.2-3-2.8 4-.6z" fill="#FFE38A"/>
+      <g transform="rotate(14 48 44)"><rect x="39" y="35" width="18" height="18" rx="4" fill="#fff" stroke="#1B1838" stroke-width="2"/><circle cx="44" cy="40" r="1.8" fill="#1B1838"/><circle cx="48" cy="44" r="1.8" fill="#E2364F"/><circle cx="52" cy="48" r="1.8" fill="#1B1838"/></g></svg></span>`,
+    count: () => csGames().filter(x => x.status === "finished").length,
+    active: () => csActive(), start: () => openCsNew(), open: g => openCs(g.id) },
+  { id: "sb", name: "セブンブリッジ", desc: "同じ数字や連番をそろえて公開し、手札を早くなくす。ポン・チーで捨て札も奪える", players: "2〜6人", time: "1ラウンド10分",
+    icon: `<span class="gic sbi"><svg viewBox="0 0 64 64" aria-hidden="true"><g transform="rotate(-18 32 50)"><rect x="18" y="12" width="24" height="34" rx="4" fill="#fff" stroke="#1B1838" stroke-width="2"/><text x="23" y="25" font-family="Arial Black,Arial" font-size="9" fill="#1B1838">7</text><text x="30" y="38" font-family="Arial" font-size="12" fill="#1B1838">♠</text></g>
+      <g transform="rotate(16 32 50)"><rect x="22" y="12" width="24" height="34" rx="4" fill="#fff" stroke="#1B1838" stroke-width="2"/><text x="27" y="25" font-family="Arial Black,Arial" font-size="9" fill="#E2364F">7</text><text x="34" y="38" font-family="Arial" font-size="12" fill="#E2364F">♦</text></g>
+      <rect x="20" y="10" width="24" height="34" rx="4" fill="url(#gG)" stroke="#1B1838" stroke-width="2"/><text x="32" y="33" text-anchor="middle" font-family="Dela Gothic One,Arial Black,Arial" font-size="16" fill="#E2364F" stroke="#1B1838" stroke-width=".6">7</text><text x="24" y="19" font-family="Arial" font-size="7" fill="#E2364F">♥</text></svg></span>`,
+    count: () => sbGames().filter(x => x.status === "finished").length,
+    active: () => sbActive(), start: () => openSbNew(), open: g => openSb(g.id) }
 ];
 function openGames(){
   const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
@@ -3347,6 +3440,452 @@ async function neuNextRound(g){
   if (await neuSave(g, { ...dealt, dealer, loser: null, status: "playing", round: g.round + 1 }, `第${g.round + 1}回戦スタート。親は${pname(dealer)}${starter !== dealer ? `（${pname(starter)}から）` : ""}`)) pushCall({ type: "neu_turn", to: starter, total: 0, need: 1, round: g.round + 1 });
 }
 
+/* ===================== キャントストップ ===================== */
+const CS_H = { 2: 3, 3: 5, 4: 7, 5: 9, 6: 11, 7: 13, 8: 11, 9: 9, 10: 7, 11: 5, 12: 3 };
+const CS_COLS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const csGames = () => db.cs_games || [];
+const csActive = () => csGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const csById = id => csGames().find(g => g.id === id);
+const csNext = (g, pid) => g.players[(g.players.indexOf(pid) + 1) % g.players.length];
+const csCur = (g, pid, col, temp) => (temp && temp[col] != null) ? temp[col] : ((g.pos[pid] || {})[col] || 0);
+// ある組み合わせ（合計の並び）で進めた結果の仮コマ。進めない部分があれば null
+function csApply(g, pid, temp, sums){
+  const t = { ...temp };
+  for (const s of sums){
+    if (g.claimed[s]) return null;
+    const cur = csCur(g, pid, s, t);
+    if (cur >= CS_H[s]) return null;
+    if (t[s] == null && Object.keys(t).length >= 3) return null;
+    t[s] = cur + 1;
+  }
+  return t;
+}
+// ダイス4個から選べる進め方の一覧
+function csOptions(g, pid, temp, dice){
+  const [a, b, c, d] = dice, pairs = [[a + b, c + d], [a + c, b + d], [a + d, b + c]];
+  const seen = new Set(), out = [];
+  const add = sums => { const k = sums.slice().sort((x, y) => x - y).join("+"); if (seen.has(k)) return; seen.add(k); out.push(sums); };
+  pairs.forEach(([x, y]) => {
+    if (csApply(g, pid, temp, [x, y])) add([x, y]);
+    else {
+      if (csApply(g, pid, temp, [x])) add([x]);
+      if (csApply(g, pid, temp, [y])) add([y]);
+    }
+  });
+  return out;
+}
+async function csSave(g, patch, logLine){
+  const body = { ...patch, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
+  if (logLine) body.log = [...(g.log || []), { t: new Date().toISOString(), m: logLine }].slice(-60);
+  const { data, error } = await sb.from("cs_games").update(body).eq("id", g.id).eq("version", g.version || 1).select();
+  if (error){ fail(error, "保存"); return false; }
+  if (!data || !data.length){ await loadTable("cs_games"); drawCs(); toast("画面を最新にしました。もう一度タップしてください", 2000); return false; }
+  Object.assign(g, data[0]); drawCs(); return true;
+}
+function openCsNew(){
+  const t = curTrip();
+  let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 6);
+  const s = openSheet("キャントストップを始める", `
+    <p class="note">ダイス4個を2組に分けてレーンを登る。欲張って振り続けるか、止めて確定するか。3本のレーンを制した人の勝ち（2〜6人）。</p>
+    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>手番の順番</span><div id="cOrder" class="norder"></div><button class="mini" id="cShuf" style="margin-top:6px">順番をシャッフル</button></div>
+    <div class="btns"><button class="btn" id="cGo">対戦スタート</button></div>`);
+  const draw = () => { $("#cOrder").innerHTML = order.map((id, i) => `<span class="nseat" style="--pc:${pcolor(id)}"><b>${i + 1}</b>${esc(pname(id))}</span>`).join("<i>→</i>"); };
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
+    if (on && order.length >= 6){ toast("最大6人です"); return; }
+    b.setAttribute("aria-pressed", String(on)); order = on ? [...order, id] : order.filter(x => x !== id); draw();
+  });
+  $("#cShuf").onclick = () => { order = shuffle(order); draw(); };
+  draw();
+  $("#cGo").onclick = async () => {
+    if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
+    const row = { trip_id: t ? t.id : null, status: "playing", players: order, pos: Object.fromEntries(order.map(id => [id, {}])), claimed: {},
+      turn: { pid: order[0], temp: {}, dice: null, phase: "roll", opts: [] }, created_by: me || null,
+      log: [{ t: new Date().toISOString(), m: `対戦スタート。最初は${pname(order[0])}` }] };
+    const res = await q(sb.from("cs_games").insert(row).select().single(), "作成");
+    if (res){ await loadTable("cs_games"); closeSheet(); openCs(res.id); pushCall({ type: "game_turn", game: "キャントストップ", to: order[0] }); }
+  };
+}
+let csId = null, csBusy = false, csPrevRoll = null;
+function openCs(id){ csId = id; csPrevRoll = null; $("#cs").hidden = false; document.body.style.overflow = "hidden"; drawCs(); }
+function closeCs(){ csId = null; $("#cs").hidden = true; document.body.style.overflow = ""; render(); }
+const dieFace = n => `<span class="die d${n}">${Array.from({ length: 9 }, (_, i) => `<i class="${[[4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]][n - 1].includes(i) ? "on" : ""}"></i>`).join("")}</span>`;
+function drawCs(){
+  if (!csId) return;
+  const g = csById(csId); if (!g) return closeCs();
+  const el = $("#cs"), t = g.turn || {}, myTurn = g.status === "playing" && t.pid === me;
+  const owned = p => Object.values(g.claimed).filter(x => x === p).length;
+  const seats = g.players.map(p => `<div class="np ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}<b>${esc(pname(p))}</b><span class="cstars">${"★".repeat(owned(p))}<i>${"★".repeat(Math.max(0, 3 - owned(p)))}</i></span></div>`).join(`<span class="nar">›</span>`);
+  // ボード
+  const temp = t.temp || {};
+  const board = CS_COLS.map(c => {
+    const h = CS_H[c], own = g.claimed[c];
+    let cells = "";
+    for (let lv = h; lv >= 1; lv--){
+      const here = g.players.filter(p => (g.pos[p] || {})[c] === lv);
+      const tmp = temp[c] === lv;
+      cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
+    }
+    return `<div class="ccol ${own ? "won" : ""} ${temp[c] != null ? "act" : ""}" style="${own ? `--oc:${pcolor(own)}` : ""}"><div class="cstack">${own ? `<span class="crown">👑</span>` : ""}${cells}</div><b class="cn">${c}</b></div>`;
+  }).join("");
+  // 下部
+  let bottom = "";
+  if (g.status === "playing"){
+    const who = myTurn ? "あなたの番！" : `${esc(pname(t.pid))}の番`;
+    const used = Object.keys(temp).length;
+    bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span><span class="req2">仮コマ ${3 - used}/3</span></div>`;
+    const roll = !!t.dice && csPrevRoll !== t.dice.join("") && csPrevRoll !== null;
+    csPrevRoll = t.dice ? t.dice.join("") : "";
+    bottom += `<div class="cdice ${roll ? "roll" : ""}">${t.dice ? t.dice.map(dieFace).join("") : `<span class="note">ダイスを振ってください</span>`}</div>`;
+    if (t.phase === "choose"){
+      bottom += `<div class="copts">${(t.opts || []).map((o, i) => `<button class="copt" data-opt="${i}" ${myTurn ? "" : "disabled"}>${o.map(x => `<b>${x}</b>`).join("<i>と</i>")}${o.length === 1 ? "<small>だけ</small>" : ""}</button>`).join("")}</div>`;
+    } else if (t.phase === "bust"){
+      bottom += `<div class="cbust">強制終了！<small>この番に進めた分はなくなりました</small></div>${myTurn ? `<div class="nbtns one"><button class="nb end" id="cPass">番を終える</button></div>` : ""}`;
+    } else if (myTurn){
+      bottom += t.phase === "roll" && !Object.keys(temp).length
+        ? `<div class="nbtns one"><button class="nb end big2" id="cRoll">ダイスを振る</button></div>`
+        : `<div class="nbtns two"><button class="nb draw" id="cRoll">もう一度振る</button><button class="nb end" id="cStop">やめる（確定）</button></div>`;
+    } else bottom += `<div class="nwait">ほかの人の番です</div>`;
+  }
+  const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  let over = "";
+  if (g.status === "finished") over = `<div class="nover" style="--c:${pcolor(g.winner)}"><span class="ob"></span><div class="k">優勝</div><div class="p">${esc(pname(g.winner))}</div><div class="y">3本のレーンを制覇！</div><div class="btns"><button class="btn" id="cClose2">閉じる</button></div></div>`;
+  el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span>${["⚀", "⚁", "⚂", "⚃", "⚄", "⚅", "▲", "★"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 90}%;font-size:${30 + (i % 3) * 18}px;color:${["#1B1838", "#E2364F", "#1FB3BF", "#E8B12A"][i % 4]};--dur:${7 + i}s;--dl:-${i}s;--dx:${(i % 2 ? 1 : -1) * 40}px;--dy:-50px;--rot:${i * 20 - 60}deg">${x}</i>`).join("")}</div>
+    <div class="ntop"><b class="nt cst">CAN'T STOP</b><span class="ndk"></span><button class="nmini" id="cMenu" aria-label="メニュー">…</button><button class="nmini" id="cClose" aria-label="閉じる">×</button></div>
+    <div class="nseats2">${seats}</div>
+    <div class="cboard">${board}</div>
+    <div class="nlogw"><div class="nlogh">直近の流れ</div><ul class="nlog">${lg}</ul></div>
+    <div class="nbottom">${bottom}</div>${over}`;
+  const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
+  const act = fn => async () => { if (csBusy) return; csBusy = true; try { const cur = csById(csId); if (cur) await fn(cur); } finally { csBusy = false; } };
+  on("cClose", closeCs); on("cClose2", closeCs); on("cMenu", () => csMenu(g));
+  on("cRoll", act(csRoll)); on("cStop", act(csStop)); on("cPass", act(csPass));
+  el.querySelectorAll("[data-opt]").forEach(b => b.onclick = act(cur => csChoose(cur, Number(b.dataset.opt))));
+}
+function csMenu(g){
+  const s = openSheet("キャントストップのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openSheet("キャントストップのルール", `<div class="rules">
+    <p class="rp">ダイス4個を振り、2個ずつ2組に分けた合計のレーンに仮コマを進めます。1回の番で使える仮コマは3個（進めるレーンは3本）まで。同じ合計が2組なら2マス進みます。</p>
+    <p class="rp">進めたら「もう一度振る」か「やめる」を選びます。やめると仮コマの位置が自分のマーカーとして確定します。</p>
+    <p class="rp">どう組み合わせても進められない目が出たら強制終了。その番に進めた分はすべてなくなります。</p>
+    <p class="rp">最上段で番を終えるとそのレーンを獲得し、以後は誰も置けません。3本獲得した人が勝ちです。</p>
+    <p class="rp">レーンの長さ：2・12は3マス、3・11は5、4・10は7、5・9は9、6・8は11、7は13。</p></div>`);
+  s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await csSave(g, { status: "aborted" }, "対戦が中止されました"); closeCs(); };
+}
+async function csRoll(g){
+  const t = g.turn; if (t.pid !== me || t.phase === "choose" || t.phase === "bust") return;
+  const dice = Array.from({ length: 4 }, () => 1 + Math.floor(Math.random() * 6));
+  const opts = csOptions(g, me, t.temp || {}, dice);
+  if (navigator.vibrate) navigator.vibrate(30);
+  if (!opts.length){
+    await csSave(g, { turn: { ...t, dice, opts: [], phase: "bust" } }, `${pname(me)}：${dice.join("・")} → 強制終了！`);
+    flash("強制終了！", "この番の前進はなくなった…");
+    return;
+  }
+  await csSave(g, { turn: { ...t, dice, opts, phase: "choose" } }, `${pname(me)}：${dice.join("・")}`);
+}
+async function csChoose(g, i){
+  const t = g.turn, o = (t.opts || [])[i]; if (!o || t.pid !== me) return;
+  const temp = csApply(g, me, t.temp || {}, o); if (!temp) return;
+  await csSave(g, { turn: { ...t, temp, opts: [], phase: "decide" } }, `${pname(me)}：${o.join("と")}を進めた`);
+}
+async function csStop(g){
+  const t = g.turn; if (t.pid !== me) return;
+  const pos = { ...g.pos, [me]: { ...(g.pos[me] || {}), ...(t.temp || {}) } };
+  const claimed = { ...g.claimed }; const got = [];
+  Object.keys(t.temp || {}).forEach(c => { if (!claimed[c] && pos[me][c] >= CS_H[c]){ claimed[c] = me; got.push(c); } });
+  const mine = Object.values(claimed).filter(x => x === me).length;
+  if (mine >= 3){
+    await csSave(g, { pos, claimed, status: "finished", winner: me, turn: { ...t, phase: "done" } }, `${pname(me)}が確定。${got.length ? `${got.join("・")}レーンを獲得！` : ""}3本制覇で優勝！`);
+    flash("キャントストップ 優勝！", pname(me)); return;
+  }
+  const nx = csNext(g, me);
+  if (await csSave(g, { pos, claimed, turn: { pid: nx, temp: {}, dice: null, phase: "roll", opts: [] } }, `${pname(me)}が確定${got.length ? `。${got.join("・")}レーンを獲得！` : ""} → ${pname(nx)}の番`)){
+    if (got.length) flash(`${got.join("・")}レーン獲得！`, pname(me));
+    pushCall({ type: "game_turn", game: "キャントストップ", to: nx });
+  }
+}
+async function csPass(g){
+  const t = g.turn; if (t.pid !== me) return;
+  const nx = csNext(g, me);
+  if (await csSave(g, { turn: { pid: nx, temp: {}, dice: null, phase: "roll", opts: [] } }, `${pname(me)}の番は強制終了 → ${pname(nx)}の番`)) pushCall({ type: "game_turn", game: "キャントストップ", to: nx });
+}
+
+/* ===================== セブンブリッジ ===================== */
+/* カード：S/H/D/C ＋ 1〜13（例 "H7", "S12"）、ジョーカーは "JK" */
+const SB_SUITS = ["S", "H", "D", "C"], SB_MARK = { S: "♠", H: "♥", D: "♦", C: "♣" };
+const SB_CLAIM_MS = 4000;
+const sbDeck = () => { const d = ["JK"]; SB_SUITS.forEach(s => { for (let r = 1; r <= 13; r++) d.push(s + r); }); return d; };
+const sbSuit = c => c === "JK" ? null : c[0];
+const sbRank = c => c === "JK" ? null : Number(c.slice(1));
+const sbRankTxt = r => ({ 1: "A", 11: "J", 12: "Q", 13: "K" }[r] || String(r));
+const sbGames = () => db.sb_games || [];
+const sbActive = () => sbGames().filter(g => g.status === "playing" || g.status === "round_over").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const sbById = id => sbGames().find(g => g.id === id);
+const sbNext = (g, pid) => g.players[(g.players.indexOf(pid) + 1) % g.players.length];
+const sbSort = h => h.slice().sort((a, b) => (sbRank(a) ?? 99) - (sbRank(b) ?? 99) || String(a).localeCompare(String(b)));
+function sbCardHtml(c, extra = ""){
+  if (c === "JK") return `<span class="pcd joker" ${extra}><b>★</b><small>JOKER</small></span>`;
+  const s = sbSuit(c), red = s === "H" || s === "D";
+  return `<span class="pcd ${red ? "red" : ""}" ${extra}><b>${sbRankTxt(sbRank(c))}</b><i>${SB_MARK[s]}</i></span>`;
+}
+/* ---- 役の判定 ---- */
+// 同数：同じ数字3枚以上（ジョーカー可）。7は1枚でも可（ジョーカー単独は不可）
+function sbAsSet(cards){
+  const nat = cards.filter(c => c !== "JK");
+  if (!nat.length) return null;
+  const r = sbRank(nat[0]);
+  if (!nat.every(c => sbRank(c) === r)) return null;
+  if (cards.length >= 3 || (r === 7 && nat.length === cards.length)) return { type: "set", rank: r, cards: cards.slice() };
+  return null;
+}
+// 連番：同じマークで連続3枚以上（A-2-3はOK、K-Aはつながらない）。6-7・7-8は2枚でも可
+function sbAsRun(cards){
+  const nat = cards.filter(c => c !== "JK"), jk = cards.length - nat.length;
+  if (!nat.length) return null;
+  const s = sbSuit(nat[0]);
+  if (!nat.every(c => sbSuit(c) === s)) return null;
+  const rs = nat.map(sbRank).sort((a, b) => a - b);
+  for (let i = 1; i < rs.length; i++) if (rs[i] === rs[i - 1]) return null;
+  const gaps = rs[rs.length - 1] - rs[0] + 1 - rs.length;
+  if (gaps > jk) return null;
+  let lo = rs[0], hi = rs[rs.length - 1], extra = jk - gaps;
+  while (extra > 0 && hi < 13){ hi++; extra--; }
+  while (extra > 0 && lo > 1){ lo--; extra--; }
+  if (extra > 0) return null;
+  const len = hi - lo + 1;
+  if (len >= 3) return { type: "run", suit: s, lo, hi, cards: cards.slice() };
+  if (len === 2 && jk === 0 && ((lo === 6 && hi === 7) || (lo === 7 && hi === 8))) return { type: "run", suit: s, lo, hi, cards: cards.slice() };
+  return null;
+}
+const sbMeld = cards => sbAsSet(cards) || sbAsRun(cards);
+// 付け札
+function sbAttach(m, c){
+  if (m.type === "set") return (c === "JK" || sbRank(c) === m.rank) ? { ...m, cards: [...m.cards, c] } : null;
+  if (c === "JK"){ if (m.hi < 13) return { ...m, hi: m.hi + 1, cards: [...m.cards, c] }; if (m.lo > 1) return { ...m, lo: m.lo - 1, cards: [...m.cards, c] }; return null; }
+  if (sbSuit(c) !== m.suit) return null;
+  const r = sbRank(c);
+  if (r === m.hi + 1) return { ...m, hi: r, cards: [...m.cards, c] };
+  if (r === m.lo - 1) return { ...m, lo: r, cards: [...m.cards, c] };
+  return null;
+}
+// ポン・チーで使える手札の組み合わせ
+function sbPonCards(hand, card){
+  if (card === "JK") return null;
+  const same = hand.filter(c => c !== "JK" && sbRank(c) === sbRank(card));
+  if (same.length >= 2) return same.slice(0, 2);
+  if (same.length === 1 && hand.includes("JK")) return [same[0], "JK"];
+  return null;
+}
+function sbChiCards(hand, card){
+  if (card === "JK") return null;
+  const s = sbSuit(card), r = sbRank(card), has = x => hand.includes(s + x);
+  for (const [a, b] of [[r - 2, r - 1], [r - 1, r + 1], [r + 1, r + 2]]) if (a >= 1 && b <= 13 && has(a) && has(b)) return [s + a, s + b];
+  if (hand.includes("JK")){
+    for (const x of [r - 1, r + 1]) if (x >= 1 && x <= 13 && has(x)) return [s + x, "JK"];
+  }
+  return null;
+}
+// 残った手札の失点：A・絵札10、2〜10は数字どおり。7は1枚ごとに2倍、ジョーカーは5倍
+function sbPenalty(hand){
+  let base = 0, sev = 0, jk = 0;
+  hand.forEach(c => { if (c === "JK"){ jk++; return; } const r = sbRank(c); if (r === 7) sev++; base += (r === 1 || r >= 11) ? 10 : r; });
+  return base * Math.pow(2, sev) * Math.pow(5, jk);
+}
+async function sbSave(g, patch, logLine){
+  const body = { ...patch, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
+  if (logLine) body.log = [...(g.log || []), { t: new Date().toISOString(), m: logLine }].slice(-60);
+  const { data, error } = await sb.from("sb_games").update(body).eq("id", g.id).eq("version", g.version || 1).select();
+  if (error){ fail(error, "保存"); return false; }
+  if (!data || !data.length){ await loadTable("sb_games"); drawSb(); return false; }
+  Object.assign(g, data[0]); drawSb(); return true;
+}
+function sbDeal(players, first){
+  let deck = shuffle(sbDeck()); const hands = {};
+  players.forEach(p => { hands[p] = deck.slice(0, 7); deck = deck.slice(7); });
+  return { hands, deck, discard: [], melds: [], claim: null, turn: { pid: first, phase: "draw" }, round_result: null };
+}
+function openSbNew(){
+  const t = curTrip();
+  let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 6), rounds = 3;
+  const s = openSheet("セブンブリッジを始める", `
+    <p class="note">同じ数字や同じマークの連番をそろえて公開し、手札を早くなくした人がラウンドの勝ち。残った手札は失点。決めたラウンド数の合計点で競います（2〜6人）。</p>
+    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>手番の順番</span><div id="bOrder" class="norder"></div><button class="mini" id="bShuf" style="margin-top:6px">順番をシャッフル</button></div>
+    <div class="f"><span>ラウンド数</span><div class="chips">${[1, 3, 5, 7].map(n => `<button type="button" data-rd="${n}" aria-pressed="${n === rounds}">${n}回</button>`).join("")}</div></div>
+    <div class="btns"><button class="btn" id="bGo">対戦スタート</button></div>`);
+  const draw = () => { $("#bOrder").innerHTML = order.map((id, i) => `<span class="nseat" style="--pc:${pcolor(id)}"><b>${i + 1}</b>${esc(pname(id))}</span>`).join("<i>→</i>"); };
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
+    if (on && order.length >= 6){ toast("最大6人です"); return; }
+    b.setAttribute("aria-pressed", String(on)); order = on ? [...order, id] : order.filter(x => x !== id); draw();
+  });
+  bindChips(s, "data-rd", false, () => { rounds = Number(picked(s, "data-rd")[0]) || 3; });
+  $("#bShuf").onclick = () => { order = shuffle(order); draw(); };
+  draw();
+  $("#bGo").onclick = async () => {
+    if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
+    const row = { trip_id: t ? t.id : null, status: "playing", players: order, scores: Object.fromEntries(order.map(id => [id, 0])), round: 1, rounds,
+      ...sbDeal(order, order[0]), created_by: me || null, log: [{ t: new Date().toISOString(), m: `第1ラウンド開始。最初は${pname(order[0])}` }] };
+    const res = await q(sb.from("sb_games").insert(row).select().single(), "作成");
+    if (res){ await loadTable("sb_games"); closeSheet(); openSb(res.id); pushCall({ type: "game_turn", game: "セブンブリッジ", to: order[0] }); }
+  };
+}
+
+/* ---------- 対戦画面 ---------- */
+let sbId = null, sbBusy = false, sbSel = [], sbTimer = null, sbAttachMode = false;
+function openSb(id){ sbId = id; sbSel = []; sbAttachMode = false; $("#sbg").hidden = false; document.body.style.overflow = "hidden"; drawSb(); }
+function closeSb(){ sbId = null; clearInterval(sbTimer); $("#sbg").hidden = true; document.body.style.overflow = ""; render(); }
+function drawSb(){
+  if (!sbId) return;
+  const g = sbById(sbId); if (!g) return closeSb();
+  const el = $("#sbg"), t = g.turn || {}, hand = g.players.includes(me) ? sbSort(g.hands[me] || []) : null;
+  const myTurn = g.status === "playing" && t.pid === me;
+  sbSel = sbSel.filter(c => hand && hand.includes(c));
+  const top = (g.discard || [])[(g.discard || []).length - 1];
+  const cl = g.claim, now = Date.now(), left = cl ? Math.max(0, Math.ceil((cl.until - now) / 1000)) : 0;
+  const opened = p => (g.melds || []).some(m => m.owner === p);
+  const seats = g.players.map(p => `<div class="np ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}${opened(p) ? `<em class="tg dl">公開</em>` : ""}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚・${g.scores[p] || 0}点</small></div>`).join(`<span class="nar">›</span>`);
+  const melds = (g.melds || []).map((m, i) => `<button class="meld ${sbAttachMode ? "pick" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${sbAttachMode ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`).join("") || `<p class="note" style="margin:auto">まだ公開された役はありません</p>`;
+  let mid = `<div class="sbmid"><div class="sbpile"><div class="deckc"><span>山札</span><b class="num">${(g.deck || []).length}</b></div><div class="disc">${top ? sbCardHtml(top) : `<span class="pcd empty">捨て札</span>`}<small>捨て札</small></div></div></div>`;
+  let claimBar = "";
+  if (cl && g.status === "playing"){
+    const canPon = hand && cl.from !== me && sbPonCards(hand, cl.card) && !(cl.claims || []).some(x => x.pid === me);
+    const canChi = hand && sbNext(g, cl.from) === me && sbChiCards(hand, cl.card) && !(cl.claims || []).some(x => x.pid === me);
+    claimBar = `<div class="sbclaim"><span>${esc(pname(cl.from))}が${sbCardHtml(cl.card)}を捨てた</span><em class="num">${left}</em>
+      ${canPon ? `<button class="nb pon" id="bPon">ポン</button>` : ""}${canChi ? `<button class="nb chi" id="bChi">チー</button>` : ""}
+      ${(cl.claims || []).map(x => `<small style="--pc:${pcolor(x.pid)}">${esc(pname(x.pid))}：${x.type === "pon" ? "ポン" : "チー"}！</small>`).join("")}</div>`;
+  }
+  let bottom = "";
+  if (g.status === "playing"){
+    const who = cl ? "ポン・チーの受付中…" : myTurn ? (t.phase === "draw" ? "あなたの番！山札から引こう" : "役を公開・付け札して、1枚捨てよう") : `${esc(pname(t.pid))}の番`;
+    bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span></div>`;
+    if (hand){
+      bottom += `<div class="sbhand">${hand.map(c => `<button class="hc ${sbSel.includes(c) ? "sel" : ""}" data-hc="${c}">${sbCardHtml(c)}</button>`).join("")}</div>`;
+      if (myTurn && t.phase === "draw" && !cl) bottom += `<div class="nbtns one"><button class="nb end big2" id="bDraw">山札から引く</button></div>`;
+      else if (myTurn && t.phase === "play"){
+        const canMeld = sbSel.length && sbMeld(sbSel) && hand.length - sbSel.length >= 1;
+        const canAtt = sbSel.length === 1 && opened(me) && hand.length >= 2;
+        bottom += `<div class="nbtns three"><button class="nb draw" id="bMeld" ${canMeld ? "" : "disabled"}>公開</button><button class="nb draw ${sbAttachMode ? "on" : ""}" id="bAtt" ${canAtt ? "" : "disabled"}>${sbAttachMode ? "付ける役をタップ" : "付け札"}</button><button class="nb end" id="bDisc" ${sbSel.length === 1 ? "" : "disabled"}>捨てる</button></div>`;
+      } else bottom += `<div class="nwait">${cl ? "" : "ほかの人の番です"}</div>`;
+    } else bottom += `<div class="nwait">観戦中</div>`;
+  }
+  let over = "";
+  if (g.status === "round_over" || g.status === "finished"){
+    const rr = g.round_result || {}, fin = g.status === "finished";
+    const best = fin ? g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0))[0] : rr.winner;
+    over = `<div class="nover" style="--c:${pcolor(best)}"><span class="ob"></span><div class="k">${fin ? "最終結果" : `第${g.round}ラウンド`}</div><div class="p">${esc(pname(best))}</div>
+      <div class="sbres">${g.players.map(p => `<span style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><em>${rr.pen && rr.pen[p] ? `−${rr.pen[p]}` : p === rr.winner ? "上がり" : "0"}</em><strong class="num">${g.scores[p] || 0}点</strong></span>`).join("")}</div>
+      <div class="btns">${fin ? `<button class="btn" id="bClose2">閉じる</button>` : `<button class="btn" id="bNext">次のラウンドへ</button>`}</div></div>`;
+  }
+  const lg = (g.log || []).slice(-2).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span>${["♠", "♥", "♦", "♣", "7", "★", "♥", "♠"].map((x, i) => `<i style="left:${(i * 13 + 5) % 92}%;top:${(i * 31 + 6) % 90}%;font-size:${28 + (i % 3) * 20}px;color:${i % 2 ? "#E2364F" : "#1B1838"};--dur:${7 + i}s;--dl:-${i}s;--dx:${(i % 2 ? 1 : -1) * 40}px;--dy:-50px;--rot:${i * 20 - 60}deg">${x}</i>`).join("")}</div>
+    <div class="ntop"><b class="nt sbt">SEVEN BRIDGE</b><span class="nrd">R ${g.round}/${g.rounds}</span><span class="ndk"></span><button class="nmini" id="bMenu" aria-label="メニュー">…</button><button class="nmini" id="bClose" aria-label="閉じる">×</button></div>
+    <div class="nseats2">${seats}</div>
+    <div class="sbmelds">${melds}</div>
+    ${mid}${claimBar}
+    <div class="nlogw"><ul class="nlog">${lg}</ul></div>
+    <div class="nbottom">${bottom}</div>${over}`;
+  const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
+  const act = fn => async () => { if (sbBusy) return; sbBusy = true; try { const cur = sbById(sbId); if (cur) await fn(cur); } finally { sbBusy = false; } };
+  on("bClose", closeSb); on("bClose2", closeSb); on("bMenu", () => sbMenu(g));
+  on("bDraw", act(sbDraw)); on("bDisc", act(sbDiscard)); on("bMeld", act(sbDoMeld)); on("bNext", act(sbNextRound));
+  on("bPon", act(cur => sbClaim(cur, "pon"))); on("bChi", act(cur => sbClaim(cur, "chi")));
+  on("bAtt", () => { sbAttachMode = !sbAttachMode; drawSb(); });
+  el.querySelectorAll("[data-hc]").forEach(b => b.onclick = () => { const c = b.dataset.hc; sbSel = sbSel.includes(c) ? sbSel.filter(x => x !== c) : [...sbSel, c]; sbAttachMode = false; drawSb(); });
+  el.querySelectorAll("[data-meld]").forEach(b => b.onclick = act(cur => sbDoAttach(cur, Number(b.dataset.meld))));
+  // ポン・チーの受付時間が過ぎたら確定（次の人の端末、だめなら誰かの端末が処理）
+  clearInterval(sbTimer);
+  if (cl && g.status === "playing"){
+    sbTimer = setInterval(() => {
+      const cur = sbById(sbId); if (!cur || !cur.claim){ clearInterval(sbTimer); return; }
+      const rest = cur.claim.until - Date.now(), nx = sbNext(cur, cur.claim.from);
+      const e = el.querySelector(".sbclaim em"); if (e) e.textContent = Math.max(0, Math.ceil(rest / 1000));
+      if ((rest <= 0 && nx === me) || rest <= -2500){ clearInterval(sbTimer); act(sbResolve)(); }
+    }, 300);
+  }
+}
+function sbMenu(g){
+  const s = openSheet("セブンブリッジのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openSheet("セブンブリッジのルール", `<div class="rules">
+    <p class="rp">7枚ずつ配り、自分の番に山札から1枚引いて、いらないカードを1枚捨てます。</p>
+    <p class="rp">役：同じ数字3枚以上、同じマークの連番3枚以上（K-Aはつながらない）。7は1枚でも、6-7・7-8の同じマークなら2枚でも公開できます。ジョーカーは何にでもなります（7の代わりに1枚では出せない）。</p>
+    <p class="rp">ポン：誰かが捨てたカードで同じ数字3枚ができるなら、誰でももらって公開できます。チー：前の人が捨てたカードで連番3枚ができるなら、次の人がもらって公開できます。どちらもポンが優先。もらったら1枚捨て、その左隣の人の番になります。</p>
+    <p class="rp">役を公開した人は、自分の番に、場の役（誰のものでも）へ手札を付け札できます。</p>
+    <p class="rp">上がりは必ず最後の1枚を捨てて上がります（公開・付け札・ポン・チーでは上がれない）。</p>
+    <p class="rp">失点：A・J・Q・Kは10点、2〜10は数字どおり。7が残ると1枚ごとに2倍、ジョーカーが残ると5倍。</p></div>`);
+  s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await sbSave(g, { status: "aborted", claim: null }, "対戦が中止されました"); closeSb(); };
+}
+async function sbDraw(g){
+  const t = g.turn; if (t.pid !== me || t.phase !== "draw" || g.claim) return;
+  let deck = (g.deck || []).slice(), discard = (g.discard || []).slice();
+  if (!deck.length){ const keep = discard.pop(); deck = shuffle(discard); discard = keep ? [keep] : []; toast("山札を切り直しました"); }
+  if (!deck.length){ toast("引けるカードがありません"); return; }
+  const c = deck.shift();
+  await sbSave(g, { deck, discard, hands: { ...g.hands, [me]: [...g.hands[me], c] }, turn: { pid: me, phase: "play" } });
+}
+const sbRemove = (hand, cards) => { const h = hand.slice(); cards.forEach(c => { const i = h.indexOf(c); if (i >= 0) h.splice(i, 1); }); return h; };
+async function sbDoMeld(g){
+  const m = sbMeld(sbSel); const hand = g.hands[me] || [];
+  if (!m || hand.length - sbSel.length < 1) return;
+  const used = sbSel.slice(); sbSel = [];
+  await sbSave(g, { hands: { ...g.hands, [me]: sbRemove(hand, used) }, melds: [...(g.melds || []), { ...m, owner: me }] }, `${pname(me)}が役を公開：${used.map(c => c === "JK" ? "JK" : SB_MARK[sbSuit(c)] + sbRankTxt(sbRank(c))).join(" ")}`);
+}
+async function sbDoAttach(g, i){
+  if (!sbAttachMode || sbSel.length !== 1) return;
+  const c = sbSel[0], m = (g.melds || [])[i], hand = g.hands[me] || [];
+  const nm = m && sbAttach(m, c);
+  if (!nm){ toast("その役には付けられません"); return; }
+  if (hand.length < 2){ toast("最後の1枚は捨てて上がる必要があります"); return; }
+  const melds = g.melds.slice(); melds[i] = nm; sbSel = []; sbAttachMode = false;
+  await sbSave(g, { hands: { ...g.hands, [me]: sbRemove(hand, [c]) }, melds }, `${pname(me)}が付け札：${c === "JK" ? "JK" : SB_MARK[sbSuit(c)] + sbRankTxt(sbRank(c))}`);
+}
+async function sbDiscard(g){
+  if (sbSel.length !== 1 || g.turn.pid !== me || g.turn.phase !== "play") return;
+  const c = sbSel[0], hand = sbRemove(g.hands[me] || [], [c]); sbSel = [];
+  const discard = [...(g.discard || []), c];
+  const txt = c === "JK" ? "ジョーカー" : SB_MARK[sbSuit(c)] + sbRankTxt(sbRank(c));
+  if (!hand.length){
+    // 上がり：ほかの人の失点を計算
+    const pen = {}, scores = { ...g.scores };
+    g.players.forEach(p => { if (p === me) return; pen[p] = sbPenalty(g.hands[p] || []); scores[p] = (scores[p] || 0) - pen[p]; });
+    const fin = g.round >= g.rounds;
+    await sbSave(g, { hands: { ...g.hands, [me]: [] }, discard, claim: null, scores, status: fin ? "finished" : "round_over", round_result: { winner: me, pen }, winner: fin ? g.players.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0] : null },
+      `${pname(me)}が${txt}を捨てて上がり！`);
+    flash("上がり！", pname(me));
+    return;
+  }
+  await sbSave(g, { hands: { ...g.hands, [me]: hand }, discard, claim: { card: c, from: me, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, me), phase: "draw" } }, `${pname(me)}：${txt}を捨てた`);
+}
+async function sbClaim(g, type){
+  const cl = g.claim; if (!cl || (cl.claims || []).some(x => x.pid === me)) return;
+  await sbSave(g, { claim: { ...cl, claims: [...(cl.claims || []), { pid: me, type }] } }, `${pname(me)}：${type === "pon" ? "ポン" : "チー"}！`);
+}
+async function sbResolve(g){
+  const cl = g.claim; if (!cl) return;
+  const pon = (cl.claims || []).find(x => x.type === "pon"), chi = (cl.claims || []).find(x => x.type === "chi");
+  const who = pon || chi;
+  if (!who){
+    if (await sbSave(g, { claim: null }, null)) pushCall({ type: "game_turn", game: "セブンブリッジ", to: g.turn.pid });
+    return;
+  }
+  const hand = g.hands[who.pid] || [];
+  const use = who.type === "pon" ? sbPonCards(hand, cl.card) : sbChiCards(hand, cl.card);
+  if (!use){ await sbSave(g, { claim: null }, null); return; }
+  const m = sbMeld([...use, cl.card]);
+  if (!m){ await sbSave(g, { claim: null }, null); return; }
+  const discard = (g.discard || []).slice(0, -1);
+  await sbSave(g, { claim: null, discard, hands: { ...g.hands, [who.pid]: sbRemove(hand, use) }, melds: [...(g.melds || []), { ...m, owner: who.pid }], turn: { pid: who.pid, phase: "play" } },
+    `${pname(who.pid)}が${who.type === "pon" ? "ポン" : "チー"}して公開 → 1枚捨てる番`);
+  pushCall({ type: "game_turn", game: "セブンブリッジ", to: who.pid });
+}
+async function sbNextRound(g){
+  const first = g.players[g.round % g.players.length];
+  await sbSave(g, { ...sbDeal(g.players, first), status: "playing", round: g.round + 1 }, `第${g.round + 1}ラウンド開始。最初は${pname(first)}`);
+  pushCall({ type: "game_turn", game: "セブンブリッジ", to: first });
+}
+
 /* ---------- 起動 ---------- */
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
 $("#gearBtn").onclick = openSettings;
@@ -3377,7 +3916,7 @@ clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
   clearBadge();
-  try { await loadAll(); render(); syncArena(); drawNeu(); } catch (e) { console.error(e); }
+  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); } catch (e) { console.error(e); }
 });
 (async () => {
   try { await loadAll(); }
