@@ -730,15 +730,13 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nseat.over{outline:3px dashed var(--ink);outline-offset:2px}
 /* ===== NEU 1画面レイアウト ===== */
 .arena.neu{height:100dvh;overflow:hidden;gap:8px;padding:calc(var(--safe-t) + 8px) 12px calc(var(--safe-b) + 10px);
-  background:repeating-conic-gradient(from 0deg at 50% 42%,rgba(139,108,255,.07) 0 6deg,transparent 6deg 12deg,rgba(31,179,191,.07) 12deg 18deg,transparent 18deg 24deg),radial-gradient(circle at 50% 38%,rgba(139,108,255,.22),transparent 60%),linear-gradient(170deg,#FFFFFF,#ECEEF3 55%,#D2D7E2)}
+  background:radial-gradient(circle at 50% 38%,rgba(139,108,255,.22),transparent 60%),linear-gradient(170deg,#FFFFFF,#ECEEF3 55%,#D2D7E2)}
 .arena.neu>*{position:relative;z-index:1}
 .nbg{position:absolute!important;inset:0;z-index:0!important;pointer-events:none;overflow:hidden}
-.nbg i{position:absolute;font-style:normal;font-size:26px;opacity:.13;animation:nfloat 9s ease-in-out infinite}
-.nbg i:nth-child(1){left:6%;top:20%;color:#1B1838}.nbg i:nth-child(2){left:84%;top:16%;color:#E2364F;animation-delay:-2s}
-.nbg i:nth-child(3){left:10%;top:62%;color:#1B1838;animation-delay:-4s}.nbg i:nth-child(4){left:88%;top:58%;color:#E2364F;animation-delay:-6s}
-.nbg i:nth-child(5){left:48%;top:8%;color:#E8B12A;opacity:.3;animation-delay:-1s}.nbg i:nth-child(6){left:30%;top:86%;color:#E2364F;animation-delay:-3s}
-.nbg i:nth-child(7){left:70%;top:84%;color:#1B1838;animation-delay:-5s}.nbg i:nth-child(8){left:52%;top:46%;color:#8B3CFF;opacity:.08;font-size:120px;animation-duration:14s}
-@keyframes nfloat{50%{transform:translateY(-18px) rotate(14deg)}}
+.nbg i{position:absolute;font-style:normal;line-height:1;opacity:.16;animation:nfloat var(--dur) ease-in-out var(--dl) infinite}
+@keyframes nfloat{0%,100%{transform:translate(0,0) rotate(0) scale(1)}50%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(1.18);opacity:.26}}
+.nrays{position:absolute;left:50%;top:42%;width:240vmax;height:240vmax;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(139,108,255,.10) 0 7deg,transparent 7deg 14deg,rgba(31,179,191,.09) 14deg 21deg,transparent 21deg 28deg,rgba(226,54,79,.07) 28deg 35deg,transparent 35deg 42deg);animation:nrays 40s linear infinite}
+@keyframes nrays{to{transform:translate(-50%,-50%) rotate(360deg)}}
 .ntop{display:flex;align-items:center;gap:8px;margin:0;flex:none}
 .ntop .nt{font-family:var(--disp);font-weight:400;font-size:26px;letter-spacing:.08em;background:linear-gradient(90deg,#E2364F,#8B3CFF,#1FB3BF,#E2364F);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nshine 4s linear infinite;filter:drop-shadow(0 2px 0 rgba(27,24,56,.15))}
 @keyframes nshine{to{background-position:300% 0}}
@@ -762,7 +760,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nar.ccw{transform:scaleX(-1)}
 @keyframes narrow{50%{opacity:.35}}
 .nstage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;gap:10px}
-.ngauge{position:relative;height:min(100%,38vh,240px);aspect-ratio:1/1;display:grid;place-items:center}
+.ngauge{position:relative;height:min(100%,38vh,240px);aspect-ratio:1/1;display:grid;place-items:center;container-type:size}
 .ngauge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .ngauge .trk{fill:#fff;stroke:#E6E8EE;stroke-width:12}
 .ngauge .bar{fill:none;stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.2,1.2,.4,1),stroke .3s;filter:drop-shadow(0 0 6px currentColor)}
@@ -770,7 +768,9 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .ngauge .dash.cw{animation:spin 12s linear infinite}.ngauge .dash.ccw{animation:spin 12s linear infinite reverse}
 .ngauge .nv{position:relative;display:flex;flex-direction:column;align-items:center;line-height:1}
 .ngauge .nv small{font-size:11px;font-weight:900;color:var(--mute)}
-.ngauge .nv b{font-size:clamp(46px,11vh,84px);color:var(--ink);margin:2px 0}
+.ngauge .nv b{font-size:30cqw;color:var(--ink);margin:2px 0;white-space:nowrap}
+.ngauge .nv b.l3{font-size:22cqw}
+.ngauge .nv b.l4{font-size:17cqw}
 .ngauge.bump .nv b{animation:nbump .5s cubic-bezier(.2,1.8,.4,1)}
 @keyframes nbump{0%{transform:scale(1.5)}100%{transform:scale(1)}}
 .nburst{position:absolute;inset:-6%;border-radius:50%;background:var(--burst-glow-gold) center/contain no-repeat;animation:nburst .7s ease-out forwards;pointer-events:none}
@@ -3136,13 +3136,13 @@ function drawNeu(){
       <div class="y">${fin ? "最後まで生き残った！" : `チップを1枚失った${(g.chips[g.loser] || 0) <= 0 ? "…脱落" : `（残り${g.chips[g.loser]}枚）`}`}</div>
       <div class="btns">${fin ? `<button class="btn" id="nClose2">閉じる</button>` : `<button class="btn" id="nNext">次の回戦へ</button>`}</div></div>`;
   }
-  el.innerHTML = `<div class="nbg" aria-hidden="true"><i>♠</i><i>♦</i><i>♣</i><i>♥</i><i>★</i><i>♦</i><i>♠</i><i>♥</i></div>
+  el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span><i style="left:55%;top:82%;font-size:51px;color:#1B1838;--dur:7.9s;--dl:-2.2s;--dx:26px;--dy:-80px;--rot:-7deg">♠</i><i style="left:60%;top:63%;font-size:66px;color:#E2364F;--dur:6.6s;--dl:-6.7s;--dx:18px;--dy:-36px;--rot:-45deg">♦</i><i style="left:89%;top:52%;font-size:38px;color:#1B1838;--dur:10.9s;--dl:-5.4s;--dx:32px;--dy:-53px;--rot:-30deg">♣</i><i style="left:17%;top:34%;font-size:31px;color:#E2364F;--dur:6.8s;--dl:-6.1s;--dx:58px;--dy:-43px;--rot:-42deg">♥</i><i style="left:84%;top:53%;font-size:34px;color:#E8B12A;--dur:12.4s;--dl:-2.5s;--dx:-32px;--dy:-34px;--rot:3deg">★</i><i style="left:7%;top:38%;font-size:41px;color:#1FB3BF;--dur:8.8s;--dl:-4.1s;--dx:-55px;--dy:-68px;--rot:40deg">✦</i><i style="left:-4%;top:56%;font-size:31px;color:#1B1838;--dur:12.3s;--dl:-10.1s;--dx:-43px;--dy:-79px;--rot:-20deg">♠</i><i style="left:50%;top:18%;font-size:66px;color:#E2364F;--dur:6.0s;--dl:-9.2s;--dx:-35px;--dy:-68px;--rot:-8deg">♦</i><i style="left:-3%;top:14%;font-size:36px;color:#1B1838;--dur:9.8s;--dl:-0.2s;--dx:-50px;--dy:-44px;--rot:13deg">♣</i><i style="left:64%;top:29%;font-size:54px;color:#E2364F;--dur:6.5s;--dl:-2.3s;--dx:37px;--dy:-75px;--rot:39deg">♥</i><i style="left:70%;top:22%;font-size:39px;color:#E8B12A;--dur:12.6s;--dl:-8.6s;--dx:-55px;--dy:-77px;--rot:-16deg">★</i><i style="left:67%;top:91%;font-size:66px;color:#1FB3BF;--dur:12.0s;--dl:-8.9s;--dx:34px;--dy:-44px;--rot:-46deg">✦</i><i style="left:11%;top:55%;font-size:43px;color:#1B1838;--dur:7.1s;--dl:-6.1s;--dx:34px;--dy:-57px;--rot:36deg">♠</i><i style="left:62%;top:79%;font-size:64px;color:#E2364F;--dur:11.4s;--dl:-1.0s;--dx:-16px;--dy:-73px;--rot:24deg">♦</i><i style="left:42%;top:61%;font-size:41px;color:#1B1838;--dur:8.8s;--dl:-11.8s;--dx:13px;--dy:-33px;--rot:-48deg">♣</i><i style="left:44%;top:81%;font-size:49px;color:#E2364F;--dur:6.0s;--dl:-1.3s;--dx:-32px;--dy:-52px;--rot:-16deg">♥</i></div>
     <div class="ntop"><b class="nt">NEU</b><span class="nrd">ROUND ${g.round}</span><span class="ndk">山札 ${deckN}</span><button class="nmini" id="nMenu" aria-label="メニュー">…</button><button class="nmini" id="nClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
     <div class="nstage ${g.total >= 90 ? "hot" : ""} ${g.total >= NEU_LIMIT ? "max" : ""}">
       <div class="ngauge ${bump ? "bump" : ""}">
         <svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="74" class="dash ${g.dir === 1 ? "cw" : "ccw"}"/><circle cx="80" cy="80" r="62" class="trk"/><circle cx="80" cy="80" r="62" class="bar" style="stroke:${gcol};stroke-dasharray:${C};stroke-dashoffset:${C * (1 - pct)}"/></svg>
-        <div class="nv"><small>合計</small><b class="num" id="ntot">${g.total}</b><small>/ 101</small></div>
+        <div class="nv"><small>合計</small><b class="num ${String(g.total).length >= 4 ? "l4" : String(g.total).length === 3 ? "l3" : ""}" id="ntot">${g.total}</b><small>/ 101</small></div>
         ${bump ? `<span class="nburst"></span>` : ""}
       </div>
       <div class="nside"><span class="ndir ${g.dir === 1 ? "cw" : "ccw"}">${g.dir === 1 ? "↻" : "↺"}</span><small>${g.dir === 1 ? "時計回り" : "逆回り"}</small>${last ? `<div class="nlast2">${neuCardHtml(last)}<small>直前</small></div>` : ""}</div>
