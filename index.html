@@ -629,6 +629,35 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .hscroll.multi>.card{flex:0 0 86%;scroll-snap-align:center;margin:0}
 .tcount{margin-left:8px;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:2px 8px;border-radius:99px;border:1.5px solid var(--line)}
 /* ===== NEU ===== */
+.neuico{position:relative}
+.neuico .gdot{position:absolute;top:0;right:0;width:10px;height:10px;border-radius:50%;background:#8B3CFF;border:2px solid #fff;animation:bangpulse 1.2s ease-in-out infinite}
+.glist{display:flex;flex-direction:column;gap:10px}
+.gcard{display:grid;grid-template-columns:56px 1fr;grid-template-rows:auto auto;gap:6px 12px;align-items:center;padding:12px;border-radius:14px;background:#fff;border:2px solid var(--ink)}
+.gcard.live{box-shadow:0 0 18px rgba(139,108,255,.5);border-color:#8B3CFF}
+.gcard .gb{display:flex;flex-direction:column;min-width:0}
+.gcard .gb b{font-family:var(--disp);font-weight:400;font-size:17px}
+.gcard .gb small{font-size:11.5px;font-weight:900;color:var(--mute)}
+.gcard .gb span{font-size:12px;color:var(--mute);font-weight:700;line-height:1.45}
+.gcard .gact{grid-column:1/3}
+.gcard .gact .btn{width:100%}
+.gcard.gsoon{border-style:dashed;background:rgba(255,255,255,.6)}
+.gic{display:grid;place-items:center;width:56px;height:56px;border-radius:14px;border:2px solid var(--ink);font-family:var(--disp);font-size:17px;transform:rotate(-6deg)}
+.gic.neu{background:var(--metal);box-shadow:4px 4px 0 #8B3CFF}
+.gic.more{background:#fff;color:var(--mute);border-style:dashed;transform:none;font-size:24px}
+.neuico{flex:none;width:36px;height:34px;display:grid;place-items:center;padding:0;border-radius:10px;animation:neuwig 3.5s ease-in-out infinite}
+.neuico:active{transform:scale(.92)}
+@keyframes neuwig{0%,88%,100%{transform:rotate(0)}92%{transform:rotate(-8deg)}96%{transform:rotate(6deg)}}
+.nring{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px;margin:10px 0 0;padding:8px;border-radius:12px;background:rgba(255,255,255,.75);border:1.5px solid var(--line)}
+.nrl{width:100%;text-align:center;font-size:11.5px;font-weight:900;color:var(--mute);margin-bottom:2px}
+.nrp{position:relative;display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:8px;font-size:12px;font-weight:900;border:2px solid var(--pc);background:#fff}
+.nrp em{font-style:normal;font-size:10px;padding:0 4px;border-radius:4px;background:var(--pc);color:#fff}
+.nrp.now{background:color-mix(in srgb,var(--pc) 28%,#fff);border-color:var(--ink);transform:scale(1.06)}
+.nrp.nx{background:color-mix(in srgb,var(--pc) 12%,#fff)}
+.nrp.loop{opacity:.45;border-style:dashed}
+.nra{font-style:normal;font-weight:900;color:var(--mute);font-size:12px}
+.nseat2 .seatno{position:absolute;left:6px;bottom:5px;font-family:var(--disp);font-size:10px;color:#B9BFCC}
+.nseat2 .nxb{position:absolute;right:6px;bottom:6px;font-style:normal;font-size:10px;font-weight:900;padding:0 5px;border-radius:5px;background:var(--pc);color:#fff}
+.nseat2 small{padding-left:12px}
 .neubar{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin:-8px 0 20px;padding:10px 14px;border-radius:14px;background:linear-gradient(110deg,#1B1838,#2E2A60);color:#fff;border:2px solid var(--ink);box-shadow:0 4px 0 #0E0C22,0 0 18px rgba(139,108,255,.35)}
 .neubar:active{transform:translateY(4px);box-shadow:none}
 .neubar .nic{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:var(--metal);color:var(--ink);font-family:var(--disp);font-size:16px;border:2px solid #fff;transform:rotate(-8deg)}
@@ -698,11 +727,14 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sharebtn svg{width:15px;height:15px}
 .sharebtn:active{background:var(--paper)}
 header{gap:8px}
-.me{max-width:112px}
-.me span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me span:last-child{white-space:nowrap}
+.logo{font-size:clamp(16px,4.9vw,20px)}
 .mapinfo{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
 .mapnote{font-size:10.5px;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis}
-.gear{position:relative}
+.gear{position:relative;flex:none;width:34px;height:34px;min-width:34px;aspect-ratio:1/1;padding:0;border-radius:10px;box-shadow:0 2px 0 var(--ink)}
+.gear svg{width:17px;height:17px}
+.logo{min-width:0;flex-shrink:1}
+.me{flex-shrink:0}
 .gear.alert::after,.bang{content:"!";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--crimson);color:#fff;font-family:var(--disp);font-size:12px;font-style:normal;line-height:1;border:2px solid #fff;box-shadow:0 0 8px rgba(226,54,79,.7);animation:bangpulse 1.2s ease-in-out infinite}
 .gear.alert::after{position:absolute;top:-6px;right:-6px}
 .bang{margin:0 auto 0 6px}
@@ -804,6 +836,7 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 <header>
   <div class="logo">男気じゃんけん旅<small id="tripsub"></small></div>
   <div class="sp"></div>
+  <button class="neuico" id="neuIco" aria-label="ゲーム一覧" hidden><svg viewBox="0 0 40 34" width="34" height="29" aria-hidden="true"><g transform="rotate(12 27 17)"><rect x="17" y="4" width="17" height="24" rx="3" fill="#F5C842" stroke="#1B1838" stroke-width="2"/><rect x="19.5" y="6.5" width="12" height="19" rx="1.6" fill="none" stroke="#1B1838" stroke-width="1" opacity=".55"/><path d="M25.5 10.5l3.2 5.5-3.2 5.5-3.2-5.5z" fill="#E2364F" stroke="#1B1838" stroke-width="1"/><circle cx="21.8" cy="9" r="1" fill="#1B1838" opacity=".6"/><circle cx="29.2" cy="23" r="1" fill="#1B1838" opacity=".6"/></g><g transform="rotate(-12 13 20)"><rect x="3" y="9" width="19" height="19" rx="4" fill="#fff" stroke="#1B1838" stroke-width="2"/><circle cx="8" cy="14" r="1.9" fill="#E2364F"/><circle cx="12.5" cy="18.5" r="1.9" fill="#1B1838"/><circle cx="17" cy="23" r="1.9" fill="#1FB3BF"/></g></svg><i class="gdot" hidden></i></button>
   <button class="me" id="meBtn" aria-label="この端末の自分を選ぶ"><span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span></button>
   <button class="gear" id="gearBtn" aria-label="設定"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 </header>
@@ -963,8 +996,11 @@ function render(){
   const t = curTrip();
   $("#tripsub").textContent = t ? t.name : "";
   $("#gearBtn").classList.toggle("alert", ruleAlert());
+  $("#neuIco").hidden = !loaded || !db.players.length;
+  $("#neuIco .gdot").hidden = !neuActive();
   const mp = player(me);
-  $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span>${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
+  const nlen = mp ? [...mp.name].length : 0, nfs = nlen <= 4 ? 12 : nlen <= 5 ? 11 : nlen <= 6 ? 10 : nlen <= 8 ? 9 : 8;
+  $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span style="font-size:${nfs}px">${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
   document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
   if (!loaded){ v.innerHTML = `<div class="loading">読み込み中…</div>`; return; }
   v.innerHTML = artLinks(tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
@@ -973,6 +1009,7 @@ function render(){
     : viewHistory(t));
   bindView();
   checkClaim();
+  neuTurnNotice();
 }
 const soon = (t, s) => `<div class="soon"><b>${t}</b>${s}</div>`;
 
@@ -1002,7 +1039,7 @@ function viewHome(t){
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
   const ng = neuActive();
-  const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu"><span class="nic">101</span><div><b>NEU 対戦中</b><small>第${ng.round}回戦・タップで入る</small></div></button>` : `<button class="neubar" data-act="newNeu"><span class="nic">101</span><div><b>NEU（ノイ）</b><small>スマホでカードゲーム対戦</small></div><em>遊ぶ</em></button>`;
+  const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu"><span class="nic">101</span><div><b>NEU 対戦中${ng.status === "playing" && ng.turn && ng.turn.pid === me ? "・あなたの番！" : ""}</b><small>第${ng.round}回戦・合計${ng.total}・タップで入る</small></div></button>` : "";
   h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
@@ -2862,6 +2899,28 @@ async function neuSave(g, patch, logLine){
   Object.assign(g, data[0]); drawNeu(); return true;
 }
 
+let neuNoticeKey = null;
+function neuTurnNotice(){
+  const g = neuActive(); if (!g || g.status !== "playing" || !g.turn || g.turn.pid !== me) return;
+  const key = `${g.id}:${g.round}:${(g.log || []).length}`;
+  if (neuNoticeKey === key) return;
+  neuNoticeKey = key;
+  if (neuId === g.id) return;
+  flash("NEU：あなたの番！", `合計${g.total}${g.turn.need === 2 ? "・2回出す" : ""}`);
+}
+/* ---------- ゲーム一覧（ここにゲームを追加していく） ---------- */
+const GAMES = [
+  { id: "neu", name: "NEU（ノイ）", desc: "101を超えないようにカードを出し合う。出せなくなったらチップを失い、最後の1人が勝ち", players: "2〜7人", time: "15〜30分",
+    icon: `<span class="gic neu">101</span>`, active: () => neuActive(), start: () => openNeuNew(), open: g => openNeu(g.id) }
+];
+function openGames(){
+  const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
+    <div class="glist">${GAMES.map(gm => { const a = gm.active(); return `<div class="gcard ${a ? "live" : ""}">${gm.icon}<div class="gb"><b>${gm.name}</b><small>${gm.players}・${gm.time}</small><span>${gm.desc}</span></div>
+      <div class="gact">${a ? `<button class="btn" data-gopen="${gm.id}">対戦中・入る</button>` : `<button class="btn" data-gstart="${gm.id}">遊ぶ</button>`}</div></div>`; }).join("")}
+      <div class="gcard gsoon"><span class="gic more">＋</span><div class="gb"><b>新しいゲーム</b><span>ここにゲームが増えていきます</span></div></div></div>`);
+  s.querySelectorAll("[data-gstart]").forEach(b => b.onclick = () => GAMES.find(x => x.id === b.dataset.gstart).start());
+  s.querySelectorAll("[data-gopen]").forEach(b => b.onclick = () => { const gm = GAMES.find(x => x.id === b.dataset.gopen); closeSheet(); gm.open(gm.active()); });
+}
 /* ---------- 対戦の作成 ---------- */
 function openNeuNew(){
   const t = curTrip();
@@ -2893,7 +2952,7 @@ function openNeuNew(){
     const row = { trip_id: t ? t.id : null, status: "playing", ...g0, ...dealt, dealer, round: 1, created_by: me || null,
       log: [{ t: new Date().toISOString(), m: `第1回戦スタート。親は${pname(dealer)}` }] };
     const res = await q(sb.from("neu_games").insert(row).select().single(), "作成");
-    if (res){ await loadTable("neu_games"); closeSheet(); openNeu(res.id); }
+    if (res){ await loadTable("neu_games"); closeSheet(); openNeu(res.id); pushCall({ type: "neu_start", ids: order.filter(id => id !== me), first: dealer }); }
   };
 }
 
@@ -2908,15 +2967,19 @@ function drawNeu(){
   const myTurn = g.status === "playing" && t.pid === me;
   const deckN = (g.deck || []).length, canDraw = myTurn && t.drawn < t.played && (deckN + (g.discard || []).length) > 0;
   const last = (g.discard || [])[(g.discard || []).length - 1];
-  const seats = g.players.map(p => {
+  const nextP = g.status === "playing" && t.pid ? (t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, t.pid, g.dir)) : null;
+  // 今の人から、回る順に並べる
+  const ring = []; if (g.status === "playing" && t.pid){ let p = t.pid; const n = neuAlive(g).length; for (let k = 0; k < n; k++){ ring.push(p); p = neuNext(g, p, g.dir); } }
+  const orderStrip = ring.length ? `<div class="nring"><span class="nrl">${g.dir === 1 ? "↻ 時計回り" : "↺ 逆回り"}</span>${ring.map((p, k) => `<span class="nrp ${k === 0 ? "now" : k === 1 ? "nx" : ""}" style="--pc:${pcolor(p)}">${k === 0 ? "<em>今</em>" : k === 1 ? "<em>次</em>" : ""}${esc(pname(p))}</span>`).join(`<i class="nra">→</i>`)}<i class="nra">→</i><span class="nrp loop" style="--pc:${pcolor(ring[0])}">${esc(pname(ring[0]))}</span></div>${t.shot ? `<p class="note" style="margin:4px 0 0;text-align:center">SHOTで${esc(pname(t.shot))}が指名されています</p>` : ""}` : "";
+  const seats = g.players.map((p, si) => {
     const c = g.chips[p] || 0, out = c <= 0, on = g.status === "playing" && t.pid === p;
     return `<div class="nseat2 ${on ? "on" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">
-      ${p === g.dealer ? `<em class="dealer">親</em>` : ""}<b>${esc(pname(p))}</b>
+      <span class="seatno">${si + 1}</span>${p === g.dealer ? `<em class="dealer">親</em>` : ""}${p === nextP ? `<em class="nxb">次</em>` : ""}<b>${esc(pname(p))}</b>
       <span class="nchips">${out ? "脱落" : "●".repeat(c) + `<i>${"●".repeat(Math.max(0, 3 - c))}</i>`}</span>
       <small>${out ? "" : `手札${(g.hands[p] || []).length}枚`}${on && t.need === 2 ? "・2回" : ""}</small></div>`;
   }).join("");
   let center = `<div class="ntotal ${g.total >= 90 ? "hot" : ""} ${g.total === NEU_LIMIT ? "max" : ""}"><small>合計</small><b class="num" id="ntot">${g.total}</b><small>／101</small></div>
-    <div class="nmeta"><span>${g.dir === 1 ? "↻ 時計回り" : "↺ 逆回り"}</span><span>山札 ${deckN}枚</span>${last ? `<span class="nlast">直前：${neuCardHtml(last, 'data-mini="1"')}</span>` : ""}</div>`;
+    <div class="nmeta"><span>山札 ${deckN}枚</span>${last ? `<span class="nlast">直前：${neuCardHtml(last, 'data-mini="1"')}</span>` : ""}</div>`;
   let me2 = "";
   if (g.status === "playing"){
     const who = t.pid === me ? "あなたの番" : `${esc(pname(t.pid))}の番`;
@@ -2942,7 +3005,7 @@ function drawNeu(){
   }
   const lg = (g.log || []).slice(-4).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
   el.innerHTML = `<div class="ntop"><b class="nt">NEU</b><span>第${g.round}回戦</span><button class="mini" id="nMenu">…</button><button class="mini" id="nClose">閉じる</button></div>
-    <div class="nseats">${seats}</div>
+    <div class="nseats">${seats}</div>${orderStrip}
     <div class="ncenter">${center}</div>
     <ul class="nlog">${lg}</ul>
     <div class="nmine">${me2}</div>${over}`;
@@ -3008,8 +3071,8 @@ async function neuEnd(g){
   const t = g.turn; if (!t.done) return;
   if (t.drawn < t.played && !confirm(`まだ${t.played - t.drawn}枚引いていません。このままターンを終えますか？`)) return;
   const next = t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, me, g.dir);
-  await neuSave(g, { turn: { pid: next, need: t.dbl ? 2 : 1, played: 0, drawn: 0, dbl: false, shot: null, done: false } },
-    `${pname(me)}のターン終了 → ${pname(next)}${t.dbl ? "（2回）" : ""}`);
+  if (await neuSave(g, { turn: { pid: next, need: t.dbl ? 2 : 1, played: 0, drawn: 0, dbl: false, shot: null, done: false } },
+    `${pname(me)}のターン終了 → ${pname(next)}${t.dbl ? "（2回）" : ""}`)) pushCall({ type: "neu_turn", to: next, total: g.total, need: t.dbl ? 2 : 1 });
 }
 async function neuLose(g){
   if (!confirm("負けを宣言しますか？\nチップを1枚失い、次の回戦の親になります。")) return;
@@ -3025,12 +3088,13 @@ async function neuNextRound(g){
   const g2 = { ...g };
   const starter = (g.chips[dealer] || 0) > 0 ? dealer : neuNext(g2, dealer, 1);
   const dealt = neuDeal(g2, starter);
-  await neuSave(g, { ...dealt, dealer, loser: null, status: "playing", round: g.round + 1 }, `第${g.round + 1}回戦スタート。親は${pname(dealer)}${starter !== dealer ? `（${pname(starter)}から）` : ""}`);
+  if (await neuSave(g, { ...dealt, dealer, loser: null, status: "playing", round: g.round + 1 }, `第${g.round + 1}回戦スタート。親は${pname(dealer)}${starter !== dealer ? `（${pname(starter)}から）` : ""}`)) pushCall({ type: "neu_turn", to: starter, total: 0, need: 1, round: g.round + 1 });
 }
 
 /* ---------- 起動 ---------- */
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
 $("#gearBtn").onclick = openSettings;
+$("#neuIco").onclick = openGames;
 async function shareLink(){
   const url = location.origin + location.pathname;
   const data = { url };  // URLだけを渡すと、共有シートの「コピー」でリンクだけが保存される
