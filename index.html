@@ -634,7 +634,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .neuico .gdot{position:absolute;top:0;right:0;width:10px;height:10px;border-radius:50%;background:#8B3CFF;border:2px solid #fff;animation:bangpulse 1.2s ease-in-out infinite}
 .glist{display:flex;flex-direction:column;gap:10px}
 .gcard{display:grid;grid-template-columns:56px 1fr;grid-template-rows:auto auto;gap:6px 12px;align-items:center;padding:12px;border-radius:14px;background:#fff;border:2px solid var(--ink)}
-.gcard.live{box-shadow:0 0 18px rgba(139,108,255,.5);border-color:#8B3CFF}
+.gcard.glive{box-shadow:0 0 18px rgba(139,108,255,.5);border-color:#8B3CFF}
 .gcard .gb{display:flex;flex-direction:column;min-width:0}
 .gcard .gb b{font-family:var(--disp);font-weight:400;font-size:17px}
 .gcard .gb small{font-size:11.5px;font-weight:900;color:var(--mute)}
@@ -643,7 +643,9 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .gcard .gact .btn{width:100%}
 .gcard.gsoon{border-style:dashed;background:rgba(255,255,255,.6)}
 .gic{display:grid;place-items:center;width:56px;height:56px;border-radius:14px;border:2px solid var(--ink);font-family:var(--disp);font-size:17px;transform:rotate(-6deg)}
-.gic.neu{background:var(--metal);box-shadow:4px 4px 0 #8B3CFF}
+.gic.neu{background:radial-gradient(circle at 30% 25%,#3B2C86,#1B1838);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(139,108,255,.55);overflow:hidden}
+.gic.neu svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
+@keyframes gicfloat{50%{transform:translateY(-2px) rotate(-3deg)}}
 .gic.more{background:#fff;color:var(--mute);border-style:dashed;transform:none;font-size:24px}
 .neuico{flex:none;width:36px;height:34px;display:grid;place-items:center;padding:0;border-radius:10px;animation:neuwig 3.5s ease-in-out infinite}
 .neuico:active{transform:scale(.92)}
@@ -663,6 +665,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .neubar:active{transform:translateY(4px);box-shadow:none}
 .neubar .nic{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:var(--metal);color:var(--ink);font-family:var(--disp);font-size:16px;border:2px solid #fff;transform:rotate(-8deg)}
 .neubar div{flex:1;display:flex;flex-direction:column}
+.neubar .gic{width:46px;height:46px;flex:none;border-color:#fff}
 .neubar b{font-family:var(--disp);font-weight:400;font-size:17px}
 .neubar small{font-size:12px;opacity:.8;font-weight:700}
 .neubar em{font-style:normal;font-weight:900;font-size:13px;padding:5px 12px;border-radius:99px;background:#fff;color:var(--ink)}
@@ -817,6 +820,17 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nwait{text-align:center;font-size:12px;font-weight:900;color:var(--mute);padding:6px}
 .nover .ob{position:absolute;left:50%;top:44%;width:min(120vw,620px);height:min(120vw,620px);transform:translate(-50%,-50%);background:var(--burst-glow-gold) center/contain no-repeat;opacity:.5;animation:spinc 18s linear infinite;pointer-events:none}
 .nover>*:not(.ob){position:relative}
+/* ===== NEU 観戦 ===== */
+.nturn .spec{font-style:normal;font-size:10.5px;font-weight:900;padding:1px 8px;border-radius:99px;background:var(--ink);color:#fff}
+.nspy{display:flex;flex-direction:column;gap:4px}
+.nspyr{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;background:#fff;border:2px solid var(--line);box-shadow:inset 4px 0 0 var(--pc)}
+.nspyr.on{border-color:var(--ink);background:color-mix(in srgb,var(--pc) 14%,#fff)}
+.nspyr b{width:64px;flex:none;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nspyr span{display:flex;gap:4px}
+.nspyr .ncard{width:34px;height:46px;border-width:1.5px;box-shadow:0 2px 0 var(--ink);border-radius:6px}
+.nspyr .ncard::before{display:none}
+.nspyr .ncard b{font-size:14px;width:auto}.nspyr .ncard small{display:none}.nspyr .ncard i{font-size:10px}
+.nspyr .ncard.inst b{font-size:15cqw}
 /* ===== NEU 固有演出 ===== */
 .neufx{position:fixed!important;inset:0;z-index:45!important;display:grid;place-items:center;pointer-events:none;overflow:hidden}
 .neufx .fxw{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px}
@@ -1139,6 +1153,7 @@ function render(){
   const t = curTrip();
   $("#tripsub").textContent = t ? t.name : "";
   $("#gearBtn").classList.toggle("alert", ruleAlert());
+  { const n = ruleAlert() ? Object.keys(setting("rule_requests") || {}).length : 0; if (n !== lastBadgeN){ lastBadgeN = n; clearBadge(); } }
   $("#neuIco").hidden = !loaded || !db.players.length;
   $("#neuIco").disabled = !player(me);
   $("#neuIco").title = player(me) ? "ゲーム一覧" : "自分を選ぶと遊べます";
@@ -1184,7 +1199,7 @@ function viewHome(t){
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
   const ng = neuActive();
-  const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu"><span class="nic">101</span><div><b>NEU 対戦中${ng.status === "playing" && ng.turn && ng.turn.pid === me ? "・あなたの番！" : ""}</b><small>第${ng.round}回戦・合計${ng.total}・タップで入る</small></div></button>` : "";
+  const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中${ng.status === "playing" && ng.turn && ng.turn.pid === me ? "・あなたの番！" : ""}</b><small>第${ng.round}回戦・合計${ng.total}・タップで入る</small></div></button>` : "";
   h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
@@ -3066,11 +3081,19 @@ function neuTurnNotice(){
 /* ---------- ゲーム一覧（ここにゲームを追加していく） ---------- */
 const GAMES = [
   { id: "neu", name: "NEU（ノイ）", desc: "101を超えないようにカードを出し合う。出せなくなったらチップを失い、最後の1人が勝ち", players: "2〜7人", time: "15〜30分",
-    icon: `<span class="gic neu">101</span>`, active: () => neuActive(), start: () => openNeuNew(), open: g => openNeu(g.id) }
+    icon: `<span class="gic neu"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="gN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E2364F"/><stop offset=".5" stop-color="#8B3CFF"/><stop offset="1" stop-color="#1FB3BF"/></linearGradient><linearGradient id="gG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1B8"/><stop offset=".45" stop-color="#E8B12A"/><stop offset="1" stop-color="#B9821A"/></linearGradient></defs>
+      <g transform="rotate(-20 32 46)"><rect x="17" y="10" width="26" height="36" rx="5" fill="#E6FAFB" stroke="#1B1838" stroke-width="2.4"/></g>
+      <g transform="rotate(14 32 46)"><rect x="21" y="10" width="26" height="36" rx="5" fill="#FFE3E8" stroke="#1B1838" stroke-width="2.4"/></g>
+      <rect x="19" y="12" width="26" height="36" rx="5" fill="url(#gG)" stroke="#1B1838" stroke-width="2.4"/>
+      <rect x="22.5" y="15.5" width="19" height="29" rx="3" fill="none" stroke="#1B1838" stroke-width="1" stroke-dasharray="2 2" opacity=".5"/>
+      <text x="32" y="35" text-anchor="middle" font-family="Dela Gothic One,Arial Black,Arial" font-size="10.5" fill="url(#gN)" stroke="#1B1838" stroke-width=".5">101</text>
+      <circle cx="52" cy="12" r="3" fill="#E8B12A"/><circle cx="10" cy="20" r="2" fill="#1FB3BF"/><path d="M50 50l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#E2364F"/></svg></span>`,
+    count: () => neuGames().filter(x => x.status === "finished").length,
+    active: () => neuActive(), start: () => openNeuNew(), open: g => openNeu(g.id) }
 ];
 function openGames(){
   const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
-    <div class="glist">${GAMES.map(gm => { const a = gm.active(); return `<div class="gcard ${a ? "live" : ""}">${gm.icon}<div class="gb"><b>${gm.name}</b><small>${gm.players}・${gm.time}</small><span>${gm.desc}</span></div>
+    <div class="glist">${GAMES.map(gm => { const a = gm.active(); return `<div class="gcard ${a ? "glive" : ""}">${gm.icon}<div class="gb"><b>${gm.name}</b><small>${gm.players}・${gm.time}・プレイ${gm.count()}回</small><span>${gm.desc}</span></div>
       <div class="gact">${a ? `<button class="btn" data-gopen="${gm.id}">対戦中・入る</button>` : `<button class="btn" data-gstart="${gm.id}">遊ぶ</button>`}</div></div>`; }).join("")}
       <div class="gcard gsoon"><span class="gic more">＋</span><div class="gb"><b>新しいゲーム</b><span>ここにゲームが増えていきます</span></div></div></div>`);
   s.querySelectorAll("[data-gstart]").forEach(b => b.onclick = () => GAMES.find(x => x.id === b.dataset.gstart).start());
@@ -3193,6 +3216,11 @@ function drawNeu(){
         bottom += `<div class="nbtns"><button class="nb draw" id="nDraw" ${canDraw ? "" : "disabled"}>引く${t.played ? `<small>${t.drawn}/${t.played}</small>` : ""}</button><button class="nb end" id="nEnd" ${t.done ? "" : "disabled"}>ターン終了</button><button class="nb lose ${!any && !t.done ? "pulse" : ""}" id="nLose">負け宣言</button></div>`;
       } else bottom += `<div class="nwait">ほかの人の番です</div>`;
     } else bottom += `<div class="nwait">観戦中（この対戦に参加していません）</div>`;
+    // 脱落した人だけ、ほかの人の手札が見える
+    if (mine && (g.chips[me] || 0) <= 0){
+      bottom = `<div class="nturn" style="--pc:${pcolor(t.pid)}"><span>${esc(pname(t.pid))}の番</span><em class="spec">脱落・観戦モード</em></div>
+        <div class="nspy">${neuAlive(g).map(p => `<div class="nspyr ${p === t.pid ? "on" : ""}" style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><span>${(g.hands[p] || []).map(c => neuCardHtml(c)).join("") || "<small>なし</small>"}</span></div>`).join("")}</div>`;
+    }
   }
   let over = "";
   if (g.status === "round_over" || g.status === "finished"){
@@ -3336,8 +3364,15 @@ async function shareLink(){
 }
 $("#meBtn").onclick = openMe;
 async function clearBadge(){
-  try { if (navigator.clearAppBadge) await navigator.clearAppBadge(); const c = await caches.open("ojk-badge"); await c.put("/badge", new Response("0")); } catch (e) {}
+  // アプリを開いたら通知の未読は0に。オーナーは未処理の編集リクエスト数だけバッジを残す
+  try {
+    let n = 0;
+    try { if (loaded && me && me === hostId()) n = Object.keys(setting("rule_requests") || {}).length; } catch (_) {}
+    if (n > 0 && navigator.setAppBadge) await navigator.setAppBadge(n); else if (navigator.clearAppBadge) await navigator.clearAppBadge();
+    const c = await caches.open("ojk-badge"); await c.put("/badge", new Response(String(n)));
+  } catch (e) {}
 }
+let lastBadgeN = null;
 clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
