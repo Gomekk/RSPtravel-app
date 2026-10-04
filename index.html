@@ -861,6 +861,10 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .fx-50{animation:fxfade 1.3s forwards}
 @keyframes fxfade{0%,75%{opacity:1}100%{opacity:0}}
 /* ===== フィードバック3 ===== */
+.sheet h3 .ht{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet h3 .x{flex:none;white-space:nowrap}
+.sheet h3.long{font-size:17px}
+.sheet h3.xlong{font-size:14.5px}
 .sharebtn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--mute);border:1.5px solid var(--line)}
 .sharebtn svg{width:15px;height:15px}
 .sharebtn:active{background:var(--paper)}
@@ -1286,7 +1290,8 @@ function bindView(){
 /* ---------- シート ---------- */
 function openSheet(title, html, noLinks){
   openSheet.n = ((openSheet.n || 0) + 1) % 3;
-  $("#sheetIn").innerHTML = `<h3 class="hd${openSheet.n}">${title}<button class="x" data-close>閉じる</button></h3>${noLinks ? html : artLinks(html)}`;
+  const tlen = String(title).replace(/<[^>]*>/g, "").length;
+  $("#sheetIn").innerHTML = `<h3 class="hd${openSheet.n} ${tlen > 9 ? "long" : ""} ${tlen > 13 ? "xlong" : ""}"><span class="ht">${title}</span><button class="x" data-close>閉じる</button></h3>${noLinks ? html : artLinks(html)}`;
   $("#sheet").classList.add("on");
   $("#sheetIn").querySelectorAll("[data-close]").forEach(b => b.onclick = closeSheet);
   return $("#sheetIn");
@@ -3039,12 +3044,13 @@ function neuLegal(g, c){
   if (a !== null && g.total + a > NEU_LIMIT) return false;
   return true;
 }
+let neuBusy = false;
 async function neuSave(g, patch, logLine){
   const body = { ...patch, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
   if (logLine) body.log = [...(g.log || []), { t: new Date().toISOString(), m: logLine }].slice(-60);
   const { data, error } = await sb.from("neu_games").update(body).eq("id", g.id).eq("version", g.version || 1).select();
   if (error){ fail(error, "保存"); return false; }
-  if (!data || !data.length){ toast("ほかの人の操作と重なりました。もう一度どうぞ"); await loadTable("neu_games"); drawNeu(); return false; }
+  if (!data || !data.length){ await loadTable("neu_games"); drawNeu(); toast("画面を最新にしました。もう一度タップしてください", 2000); return false; }
   Object.assign(g, data[0]); drawNeu(); return true;
 }
 
@@ -3211,8 +3217,10 @@ function drawNeu(){
     <div class="nbottom">${bottom}</div>${over}`;
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   on("nClose", closeNeu); on("nClose2", closeNeu); on("nMenu", () => neuMenu(g));
-  on("nDraw", () => neuDraw(g)); on("nEnd", () => neuEnd(g)); on("nLose", () => neuLose(g)); on("nNext", () => neuNextRound(g));
-  el.querySelectorAll("[data-play]").forEach(b => b.onclick = () => neuPlay(g, Number(b.dataset.play)));
+  // 連打や通信待ちの間の操作を防ぎ、押した時点の最新の状態で処理する
+  const act = fn => async () => { if (neuBusy) return; neuBusy = true; try { const cur = neuById(neuId); if (cur) await fn(cur); } finally { neuBusy = false; } };
+  on("nDraw", act(neuDraw)); on("nEnd", act(neuEnd)); on("nLose", act(neuLose)); on("nNext", act(neuNextRound));
+  el.querySelectorAll("[data-play]").forEach(b => b.onclick = act(cur => neuPlay(cur, Number(b.dataset.play))));
   if (fxCard) neuFx(fxCard, g);
 }
 /* 特殊カード・101の固有演出（全員の画面で再生） */
@@ -3253,7 +3261,7 @@ async function neuPlay(g, i){
   if (c === "SHOT"){
     const alive = neuAlive(g).filter(p => p !== me);
     const s = openSheet("SHOT：次に出す人を指名", `<div class="chips">${alive.map(p => `<button type="button" class="pc" style="--pc:${pcolor(p)}" data-shot="${p}" aria-pressed="false"><span class="dot" style="background:${pcolor(p)}"></span>${esc(pname(p))}</button>`).join("")}</div>`);
-    s.querySelectorAll("[data-shot]").forEach(b => b.onclick = () => { closeSheet(); neuApply(g, i, c, b.dataset.shot); });
+    s.querySelectorAll("[data-shot]").forEach(b => b.onclick = async () => { closeSheet(); if (neuBusy) return; neuBusy = true; try { await neuApply(neuById(g.id) || g, i, c, b.dataset.shot); } finally { neuBusy = false; } });
     return;
   }
   neuApply(g, i, c, null);
@@ -3290,7 +3298,6 @@ async function neuDraw(g){
 }
 async function neuEnd(g){
   const t = g.turn; if (!t.done) return;
-  if (t.drawn < t.played && !confirm(`まだ${t.played - t.drawn}枚引いていません。このままターンを終えますか？`)) return;
   const next = t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, me, g.dir);
   if (await neuSave(g, { turn: { pid: next, need: t.dbl ? 2 : 1, played: 0, drawn: 0, dbl: false, shot: null, done: false } },
     `${pname(me)}のターン終了 → ${pname(next)}${t.dbl ? "（2回）" : ""}`)) pushCall({ type: "neu_turn", to: next, total: g.total, need: t.dbl ? 2 : 1 });
