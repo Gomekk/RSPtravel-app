@@ -628,6 +628,71 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .hscroll.multi{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -18px;padding:0 18px 6px;gap:12px}
 .hscroll.multi>.card{flex:0 0 86%;scroll-snap-align:center;margin:0}
 .tcount{margin-left:8px;font-family:var(--body);font-size:12px;font-weight:900;color:var(--mute);padding:2px 8px;border-radius:99px;border:1.5px solid var(--line)}
+/* ===== NEU ===== */
+.neubar{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin:-8px 0 20px;padding:10px 14px;border-radius:14px;background:linear-gradient(110deg,#1B1838,#2E2A60);color:#fff;border:2px solid var(--ink);box-shadow:0 4px 0 #0E0C22,0 0 18px rgba(139,108,255,.35)}
+.neubar:active{transform:translateY(4px);box-shadow:none}
+.neubar .nic{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:var(--metal);color:var(--ink);font-family:var(--disp);font-size:16px;border:2px solid #fff;transform:rotate(-8deg)}
+.neubar div{flex:1;display:flex;flex-direction:column}
+.neubar b{font-family:var(--disp);font-weight:400;font-size:17px}
+.neubar small{font-size:12px;opacity:.8;font-weight:700}
+.neubar em{font-style:normal;font-weight:900;font-size:13px;padding:5px 12px;border-radius:99px;background:#fff;color:var(--ink)}
+.neubar.live2{background:linear-gradient(110deg,#5B2EC9,#8B3CFF);animation:pulse 1.6s ease-in-out infinite}
+.arena.neu{background:radial-gradient(circle at 50% 36%,rgba(139,108,255,.25),transparent 60%),linear-gradient(170deg,#FFFFFF,#ECEEF3 55%,#D2D7E2);overflow-y:auto}
+.ntop{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ntop .nt{font-family:var(--disp);font-weight:400;font-size:24px;letter-spacing:.08em;background:linear-gradient(90deg,var(--crimson),#8B3CFF,var(--aqua));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ntop span{flex:1;font-weight:900;color:var(--mute);font-size:13px}
+.nseats{display:flex;flex-wrap:wrap;gap:6px}
+.nseat2{position:relative;flex:0 0 calc(33.333% - 4px);min-width:0;padding:8px 8px 6px;border-radius:12px;background:#fff;border:2px solid var(--line);box-shadow:inset 0 4px 0 var(--pc)}
+.nseat2 b{display:block;font-weight:900;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nseat2 .nchips{display:block;color:var(--gold);font-size:13px;letter-spacing:1px;text-shadow:0 0 1px var(--ink)}
+.nseat2 .nchips i{font-style:normal;color:#D3D8E3;text-shadow:none}
+.nseat2 small{font-size:11px;color:var(--mute);font-weight:700}
+.nseat2.on{border-color:var(--ink);background:color-mix(in srgb,var(--pc) 16%,#fff);box-shadow:inset 0 4px 0 var(--pc),0 0 16px color-mix(in srgb,var(--pc) 60%,transparent);animation:topglow 1.6s ease-in-out infinite}
+.nseat2.out{opacity:.45;filter:grayscale(1)}
+.nseat2 .dealer{position:absolute;right:6px;top:6px;font-style:normal;font-size:10px;font-weight:900;padding:0 5px;border-radius:5px;background:var(--ink);color:#fff}
+.ncenter{display:flex;flex-direction:column;align-items:center;margin:14px 0 6px}
+.ntotal{display:flex;align-items:baseline;gap:6px}
+.ntotal small{font-weight:900;color:var(--mute)}
+.ntotal b{font-size:76px;line-height:1;color:var(--ink);-webkit-text-stroke:0}
+.ntotal.hot b{color:#E8890C;filter:drop-shadow(0 0 10px rgba(255,138,61,.6))}
+.ntotal.max b{color:var(--crimson);filter:drop-shadow(0 0 14px rgba(226,54,79,.7))}
+.ntotal b.pop{animation:pop .35s}
+.nmeta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;font-size:12px;font-weight:900;color:var(--mute)}
+.nlast{display:inline-flex;align-items:center;gap:4px}
+.nlast .ncard{transform:scale(.55);margin:-14px -10px}
+.nlog{list-style:none;margin:6px 0 8px;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.7);font-size:11.5px;font-weight:700;color:var(--mute);min-height:20px}
+.nlog li:first-child{color:var(--ink)}
+.nturn{text-align:center;font-family:var(--disp);font-size:16px;padding:6px;border-radius:10px;margin-bottom:8px;background:#fff;border:2px solid var(--line)}
+.nturn.mine{border-color:var(--ink);background:color-mix(in srgb,var(--pc) 22%,#fff);animation:pulse 1.6s ease-in-out infinite}
+.nhand{display:flex;justify-content:center;gap:10px;margin-bottom:10px}
+.nslot{padding:0;border:0;background:none;transition:transform .12s}
+.nslot:active{transform:translateY(-6px) scale(1.04)}
+.nslot.ng{opacity:.4;filter:grayscale(.6)}
+.ncard{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:84px;height:118px;border-radius:12px;border:2.5px solid var(--ink);background:#fff;box-shadow:0 4px 0 var(--ink);overflow:hidden}
+.ncard::before{content:"";position:absolute;inset:5px;border-radius:8px;border:1.5px dashed rgba(27,24,56,.18)}
+.ncard b{font-family:var(--disp);font-weight:400;font-size:34px;line-height:1.05}
+.ncard small{font-size:10.5px;font-weight:900;color:var(--mute)}
+.ncard.c-10{background:linear-gradient(170deg,#E6FAFB,#fff)}.ncard.c-10 b{color:#108C96}
+.ncard.c-50{background:linear-gradient(170deg,#FFF3C4,#fff)}.ncard.c-50 b{color:#C98E12}
+.ncard.c-min{background:linear-gradient(170deg,#FFE3E8,#fff)}.ncard.c-min b{color:var(--crimson)}
+.ncard.c101{background:var(--metal)}.ncard.c101 b{font-size:30px}.ncard.c101 small{color:var(--ink)}
+.ncard.inst{background:linear-gradient(170deg,#EFE8FF,#fff)}
+.ncard.inst i{font-style:normal;font-family:var(--disp);font-size:24px;line-height:1;color:#6B3CE0}
+.ncard.inst b{font-size:15px;letter-spacing:.04em}
+.ncard.i-double i{color:var(--crimson)}.ncard.i-shot i{color:#E8890C}.ncard.i-turn i{color:#108C96}
+.nbtns{display:flex;gap:10px}
+.nbtns .btn{flex:1}
+.nlose{display:block;width:100%;margin-top:10px;padding:10px;border-radius:12px;font-weight:900;color:var(--crimson);background:#fff;border:2px solid var(--crimson)}
+.nlose.pulse{background:var(--crimson);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+.nover{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;background:repeating-conic-gradient(from 0deg at 50% 44%,color-mix(in srgb,var(--c) 22%,transparent) 0 6deg,transparent 6deg 12deg),radial-gradient(circle at 50% 44%,#fff,rgba(236,238,243,.97))}
+.nover .k{font-family:var(--disp);font-size:20px;padding:2px 16px;border-radius:8px;background:var(--metal);border:2px solid var(--ink)}
+.nover .p{font-family:var(--disp);font-size:clamp(40px,12vw,64px);margin:14px 0 6px;color:var(--c);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;animation:slam .5s cubic-bezier(.2,1.6,.4,1) both}
+.nover .y{font-weight:900}
+.nover .btns{width:100%;max-width:320px;margin-top:24px}
+.norder{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.norder i{font-style:normal;color:var(--mute);font-size:12px}
+.nseat{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:8px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 14%,#fff);font-size:12px;font-weight:900}
+.nseat b{font-family:var(--disp);font-weight:400}
 /* ===== フィードバック3 ===== */
 .sharebtn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--mute);border:1.5px solid var(--line)}
 .sharebtn svg{width:15px;height:15px}
@@ -753,6 +818,7 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 </nav>
 
 <div class="arena" id="arena" hidden></div>
+<div class="arena neu" id="neu" hidden></div>
 <div class="sheet" id="sheet"><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -767,7 +833,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
 const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#5A6378"];
-const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games"];
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
@@ -798,7 +864,7 @@ const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
 const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
 
-const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [] };
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [] };
 let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
@@ -843,6 +909,7 @@ const fail = (e, what) => { console.error(e); toast(`${what}できませんで�
 /* ---------- データ ---------- */
 async function loadTable(t){
   const { data, error } = await sb.from(t).select("*");
+  if (error && t === "neu_games"){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
   if (error) throw error;
   db[t] = data || [];
 }
@@ -858,7 +925,7 @@ function subscribe(){
       if (!TABLES.includes(t)) return;
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); render(); if (t === "jankens") syncArena(); } catch (e) { console.error(e); }
+        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -934,7 +1001,9 @@ function viewHome(t){
   if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><span>今日の特権・<b class="who">${esc(pname(tp.player_id))}</b></span><small class="pno">特権${KANJI[tp.kind]}</small><b class="pnm">${PRIVS[tp.kind].name}</b></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>`;
+  const ng = neuActive();
+  const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu"><span class="nic">101</span><div><b>NEU 対戦中</b><small>第${ng.round}回戦・タップで入る</small></div></button>` : `<button class="neubar" data-act="newNeu"><span class="nic">101</span><div><b>NEU（ノイ）</b><small>スマホでカードゲーム対戦</small></div><em>遊ぶ</em></button>`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -1002,6 +1071,7 @@ function bindView(){
   v.querySelectorAll("[data-act]").forEach(b => b.onclick = () => ({
     players: openPlayers, trips: () => editTrip(null), editTrip: () => editTrip(curTrip().id), newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id),
     privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
+    openNeu: () => { const g = neuActive(); if (g) openNeu(g.id); }, newNeu: openNeuNew,
     completeTrip: () => openCompleteTrip(curTrip()), reopenTrip: () => reopenTrip(curTrip()), listBack: () => { listTripId = null; render(); },
     togglePend: () => { localStorage.setItem("ojk:pendOpen", localStorage.getItem("ojk:pendOpen") === "0" ? "1" : "0"); render(); },
     travelTotal: () => openTravelTotal(curTrip()), resetTickets: () => resetTickets(curTrip()), rouletteReset: () => resetRoulette(curTrip(), rouletteDay),
@@ -2732,6 +2802,231 @@ function openArticle(k){
   el.classList.add("on");
 }
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-art]"); if (b){ e.preventDefault(); e.stopPropagation(); openArticle(b.dataset.art); } }, true);
+
+/* ===================== カードゲーム NEU ===================== */
+/* カード：n3=+3, n10, n50, m10=-10, m1=-1, X101=101にする, PASS / TURN / SHOT / DOUBLE */
+const NEU_LIMIT = 101;
+function neuDeck(){
+  const d = [];
+  for (let v = 1; v <= 9; v++) for (let i = 0; i < 3; i++) d.push("n" + v);
+  for (let i = 0; i < 6; i++) d.push("n10");
+  d.push("n50", "n50");
+  for (let i = 0; i < 4; i++) d.push("m10");
+  d.push("m1", "m1");
+  ["PASS", "TURN"].forEach(k => { for (let i = 0; i < 4; i++) d.push(k); });
+  d.push("SHOT", "SHOT", "DOUBLE", "DOUBLE");
+  for (let i = 0; i < 5; i++) d.push("X101");
+  return d;
+}
+const shuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const neuAdd = c => c[0] === "n" ? Number(c.slice(1)) : c[0] === "m" ? -Number(c.slice(1)) : null;
+const NEU_INST = { PASS: "次の人へ", TURN: "逆回り", SHOT: "指名", DOUBLE: "次は2回" };
+function neuCardHtml(c, extra = ""){
+  const a = neuAdd(c);
+  if (a !== null){
+    const cls = a < 0 ? "c-min" : a >= 50 ? "c-50" : a >= 10 ? "c-10" : "c-num";
+    return `<span class="ncard ${cls}" ${extra}><b>${a > 0 ? a : "−" + Math.abs(a)}</b><small>${a > 0 ? "たす" : "ひく"}</small></span>`;
+  }
+  if (c === "X101") return `<span class="ncard c101" ${extra}><b>101</b><small>101にする</small></span>`;
+  const ic = { PASS: "→", TURN: "↺", SHOT: "◎", DOUBLE: "×2" }[c];
+  return `<span class="ncard inst i-${c.toLowerCase()}" ${extra}><i>${ic}</i><b>${c}</b><small>${NEU_INST[c]}</small></span>`;
+}
+const neuGames = () => (db.neu_games || []);
+const neuActive = () => neuGames().filter(g => g.status === "playing" || g.status === "round_over").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const neuById = id => neuGames().find(g => g.id === id);
+const neuAlive = g => g.players.filter(p => (g.chips[p] || 0) > 0);
+function neuNext(g, pid, dir){
+  const n = g.players.length; let i = g.players.indexOf(pid);
+  for (let k = 0; k < n; k++){ i = (i + dir + n) % n; const p = g.players[i]; if ((g.chips[p] || 0) > 0 && p !== pid) return p; }
+  return pid;
+}
+function neuDeal(g, starter){
+  let deck = shuffle(neuDeck());
+  const hands = {};
+  neuAlive(g).forEach(p => { hands[p] = deck.slice(0, 3); deck = deck.slice(3); });
+  return { hands, deck, discard: [], total: 0, dir: 1, turn: { pid: starter, need: 1, played: 0, drawn: 0, dbl: false, shot: null, done: false } };
+}
+function neuLegal(g, c){
+  const t = g.turn; if (!t || t.done) return false;
+  if (c === "DOUBLE" && t.need === 2 && t.played === 0) return false;
+  const a = neuAdd(c);
+  if (a !== null && g.total + a > NEU_LIMIT) return false;
+  return true;
+}
+async function neuSave(g, patch, logLine){
+  const body = { ...patch, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
+  if (logLine) body.log = [...(g.log || []), { t: new Date().toISOString(), m: logLine }].slice(-60);
+  const { data, error } = await sb.from("neu_games").update(body).eq("id", g.id).eq("version", g.version || 1).select();
+  if (error){ fail(error, "保存"); return false; }
+  if (!data || !data.length){ toast("ほかの人の操作と重なりました。もう一度どうぞ"); await loadTable("neu_games"); drawNeu(); return false; }
+  Object.assign(g, data[0]); drawNeu(); return true;
+}
+
+/* ---------- 対戦の作成 ---------- */
+function openNeuNew(){
+  const t = curTrip();
+  const base = t ? activeMembers(t) : db.players.map(p => p.id);
+  let order = base.slice();
+  const s = openSheet("NEU（ノイ）を始める", `
+    <p class="note">101を超えないようにカードを出し合い、出せなくなった人がチップを失います。最後まで生き残った人の勝ち（2〜7人）。</p>
+    <div class="f"><span>参加者（タップで選ぶ）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>席順（時計回り）</span><div id="nOrder" class="norder"></div><button class="mini" id="nShuf" style="margin-top:6px">席順をシャッフル</button></div>
+    <label class="f"><span>最初の親（じゃんけんで決めた人）</span><select id="nDealer"></select></label>
+    <div class="btns"><button class="btn" id="nGo">対戦スタート</button></div>`);
+  const draw = () => {
+    $("#nOrder").innerHTML = order.map((id, i) => `<span class="nseat" style="--pc:${pcolor(id)}"><b>${i + 1}</b>${esc(pname(id))}</span>`).join("<i>→</i>");
+    const cur = $("#nDealer").value;
+    $("#nDealer").innerHTML = order.map(id => `<option value="${id}" ${id === cur ? "selected" : ""}>${esc(pname(id))}</option>`).join("");
+  };
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
+    b.setAttribute("aria-pressed", String(on));
+    order = on ? [...order, id] : order.filter(x => x !== id); draw();
+  });
+  $("#nShuf").onclick = () => { order = shuffle(order); draw(); };
+  draw();
+  $("#nGo").onclick = async () => {
+    if (order.length < 2 || order.length > 7){ toast("参加者は2〜7人です"); return; }
+    const dealer = $("#nDealer").value || order[0];
+    const g0 = { players: order, chips: Object.fromEntries(order.map(id => [id, 3])) };
+    const dealt = neuDeal(g0, dealer);
+    const row = { trip_id: t ? t.id : null, status: "playing", ...g0, ...dealt, dealer, round: 1, created_by: me || null,
+      log: [{ t: new Date().toISOString(), m: `第1回戦スタート。親は${pname(dealer)}` }] };
+    const res = await q(sb.from("neu_games").insert(row).select().single(), "作成");
+    if (res){ await loadTable("neu_games"); closeSheet(); openNeu(res.id); }
+  };
+}
+
+/* ---------- 対戦画面 ---------- */
+let neuId = null, neuSel = null;
+function openNeu(id){ neuId = id; neuSel = null; $("#neu").hidden = false; document.body.style.overflow = "hidden"; drawNeu(); }
+function closeNeu(){ neuId = null; $("#neu").hidden = true; document.body.style.overflow = ""; render(); }
+function drawNeu(){
+  if (!neuId) return;
+  const g = neuById(neuId); if (!g) return closeNeu();
+  const el = $("#neu"), t = g.turn || {}, mine = g.players.includes(me) ? (g.hands[me] || []) : null;
+  const myTurn = g.status === "playing" && t.pid === me;
+  const deckN = (g.deck || []).length, canDraw = myTurn && t.drawn < t.played && (deckN + (g.discard || []).length) > 0;
+  const last = (g.discard || [])[(g.discard || []).length - 1];
+  const seats = g.players.map(p => {
+    const c = g.chips[p] || 0, out = c <= 0, on = g.status === "playing" && t.pid === p;
+    return `<div class="nseat2 ${on ? "on" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">
+      ${p === g.dealer ? `<em class="dealer">親</em>` : ""}<b>${esc(pname(p))}</b>
+      <span class="nchips">${out ? "脱落" : "●".repeat(c) + `<i>${"●".repeat(Math.max(0, 3 - c))}</i>`}</span>
+      <small>${out ? "" : `手札${(g.hands[p] || []).length}枚`}${on && t.need === 2 ? "・2回" : ""}</small></div>`;
+  }).join("");
+  let center = `<div class="ntotal ${g.total >= 90 ? "hot" : ""} ${g.total === NEU_LIMIT ? "max" : ""}"><small>合計</small><b class="num" id="ntot">${g.total}</b><small>／101</small></div>
+    <div class="nmeta"><span>${g.dir === 1 ? "↻ 時計回り" : "↺ 逆回り"}</span><span>山札 ${deckN}枚</span>${last ? `<span class="nlast">直前：${neuCardHtml(last, 'data-mini="1"')}</span>` : ""}</div>`;
+  let me2 = "";
+  if (g.status === "playing"){
+    const who = t.pid === me ? "あなたの番" : `${esc(pname(t.pid))}の番`;
+    const req = t.need === 2 ? `（2回出す：${t.played}/2）` : "";
+    me2 += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}">${who}${req}</div>`;
+    if (mine){
+      me2 += `<div class="nhand">${mine.length ? mine.map((c, i) => { const ok = myTurn && neuLegal(g, c); return `<button class="nslot ${ok ? "" : "ng"}" data-play="${i}" ${ok ? "" : "disabled"}>${neuCardHtml(c)}</button>`; }).join("") : `<p class="note">手札がありません</p>`}</div>`;
+      if (myTurn){
+        const any = mine.some(c => neuLegal(g, c));
+        me2 += `<div class="nbtns"><button class="btn ghost" id="nDraw" ${canDraw ? "" : "disabled"}>山札から引く${t.played ? `（${t.drawn}/${t.played}）` : ""}</button><button class="btn" id="nEnd" ${t.done ? "" : "disabled"}>ターン終了</button></div>
+          <button class="nlose ${!any && !t.done ? "pulse" : ""}" id="nLose">負けを宣言する</button>`;
+        if (!any && !t.done) me2 += `<p class="note" style="text-align:center;margin:6px 0 0">出せるカードがありません</p>`;
+      }
+    } else me2 += `<p class="note" style="text-align:center">観戦中です（この対戦に参加していません）</p>`;
+  }
+  let over = "";
+  if (g.status === "round_over" || g.status === "finished"){
+    const fin = g.status === "finished";
+    over = `<div class="nover" style="--c:${pcolor(fin ? g.winner : g.loser)}"><div class="k">${fin ? "優勝" : `第${g.round}回戦 終了`}</div>
+      <div class="p">${esc(pname(fin ? g.winner : g.loser))}</div>
+      <div class="y">${fin ? "最後まで生き残った！" : `チップを1枚失った${(g.chips[g.loser] || 0) <= 0 ? "…脱落" : `（残り${g.chips[g.loser]}枚）`}`}</div>
+      <div class="btns">${fin ? `<button class="btn" id="nClose2">閉じる</button>` : `<button class="btn" id="nNext">次の回戦へ</button>`}</div></div>`;
+  }
+  const lg = (g.log || []).slice(-4).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  el.innerHTML = `<div class="ntop"><b class="nt">NEU</b><span>第${g.round}回戦</span><button class="mini" id="nMenu">…</button><button class="mini" id="nClose">閉じる</button></div>
+    <div class="nseats">${seats}</div>
+    <div class="ncenter">${center}</div>
+    <ul class="nlog">${lg}</ul>
+    <div class="nmine">${me2}</div>${over}`;
+  const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
+  on("nClose", closeNeu); on("nClose2", closeNeu); on("nMenu", () => neuMenu(g));
+  on("nDraw", () => neuDraw(g)); on("nEnd", () => neuEnd(g)); on("nLose", () => neuLose(g)); on("nNext", () => neuNextRound(g));
+  el.querySelectorAll("[data-play]").forEach(b => b.onclick = () => neuPlay(g, Number(b.dataset.play)));
+}
+function neuMenu(g){
+  const s = openSheet("NEUのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openSheet("NEUのルール", `<div class="rules">
+    <p class="rp">合計が101を超えるカードは出せません（101ちょうどまでOK）。合計はマイナスにもなります。</p>
+    <p class="rp">自分の番にカードを出したら、山札から出した枚数分を引いて「ターン終了」。引き忘れると手札が減ったまま続きます。</p>
+    <p class="rp">出せるカードがなくなったら「負けを宣言する」。チップを1枚失い、次の回戦の親になります。チップがなくなったら脱落、最後の1人が勝ち。</p>
+    <p class="rp">PASS：次の人へ／TURN：逆回りに／SHOT：次に出す人を指名／DOUBLE：次の人は2回出す（1枚目にDOUBLEは不可。1枚目にPASS・TURN・SHOTを出すと、2回出す義務が次の人に移る）／101：合計を101にする。</p></div>`);
+  s.querySelector('[data-x="abort"]').onclick = async () => {
+    if (!confirm("この対戦をやめますか？（記録は残りません）")) return;
+    closeSheet(); await neuSave(g, { status: "aborted" }, "対戦が中止されました"); closeNeu();
+  };
+}
+async function neuPlay(g, i){
+  const t = { ...g.turn }, c = (g.hands[me] || [])[i];
+  if (!c || !neuLegal(g, c)) return;
+  if (c === "SHOT"){
+    const alive = neuAlive(g).filter(p => p !== me);
+    const s = openSheet("SHOT：次に出す人を指名", `<div class="chips">${alive.map(p => `<button type="button" class="pc" style="--pc:${pcolor(p)}" data-shot="${p}" aria-pressed="false"><span class="dot" style="background:${pcolor(p)}"></span>${esc(pname(p))}</button>`).join("")}</div>`);
+    s.querySelectorAll("[data-shot]").forEach(b => b.onclick = () => { closeSheet(); neuApply(g, i, c, b.dataset.shot); });
+    return;
+  }
+  neuApply(g, i, c, null);
+}
+async function neuApply(g, i, c, shotTo){
+  const t = { ...g.turn };
+  const hand = (g.hands[me] || []).slice(); hand.splice(i, 1);
+  let total = g.total, dir = g.dir;
+  const a = neuAdd(c);
+  if (a !== null) total += a; else if (c === "X101") total = NEU_LIMIT;
+  if (c === "TURN") dir = -dir;
+  if (c === "SHOT") t.shot = shotTo;
+  if (c === "DOUBLE") t.dbl = true;
+  const transfer = t.need === 2 && t.played === 0 && ["PASS", "TURN", "SHOT"].includes(c);
+  t.played++;
+  if (transfer){ t.dbl = true; t.done = true; }
+  if (t.played >= t.need) t.done = true;
+  if (["PASS", "TURN", "SHOT"].includes(c) && !transfer && t.need === 2 && t.played === 2){ /* 2枚目の指示カードは通常どおり */ }
+  const label = a !== null ? (a > 0 ? `+${a}` : `${a}`) : c === "X101" ? "101" : c;
+  const ok = await neuSave(g, { hands: { ...g.hands, [me]: hand }, discard: [...(g.discard || []), c], total, dir, turn: t },
+    `${pname(me)}：${label}${c === "SHOT" ? `（${pname(shotTo)}を指名）` : ""} → 合計${total}${transfer ? "（2回出す義務が次の人へ）" : ""}`);
+  if (ok){
+    const n = $("#ntot"); if (n){ n.classList.remove("pop"); void n.offsetWidth; n.classList.add("pop"); }
+    if (navigator.vibrate) navigator.vibrate(20);
+  }
+}
+async function neuDraw(g){
+  const t = { ...g.turn }; if (!(t.drawn < t.played)) return;
+  let deck = (g.deck || []).slice(), discard = (g.discard || []).slice();
+  if (!deck.length){ deck = shuffle(discard); discard = []; toast("山札を切り直しました"); }
+  if (!deck.length) return;
+  const c = deck.shift(); t.drawn++;
+  await neuSave(g, { deck, discard, hands: { ...g.hands, [me]: [...(g.hands[me] || []), c] }, turn: t });
+}
+async function neuEnd(g){
+  const t = g.turn; if (!t.done) return;
+  if (t.drawn < t.played && !confirm(`まだ${t.played - t.drawn}枚引いていません。このままターンを終えますか？`)) return;
+  const next = t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, me, g.dir);
+  await neuSave(g, { turn: { pid: next, need: t.dbl ? 2 : 1, played: 0, drawn: 0, dbl: false, shot: null, done: false } },
+    `${pname(me)}のターン終了 → ${pname(next)}${t.dbl ? "（2回）" : ""}`);
+}
+async function neuLose(g){
+  if (!confirm("負けを宣言しますか？\nチップを1枚失い、次の回戦の親になります。")) return;
+  const chips = { ...g.chips, [me]: Math.max(0, (g.chips[me] || 0) - 1) };
+  const alive = g.players.filter(p => chips[p] > 0);
+  const fin = alive.length <= 1;
+  await neuSave(g, { chips, loser: me, status: fin ? "finished" : "round_over", winner: fin ? alive[0] || null : null },
+    `${pname(me)}が負けを宣言（合計${g.total}）。チップ残り${chips[me]}${chips[me] <= 0 ? "・脱落" : ""}${fin ? `。優勝は${pname(alive[0])}！` : ""}`);
+  if (fin) flash("NEU 優勝！", pname(alive[0]));
+}
+async function neuNextRound(g){
+  const dealer = g.loser || g.dealer;
+  const g2 = { ...g };
+  const starter = (g.chips[dealer] || 0) > 0 ? dealer : neuNext(g2, dealer, 1);
+  const dealt = neuDeal(g2, starter);
+  await neuSave(g, { ...dealt, dealer, loser: null, status: "playing", round: g.round + 1 }, `第${g.round + 1}回戦スタート。親は${pname(dealer)}${starter !== dealer ? `（${pname(starter)}から）` : ""}`);
+}
 
 /* ---------- 起動 ---------- */
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
