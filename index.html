@@ -1094,26 +1094,26 @@ async function checkClaim(){
   } else if (player(me)) await writeClaim(me);
   claimChecking = false;
 }
-/* ---------- オーナー（ごめ）のパスコード ---------- */
+/* ---------- オーナー（ごめ）のパスワード ---------- */
 async function pinHash(pin){
   const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("ojk-owner:" + pin));
   return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
 }
-const pinOk = p => /^\d{4,8}$/.test(p);
+const pinOk = p => /^[A-Za-z0-9]{4,16}$/.test(p);
 function askOwnerPin(onOk){
   const has = !!setting("owner_pin");
-  const s = openSheet("オーナー認証", `<p class="note">${has ? `オーナー（${esc(pname(hostId()))}）のパスコードを入力してください。` : "はじめてなので、オーナー用のパスコード（4〜8桁の数字）を決めてください。"}</p>
-    <label class="f"><span>パスコード</span><input id="pin1" type="password" inputmode="numeric" maxlength="8" autocomplete="off"></label>
-    ${has ? "" : `<label class="f"><span>確認のため、もう一度</span><input id="pin2" type="password" inputmode="numeric" maxlength="8" autocomplete="off"></label>`}
+  const s = openSheet("オーナー認証", `<p class="note">${has ? `オーナー（${esc(pname(hostId()))}）のパスワードを入力してください。` : "はじめてなので、オーナー用のパスワード（英数字4〜16文字）を決めてください。"}</p>
+    <label class="f"><span>パスワード</span><input id="pin1" type="password" maxlength="16" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off"></label>
+    ${has ? "" : `<label class="f"><span>確認のため、もう一度</span><input id="pin2" type="password" maxlength="16" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off"></label>`}
     <div class="btns"><button class="btn ghost" id="pinBack">戻る</button><button class="btn" id="pinGo">${has ? "認証する" : "設定してログイン"}</button></div>`);
   $("#pinBack").onclick = openMe;
   setTimeout(() => $("#pin1").focus(), 250);
   $("#pinGo").onclick = async () => {
     const p1 = $("#pin1").value.trim();
-    if (!pinOk(p1)){ toast("4〜8桁の数字で入力してください"); return; }
+    if (!pinOk(p1)){ toast("英数字4〜16文字で入力してください"); return; }
     await loadTable("app_settings");
     if (setting("owner_pin")){
-      if ((await pinHash(p1)) !== setting("owner_pin")){ toast("パスコードが違います", 2600); $("#pin1").value = ""; return; }
+      if ((await pinHash(p1)) !== setting("owner_pin")){ toast("パスワードが違います", 2600); $("#pin1").value = ""; return; }
     } else {
       if (p1 !== $("#pin2").value.trim()){ toast("2回の入力が一致しません"); return; }
       if (!(await putSetting("owner_pin", await pinHash(p1)))) return;
@@ -1123,18 +1123,18 @@ function askOwnerPin(onOk){
   };
 }
 function openPinChange(){
-  const s = openSheet("パスコードを変更", `<label class="f"><span>今のパスコード</span><input id="pc0" type="password" inputmode="numeric" maxlength="8"></label>
-    <label class="f"><span>新しいパスコード（4〜8桁の数字）</span><input id="pc1" type="password" inputmode="numeric" maxlength="8"></label>
-    <label class="f"><span>確認のため、もう一度</span><input id="pc2" type="password" inputmode="numeric" maxlength="8"></label>
+  const s = openSheet("パスワードを変更", `<label class="f"><span>今のパスワード</span><input id="pc0" type="password" maxlength="16" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+    <label class="f"><span>新しいパスワード（英数字4〜16文字）</span><input id="pc1" type="password" maxlength="16" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+    <label class="f"><span>確認のため、もう一度</span><input id="pc2" type="password" maxlength="16" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
     <div class="btns"><button class="btn ghost" id="pcBack">戻る</button><button class="btn" id="pcGo">変更する</button></div>`);
   $("#pcBack").onclick = openMe;
   $("#pcGo").onclick = async () => {
     await loadTable("app_settings");
-    if (setting("owner_pin") && (await pinHash($("#pc0").value.trim())) !== setting("owner_pin")){ toast("今のパスコードが違います"); return; }
+    if (setting("owner_pin") && (await pinHash($("#pc0").value.trim())) !== setting("owner_pin")){ toast("今のパスワードが違います"); return; }
     const p = $("#pc1").value.trim();
-    if (!pinOk(p)){ toast("4〜8桁の数字で入力してください"); return; }
+    if (!pinOk(p)){ toast("英数字4〜16文字で入力してください"); return; }
     if (p !== $("#pc2").value.trim()){ toast("2回の入力が一致しません"); return; }
-    if (await putSetting("owner_pin", await pinHash(p))){ await loadTable("app_settings"); toast("パスコードを変更しました"); openMe(); }
+    if (await putSetting("owner_pin", await pinHash(p))){ await loadTable("app_settings"); toast("パスワードを変更しました"); openMe(); }
   };
 }
 function openMe(){
@@ -1144,7 +1144,7 @@ function openMe(){
     <div class="chips">${db.players.map(p => { const other = claimedByOther(p.id); return `<button type="button" class="pc" style="--pc:${p.color}" data-p="${p.id}" aria-pressed="${p.id === me}" ${other ? "disabled" : ""}><span class="dot" style="background:${p.color}"></span>${esc(p.name)}${other ? `<small class="inuse">使用中</small>` : ""}</button>`; }).join("")}</div>
     ${isHost && Object.keys(cl).some(id => claimedByOther(id)) ? `<div class="card hostc" style="margin-top:12px"><b class="hc">オーナー：ログインの解除</b><p class="note" style="margin:2px 0 6px">端末をなくしたときなどに、別の端末のログインを解除できます。</p>${Object.keys(cl).filter(id => claimedByOther(id) && player(id)).map(id => `<div class="plist"><span class="dot" style="background:${pcolor(id)}"></span><b>${esc(pname(id))}</b><button class="mini" data-release="${id}">解除</button></div>`).join("")}</div>` : ""}
     <div class="btns"><button class="btn ghost" data-back>戻る</button>${me ? `<button class="btn danger" id="meOut">ログアウト</button>` : ""}<button class="btn" id="meOk">決定</button></div>
-    ${isHost ? `<button class="linkbtn" id="pinChange">オーナーのパスコードを変更</button>` : `<p class="note" style="margin-top:10px">オーナー（${esc(pname(hostId()) || "ごめ")}）を選ぶときだけ、パスコードの入力が必要です。</p>`}`);
+    ${isHost ? `<button class="linkbtn" id="pinChange">オーナーのパスワードを変更</button>` : `<p class="note" style="margin-top:10px">オーナー（${esc(pname(hostId()) || "ごめ")}）を選ぶときだけ、パスワードの入力が必要です。</p>`}`);
   s.querySelector("[data-back]").onclick = openSettings;
   bindChips(s, "data-p", false);
   const login = async id => {
