@@ -689,7 +689,10 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nmeta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 12px;font-size:12px;font-weight:900;color:var(--mute)}
 .nlast{display:inline-flex;align-items:center;gap:4px}
 .nlast .ncard{transform:scale(.55);margin:-14px -10px}
-.nlog{list-style:none;margin:6px 0 8px;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.7);font-size:11.5px;font-weight:700;color:var(--mute);min-height:20px}
+.nlogw{margin:8px 0 10px;padding:6px 10px 8px;border-radius:10px;background:rgba(255,255,255,.75);border:1.5px solid var(--line)}
+.nlogh{display:flex;align-items:baseline;gap:6px;font-size:11px;font-weight:900;color:var(--ink);margin-bottom:2px}
+.nlogh small{font-size:10px;color:var(--mute)}
+.nlog{list-style:none;margin:0;padding:0;font-size:11.5px;font-weight:700;color:var(--mute);max-height:120px;overflow-y:auto}
 .nlog li:first-child{color:var(--ink)}
 .nturn{text-align:center;font-family:var(--disp);font-size:16px;padding:6px;border-radius:10px;margin-bottom:8px;background:#fff;border:2px solid var(--line)}
 .nturn.mine{border-color:var(--ink);background:color-mix(in srgb,var(--pc) 22%,#fff);animation:pulse 1.6s ease-in-out infinite}
@@ -3039,11 +3042,20 @@ function drawNeu(){
       <div class="y">${fin ? "最後まで生き残った！" : `チップを1枚失った${(g.chips[g.loser] || 0) <= 0 ? "…脱落" : `（残り${g.chips[g.loser]}枚）`}`}</div>
       <div class="btns">${fin ? `<button class="btn" id="nClose2">閉じる</button>` : `<button class="btn" id="nNext">次の回戦へ</button>`}</div></div>`;
   }
-  const lg = (g.log || []).slice(-4).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  // 直近の流れ：今の人までの1周分（生き残っている人数分のターン）だけ表示
+  const logs = g.log || [], lap = Math.max(1, neuAlive(g).length);
+  let from = logs.length, ends = 0;
+  for (let k = logs.length - 1; k >= 0; k--){
+    const m = logs[k].m || "";
+    if (m.includes("のターン終了")){ if (ends >= lap) break; ends++; }
+    from = k;
+    if (m.includes("回戦スタート")) break;
+  }
+  const lg = logs.slice(from).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
   el.innerHTML = `<div class="ntop"><b class="nt">NEU</b><span>第${g.round}回戦</span><button class="mini" id="nMenu">…</button><button class="mini" id="nClose">閉じる</button></div>
     <div class="nseats">${seats}</div>${orderStrip}
     <div class="ncenter">${center}</div>
-    <ul class="nlog">${lg}</ul>
+    <div class="nlogw"><div class="nlogh">直近の流れ<small>1周分</small></div><ul class="nlog">${lg}</ul></div>
     <div class="nmine">${me2}</div>${over}`;
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   on("nClose", closeNeu); on("nClose2", closeNeu); on("nMenu", () => neuMenu(g));
