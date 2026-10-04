@@ -3185,7 +3185,7 @@ function drawNeu(){
       if (myTurn){
         const any = mine.some(c => neuLegal(g, c));
         bottom += `<div class="nbtns"><button class="nb draw" id="nDraw" ${canDraw ? "" : "disabled"}>引く${t.played ? `<small>${t.drawn}/${t.played}</small>` : ""}</button><button class="nb end" id="nEnd" ${t.done ? "" : "disabled"}>ターン終了</button><button class="nb lose ${!any && !t.done ? "pulse" : ""}" id="nLose">負け宣言</button></div>`;
-      } else bottom += `<div class="nwait">ほかの人の番です。スマホを置いて待とう</div>`;
+      } else bottom += `<div class="nwait">ほかの人の番です</div>`;
     } else bottom += `<div class="nwait">観戦中（この対戦に参加していません）</div>`;
   }
   let over = "";
