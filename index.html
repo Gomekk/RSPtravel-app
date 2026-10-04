@@ -720,8 +720,11 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nover .btns{width:100%;max-width:320px;margin-top:24px}
 .norder{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
 .norder i{font-style:normal;color:var(--mute);font-size:12px}
-.nseat{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:8px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 14%,#fff);font-size:12px;font-weight:900}
+.nseat{position:relative;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;display:inline-flex;align-items:center;gap:4px;padding:6px 8px;border-radius:8px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 14%,#fff);font-size:12px;font-weight:900}
 .nseat b{font-family:var(--disp);font-weight:400}
+.nseat .grip{font-style:normal;font-size:10px;color:var(--mute);letter-spacing:-2px;margin-left:2px}
+.nseat.drag{z-index:5;box-shadow:0 8px 18px rgba(27,24,56,.25);border-color:var(--ink)}
+.nseat.over{outline:3px dashed var(--ink);outline-offset:2px}
 /* ===== フィードバック3 ===== */
 .sharebtn{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--mute);border:1.5px solid var(--line)}
 .sharebtn svg{width:15px;height:15px}
@@ -2929,11 +2932,12 @@ function openNeuNew(){
   const s = openSheet("NEU（ノイ）を始める", `
     <p class="note">101を超えないようにカードを出し合い、出せなくなった人がチップを失います。最後まで生き残った人の勝ち（2〜7人）。</p>
     <div class="f"><span>参加者（タップで選ぶ）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
-    <div class="f"><span>席順（時計回り）</span><div id="nOrder" class="norder"></div><button class="mini" id="nShuf" style="margin-top:6px">席順をシャッフル</button></div>
+    <div class="f"><span>席順（時計回り）・名前を指で動かして並べ替え</span><div id="nOrder" class="norder"></div><button class="mini" id="nShuf" style="margin-top:6px">席順をシャッフル</button></div>
     <label class="f"><span>最初の親（じゃんけんで決めた人）</span><select id="nDealer"></select></label>
     <div class="btns"><button class="btn" id="nGo">対戦スタート</button></div>`);
   const draw = () => {
-    $("#nOrder").innerHTML = order.map((id, i) => `<span class="nseat" style="--pc:${pcolor(id)}"><b>${i + 1}</b>${esc(pname(id))}</span>`).join("<i>→</i>");
+    $("#nOrder").innerHTML = order.map((id, i) => `<span class="nseat" data-seat="${id}" style="--pc:${pcolor(id)}"><b>${i + 1}</b>${esc(pname(id))}<em class="grip">⋮⋮</em></span>`).join("<i>→</i>");
+    bindSeatDrag();
     const cur = $("#nDealer").value;
     $("#nDealer").innerHTML = order.map(id => `<option value="${id}" ${id === cur ? "selected" : ""}>${esc(pname(id))}</option>`).join("");
   };
@@ -2943,6 +2947,38 @@ function openNeuNew(){
     order = on ? [...order, id] : order.filter(x => x !== id); draw();
   });
   $("#nShuf").onclick = () => { order = shuffle(order); draw(); };
+  // 席順のドラッグ並べ替え（指で押さえて動かす）
+  function bindSeatDrag(){
+    $("#nOrder").querySelectorAll("[data-seat]").forEach(el => {
+      el.onpointerdown = e => {
+        e.preventDefault();
+        const id = el.dataset.seat; el.setPointerCapture(e.pointerId); el.classList.add("drag");
+        const sx = e.clientX, sy = e.clientY;
+        const move = ev => {
+          el.style.transform = `translate(${ev.clientX - sx}px, ${ev.clientY - sy}px) scale(1.08)`;
+          el.style.pointerEvents = "none";
+          const under = document.elementFromPoint(ev.clientX, ev.clientY);
+          el.style.pointerEvents = "";
+          const tgt = under && under.closest && under.closest("[data-seat]");
+          $("#nOrder").querySelectorAll("[data-seat]").forEach(x => x.classList.toggle("over", x === tgt && x !== el));
+        };
+        const up = ev => {
+          el.removeEventListener("pointermove", move); el.removeEventListener("pointerup", up); el.removeEventListener("pointercancel", up);
+          el.style.pointerEvents = "none";
+          const under = document.elementFromPoint(ev.clientX, ev.clientY);
+          el.style.pointerEvents = "";
+          const tgt = under && under.closest && under.closest("[data-seat]");
+          if (tgt && tgt.dataset.seat !== id){
+            const from = order.indexOf(id), to = order.indexOf(tgt.dataset.seat);
+            order.splice(from, 1); order.splice(to, 0, id);
+            if (navigator.vibrate) navigator.vibrate(15);
+          }
+          draw();
+        };
+        el.addEventListener("pointermove", move); el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up);
+      };
+    });
+  }
   draw();
   $("#nGo").onclick = async () => {
     if (order.length < 2 || order.length > 7){ toast("参加者は2〜7人です"); return; }
