@@ -790,7 +790,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nlast2>small{font-size:10px;font-weight:900;color:var(--mute);margin-top:2px}
 @keyframes ndrop{from{transform:translateY(-30px) rotate(-20deg);opacity:0}}
 .nlogw{flex:none;margin:0;padding:4px 10px 5px}
-.nlog{max-height:none;overflow:visible;font-size:11px;line-height:1.35}
+.nlog{max-height:none;overflow:visible;font-size:11px;line-height:1.4}
+.nlog .lgn{font-weight:900;color:var(--pc);text-shadow:0 0 1px rgba(27,24,56,.35)}
 .nbottom{flex:none;display:flex;flex-direction:column;gap:6px}
 .nturn{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:5px}
 .nturn .req{font-family:var(--body);font-size:11px;font-weight:900;padding:1px 8px;border-radius:99px;background:var(--crimson);color:#fff}
@@ -3170,11 +3171,10 @@ function drawNeu(){
   const fxCard = neuPrevGame === g.id && neuPrevDisc !== null && dl > neuPrevDisc ? g.discard[dl - 1] : null;
   neuPrevDisc = dl; neuPrevGame = g.id;
   neuPrevTotal = g.total;
-  // 直近の流れ：1周分
-  const logs = g.log || [], lap = Math.max(1, neuAlive(g).length);
-  let from = logs.length, ends = 0;
-  for (let k = logs.length - 1; k >= 0; k--){ const m = logs[k].m || ""; if (m.includes("のターン終了")){ if (ends >= lap) break; ends++; } from = k; if (m.includes("回戦スタート")) break; }
-  const lg = logs.slice(from).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  // 直近の流れ：新しい順に5行。名前はプレイヤーカラーで
+  const names = g.players.map(p => ({ p, n: esc(pname(p)) })).sort((a, b) => b.n.length - a.n.length);
+  const colorize = txt => { let h = esc(txt); const marks = []; names.forEach(({ p, n }, i) => { h = h.split(n).join(`\u0001${i}\u0002`); marks[i] = `<b class="lgn" style="--pc:${pcolor(p)}">${n}</b>`; }); return h.replace(/\u0001(\d+)\u0002/g, (_, i) => marks[i]); };
+  const lg = (g.log || []).slice(-5).reverse().map(x => `<li>${colorize(x.m)}</li>`).join("");
   let bottom = "";
   if (g.status === "playing"){
     const who = t.pid === me ? "あなたの番！" : `${esc(pname(t.pid))}の番`;
@@ -3207,7 +3207,7 @@ function drawNeu(){
       </div>
       <div class="nside"><span class="ndir ${g.dir === 1 ? "cw" : "ccw"}">${g.dir === 1 ? "↻" : "↺"}</span><small>${g.dir === 1 ? "時計回り" : "逆回り"}</small>${last ? `<div class="nlast2">${neuCardHtml(last)}<small>直前</small></div>` : ""}</div>
     </div>
-    <div class="nlogw"><div class="nlogh">直近の流れ<small>1周分</small></div><ul class="nlog">${lg}</ul></div>
+    <div class="nlogw"><div class="nlogh">直近の流れ</div><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${over}`;
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   on("nClose", closeNeu); on("nClose2", closeNeu); on("nMenu", () => neuMenu(g));
@@ -3328,8 +3328,13 @@ async function shareLink(){
   }
 }
 $("#meBtn").onclick = openMe;
+async function clearBadge(){
+  try { if (navigator.clearAppBadge) await navigator.clearAppBadge(); const c = await caches.open("ojk-badge"); await c.put("/badge", new Response("0")); } catch (e) {}
+}
+clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
+  clearBadge();
   try { await loadAll(); render(); syncArena(); drawNeu(); } catch (e) { console.error(e); }
 });
 (async () => {
