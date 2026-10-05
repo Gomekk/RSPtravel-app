@@ -1035,13 +1035,23 @@ details.sgroup[open]>summary{margin-bottom:6px}
 @keyframes reachtxt{50%{transform:scale(1.12) rotate(-3deg)}}
 .csfx.bust{background:radial-gradient(circle at 50% 48%,rgba(255,138,61,.4),transparent 60%)}
 .csfx.bust .core{display:none}
-.csfx .boomsvg{position:absolute;left:50%;top:48%;width:min(86vw,380px);transform:translate(-50%,-50%) scale(0) rotate(-20deg);animation:boomsvg .9s cubic-bezier(.2,1.5,.4,1) forwards;filter:drop-shadow(0 0 18px rgba(255,138,61,.9))}
+.csfx .boomsvg{z-index:1;position:absolute;left:50%;top:48%;width:min(86vw,380px);transform:translate(-50%,-50%) scale(0) rotate(-20deg);animation:boomsvg .9s cubic-bezier(.2,1.5,.4,1) forwards;filter:drop-shadow(0 0 18px rgba(255,138,61,.9))}
 @keyframes boomsvg{0%{transform:translate(-50%,-50%) scale(0) rotate(-20deg)}55%{transform:translate(-50%,-50%) scale(1.08) rotate(6deg)}75%{transform:translate(-50%,-50%) scale(.96) rotate(0)}100%{transform:translate(-50%,-50%) scale(1) rotate(2deg);opacity:1}}
 .csfx .shock{position:absolute;left:50%;top:48%;width:40px;height:40px;border-radius:50%;border:6px solid rgba(255,255,255,.9);transform:translate(-50%,-50%);animation:shock .7s ease-out forwards}
 @keyframes shock{to{width:150vmin;height:150vmin;border-width:1px;opacity:0}}
 .csfx em{position:absolute;left:50%;top:48%;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#9AA1B4,#5A6378 70%);opacity:0;transform:translate(-50%,-50%);animation:smoke 1.6s ease-out var(--d) forwards}
-@keyframes smoke{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(10px) scale(.4)}30%{opacity:.75}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(150px) scale(1.8)}}
-.csfx.bust i{width:calc(14px * var(--s));height:calc(14px * var(--s));border-radius:3px;transform-origin:center}
+@keyframes smoke{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(60px) scale(.4)}30%{opacity:.45}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(150px) scale(1.8)}}
+.csfx.bust i{border-radius:0}
+.csfx .flash2{position:absolute;inset:0;background:#FFF8DC;animation:flash2 .35s ease-out forwards}
+@keyframes flash2{0%{opacity:.95}100%{opacity:0}}
+.csfx u.spark{z-index:2;position:absolute;left:50%;top:48%;width:4px;height:var(--len);border-radius:4px;background:linear-gradient(#FFF8DC,#FFD84A 40%,#FF8A3D 80%,transparent);transform-origin:50% 0;transform:translate(-50%,0) rotate(var(--a)) translateY(0);filter:drop-shadow(0 0 4px #FF8A3D);opacity:0;animation:sparkfly .65s cubic-bezier(.1,.9,.3,1) var(--d) forwards}
+@keyframes sparkfly{0%{opacity:1;transform:translate(-50%,0) rotate(var(--a)) translateY(10px) scaleY(.3)}60%{opacity:1}100%{opacity:0;transform:translate(-50%,0) rotate(var(--a)) translateY(var(--dist)) scaleY(1)}}
+.csfx i.deb{z-index:2;position:absolute;left:50%;top:48%;width:calc(13px * var(--s));height:calc(11px * var(--s));background:var(--c);clip-path:polygon(10% 0,80% 8%,100% 55%,70% 100%,15% 90%,0 40%);animation:debfly 1.3s cubic-bezier(.15,.7,.4,1) var(--d) forwards}
+@keyframes debfly{0%{transform:translate(-50%,-50%) rotate(0) scale(1);opacity:1}80%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(.7);opacity:0}}
+.csfx i.emb{z-index:2;position:absolute;left:50%;top:48%;width:calc(9px * var(--s));height:calc(9px * var(--s));border-radius:50%;background:radial-gradient(circle,#FFF8DC,#FFD84A 40%,#FF5A3D);box-shadow:0 0 8px #FF8A3D;animation:embfly 1.6s ease-out var(--d) forwards}
+@keyframes embfly{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y) - 60px)) scale(.2);opacity:0}}
+.csfx s.pow{position:absolute;left:50%;top:48%;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(60,50,60,.75),rgba(90,99,120,.35) 60%,transparent 72%);opacity:0;transform:translate(-50%,-50%);animation:powfly 1.8s ease-out var(--d) forwards;text-decoration:none}
+@keyframes powfly{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(60px) scale(.3)}25%{opacity:.5}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(170px) scale(calc(2.4 * var(--s)))}}
 .csfx.bust .txt{z-index:2;animation-delay:.35s}
 .csfx.bust .txt b{color:#FFF;-webkit-text-stroke:3px #E2364F;font-size:48px;filter:drop-shadow(0 3px 0 #1B1838)}
 .csfx.claim{background:radial-gradient(circle at 50% 48%,rgba(255,227,138,.65),rgba(255,227,138,.15) 45%,transparent 70%)}
@@ -1056,10 +1066,17 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .rank.top .r1fx{position:absolute;inset:0;border-radius:12px;overflow:hidden;pointer-events:none}
 .rank.top .r1fx .sweep{position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.9),transparent);transform:skewX(-20deg);animation:sweep 2.6s ease-in-out infinite}
 @keyframes sweep{0%,30%{left:-40%}100%{left:140%}}
-.rank.top .r1fx i{position:absolute;bottom:-8px;width:10px;height:10px;background:var(--glint-gold) center/contain no-repeat;animation:rise1 var(--dur) linear var(--dl) infinite}
+.rank.top{box-shadow:inset 6px 0 0 var(--c),0 0 28px rgba(232,177,42,.75)!important;animation:topglow2 1s ease-in-out infinite,goldbg 3s ease-in-out infinite!important}
+@keyframes topglow2{50%{box-shadow:inset 6px 0 0 var(--c),0 0 46px 6px rgba(255,214,90,1)}}
+.rank.top .r1fx .rays1{position:absolute;left:12%;top:50%;width:520px;height:520px;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(232,177,42,.35) 0 7deg,transparent 7deg 16deg);animation:spinc 6s linear infinite}
+.rank.top .r1fx .sweep{animation-duration:1.6s}
+.rank.top .r1fx .sweep.s2{animation-delay:.8s;width:14%}
+.rank.top .r1fx b{position:absolute;width:22px;height:22px;background:var(--glint-gold) center/contain no-repeat;animation:twinkle .9s ease-in-out var(--dl) infinite;filter:drop-shadow(0 0 6px #FFE38A)}
+.rank.top .r1fx b:nth-of-type(3n){background-image:var(--glint-aqua)}.rank.top .r1fx b:nth-of-type(3n+1){background-image:var(--glint-red);width:16px;height:16px}
+.rank.top .r1fx i{position:absolute;bottom:-10px;width:var(--sz);height:var(--sz);background:var(--glint-gold) center/contain no-repeat;animation:rise1 var(--dur) linear var(--dl) infinite;filter:drop-shadow(0 0 4px #FFE38A)}
 .rank.top .r1fx i:nth-child(3n){background-image:var(--glint-red);width:8px;height:8px}.rank.top .r1fx i:nth-child(4n){background-image:var(--glint-aqua)}
-@keyframes rise1{0%{transform:translateY(0) rotate(0) scale(.5);opacity:0}15%{opacity:1}100%{transform:translateY(-110px) rotate(200deg) scale(1.1);opacity:0}}
-.rank.top .crown1{position:absolute;left:14px;top:-16px;font-size:22px;z-index:3;filter:drop-shadow(0 0 6px rgba(232,177,42,.9));animation:crown1 2s ease-in-out infinite;pointer-events:none}
+@keyframes rise1{0%{transform:translate(0,0) rotate(0) scale(.4);opacity:0}12%{opacity:1}100%{transform:translate(var(--sx),-150px) rotate(360deg) scale(1.3);opacity:0}}
+.rank.top .crown1{position:absolute;left:12px;top:-20px;font-size:26px;z-index:3;filter:drop-shadow(0 0 10px rgba(255,214,90,1));animation:crown1 1.2s ease-in-out infinite;pointer-events:none}
 @keyframes crown1{0%,100%{transform:rotate(-12deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-4px)}}
 .rank.top>*:not(.r1fx):not(.crown1){position:relative;z-index:1}
 .rank.r2,.rank.r3{overflow:hidden}
@@ -1415,7 +1432,7 @@ function viewHome(t){
   h += rows.map(r => {
     const diff = r.paid - r.std;
     const nn = tcount(t, r.id, "normal"), ss = tcount(t, r.id, "super");
-    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}">${r.rank === 1 && r.paid > 0 ? `<span class="r1fx" aria-hidden="true"><span class="sweep"></span>${Array.from({ length: 10 }, (_, k) => `<i style="left:${(k * 37 + 11) % 96}%;--dl:-${(k * .45).toFixed(2)}s;--dur:${(2.6 + (k % 4) * .5).toFixed(1)}s"></i>`).join("")}</span><span class="crown1" aria-hidden="true">👑</span>` : ""}${(r.rank === 2 || r.rank === 3) && r.paid > 0 ? `<span class="shine2" aria-hidden="true"></span>` : ""}${r.rank === 4 ? `<span class="rain" aria-hidden="true"><i style="left:37%;--dl:-1.07s;--dur:0.58s;--len:19px"></i><i style="left:39%;--dl:-0.51s;--dur:0.76s;--len:12px"></i><i style="left:92%;--dl:-0.23s;--dur:0.73s;--len:13px"></i><i style="left:79%;--dl:-0.55s;--dur:0.56s;--len:11px"></i><i style="left:90%;--dl:-0.60s;--dur:0.56s;--len:20px"></i><i style="left:93%;--dl:-0.52s;--dur:0.86s;--len:13px"></i><i style="left:4%;--dl:-0.71s;--dur:0.81s;--len:19px"></i><i style="left:27%;--dl:-1.16s;--dur:0.70s;--len:15px"></i><i style="left:73%;--dl:-0.34s;--dur:0.94s;--len:19px"></i><i style="left:10%;--dl:-0.98s;--dur:0.62s;--len:17px"></i><i style="left:75%;--dl:-0.95s;--dur:0.82s;--len:12px"></i><i style="left:23%;--dl:-0.96s;--dur:0.76s;--len:20px"></i><i style="left:66%;--dl:-0.23s;--dur:0.60s;--len:11px"></i><i style="left:54%;--dl:-0.05s;--dur:0.66s;--len:19px"></i><i style="left:35%;--dl:-0.98s;--dur:0.68s;--len:15px"></i><i style="left:36%;--dl:-0.65s;--dur:0.91s;--len:17px"></i><i style="left:70%;--dl:-0.26s;--dur:0.61s;--len:19px"></i><i style="left:15%;--dl:-0.85s;--dur:0.88s;--len:13px"></i><i style="left:42%;--dl:-0.65s;--dur:0.92s;--len:19px"></i><i style="left:12%;--dl:-1.13s;--dur:0.62s;--len:10px"></i><i style="left:7%;--dl:-0.76s;--dur:0.71s;--len:12px"></i><i style="left:28%;--dl:-0.82s;--dur:0.94s;--len:10px"></i><i style="left:68%;--dl:-1.13s;--dur:0.73s;--len:11px"></i><i style="left:44%;--dl:-0.02s;--dur:0.87s;--len:17px"></i><i style="left:24%;--dl:-0.04s;--dur:0.66s;--len:18px"></i><i style="left:25%;--dl:-0.91s;--dur:0.73s;--len:14px"></i></span><span class="cloud" aria-hidden="true">☁</span><span class="cloud c2" aria-hidden="true">☁</span>` : ""}
+    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}">${r.rank === 1 && r.paid > 0 ? `<span class="r1fx" aria-hidden="true"><span class="rays1"></span><span class="sweep"></span><span class="sweep s2"></span>${Array.from({ length: 34 }, (_, k) => `<i style="left:${(k * 29 + 7) % 98}%;--dl:-${(k * .17).toFixed(2)}s;--dur:${(1.3 + (k % 5) * .3).toFixed(1)}s;--sz:${8 + (k % 4) * 4}px;--sx:${((k % 7) - 3) * 9}px"></i>`).join("")}${Array.from({ length: 10 }, (_, k) => `<b style="left:${(k * 41 + 5) % 94}%;top:${(k * 23 + 10) % 80}%;--dl:-${(k * .23).toFixed(2)}s"></b>`).join("")}</span><span class="crown1" aria-hidden="true">👑</span>` : ""}${(r.rank === 2 || r.rank === 3) && r.paid > 0 ? `<span class="shine2" aria-hidden="true"></span>` : ""}${r.rank === 4 ? `<span class="rain" aria-hidden="true"><i style="left:37%;--dl:-1.07s;--dur:0.58s;--len:19px"></i><i style="left:39%;--dl:-0.51s;--dur:0.76s;--len:12px"></i><i style="left:92%;--dl:-0.23s;--dur:0.73s;--len:13px"></i><i style="left:79%;--dl:-0.55s;--dur:0.56s;--len:11px"></i><i style="left:90%;--dl:-0.60s;--dur:0.56s;--len:20px"></i><i style="left:93%;--dl:-0.52s;--dur:0.86s;--len:13px"></i><i style="left:4%;--dl:-0.71s;--dur:0.81s;--len:19px"></i><i style="left:27%;--dl:-1.16s;--dur:0.70s;--len:15px"></i><i style="left:73%;--dl:-0.34s;--dur:0.94s;--len:19px"></i><i style="left:10%;--dl:-0.98s;--dur:0.62s;--len:17px"></i><i style="left:75%;--dl:-0.95s;--dur:0.82s;--len:12px"></i><i style="left:23%;--dl:-0.96s;--dur:0.76s;--len:20px"></i><i style="left:66%;--dl:-0.23s;--dur:0.60s;--len:11px"></i><i style="left:54%;--dl:-0.05s;--dur:0.66s;--len:19px"></i><i style="left:35%;--dl:-0.98s;--dur:0.68s;--len:15px"></i><i style="left:36%;--dl:-0.65s;--dur:0.91s;--len:17px"></i><i style="left:70%;--dl:-0.26s;--dur:0.61s;--len:19px"></i><i style="left:15%;--dl:-0.85s;--dur:0.88s;--len:13px"></i><i style="left:42%;--dl:-0.65s;--dur:0.92s;--len:19px"></i><i style="left:12%;--dl:-1.13s;--dur:0.62s;--len:10px"></i><i style="left:7%;--dl:-0.76s;--dur:0.71s;--len:12px"></i><i style="left:28%;--dl:-0.82s;--dur:0.94s;--len:10px"></i><i style="left:68%;--dl:-1.13s;--dur:0.73s;--len:11px"></i><i style="left:44%;--dl:-0.02s;--dur:0.87s;--len:17px"></i><i style="left:24%;--dl:-0.04s;--dur:0.66s;--len:18px"></i><i style="left:25%;--dl:-0.91s;--dur:0.73s;--len:14px"></i></span><span class="cloud" aria-hidden="true">☁</span><span class="cloud c2" aria-hidden="true">☁</span>` : ""}
       <div class="r">${r.rank}</div>
       <div class="n">${r.id === me ? `<span class="mine" style="background:${pcolor(me)}">自分</span>` : ""}<span class="nm">${esc(pname(r.id))}</span>${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
       <div class="tk2"><span class="tic n ${nn ? "" : "zero"}">免×${nn}</span><span class="tic s ${ss ? "" : "zero"}">S×${ss}</span></div>
@@ -3634,9 +3651,17 @@ const BOOM_SVG = (() => {
 })();
 function csFx(kind, big, small){
   const fx = document.createElement("div"); fx.className = "csfx " + kind;
-  const N = kind === "bust" ? 26 : 64;
-  const parts = Array.from({ length: N }, (_, i) => { const a = (i / N) * Math.PI * 2 + Math.random() * .3, d = (kind === "bust" ? 90 : 120) + Math.random() * (kind === "bust" ? 140 : 200); return `<i style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${(Math.random() * .25).toFixed(2)}s;--s:${(.6 + Math.random() * .9).toFixed(2)}"></i>`; }).join("");
-  const smoke = kind === "bust" ? Array.from({ length: 7 }, (_, i) => `<em style="--a:${i * 51}deg;--d:${(.15 + i * .04).toFixed(2)}s"></em>`).join("") : "";
+  const N = kind === "bust" ? 0 : 64;
+  let parts = Array.from({ length: N }, (_, i) => { const a = (i / N) * Math.PI * 2 + Math.random() * .3, d = 120 + Math.random() * 200; return `<i style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${(Math.random() * .25).toFixed(2)}s;--s:${(.6 + Math.random() * .9).toFixed(2)}"></i>`; }).join("");
+  if (kind === "bust"){
+    // 火花（光の筋）・破片（ゴツゴツの塊）・火の粉・火薬の煙
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    parts = Array.from({ length: 36 }, () => { const a = rnd(0, 360), d = rnd(140, 340); return `<u class="spark" style="--a:${a.toFixed(0)}deg;--dist:${d.toFixed(0)}px;--d:${rnd(0, .15).toFixed(2)}s;--len:${rnd(22, 60).toFixed(0)}px"></u>`; }).join("")
+      + Array.from({ length: 30 }, () => { const a = rnd(0, Math.PI * 2), d = rnd(120, 300); return `<i class="deb" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d + rnd(40, 160)).toFixed(0)}px;--d:${rnd(0, .2).toFixed(2)}s;--s:${rnd(.6, 1.8).toFixed(2)};--r:${rnd(-540, 540).toFixed(0)}deg;--c:${["#1B1838", "#5A3A2E", "#7A8299", "#3A2A20"][Math.floor(rnd(0, 4))]}"></i>`; }).join("")
+      + Array.from({ length: 34 }, () => { const a = rnd(0, Math.PI * 2), d = rnd(60, 260); return `<i class="emb" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${rnd(0, .4).toFixed(2)}s;--s:${rnd(.4, 1.2).toFixed(2)}"></i>`; }).join("")
+      + Array.from({ length: 10 }, () => `<s class="pow" style="--a:${rnd(0, 360).toFixed(0)}deg;--d:${rnd(.45, .8).toFixed(2)}s;--s:${rnd(.8, 1.6).toFixed(2)}"></s>`).join("");
+  }
+  const smoke = kind === "bust" ? Array.from({ length: 12 }, (_, i) => `<em style="--a:${i * 30}deg;--d:${(.55 + i * .03).toFixed(2)}s"></em>`).join("") + `<span class="flash2"></span>` : "";
   const extra = kind === "bust" ? `<span class="shock"></span>${BOOM_SVG}${smoke}` : `<span class="rays2"></span><span class="ring"></span><span class="ring r2"></span>`;
   fx.innerHTML = `${extra}${parts}<div class="txt"><b>${esc(big)}</b><small>${esc(small || "")}</small></div>`;
   document.body.appendChild(fx);
@@ -3732,7 +3757,7 @@ function drawCs(){
       const tmp = temp[c] === lv;
       cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp ${t.phase === "bust" && csReveal === ckey && csPrevRoll === ckey ? "burn" : ""}" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
     }
-    return `<div class="ccol ${own ? "won" : ""} ${temp[c] != null ? "act" : ""}" style="--h:${h};${own ? `--oc:${pcolor(own)}` : ""}"><div class="cstack">${own ? `<span class="crown">👑</span>` : ""}${cells}</div><b class="cn">${c}</b></div>`;
+    return `<div class="ccol ${own ? "won" : ""} ${temp[c] != null ? "act" : ""}" style="--h:${h};${own ? `--oc:${pcolor(own)}` : ""}"><div class="cstack">${own ? `<span class="crown">⭐️</span>` : ""}${cells}</div><b class="cn">${c}</b></div>`;
   }).join("");
   // 下部
   let bottom = "";
