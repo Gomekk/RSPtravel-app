@@ -1026,7 +1026,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .reachfx.l{left:6px}.reachfx.r{right:6px}
 .reachfx b{font-family:var(--disp);font-weight:400;font-size:clamp(20px,6.5vw,30px);line-height:1;color:var(--rc);-webkit-text-stroke:1.5px #1B1838;paint-order:stroke fill;filter:drop-shadow(0 0 10px var(--rc));animation:reachtxt 1s ease-in-out infinite}
 .reachfx.r{height:70px}
-.reachfx.r .chance{position:absolute;top:18px;font-size:clamp(18px,5.6vw,26px);font-style:italic;letter-spacing:.04em;background:linear-gradient(90deg,#FFE38A,#E8B12A,#FF6FB5,#8B3CFF,#1FB3BF,#FFE38A);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px #1B1838;filter:drop-shadow(0 0 8px rgba(232,177,42,.9));animation:nshine 2.5s linear infinite,roam 3.2s ease-in-out infinite}
+.reachfx.r .chance{position:absolute;top:18px;font-size:clamp(18px,5.6vw,26px);font-style:italic;letter-spacing:.04em;background:linear-gradient(90deg,#FFE38A,#E8B12A,#FF6FB5,#8B3CFF,#1FB3BF,#FFE38A);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px #1B1838;filter:drop-shadow(0 0 8px rgba(232,177,42,.9));animation:nshine 2.5s linear infinite}
 @keyframes roam{0%,100%{transform:translate(0,0) rotate(-6deg) scale(1)}25%{transform:translate(-14px,10px) rotate(4deg) scale(1.1)}50%{transform:translate(8px,22px) rotate(-3deg) scale(.95)}75%{transform:translate(12px,4px) rotate(7deg) scale(1.08)}}
 .reachfx .rsp{position:absolute;width:16px;height:16px;background:var(--glint-gold) center/contain no-repeat;animation:twinkle 1.2s ease-in-out infinite}
 .reachfx .rsp.s1{left:6%;top:6px}.reachfx .rsp.s2{right:4%;top:2px;background-image:var(--glint-aqua);animation-delay:.3s}
@@ -1050,6 +1050,24 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .csfx.claim .ring.r2{border-color:#9BF1F4;animation-delay:.25s;box-shadow:0 0 20px #1FB3BF}
 .csfx.claim i{width:calc(20px * var(--s));height:calc(20px * var(--s))}
 .csfx.claim .txt b{font-size:50px}
+/* ===== 序列のアニメーション ===== */
+.rank.top{overflow:visible;border-color:#B9821A;background:linear-gradient(105deg,#FFF1C2,#FFFBEA 45%,#FFF1C2)!important;background-size:200% 100%!important;animation:topglow 2s ease-in-out infinite,goldbg 4s ease-in-out infinite!important}
+@keyframes goldbg{50%{background-position:100% 0}}
+.rank.top .r1fx{position:absolute;inset:0;border-radius:12px;overflow:hidden;pointer-events:none}
+.rank.top .r1fx .sweep{position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.9),transparent);transform:skewX(-20deg);animation:sweep 2.6s ease-in-out infinite}
+@keyframes sweep{0%,30%{left:-40%}100%{left:140%}}
+.rank.top .r1fx i{position:absolute;bottom:-8px;width:10px;height:10px;background:var(--glint-gold) center/contain no-repeat;animation:rise1 var(--dur) linear var(--dl) infinite}
+.rank.top .r1fx i:nth-child(3n){background-image:var(--glint-red);width:8px;height:8px}.rank.top .r1fx i:nth-child(4n){background-image:var(--glint-aqua)}
+@keyframes rise1{0%{transform:translateY(0) rotate(0) scale(.5);opacity:0}15%{opacity:1}100%{transform:translateY(-110px) rotate(200deg) scale(1.1);opacity:0}}
+.rank.top .crown1{position:absolute;left:14px;top:-16px;font-size:22px;z-index:3;filter:drop-shadow(0 0 6px rgba(232,177,42,.9));animation:crown1 2s ease-in-out infinite;pointer-events:none}
+@keyframes crown1{0%,100%{transform:rotate(-12deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-4px)}}
+.rank.top>*:not(.r1fx):not(.crown1){position:relative;z-index:1}
+.rank.r2,.rank.r3{overflow:hidden}
+.rank .shine2{position:absolute;top:0;bottom:0;left:-40%;width:22%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg);animation:sweep 5s ease-in-out infinite}
+.rank.r3 .shine2{animation-delay:1.2s}
+.rank.r2{background:linear-gradient(105deg,#F0F7FA,#fff 60%)}
+.rank.r3{background:linear-gradient(105deg,#FFF0EC,#fff 60%)}
+.rank.r2>*:not(.shine2),.rank.r3>*:not(.shine2){position:relative}
 /* ===== フィードバック3 ===== */
 .nturn.mine{animation:turnglow 1.6s ease-in-out infinite!important}
 @keyframes turnglow{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 18px 4px color-mix(in srgb,var(--pc) 70%,transparent)}}
@@ -1298,7 +1316,7 @@ function subscribe(){
       if (!TABLES.includes(t)) return;
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); } catch (e) { console.error(e); }
+        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); turnBuzz(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -1353,6 +1371,7 @@ function render(){
   bindView();
   checkClaim();
   neuTurnNotice();
+  turnBuzz();
 }
 const soon = (t, s) => `<div class="soon"><b>${t}</b>${s}</div>`;
 
@@ -1396,7 +1415,7 @@ function viewHome(t){
   h += rows.map(r => {
     const diff = r.paid - r.std;
     const nn = tcount(t, r.id, "normal"), ss = tcount(t, r.id, "super");
-    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}">${r.rank === 4 ? `<span class="rain" aria-hidden="true"><i style="left:37%;--dl:-1.07s;--dur:0.58s;--len:19px"></i><i style="left:39%;--dl:-0.51s;--dur:0.76s;--len:12px"></i><i style="left:92%;--dl:-0.23s;--dur:0.73s;--len:13px"></i><i style="left:79%;--dl:-0.55s;--dur:0.56s;--len:11px"></i><i style="left:90%;--dl:-0.60s;--dur:0.56s;--len:20px"></i><i style="left:93%;--dl:-0.52s;--dur:0.86s;--len:13px"></i><i style="left:4%;--dl:-0.71s;--dur:0.81s;--len:19px"></i><i style="left:27%;--dl:-1.16s;--dur:0.70s;--len:15px"></i><i style="left:73%;--dl:-0.34s;--dur:0.94s;--len:19px"></i><i style="left:10%;--dl:-0.98s;--dur:0.62s;--len:17px"></i><i style="left:75%;--dl:-0.95s;--dur:0.82s;--len:12px"></i><i style="left:23%;--dl:-0.96s;--dur:0.76s;--len:20px"></i><i style="left:66%;--dl:-0.23s;--dur:0.60s;--len:11px"></i><i style="left:54%;--dl:-0.05s;--dur:0.66s;--len:19px"></i><i style="left:35%;--dl:-0.98s;--dur:0.68s;--len:15px"></i><i style="left:36%;--dl:-0.65s;--dur:0.91s;--len:17px"></i><i style="left:70%;--dl:-0.26s;--dur:0.61s;--len:19px"></i><i style="left:15%;--dl:-0.85s;--dur:0.88s;--len:13px"></i><i style="left:42%;--dl:-0.65s;--dur:0.92s;--len:19px"></i><i style="left:12%;--dl:-1.13s;--dur:0.62s;--len:10px"></i><i style="left:7%;--dl:-0.76s;--dur:0.71s;--len:12px"></i><i style="left:28%;--dl:-0.82s;--dur:0.94s;--len:10px"></i><i style="left:68%;--dl:-1.13s;--dur:0.73s;--len:11px"></i><i style="left:44%;--dl:-0.02s;--dur:0.87s;--len:17px"></i><i style="left:24%;--dl:-0.04s;--dur:0.66s;--len:18px"></i><i style="left:25%;--dl:-0.91s;--dur:0.73s;--len:14px"></i></span><span class="cloud" aria-hidden="true">☁</span><span class="cloud c2" aria-hidden="true">☁</span>` : ""}
+    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}">${r.rank === 1 && r.paid > 0 ? `<span class="r1fx" aria-hidden="true"><span class="sweep"></span>${Array.from({ length: 10 }, (_, k) => `<i style="left:${(k * 37 + 11) % 96}%;--dl:-${(k * .45).toFixed(2)}s;--dur:${(2.6 + (k % 4) * .5).toFixed(1)}s"></i>`).join("")}</span><span class="crown1" aria-hidden="true">👑</span>` : ""}${(r.rank === 2 || r.rank === 3) && r.paid > 0 ? `<span class="shine2" aria-hidden="true"></span>` : ""}${r.rank === 4 ? `<span class="rain" aria-hidden="true"><i style="left:37%;--dl:-1.07s;--dur:0.58s;--len:19px"></i><i style="left:39%;--dl:-0.51s;--dur:0.76s;--len:12px"></i><i style="left:92%;--dl:-0.23s;--dur:0.73s;--len:13px"></i><i style="left:79%;--dl:-0.55s;--dur:0.56s;--len:11px"></i><i style="left:90%;--dl:-0.60s;--dur:0.56s;--len:20px"></i><i style="left:93%;--dl:-0.52s;--dur:0.86s;--len:13px"></i><i style="left:4%;--dl:-0.71s;--dur:0.81s;--len:19px"></i><i style="left:27%;--dl:-1.16s;--dur:0.70s;--len:15px"></i><i style="left:73%;--dl:-0.34s;--dur:0.94s;--len:19px"></i><i style="left:10%;--dl:-0.98s;--dur:0.62s;--len:17px"></i><i style="left:75%;--dl:-0.95s;--dur:0.82s;--len:12px"></i><i style="left:23%;--dl:-0.96s;--dur:0.76s;--len:20px"></i><i style="left:66%;--dl:-0.23s;--dur:0.60s;--len:11px"></i><i style="left:54%;--dl:-0.05s;--dur:0.66s;--len:19px"></i><i style="left:35%;--dl:-0.98s;--dur:0.68s;--len:15px"></i><i style="left:36%;--dl:-0.65s;--dur:0.91s;--len:17px"></i><i style="left:70%;--dl:-0.26s;--dur:0.61s;--len:19px"></i><i style="left:15%;--dl:-0.85s;--dur:0.88s;--len:13px"></i><i style="left:42%;--dl:-0.65s;--dur:0.92s;--len:19px"></i><i style="left:12%;--dl:-1.13s;--dur:0.62s;--len:10px"></i><i style="left:7%;--dl:-0.76s;--dur:0.71s;--len:12px"></i><i style="left:28%;--dl:-0.82s;--dur:0.94s;--len:10px"></i><i style="left:68%;--dl:-1.13s;--dur:0.73s;--len:11px"></i><i style="left:44%;--dl:-0.02s;--dur:0.87s;--len:17px"></i><i style="left:24%;--dl:-0.04s;--dur:0.66s;--len:18px"></i><i style="left:25%;--dl:-0.91s;--dur:0.73s;--len:14px"></i></span><span class="cloud" aria-hidden="true">☁</span><span class="cloud c2" aria-hidden="true">☁</span>` : ""}
       <div class="r">${r.rank}</div>
       <div class="n">${r.id === me ? `<span class="mine" style="background:${pcolor(me)}">自分</span>` : ""}<span class="nm">${esc(pname(r.id))}</span>${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
       <div class="tk2"><span class="tic n ${nn ? "" : "zero"}">免×${nn}</span><span class="tic s ${ss ? "" : "zero"}">S×${ss}</span></div>
@@ -3254,6 +3273,17 @@ async function neuSave(g, patch, logLine){
   Object.assign(g, data[0]); drawNeu(); return true;
 }
 
+/* どのゲームでも、自分の番が回ってきたら振動させる */
+const turnSeen = {};
+function turnBuzz(){
+  if (!me) return;
+  [neuActive(), csActive(), sbActive()].filter(Boolean).forEach(g => {
+    const now = g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
+    const prev = turnSeen[g.id];
+    turnSeen[g.id] = now;
+    if (prev === false && now){ try { if (navigator.vibrate) navigator.vibrate([120, 70, 120, 70, 200]); } catch (e) {} }
+  });
+}
 let neuNoticeKey = null;
 function neuTurnNotice(){
   const g = neuActive(); if (!g || g.status !== "playing" || !g.turn || g.turn.pid !== me) return;
@@ -3588,10 +3618,11 @@ function csRollFx(dice, bust, mine, key){
     if (n < 18){ setTimeout(tick, 55 + n * 9); return; }
     ds.forEach((d, i) => { d.innerHTML = dieFace(dice[i]); d.classList.add("land"); });
     fx.classList.add("done"); if (navigator.vibrate) navigator.vibrate(40);
-    if (bust){ setTimeout(() => { csFx("bust", "強制終了！", "この番の前進はなくなった…"); reveal(false); }, 2100); return; }
+    if (bust && !mine){ setTimeout(() => { csFx("bust", "強制終了！", "この番の前進はなくなった…"); reveal(false); }, 2100); return; }
     if (mine){
       const b = document.createElement("button"); b.className = "nb end cpick"; b.textContent = "組み合わせを選ぶ";
-      b.onclick = () => reveal(true); fx.querySelector(".cact").appendChild(b); fx.classList.add("wait");
+      b.onclick = () => { if (bust){ csFx("bust", "強制終了！", "この番の前進はなくなった…"); reveal(false); } else reveal(true); };
+      fx.querySelector(".cact").appendChild(b); fx.classList.add("wait");
     } else setTimeout(() => reveal(false), 1300);
   };
   tick();
@@ -3712,7 +3743,7 @@ function drawCs(){
     const key = t.dice ? t.dice.join("") + ":" + (g.log || []).length : "";
     const roll = !!t.dice && (t.phase === "choose" || t.phase === "bust") && csPrevRoll !== null && csPrevRoll !== key;
     if (t.dice && (t.phase === "choose" || t.phase === "bust")){ if (csPrevRoll === null) csReveal = key; csPrevRoll = key; } else if (!t.dice) csPrevRoll = "";
-    if (roll){ csReveal = null; setTimeout(() => csRollFx(t.dice, t.phase === "bust", myTurn && t.phase === "choose", key), 0); }
+    if (roll){ csReveal = null; setTimeout(() => csRollFx(t.dice, t.phase === "bust", myTurn, key), 0); }
     const hidden = t.dice && (t.phase === "choose" || t.phase === "bust") && csReveal !== key;
     bottom += `<div class="cdice">${t.dice && !hidden ? t.dice.map(dieFace).join("") : hidden ? `<span class="note">ダイスを振っています…</span>` : `<span class="note">ダイスを振ってください</span>`}</div>`;
     if (hidden){ bottom += `<div class="copts ghost"><span>…</span></div>`; }
