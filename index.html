@@ -796,6 +796,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nlog{max-height:none;overflow:visible;font-size:11px;line-height:1.4}
 .nlog .lgn{font-weight:900;color:var(--pc);text-shadow:0 0 1px rgba(27,24,56,.35)}
 .nbottom{flex:none;display:flex;flex-direction:column;gap:6px}
+.nturn{background:color-mix(in srgb,var(--pc) 18%,#fff)!important;border-color:var(--pc)!important;}
+.nturn .tn{color:var(--pc);font-weight:400;text-shadow:0 0 1px rgba(27,24,56,.4)}
 .nturn{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:5px}
 .nturn .req{font-family:var(--body);font-size:11px;font-weight:900;padding:1px 8px;border-radius:99px;background:var(--crimson);color:#fff}
 .nturn.mine span:first-child{animation:nbeat 1s ease-in-out infinite}
@@ -889,8 +891,10 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .ccol.act .cc{background:#F4EEFF}
 .cc .mk{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 18%,var(--pc) 22%);border:1.5px solid #1B1838;box-shadow:0 0 6px var(--pc),0 1px 0 #1B1838}
 .cc .tmp{position:absolute;inset:-2px;border-radius:5px;border:3px solid var(--pc);background:color-mix(in srgb,var(--pc) 35%,transparent);box-shadow:0 0 10px #FF8A3D,0 0 4px var(--pc);animation:ctmp 1s ease-in-out infinite}
-.cc .tmp::after{content:"🔥";position:absolute;left:50%;bottom:62%;transform:translateX(-50%);font-size:14px;line-height:1;filter:drop-shadow(0 0 4px #FF8A3D);animation:flame .35s ease-in-out infinite alternate;pointer-events:none}
-@keyframes flame{from{transform:translateX(-50%) scale(1,1) rotate(-4deg)}to{transform:translateX(-50%) scale(.85,1.15) rotate(4deg)}}
+.cc .tmp{box-shadow:0 0 10px var(--pc)}
+.cc .tmp.burn{box-shadow:0 0 14px #FF8A3D,0 0 4px #E2364F;filter:saturate(.6)}
+.cc .tmp.burn::after{content:"🔥";position:absolute;left:50%;top:50%;transform:translate(-50%,-55%);font-size:15px;line-height:1;filter:drop-shadow(0 0 4px #FF8A3D);animation:flame .35s ease-in-out infinite alternate;pointer-events:none}
+@keyframes flame{from{transform:translate(-50%,-55%) scale(1,1) rotate(-4deg)}to{transform:translate(-50%,-62%) scale(.88,1.15) rotate(4deg)}}
 @keyframes ctmp{50%{transform:scale(1.12)}}
 .ccol .cn{text-align:center;font-family:var(--disp);font-weight:400;font-size:12px;margin-top:3px}
 .ccol.won .cc{background:color-mix(in srgb,var(--oc) 55%,#fff);border-color:var(--oc)}
@@ -958,11 +962,15 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sbres span{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:10px;background:#fff;border:2px solid var(--pc);font-weight:900}
 .sbres b{flex:1;text-align:left}.sbres em{font-style:normal;color:var(--crimson);font-size:13px}.sbres strong{font-size:16px}
 /* ===== フィードバック：ゲーム周り ===== */
-.rank.gloom{background:linear-gradient(180deg,#C9CFDB,#E4E7EE 60%,#D6DBE5);box-shadow:inset 6px 0 0 var(--c);overflow:hidden;filter:saturate(.7)}
+.rank.gloom{background:linear-gradient(180deg,#8F93BE 0%,#B9BCD8 45%,#D9DBEA 100%);box-shadow:inset 6px 0 0 var(--c),inset 0 10px 24px rgba(40,34,90,.35);overflow:hidden}
 .rank.gloom .r{color:#7A8299}
-.rank.gloom .rain{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(105deg,transparent 0 9px,rgba(90,99,120,.22) 9px 10px);background-size:200% 200%;animation:rain .7s linear infinite;opacity:.8}
-@keyframes rain{to{background-position:-20px 40px}}
-.rank.gloom .cloud{position:absolute;right:10px;top:-2px;font-size:22px;color:#7A8299;opacity:.7;animation:nfloat 5s ease-in-out infinite;--dx:-8px;--dy:2px;--rot:0deg;pointer-events:none}
+.rank.gloom .rain{position:absolute;inset:0;pointer-events:none}
+.rank.gloom .rain i{position:absolute;top:-24px;width:2px;height:var(--len);border-radius:2px;background:linear-gradient(transparent,rgba(58,64,140,.75));transform:rotate(12deg);animation:drop var(--dur) linear var(--dl) infinite}
+@keyframes drop{to{transform:translate(-14px,150px) rotate(12deg)}}
+.rank.gloom .a,.rank.gloom .n{text-shadow:0 0 6px rgba(255,255,255,.8)}
+.rank.gloom .m{color:#4A4F72}
+.rank.gloom .cloud.c2{right:46px;top:-8px;font-size:16px;color:#4A4F72;animation-delay:-2s}
+.rank.gloom .cloud{position:absolute;right:10px;top:-2px;font-size:24px;color:#5A5F86;opacity:.85;animation:nfloat 5s ease-in-out infinite;--dx:-8px;--dy:2px;--rot:0deg;pointer-events:none}
 .rank.gloom>*:not(.rain):not(.cloud){position:relative}
 .neubar div{min-width:0}
 .neubar small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1002,7 +1010,45 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .csfx.claim i:nth-child(3n){background-image:var(--glint-aqua)}.csfx.claim i:nth-child(3n+1){background-image:var(--glint-red);width:12px;height:12px}
 .csfx.claim .txt b{background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(232,177,42,.9))}
 .arena.cs.quake{animation:quake .6s}
+/* ===== キャントストップ改 ===== */
+.copts.ghost{justify-content:center;color:var(--mute);font-family:var(--disp);min-height:44px;align-items:center}
+.copts.guide .copt{animation:optin .5s cubic-bezier(.2,1.6,.4,1) both,pulse 1s ease-in-out .5s 2}
+.copts.guide .copt:nth-child(2){animation-delay:.06s,.56s}.copts.guide .copt:nth-child(3){animation-delay:.12s,.62s}.copts.guide .copt:nth-child(4){animation-delay:.18s,.68s}.copts.guide .copt:nth-child(5){animation-delay:.24s,.74s}
+@keyframes optin{from{transform:translateY(-60px) scale(.6);opacity:0}}
+.csroll{pointer-events:none}
+.csroll.wait{pointer-events:auto}
+.csroll .cact{position:absolute;left:50%;top:calc(50% + 120px);transform:translateX(-50%)}
+.csroll .cpick{pointer-events:auto;font-size:18px;padding:14px 26px;white-space:nowrap;animation:slam .45s cubic-bezier(.2,1.6,.4,1) both,pulse 1.2s ease-in-out .5s infinite}
+.cboard{position:relative}
+.cboard.reach{border-color:var(--rc);animation:reachb 1s ease-in-out infinite}
+@keyframes reachb{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--rc) 40%,transparent),0 0 30px var(--rc)}}
+.reachfx{position:absolute;top:10px;z-index:3;display:flex;flex-direction:column;align-items:center;pointer-events:none;width:34%}
+.reachfx.l{left:6px}.reachfx.r{right:6px}
+.reachfx b{font-family:var(--disp);font-weight:400;font-size:clamp(20px,6.5vw,30px);line-height:1;color:var(--rc);-webkit-text-stroke:1.5px #1B1838;paint-order:stroke fill;filter:drop-shadow(0 0 10px var(--rc));animation:reachtxt 1s ease-in-out infinite}
+.reachfx.r b{-webkit-text-stroke:0;font-size:30px;animation:flame .4s ease-in-out infinite alternate;transform-origin:center}
+.reachfx small{margin-top:4px;text-align:center;font-size:11px;font-weight:900;color:#1B1838;padding:2px 8px;border-radius:8px;background:#fff;border:2px solid var(--rc)}
+@keyframes reachtxt{50%{transform:scale(1.12) rotate(-3deg)}}
+.csfx.bust{background:radial-gradient(circle at 50% 48%,rgba(255,138,61,.4),transparent 60%)}
+.csfx.bust .core{display:none}
+.csfx .boomsvg{position:absolute;left:50%;top:48%;width:min(86vw,380px);transform:translate(-50%,-50%) scale(0) rotate(-20deg);animation:boomsvg .9s cubic-bezier(.2,1.5,.4,1) forwards;filter:drop-shadow(0 0 18px rgba(255,138,61,.9))}
+@keyframes boomsvg{0%{transform:translate(-50%,-50%) scale(0) rotate(-20deg)}55%{transform:translate(-50%,-50%) scale(1.08) rotate(6deg)}75%{transform:translate(-50%,-50%) scale(.96) rotate(0)}100%{transform:translate(-50%,-50%) scale(1) rotate(2deg);opacity:1}}
+.csfx .shock{position:absolute;left:50%;top:48%;width:40px;height:40px;border-radius:50%;border:6px solid rgba(255,255,255,.9);transform:translate(-50%,-50%);animation:shock .7s ease-out forwards}
+@keyframes shock{to{width:150vmin;height:150vmin;border-width:1px;opacity:0}}
+.csfx em{position:absolute;left:50%;top:48%;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#9AA1B4,#5A6378 70%);opacity:0;transform:translate(-50%,-50%);animation:smoke 1.6s ease-out var(--d) forwards}
+@keyframes smoke{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(10px) scale(.4)}30%{opacity:.75}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--a)) translateX(150px) scale(1.8)}}
+.csfx.bust i{width:calc(14px * var(--s));height:calc(14px * var(--s));border-radius:3px;transform-origin:center}
+.csfx.bust .txt{z-index:2;animation-delay:.35s}
+.csfx.bust .txt b{color:#FFF;-webkit-text-stroke:3px #E2364F;font-size:48px;filter:drop-shadow(0 3px 0 #1B1838)}
+.csfx.claim{background:radial-gradient(circle at 50% 48%,rgba(255,227,138,.65),rgba(255,227,138,.15) 45%,transparent 70%)}
+.csfx.claim .rays2{position:absolute;left:50%;top:48%;width:180vmin;height:180vmin;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(255,227,138,.55) 0 6deg,transparent 6deg 14deg);animation:spinc 4s linear infinite}
+.csfx.claim .ring{position:absolute;left:50%;top:48%;width:30px;height:30px;border-radius:50%;border:5px solid #FFE38A;transform:translate(-50%,-50%);animation:shock .9s ease-out forwards;box-shadow:0 0 20px #E8B12A}
+.csfx.claim .ring.r2{border-color:#9BF1F4;animation-delay:.25s;box-shadow:0 0 20px #1FB3BF}
+.csfx.claim i{width:calc(20px * var(--s));height:calc(20px * var(--s))}
+.csfx.claim .txt b{font-size:50px}
 /* ===== フィードバック3 ===== */
+.shufbtn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 14px 7px 10px;border-radius:99px;font-size:12.5px;font-weight:900;background:#fff;border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink)}
+.shufbtn span{font-size:14px;line-height:1}
+.shufbtn:active{transform:translateY(3px);box-shadow:none}
 .sheet h3 .ht{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sheet h3 .x{flex:none;white-space:nowrap}
 .sheet h3.long{font-size:17px}
@@ -1343,7 +1389,7 @@ function viewHome(t){
   h += rows.map(r => {
     const diff = r.paid - r.std;
     const nn = tcount(t, r.id, "normal"), ss = tcount(t, r.id, "super");
-    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}">${r.rank === 4 ? `<span class="rain" aria-hidden="true"></span><span class="cloud" aria-hidden="true">☁</span>` : ""}
+    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}">${r.rank === 4 ? `<span class="rain" aria-hidden="true"><i style="left:37%;--dl:-1.07s;--dur:0.58s;--len:19px"></i><i style="left:39%;--dl:-0.51s;--dur:0.76s;--len:12px"></i><i style="left:92%;--dl:-0.23s;--dur:0.73s;--len:13px"></i><i style="left:79%;--dl:-0.55s;--dur:0.56s;--len:11px"></i><i style="left:90%;--dl:-0.60s;--dur:0.56s;--len:20px"></i><i style="left:93%;--dl:-0.52s;--dur:0.86s;--len:13px"></i><i style="left:4%;--dl:-0.71s;--dur:0.81s;--len:19px"></i><i style="left:27%;--dl:-1.16s;--dur:0.70s;--len:15px"></i><i style="left:73%;--dl:-0.34s;--dur:0.94s;--len:19px"></i><i style="left:10%;--dl:-0.98s;--dur:0.62s;--len:17px"></i><i style="left:75%;--dl:-0.95s;--dur:0.82s;--len:12px"></i><i style="left:23%;--dl:-0.96s;--dur:0.76s;--len:20px"></i><i style="left:66%;--dl:-0.23s;--dur:0.60s;--len:11px"></i><i style="left:54%;--dl:-0.05s;--dur:0.66s;--len:19px"></i><i style="left:35%;--dl:-0.98s;--dur:0.68s;--len:15px"></i><i style="left:36%;--dl:-0.65s;--dur:0.91s;--len:17px"></i><i style="left:70%;--dl:-0.26s;--dur:0.61s;--len:19px"></i><i style="left:15%;--dl:-0.85s;--dur:0.88s;--len:13px"></i><i style="left:42%;--dl:-0.65s;--dur:0.92s;--len:19px"></i><i style="left:12%;--dl:-1.13s;--dur:0.62s;--len:10px"></i><i style="left:7%;--dl:-0.76s;--dur:0.71s;--len:12px"></i><i style="left:28%;--dl:-0.82s;--dur:0.94s;--len:10px"></i><i style="left:68%;--dl:-1.13s;--dur:0.73s;--len:11px"></i><i style="left:44%;--dl:-0.02s;--dur:0.87s;--len:17px"></i><i style="left:24%;--dl:-0.04s;--dur:0.66s;--len:18px"></i><i style="left:25%;--dl:-0.91s;--dur:0.73s;--len:14px"></i></span><span class="cloud" aria-hidden="true">☁</span><span class="cloud c2" aria-hidden="true">☁</span>` : ""}
       <div class="r">${r.rank}</div>
       <div class="n">${r.id === me ? `<span class="mine" style="background:${pcolor(me)}">自分</span>` : ""}<span class="nm">${esc(pname(r.id))}</span>${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
       <div class="tk2"><span class="tic n ${nn ? "" : "zero"}">免×${nn}</span><span class="tic s ${ss ? "" : "zero"}">S×${ss}</span></div>
@@ -3242,6 +3288,14 @@ function openGames(){
   s.querySelectorAll("[data-gstart]").forEach(b => b.onclick = () => GAMES.find(x => x.id === b.dataset.gstart).start());
   s.querySelectorAll("[data-gopen]").forEach(b => b.onclick = () => { const gm = GAMES.find(x => x.id === b.dataset.gopen); closeSheet(); gm.open(gm.active()); });
 }
+/* ログの名前をプレイヤーカラーに */
+function colorizeLog(players, txt){
+  const names = players.map(p => ({ p, n: esc(pname(p)) })).sort((a, b) => b.n.length - a.n.length);
+  let h = esc(txt); const marks = [];
+  names.forEach(({ p, n }, i) => { h = h.split(n).join(`\u0001${i}\u0002`); marks[i] = `<b class="lgn" style="--pc:${pcolor(p)}">${n}</b>`; });
+  return h.replace(/\u0001(\d+)\u0002/g, (_, i) => marks[i]);
+}
+const turnName = (pid, mine) => mine ? `<b class="tn">あなた</b>の番！` : `<b class="tn">${esc(pname(pid))}</b>の番`;
 /* 席順・手番順のドラッグ並べ替え（どのゲームでも共通） */
 function seatDrag(box, getOrder, setOrder, redraw){
   box.querySelectorAll("[data-seat]").forEach(el => {
@@ -3270,10 +3324,10 @@ function openNeuNew(){
   const s = openSheet("NEU（ノイ）を始める", `
     <p class="note">101を超えないようにカードを出し合い、出せなくなった人がチップを失います。最後まで生き残った人の勝ち（2〜7人）。</p>
     <div class="f"><span>参加者（タップで選ぶ）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
-    <div class="f"><span>席順（時計回り）・名前を指で動かして並べ替え</span><div id="nOrder" class="norder"></div><button class="mini" id="nShuf" style="margin-top:6px">席順をシャッフル</button></div>
+    <div class="f"><span>席順（時計回り）・名前を指で動かして並べ替え</span><div id="nOrder" class="norder"></div><button class="shufbtn" id="nShuf"><span aria-hidden="true">🔀</span>席順をシャッフル</button></div>
     <label class="f"><span>最初の親（じゃんけんで決めた人）</span><select id="nDealer"></select></label>
     <div class="btns"><button class="btn ghost" id="gBack">戻る</button><button class="btn" id="nGo">対戦スタート</button></div>`);
-  $("#gBack").onclick = openGames;
+  $("#gBack").onclick = openGames; s.querySelector("[data-close]").onclick = openGames;
   const draw = () => {
     $("#nOrder").innerHTML = order.map((id, i) => `<span class="nseat" data-seat="${id}" style="--pc:${pcolor(id)}"><b>${i + 1}</b>${esc(pname(id))}<em class="grip">⋮⋮</em></span>`).join("<i>→</i>");
     bindSeatDrag();
@@ -3370,7 +3424,7 @@ function drawNeu(){
   const lg = (g.log || []).slice(-5).reverse().map(x => `<li>${colorize(x.m)}</li>`).join("");
   let bottom = "";
   if (g.status === "playing"){
-    const who = t.pid === me ? "あなたの番！" : `${esc(pname(t.pid))}の番`;
+    const who = turnName(t.pid, t.pid === me);
     const req = t.need === 2 ? `<span class="req">2回出す ${t.played}/2</span>` : "";
     bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span>${req}</div>`;
     if (mine){
@@ -3382,7 +3436,7 @@ function drawNeu(){
     } else bottom += `<div class="nwait">観戦中（この対戦に参加していません）</div>`;
     // 脱落した人だけ、ほかの人の手札が見える
     if (mine && (g.chips[me] || 0) <= 0){
-      bottom = `<div class="nturn" style="--pc:${pcolor(t.pid)}"><span>${esc(pname(t.pid))}の番</span><em class="spec">脱落・観戦モード</em></div>
+      bottom = `<div class="nturn" style="--pc:${pcolor(t.pid)}"><span>${turnName(t.pid, false)}</span><em class="spec">脱落・観戦モード</em></div>
         <div class="nspy">${neuAlive(g).map(p => `<div class="nspyr ${p === t.pid ? "on" : ""}" style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><span>${(g.hands[p] || []).map(c => neuCardHtml(c)).join("") || "<small>なし</small>"}</span></div>`).join("")}</div>`;
     }
   }
@@ -3512,24 +3566,45 @@ async function neuNextRound(g){
 }
 
 /* ===================== キャントストップ ===================== */
-/* ダイスを振る演出：ボードの上で大きく転がって止まる */
-function csRollFx(dice, bust){
+/* ダイスを振る演出：ボードの上で大きく転がって止まる。自分の番なら「組み合わせを選ぶ」で下の選択肢へ */
+function csRollFx(dice, bust, mine, key){
   document.querySelectorAll(".csroll").forEach(x => x.remove());
   const fx = document.createElement("div"); fx.className = "csroll";
-  fx.innerHTML = `<span class="cflash"></span><div class="cbig">${dice.map(() => `<span class="bd"></span>`).join("")}</div>`;
+  fx.innerHTML = `<span class="cflash"></span><div class="cbig">${dice.map(() => `<span class="bd"></span>`).join("")}</div><div class="cact"></div>`;
   document.body.appendChild(fx);
   const ds = [...fx.querySelectorAll(".bd")];
-  let n = 0; const tick = () => { ds.forEach(d => { d.innerHTML = dieFace(1 + Math.floor(Math.random() * 6)); }); n++; if (n < 12) setTimeout(tick, 60 + n * 8); else { ds.forEach((d, i) => { d.innerHTML = dieFace(dice[i]); d.classList.add("land"); }); fx.classList.add("done"); if (navigator.vibrate) navigator.vibrate(40); setTimeout(() => { fx.classList.add("out"); if (bust) csFx("bust", "強制終了！", "この番の前進はなくなった…"); }, 650); setTimeout(() => fx.remove(), 1000); } };
+  const reveal = (guide) => { csReveal = key; csGuide = !!guide; fx.classList.add("out"); setTimeout(() => fx.remove(), 350); drawCs(); if (guide) setTimeout(() => { csGuide = false; }, 1600); };
+  let n = 0;
+  const tick = () => {
+    ds.forEach(d => { d.innerHTML = dieFace(1 + Math.floor(Math.random() * 6)); });
+    n++;
+    if (n < 18){ setTimeout(tick, 55 + n * 9); return; }
+    ds.forEach((d, i) => { d.innerHTML = dieFace(dice[i]); d.classList.add("land"); });
+    fx.classList.add("done"); if (navigator.vibrate) navigator.vibrate(40);
+    if (bust){ setTimeout(() => { csFx("bust", "強制終了！", "この番の前進はなくなった…"); reveal(false); }, 1100); return; }
+    if (mine){
+      const b = document.createElement("button"); b.className = "nb end cpick"; b.textContent = "組み合わせを選ぶ";
+      b.onclick = () => reveal(true); fx.querySelector(".cact").appendChild(b); fx.classList.add("wait");
+    } else setTimeout(() => reveal(false), 1300);
+  };
   tick();
 }
 /* 強制終了の爆発、レーン獲得のキラキラ */
+const BOOM_SVG = (() => {
+  const pts = (n, r1, r2, seed) => { let o = ""; for (let i = 0; i < n * 2; i++){ const a = Math.PI * i / n + seed, r = (i % 2 ? r2 : r1) * (0.82 + ((i * 7919 + seed * 100) % 37) / 100); o += `${(100 + r * Math.cos(a)).toFixed(1)},${(100 + r * Math.sin(a)).toFixed(1)} `; } return o; };
+  return `<svg viewBox="0 0 200 200" class="boomsvg" aria-hidden="true"><polygon points="${pts(13, 96, 58, .2)}" fill="#E2364F" stroke="#1B1838" stroke-width="4" stroke-linejoin="round"/><polygon points="${pts(11, 76, 46, .5)}" fill="#FF8A3D"/><polygon points="${pts(9, 54, 32, .9)}" fill="#FFD84A"/><polygon points="${pts(7, 30, 18, 1.3)}" fill="#FFF8DC"/></svg>`;
+})();
 function csFx(kind, big, small){
   const fx = document.createElement("div"); fx.className = "csfx " + kind;
-  const parts = Array.from({ length: kind === "bust" ? 22 : 30 }, (_, i) => { const a = (i / (kind === "bust" ? 22 : 30)) * Math.PI * 2, d = 90 + Math.random() * 120; return `<i style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${(Math.random() * .2).toFixed(2)}s"></i>`; }).join("");
-  fx.innerHTML = `<span class="core"></span>${parts}<div class="txt"><b>${esc(big)}</b><small>${esc(small || "")}</small></div>`;
+  const N = kind === "bust" ? 26 : 64;
+  const parts = Array.from({ length: N }, (_, i) => { const a = (i / N) * Math.PI * 2 + Math.random() * .3, d = (kind === "bust" ? 90 : 120) + Math.random() * (kind === "bust" ? 140 : 200); return `<i style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${(Math.random() * .25).toFixed(2)}s;--s:${(.6 + Math.random() * .9).toFixed(2)}"></i>`; }).join("");
+  const smoke = kind === "bust" ? Array.from({ length: 7 }, (_, i) => `<em style="--a:${i * 51}deg;--d:${(.15 + i * .04).toFixed(2)}s"></em>`).join("") : "";
+  const extra = kind === "bust" ? `<span class="shock"></span>${BOOM_SVG}${smoke}` : `<span class="rays2"></span><span class="ring"></span><span class="ring r2"></span>`;
+  fx.innerHTML = `${extra}${parts}<div class="txt"><b>${esc(big)}</b><small>${esc(small || "")}</small></div>`;
   document.body.appendChild(fx);
-  if (kind === "bust"){ const a = $("#cs"); if (a){ a.classList.add("quake"); setTimeout(() => a.classList.remove("quake"), 700); } if (navigator.vibrate) navigator.vibrate([80, 40, 120]); }
-  setTimeout(() => fx.remove(), 2000);
+  if (kind === "bust"){ const a = $("#cs"); if (a){ a.classList.add("quake"); setTimeout(() => a.classList.remove("quake"), 800); } if (navigator.vibrate) navigator.vibrate([80, 40, 140]); }
+  else if (navigator.vibrate) navigator.vibrate([30, 30, 30, 30, 60]);
+  setTimeout(() => fx.remove(), 2400);
 }
 const CS_H = { 2: 3, 3: 5, 4: 7, 5: 9, 6: 11, 7: 13, 8: 11, 9: 9, 10: 7, 11: 5, 12: 3 };
 const CS_COLS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -3578,9 +3653,9 @@ function openCsNew(){
   const s = openSheet("キャントストップを始める", `
     <p class="note">ダイス4個を2組に分けてレーンを登る。欲張って振り続けるか、止めて確定するか。3本のレーンを制した人の勝ち（2〜6人）。</p>
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
-    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="cOrder" class="norder"></div><button class="mini" id="cShuf" style="margin-top:6px">順番をシャッフル</button></div>
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="cOrder" class="norder"></div><button class="shufbtn" id="cShuf"><span aria-hidden="true">🔀</span>順番をシャッフル</button></div>
     <div class="btns"><button class="btn ghost" id="gBack">戻る</button><button class="btn" id="cGo">対戦スタート</button></div>`);
-  $("#gBack").onclick = openGames;
+  $("#gBack").onclick = openGames; s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#cOrder").innerHTML = seatHtml(order); seatDrag($("#cOrder"), () => order, o => order = o, draw); };
   s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
@@ -3598,7 +3673,7 @@ function openCsNew(){
     if (res){ await loadTable("cs_games"); closeSheet(); openCs(res.id); pushCall({ type: "game_turn", game: "キャントストップ", to: order[0] }); }
   };
 }
-let csId = null, csBusy = false, csPrevRoll = null;
+let csId = null, csBusy = false, csPrevRoll = null, csReveal = null, csGuide = false;
 function openCs(id){ csId = id; csPrevRoll = null; $("#cs").hidden = false; document.body.style.overflow = "hidden"; drawCs(); }
 function closeCs(){ csId = null; $("#cs").hidden = true; document.body.style.overflow = ""; render(); }
 const dieFace = n => `<span class="die d${n}">${Array.from({ length: 9 }, (_, i) => `<i class="${[[4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]][n - 1].includes(i) ? "on" : ""}"></i>`).join("")}</span>`;
@@ -3616,23 +3691,25 @@ function drawCs(){
     for (let lv = h; lv >= 1; lv--){
       const here = g.players.filter(p => (g.pos[p] || {})[c] === lv);
       const tmp = temp[c] === lv;
-      cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
+      cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp ${t.phase === "bust" && csReveal ? "burn" : ""}" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
     }
     return `<div class="ccol ${own ? "won" : ""} ${temp[c] != null ? "act" : ""}" style="--h:${h};${own ? `--oc:${pcolor(own)}` : ""}"><div class="cstack">${own ? `<span class="crown">👑</span>` : ""}${cells}</div><b class="cn">${c}</b></div>`;
   }).join("");
   // 下部
   let bottom = "";
   if (g.status === "playing"){
-    const who = myTurn ? "あなたの番！" : `${esc(pname(t.pid))}の番`;
+    const who = turnName(t.pid, myTurn);
     const used = Object.keys(temp).length;
     bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span><span class="req2">仮コマ ${3 - used}/3</span></div>`;
     const key = t.dice ? t.dice.join("") + ":" + (g.log || []).length : "";
-    const roll = !!t.dice && t.phase !== "decide" && csPrevRoll !== null && csPrevRoll !== key && !String(csPrevRoll).startsWith(t.dice.join("") + ":");
-    csPrevRoll = key;
-    if (roll) setTimeout(() => csRollFx(t.dice, t.phase === "bust"), 0);
-    bottom += `<div class="cdice ${roll ? "hold" : ""}">${t.dice ? t.dice.map(dieFace).join("") : `<span class="note">ダイスを振ってください</span>`}</div>`;
-    if (t.phase === "choose"){
-      bottom += `<div class="copts">${(t.opts || []).map((o, i) => `<button class="copt" data-opt="${i}" ${myTurn ? "" : "disabled"}>${o.map(x => `<b>${x}</b>`).join("<i>と</i>")}${o.length === 1 ? "<small>だけ</small>" : ""}</button>`).join("")}</div>`;
+    const roll = !!t.dice && (t.phase === "choose" || t.phase === "bust") && csPrevRoll !== null && csPrevRoll !== key;
+    if (t.dice && (t.phase === "choose" || t.phase === "bust")){ if (csPrevRoll === null) csReveal = key; csPrevRoll = key; } else if (!t.dice) csPrevRoll = "";
+    if (roll){ csReveal = null; setTimeout(() => csRollFx(t.dice, t.phase === "bust", myTurn && t.phase === "choose", key), 0); }
+    const hidden = t.dice && (t.phase === "choose" || t.phase === "bust") && csReveal !== key;
+    bottom += `<div class="cdice">${t.dice && !hidden ? t.dice.map(dieFace).join("") : hidden ? `<span class="note">ダイスを振っています…</span>` : `<span class="note">ダイスを振ってください</span>`}</div>`;
+    if (hidden){ bottom += `<div class="copts ghost"><span>…</span></div>`; }
+    else if (t.phase === "choose"){
+      bottom += `<div class="copts ${csGuide ? "guide" : ""}">${(t.opts || []).map((o, i) => `<button class="copt" data-opt="${i}" ${myTurn ? "" : "disabled"}>${o.map(x => `<b>${x}</b>`).join("<i>と</i>")}${o.length === 1 ? "<small>だけ</small>" : ""}</button>`).join("")}</div>`;
     } else if (t.phase === "bust"){
       bottom += `<div class="cbust">強制終了！<small>この番に進めた分はなくなりました</small></div>${myTurn ? `<div class="nbtns one"><button class="nb end" id="cPass">番を終える</button></div>` : ""}`;
     } else if (myTurn){
@@ -3641,13 +3718,13 @@ function drawCs(){
         : `<div class="nbtns two"><button class="nb draw" id="cRoll">もう一度振る</button><button class="nb end" id="cStop">やめる（確定）</button></div>`;
     } else bottom += `<div class="nwait">ほかの人の番です</div>`;
   }
-  const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   let over = "";
   if (g.status === "finished") over = `<div class="nover" style="--c:${pcolor(g.winner)}"><span class="ob"></span><div class="k">優勝</div><div class="p">${esc(pname(g.winner))}</div><div class="y">3本のレーンを制覇！</div><div class="btns"><button class="btn" id="cClose2">閉じる</button></div></div>`;
   el.innerHTML = `<div class="nbg cbg" aria-hidden="true"><span class="nrays"></span><span class="cglow"></span><i style="left:62%;top:55%;font-size:45px;color:#1B1838;--dur:11.7s;--dl:-2.9s;--dx:68px;--dy:-48px;--rot:-49deg">⚀</i><i style="left:10%;top:5%;font-size:41px;color:#E2364F;--dur:7.7s;--dl:-7.5s;--dx:-6px;--dy:-35px;--rot:8deg">⚁</i><i style="left:36%;top:83%;font-size:69px;color:#1FB3BF;--dur:11.6s;--dl:-4.0s;--dx:-55px;--dy:-82px;--rot:88deg">⚂</i><i style="left:21%;top:21%;font-size:60px;color:#E8B12A;--dur:8.9s;--dl:-9.6s;--dx:-17px;--dy:-69px;--rot:18deg">⚃</i><i style="left:11%;top:83%;font-size:30px;color:#1B1838;--dur:7.2s;--dl:-0.8s;--dx:51px;--dy:-50px;--rot:33deg">⚄</i><i style="left:14%;top:89%;font-size:52px;color:#E2364F;--dur:10.7s;--dl:-9.2s;--dx:-66px;--dy:-63px;--rot:-25deg">⚅</i><i style="left:69%;top:8%;font-size:48px;color:#1FB3BF;--dur:5.4s;--dl:-4.8s;--dx:-69px;--dy:-35px;--rot:-17deg">★</i><i style="left:26%;top:16%;font-size:61px;color:#E8B12A;--dur:6.5s;--dl:-2.5s;--dx:22px;--dy:-87px;--rot:-52deg">✦</i><i style="left:4%;top:37%;font-size:38px;color:#1B1838;--dur:10.2s;--dl:-8.3s;--dx:66px;--dy:-55px;--rot:110deg">▲</i><i style="left:12%;top:34%;font-size:68px;color:#E2364F;--dur:7.2s;--dl:-3.5s;--dx:-27px;--dy:-69px;--rot:-96deg">⚀</i><i style="left:69%;top:76%;font-size:43px;color:#1FB3BF;--dur:7.3s;--dl:-0.5s;--dx:19px;--dy:-89px;--rot:-1deg">⚁</i><i style="left:91%;top:36%;font-size:56px;color:#E8B12A;--dur:9.4s;--dl:-7.3s;--dx:9px;--dy:-74px;--rot:-101deg">⚂</i><i style="left:91%;top:64%;font-size:27px;color:#1B1838;--dur:9.3s;--dl:-5.3s;--dx:-35px;--dy:-65px;--rot:4deg">⚃</i><i style="left:89%;top:77%;font-size:51px;color:#E2364F;--dur:6.3s;--dl:-10.0s;--dx:-32px;--dy:-47px;--rot:-92deg">⚄</i><i style="left:23%;top:8%;font-size:60px;color:#1FB3BF;--dur:7.1s;--dl:-8.9s;--dx:10px;--dy:-39px;--rot:-40deg">⚅</i><i style="left:2%;top:22%;font-size:52px;color:#E8B12A;--dur:5.6s;--dl:-7.7s;--dx:-6px;--dy:-48px;--rot:-17deg">★</i><i style="left:57%;top:11%;font-size:60px;color:#1B1838;--dur:5.6s;--dl:-6.4s;--dx:-9px;--dy:-76px;--rot:16deg">✦</i><i style="left:29%;top:75%;font-size:36px;color:#E2364F;--dur:10.6s;--dl:-0.5s;--dx:54px;--dy:-53px;--rot:-20deg">▲</i>${Array.from({ length: 12 }, (_, i) => `<b class="spk" style="left:${(i * 37 + 7) % 96}%;--dl:-${(i * 0.7).toFixed(1)}s;--dur:${4 + (i % 4)}s"></b>`).join("")}</div>
     <div class="ntop"><b class="nt cst">CAN'T STOP</b><span class="ndk"></span><button class="nmini" id="cMenu" aria-label="メニュー">…</button><button class="nmini" id="cClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
-    <div class="cboard">${board}</div>
+    <div class="cboard ${g.status === "playing" && owned(t.pid) >= 2 ? "reach" : ""}" style="--rc:${pcolor(t.pid)}">${g.status === "playing" && owned(t.pid) >= 2 ? `<div class="reachfx l" aria-hidden="true"><b>REACH!</b><small>${esc(pname(t.pid))}<br>あと1本で勝利</small></div><div class="reachfx r" aria-hidden="true"><b>🔥</b><small>CHANCE!</small></div>` : ""}${board}</div>
     <div class="nlogw"><div class="nlogh">直近の流れ</div><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${over}`;
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
@@ -3804,10 +3881,10 @@ function openSbNew(){
   const s = openSheet("セブンブリッジを始める", `
     <p class="note">同じ数字や同じマークの連番をそろえて公開し、手札を早くなくした人がラウンドの勝ち。残った手札は失点。決めたラウンド数の合計点で競います（2〜6人）。</p>
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
-    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="bOrder" class="norder"></div><button class="mini" id="bShuf" style="margin-top:6px">順番をシャッフル</button></div>
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="bOrder" class="norder"></div><button class="shufbtn" id="bShuf"><span aria-hidden="true">🔀</span>順番をシャッフル</button></div>
     <div class="f"><span>ラウンド数</span><div class="chips">${[1, 3, 5, 7].map(n => `<button type="button" data-rd="${n}" aria-pressed="${n === rounds}">${n}回</button>`).join("")}</div></div>
     <div class="btns"><button class="btn ghost" id="gBack">戻る</button><button class="btn" id="bGo">対戦スタート</button></div>`);
-  $("#gBack").onclick = openGames;
+  $("#gBack").onclick = openGames; s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#bOrder").innerHTML = seatHtml(order); seatDrag($("#bOrder"), () => order, o => order = o, draw); };
   s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
@@ -3852,7 +3929,7 @@ function drawSb(){
   }
   let bottom = "";
   if (g.status === "playing"){
-    const who = cl ? "ポン・チーの受付中…" : myTurn ? (t.phase === "draw" ? "あなたの番！山札から引こう" : "役を公開・付け札して、1枚捨てよう") : `${esc(pname(t.pid))}の番`;
+    const who = cl ? "ポン・チーの受付中…" : myTurn ? (t.phase === "draw" ? `${turnName(t.pid, true)}山札から引こう` : `<b class="tn">あなた</b>：役を公開・付け札して、1枚捨てよう`) : turnName(t.pid, false);
     bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span></div>`;
     if (hand){
       bottom += `<div class="sbhand">${hand.map(c => `<button class="hc ${sbSel.includes(c) ? "sel" : ""}" data-hc="${c}">${sbCardHtml(c)}</button>`).join("")}</div>`;
@@ -3872,7 +3949,7 @@ function drawSb(){
       <div class="sbres">${g.players.map(p => `<span style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><em>${rr.pen && rr.pen[p] ? `−${rr.pen[p]}` : p === rr.winner ? "上がり" : "0"}</em><strong class="num">${g.scores[p] || 0}点</strong></span>`).join("")}</div>
       <div class="btns">${fin ? `<button class="btn" id="bClose2">閉じる</button>` : `<button class="btn" id="bNext">次のラウンドへ</button>`}</div></div>`;
   }
-  const lg = (g.log || []).slice(-2).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  const lg = (g.log || []).slice(-2).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span>${["♠", "♥", "♦", "♣", "7", "★", "♥", "♠"].map((x, i) => `<i style="left:${(i * 13 + 5) % 92}%;top:${(i * 31 + 6) % 90}%;font-size:${28 + (i % 3) * 20}px;color:${i % 2 ? "#E2364F" : "#1B1838"};--dur:${7 + i}s;--dl:-${i}s;--dx:${(i % 2 ? 1 : -1) * 40}px;--dy:-50px;--rot:${i * 20 - 60}deg">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt sbt">SEVEN BRIDGE</b><span class="nrd">R ${g.round}/${g.rounds}</span><span class="ndk"></span><button class="nmini" id="bMenu" aria-label="メニュー">…</button><button class="nmini" id="bClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
