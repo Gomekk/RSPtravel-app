@@ -1025,7 +1025,12 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .reachfx{position:absolute;top:10px;z-index:3;display:flex;flex-direction:column;align-items:center;pointer-events:none;width:34%}
 .reachfx.l{left:6px}.reachfx.r{right:6px}
 .reachfx b{font-family:var(--disp);font-weight:400;font-size:clamp(20px,6.5vw,30px);line-height:1;color:var(--rc);-webkit-text-stroke:1.5px #1B1838;paint-order:stroke fill;filter:drop-shadow(0 0 10px var(--rc));animation:reachtxt 1s ease-in-out infinite}
-.reachfx.r b{-webkit-text-stroke:0;font-size:30px;animation:flame .4s ease-in-out infinite alternate;transform-origin:center}
+.reachfx.r{height:70px}
+.reachfx.r .chance{position:absolute;top:18px;font-size:clamp(18px,5.6vw,26px);font-style:italic;letter-spacing:.04em;background:linear-gradient(90deg,#FFE38A,#E8B12A,#FF6FB5,#8B3CFF,#1FB3BF,#FFE38A);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px #1B1838;filter:drop-shadow(0 0 8px rgba(232,177,42,.9));animation:nshine 2.5s linear infinite,roam 3.2s ease-in-out infinite}
+@keyframes roam{0%,100%{transform:translate(0,0) rotate(-6deg) scale(1)}25%{transform:translate(-14px,10px) rotate(4deg) scale(1.1)}50%{transform:translate(8px,22px) rotate(-3deg) scale(.95)}75%{transform:translate(12px,4px) rotate(7deg) scale(1.08)}}
+.reachfx .rsp{position:absolute;width:16px;height:16px;background:var(--glint-gold) center/contain no-repeat;animation:twinkle 1.2s ease-in-out infinite}
+.reachfx .rsp.s1{left:6%;top:6px}.reachfx .rsp.s2{right:4%;top:2px;background-image:var(--glint-aqua);animation-delay:.3s}
+.reachfx .rsp.s3{left:18%;top:52px;width:12px;height:12px;background-image:var(--glint-red);animation-delay:.6s}.reachfx .rsp.s4{right:16%;top:56px;animation-delay:.9s}
 .reachfx small{margin-top:4px;text-align:center;font-size:11px;font-weight:900;color:#1B1838;padding:2px 8px;border-radius:8px;background:#fff;border:2px solid var(--rc)}
 @keyframes reachtxt{50%{transform:scale(1.12) rotate(-3deg)}}
 .csfx.bust{background:radial-gradient(circle at 50% 48%,rgba(255,138,61,.4),transparent 60%)}
@@ -1046,6 +1051,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .csfx.claim i{width:calc(20px * var(--s));height:calc(20px * var(--s))}
 .csfx.claim .txt b{font-size:50px}
 /* ===== フィードバック3 ===== */
+.nturn.mine{animation:turnglow 1.6s ease-in-out infinite!important}
+@keyframes turnglow{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 18px 4px color-mix(in srgb,var(--pc) 70%,transparent)}}
 .shufbtn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 14px 7px 10px;border-radius:99px;font-size:12.5px;font-weight:900;background:#fff;border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink)}
 .shufbtn span{font-size:14px;line-height:1}
 .shufbtn:active{transform:translateY(3px);box-shadow:none}
@@ -3324,10 +3331,10 @@ function openNeuNew(){
   const s = openSheet("NEU（ノイ）を始める", `
     <p class="note">101を超えないようにカードを出し合い、出せなくなった人がチップを失います。最後まで生き残った人の勝ち（2〜7人）。</p>
     <div class="f"><span>参加者（タップで選ぶ）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
-    <div class="f"><span>席順（時計回り）・名前を指で動かして並べ替え</span><div id="nOrder" class="norder"></div><button class="shufbtn" id="nShuf"><span aria-hidden="true">🔀</span>席順をシャッフル</button></div>
+    <div class="f"><span>席順（時計回り）・名前を指で動かして並べ替え</span><div id="nOrder" class="norder"></div><button class="shufbtn" id="nShuf">席順をシャッフル</button></div>
     <label class="f"><span>最初の親（じゃんけんで決めた人）</span><select id="nDealer"></select></label>
-    <div class="btns"><button class="btn ghost" id="gBack">戻る</button><button class="btn" id="nGo">対戦スタート</button></div>`);
-  $("#gBack").onclick = openGames; s.querySelector("[data-close]").onclick = openGames;
+    <div class="btns"><button class="btn" id="nGo">対戦スタート</button></div>`);
+  s.querySelector("[data-close]").onclick = openGames;
   const draw = () => {
     $("#nOrder").innerHTML = order.map((id, i) => `<span class="nseat" data-seat="${id}" style="--pc:${pcolor(id)}"><b>${i + 1}</b>${esc(pname(id))}<em class="grip">⋮⋮</em></span>`).join("<i>→</i>");
     bindSeatDrag();
@@ -3581,7 +3588,7 @@ function csRollFx(dice, bust, mine, key){
     if (n < 18){ setTimeout(tick, 55 + n * 9); return; }
     ds.forEach((d, i) => { d.innerHTML = dieFace(dice[i]); d.classList.add("land"); });
     fx.classList.add("done"); if (navigator.vibrate) navigator.vibrate(40);
-    if (bust){ setTimeout(() => { csFx("bust", "強制終了！", "この番の前進はなくなった…"); reveal(false); }, 1100); return; }
+    if (bust){ setTimeout(() => { csFx("bust", "強制終了！", "この番の前進はなくなった…"); reveal(false); }, 2100); return; }
     if (mine){
       const b = document.createElement("button"); b.className = "nb end cpick"; b.textContent = "組み合わせを選ぶ";
       b.onclick = () => reveal(true); fx.querySelector(".cact").appendChild(b); fx.classList.add("wait");
@@ -3653,9 +3660,9 @@ function openCsNew(){
   const s = openSheet("キャントストップを始める", `
     <p class="note">ダイス4個を2組に分けてレーンを登る。欲張って振り続けるか、止めて確定するか。3本のレーンを制した人の勝ち（2〜6人）。</p>
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
-    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="cOrder" class="norder"></div><button class="shufbtn" id="cShuf"><span aria-hidden="true">🔀</span>順番をシャッフル</button></div>
-    <div class="btns"><button class="btn ghost" id="gBack">戻る</button><button class="btn" id="cGo">対戦スタート</button></div>`);
-  $("#gBack").onclick = openGames; s.querySelector("[data-close]").onclick = openGames;
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="cOrder" class="norder"></div><button class="shufbtn" id="cShuf">順番をシャッフル</button></div>
+    <div class="btns"><button class="btn" id="cGo">対戦スタート</button></div>`);
+  s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#cOrder").innerHTML = seatHtml(order); seatDrag($("#cOrder"), () => order, o => order = o, draw); };
   s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
@@ -3685,13 +3692,14 @@ function drawCs(){
   const seats = g.players.map(p => `<div class="np ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}<b>${esc(pname(p))}</b><span class="cstars">${"★".repeat(owned(p))}<i>${"★".repeat(Math.max(0, 3 - owned(p)))}</i></span></div>`).join(`<span class="nar">›</span>`);
   // ボード
   const temp = t.temp || {};
+  const ckey = t.dice ? t.dice.join("") + ":" + (g.log || []).length : "";
   const board = CS_COLS.map(c => {
     const h = CS_H[c], own = g.claimed[c];
     let cells = "";
     for (let lv = h; lv >= 1; lv--){
       const here = g.players.filter(p => (g.pos[p] || {})[c] === lv);
       const tmp = temp[c] === lv;
-      cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp ${t.phase === "bust" && csReveal ? "burn" : ""}" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
+      cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp ${t.phase === "bust" && csReveal === ckey && csPrevRoll === ckey ? "burn" : ""}" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
     }
     return `<div class="ccol ${own ? "won" : ""} ${temp[c] != null ? "act" : ""}" style="--h:${h};${own ? `--oc:${pcolor(own)}` : ""}"><div class="cstack">${own ? `<span class="crown">👑</span>` : ""}${cells}</div><b class="cn">${c}</b></div>`;
   }).join("");
@@ -3724,7 +3732,7 @@ function drawCs(){
   el.innerHTML = `<div class="nbg cbg" aria-hidden="true"><span class="nrays"></span><span class="cglow"></span><i style="left:62%;top:55%;font-size:45px;color:#1B1838;--dur:11.7s;--dl:-2.9s;--dx:68px;--dy:-48px;--rot:-49deg">⚀</i><i style="left:10%;top:5%;font-size:41px;color:#E2364F;--dur:7.7s;--dl:-7.5s;--dx:-6px;--dy:-35px;--rot:8deg">⚁</i><i style="left:36%;top:83%;font-size:69px;color:#1FB3BF;--dur:11.6s;--dl:-4.0s;--dx:-55px;--dy:-82px;--rot:88deg">⚂</i><i style="left:21%;top:21%;font-size:60px;color:#E8B12A;--dur:8.9s;--dl:-9.6s;--dx:-17px;--dy:-69px;--rot:18deg">⚃</i><i style="left:11%;top:83%;font-size:30px;color:#1B1838;--dur:7.2s;--dl:-0.8s;--dx:51px;--dy:-50px;--rot:33deg">⚄</i><i style="left:14%;top:89%;font-size:52px;color:#E2364F;--dur:10.7s;--dl:-9.2s;--dx:-66px;--dy:-63px;--rot:-25deg">⚅</i><i style="left:69%;top:8%;font-size:48px;color:#1FB3BF;--dur:5.4s;--dl:-4.8s;--dx:-69px;--dy:-35px;--rot:-17deg">★</i><i style="left:26%;top:16%;font-size:61px;color:#E8B12A;--dur:6.5s;--dl:-2.5s;--dx:22px;--dy:-87px;--rot:-52deg">✦</i><i style="left:4%;top:37%;font-size:38px;color:#1B1838;--dur:10.2s;--dl:-8.3s;--dx:66px;--dy:-55px;--rot:110deg">▲</i><i style="left:12%;top:34%;font-size:68px;color:#E2364F;--dur:7.2s;--dl:-3.5s;--dx:-27px;--dy:-69px;--rot:-96deg">⚀</i><i style="left:69%;top:76%;font-size:43px;color:#1FB3BF;--dur:7.3s;--dl:-0.5s;--dx:19px;--dy:-89px;--rot:-1deg">⚁</i><i style="left:91%;top:36%;font-size:56px;color:#E8B12A;--dur:9.4s;--dl:-7.3s;--dx:9px;--dy:-74px;--rot:-101deg">⚂</i><i style="left:91%;top:64%;font-size:27px;color:#1B1838;--dur:9.3s;--dl:-5.3s;--dx:-35px;--dy:-65px;--rot:4deg">⚃</i><i style="left:89%;top:77%;font-size:51px;color:#E2364F;--dur:6.3s;--dl:-10.0s;--dx:-32px;--dy:-47px;--rot:-92deg">⚄</i><i style="left:23%;top:8%;font-size:60px;color:#1FB3BF;--dur:7.1s;--dl:-8.9s;--dx:10px;--dy:-39px;--rot:-40deg">⚅</i><i style="left:2%;top:22%;font-size:52px;color:#E8B12A;--dur:5.6s;--dl:-7.7s;--dx:-6px;--dy:-48px;--rot:-17deg">★</i><i style="left:57%;top:11%;font-size:60px;color:#1B1838;--dur:5.6s;--dl:-6.4s;--dx:-9px;--dy:-76px;--rot:16deg">✦</i><i style="left:29%;top:75%;font-size:36px;color:#E2364F;--dur:10.6s;--dl:-0.5s;--dx:54px;--dy:-53px;--rot:-20deg">▲</i>${Array.from({ length: 12 }, (_, i) => `<b class="spk" style="left:${(i * 37 + 7) % 96}%;--dl:-${(i * 0.7).toFixed(1)}s;--dur:${4 + (i % 4)}s"></b>`).join("")}</div>
     <div class="ntop"><b class="nt cst">CAN'T STOP</b><span class="ndk"></span><button class="nmini" id="cMenu" aria-label="メニュー">…</button><button class="nmini" id="cClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
-    <div class="cboard ${g.status === "playing" && owned(t.pid) >= 2 ? "reach" : ""}" style="--rc:${pcolor(t.pid)}">${g.status === "playing" && owned(t.pid) >= 2 ? `<div class="reachfx l" aria-hidden="true"><b>REACH!</b><small>${esc(pname(t.pid))}<br>あと1本で勝利</small></div><div class="reachfx r" aria-hidden="true"><b>🔥</b><small>CHANCE!</small></div>` : ""}${board}</div>
+    <div class="cboard ${g.status === "playing" && owned(t.pid) >= 2 ? "reach" : ""}" style="--rc:${pcolor(t.pid)}">${g.status === "playing" && owned(t.pid) >= 2 ? `<div class="reachfx l" aria-hidden="true"><b>REACH!</b><small>${esc(pname(t.pid))}<br>あと1本で勝利</small></div><div class="reachfx r" aria-hidden="true"><span class="rsp s1"></span><span class="rsp s2"></span><span class="rsp s3"></span><span class="rsp s4"></span><b class="chance">CHANCE!</b></div>` : ""}${board}</div>
     <div class="nlogw"><div class="nlogh">直近の流れ</div><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${over}`;
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
@@ -3881,10 +3889,10 @@ function openSbNew(){
   const s = openSheet("セブンブリッジを始める", `
     <p class="note">同じ数字や同じマークの連番をそろえて公開し、手札を早くなくした人がラウンドの勝ち。残った手札は失点。決めたラウンド数の合計点で競います（2〜6人）。</p>
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
-    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="bOrder" class="norder"></div><button class="shufbtn" id="bShuf"><span aria-hidden="true">🔀</span>順番をシャッフル</button></div>
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="bOrder" class="norder"></div><button class="shufbtn" id="bShuf">順番をシャッフル</button></div>
     <div class="f"><span>ラウンド数</span><div class="chips">${[1, 3, 5, 7].map(n => `<button type="button" data-rd="${n}" aria-pressed="${n === rounds}">${n}回</button>`).join("")}</div></div>
-    <div class="btns"><button class="btn ghost" id="gBack">戻る</button><button class="btn" id="bGo">対戦スタート</button></div>`);
-  $("#gBack").onclick = openGames; s.querySelector("[data-close]").onclick = openGames;
+    <div class="btns"><button class="btn" id="bGo">対戦スタート</button></div>`);
+  s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#bOrder").innerHTML = seatHtml(order); seatDrag($("#bOrder"), () => order, o => order = o, draw); };
   s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
