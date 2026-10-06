@@ -5114,8 +5114,8 @@ function drawSk(){
   on("kClose", closeSk); on("kClose2", closeSk); on("kMenu", () => skMenu(g));
   on("kPlace", act(async () => { const d = skSel; skSel = null; skSelIdx = -1; if (d) await skPlace(d); }));
   on("kPass", act(skPass)); on("kNext", act(skNextRound));
-  el.querySelectorAll("[data-hd]").forEach(b => b.onclick = () => { const i = Number(b.dataset.hi); if (skSelIdx === i){ skSel = null; skSelIdx = -1; } else { skSel = b.dataset.hd; skSelIdx = i; } drawSk(); });
-  el.querySelectorAll("[data-bid]").forEach(b => b.onclick = () => { const v = Number(b.dataset.bid); skBidSel = skBidSel === v ? null : v; drawSk(); });
+  el.querySelectorAll("[data-hd]").forEach(b => b.onclick = () => { const i = Number(b.dataset.hi); if (skSelIdx === i){ skSel = null; skSelIdx = -1; } else { skSel = b.dataset.hd; skSelIdx = i; skBidSel = null; } drawSk(); });
+  el.querySelectorAll("[data-bid]").forEach(b => b.onclick = () => { const v = Number(b.dataset.bid); skBidSel = skBidSel === v ? null : v; if (skBidSel != null){ skSel = null; skSelIdx = -1; } drawSk(); });
   on("kBid", act(async () => { const v = skBidSel; skBidSel = null; if (v != null) await skBid(v); }));
   el.querySelectorAll("[data-flip]").forEach(b => b.onclick = act(() => skFlip(b.dataset.flip)));
 }
