@@ -890,8 +890,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sd.ks{background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26 60%,#0A0410)}
 .sd.open{animation:sdflip .5s cubic-bezier(.2,1.5,.4,1)}
 @keyframes sdflip{0%{transform:rotateY(90deg) scale(1.3)}100%{transform:none}}
-.sd.top{box-shadow:0 0 0 3px #FFE38A,0 0 16px #FFE38A,0 4px 0 var(--ink);animation:topglow .9s ease-in-out infinite}
-@keyframes topglow{50%{transform:scale(1.1);box-shadow:0 0 0 4px #FFE38A,0 0 26px #FFE38A,0 4px 0 var(--ink)}}
+.sd.top{box-shadow:0 0 12px 3px rgba(255,227,138,.85),0 0 26px 8px rgba(255,200,80,.45),0 4px 0 var(--ink);animation:topglow 1s ease-in-out infinite}
+@keyframes topglow{50%{transform:scale(1.08);box-shadow:0 0 18px 6px rgba(255,227,138,.95),0 0 40px 14px rgba(255,200,80,.55),0 4px 0 var(--ink)}}
 .skp .pd .sd:last-child:not(.open){animation:coinin2 .45s cubic-bezier(.2,1.6,.4,1)}
 .skp .pd .sd.top:last-child{animation:topglow .9s ease-in-out infinite}
 @keyframes coinin2{from{transform:translateY(-24px) scale(1.25);opacity:0}}
@@ -5078,7 +5078,7 @@ function drawSk(){
     }
     const banPid = ph === "challenge" && ch ? ch.pid : ph === "result" && res ? res.pid : ph === "setup" ? me : t.pid;
     bottom += `<div class="nturn ${mt ? "mine" : ""}" style="--pc:${pcolor(banPid || me)}">${msg}</div>`;
-    if (ph === "result" && res && res.type === "fail" && res.pid === me) bottom += `<div class="sklost">失ったディスク：${skDisc(res.lost, "mini")}<b>${res.lost === "S" ? "ドクロ" : "花"}</b>（ほかの人には見えません）</div>`;
+    if (ph === "result" && res && res.type === "fail" && res.pid === me) bottom += `<div class="sklost">失ったディスク：<span class="sd open ${res.lost === "S" ? "ks" : "kf"}" style="--dz:28px"><em>${skFace(res.lost)}</em></span><b>${res.lost === "S" ? "ドクロ" : "花"}</b>（ほかの人には見えません）</div>`;
     else if (ph === "result" && res && res.type === "fail") bottom += `<div class="sklost">${esc(pname(res.pid))}はディスクを1枚失った${res.out ? "…脱落" : ""}</div>`;
     if (alive){
       const hand = skHand(g, me), canPick = ph === "setup" ? !skStack(g, me).length : ph === "place" && mt;
