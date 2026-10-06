@@ -4509,7 +4509,7 @@ function drawSb(){
   const cl = g.claim, now = Date.now(), left = cl ? Math.max(0, Math.ceil((cl.until - now) / 1000)) : 0;
   const opened = p => (g.melds || []).some(m => m.owner === p);
   const fresh = sbDiff(g);
-  const seats = g.players.map(p => `<div class="np ${opened(p) ? "op" : "cl"} ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}${opened(p) ? `<em class="tg ok">✓公開済</em>` : `<em class="tg no">未公開</em>`}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚・${g.scores[p] || 0}点</small></div>`).join(`<span class="nar">›</span>`);
+  const seats = g.players.map(p => `<div class="np ${opened(p) ? "op" : "cl"} ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚・${g.scores[p] || 0}点</small></div>`).join(`<span class="nar">›</span>`);
   const canAttTo = m => sbAttachMode && sbSel.length === 1 && !!sbAttach(m, sbSel[0]);
   const meldBtn = (m, i) => { const ok = canAttTo(m); return `<button class="meld ${ok ? "pick" : sbAttachMode ? "dim" : ""} ${fresh.has(i) ? "new" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${ok ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`; };
   const zones = g.players.map(p => {
