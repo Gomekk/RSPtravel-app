@@ -614,6 +614,9 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sbz .zs{flex:none;font-style:normal;font-size:10px;font-weight:900;padding:1px 6px;border-radius:6px;white-space:nowrap}
 .sbz.op .zs{background:var(--metal);color:var(--ink);border:1.5px solid var(--ink)}
 .sbz.cl .zs{color:rgba(255,255,255,.75);border:1.5px dashed rgba(255,255,255,.45)}
+.sbz.on .zh b::before{content:"▶";display:inline-block;margin-right:3px;font-size:9px;vertical-align:1px;color:#FFE38A;animation:zarr .8s ease-in-out infinite}
+@keyframes zarr{50%{transform:translateX(3px)}}
+.sbz.on.cl .zh{background:linear-gradient(90deg,rgba(255,227,138,.35),transparent)}
 .sbz .zt{flex:none;font-style:normal;font-size:10px;font-weight:900;padding:1px 6px;border-radius:6px;background:var(--crimson);color:#fff;border:1.5px solid var(--ink)}
 .sbz .zb{flex:1;min-height:0;overflow-y:auto;display:flex;flex-wrap:wrap;align-content:flex-start;gap:5px;padding:6px}
 .sbz.cl .zb{align-items:center;justify-content:center;align-content:center}
@@ -626,6 +629,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sbg .np.op{border-color:var(--ink);box-shadow:inset 0 3px 0 var(--pc),0 0 0 2px #E8B12A,0 0 12px rgba(232,177,42,.85)}
 .sbg .np.cl{border-style:dashed;background:#F1F2F6}
 .sbg .np.cl b{color:var(--mute)}
+.sbg .np .tg.now{left:-5px;transform:none;z-index:1}
 .np .tg.ok{left:auto;right:-5px;transform:none;background:var(--metal);color:var(--ink);border:1px solid var(--ink)}
 .np .tg.no{left:auto;right:-5px;transform:none;background:#9A9EB0}
 /* ---- セブンブリッジの演出 ---- */
@@ -1108,7 +1112,10 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .nbtns.one{grid-template-columns:1fr}.nbtns.two{grid-template-columns:1fr 1fr}
 .nb.big2{font-size:18px;padding:14px}
 /* ===== セブンブリッジ ===== */
-.ntop .nt.sbt{font-size:20px;letter-spacing:.02em;background:linear-gradient(90deg,#E2364F,#1B1838,#E8B12A,#E2364F);background-size:300% 100%;-webkit-background-clip:text;background-clip:text}
+.ntop .nrd.sbr{flex:none;display:inline-flex;align-items:baseline;gap:3px;white-space:nowrap;padding:4px 9px 3px;border-radius:8px;line-height:1;font-size:17px;color:#FFE38A;background:var(--ink);border:2px solid #E8B12A;transform:none}
+.ntop .nrd.sbr small{font-family:var(--body,inherit);font-size:9px;font-weight:900;color:#fff;letter-spacing:.06em}
+.ntop .nrd.sbr i{font-style:normal;font-size:11px;color:rgba(255,255,255,.75)}
+.ntop .nt.sbt{font-size:18px;white-space:nowrap;letter-spacing:.02em;background:linear-gradient(90deg,#E2364F,#1B1838,#E8B12A,#E2364F);background-size:300% 100%;-webkit-background-clip:text;background-clip:text}
 .gic.sbi{background:radial-gradient(circle at 30% 25%,#7A1730,#1B1838);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(226,54,79,.55);overflow:hidden}
 .gic.sbi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .pcd{container-type:normal;position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:34px;height:48px;border-radius:6px;background:#fff;border:2px solid var(--ink);box-shadow:0 2px 0 var(--ink);color:var(--ink);line-height:1;flex:none}
@@ -4299,7 +4306,7 @@ function drawSb(){
   const meldBtn = (m, i) => { const ok = canAttTo(m); return `<button class="meld ${ok ? "pick" : sbAttachMode ? "dim" : ""} ${fresh.has(i) ? "new" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${ok ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`; };
   const zones = g.players.map(p => {
     const ms = (g.melds || []).map((m, i) => m.owner === p ? meldBtn(m, i) : "").join(""), op = opened(p), on = t.pid === p && g.status === "playing";
-    return `<div class="sbz ${op ? "op" : "cl"} ${on ? "on" : ""}" style="--pc:${pcolor(p)}"><div class="zh">${on ? `<em class="zt">今</em>` : ""}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚</small><em class="zs">${op ? "✓ OPEN" : "未公開"}</em></div><div class="zb">${ms || `<span class="zl"><i></i>まだ公開なし</span>`}</div></div>`;
+    return `<div class="sbz ${op ? "op" : "cl"} ${on ? "on" : ""}" style="--pc:${pcolor(p)}"><div class="zh"><b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚</small><em class="zs">${op ? "✓ OPEN" : "未公開"}</em></div><div class="zb">${ms || `<span class="zl"><i></i>まだ公開なし</span>`}</div></div>`;
   }).join("");
   const melds = `<div class="sbtable" style="--cols:${g.players.length <= 2 ? 1 : 2}">${zones}</div>`;
   let mid = `<div class="sbmid"><div class="sbpile"><div class="deckc"><span>山札</span><b class="num">${(g.deck || []).length}</b></div><div class="disc">${top ? sbCardHtml(top) : `<span class="pcd empty">捨て札</span>`}<small>捨て札</small></div></div></div>`;
@@ -4335,7 +4342,7 @@ function drawSb(){
   }
   const lg = (g.log || []).slice(-2).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span>${["♠", "♥", "♦", "♣", "7", "★", "♥", "♠"].map((x, i) => `<i style="left:${(i * 13 + 5) % 92}%;top:${(i * 31 + 6) % 90}%;font-size:${28 + (i % 3) * 20}px;color:${i % 2 ? "#E2364F" : "#1B1838"};--dur:${7 + i}s;--dl:-${i}s;--dx:${(i % 2 ? 1 : -1) * 40}px;--dy:-50px;--rot:${i * 20 - 60}deg">${x}</i>`).join("")}</div>
-    <div class="ntop"><b class="nt sbt">SEVEN BRIDGE</b><span class="nrd">R ${g.round}/${g.rounds}</span><span class="ndk"></span><button class="nmini" id="bMenu" aria-label="メニュー">…</button><button class="nmini" id="bClose" aria-label="閉じる">×</button></div>
+    <div class="ntop"><b class="nt sbt">SEVEN BRIDGE</b><span class="nrd sbr"><small>ROUND</small><b>${g.round}</b><i>/${g.rounds}</i></span><span class="ndk"></span><button class="nmini" id="bMenu" aria-label="メニュー">…</button><button class="nmini" id="bClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
     ${melds}
     ${mid}${claimBar}
