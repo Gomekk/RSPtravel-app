@@ -592,6 +592,114 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .artin{width:100%;max-width:480px;max-height:80vh;overflow-y:auto;background:#fff;border:2.5px solid var(--ink);border-radius:18px;padding:14px 16px 16px;box-shadow:0 0 30px rgba(232,177,42,.5)}
 .arth{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .arth b{font-family:var(--disp);font-weight:400;font-size:20px;color:#C98E12}
+/* ---- セブンブリッジ：カジノテーブル風ボード ---- */
+.sbtable{flex:1 1 auto;min-height:0;position:relative;display:grid;grid-template-columns:repeat(var(--cols),1fr);grid-auto-rows:minmax(0,1fr);gap:7px;padding:9px;border-radius:20px;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 35%,#24806D,#145146 55%,#0B2E28);border:3px solid var(--ink);box-shadow:inset 0 0 0 3px #D9B04A,inset 0 0 0 5px #7A5A12,inset 0 0 40px rgba(0,0,0,.55),0 4px 0 var(--ink)}
+.sbtable::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 2px,transparent 2px 7px)}
+.sbtable::after{content:"7";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--disp);font-size:180px;line-height:1;color:rgba(255,255,255,.05);pointer-events:none}
+.sbz{position:relative;z-index:1;min-height:0;display:flex;flex-direction:column;border-radius:13px;overflow:hidden;transition:transform .3s}
+.sbz.cl{background:rgba(0,0,0,.32);border:2px dashed rgba(255,255,255,.3)}
+.sbz.op{background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 30%,#fff),#fff 75%);border:2.5px solid var(--ink);box-shadow:0 0 0 2px var(--pc),0 0 18px color-mix(in srgb,var(--pc) 80%,transparent)}
+.sbz.op::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%);background-size:250% 100%;animation:zglint 3.2s ease-in-out infinite}
+@keyframes zglint{0%,55%{background-position:150% 0}100%{background-position:-100% 0}}
+.sbz.on{animation:zon 1.1s ease-in-out infinite}
+.sbz.on.cl{border-color:#FFE38A;border-style:solid}
+@keyframes zon{50%{box-shadow:0 0 0 3px #FFE38A,0 0 26px #FFE38A}}
+.sbz .zh{flex:none;display:flex;align-items:center;gap:5px;padding:4px 7px;font-size:12px;line-height:1.2}
+.sbz.op .zh{background:var(--pc);color:#fff;border-bottom:2px solid var(--ink)}
+.sbz.cl .zh{color:rgba(255,255,255,.8)}
+.sbz .zh b{flex:1;min-width:0;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbz.op .zh b{text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.sbz .zh small{flex:none;font-weight:900;font-size:10.5px;opacity:.85}
+.sbz .zs{flex:none;font-style:normal;font-size:10px;font-weight:900;padding:1px 6px;border-radius:6px;white-space:nowrap}
+.sbz.op .zs{background:var(--metal);color:var(--ink);border:1.5px solid var(--ink)}
+.sbz.cl .zs{color:rgba(255,255,255,.75);border:1.5px dashed rgba(255,255,255,.45)}
+.sbz .zt{flex:none;font-style:normal;font-size:10px;font-weight:900;padding:1px 6px;border-radius:6px;background:var(--crimson);color:#fff;border:1.5px solid var(--ink)}
+.sbz .zb{flex:1;min-height:0;overflow-y:auto;display:flex;flex-wrap:wrap;align-content:flex-start;gap:5px;padding:6px}
+.sbz.cl .zb{align-items:center;justify-content:center;align-content:center}
+.sbz .zl{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:900;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.sbz .zl i{position:relative;width:20px;height:15px;margin-top:9px;border-radius:4px;background:rgba(255,255,255,.4)}
+.sbz .zl i::before{content:"";position:absolute;left:50%;bottom:100%;width:12px;height:11px;transform:translateX(-50%);border:3px solid rgba(255,255,255,.4);border-bottom:0;border-radius:8px 8px 0 0;box-sizing:border-box}
+.sbz .meld{background:#fff;box-shadow:0 2px 0 var(--ink)}
+.meld.new{animation:meldpop .9s cubic-bezier(.2,1.6,.4,1)}
+@keyframes meldpop{0%{transform:scale(0) rotate(-25deg);box-shadow:0 0 0 0 #FFE38A}55%{transform:scale(1.25) rotate(4deg);box-shadow:0 0 0 8px rgba(255,227,138,.7),0 0 30px #FFE38A}100%{transform:scale(1);box-shadow:0 2px 0 var(--ink)}}
+.sbg .np.op{border-color:var(--ink);box-shadow:inset 0 3px 0 var(--pc),0 0 0 2px #E8B12A,0 0 12px rgba(232,177,42,.85)}
+.sbg .np.cl{border-style:dashed;background:#F1F2F6}
+.sbg .np.cl b{color:var(--mute)}
+.np .tg.ok{left:auto;right:-5px;transform:none;background:var(--metal);color:var(--ink);border:1px solid var(--ink)}
+.np .tg.no{left:auto;right:-5px;transform:none;background:#9A9EB0}
+/* ---- セブンブリッジの演出 ---- */
+.sbfx{position:fixed;inset:0;z-index:47;display:grid;place-items:center;pointer-events:none;overflow:hidden;animation:fxfade var(--ms) forwards}
+.sbfx .bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,color-mix(in srgb,var(--pc) 55%,transparent),transparent 62%)}
+.sbfx .rays{position:absolute;left:50%;top:46%;width:200vmax;height:200vmax;transform:translate(-50%,-50%);background:repeating-conic-gradient(color-mix(in srgb,var(--pc) 45%,transparent) 0 7deg,transparent 7deg 15deg);animation:spinc 5s linear infinite;opacity:.8}
+.sbfx .speed{position:absolute;left:50%;top:46%;width:200vmax;height:200vmax;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(27,24,56,.55) 0 1.2deg,transparent 1.2deg 9deg);-webkit-mask:radial-gradient(circle,transparent 18%,#000 45%);mask:radial-gradient(circle,transparent 18%,#000 45%);animation:speedz .25s steps(2) infinite}
+@keyframes speedz{50%{transform:translate(-50%,-50%) rotate(4deg)}}
+.sbfx .rg{position:absolute;left:50%;top:46%;width:30px;height:30px;border-radius:50%;border:6px solid var(--rc,#FFE38A);transform:translate(-50%,-50%);box-shadow:0 0 22px var(--rc,#FFE38A);animation:shock 1s ease-out var(--d,0s) both}
+.sbfx .fl{position:absolute;inset:0;background:#fff;animation:flash2 .4s ease-out forwards}
+.sbfx i.cf{position:absolute;left:50%;top:46%;width:calc(9px * var(--s));height:calc(15px * var(--s));background:var(--c);border:1px solid rgba(27,24,56,.5);border-radius:2px;animation:cffly var(--t,1.8s) cubic-bezier(.15,.75,.4,1) var(--d) both}
+@keyframes cffly{0%{transform:translate(-50%,-50%) rotate(0) scale(.3);opacity:1}55%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(calc(var(--r) * .6)) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--x) * 1.1),calc(-50% + var(--y) + 260px)) rotate(var(--r)) scale(.9);opacity:0}}
+.sbfx i.su{position:absolute;left:50%;top:46%;font-style:normal;font-size:calc(30px * var(--s));line-height:1;color:var(--c);-webkit-text-stroke:1.5px #1B1838;animation:cffly var(--t,1.8s) cubic-bezier(.15,.75,.4,1) var(--d) both}
+.sbfx i.gl{position:absolute;left:50%;top:46%;width:calc(26px * var(--s));height:calc(26px * var(--s));background:var(--glint-gold) center/contain no-repeat;animation:cffly 1.6s cubic-bezier(.15,.75,.4,1) var(--d) both}
+.sbfx .tx{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;animation:sbslam .6s cubic-bezier(.2,1.7,.4,1) .08s both}
+@keyframes sbslam{0%{transform:scale(4) rotate(-14deg);opacity:0}60%{transform:scale(.88) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(-4deg)}}
+.sbfx .tx b{font-family:var(--disp);font-weight:400;font-size:72px;line-height:1;white-space:nowrap;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;filter:drop-shadow(0 5px 0 var(--ink)) drop-shadow(0 0 20px var(--pc))}
+.sbfx .tx small{font-weight:900;font-size:16px;padding:3px 14px;border-radius:99px;background:var(--pc);color:#fff;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink);white-space:nowrap}
+.sbfx.open .tx b,.sbfx.win .tx b{background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:84px}
+.sbfx.win .tx b{font-size:92px}
+.sbfx.pon .tx b{color:#FF4D66;font-size:100px}
+.sbfx.chi .tx b{color:#3FE0EC;font-size:100px}
+.sbfx.meld .tx b{font-size:58px;color:#FFE38A}
+.sbfx.attach .tx b{font-size:54px;color:#9BF1F4}
+.sbfx.attach .slash{position:absolute;left:-20%;top:46%;width:140%;height:26px;background:linear-gradient(90deg,transparent,#fff,#9BF1F4,#fff,transparent);transform:rotate(-12deg) scaleX(0);transform-origin:0 50%;animation:slashx .45s ease-out forwards;filter:drop-shadow(0 0 12px #1FB3BF)}
+@keyframes slashx{to{transform:rotate(-12deg) scaleX(1)}}
+.sbfx.call .tx b{font-size:64px}
+.sbfx.draw .tx b{color:#B8BAC6;font-size:64px}
+.sbg.quake{animation:quake .6s cubic-bezier(.36,.07,.19,.97)}
+/* ポン・チー：画面全体を使った大演出 */
+.sbfx.pon{--hc:#E2364F;--hc2:#FF8FA0}.sbfx.chi{--hc:#1FB3BF;--hc2:#9BF1F4}
+.sbfx .wash{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,var(--hc2),var(--hc) 60%,color-mix(in srgb,var(--hc) 70%,#1B1838));animation:wash 2.8s forwards}
+@keyframes wash{0%{opacity:1}6%{opacity:.25}10%{opacity:.95}18%{opacity:.55}100%{opacity:.5}}
+.sbfx .fl2{position:absolute;inset:0;background:#1B1838;opacity:0;animation:fl2 .5s .05s steps(1) forwards}
+@keyframes fl2{0%{opacity:.9}20%{opacity:0}40%{opacity:.6}60%,100%{opacity:0}}
+.sbfx.pon .speed,.sbfx.chi .speed{background:repeating-conic-gradient(rgba(255,255,255,.85) 0 1deg,transparent 1deg 6deg);-webkit-mask:radial-gradient(circle,transparent 22%,#000 50%);mask:radial-gradient(circle,transparent 22%,#000 50%)}
+.sbfx .tick{position:absolute;left:-15%;width:130%;height:58px;overflow:hidden;background:var(--ink);border-top:4px solid #FFE38A;border-bottom:4px solid #FFE38A;transform:rotate(-9deg);box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.sbfx .tick.t1{top:9%;animation:tickin .4s cubic-bezier(.2,1.4,.4,1) both}.sbfx .tick.t2{bottom:11%;animation:tickin2 .4s .1s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes tickin{from{transform:rotate(-9deg) translateX(-110%)}}
+@keyframes tickin2{from{transform:rotate(-9deg) translateX(110%)}}
+.sbfx .tick span{display:block;white-space:nowrap;font-family:var(--disp);font-size:36px;line-height:50px;color:#FFE38A;letter-spacing:.06em;animation:tickrun 1.6s linear infinite}
+.sbfx .tick.t2 span{color:var(--hc2);animation-direction:reverse}
+@keyframes tickrun{from{transform:translateX(0)}to{transform:translateX(-33.3%)}}
+.sbfx .bigt{position:relative;z-index:3;display:flex;align-items:flex-end;justify-content:center;transform:rotate(-8deg)}
+.sbfx .bigt span{font-family:var(--disp);font-size:min(36vw,190px);line-height:.95;color:#fff;-webkit-text-stroke:5px var(--ink);paint-order:stroke fill;filter:drop-shadow(0 8px 0 var(--ink)) drop-shadow(0 0 30px var(--hc2));animation:chslam .5s cubic-bezier(.2,1.8,.4,1) var(--d) both}
+.sbfx .bigt span:nth-child(2){color:var(--hc2)}
+.sbfx .bigt span.ex{font-size:min(24vw,130px);color:#FFE38A}
+@keyframes chslam{0%{transform:scale(5) translateY(-40px) rotate(-30deg);opacity:0}55%{transform:scale(.8) rotate(6deg);opacity:1}75%{transform:scale(1.12) rotate(-2deg)}100%{transform:scale(1)}}
+.sbfx .who{position:relative;z-index:3;margin-top:10px;font-weight:900;font-size:20px;padding:4px 18px;border-radius:99px;background:#fff;color:var(--ink);border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);white-space:nowrap;animation:fadein .3s .5s both}
+.sbfx .who i{font-style:normal;color:var(--pc)}
+.sbfx .pcards{position:absolute;z-index:3;left:50%;top:70%;display:flex;gap:8px;transform:translateX(-50%)}
+.sbfx .pcards .pcd{width:58px;height:82px;border-width:3px;border-radius:9px;box-shadow:0 5px 0 var(--ink),0 0 24px rgba(255,255,255,.9);animation:pcin .55s cubic-bezier(.2,1.5,.4,1) var(--d) both}
+.sbfx .pcards .pcd b{font-size:28px}.sbfx .pcards .pcd i{font-size:24px}
+.sbfx .pcards .pcd.taken{box-shadow:0 5px 0 var(--ink),0 0 0 4px #FFE38A,0 0 30px #FFE38A}
+@keyframes pcin{0%{transform:translate(var(--fx),var(--fy)) rotate(var(--fr)) scale(1.6);opacity:0}100%{transform:none;opacity:1}}
+.sbg.quake2{animation:quake2 .9s cubic-bezier(.36,.07,.19,.97)}
+@keyframes quake2{10%,50%,90%{transform:translate(-12px,6px) rotate(-1deg)}30%,70%{transform:translate(12px,-6px) rotate(1deg)}}
+/* 上がり：画面いっぱいのカラフル紙吹雪 */
+.sbfx.win{--hc:#E8890C;--hc2:#FFE38A}
+.sbfx.win .wash{background:radial-gradient(circle at 50% 46%,#FFF8DC,#FFD84A 40%,#F2A11F 70%,#E2364F);animation:wash 4s forwards}
+.sbfx.win .rays{background:repeating-conic-gradient(rgba(255,255,255,.55) 0 6deg,transparent 6deg 14deg);animation-duration:3s}
+.sbfx .rain{position:absolute;top:-40px;left:var(--x);width:calc(10px * var(--s));height:calc(15px * var(--s));background:var(--c);border-radius:2px;animation:rainf var(--t) linear var(--d) both;z-index:1}
+.sbfx .rain.c{border-radius:50%;width:calc(11px * var(--s));height:calc(11px * var(--s))}
+.sbfx .rain.rb{width:calc(5px * var(--s));height:calc(30px * var(--s));border-radius:3px}
+@keyframes rainf{0%{transform:translate(0,0) rotate(0) rotateY(0)}25%{transform:translate(var(--sw),28vh) rotate(calc(var(--r) * .25)) rotateY(180deg)}50%{transform:translate(calc(var(--sw) * -1),56vh) rotate(calc(var(--r) * .5)) rotateY(360deg)}75%{transform:translate(var(--sw),84vh) rotate(calc(var(--r) * .75)) rotateY(540deg)}100%{transform:translate(0,115vh) rotate(var(--r)) rotateY(720deg)}}
+.sbfx .cn{position:absolute;bottom:-20px;left:var(--l);width:calc(10px * var(--s));height:calc(16px * var(--s));background:var(--c);border-radius:2px;z-index:1;animation:cnfly var(--t) cubic-bezier(.15,.7,.35,1) var(--d) both}
+.sbfx .cn.rb{width:calc(5px * var(--s));height:calc(32px * var(--s))}
+@keyframes cnfly{0%{transform:translate(0,0) rotate(0);opacity:1}45%{transform:translate(var(--x),var(--y)) rotate(calc(var(--r) * .5));opacity:1}100%{transform:translate(calc(var(--x) * 1.25),calc(var(--y) + 75vh)) rotate(var(--r));opacity:0}}
+.sbfx .fw{position:absolute;left:var(--l);top:var(--tp);z-index:1}
+.sbfx .fw i{position:absolute;left:0;top:0;width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c),0 0 3px #fff;opacity:0;animation:fwb 1.2s cubic-bezier(.1,.8,.3,1) var(--d) both}
+@keyframes fwb{0%{transform:translate(0,0) scale(1.4);opacity:0}8%{opacity:1}100%{transform:translate(var(--x),calc(var(--y) + 30px)) scale(.3);opacity:0}}
+.sbfx.win .bigt span{color:var(--cc);font-size:min(25vw,140px)}
+.sbfx.win .bigt span.ex{color:#fff;font-size:min(17vw,96px)}
+.sbfx.win .who{font-size:22px;background:var(--metal)}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -4171,7 +4279,7 @@ function openSbNew(){
 
 /* ---------- 対戦画面 ---------- */
 let sbId = null, sbBusy = false, sbSel = [], sbTimer = null, sbAttachMode = false;
-function openSb(id){ sbId = id; sbSel = []; sbAttachMode = false; $("#sbg").hidden = false; document.body.style.overflow = "hidden"; drawSb(); }
+function openSb(id){ sbId = id; sbPrev = null; sbSel = []; sbAttachMode = false; $("#sbg").hidden = false; document.body.style.overflow = "hidden"; drawSb(); }
 function closeSb(){ sbId = null; clearInterval(sbTimer); $("#sbg").hidden = true; document.body.style.overflow = ""; render(); }
 function drawSb(){
   if (!sbId) return;
@@ -4182,8 +4290,14 @@ function drawSb(){
   const top = (g.discard || [])[(g.discard || []).length - 1];
   const cl = g.claim, now = Date.now(), left = cl ? Math.max(0, Math.ceil((cl.until - now) / 1000)) : 0;
   const opened = p => (g.melds || []).some(m => m.owner === p);
-  const seats = g.players.map(p => `<div class="np ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}${opened(p) ? `<em class="tg dl">公開</em>` : ""}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚・${g.scores[p] || 0}点</small></div>`).join(`<span class="nar">›</span>`);
-  const melds = (g.melds || []).map((m, i) => `<button class="meld ${sbAttachMode ? "pick" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${sbAttachMode ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`).join("") || `<p class="note" style="margin:auto">まだ公開された役はありません</p>`;
+  const fresh = sbDiff(g);
+  const seats = g.players.map(p => `<div class="np ${opened(p) ? "op" : "cl"} ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}${opened(p) ? `<em class="tg ok">✓公開済</em>` : `<em class="tg no">未公開</em>`}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚・${g.scores[p] || 0}点</small></div>`).join(`<span class="nar">›</span>`);
+  const meldBtn = (m, i) => `<button class="meld ${sbAttachMode ? "pick" : ""} ${fresh.has(i) ? "new" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${sbAttachMode ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`;
+  const zones = g.players.map(p => {
+    const ms = (g.melds || []).map((m, i) => m.owner === p ? meldBtn(m, i) : "").join(""), op = opened(p), on = t.pid === p && g.status === "playing";
+    return `<div class="sbz ${op ? "op" : "cl"} ${on ? "on" : ""}" style="--pc:${pcolor(p)}"><div class="zh">${on ? `<em class="zt">今</em>` : ""}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚</small><em class="zs">${op ? "✓ OPEN" : "未公開"}</em></div><div class="zb">${ms || `<span class="zl"><i></i>まだ公開なし</span>`}</div></div>`;
+  }).join("");
+  const melds = `<div class="sbtable" style="--cols:${g.players.length <= 2 ? 1 : 2}">${zones}</div>`;
   let mid = `<div class="sbmid"><div class="sbpile"><div class="deckc"><span>山札</span><b class="num">${(g.deck || []).length}</b></div><div class="disc">${top ? sbCardHtml(top) : `<span class="pcd empty">捨て札</span>`}<small>捨て札</small></div></div></div>`;
   let claimBar = "";
   if (cl && g.status === "playing"){
@@ -4219,7 +4333,7 @@ function drawSb(){
   el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span>${["♠", "♥", "♦", "♣", "7", "★", "♥", "♠"].map((x, i) => `<i style="left:${(i * 13 + 5) % 92}%;top:${(i * 31 + 6) % 90}%;font-size:${28 + (i % 3) * 20}px;color:${i % 2 ? "#E2364F" : "#1B1838"};--dur:${7 + i}s;--dl:-${i}s;--dx:${(i % 2 ? 1 : -1) * 40}px;--dy:-50px;--rot:${i * 20 - 60}deg">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt sbt">SEVEN BRIDGE</b><span class="nrd">R ${g.round}/${g.rounds}</span><span class="ndk"></span><button class="nmini" id="bMenu" aria-label="メニュー">…</button><button class="nmini" id="bClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
-    <div class="sbmelds">${melds}</div>
+    ${melds}
     ${mid}${claimBar}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${over}`;
@@ -4260,6 +4374,89 @@ async function sbDraw(g){
   await sbSave(g, { deck, discard, hands: { ...g.hands, [me]: [...g.hands[me], c] }, turn: { pid: me, phase: "play" } });
 }
 const sbRemove = (hand, cards) => { const h = hand.slice(); cards.forEach(c => { const i = h.indexOf(c); if (i >= 0) h.splice(i, 1); }); return h; };
+/* ---- セブンブリッジの演出（ログの変化を見て全員の画面で再生） ---- */
+let sbPrev = null;
+function sbFx(kind, pid, big, small, cards){
+  const pc = pid ? pcolor(pid) : "#E8B12A";
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const conf = { open: 90, win: 60, pon: 110, chi: 110, meld: 46, attach: 24, call: 18, draw: 0 }[kind] || 0;
+  const cols = [pc, "#FFE38A", "#E8B12A", "#E2364F", "#1FB3BF", "#8B6CFF", "#fff"];
+  let parts = Array.from({ length: conf }, () => { const a = rnd(0, Math.PI * 2), d = rnd(110, kind === "win" ? 420 : 330); return `<i class="cf" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d - 60).toFixed(0)}px;--r:${rnd(-900, 900).toFixed(0)}deg;--c:${cols[Math.floor(rnd(0, cols.length))]};--d:${rnd(0, .25).toFixed(2)}s;--s:${rnd(.6, 1.4).toFixed(2)};--t:${rnd(1.5, 2.4).toFixed(2)}s"></i>`; }).join("");
+  if (["open", "win", "meld", "pon", "chi"].includes(kind)) parts += Array.from({ length: kind === "win" ? 22 : 12 }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(120, 300); return `<i class="su" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d - 40).toFixed(0)}px;--r:${rnd(-400, 400).toFixed(0)}deg;--c:${i % 2 ? "#E2364F" : "#1B1838"};--d:${rnd(.05, .3).toFixed(2)}s;--s:${rnd(.7, 1.5).toFixed(2)}">${"♠♥♦♣"[i % 4]}</i>`; }).join("");
+  if (["open", "win"].includes(kind)) parts += Array.from({ length: 16 }, () => { const a = rnd(0, Math.PI * 2), d = rnd(80, 260); return `<i class="gl" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--r:${rnd(-720, 720).toFixed(0)}deg;--d:${rnd(0, .4).toFixed(2)}s;--s:${rnd(.6, 1.3).toFixed(2)}"></i>`; }).join("");
+  const rings = n => Array.from({ length: n }, (_, i) => `<span class="rg" style="--d:${(i * .18).toFixed(2)}s;--rc:${[pc, "#FFE38A", "#9BF1F4"][i % 3]}"></span>`).join("");
+  const layer = {
+    open: `<span class="fl"></span><span class="bg"></span><span class="rays"></span>${rings(3)}`,
+    win: "",
+    pon: "", chi: "",
+    meld: `<span class="bg"></span>${rings(2)}`,
+    attach: `<span class="bg"></span><span class="slash"></span>${rings(1)}`,
+    call: `<span class="bg"></span>${rings(1)}`,
+    draw: `<span class="bg"></span>`
+  }[kind] || "";
+  const ms = { open: 2600, win: 4300, pon: 2900, chi: 2900, meld: 1800, attach: 1300, call: 1100, draw: 1800 }[kind] || 1500;
+  document.querySelectorAll(".sbfx").forEach(x => x.remove());
+  const fx = document.createElement("div"); fx.className = "sbfx " + kind; fx.style.cssText = `--pc:${pc};--ms:${ms}ms`;
+  if (kind === "pon" || kind === "chi"){
+    const word = kind === "pon" ? "PON!" : "CHI!", run = Array(18).fill(word).join("  ");
+    const chars = (kind === "pon" ? ["ポ", "ン"] : ["チ", "ー"]).map((c, i) => `<span style="--d:${(.12 + i * .16).toFixed(2)}s">${c}</span>`).join("") + `<span class="ex" style="--d:.45s">!!</span>`;
+    const cs = (cards || []).map((c, i, a) => `<span class="pcd ${c === "JK" ? "joker" : (sbSuit(c) === "H" || sbSuit(c) === "D") ? "red" : ""} ${i === a.length - 1 ? "taken" : ""}" style="--d:${(.6 + i * .12).toFixed(2)}s;--fx:${[-260, 0, 260, 0][i % 4]}px;--fy:${[120, 320, 120, -300][i % 4]}px;--fr:${[-60, 30, 70, -20][i % 4]}deg">${c === "JK" ? "<b>★</b><small>JOKER</small>" : `<b>${sbRankTxt(sbRank(c))}</b><i>${SB_MARK[sbSuit(c)]}</i>`}</span>`).join("");
+    fx.innerHTML = `<span class="wash"></span><span class="fl"></span><span class="fl2"></span><span class="rays"></span><span class="speed"></span>${rings(4)}<div class="tick t1"><span>${run}</span></div><div class="tick t2"><span>${run}</span></div>${parts}
+      <div class="tx" style="animation:none"><div class="bigt">${chars}</div>${small ? `<div class="who"><i>●</i> ${esc(small)}</div>` : ""}</div>${cs ? `<div class="pcards">${cs}</div>` : ""}`;
+  } else if (kind === "win"){
+    const C = ["#FF4D66", "#FFD84A", "#3FE0EC", "#8B6CFF", "#2DBE60", "#FF8A3D", "#FF6FB5", "#fff", pc];
+    const pick = () => C[Math.floor(rnd(0, C.length))], shp = () => ["", "c", "rb"][Math.floor(rnd(0, 3))];
+    const rain = Array.from({ length: 150 }, () => `<i class="rain ${shp()}" style="--x:${rnd(-3, 100).toFixed(1)}vw;--c:${pick()};--s:${rnd(.6, 1.5).toFixed(2)};--d:${rnd(.1, 2).toFixed(2)}s;--t:${rnd(2.2, 3.6).toFixed(2)}s;--sw:${rnd(-40, 40).toFixed(0)}px;--r:${rnd(-900, 900).toFixed(0)}deg"></i>`).join("");
+    const cannon = side => Array.from({ length: 55 }, () => `<i class="cn ${Math.random() < .3 ? "rb" : ""}" style="--l:${side ? "100%" : "0%"};--x:${((side ? -1 : 1) * rnd(60, 420)).toFixed(0)}px;--y:${(-rnd(320, 720)).toFixed(0)}px;--c:${pick()};--s:${rnd(.6, 1.4).toFixed(2)};--d:${rnd(0, .35).toFixed(2)}s;--t:${rnd(2.2, 3.2).toFixed(2)}s;--r:${rnd(-1080, 1080).toFixed(0)}deg"></i>`).join("");
+    const fw = (l, tp, d) => `<div class="fw" style="--l:${l}%;--tp:${tp}%">${Array.from({ length: 26 }, (_, i) => { const a = i / 26 * Math.PI * 2, r = rnd(70, 120), c = pick(); return `<i style="--x:${(Math.cos(a) * r).toFixed(0)}px;--y:${(Math.sin(a) * r).toFixed(0)}px;--c:${c};--d:${d}s"></i>`; }).join("")}</div>`;
+    const chars = ["上", "が", "り"].map((c, i) => `<span style="--d:${(.15 + i * .14).toFixed(2)}s;--cc:${["#fff", "#FFE38A", "#fff"][i]}">${c}</span>`).join("") + `<span class="ex" style="--d:.6s">!!</span>`;
+    fx.innerHTML = `<span class="wash"></span><span class="fl"></span><span class="rays"></span>${rings(4)}${fw(18, 18, .3)}${fw(80, 14, .6)}${fw(25, 72, .9)}${fw(76, 66, 1.2)}${fw(50, 10, 1.5)}${cannon(0)}${cannon(1)}${rain}${parts}
+      <div class="tx" style="animation:none"><div class="bigt">${chars}</div><div class="who">👑 ${esc(pname(pid) || "")} WIN!</div></div>`;
+  } else fx.innerHTML = `${layer}${parts}<div class="tx"><b>${esc(big)}</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
+  document.body.appendChild(fx);
+  if (["open", "win", "pon", "chi"].includes(kind)){ const q = kind === "pon" || kind === "chi" ? "quake2" : "quake", a = $("#sbg"); if (a){ a.classList.remove(q); void a.offsetWidth; a.classList.add(q); setTimeout(() => a.classList.remove(q), 950); } }
+  try { if (navigator.vibrate) navigator.vibrate(kind === "win" ? [80, 50, 80, 50, 200] : ["pon", "chi"].includes(kind) ? [120, 40, 120, 40, 200] : kind === "open" ? [60, 40, 120] : 30); } catch (e) {}
+  setTimeout(() => fx.remove(), ms);
+}
+function sbDiff(g){
+  const log = g.log || [], last = log[log.length - 1];
+  const opNow = new Set((g.melds || []).map(m => m.owner));
+  const sig = (g.melds || []).map(m => m.cards.length);
+  const prev = sbPrev && sbPrev.id === g.id ? sbPrev : null;
+  let fx = null, fresh = new Set();
+  if (prev){
+    sig.forEach((n, i) => { if (i >= prev.sig.length || prev.sig[i] !== n) fresh.add(i); });
+    const k = prev.lastT ? log.findIndex(x => x.t === prev.lastT) : -1;
+    const lines = (k >= 0 ? log.slice(k + 1) : (last && last.t !== prev.lastT ? [last] : [])).map(x => x.m);
+    const rank = { win: 9, pon: 8, chi: 8, open: 7, draw: 6, meld: 5, attach: 4, call: 3 };
+    lines.forEach(m => {
+      const who = g.players.slice().sort((a, b) => pname(b).length - pname(a).length).find(p => m.startsWith(pname(p))) || null;
+      let k2 = null;
+      if (/上がり！/.test(m)) k2 = "win";
+      else if (/ポンして公開/.test(m)) k2 = "pon";
+      else if (/チーして公開/.test(m)) k2 = "chi";
+      else if (/が役を公開/.test(m)) k2 = who && !prev.op.has(who) ? "open" : "meld";
+      else if (/付け札/.test(m)) k2 = "attach";
+      else if (/流局/.test(m)) k2 = "draw";
+      else if (/：(ポン|チー)！$/.test(m)) k2 = "call";
+      if (k2 && (!fx || rank[k2] >= rank[fx.k])) fx = { k: k2, who, m };
+    });
+  }
+  sbPrev = { id: g.id, lastT: last ? last.t : null, op: opNow, sig };
+  if (fx){
+    const nm = fx.who ? pname(fx.who) : "";
+    const first = fx.who && prev && !prev.op.has(fx.who) && opNow.has(fx.who);
+    const T = {
+      win: ["上がり!!", `${nm} WIN`], open: ["OPEN!!", `${nm} 初公開！`], meld: ["役公開！", nm],
+      pon: ["ポン!!", first ? `${nm} 初公開！` : nm], chi: ["チー!!", first ? `${nm} 初公開！` : nm],
+      attach: ["付け札！", nm], draw: ["流局", "山札切れ"], call: [/ポン！$/.test(fx.m) ? "ポン！" : "チー！", `${nm}が宣言`]
+    }[fx.k];
+    const lastMeld = (g.melds || []).slice(-1)[0];
+    const cards = (fx.k === "pon" || fx.k === "chi") && lastMeld ? lastMeld.cards : null;
+    setTimeout(() => sbFx(fx.k, fx.who, T[0], T[1], cards), 30);
+  }
+  return fresh;
+}
 async function sbDoMeld(g){
   const m = sbMeld(sbSel); const hand = g.hands[me] || [];
   if (!m || hand.length - sbSel.length < 1) return;
@@ -4287,7 +4484,6 @@ async function sbDiscard(g){
     const fin = g.round >= g.rounds;
     await sbSave(g, { hands: { ...g.hands, [me]: [] }, discard, claim: null, scores, status: fin ? "finished" : "round_over", round_result: { winner: me, pen }, winner: fin ? g.players.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0] : null },
       `${pname(me)}が${txt}を捨てて上がり！`);
-    flash("上がり！", pname(me));
     return;
   }
   await sbSave(g, { hands: { ...g.hands, [me]: hand }, discard, claim: { card: c, from: me, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, me), phase: "draw" } }, `${pname(me)}：${txt}を捨てた`);
