@@ -4844,7 +4844,7 @@ function openSkNew(){
     if (res){ await loadTable("sk_games"); closeSheet(); openSk(res.id); order.forEach(p => pushCall({ type: "game_turn", game: "スカル", to: p })); }
   };
 }
-let skId = null, skBusy = false, skSel = null, skPrev = null;
+let skId = null, skBusy = false, skSel = null, skSelIdx = -1, skPrev = null;
 function openSk(id){ skId = id; skSel = null; skPrev = null; $("#skg").hidden = false; document.body.style.overflow = "hidden"; drawSk(); }
 function closeSk(){ skId = null; $("#skg").hidden = true; document.body.style.overflow = ""; render(); }
 
@@ -5082,9 +5082,10 @@ function drawSk(){
     else if (ph === "result" && res && res.type === "fail") bottom += `<div class="sklost">${esc(pname(res.pid))}はディスクを1枚失った${res.out ? "…脱落" : ""}</div>`;
     if (alive){
       const hand = skHand(g, me), canPick = ph === "setup" ? !skStack(g, me).length : ph === "place" && mt;
-      if (skSel && !hand.includes(skSel)) skSel = null;
+
       const order = ["F", "S"], shown = hand.slice().sort((a, b) => order.indexOf(a) - order.indexOf(b));
-      bottom += `<div class="skhand">${shown.length ? shown.map((d, i) => `<button class="skhb ${canPick ? "" : "off"}" data-hd="${d}" ${canPick ? "" : "disabled"}>${skDisc(d, skSel === d && shown.indexOf(d) === i ? "sel" : "")}</button>`).join("") : `<span class="note">置けるディスクはありません</span>`}</div>`;
+      if (skSel && shown[skSelIdx] !== skSel){ skSel = null; skSelIdx = -1; }
+      bottom += `<div class="skhand">${shown.length ? shown.map((d, i) => `<button class="skhb ${canPick ? "" : "off"}" data-hd="${d}" data-hi="${i}" ${canPick ? "" : "disabled"}>${skDisc(d, skSel === d && skSelIdx === i ? "sel" : "")}</button>`).join("") : `<span class="note">置けるディスクはありません</span>`}</div>`;
       if (canPick && ph === "setup") bottom += `<div class="nbtns one"><button class="nb end ${skSel ? "go" : ""}" id="kPlace" ${skSel ? "" : "disabled"}>${skSel ? `${skSel === "S" ? "ドクロ" : "花"}を伏せる` : "ディスクを選んでね"}</button></div>`;
       else if (mt && (ph === "place" || ph === "bid")){
         const lo = (bid ? bid.n : 0) + 1;
@@ -5108,9 +5109,9 @@ function drawSk(){
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (skBusy) return; skBusy = true; try { await fn(); } finally { skBusy = false; } };
   on("kClose", closeSk); on("kClose2", closeSk); on("kMenu", () => skMenu(g));
-  on("kPlace", act(async () => { const d = skSel; skSel = null; if (d) await skPlace(d); }));
+  on("kPlace", act(async () => { const d = skSel; skSel = null; skSelIdx = -1; if (d) await skPlace(d); }));
   on("kPass", act(skPass)); on("kNext", act(skNextRound));
-  el.querySelectorAll("[data-hd]").forEach(b => b.onclick = () => { skSel = skSel === b.dataset.hd ? null : b.dataset.hd; drawSk(); });
+  el.querySelectorAll("[data-hd]").forEach(b => b.onclick = () => { const i = Number(b.dataset.hi); if (skSelIdx === i){ skSel = null; skSelIdx = -1; } else { skSel = b.dataset.hd; skSelIdx = i; } drawSk(); });
   el.querySelectorAll("[data-bid]").forEach(b => b.onclick = act(() => skBid(Number(b.dataset.bid))));
   el.querySelectorAll("[data-flip]").forEach(b => b.onclick = act(() => skFlip(b.dataset.flip)));
 }
