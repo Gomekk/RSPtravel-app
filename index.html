@@ -898,7 +898,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 @keyframes ctmp{50%{transform:scale(1.12)}}
 .ccol .cn{text-align:center;font-family:var(--disp);font-weight:400;font-size:12px;margin-top:3px}
 .ccol.won .cc{background:color-mix(in srgb,var(--oc) 55%,#fff);border-color:var(--oc)}
-.ccol.won .cc .mk{opacity:.35;filter:grayscale(1)}
+.ccol.won .cc .mk:not(.win){opacity:.35;filter:grayscale(1)}
 .ccol.won .cn{color:var(--oc)}
 .crown{position:absolute;top:-17px;left:50%;transform:translateX(-50%);font-size:13px}
 .req2{font-family:var(--body);font-size:11px;font-weight:900;padding:1px 8px;border-radius:99px;background:var(--ink);color:#fff}
@@ -3755,7 +3755,7 @@ function drawCs(){
     for (let lv = h; lv >= 1; lv--){
       const here = g.players.filter(p => (g.pos[p] || {})[c] === lv);
       const tmp = temp[c] === lv;
-      cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp ${t.phase === "bust" && csReveal === ckey && csPrevRoll === ckey ? "burn" : ""}" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
+      cells += `<div class="cc ${lv === h ? "top" : ""}">${here.map(p => `<i class="mk ${own && own === p && lv === h ? "win" : ""}" style="--pc:${pcolor(p)}"></i>`).join("")}${tmp ? `<i class="tmp ${t.phase === "bust" && csReveal === ckey && csPrevRoll === ckey ? "burn" : ""}" style="--pc:${pcolor(t.pid)}"></i>` : ""}</div>`;
     }
     return `<div class="ccol ${own ? "won" : ""} ${temp[c] != null ? "act" : ""}" style="--h:${h};${own ? `--oc:${pcolor(own)}` : ""}"><div class="cstack">${own ? `<span class="crown">⭐️</span>` : ""}${cells}</div><b class="cn">${c}</b></div>`;
   }).join("");
