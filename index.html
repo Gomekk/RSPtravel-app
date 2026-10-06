@@ -3325,7 +3325,7 @@ function neuRulesHtml(){
   <h4>1ターンの流れ</h4>
   <div class="steps">
     <div class="st"><b class="t">手札から<span class="r">1枚出す</span></b><small>数字は場の合計にたされる</small></div>
-    <div class="st"><b class="t">「引く」で山札から<span class="g">1枚引く</span></b><small>手札が3枚に戻る</small></div>
+    <div class="st"><b class="t">山札から<span class="g">1枚引く</span></b><small>手札が3枚に戻る</small></div>
     <div class="st"><b class="t">「ターン終了」</b><small>次の人の番へ</small></div>
   </div>
   <div class="tip w"><b>引き忘れに注意！</b> 引かずにターン終了すると、手札が減ったまま続きます。</div>
@@ -3347,7 +3347,7 @@ function neuRulesHtml(){
   <div class="steps">
     <div class="st"><b class="t">「負けを宣言する」を押す</b><small>出せるカードが1枚もないとき</small></div>
     <div class="st"><b class="t">チップを1枚失う</b><small>${chips(3)} <span class="op" style="font-size:14px">→</span> ${chips(2)}</small></div>
-    <div class="st"><b class="t">次の回戦はその人が親</b><small>チップが <span class="r">0枚で脱落</span>（観戦へ）</small></div>
+    <div class="st"><b class="t">次の回戦はその人が親</b><small>チップが <span class="r">0枚で脱落</span>（観戦モードへ）</small></div>
   </div>
   <h4 style="--hc:#E8B12A">カードの中身（全${neuDeck().length}枚）</h4>
   <div class="deckg">${[["n1", "1〜9", "各3"], ["n10", "10", "6"], ["n50", "50", "2"], ["m10", "−10", "4"], ["m1", "−1", "2"], ["X101", "101", "5"], ["PASS", "PASS", "4"], ["TURN", "TURN", "4"], ["SHOT", "SHOT", "2"], ["DOUBLE", "DOUBLE", "2"]].map(([c, l, n]) => `<span>${C(c)}${l === "1〜9" ? "1〜9" : ""}×${n}</span>`).join("")}</div>`;
@@ -3390,11 +3390,12 @@ function sbRulesHtml(){
   <div class="goal"><b>手札を<span class="r">早くなくした人</span>が勝ち！</b><small>役をそろえて公開し、手札を減らす。ほかの人の残り手札は失点。決めたラウンド数の合計点で競う。最初は<b>7枚</b>ずつ。</small></div>
   <h4>1ターンの流れ</h4>
   <div class="steps">
-    <div class="st"><b class="t">「山札から引く」で1枚引く</b><small>手札が1枚増える</small></div>
+    <div class="st"><b class="t">山札から1枚引く</b><small>手札が1枚増える</small></div>
     <div class="st"><b class="t">（できれば）役を公開・付け札</b><small>カードを選んで「公開」「付け札」。<span class="v">何もなければ飛ばしてOK</span></small></div>
     <div class="st"><b class="t">いらないカードを<span class="r">1枚選んで「捨てる」</span></b><small><mark>捨てたら番が終わり</mark>、次の人へ</small></div>
   </div>
   <div class="tip"><b>何もできない時は？</b> いらないカードを1枚タップして「捨てる」。それで番が終わります。</div>
+  <div class="tip"><b>山札がなくなったら？</b> 場に捨てたトランプ（一番上の1枚を除く）をよくシャッフルして、新しい山札にします。</div>
   <h4 style="--hc:#108C96">役（3枚以上）</h4>
   <div class="kv">
     <div>${M(["S5", "H5", "D5"])}<p><b>同じ数字</b>3枚以上（4枚もOK）</p></div>
@@ -3405,6 +3406,7 @@ function sbRulesHtml(){
   <div class="kv">
     <div>${M(["D7"], "", "#E8B12A")}<p><b>7は1枚だけでも公開OK</b></p></div>
     <div>${M(["C6", "C7"], "", "#E8B12A")}${M(["H7", "H8"], "", "#E8B12A")}<p><b>6-7・7-8</b>は同じマークなら2枚でOK</p></div>
+    <div>${M(["S7"], "", "#E8B12A")}<span class="op">+</span>${M(["S6"], "add", "#E8B12A")}<p><b>7の役</b>に同じマークの6・8を付け札できる</p></div>
   </div>
   <h4 style="--hc:#6B3CE0">ジョーカー</h4>
   <div class="kv"><div>${M(["S9", "JK", "S11"], "", "#6B3CE0")}<p><b>何にでもなる</b>この場合は♠10の代わり</p></div></div>
@@ -4088,12 +4090,18 @@ function sbAsRun(cards){
 const sbMeld = cards => sbAsSet(cards) || sbAsRun(cards);
 // 付け札
 function sbAttach(m, c){
+  // 7が1枚だけの役：同じマークの6・8を付けると連番になる
+  if (m.type === "set" && m.cards.length === 1 && m.rank === 7 && c !== "JK"){
+    const s7 = sbSuit(m.cards[0]), r = sbRank(c);
+    if (sbSuit(c) === s7 && r === 6) return { type: "run", suit: s7, lo: 6, hi: 7, cards: [c, m.cards[0]] };
+    if (sbSuit(c) === s7 && r === 8) return { type: "run", suit: s7, lo: 7, hi: 8, cards: [m.cards[0], c] };
+  }
   if (m.type === "set") return (c === "JK" || sbRank(c) === m.rank) ? { ...m, cards: [...m.cards, c] } : null;
-  if (c === "JK"){ if (m.hi < 13) return { ...m, hi: m.hi + 1, cards: [...m.cards, c] }; if (m.lo > 1) return { ...m, lo: m.lo - 1, cards: [...m.cards, c] }; return null; }
+  if (c === "JK"){ if (m.hi < 13) return { ...m, hi: m.hi + 1, cards: [...m.cards, c] }; if (m.lo > 1) return { ...m, lo: m.lo - 1, cards: [c, ...m.cards] }; return null; }
   if (sbSuit(c) !== m.suit) return null;
   const r = sbRank(c);
   if (r === m.hi + 1) return { ...m, hi: r, cards: [...m.cards, c] };
-  if (r === m.lo - 1) return { ...m, lo: r, cards: [...m.cards, c] };
+  if (r === m.lo - 1) return { ...m, lo: r, cards: [c, ...m.cards] };
   return null;
 }
 // ポン・チーで使える手札の組み合わせ
