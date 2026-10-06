@@ -710,7 +710,7 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .gic.ski{background:radial-gradient(circle at 50% 40%,#5A2160,#2A0F2E 60%,#12061A);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(226,54,79,.5),inset 0 0 0 2px #B23A5A;overflow:hidden}
 .gic.ski svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .skd{display:inline-grid;place-items:center;flex:none;position:relative;width:var(--sz,40px);height:var(--sz,40px);border-radius:50%;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink);line-height:1;vertical-align:middle}
-.skd em{font-style:normal;font-size:calc(var(--sz,40px) * .56)}
+.skd em{font-style:normal;font-size:calc(var(--sz,40px) * .52);line-height:1;display:grid;place-items:center;width:100%;height:100%;text-align:center}
 .skd.f{background:radial-gradient(circle at 38% 32%,#FFFFFF,#FFE1E8 55%,#FFB8C8)}
 .skd.s{background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26 60%,#0A0410)}
 .skd.back{background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--pc) 45%,#fff),var(--pc) 50%,color-mix(in srgb,var(--pc) 55%,#1B1838))}
@@ -849,6 +849,58 @@ details.sgroup[open]>summary{margin-bottom:6px}
 @keyframes lgone{0%{transform:translateY(-46px) scale(1.3)}100%{transform:translateY(-220px) scale(.2) rotate(540deg);opacity:0}}
 .sbfx .lrow .coin .face{position:absolute;inset:-2px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:900;color:#fff;background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26);border:2px solid var(--ink);opacity:0;z-index:2;animation:lface .3s 1.55s forwards}
 @keyframes lface{0%{opacity:0;transform:rotateY(90deg)}100%{opacity:1;transform:none}}
+/* スカル v3：横長フィールド */
+.sktable{display:flex;flex-direction:column;gap:7px;padding:9px}
+.sktable::after{display:none}
+.sktable::before{background:radial-gradient(ellipse at 50% 60%,rgba(255,170,80,.28),rgba(255,120,60,.08) 55%,transparent 80%);animation:candle2 2.3s infinite}
+@keyframes candle2{0%{opacity:.9}12%{opacity:.55}20%{opacity:.85}37%{opacity:.6}48%{opacity:1}63%{opacity:.7}78%{opacity:.95}90%{opacity:.6}100%{opacity:.9}}
+.sktable .skglow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 90%,rgba(255,150,70,.18),transparent 40%),radial-gradient(circle at 85% 15%,rgba(255,150,70,.14),transparent 40%);animation:candle2 3.1s infinite reverse}
+.sktable .skfog{width:120%;height:60%;left:-30%;top:-5%;background:radial-gradient(ellipse,rgba(210,170,235,.42),transparent 62%);filter:blur(14px);animation:fogm 11s ease-in-out infinite alternate;opacity:.9}
+.sktable .skfog.f2{left:20%;top:45%;background:radial-gradient(ellipse,rgba(255,140,170,.32),transparent 62%);animation-duration:15s;animation-direction:alternate-reverse}
+.sktable .skfog.f3{left:-20%;top:60%;width:90%;background:radial-gradient(ellipse,rgba(180,200,255,.25),transparent 62%);animation-duration:19s}
+@keyframes fogm{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30%,15%) scale(1.35)}}
+.sktable .emb2{bottom:-8px;animation:embrise2 var(--t) linear var(--d) infinite}
+@keyframes embrise2{0%{transform:translate(0,0);opacity:0}10%{opacity:1}60%{opacity:.8}100%{transform:translate(var(--dx),-560px);opacity:0}}
+.skgrid{position:relative;z-index:2;flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1fr;gap:7px;align-content:center}
+.skgrid.two{grid-template-columns:1fr 1fr}
+.skp{position:relative;z-index:2;min-width:0;border-radius:13px;padding:5px 8px 7px;background:linear-gradient(160deg,color-mix(in srgb,var(--pc) 30%,rgba(22,8,28,.88)),rgba(22,8,28,.88) 75%);border:2px solid var(--pc);box-shadow:0 0 12px color-mix(in srgb,var(--pc) 45%,transparent),inset 0 1px 0 rgba(255,255,255,.15)}
+.skp .ph{display:flex;align-items:center;gap:4px;min-width:0;margin-bottom:5px}
+.skp .nm{min-width:0;flex:0 1 auto;padding:1px 8px;border-radius:99px;background:var(--pc);color:#fff;font-size:11.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1.5px solid var(--ink);text-shadow:0 1px 0 rgba(0,0,0,.3)}
+.skp .ph small{margin-left:auto;flex:none;font-size:9.5px;font-weight:900;color:rgba(255,255,255,.7);white-space:nowrap}
+.skp .pd{display:flex;align-items:center;gap:5px;min-height:34px;overflow:hidden}
+.skp .wait{font-size:10.5px;font-weight:900;color:rgba(255,255,255,.5);white-space:nowrap;animation:nbeat 1.2s ease-in-out infinite}
+.skp.me{--dz:38px;flex:none}
+.skp.me .pd{min-height:44px}
+.skp.on{animation:zon 1.1s ease-in-out infinite}
+.skp.can{cursor:pointer;border-color:#FFE38A;animation:canflip2 .9s ease-in-out infinite}
+.skp.can::after{content:"TAP";position:absolute;right:6px;bottom:6px;font-size:9px;font-weight:900;padding:1px 5px;border-radius:5px;background:#FFE38A;color:var(--ink);border:1.5px solid var(--ink)}
+@keyframes canflip2{50%{box-shadow:0 0 0 3px rgba(255,227,138,.6),0 0 24px #FFE38A}}
+.skp.passed{filter:grayscale(.85) brightness(.75);border-style:dashed}
+.skp .pst{position:absolute;left:50%;top:55%;z-index:4;transform:translate(-50%,-50%) rotate(-12deg);font-family:var(--disp);font-weight:400;font-size:18px;letter-spacing:.08em;color:#fff;padding:1px 10px;border:2.5px solid #fff;border-radius:7px;background:rgba(90,99,120,.9);box-shadow:0 0 0 2px var(--ink)}
+.skp.out{opacity:.3;filter:grayscale(1)}
+.sd{--dz0:var(--dz,30px);flex:none;position:relative;display:grid;place-items:center;width:var(--dz0);height:var(--dz0);border-radius:50%;border:2px solid var(--ink);box-shadow:0 2px 0 color-mix(in srgb,var(--pc,#5A5F73) 45%,#1B1838),0 4px 0 var(--ink),0 6px 6px rgba(0,0,0,.45)}
+.sd.back{background:radial-gradient(circle at 35% 28%,color-mix(in srgb,var(--pc) 40%,#fff),var(--pc) 48%,color-mix(in srgb,var(--pc) 55%,#1B1838))}
+.sd.back::after{content:"";position:absolute;inset:18%;border-radius:50%;border:2px dashed rgba(255,255,255,.55)}
+.sd em{position:relative;z-index:1;display:grid;place-items:center;width:100%;height:100%;font-style:normal;font-size:calc(var(--dz0) * .5);line-height:1;text-align:center}
+.sd.back em{width:58%;height:58%;border-radius:50%;background:rgba(255,255,255,.92);font-size:calc(var(--dz0) * .36);box-shadow:0 0 0 1.5px var(--ink)}
+.sd.f{background:radial-gradient(circle at 38% 32%,#FFFFFF,#FFE1E8 55%,#FFB8C8)}
+.sd.s{background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26 60%,#0A0410)}
+.sd.open{animation:sdflip .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes sdflip{0%{transform:rotateY(90deg) scale(1.3)}100%{transform:none}}
+.sd.top{box-shadow:0 0 0 3px #FFE38A,0 0 16px #FFE38A,0 4px 0 var(--ink);animation:nbeat .9s ease-in-out infinite}
+.skp .pd .sd:last-child:not(.open){animation:coinin2 .45s cubic-bezier(.2,1.6,.4,1)}
+.skp .pd .sd.top:last-child{animation:nbeat .9s ease-in-out infinite}
+@keyframes coinin2{from{transform:translateY(-24px) scale(1.25);opacity:0}}
+.skc{position:relative;z-index:2;left:auto;top:auto;transform:none;flex:none;align-self:center;width:auto;height:auto;flex-direction:row;gap:8px;padding:4px 16px;border-radius:99px}
+.skc small{font-size:10.5px}
+.skc b{font-size:26px}
+.skc .bidn{font-size:30px}
+.skc .rs{font-size:18px}.skc .rs.ng{font-size:18px;color:#FF8FA0}
+.sS{display:inline-grid;place-items:center;flex:none;width:19px;height:19px;border-radius:50%;background:#fff;color:var(--ink);border:2px solid var(--ink);font-family:var(--disp);font-weight:400;font-size:11px;line-height:1;box-shadow:0 0 0 2px #FFD84A;margin-right:2px;vertical-align:middle}
+.np .sS{width:14px;height:14px;font-size:8px;border-width:1.5px;box-shadow:0 0 0 1.5px #FFD84A;vertical-align:1px}
+.reach{flex:none;font-family:var(--disp);font-weight:400;font-style:italic;font-size:12px;letter-spacing:.04em;line-height:1.1;padding:0 2px;background:linear-gradient(90deg,#FFE38A,#E8B12A,#FF6FB5,#8B3CFF,#1FB3BF,#FFE38A);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.5px rgba(27,24,56,.6);animation:nshine 1.8s linear infinite,reachpop 1.2s ease-in-out infinite;display:inline-block}
+@keyframes reachpop{50%{transform:scale(1.15) rotate(-4deg)}}
+.np .reach{font-size:9.5px}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -4847,10 +4899,10 @@ function skFx(kind, pid, big, small, extra){
     html = `<span class="wash"></span><span class="fl"></span><span class="fl2"></span><svg class="crk" viewBox="0 0 100 100" preserveAspectRatio="none">${cracks}</svg>${rings(3)}${burst(26, ["💀", "🦴", "💥"], 320)}
       <div class="tx" style="animation:none"><span class="bigsk">💀</span><div class="bigt"><span style="--d:.35s">ド</span><span style="--d:.47s">ク</span><span style="--d:.59s">ロ</span><span class="ex" style="--d:.7s">!!</span></div>${small ? `<div class="who"><i>●</i> ${esc(small)}</div>` : ""}</div>`;
   } else if (kind === "chal"){
-    html = `<span class="spot"></span><span class="speed"></span>${rings(2)}<div class="tx"><b>CHALLENGE!!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
+    html = `<span class="spot"></span>${rings(2)}<div class="tx"><b>CHALLENGE!!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "succ"){
     const rain = Array.from({ length: 70 }, () => `<i class="rain c" style="--x:${rnd(-3, 100).toFixed(1)}vw;--c:transparent;--s:${rnd(.8, 1.6).toFixed(2)};--d:${rnd(0, 1.2).toFixed(2)}s;--t:${rnd(2, 3).toFixed(2)}s;--sw:${rnd(-40, 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;border:0;font-size:${rnd(16, 28).toFixed(0)}px;font-style:normal;width:auto;height:auto">🌸</i>`).join("");
-    html = `<span class="fl"></span><span class="bg"></span><span class="rays"></span>${rings(3)}${rain}${burst(24, ["🌸", "✨", "💮"], 300)}<div class="tx"><b>成功!!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
+    html = `<span class="fl"></span><span class="bg"></span>${rings(3)}${rain}${burst(24, ["🌸", "✨", "💮"], 300)}<div class="tx"><b>成功!!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "rose"){
     html = `<span class="bg"></span>${rings(1)}${burst(14, ["🌸", "💮", "✨"], 200)}<div class="tx"><b>🌸 SAFE</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "bid"){
@@ -4932,32 +4984,31 @@ function drawSk(){
   const seats = g.players.map(p => {
     const out = !skAliveP(g, p), on = playing && !out && (ph === "setup" ? !skStack(g, p).length : actor === p);
     const tag = (g.passed || []).includes(p) && ph === "bid" ? `<em class="tg no">PASS</em>` : bid && bid.pid === p && (ph === "bid" || ph === "challenge") ? `<em class="tg ok">宣言${bid.n}</em>` : "";
-    return `<div class="np ${on ? "on" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "setup" ? "待" : "今"}</em>` : ""}${tag}<b>${(t.start || null) === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw">${[0, 1].map(i => `<i class="${wins(p) > i ? "on" : ""}"></i>`).join("")}<small>${out ? "脱落" : `●${skOwn(g, p).length}`}</small></span></div>`;
+    return `<div class="np ${on ? "on" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "setup" ? "待" : "今"}</em>` : ""}${tag}<b>${(t.start || null) === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw">${wins(p) ? `<span class="reach">REACH</span>` : ""}<small>${out ? "脱落" : `持ち${skOwn(g, p).length}`}</small></span></div>`;
   }).join(`<span class="nar">›</span>`);
-  // テーブル（自分が手前になるよう円形に配置）
+  // テーブル：プレイヤーごとの横長フィールド（ディスクは置いた順に左から右へ並べる。自分は一番下）
   const n = g.players.length, base = Math.max(0, g.players.indexOf(me));
   const canFlip = p => ph === "challenge" && ch && ch.pid === me && playing && skStack(g, p).length > ((ch.fc || {})[p] || 0) && (p === me || ((ch.fc || {})[me] || 0) >= skStack(g, me).length);
-  const mats = g.players.map((p, i) => {
-    const k = (i - base + n) % n, a = Math.PI / 2 + k * 2 * Math.PI / n;
-    const x = 50 + Math.cos(a) * (n <= 2 ? 0 : 36), y = 50 + Math.sin(a) * (n <= 2 ? 34 : 35);
-    const st = skStack(g, p), fcN = ch ? ((ch.fc || {})[p] || 0) : 0, down = st.slice(0, st.length - fcN);
-    const flipped = ch ? (ch.flips || []).filter(f => f.o === p) : [];
-    const coins = down.map((d, j) => `<span class="coin" style="--pc:${pcolor(p)};--i:${j};--r:${((j * 37 + i * 11) % 15) - 7}deg;--jx:${[0, 3, -3, 2, -2][j % 5]}px"></span>`).join("");
-    const faces = p === me && down.length ? `<span class="myf">${down.map(d => `<i>${skFace(d)}</i>`).reverse().join("")}</span>` : "";
+  const field = (p, mine) => {
+    const st = skStack(g, p), nDown = st.length - (ch ? ((ch.fc || {})[p] || 0) : 0), cf = canFlip(p);
+    const discs = st.map((d, j) => j < nDown
+      ? `<span class="sd back ${cf && j === nDown - 1 ? "top" : ""}" style="--pc:${pcolor(p)}">${p === me ? `<em>${skFace(d)}</em>` : ""}</span>`
+      : `<span class="sd open ${d === "S" ? "s" : "f"}"><em>${skFace(d)}</em></span>`).join("");
     const isStart = (t.start || null) === p, isPass = ph === "bid" && (g.passed || []).includes(p);
-    const out = !skAliveP(g, p), on = playing && !out && actor === p;
-    return `<div class="skm ${canFlip(p) ? "can" : ""} ${on ? "on" : ""} ${out ? "out" : ""} ${wins(p) ? "won" : ""} ${isPass ? "passed" : ""}" style="--x:${x.toFixed(1)}%;--y:${y.toFixed(1)}%;--pc:${pcolor(p)}" ${canFlip(p) ? `data-flip="${p}"` : ""}>
-      ${flipped.length ? `<div class="flp">${flipped.map(f => skDisc(f.d, "mini")).join("")}</div>` : ""}
-      <div class="mat">${isStart ? `<span class="smk">S</span>` : ""}${wins(p) ? `<span class="wm">${"⭐".repeat(wins(p))}</span>` : ""}${isPass ? `<span class="pst">PASS</span>` : ""}${faces}<div class="stk" style="--n:${down.length}">${coins || (ph === "setup" && !out ? `<span class="wait">…</span>` : "")}</div>${down.length ? `<b class="cnt">${down.length}</b>` : ""}</div>
-      <span class="nm">${esc(pname(p))}</span></div>`;
-  }).join("");
+    const out = !skAliveP(g, p), on = playing && !out && (ph === "setup" ? !st.length : actor === p);
+    return `<div class="skp ${mine ? "me" : ""} ${cf ? "can" : ""} ${on ? "on" : ""} ${out ? "out" : ""} ${isPass ? "passed" : ""}" style="--pc:${pcolor(p)}" ${cf ? `data-flip="${p}"` : ""}>
+      <div class="ph">${isStart ? `<span class="sS">S</span>` : ""}<b class="nm">${esc(pname(p))}</b>${wins(p) ? `<span class="reach">REACH</span>` : ""}<small>${out ? "脱落" : `場${st.length}・持ち${skOwn(g, p).length}`}</small></div>
+      <div class="pd">${discs || `<span class="wait">${out ? "—" : ph === "setup" ? "伏せるのを待っています…" : "—"}</span>`}</div>${isPass ? `<span class="pst">PASS</span>` : ""}</div>`;
+  };
+  const others = inGame ? Array.from({ length: n - 1 }, (_, k) => g.players[(base + 1 + k) % n]) : g.players.slice();
   let center = "";
-  if (ph === "setup"){ const done = skAlive(g).filter(p => skStack(g, p).length).length; center = `<small>全員1枚伏せる</small><b class="num">${done}/${skAlive(g).length}</b>`; }
+  if (ph === "setup"){ const done = skAlive(g).filter(p => skStack(g, p).length).length; center = `<small>全員1枚伏せる</small><b class="num">${done}<i>/${skAlive(g).length}</i></b>`; }
   else if (ph === "place") center = `<small>場のディスク</small><b class="num">${total}</b><small>枚</small>`;
-  else if (ph === "bid") center = `<small style="color:${pcolor(bid.pid)}">${esc(pname(bid.pid))}の宣言</small><b class="num bidn">${bid.n}</b><small>場 ${total}枚</small>`;
-  else if (ph === "challenge") center = `<small>めくった</small><b class="num">${(ch.flips || []).length}<i>/${ch.need}</i></b><small style="color:${pcolor(ch.pid)}">${esc(pname(ch.pid))}</small>`;
-  else if (ph === "result" && res) center = res.type === "success" ? `<b class="rs ok">成功!</b><small>${esc(pname(res.pid))}</small>` : `<b class="rs ng">💀</b><small>${esc(pname(res.pid))} 失敗</small>`;
-  const table = `<div class="sktable ${ph === "challenge" ? "chal" : ""} ${ph === "result" && res && res.type === "fail" ? "dead" : ""}"><span class="skrays"></span><span class="skfog"></span><span class="skfog f2"></span>${Array.from({ length: 14 }, (_, i) => `<i class="emb2" style="left:${(i * 37 + 5) % 96}%;--d:-${(i * .7).toFixed(1)}s;--t:${(5 + (i % 4) * 1.5).toFixed(1)}s;--s:${(.6 + (i % 3) * .4).toFixed(1)}"></i>`).join("")}${mats}<div class="skc">${center}</div></div>`;
+  else if (ph === "bid") center = `<small style="color:${pcolor(bid.pid)}">${esc(pname(bid.pid))}の宣言</small><b class="num bidn">${bid.n}</b><small>場${total}枚</small>`;
+  else if (ph === "challenge") center = `<small style="color:${pcolor(ch.pid)}">${esc(pname(ch.pid))}がめくる</small><b class="num">${(ch.flips || []).length}<i>/${ch.need}</i></b>`;
+  else if (ph === "result" && res) center = res.type === "success" ? `<b class="rs ok">成功!</b><small>${esc(pname(res.pid))}</small>` : `<b class="rs ng">💀 失敗</b><small>${esc(pname(res.pid))}</small>`;
+  const table = `<div class="sktable ${ph === "challenge" ? "chal" : ""} ${ph === "result" && res && res.type === "fail" ? "dead" : ""}"><span class="skglow"></span><span class="skfog"></span><span class="skfog f2"></span><span class="skfog f3"></span>${Array.from({ length: 26 }, (_, i) => `<i class="emb2" style="left:${(i * 37 + 3) % 98}%;--d:-${(i * .53).toFixed(2)}s;--t:${(4.5 + (i % 5) * 1.3).toFixed(1)}s;--s:${(.5 + (i % 3) * .35).toFixed(2)};--dx:${(i % 2 ? 1 : -1) * (10 + (i % 4) * 8)}px"></i>`).join("")}
+    <div class="skgrid ${others.length >= 3 ? "two" : ""}">${others.map(p => field(p, false)).join("")}</div><div class="skc">${center}</div>${inGame ? field(me, true) : ""}</div>`;
   // 下部
   let bottom = "";
   if (playing || ph === "result"){
@@ -4995,7 +5046,7 @@ function drawSk(){
   const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   let over = "";
   if (g.status === "finished") over = `<div class="nover" style="--c:${pcolor(g.winner)}"><span class="ob"></span><div class="k">優勝</div><div class="p">${esc(pname(g.winner))}</div><div class="y">${wins(g.winner) >= 2 ? "チャレンジ2回成功！" : "最後まで生き残った！"}</div><div class="btns"><button class="btn" id="kClose2">閉じる</button></div></div>`;
-  el.innerHTML = `<div class="nbg skbg" aria-hidden="true"><span class="nrays"></span>${["💀", "🌸", "💀", "🌸", "🦴", "🌸", "💀", "💮"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${26 + (i % 3) * 18}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 36}px;--dy:-48px;--rot:${i * 17 - 50}deg;opacity:.22">${x}</i>`).join("")}</div>
+  el.innerHTML = `<div class="nbg skbg" aria-hidden="true">${["💀", "🌸", "💀", "🌸", "🦴", "🌸", "💀", "💮"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${26 + (i % 3) * 18}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 36}px;--dy:-48px;--rot:${i * 17 - 50}deg;opacity:.22">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt skt">SKULL</b><span class="nrd sbr"><small>ROUND</small><b>${g.round || 1}</b></span><span class="ndk"></span><button class="nmini" id="kMenu" aria-label="メニュー">…</button><button class="nmini" id="kClose" aria-label="閉じる">×</button></div>
     <div class="nseats2 ${g.players.length >= 5 ? "tight" : ""}">${seats}</div>
     ${table}
