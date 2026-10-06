@@ -592,6 +592,82 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .artin{width:100%;max-width:480px;max-height:80vh;overflow-y:auto;background:#fff;border:2.5px solid var(--ink);border-radius:18px;padding:14px 16px 16px;box-shadow:0 0 30px rgba(232,177,42,.5)}
 .arth{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .arth b{font-family:var(--disp);font-weight:400;font-size:20px;color:#C98E12}
+/* ---- ゲームのルール（図解） ---- */
+.artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
+.artin.wide .arth b{font-size:19px}
+.gr{font-size:14px;line-height:1.65;color:var(--ink)}
+.gr p{margin:4px 0}
+.gr .goal{position:relative;margin:4px 0 6px;padding:12px 12px 12px 60px;border-radius:14px;border:2.5px solid var(--ink);background:linear-gradient(120deg,#FFF3C4,#fff 55%,#E6FAFB);box-shadow:0 3px 0 var(--ink)}
+.gr .goal::before{content:"WIN";position:absolute;left:9px;top:50%;transform:translateY(-50%) rotate(-8deg);width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-size:12px;background:var(--metal);border:2px solid var(--ink);box-shadow:0 2px 0 var(--ink)}
+.gr .goal>b{display:block;font-size:16px;font-weight:900}
+.gr .goal small{display:block;font-size:12.5px;color:var(--mute);line-height:1.55;margin-top:2px}
+.gr h4{display:flex;align-items:center;gap:8px;margin:18px 0 8px;font-family:var(--disp);font-weight:400;font-size:16px;white-space:nowrap}
+.gr h4::before{content:"";flex:none;width:7px;height:20px;border-radius:3px;background:var(--hc,var(--crimson));border:1.5px solid var(--ink)}
+.gr h4::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(90deg,rgba(27,24,56,.25) 0 6px,transparent 6px 10px)}
+.gr .steps{display:flex;flex-direction:column;gap:7px;counter-reset:st}
+.gr .st{position:relative;padding:7px 10px 7px 44px;border-radius:12px;background:#fff;border:2px solid var(--ink);counter-increment:st}
+.gr .st::before{content:counter(st);position:absolute;left:8px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-size:14px;color:#fff;background:var(--sc,var(--crimson));border:2px solid var(--ink)}
+.gr .st:nth-child(2){--sc:#E8890C}.gr .st:nth-child(3){--sc:#108C96}.gr .st:nth-child(4){--sc:#6B3CE0}
+.gr .st b.t{display:block;font-size:14.5px;font-weight:900;line-height:1.4}
+.gr .st small{display:block;font-size:12.5px;color:var(--mute);line-height:1.5}
+.gr .st:not(:last-child)::after{content:"";position:absolute;left:19px;bottom:-9px;width:0;height:0;border:5px solid transparent;border-top:6px solid var(--ink);z-index:1}
+.gr .ex{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;margin:7px 0;padding:9px 8px;border-radius:12px;background:#F6F7FB;border:1.5px dashed rgba(27,24,56,.3)}
+.gr .ex.okx{background:#EDFAF2;border-color:#1E9E5A}.gr .ex.ngx{background:#FFF0F2;border-color:var(--crimson)}
+.gr .ex .cap{flex-basis:100%;text-align:center;font-size:12.5px;font-weight:700;color:var(--mute);line-height:1.4}
+.gr .op{font-family:var(--disp);font-size:20px;line-height:1}
+.gr .tot{font-family:var(--disp);font-size:20px;line-height:1;padding:6px 8px;border-radius:9px;background:#fff;border:2px solid var(--ink);box-shadow:0 2px 0 var(--ink)}
+.gr .tot.r{color:var(--crimson)}
+.gr .ok,.gr .ng{display:inline-grid;place-items:center;height:26px;padding:0 9px;border-radius:13px;font-weight:900;font-size:12.5px;color:#fff;border:2px solid var(--ink);white-space:nowrap}
+.gr .ok{background:#1E9E5A}.gr .ng{background:var(--crimson)}
+.gr mark{background:linear-gradient(transparent 55%,#FFE38A 55%);color:inherit;font-weight:900;padding:0 1px}
+.gr .r{color:var(--crimson);font-weight:900}.gr .a{color:#108C96;font-weight:900}.gr .g{color:#C98E12;font-weight:900}.gr .v{color:#6B3CE0;font-weight:900}
+.gr .tip{position:relative;margin:8px 0;padding:7px 10px 7px 36px;border-radius:10px;background:#FFF6D6;border:2px solid #E8B12A;font-size:13px;line-height:1.55}
+.gr .tip::before{content:"!";position:absolute;left:9px;top:8px;width:19px;height:19px;border-radius:50%;background:#E8B12A;color:#fff;font-weight:900;display:grid;place-items:center;font-size:12px;border:1.5px solid var(--ink)}
+.gr .tip.w{background:#FFF0F2;border-color:var(--crimson)}.gr .tip.w::before{background:var(--crimson)}
+.gr .kv{display:flex;flex-direction:column;gap:6px}
+.gr .kv>div{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:12px;background:#fff;border:2px solid var(--ink)}
+.gr .kv>div>p{margin:0;font-size:13.5px;line-height:1.5}
+.gr .kv>div>p b{display:block;font-size:14.5px}
+.gr .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gr .box{padding:9px 9px 10px;border-radius:12px;border:2.5px solid var(--bc,var(--ink));background:#fff;font-size:13px;line-height:1.5}
+.gr .box>b{display:block;font-family:var(--disp);font-weight:400;font-size:16px;color:var(--bc,var(--ink));margin-bottom:3px}
+.gr .ncard{width:50px;height:70px;border-radius:9px;border-width:2px;box-shadow:0 3px 0 var(--ink);flex:none}
+.gr .ncard::before{inset:3px;border-radius:6px}
+.gr .ncard b{font-size:20px}.gr .ncard small{font-size:8px}
+.gr .ncard.c101 b{font-size:17px}.gr .ncard.inst i{font-size:15px}
+.gr .die{width:30px;height:30px;padding:4px;gap:1px;border-radius:7px;border-width:2px;box-shadow:0 2px 0 var(--ink)}
+.gr .pair{display:inline-flex;align-items:center;gap:3px;padding:3px 7px 3px 4px;border-radius:10px;border:2.5px solid var(--pc);background:color-mix(in srgb,var(--pc) 10%,#fff)}
+.gr .pair em{font-style:normal;font-family:var(--disp);font-size:17px;color:var(--pc);margin-left:3px}
+.gr .orow{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;padding:5px 0}
+.gr .orow+.orow{border-top:1px dashed rgba(27,24,56,.2)}
+.gr .orow .res{font-size:12.5px;font-weight:900}
+.gr .chipi{display:inline-block;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6D6,#E8B12A 60%,#B9820E);border:2px solid var(--ink);vertical-align:-4px;margin:0 1px}
+.gr .chipi.lost{background:#E4E5EC;border-style:dashed;opacity:.6}
+.gr .tmpi{display:inline-block;width:14px;height:14px;border-radius:50%;background:#fff;border:2.5px solid var(--ink);box-shadow:0 0 0 2px #FFE38A;vertical-align:-2px;margin:0 1px}
+.gr .mki{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--pc,#E2364F);border:2px solid var(--ink);vertical-align:-2px;margin:0 1px}
+.gr .mki.gray{background:#B8BAC6;opacity:.6}
+.gr .lanes{display:grid;grid-template-columns:repeat(11,1fr);gap:3px;align-items:end;padding:8px 6px 4px;border-radius:12px;background:#F6F7FB;border:2px solid var(--ink)}
+.gr .lane{display:flex;flex-direction:column;align-items:center;gap:2px}
+.gr .lane i{display:block;width:100%;height:calc(var(--h) * 7px);border-radius:5px 5px 2px 2px;border:1.5px solid var(--ink);background:repeating-linear-gradient(0deg,#fff 0 5px,rgba(27,24,56,.12) 5px 7px);position:relative}
+.gr .lane i::after{content:attr(data-h);position:absolute;top:-2px;left:0;right:0;transform:translateY(-100%);text-align:center;font-size:9px;font-weight:900;color:var(--mute)}
+.gr .lane:nth-child(6) i{background:repeating-linear-gradient(0deg,#FFF3C4 0 5px,rgba(232,177,42,.35) 5px 7px)}
+.gr .lane b{font-family:var(--disp);font-weight:400;font-size:13px}
+.gr .deckg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px 4px;justify-items:center}
+.gr .deckg>span{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11.5px;font-weight:900;color:var(--mute)}
+.gr .pcd{width:30px;height:42px}
+.gr .pcd b{font-size:13px}.gr .pcd i{font-size:13px}
+.gr .meldi{display:inline-flex;gap:2px;padding:4px;border-radius:9px;border:2px solid var(--pc,#1FB3BF);background:color-mix(in srgb,var(--pc,#1FB3BF) 10%,#fff)}
+.gr .meldi.add{border-style:dashed}
+.gr table{width:100%;border-collapse:separate;border-spacing:0;border:2px solid var(--ink);border-radius:12px;overflow:hidden;font-size:13.5px}
+.gr th,.gr td{padding:6px 8px;text-align:left;border-bottom:1px solid rgba(27,24,56,.15)}
+.gr tr:last-child td{border-bottom:0}
+.gr th{background:var(--ink);color:#fff;font-weight:900;font-size:12.5px}
+.gr td:last-child{font-weight:900;text-align:right;white-space:nowrap}
+.gr td .pcd{vertical-align:middle;margin-right:2px}
+.nb.end.go{animation:gopulse 1.1s ease-in-out infinite}
+@keyframes gopulse{50%{box-shadow:0 0 0 4px rgba(232,177,42,.5),0 0 18px rgba(232,177,42,.9)}}
+.grbtn{display:inline-flex;align-items:center;gap:6px;margin:2px 0 10px;padding:6px 12px;border-radius:999px;border:2px solid var(--ink);background:#fff;font-weight:900;font-size:13px;color:var(--ink);box-shadow:0 2px 0 var(--ink)}
+.grbtn::before{content:"";width:14px;height:16px;border:2px solid var(--ink);border-radius:2px 4px 4px 2px;background:linear-gradient(90deg,#E2364F 0 3px,#FFF3C4 3px)}
 .artx{width:36px;height:36px;border-radius:10px;border:2px solid var(--ink);font-size:20px;font-weight:900;line-height:1}
 .big .kr{position:absolute;width:14px;height:14px;background:var(--glint-gold) center/contain no-repeat;animation:twk 1.8s ease-in-out infinite}
 .big .kr.k1{right:16px;top:9px;background-image:var(--glint-red)}
@@ -3230,6 +3306,129 @@ function openArticle(k){
 }
 document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-art]"); if (b){ e.preventDefault(); e.stopPropagation(); openArticle(b.dataset.art); } }, true);
 
+/* ===================== ゲームのルール（図解） ===================== */
+function openGameRules(k){
+  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール" }[k];
+  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml }[k]();
+  let el = $("#artpop");
+  if (!el){ el = document.createElement("div"); el.id = "artpop"; el.className = "artpop"; document.body.appendChild(el); el.addEventListener("click", e => { if (e.target === el || e.target.closest("[data-artclose]")) el.classList.remove("on"); }); }
+  el.innerHTML = `<div class="artin wide" role="dialog" aria-modal="true"><div class="arth"><b>${title}</b><button class="artx" data-artclose aria-label="閉じる">×</button></div><div class="gr">${html}</div></div>`;
+  el.classList.add("on"); el.querySelector(".artin").scrollTop = 0;
+}
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-grule]"); if (b){ e.preventDefault(); openGameRules(b.dataset.grule); } });
+function neuRulesHtml(){
+  const C = neuCardHtml, chips = n => Array.from({ length: 3 }, (_, i) => `<span class="chipi ${i < n ? "" : "lost"}"></span>`).join("");
+  return `
+  <div class="goal"><b>合計を<span class="r">101</span>より上にしない！</b><small>カードを出すたびに場の合計が増えていく。出せなくなった人はチップを1枚失い、<mark>最後まで残った人が勝ち</mark>。</small></div>
+  <p style="text-align:center;font-size:13px">はじめ：チップ ${chips(3)} <b>3枚</b>・手札 <b>3枚</b></p>
+  <h4>1ターンの流れ</h4>
+  <div class="steps">
+    <div class="st"><b class="t">手札から<span class="r">1枚出す</span></b><small>数字は場の合計にたされる</small></div>
+    <div class="st"><b class="t">「引く」で山札から<span class="g">1枚引く</span></b><small>手札が3枚に戻る</small></div>
+    <div class="st"><b class="t">「ターン終了」</b><small>次の人の番へ</small></div>
+  </div>
+  <div class="tip w"><b>引き忘れに注意！</b> 引かずにターン終了すると、手札が減ったまま続きます。</div>
+  <h4 style="--hc:#1E9E5A">出せる？出せない？</h4>
+  <div class="ex okx"><span class="tot">95</span><span class="op">+</span>${C("n5")}<span class="op">=</span><span class="tot">100</span><span class="ok">OK</span></div>
+  <div class="ex ngx"><span class="tot">95</span><span class="op">+</span>${C("n10")}<span class="op">=</span><span class="tot r">105</span><span class="ng">出せない</span><span class="cap">101を超えるカードは出せない</span></div>
+  <div class="ex okx"><span class="tot">95</span><span class="op">+</span>${C("m10")}<span class="op">=</span><span class="tot">85</span><span class="ok">OK</span><span class="cap">マイナスで合計を減らせる（0より下になってもOK）</span></div>
+  <div class="ex okx"><span class="tot">87</span><span class="op">→</span>${C("X101")}<span class="op">=</span><span class="tot">101</span><span class="ok">OK</span><span class="cap">いつでも合計を101ちょうどにする</span></div>
+  <div class="tip"><b>101ちょうど</b>まではセーフ！</div>
+  <h4 style="--hc:#6B3CE0">特殊カード</h4>
+  <div class="kv">
+    <div>${C("PASS")}<p><b>パス</b>合計はそのまま、次の人へ</p></div>
+    <div>${C("TURN")}<p><b>ターン</b>回る向きが<span class="a">逆回り</span>になる</p></div>
+    <div>${C("SHOT")}<p><b>ショット</b>次に出す人を<span class="g">指名</span>できる</p></div>
+    <div>${C("DOUBLE")}<p><b>ダブル</b>次の人は<span class="r">2回出す</span>（2枚出して、まとめて2枚引く）</p></div>
+  </div>
+  <div class="tip">2回出す番の<b>1枚目にDOUBLEは出せない</b>。1枚目にPASS・TURN・SHOTを出すと、<mark>2回出す義務が次の人に移る</mark>。</div>
+  <h4>出せなくなったら</h4>
+  <div class="steps">
+    <div class="st"><b class="t">「負けを宣言する」を押す</b><small>出せるカードが1枚もないとき</small></div>
+    <div class="st"><b class="t">チップを1枚失う</b><small>${chips(3)} <span class="op" style="font-size:14px">→</span> ${chips(2)}</small></div>
+    <div class="st"><b class="t">次の回戦はその人が親</b><small>チップが <span class="r">0枚で脱落</span>（観戦へ）</small></div>
+  </div>
+  <h4 style="--hc:#E8B12A">カードの中身（全${neuDeck().length}枚）</h4>
+  <div class="deckg">${[["n1", "1〜9", "各3"], ["n10", "10", "6"], ["n50", "50", "2"], ["m10", "−10", "4"], ["m1", "−1", "2"], ["X101", "101", "5"], ["PASS", "PASS", "4"], ["TURN", "TURN", "4"], ["SHOT", "SHOT", "2"], ["DOUBLE", "DOUBLE", "2"]].map(([c, l, n]) => `<span>${C(c)}${l === "1〜9" ? "1〜9" : ""}×${n}</span>`).join("")}</div>`;
+}
+function csRulesHtml(){
+  const D = n => dieFace(n), P = (a, b, c) => `<span class="pair" style="--pc:${c}">${D(a)}${D(b)}<em>${a + b}</em></span>`;
+  return `
+  <div class="goal"><b>レーンを<span class="r">3本</span>制覇したら勝ち！</b><small>ダイスを振ってレーンを登る。欲張って振り続けるか、止めて確定するかの勝負。</small></div>
+  <h4>① ダイス4個を振って2組に分ける</h4>
+  <div class="ex" style="flex-direction:column;gap:2px">
+    <div class="orow">${D(3)}${D(4)}${D(2)}${D(5)}</div>
+    <div class="orow">${P(3, 4, "#E2364F")}${P(2, 5, "#E2364F")}<span class="res">→ 7レーンを<span class="r">2マス</span></span></div>
+    <div class="orow">${P(3, 2, "#108C96")}${P(4, 5, "#108C96")}<span class="res">→ 5と9を1マスずつ</span></div>
+    <div class="orow">${P(3, 5, "#6B3CE0")}${P(4, 2, "#6B3CE0")}<span class="res">→ 8と6を1マスずつ</span></div>
+    <span class="cap">組み合わせを1つ選ぶと、その合計のレーンに<b>仮コマ</b>が進む</span>
+  </div>
+  <div class="tip">仮コマ <span class="tmpi"></span><span class="tmpi"></span><span class="tmpi"></span> は<b>1回の番に3つまで</b>＝<mark>進めるレーンは3本まで</mark>。</div>
+  <h4 style="--hc:#E8890C">② 振る？やめる？</h4>
+  <div class="two">
+    <div class="box" style="--bc:#E2364F"><b>もう一度振る</b>もっと進めるチャンス。でも<span class="r">バースト</span>すると全部パー。</div>
+    <div class="box" style="--bc:#108C96"><b>やめる</b>仮コマの位置が<mark>自分のマーカー</mark>として確定（セーブ）。次の人へ。</div>
+  </div>
+  <h4 style="--hc:#E2364F">③ バースト（強制終了）</h4>
+  <div class="ex ngx" style="flex-direction:column;gap:2px">
+    <span class="cap" style="font-weight:900;color:var(--ink)">仮コマが 2・7・12 にあって3つとも使用中…</span>
+    <div class="orow">${D(1)}${D(3)}${D(3)}${D(5)}</div>
+    <div class="orow"><span class="res">作れる合計は 4・8・6 だけ</span><span class="ng">進めない</span></div>
+    <span class="cap">どう組み合わせても進めない目が出たら、<span class="r">その番に進めた分はすべて消える</span></span>
+  </div>
+  <h4 style="--hc:#E8B12A">④ レーンを獲得 ⭐️</h4>
+  <p>最上段に着いて番を終えると、そのレーンは<mark>あなたのもの</mark>。以後そのレーンには誰も進めません。</p>
+  <div class="ex"><span class="mki" style="--pc:#E2364F"></span><span class="res" style="font-size:12.5px;font-weight:900">獲得した人のマーカー</span><span class="op" style="font-size:14px">／</span><span class="mki gray"></span><span class="res" style="font-size:12.5px;font-weight:900">ほかの人はグレーに</span></div>
+  <h4 style="--hc:#108C96">レーンの長さ</h4>
+  <div class="lanes">${CS_COLS.map(c => `<div class="lane"><i style="--h:${CS_H[c]}" data-h="${CS_H[c]}"></i><b>${c}</b></div>`).join("")}</div>
+  <div class="tip"><b>7</b>は一番出やすいけど一番長い（13マス）。<b>2・12</b>は3マスだけど出にくい。</div>`;
+}
+function sbRulesHtml(){
+  const K = c => sbCardHtml(c), M = (cs, cls = "", pc = "#1FB3BF") => `<span class="meldi ${cls}" style="--pc:${pc}">${cs.map(K).join("")}</span>`;
+  return `
+  <div class="goal"><b>手札を<span class="r">早くなくした人</span>が勝ち！</b><small>役をそろえて公開し、手札を減らす。ほかの人の残り手札は失点。決めたラウンド数の合計点で競う。最初は<b>7枚</b>ずつ。</small></div>
+  <h4>1ターンの流れ</h4>
+  <div class="steps">
+    <div class="st"><b class="t">「山札から引く」で1枚引く</b><small>手札が1枚増える</small></div>
+    <div class="st"><b class="t">（できれば）役を公開・付け札</b><small>カードを選んで「公開」「付け札」。<span class="v">何もなければ飛ばしてOK</span></small></div>
+    <div class="st"><b class="t">いらないカードを<span class="r">1枚選んで「捨てる」</span></b><small><mark>捨てたら番が終わり</mark>、次の人へ</small></div>
+  </div>
+  <div class="tip"><b>何もできない時は？</b> いらないカードを1枚タップして「捨てる」。それで番が終わります。</div>
+  <h4 style="--hc:#108C96">役（3枚以上）</h4>
+  <div class="kv">
+    <div>${M(["S5", "H5", "D5"])}<p><b>同じ数字</b>3枚以上（4枚もOK）</p></div>
+    <div>${M(["H3", "H4", "H5"])}<p><b>同じマークの連番</b>3枚以上</p></div>
+    <div>${M(["S12", "S13", "S1"], "", "#E2364F")}<p><b><span class="ng" style="height:22px;font-size:11px">×</span> K→Aはつながらない</b></p></div>
+  </div>
+  <h4 style="--hc:#E8B12A">7は特別</h4>
+  <div class="kv">
+    <div>${M(["D7"], "", "#E8B12A")}<p><b>7は1枚だけでも公開OK</b></p></div>
+    <div>${M(["C6", "C7"], "", "#E8B12A")}${M(["H7", "H8"], "", "#E8B12A")}<p><b>6-7・7-8</b>は同じマークなら2枚でOK</p></div>
+  </div>
+  <h4 style="--hc:#6B3CE0">ジョーカー</h4>
+  <div class="kv"><div>${M(["S9", "JK", "S11"], "", "#6B3CE0")}<p><b>何にでもなる</b>この場合は♠10の代わり</p></div></div>
+  <div class="tip w">ジョーカー1枚だけを「7」として出すことはできない。</div>
+  <h4 style="--hc:#E8890C">ポン・チー（捨て札をもらう）</h4>
+  <div class="two">
+    <div class="box" style="--bc:#E2364F"><b>ポン</b>${M(["S9", "D9"], "", "#E2364F")} ＋ ${K("H9")}<br><span class="r">誰が捨てても</span>同じ数字3枚ができればもらえる</div>
+    <div class="box" style="--bc:#108C96"><b>チー</b>${M(["C4", "C5"], "", "#108C96")} ＋ ${K("C6")}<br><span class="a">前の人</span>の捨て札で連番ができればもらえる</div>
+  </div>
+  <div class="tip">捨てられてから<b>4秒以内</b>にボタンを押す。両方いたら<mark>ポンが優先</mark>。もらったら役を公開して1枚捨て、その次の人の番へ（間の人は飛ばされる）。</div>
+  <h4 style="--hc:#1FB3BF">付け札</h4>
+  <div class="ex">${M(["H3", "H4", "H5"])}<span class="op">+</span>${M(["H6"], "add")}<span class="cap">役を<b>1つでも公開した人</b>は、自分の番に場の役（誰のでも）へ手札を付けられる</span></div>
+  <h4 style="--hc:#E2364F">上がり方</h4>
+  <div class="ex okx">${K("D2")}<span class="op">→</span><span class="res" style="font-weight:900">最後の1枚を捨てる</span><span class="ok">上がり！</span></div>
+  <div class="tip w">公開・付け札・ポン・チーで手札を0枚にはできない。<b>必ず最後の1枚は捨てて</b>上がる。</div>
+  <h4>失点（残った手札）</h4>
+  <table><tr><th>残ったカード</th><th>失点</th></tr>
+    <tr><td>${K("S1")}${K("H11")}${K("D12")}${K("C13")}</td><td>10点</td></tr>
+    <tr><td>${K("H2")}〜${K("S10")}</td><td>数字どおり</td></tr>
+    <tr><td>${K("D7")} 7が残っている</td><td class="r">1枚ごとに×2</td></tr>
+    <tr><td>${K("JK")} ジョーカーが残っている</td><td class="r">×5</td></tr>
+  </table>
+  <div class="ex" style="margin-top:8px">${K("S13")}${K("H7")}<span class="op">→</span><span class="res" style="font-weight:900">(10＋7)×2 ＝ <span class="r">−34点</span></span></div>`;
+}
+
 /* ===================== カードゲーム NEU ===================== */
 /* カード：n3=+3, n10, n50, m10=-10, m1=-1, X101=101にする, PASS / TURN / SHOT / DOUBLE */
 const NEU_LIMIT = 101;
@@ -3377,6 +3576,7 @@ function openNeuNew(){
   let order = base.slice();
   const s = openSheet("NEU（ノイ）を始める", `
     <p class="note">101を超えないようにカードを出し合い、出せなくなった人がチップを失います。最後まで生き残った人の勝ち（2〜7人）。</p>
+    <button type="button" class="grbtn" data-grule="neu">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
     <div class="f"><span>席順（時計回り）・名前を指で動かして並べ替え</span><div id="nOrder" class="norder"></div><button class="shufbtn" id="nShuf">席順をシャッフル</button></div>
     <label class="f"><span>最初の親（じゃんけんで決めた人）</span><select id="nDealer"></select></label>
@@ -3545,11 +3745,7 @@ function neuFx(c, g){
 }
 function neuMenu(g){
   const s = openSheet("NEUのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
-  s.querySelector('[data-x="rule"]').onclick = () => openSheet("NEUのルール", `<div class="rules">
-    <p class="rp">合計が101を超えるカードは出せません（101ちょうどまでOK）。合計はマイナスにもなります。</p>
-    <p class="rp">自分の番にカードを出したら、山札から出した枚数分を引いて「ターン終了」。引き忘れると手札が減ったまま続きます。</p>
-    <p class="rp">出せるカードがなくなったら「負けを宣言する」。チップを1枚失い、次の回戦の親になります。チップがなくなったら脱落、最後の1人が勝ち。</p>
-    <p class="rp">PASS：次の人へ／TURN：逆回りに／SHOT：次に出す人を指名／DOUBLE：次の人は2回出す（1枚目にDOUBLEは不可。1枚目にPASS・TURN・SHOTを出すと、2回出す義務が次の人に移る）／101：合計を101にする。</p></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openGameRules("neu");
   s.querySelector('[data-x="abort"]').onclick = async () => {
     if (!confirm("この対戦をやめますか？（記録は残りません）")) return;
     closeSheet(); await neuSave(g, { status: "aborted" }, "対戦が中止されました"); closeNeu();
@@ -3715,6 +3911,7 @@ function openCsNew(){
   let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 6);
   const s = openSheet("キャントストップを始める", `
     <p class="note">ダイス4個を2組に分けてレーンを登る。欲張って振り続けるか、止めて確定するか。3本のレーンを制した人の勝ち（2〜6人）。</p>
+    <button type="button" class="grbtn" data-grule="cs">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="cOrder" class="norder"></div><button class="shufbtn" id="cShuf">順番をシャッフル</button></div>
     <div class="btns"><button class="btn" id="cGo">対戦スタート</button></div>`);
@@ -3799,12 +3996,7 @@ function drawCs(){
 }
 function csMenu(g){
   const s = openSheet("キャントストップのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
-  s.querySelector('[data-x="rule"]').onclick = () => openSheet("キャントストップのルール", `<div class="rules">
-    <p class="rp">ダイス4個を振り、2個ずつ2組に分けた合計のレーンに仮コマを進めます。1回の番で使える仮コマは3個（進めるレーンは3本）まで。同じ合計が2組なら2マス進みます。</p>
-    <p class="rp">進めたら「もう一度振る」か「やめる」を選びます。やめると仮コマの位置が自分のマーカーとして確定します。</p>
-    <p class="rp">どう組み合わせても進められない目が出たら強制終了。その番に進めた分はすべてなくなります。</p>
-    <p class="rp">最上段で番を終えるとそのレーンを獲得し、以後は誰も置けません。3本獲得した人が勝ちです。</p>
-    <p class="rp">レーンの長さ：2・12は3マス、3・11は5、4・10は7、5・9は9、6・8は11、7は13。</p></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openGameRules("cs");
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await csSave(g, { status: "aborted" }, "対戦が中止されました"); closeCs(); };
 }
 async function csRoll(g){
@@ -3944,6 +4136,7 @@ function openSbNew(){
   let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 6), rounds = 3;
   const s = openSheet("セブンブリッジを始める", `
     <p class="note">同じ数字や同じマークの連番をそろえて公開し、手札を早くなくした人がラウンドの勝ち。残った手札は失点。決めたラウンド数の合計点で競います（2〜6人）。</p>
+    <button type="button" class="grbtn" data-grule="sb">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="bOrder" class="norder"></div><button class="shufbtn" id="bShuf">順番をシャッフル</button></div>
     <div class="f"><span>ラウンド数</span><div class="chips">${[1, 3, 5, 7].map(n => `<button type="button" data-rd="${n}" aria-pressed="${n === rounds}">${n}回</button>`).join("")}</div></div>
@@ -3985,15 +4178,15 @@ function drawSb(){
   let mid = `<div class="sbmid"><div class="sbpile"><div class="deckc"><span>山札</span><b class="num">${(g.deck || []).length}</b></div><div class="disc">${top ? sbCardHtml(top) : `<span class="pcd empty">捨て札</span>`}<small>捨て札</small></div></div></div>`;
   let claimBar = "";
   if (cl && g.status === "playing"){
-    const canPon = hand && cl.from !== me && sbPonCards(hand, cl.card) && !(cl.claims || []).some(x => x.pid === me);
-    const canChi = hand && sbNext(g, cl.from) === me && sbChiCards(hand, cl.card) && !(cl.claims || []).some(x => x.pid === me);
+    const canPon = hand && hand.length >= 3 && cl.from !== me && sbPonCards(hand, cl.card) && !(cl.claims || []).some(x => x.pid === me);
+    const canChi = hand && hand.length >= 3 && sbNext(g, cl.from) === me && sbChiCards(hand, cl.card) && !(cl.claims || []).some(x => x.pid === me);
     claimBar = `<div class="sbclaim"><span>${esc(pname(cl.from))}が${sbCardHtml(cl.card)}を捨てた</span><em class="num">${left}</em>
       ${canPon ? `<button class="nb pon" id="bPon">ポン</button>` : ""}${canChi ? `<button class="nb chi" id="bChi">チー</button>` : ""}
       ${(cl.claims || []).map(x => `<small style="--pc:${pcolor(x.pid)}">${esc(pname(x.pid))}：${x.type === "pon" ? "ポン" : "チー"}！</small>`).join("")}</div>`;
   }
   let bottom = "";
   if (g.status === "playing"){
-    const who = cl ? "ポン・チーの受付中…" : myTurn ? (t.phase === "draw" ? `${turnName(t.pid, true)}山札から引こう` : `<b class="tn">あなた</b>：役を公開・付け札して、1枚捨てよう`) : turnName(t.pid, false);
+    const who = cl ? "ポン・チーの受付中…" : myTurn ? (t.phase === "draw" ? `${turnName(t.pid, true)}山札から引こう` : (sbSel.length === 1 ? `<b class="tn">あなた</b>：「捨てて終了」で番を終える` : `<b class="tn">あなた</b>：いらないカードを1枚選んで捨てよう`)) : turnName(t.pid, false);
     bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span></div>`;
     if (hand){
       bottom += `<div class="sbhand">${hand.map(c => `<button class="hc ${sbSel.includes(c) ? "sel" : ""}" data-hc="${c}">${sbCardHtml(c)}</button>`).join("")}</div>`;
@@ -4001,7 +4194,7 @@ function drawSb(){
       else if (myTurn && t.phase === "play"){
         const canMeld = sbSel.length && sbMeld(sbSel) && hand.length - sbSel.length >= 1;
         const canAtt = sbSel.length === 1 && opened(me) && hand.length >= 2;
-        bottom += `<div class="nbtns three"><button class="nb draw" id="bMeld" ${canMeld ? "" : "disabled"}>公開</button><button class="nb draw ${sbAttachMode ? "on" : ""}" id="bAtt" ${canAtt ? "" : "disabled"}>${sbAttachMode ? "付ける役をタップ" : "付け札"}</button><button class="nb end" id="bDisc" ${sbSel.length === 1 ? "" : "disabled"}>捨てる</button></div>`;
+        bottom += `<div class="nbtns three"><button class="nb draw" id="bMeld" ${canMeld ? "" : "disabled"}>公開</button><button class="nb draw ${sbAttachMode ? "on" : ""}" id="bAtt" ${canAtt ? "" : "disabled"}>${sbAttachMode ? "付ける役をタップ" : "付け札"}</button><button class="nb end ${sbSel.length === 1 ? "go" : ""}" id="bDisc" ${sbSel.length === 1 ? "" : "disabled"}>${sbSel.length > 1 ? "1枚だけ選ぶ" : "捨てて終了"}</button></div>`;
       } else bottom += `<div class="nwait">${cl ? "" : "ほかの人の番です"}</div>`;
     } else bottom += `<div class="nwait">観戦中</div>`;
   }
@@ -4009,7 +4202,7 @@ function drawSb(){
   if (g.status === "round_over" || g.status === "finished"){
     const rr = g.round_result || {}, fin = g.status === "finished";
     const best = fin ? g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0))[0] : rr.winner;
-    over = `<div class="nover" style="--c:${pcolor(best)}"><span class="ob"></span><div class="k">${fin ? "最終結果" : `第${g.round}ラウンド`}</div><div class="p">${esc(pname(best))}</div>
+    over = `<div class="nover" style="--c:${best ? pcolor(best) : "#8A8FA3"}"><span class="ob"></span><div class="k">${fin ? "最終結果" : `第${g.round}ラウンド`}</div><div class="p">${best ? esc(pname(best)) : "流局"}</div>
       <div class="sbres">${g.players.map(p => `<span style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><em>${rr.pen && rr.pen[p] ? `−${rr.pen[p]}` : p === rr.winner ? "上がり" : "0"}</em><strong class="num">${g.scores[p] || 0}点</strong></span>`).join("")}</div>
       <div class="btns">${fin ? `<button class="btn" id="bClose2">閉じる</button>` : `<button class="btn" id="bNext">次のラウンドへ</button>`}</div></div>`;
   }
@@ -4042,20 +4235,18 @@ function drawSb(){
 }
 function sbMenu(g){
   const s = openSheet("セブンブリッジのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
-  s.querySelector('[data-x="rule"]').onclick = () => openSheet("セブンブリッジのルール", `<div class="rules">
-    <p class="rp">7枚ずつ配り、自分の番に山札から1枚引いて、いらないカードを1枚捨てます。</p>
-    <p class="rp">役：同じ数字3枚以上、同じマークの連番3枚以上（K-Aはつながらない）。7は1枚でも、6-7・7-8の同じマークなら2枚でも公開できます。ジョーカーは何にでもなります（7の代わりに1枚では出せない）。</p>
-    <p class="rp">ポン：誰かが捨てたカードで同じ数字3枚ができるなら、誰でももらって公開できます。チー：前の人が捨てたカードで連番3枚ができるなら、次の人がもらって公開できます。どちらもポンが優先。もらったら1枚捨て、その左隣の人の番になります。</p>
-    <p class="rp">役を公開した人は、自分の番に、場の役（誰のものでも）へ手札を付け札できます。</p>
-    <p class="rp">上がりは必ず最後の1枚を捨てて上がります（公開・付け札・ポン・チーでは上がれない）。</p>
-    <p class="rp">失点：A・J・Q・Kは10点、2〜10は数字どおり。7が残ると1枚ごとに2倍、ジョーカーが残ると5倍。</p></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openGameRules("sb");
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await sbSave(g, { status: "aborted", claim: null }, "対戦が中止されました"); closeSb(); };
 }
 async function sbDraw(g){
   const t = g.turn; if (t.pid !== me || t.phase !== "draw" || g.claim) return;
   let deck = (g.deck || []).slice(), discard = (g.discard || []).slice();
   if (!deck.length){ const keep = discard.pop(); deck = shuffle(discard); discard = keep ? [keep] : []; toast("山札を切り直しました"); }
-  if (!deck.length){ toast("引けるカードがありません"); return; }
+  if (!deck.length){
+    const fin = g.round >= g.rounds;
+    await sbSave(g, { claim: null, status: fin ? "finished" : "round_over", round_result: { winner: null, pen: {} }, winner: fin ? g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0))[0] : null }, "山札がなくなったので流局（このラウンドは失点なし）");
+    return;
+  }
   const c = deck.shift();
   await sbSave(g, { deck, discard, hands: { ...g.hands, [me]: [...g.hands[me], c] }, turn: { pid: me, phase: "play" } });
 }
@@ -4105,7 +4296,7 @@ async function sbResolve(g){
     return;
   }
   const hand = g.hands[who.pid] || [];
-  const use = who.type === "pon" ? sbPonCards(hand, cl.card) : sbChiCards(hand, cl.card);
+  const use = hand.length >= 3 && (who.type === "pon" ? sbPonCards(hand, cl.card) : sbChiCards(hand, cl.card));
   if (!use){ await sbSave(g, { claim: null }, null); return; }
   const m = sbMeld([...use, cl.card]);
   if (!m){ await sbSave(g, { claim: null }, null); return; }
