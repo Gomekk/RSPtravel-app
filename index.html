@@ -759,7 +759,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .skb{min-width:40px;height:40px;padding:0 6px;border-radius:10px;font-family:var(--disp);font-weight:400;font-size:19px;background:#fff;border:2px solid var(--ink);box-shadow:0 3px 0 var(--ink);color:var(--ink)}
 .skb:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
 .skbids.sm{gap:3px}.skbids.sm .skb{min-width:30px;height:36px;padding:0 3px;font-size:15px;border-radius:8px}
-.skb.max{background:linear-gradient(160deg,#FF8FA0,#E2364F);color:#fff;-webkit-text-stroke:.5px var(--ink)}
+.skb.sel,.skb.max.sel{background:linear-gradient(160deg,#FF8FA0,#E2364F);color:#fff;-webkit-text-stroke:.5px var(--ink)}
+.skb.max{}
 .sklost{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:900;padding:4px 10px;border-radius:10px;background:#FFF0F2;border:1.5px solid var(--crimson);white-space:nowrap}
 .gr .skset{display:flex;align-items:center;justify-content:center;gap:3px;font-size:12.5px;white-space:nowrap}
 .gr .skset .skd{--sz:28px;border-width:2px;box-shadow:0 2px 0 var(--ink)}
@@ -4844,8 +4845,8 @@ function openSkNew(){
     if (res){ await loadTable("sk_games"); closeSheet(); openSk(res.id); order.forEach(p => pushCall({ type: "game_turn", game: "スカル", to: p })); }
   };
 }
-let skId = null, skBusy = false, skSel = null, skSelIdx = -1, skPrev = null;
-function openSk(id){ skId = id; skSel = null; skPrev = null; $("#skg").hidden = false; document.body.style.overflow = "hidden"; drawSk(); }
+let skId = null, skBusy = false, skSel = null, skSelIdx = -1, skBidSel = null, skPrev = null;
+function openSk(id){ skId = id; skSel = null; skBidSel = null; skPrev = null; $("#skg").hidden = false; document.body.style.overflow = "hidden"; drawSk(); }
 function closeSk(){ skId = null; $("#skg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
@@ -5090,9 +5091,11 @@ function drawSk(){
       else if (mt && (ph === "place" || ph === "bid")){
         const lo = (bid ? bid.n : 0) + 1;
         const nums = Array.from({ length: Math.max(0, total - lo + 1) }, (_, i) => lo + i);
-        bottom += `<div class="skbids ${nums.length > 8 ? "sm" : ""}">${nums.map(v => `<button class="skb ${v === total ? "max" : ""}" data-bid="${v}">${v}</button>`).join("")}</div>`;
-        if (ph === "place") bottom += `<div class="nbtns one"><button class="nb end ${skSel ? "go" : ""}" id="kPlace" ${skSel && hand.length ? "" : "disabled"}>${!hand.length ? "置けないので宣言しよう" : skSel ? `${skSel === "S" ? "ドクロ" : "花"}をもう1枚伏せる` : "伏せるなら手元から選ぶ"}</button></div>`;
-        else bottom += `<div class="nbtns one"><button class="nb lose" id="kPass">パス（このラウンドは降りる）</button></div>`;
+        if (skBidSel != null && !nums.includes(skBidSel)) skBidSel = null;
+        bottom += `<div class="skbids ${nums.length > 8 ? "sm" : ""}">${nums.map(v => `<button class="skb ${v === total ? "max" : ""} ${skBidSel === v ? "sel" : ""}" data-bid="${v}">${v}</button>`).join("")}</div>`;
+        const decl = `<button class="nb end ${skBidSel != null ? "go" : ""}" id="kBid" ${skBidSel != null ? "" : "disabled"}>${skBidSel != null ? `「${skBidSel}枚」${bid ? "上乗せ" : "宣言"}` : `数字を選んで${bid ? "上乗せ" : "宣言"}`}</button>`;
+        if (ph === "place") bottom += `<div class="nbtns two"><button class="nb draw ${skSel ? "go" : ""}" id="kPlace" ${skSel && hand.length ? "" : "disabled"}>${!hand.length ? "置けるディスクなし" : skSel ? `${skSel === "S" ? "ドクロ" : "花"}を伏せる` : "手元を選んで伏せる"}</button>${decl}</div>`;
+        else bottom += `<div class="nbtns two"><button class="nb lose" id="kPass">パス（降りる）</button>${decl}</div>`;
       }
     }
     if (ph === "result" && playing) bottom += `<div class="nbtns one"><button class="nb end big2 go" id="kNext">次のラウンドへ</button></div>`;
@@ -5112,7 +5115,8 @@ function drawSk(){
   on("kPlace", act(async () => { const d = skSel; skSel = null; skSelIdx = -1; if (d) await skPlace(d); }));
   on("kPass", act(skPass)); on("kNext", act(skNextRound));
   el.querySelectorAll("[data-hd]").forEach(b => b.onclick = () => { const i = Number(b.dataset.hi); if (skSelIdx === i){ skSel = null; skSelIdx = -1; } else { skSel = b.dataset.hd; skSelIdx = i; } drawSk(); });
-  el.querySelectorAll("[data-bid]").forEach(b => b.onclick = act(() => skBid(Number(b.dataset.bid))));
+  el.querySelectorAll("[data-bid]").forEach(b => b.onclick = () => { const v = Number(b.dataset.bid); skBidSel = skBidSel === v ? null : v; drawSk(); });
+  on("kBid", act(async () => { const v = skBidSel; skBidSel = null; if (v != null) await skBid(v); }));
   el.querySelectorAll("[data-flip]").forEach(b => b.onclick = act(() => skFlip(b.dataset.flip)));
 }
 function skMenu(g){
