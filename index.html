@@ -800,6 +800,55 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sbfx.sk-out .tx small{background:#5A5F73}
 .arena.skg.quake2{animation:quake2 .9s cubic-bezier(.36,.07,.19,.97)}
 .arena.skg.quake{animation:quake .6s cubic-bezier(.36,.07,.19,.97)}
+/* スカル：リアルなディスク・背景の動き・PASS・S */
+.coin{position:absolute;left:calc(50% + var(--jx,0px));bottom:calc(var(--i) * 9px);width:38px;height:38px;margin-left:-19px;border-radius:50%;border:2px solid var(--ink);transform:rotate(var(--r,0deg));
+  background:radial-gradient(circle at 35% 28%,color-mix(in srgb,var(--pc) 40%,#fff),var(--pc) 48%,color-mix(in srgb,var(--pc) 55%,#1B1838));
+  box-shadow:0 2px 0 color-mix(in srgb,var(--pc) 60%,#1B1838),0 4px 0 color-mix(in srgb,var(--pc) 40%,#1B1838),0 6px 0 var(--ink),0 8px 9px rgba(0,0,0,.5)}
+.coin::after{content:"";position:absolute;inset:18%;border-radius:50%;border:2px dashed rgba(255,255,255,.6)}
+.coin::before{content:"";position:absolute;left:14%;top:10%;width:40%;height:22%;border-radius:50%;background:rgba(255,255,255,.45);filter:blur(1px)}
+.skm .stk{width:44px;height:44px;margin-top:4px}
+.skm .stk .coin:last-child{animation:coinin .45s cubic-bezier(.2,1.6,.4,1)}
+@keyframes coinin{from{transform:translateY(-30px) rotate(var(--r,0deg)) scale(1.2);opacity:0}}
+.skm .myf{position:absolute;right:-16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1px;z-index:3}
+.skm .myf i{font-style:normal;font-size:12px;line-height:1;width:17px;height:17px;display:grid;place-items:center;border-radius:50%;background:#fff;border:1.5px solid var(--ink)}
+.skm .smk,.sS{display:inline-grid;place-items:center;font-family:var(--disp);font-weight:400;color:var(--ink);background:var(--metal);border:1.5px solid var(--ink);border-radius:50%}
+.skm .smk{position:absolute;left:-8px;top:-8px;width:22px;height:22px;font-size:12px;z-index:3;box-shadow:0 0 10px #FFD84A}
+.sS{width:14px;height:14px;font-size:8.5px;margin-right:2px;vertical-align:1px}
+.skm .wm{right:-10px;top:-10px;font-size:13px;white-space:nowrap}
+.skm.passed .mat{filter:grayscale(.85) brightness(.7);border-style:dashed}
+.skm .pst{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%) rotate(-18deg);font-family:var(--disp);font-weight:400;font-size:15px;letter-spacing:.06em;color:#fff;padding:1px 7px;border:2.5px solid #fff;border-radius:6px;background:rgba(90,99,120,.85);box-shadow:0 0 0 2px var(--ink);filter:none}
+.skm.passed .nm{opacity:.6}
+.sktable .skrays{position:absolute;left:50%;top:50%;width:180%;height:180%;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(178,58,90,.10) 0 8deg,transparent 8deg 20deg);animation:spinc 40s linear infinite;pointer-events:none}
+.sktable .skfog{position:absolute;width:70%;height:50%;left:-10%;top:10%;border-radius:50%;background:radial-gradient(circle,rgba(178,108,200,.22),transparent 65%);filter:blur(8px);animation:fogm 14s ease-in-out infinite alternate;pointer-events:none}
+.sktable .skfog.f2{left:40%;top:50%;background:radial-gradient(circle,rgba(226,54,79,.18),transparent 65%);animation-duration:18s;animation-direction:alternate-reverse}
+@keyframes fogm{to{transform:translate(35%,25%) scale(1.3)}}
+.sktable .emb2{position:absolute;bottom:-10px;width:calc(5px * var(--s));height:calc(5px * var(--s));border-radius:50%;background:radial-gradient(circle,#FFE38A,#FF8A3D 60%,transparent 70%);box-shadow:0 0 6px #FF8A3D;animation:embrise var(--t) linear var(--d) infinite;pointer-events:none;opacity:.8}
+@keyframes embrise{0%{transform:translate(0,0);opacity:0}10%{opacity:.9}100%{transform:translate(30px,-110%);opacity:0}}
+.sktable .emb2{bottom:0}
+.sktable>.skm,.sktable>.skc{z-index:2}
+/* PASS演出 */
+.sbfx.sk-pass .pwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,rgba(200,205,220,.55),rgba(60,66,90,.55));animation:wash 1.5s forwards}
+.sbfx .pstamp{font-family:var(--disp);font-weight:400;font-size:min(22vw,96px);line-height:1;letter-spacing:.06em;color:#5A6378;padding:6px 22px;border:7px solid #5A6378;border-radius:16px;background:rgba(255,255,255,.9);transform:rotate(-12deg);box-shadow:0 8px 0 rgba(27,24,56,.6);animation:stampin .5s cubic-bezier(.2,1.8,.4,1) both}
+@keyframes stampin{0%{transform:rotate(-30deg) scale(3);opacity:0}60%{transform:rotate(-8deg) scale(.9);opacity:1}100%{transform:rotate(-12deg) scale(1)}}
+/* 全員セット */
+.sbfx .rrow{position:relative;z-index:2;display:flex;gap:8px;margin-bottom:14px}
+.sbfx .rrow .coin,.sbfx .lrow .coin{position:relative;left:auto;bottom:auto;margin:0;width:46px;height:46px}
+.sbfx .rrow .coin{animation:rdrop .6s cubic-bezier(.3,1.6,.5,1) var(--dd) both}
+@keyframes rdrop{0%{transform:translateY(-70vh) rotate(-200deg)}100%{transform:none}}
+.sbfx.sk-ready{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sbfx.sk-ready .tx b{font-size:min(14vw,60px);color:#FFE38A}
+/* ランダム没収 */
+.sbfx.sk-lose{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sbfx.sk-lose .gloom{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,rgba(90,10,22,.55),rgba(10,4,16,.85))}
+.sbfx .lrow{position:relative;z-index:2;display:flex;gap:12px;margin-bottom:18px}
+.sbfx .lrow .coin{width:58px;height:58px;animation:lshuf 1s ease-in-out both,ldim .3s 1.05s forwards}
+.sbfx .lrow .coin.pick{z-index:3;animation:lshuf 1s ease-in-out both,lpick .5s 1.05s cubic-bezier(.2,1.6,.4,1) forwards,lgone .7s 2.2s ease-in forwards}
+@keyframes lshuf{20%{transform:translateX(var(--a))}40%{transform:translateX(var(--b))}60%{transform:translateX(var(--a2))}80%{transform:translateX(var(--b2))}}
+@keyframes ldim{to{opacity:.3;filter:grayscale(1)}}
+@keyframes lpick{to{transform:translateY(-46px) scale(1.3);box-shadow:0 0 0 4px #FFE38A,0 0 30px #FFE38A}}
+@keyframes lgone{0%{transform:translateY(-46px) scale(1.3)}100%{transform:translateY(-220px) scale(.2) rotate(540deg);opacity:0}}
+.sbfx .lrow .coin .face{position:absolute;inset:-2px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:900;color:#fff;background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26);border:2px solid var(--ink);opacity:0;z-index:2;animation:lface .3s 1.55s forwards}
+@keyframes lface{0%{opacity:0;transform:rotateY(90deg)}100%{opacity:1;transform:none}}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -4648,7 +4697,7 @@ const skAliveP = (g, p) => skOwn(g, p).length > 0;
 const skAlive = g => g.players.filter(p => skAliveP(g, p));
 const skHand = (g, p) => { const own = skOwn(g, p).slice(); skStack(g, p).forEach(d => { const i = own.indexOf(d); if (i >= 0) own.splice(i, 1); }); return own; };
 const skTotal = g => g.players.reduce((s, p) => s + skStack(g, p).length, 0);
-const skFace = d => d === "S" ? "💀" : "🌹";
+const skFace = d => d === "S" ? "💀" : "🌸";
 function skNext(g, pid, skipPassed){
   const n = g.players.length; let i = g.players.indexOf(pid);
   for (let k = 0; k < n; k++){ i = (i + 1) % n; const p = g.players[i]; if (p !== pid && skAliveP(g, p) && !(skipPassed && (g.passed || []).includes(p))) return p; }
@@ -4699,7 +4748,7 @@ function openSkNew(){
     if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
     const row = { trip_id: t ? t.id : null, status: "playing", players: order, phase: "setup", round: 1,
       discs: Object.fromEntries(order.map(id => [id, ["F", "F", "F", "S"]])), wins: {}, stacks: {}, passed: [], bid: null, ch: null, result: null,
-      turn: { pid: order[0] }, created_by: me || null,
+      turn: { pid: order[0], start: order[0] }, created_by: me || null,
       log: [{ t: new Date().toISOString(), m: `対戦スタート。全員1枚伏せてください（最初の番は${pname(order[0])}）` }] };
     const res = await q(sb.from("sk_games").insert(row).select().single(), "作成");
     if (res){ await loadTable("sk_games"); closeSheet(); openSk(res.id); order.forEach(p => pushCall({ type: "game_turn", game: "スカル", to: p })); }
@@ -4726,7 +4775,7 @@ function skPlace(d){
     }
     if (g.phase !== "place" || g.turn.pid !== me) return null;
     const nx = skNext(g, me, false);
-    return { patch: { stacks, turn: { pid: nx } }, log: `${pname(me)}がもう1枚伏せた → ${pname(nx)}の番`, push: [nx] };
+    return { patch: { stacks, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}がもう1枚伏せた → ${pname(nx)}の番`, push: [nx] };
   });
 }
 function skBid(n){
@@ -4739,7 +4788,7 @@ function skBid(n){
     if (n === total){ lines.push(`${pname(me)}のチャレンジ開始！${n}枚めくる`); return { patch: skStartChallenge(g, me, n, { passed }), log: lines }; }
     const g2 = { ...g, passed }, nx = skNext(g2, me, true);
     if (nx === me){ lines.push(`${pname(me)}のチャレンジ開始！${n}枚めくる`); return { patch: skStartChallenge(g, me, n, { passed }), log: lines }; }
-    return { patch: { phase: "bid", bid: { n, pid: me }, passed, turn: { pid: nx } }, log: lines, push: [nx] };
+    return { patch: { phase: "bid", bid: { n, pid: me }, passed, turn: { ...g.turn, pid: nx } }, log: lines, push: [nx] };
   });
 }
 function skPass(){
@@ -4747,7 +4796,7 @@ function skPass(){
     if (g.status !== "playing" || g.phase !== "bid" || g.turn.pid !== me || !g.bid || g.bid.pid === me) return null;
     const passed = [...(g.passed || []), me], g2 = { ...g, passed }, nx = skNext(g2, me, true);
     if (nx === g.bid.pid) return { patch: skStartChallenge(g, g.bid.pid, g.bid.n, { passed }), log: [`${pname(me)}：パス`, `${pname(g.bid.pid)}のチャレンジ開始！${g.bid.n}枚めくる`], push: [g.bid.pid] };
-    return { patch: { passed, turn: { pid: nx } }, log: `${pname(me)}：パス → ${pname(nx)}の番`, push: [nx] };
+    return { patch: { passed, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}：パス → ${pname(nx)}の番`, push: [nx] };
   });
 }
 function skFlip(owner){
@@ -4768,30 +4817,30 @@ function skFlip(owner){
       const result = { type: "fail", pid: me, by: owner, lost, out: !mine.length };
       if (alive.length <= 1){ lines.push(`${pname(alive[0])}が最後の1人！優勝！`); return { patch: { discs, ch: { ...ch, fc, flips }, result, phase: "result", status: "finished", winner: alive[0] || null }, log: lines }; }
       const starter = owner !== me && skAliveP(g2, owner) ? owner : skAliveP(g2, me) ? me : skNext(g2, me, false);
-      return { patch: { discs, ch: { ...ch, fc, flips }, result, phase: "result", turn: { pid: starter } }, log: lines };
+      return { patch: { discs, ch: { ...ch, fc, flips }, result, phase: "result", turn: { pid: starter, start: starter } }, log: lines };
     }
     const done = flips.length >= ch.need;
-    if (!done) return { patch: { ch: { ...ch, fc, flips } }, log: `${pname(me)}：${whose}の🌹（${flips.length}/${ch.need}）` };
+    if (!done) return { patch: { ch: { ...ch, fc, flips } }, log: `${pname(me)}：${whose}の🌸（${flips.length}/${ch.need}）` };
     const wins = { ...(g.wins || {}), [me]: ((g.wins || {})[me] || 0) + 1 }, fin = wins[me] >= 2;
-    const lines = [`${pname(me)}：${whose}の🌹（${flips.length}/${ch.need}）`, `${pname(me)}のチャレンジ成功！${fin ? "2勝目で優勝！" : "1勝目"}`];
-    return { patch: { ch: { ...ch, fc, flips }, wins, result: { type: "success", pid: me }, phase: "result", turn: { pid: me }, ...(fin ? { status: "finished", winner: me } : {}) }, log: lines };
+    const lines = [`${pname(me)}：${whose}の🌸（${flips.length}/${ch.need}）`, `${pname(me)}のチャレンジ成功！${fin ? "2勝目で優勝！" : "1勝目"}`];
+    return { patch: { ch: { ...ch, fc, flips }, wins, result: { type: "success", pid: me }, phase: "result", turn: { pid: me, start: me }, ...(fin ? { status: "finished", winner: me } : {}) }, log: lines };
   });
 }
 function skNextRound(){
   return skCommit(skId, g => {
     if (g.status !== "playing" || g.phase !== "result") return null;
     const st = g.turn.pid, n = (g.round || 1) + 1;
-    return { patch: { phase: "setup", round: n, stacks: {}, passed: [], bid: null, ch: null, result: null, turn: { pid: st } },
+    return { patch: { phase: "setup", round: n, stacks: {}, passed: [], bid: null, ch: null, result: null, turn: { pid: st, start: st } },
       log: `第${n}ラウンド。全員1枚伏せてください（最初の番は${pname(st)}）`, push: skAlive(g) };
   });
 }
 
 /* ---- 演出（ログの変化を見て全員の画面で再生） ---- */
-function skFx(kind, pid, big, small){
+function skFx(kind, pid, big, small, extra){
   const pc = pid ? pcolor(pid) : "#E2364F", rnd = (a, b) => a + Math.random() * (b - a);
   const burst = (n, chars, dist = 260) => Array.from({ length: n }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(90, dist); return `<i class="su" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d - 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;--c:#fff;--d:${rnd(0, .25).toFixed(2)}s;--s:${rnd(.6, 1.4).toFixed(2)};-webkit-text-stroke:0">${chars[i % chars.length]}</i>`; }).join("");
   const rings = n => Array.from({ length: n }, (_, i) => `<span class="rg" style="--d:${(i * .16).toFixed(2)}s;--rc:${[pc, "#FFE38A", "#FF8FA0"][i % 3]}"></span>`).join("");
-  const ms = { skull: 2800, chal: 2300, succ: 2700, rose: 1100, bid: 1100, pass: 900, out: 2200 }[kind] || 1400;
+  const ms = { skull: 2800, chal: 2300, succ: 2700, rose: 1100, bid: 1100, pass: 1500, out: 2200, ready: 2400, lose: 3100 }[kind] || 1400;
   let html = "";
   if (kind === "skull"){
     const cracks = Array.from({ length: 12 }, (_, i) => { const a = i / 12 * Math.PI * 2 + rnd(-.2, .2); let x = 50, y = 46, d = `M${x} ${y}`; for (let k = 0; k < 4; k++){ x += Math.cos(a + rnd(-.5, .5)) * rnd(8, 16); y += Math.sin(a + rnd(-.5, .5)) * rnd(8, 16); d += ` L${x.toFixed(1)} ${y.toFixed(1)}`; } return `<path d="${d}"/>`; }).join("");
@@ -4800,22 +4849,30 @@ function skFx(kind, pid, big, small){
   } else if (kind === "chal"){
     html = `<span class="spot"></span><span class="speed"></span>${rings(2)}<div class="tx"><b>CHALLENGE!!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "succ"){
-    const rain = Array.from({ length: 70 }, () => `<i class="rain c" style="--x:${rnd(-3, 100).toFixed(1)}vw;--c:transparent;--s:${rnd(.8, 1.6).toFixed(2)};--d:${rnd(0, 1.2).toFixed(2)}s;--t:${rnd(2, 3).toFixed(2)}s;--sw:${rnd(-40, 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;border:0;font-size:${rnd(16, 28).toFixed(0)}px;font-style:normal;width:auto;height:auto">🌹</i>`).join("");
-    html = `<span class="fl"></span><span class="bg"></span><span class="rays"></span>${rings(3)}${rain}${burst(24, ["🌹", "✨", "🌸"], 300)}<div class="tx"><b>成功!!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
+    const rain = Array.from({ length: 70 }, () => `<i class="rain c" style="--x:${rnd(-3, 100).toFixed(1)}vw;--c:transparent;--s:${rnd(.8, 1.6).toFixed(2)};--d:${rnd(0, 1.2).toFixed(2)}s;--t:${rnd(2, 3).toFixed(2)}s;--sw:${rnd(-40, 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;border:0;font-size:${rnd(16, 28).toFixed(0)}px;font-style:normal;width:auto;height:auto">🌸</i>`).join("");
+    html = `<span class="fl"></span><span class="bg"></span><span class="rays"></span>${rings(3)}${rain}${burst(24, ["🌸", "✨", "💮"], 300)}<div class="tx"><b>成功!!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "rose"){
-    html = `<span class="bg"></span>${rings(1)}${burst(14, ["🌹", "🌸", "✨"], 200)}<div class="tx"><b>🌹 SAFE</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
+    html = `<span class="bg"></span>${rings(1)}${burst(14, ["🌸", "💮", "✨"], 200)}<div class="tx"><b>🌸 SAFE</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "bid"){
     html = `<span class="bg"></span>${rings(1)}<div class="tx"><b>${esc(big)}</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "pass"){
-    html = `<div class="tx"><b>PASS</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
+    html = `<span class="pwash"></span>${burst(16, ["💨", "🏳️", "💨"], 230)}<div class="tx" style="animation:none"><div class="pstamp">PASS</div>${small ? `<div class="who"><i>●</i> ${esc(small)} は降りた</div>` : ""}</div>`;
+  } else if (kind === "ready"){
+    const cols = (extra && extra.cols) || [];
+    html = `<span class="bg"></span>${rings(2)}<div class="rrow">${cols.map((c, i) => `<span class="coin" style="--pc:${c};--dd:${(i * .12).toFixed(2)}s"></span>`).join("")}</div><div class="tx" style="animation-delay:${(.2 + cols.length * .12).toFixed(2)}s"><b>全員セット!</b>${small ? `<small><span class="sS">S</span> ${esc(small)}</small>` : ""}</div>`;
+  } else if (kind === "lose"){
+    const n = Math.max(1, (extra && extra.n) || 1), k = Math.floor(Math.random() * n), mine = extra && extra.mine;
+    const jit = () => `${(rnd(-1, 1) * 60).toFixed(0)}px`;
+    html = `<span class="gloom"></span><div class="lrow">${Array.from({ length: n }, (_, i) => `<span class="coin ${i === k ? "pick" : ""}" style="--pc:${pc};--a:${jit()};--b:${jit()};--a2:${jit()};--b2:${jit()}">${i === k ? `<span class="face">${mine ? skFace(extra.lost) : "?"}</span>` : ""}</span>`).join("")}</div>
+      <div class="tx" style="animation-delay:1s"><b>1枚没収!</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   } else if (kind === "out"){
     html = `<span class="gloom"></span><div class="tx"><b>脱落…</b>${small ? `<small>${esc(small)}</small>` : ""}</div>`;
   }
   document.querySelectorAll(".sbfx").forEach(x => x.remove());
   const fx = document.createElement("div"); fx.className = "sbfx sk-" + kind; fx.style.cssText = `--pc:${pc};--ms:${ms}ms`;
   fx.innerHTML = html; document.body.appendChild(fx);
-  if (kind === "skull" || kind === "chal"){ const q2 = kind === "skull" ? "quake2" : "quake", a = $("#skg"); if (a){ a.classList.remove(q2); void a.offsetWidth; a.classList.add(q2); setTimeout(() => a.classList.remove(q2), 950); } }
-  try { if (navigator.vibrate) navigator.vibrate(kind === "skull" ? [200, 60, 200, 60, 300] : kind === "succ" ? [60, 40, 60, 40, 160] : kind === "chal" ? [80, 40, 120] : 30); } catch (e) {}
+  if (kind === "skull" || kind === "chal" || kind === "pass"){ const q2 = kind === "skull" ? "quake2" : "quake", a = $("#skg"); if (a){ a.classList.remove(q2); void a.offsetWidth; a.classList.add(q2); setTimeout(() => a.classList.remove(q2), 950); } }
+  try { if (navigator.vibrate) navigator.vibrate(kind === "lose" ? [40, 40, 40, 40, 160] : kind === "ready" ? [60, 60, 60] : kind === "skull" ? [200, 60, 200, 60, 300] : kind === "succ" ? [60, 40, 60, 40, 160] : kind === "chal" ? [80, 40, 120] : 30); } catch (e) {}
   setTimeout(() => fx.remove(), ms);
 }
 function skDiff(g){
@@ -4825,7 +4882,7 @@ function skDiff(g){
   if (prev){
     const k = prev.lastT ? log.findIndex(x => x.t === prev.lastT) : -1;
     const lines = (k >= 0 ? log.slice(k + 1) : (last && last.t !== prev.lastT ? [last] : [])).map(x => x.m);
-    const rank = { win: 9, skull: 8, succ: 7, chal: 6, out: 5, bid: 4, rose: 3, pass: 2 };
+    const rank = { win: 9, skull: 8, succ: 7, chal: 6, ready: 5, out: 5, bid: 4, rose: 3, pass: 2 };
     lines.forEach(m => {
       const who = g.players.slice().sort((a, b) => pname(b).length - pname(a).length).find(p => m.startsWith(pname(p))) || null;
       let k2 = null;
@@ -4833,9 +4890,10 @@ function skDiff(g){
       else if (/ドクロをめくった/.test(m)) k2 = "skull";
       else if (/チャレンジ成功/.test(m)) k2 = "succ";
       else if (/チャレンジ開始/.test(m)) k2 = "chal";
+      else if (/全員そろった/.test(m)) k2 = "ready";
       else if (/脱落/.test(m)) k2 = "out";
       else if (/を宣言/.test(m)) k2 = "bid";
-      else if (/の🌹/.test(m)) k2 = "rose";
+      else if (/の(🌹|🌸)/.test(m)) k2 = "rose";
       else if (/：パス/.test(m)) k2 = "pass";
       if (k2 && (!fx || rank[k2] >= rank[fx.k])) fx = { k: k2, who, m };
     });
@@ -4845,7 +4903,12 @@ function skDiff(g){
   const nm = fx.who ? pname(fx.who) : "", ch = g.ch || {}, bid = g.bid || {};
   setTimeout(() => {
     if (fx.k === "win") sbFx("win", g.winner || fx.who, "", "", ["優", "勝"]);
-    else if (fx.k === "skull") skFx("skull", fx.who, "", `${nm} チャレンジ失敗`);
+    else if (fx.k === "skull"){
+      skFx("skull", fx.who, "", `${nm} チャレンジ失敗`);
+      const r = g.result;
+      if (r && r.type === "fail") setTimeout(() => skFx("lose", r.pid, "", r.out ? `${pname(r.pid)}…脱落` : `${pname(r.pid)} 残り${skOwn(g, r.pid).length}枚`, { n: skOwn(g, r.pid).length + 1, lost: r.lost, mine: r.pid === me }), 2700);
+    }
+    else if (fx.k === "ready") skFx("ready", (g.turn || {}).pid, "", `最初は${pname((g.turn || {}).pid)}`, { cols: skAlive(g).map(pcolor) });
     else if (fx.k === "succ") skFx("succ", fx.who, "", `${nm} ${((g.wins || {})[fx.who] || 0)}勝目！`);
     else if (fx.k === "chal") skFx("chal", fx.who, "", `${nm}が${ch.need || bid.n || ""}枚めくる`);
     else if (fx.k === "out") skFx("out", fx.who, "", nm);
@@ -4869,7 +4932,7 @@ function drawSk(){
   const seats = g.players.map(p => {
     const out = !skAliveP(g, p), on = playing && !out && (ph === "setup" ? !skStack(g, p).length : actor === p);
     const tag = (g.passed || []).includes(p) && ph === "bid" ? `<em class="tg no">PASS</em>` : bid && bid.pid === p && (ph === "bid" || ph === "challenge") ? `<em class="tg ok">宣言${bid.n}</em>` : "";
-    return `<div class="np ${on ? "on" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "setup" ? "待" : "今"}</em>` : ""}${tag}<b>${esc(pname(p))}</b><span class="skw">${[0, 1].map(i => `<i class="${wins(p) > i ? "on" : ""}"></i>`).join("")}<small>${out ? "脱落" : `●${skOwn(g, p).length}`}</small></span></div>`;
+    return `<div class="np ${on ? "on" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "setup" ? "待" : "今"}</em>` : ""}${tag}<b>${(t.start || null) === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw">${[0, 1].map(i => `<i class="${wins(p) > i ? "on" : ""}"></i>`).join("")}<small>${out ? "脱落" : `●${skOwn(g, p).length}`}</small></span></div>`;
   }).join(`<span class="nar">›</span>`);
   // テーブル（自分が手前になるよう円形に配置）
   const n = g.players.length, base = Math.max(0, g.players.indexOf(me));
@@ -4879,11 +4942,13 @@ function drawSk(){
     const x = 50 + Math.cos(a) * (n <= 2 ? 0 : 36), y = 50 + Math.sin(a) * (n <= 2 ? 34 : 35);
     const st = skStack(g, p), fcN = ch ? ((ch.fc || {})[p] || 0) : 0, down = st.slice(0, st.length - fcN);
     const flipped = ch ? (ch.flips || []).filter(f => f.o === p) : [];
-    const coins = down.map((d, j) => `<span class="skd back" style="--pc:${pcolor(p)};--i:${j}">${p === me ? `<u>${skFace(d)}</u>` : ""}</span>`).join("");
+    const coins = down.map((d, j) => `<span class="coin" style="--pc:${pcolor(p)};--i:${j};--r:${((j * 37 + i * 11) % 15) - 7}deg;--jx:${[0, 3, -3, 2, -2][j % 5]}px"></span>`).join("");
+    const faces = p === me && down.length ? `<span class="myf">${down.map(d => `<i>${skFace(d)}</i>`).reverse().join("")}</span>` : "";
+    const isStart = (t.start || null) === p, isPass = ph === "bid" && (g.passed || []).includes(p);
     const out = !skAliveP(g, p), on = playing && !out && actor === p;
-    return `<div class="skm ${canFlip(p) ? "can" : ""} ${on ? "on" : ""} ${out ? "out" : ""} ${wins(p) ? "won" : ""}" style="--x:${x.toFixed(1)}%;--y:${y.toFixed(1)}%;--pc:${pcolor(p)}" ${canFlip(p) ? `data-flip="${p}"` : ""}>
+    return `<div class="skm ${canFlip(p) ? "can" : ""} ${on ? "on" : ""} ${out ? "out" : ""} ${wins(p) ? "won" : ""} ${isPass ? "passed" : ""}" style="--x:${x.toFixed(1)}%;--y:${y.toFixed(1)}%;--pc:${pcolor(p)}" ${canFlip(p) ? `data-flip="${p}"` : ""}>
       ${flipped.length ? `<div class="flp">${flipped.map(f => skDisc(f.d, "mini")).join("")}</div>` : ""}
-      <div class="mat">${wins(p) ? `<span class="wm">🌹</span>` : ""}<div class="stk">${coins || (ph === "setup" && !out ? `<span class="wait">…</span>` : "")}</div>${down.length ? `<b class="cnt">${down.length}</b>` : ""}</div>
+      <div class="mat">${isStart ? `<span class="smk">S</span>` : ""}${wins(p) ? `<span class="wm">${"⭐".repeat(wins(p))}</span>` : ""}${isPass ? `<span class="pst">PASS</span>` : ""}${faces}<div class="stk" style="--n:${down.length}">${coins || (ph === "setup" && !out ? `<span class="wait">…</span>` : "")}</div>${down.length ? `<b class="cnt">${down.length}</b>` : ""}</div>
       <span class="nm">${esc(pname(p))}</span></div>`;
   }).join("");
   let center = "";
@@ -4892,7 +4957,7 @@ function drawSk(){
   else if (ph === "bid") center = `<small style="color:${pcolor(bid.pid)}">${esc(pname(bid.pid))}の宣言</small><b class="num bidn">${bid.n}</b><small>場 ${total}枚</small>`;
   else if (ph === "challenge") center = `<small>めくった</small><b class="num">${(ch.flips || []).length}<i>/${ch.need}</i></b><small style="color:${pcolor(ch.pid)}">${esc(pname(ch.pid))}</small>`;
   else if (ph === "result" && res) center = res.type === "success" ? `<b class="rs ok">成功!</b><small>${esc(pname(res.pid))}</small>` : `<b class="rs ng">💀</b><small>${esc(pname(res.pid))} 失敗</small>`;
-  const table = `<div class="sktable ${ph === "challenge" ? "chal" : ""} ${ph === "result" && res && res.type === "fail" ? "dead" : ""}">${mats}<div class="skc">${center}</div></div>`;
+  const table = `<div class="sktable ${ph === "challenge" ? "chal" : ""} ${ph === "result" && res && res.type === "fail" ? "dead" : ""}"><span class="skrays"></span><span class="skfog"></span><span class="skfog f2"></span>${Array.from({ length: 14 }, (_, i) => `<i class="emb2" style="left:${(i * 37 + 5) % 96}%;--d:-${(i * .7).toFixed(1)}s;--t:${(5 + (i % 4) * 1.5).toFixed(1)}s;--s:${(.6 + (i % 3) * .4).toFixed(1)}"></i>`).join("")}${mats}<div class="skc">${center}</div></div>`;
   // 下部
   let bottom = "";
   if (playing || ph === "result"){
@@ -4930,7 +4995,7 @@ function drawSk(){
   const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   let over = "";
   if (g.status === "finished") over = `<div class="nover" style="--c:${pcolor(g.winner)}"><span class="ob"></span><div class="k">優勝</div><div class="p">${esc(pname(g.winner))}</div><div class="y">${wins(g.winner) >= 2 ? "チャレンジ2回成功！" : "最後まで生き残った！"}</div><div class="btns"><button class="btn" id="kClose2">閉じる</button></div></div>`;
-  el.innerHTML = `<div class="nbg skbg" aria-hidden="true"><span class="nrays"></span>${["💀", "🌹", "💀", "🌹", "🦴", "🌹", "💀", "🥀"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${26 + (i % 3) * 18}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 36}px;--dy:-48px;--rot:${i * 17 - 50}deg;opacity:.22">${x}</i>`).join("")}</div>
+  el.innerHTML = `<div class="nbg skbg" aria-hidden="true"><span class="nrays"></span>${["💀", "🌸", "💀", "🌸", "🦴", "🌸", "💀", "💮"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${26 + (i % 3) * 18}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 36}px;--dy:-48px;--rot:${i * 17 - 50}deg;opacity:.22">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt skt">SKULL</b><span class="nrd sbr"><small>ROUND</small><b>${g.round || 1}</b></span><span class="ndk"></span><button class="nmini" id="kMenu" aria-label="メニュー">…</button><button class="nmini" id="kClose" aria-label="閉じる">×</button></div>
     <div class="nseats2 ${g.players.length >= 5 ? "tight" : ""}">${seats}</div>
     ${table}
