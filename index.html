@@ -1121,7 +1121,11 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .meld{display:flex;gap:0;padding:3px 5px 3px 3px;border-radius:9px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 12%,#fff)}
 .meld .pcd{width:26px;height:38px;margin-right:-6px;border-width:1.5px}.meld .pcd b{font-size:12px}.meld .pcd i{font-size:11px}
 .meld .pcd:last-child{margin-right:0}
-.meld.pick{animation:pulse 1.2s ease-in-out infinite;border-style:dashed}
+.meld.pick{position:relative;z-index:2;border-style:solid;border-width:3px;border-color:#E8B12A;background:#FFF6D6!important;animation:mpick .9s ease-in-out infinite;cursor:pointer}
+.meld.pick::after{content:"ここに付ける";position:absolute;left:-2px;top:-12px;font-size:9px;font-weight:900;padding:1px 6px;border-radius:6px;background:var(--crimson);color:#fff;border:1.5px solid var(--ink);white-space:nowrap}
+@keyframes mpick{50%{transform:scale(1.08);box-shadow:0 0 0 4px rgba(255,227,138,.8),0 0 22px #FFE38A}}
+.meld.dim{opacity:.25!important;filter:grayscale(1);pointer-events:none}
+.sbz .zb:has(.pick){padding-top:16px}
 .meld:disabled{opacity:1}
 .sbmid{flex:none;display:flex;justify-content:center}
 .sbpile{display:flex;align-items:center;gap:16px}
@@ -4292,7 +4296,8 @@ function drawSb(){
   const opened = p => (g.melds || []).some(m => m.owner === p);
   const fresh = sbDiff(g);
   const seats = g.players.map(p => `<div class="np ${opened(p) ? "op" : "cl"} ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}${opened(p) ? `<em class="tg ok">✓公開済</em>` : `<em class="tg no">未公開</em>`}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚・${g.scores[p] || 0}点</small></div>`).join(`<span class="nar">›</span>`);
-  const meldBtn = (m, i) => `<button class="meld ${sbAttachMode ? "pick" : ""} ${fresh.has(i) ? "new" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${sbAttachMode ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`;
+  const canAttTo = m => sbAttachMode && sbSel.length === 1 && !!sbAttach(m, sbSel[0]);
+  const meldBtn = (m, i) => { const ok = canAttTo(m); return `<button class="meld ${ok ? "pick" : sbAttachMode ? "dim" : ""} ${fresh.has(i) ? "new" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${ok ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`; };
   const zones = g.players.map(p => {
     const ms = (g.melds || []).map((m, i) => m.owner === p ? meldBtn(m, i) : "").join(""), op = opened(p), on = t.pid === p && g.status === "playing";
     return `<div class="sbz ${op ? "op" : "cl"} ${on ? "on" : ""}" style="--pc:${pcolor(p)}"><div class="zh">${on ? `<em class="zt">今</em>` : ""}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚</small><em class="zs">${op ? "✓ OPEN" : "未公開"}</em></div><div class="zb">${ms || `<span class="zl"><i></i>まだ公開なし</span>`}</div></div>`;
@@ -4342,7 +4347,10 @@ function drawSb(){
   on("bClose", closeSb); on("bClose2", closeSb); on("bMenu", () => sbMenu(g));
   on("bDraw", act(sbDraw)); on("bDisc", act(sbDiscard)); on("bMeld", act(sbDoMeld)); on("bNext", act(sbNextRound));
   on("bPon", act(cur => sbClaim(cur, "pon"))); on("bChi", act(cur => sbClaim(cur, "chi")));
-  on("bAtt", () => { sbAttachMode = !sbAttachMode; drawSb(); });
+  on("bAtt", () => {
+    if (!sbAttachMode && !(g.melds || []).some(m => sbSel.length === 1 && sbAttach(m, sbSel[0]))){ toast("このカードを付けられる役はありません", 2200); return; }
+    sbAttachMode = !sbAttachMode; drawSb();
+  });
   el.querySelectorAll("[data-hc]").forEach(b => b.onclick = () => { const c = b.dataset.hc; sbSel = sbSel.includes(c) ? sbSel.filter(x => x !== c) : [...sbSel, c]; sbAttachMode = false; drawSb(); });
   el.querySelectorAll("[data-meld]").forEach(b => b.onclick = act(cur => sbDoAttach(cur, Number(b.dataset.meld))));
   // ポン・チーの受付時間が過ぎたら確定（次の人の端末、だめなら誰かの端末が処理）
