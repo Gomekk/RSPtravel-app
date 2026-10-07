@@ -1561,8 +1561,8 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kgback .kbr p u{text-decoration:none;font-weight:900;color:#C0392B}
 .kgback .kbr p b i{font-style:normal;font-size:9px;font-weight:900;padding:0 6px;border-radius:99px;background:#E4E0D8;color:#7A7268}
 .kgback .kbr p b i.on{background:#1E9E5A;color:#fff}
-.kgback .kbr.sub{grid-template-columns:1fr;padding-left:32px;border-top:0}
-.kgback .kbr.sub p{font-size:10.5px;color:#7A4A1A}
+.kgback .kbr.kbsub{grid-template-columns:1fr;padding-left:32px;border-top:0}
+.kgback .kbr.kbsub p{font-size:10.5px;color:#7A4A1A}
 .kgback .kbr.pir{padding-left:16px;grid-template-columns:22px 1fr}
 .kgback .kbr.pir em{font-size:11px;font-weight:900;width:20px;height:20px;line-height:17px;border-radius:50%;background:#FFE2D6;border:1.5px solid #C0392B;color:#6A1F0C}
 .kgc.sp-kra{--sc:#C04A9A;background:linear-gradient(170deg,#4A1A3A,#16060F);color:#FFB3D9}
@@ -1605,6 +1605,42 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .sbfx.kg-whale .bigt span{font-size:min(15vw,66px);line-height:1;color:#fff;-webkit-text-stroke-color:#0A3A5A}
 .sbfx.kg-whale .who{max-width:92vw;font-size:15px;white-space:normal;text-align:center}
 
+
+/* トリック獲得：勝者の席から衝撃波とコイン＋リボン */
+.sbfx.kg-trick .tglow{position:absolute;inset:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),var(--pcA,rgba(255,210,63,.5)),transparent 55%);animation:fadein .25s both}
+.sbfx .tban{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;max-width:86vw;padding:8px 28px 10px;border-radius:18px;background:var(--pc);border:3px solid var(--ink);box-shadow:0 6px 0 var(--ink),0 0 0 5px #FFE38A,0 0 40px rgba(255,210,63,.85);overflow:hidden;animation:tban 1.9s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes tban{0%{transform:scale(.2) rotate(-14deg);opacity:0}16%{transform:scale(1.14) rotate(3deg);opacity:1}26%{transform:scale(1) rotate(-2deg)}82%{transform:scale(1) rotate(-2deg);opacity:1}100%{transform:scale(.92) translateY(-26px) rotate(-2deg);opacity:0}}
+.sbfx .tban small{font-family:var(--disp);font-weight:400;font-size:15px;letter-spacing:.25em;color:#FFE38A;-webkit-text-stroke:1px var(--ink);paint-order:stroke fill}
+.sbfx .tban b{font-family:var(--disp);font-weight:400;font-size:min(12vw,48px);line-height:1.08;color:#fff;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;white-space:nowrap;max-width:76vw;overflow:hidden;text-overflow:ellipsis}
+.sbfx .tban em{font-style:normal;font-weight:900;font-size:13px;color:#fff;padding:1px 12px;border-radius:99px;background:rgba(0,0,0,.28);margin-top:3px}
+.sbfx .tban .shine{position:absolute;top:-30%;bottom:-30%;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.8),transparent);transform:skewX(-20deg);animation:tshine .9s .3s ease-in-out both}
+@keyframes tshine{from{left:-60%}to{left:130%}}
+.sbfx .tbn{position:absolute;z-index:3;left:50%;top:calc(50% + 62px);font-family:var(--disp);font-weight:400;font-size:46px;line-height:1;color:#FFE38A;-webkit-text-stroke:2.5px #3A1E0C;paint-order:stroke fill;animation:tbn 1.6s cubic-bezier(.2,1.8,.4,1) .3s both}
+@keyframes tbn{0%{transform:translateX(-50%) scale(0);opacity:0}22%{transform:translateX(-50%) scale(1.35);opacity:1}34%,82%{transform:translateX(-50%) scale(1);opacity:1}100%{transform:translateX(-50%) translateY(-22px);opacity:0}}
+.sbfx .tring{position:absolute;z-index:2;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:5px solid #FFE38A;box-shadow:0 0 18px #FFD23F,inset 0 0 12px #FFD23F;animation:tring .95s ease-out var(--d) both}
+@keyframes tring{0%{transform:scale(.2);opacity:1}100%{transform:scale(8);opacity:0}}
+.sbfx .tcoin{position:absolute;z-index:2;font-style:normal;font-size:calc(22px * var(--s));line-height:1;animation:tcoin 1.4s cubic-bezier(.2,.7,.4,1) var(--d) both}
+@keyframes tcoin{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}10%{opacity:1}55%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--x) * 1.15),calc(-50% + var(--y) + 170px)) rotate(var(--r));opacity:0}}
+/* ラウンド結果：1人ずつ判定、的中はハンコ＋紙吹雪、ハズレは揺れて沈む */
+.sbfx .rtab span{position:relative;overflow:visible}
+.sbfx .rtab span .stamp{position:absolute;left:40%;top:50%;font-style:normal;font-weight:900;font-size:15px;line-height:1;padding:4px 8px;border-radius:8px;border:3px solid #E2364F;color:#E2364F;background:rgba(255,255,255,.85);transform:translateY(-50%) rotate(-12deg);animation:stampin .4s cubic-bezier(.2,1.6,.4,1) calc(var(--d) + .35s) both}
+@keyframes stampin{0%{transform:translateY(-50%) rotate(-30deg) scale(3.2);opacity:0}60%{opacity:1;transform:translateY(-50%) rotate(-10deg) scale(.9)}100%{transform:translateY(-50%) rotate(-12deg) scale(1);opacity:1}}
+.sbfx .rtab span.rm .stamp{border-color:#9AA1B4;color:#7A8296;font-size:12px}
+.sbfx .rtab span.rh{animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both,rhpop 1.4s ease-out calc(var(--d) + .5s) both}
+@keyframes rhpop{0%{box-shadow:0 3px 0 var(--ink)}15%{transform:scale(1.07);box-shadow:0 3px 0 var(--ink),0 0 0 4px #FFE38A,0 0 26px #FFD23F}35%{transform:scale(1)}100%{box-shadow:0 3px 0 var(--ink),0 0 0 3px #FFE38A,0 0 14px rgba(255,210,63,.7)}}
+.sbfx .rtab span.rh b{animation:rhjump .6s cubic-bezier(.3,1.8,.5,1) calc(var(--d) + .55s) 2 both}
+@keyframes rhjump{50%{transform:translateY(-7px)}}
+.sbfx .rtab span.rm{animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both,rmshake .5s ease-in-out calc(var(--d) + .45s) both}
+@keyframes rmshake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}100%{filter:saturate(.5);opacity:.82}}
+.sbfx .rtab .rcw{position:absolute;left:30%;top:50%;width:0;height:0}
+.sbfx .rtab .rcf{position:absolute;left:0;top:0;width:calc(8px * var(--s));height:calc(12px * var(--s));border-radius:2px;background:var(--c);opacity:0;animation:rcf 1.3s cubic-bezier(.2,.8,.4,1) calc(var(--d) + .5s) both}
+@keyframes rcf{0%{transform:translate(0,0) rotate(0);opacity:1}55%{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:1}100%{transform:translate(calc(var(--x) * 1.1),calc(var(--y) + 90px)) rotate(var(--r));opacity:0}}
+.sbfx .rtab .rhit{align-self:center;margin-top:6px;font-weight:900;font-size:20px;color:#fff;padding:5px 18px;border-radius:99px;background:linear-gradient(90deg,#E2364F,#FF8A3D);border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);animation:chslam .5s cubic-bezier(.2,1.8,.4,1) var(--d) both}
+.sbfx .rtab .rhit b{font-family:var(--disp);font-weight:400;font-size:26px;color:#FFE38A}
+.sbfx .rtab .rhit.none{background:#7A8296;font-size:15px}
+.kgres2 span{position:relative}
+.kgres2 span.rh::after{content:"的中";position:absolute;right:44px;top:-7px;font-size:10px;font-weight:900;line-height:1;padding:2px 5px;border:2px solid #E2364F;border-radius:6px;color:#E2364F;background:rgba(255,255,255,.85);transform:rotate(-14deg)}
+.kgres2.late{animation-delay:var(--rd)}
 /* 表のボードは早見表がなくなった分、カードを大きく */
 .kgc.tb{width:42px;height:58px;border-radius:7px}
 .kgc.tb b{font-size:23px}.kgc.tb b.len2{font-size:19px}.kgc.tb .ci{font-size:9px;left:4px;top:3px}.kgc.tb .ci.br{right:4px;bottom:3px}
@@ -6498,7 +6534,7 @@ function openKgNew(){
   };
 }
 let kgFeltW = 0, kgFeltH = 0; addEventListener("resize", () => { kgFeltW = 0; if (kgId) drawKg(); }); let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
-let kgFlip = false, kgDisc = [], kgAbSel = null;
+let kgFlip = false, kgDisc = [], kgAbSel = null, kgResAt = 0;
 function openKg(id){ kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; kgFlip = false; kgDisc = []; kgAbSel = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
@@ -6625,7 +6661,8 @@ function kgCard(c, cls = "", extra = "", tg){
 /* ---- 演出 ---- */
 function kgFx(kind, opt = {}){
   const rnd = (a, b) => a + Math.random() * (b - a);
-  const ms = { yoho: 4600, trick: 1300, king: 2600, mermaid: 2800, pirmer: 2200, round: 4200, kraken: 2900, whale: 2700 }[kind] || 1500;
+  const nRows = (opt.rows || []).length;
+  const ms = { yoho: 4600, trick: 1900, round: Math.max(4200, 1600 + nRows * 550 + 2000), king: 2600, mermaid: 2800, pirmer: 2200, kraken: 2900, whale: 2700 }[kind] || 1500;
   let html = "";
   const burst = (n, chars, dist = 260) => Array.from({ length: n }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(90, dist); return `<i class="su" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d - 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;--c:#fff;--d:${rnd(0, .25).toFixed(2)}s;--s:${rnd(.6, 1.4).toFixed(2)};-webkit-text-stroke:0">${chars[i % chars.length]}</i>`; }).join("");
   if (kind === "yoho"){
@@ -6633,7 +6670,7 @@ function kgFx(kind, opt = {}){
     html = `<span class="seawash"></span><div class="waves"><i></i><i></i><i></i></div><div class="yoho">${w.map((x, i) => `<b style="--d:${(.15 + i * .45).toFixed(2)}s">${x}</b>`).join("")}</div>
       <div class="bids">${(opt.bids || []).map((b, i) => `<span style="--pc:${b.c};--d:${(1.5 + i * .08).toFixed(2)}s"><small>${esc(b.n)}</small><b>${b.v}</b></span>`).join("")}</div>`;
   } else if (kind === "trick"){
-    html = `<div class="tx"><small style="background:${opt.c}">${esc(opt.name)} が獲得</small>${opt.bonus ? `<b class="bn">+${opt.bonus}</b>` : ""}</div>`;
+    html = `<span class="tglow"></span><div class="tban"><i class="shine"></i><small>TRICK!</small><b>${esc(opt.name)}</b><em>トリック獲得</em></div>${opt.bonus ? `<b class="tbn">+${opt.bonus}</b>` : ""}`;
   } else if (kind === "king"){
     html = `<span class="kwash"></span>${burst(26, ["💀", "⚔️", "💰"], 320)}<div class="tx" style="animation:none"><span class="kbig">💀</span><span class="kcrown">👑</span><div class="bigt">${["SKULL", "KING"].map((c, i) => `<span style="--d:${(.3 + i * .2).toFixed(2)}s">${c}</span>`).join("")}<span class="ex" style="--d:.7s">!!</span></div><div class="who"><i style="color:${opt.c}">●</i> ${esc(opt.name)}${opt.bonus ? ` +${opt.bonus}` : ""}</div></div>`;
   } else if (kind === "mermaid"){
@@ -6648,11 +6685,31 @@ function kgFx(kind, opt = {}){
     const sp = Array.from({ length: 34 }, () => `<i class="spl" style="left:${rnd(30, 70).toFixed(1)}%;--x:${rnd(-180, 180).toFixed(0)}px;--y:${rnd(-320, -120).toFixed(0)}px;--s:${rnd(.5, 1.4).toFixed(2)};--d:${rnd(.5, .9).toFixed(2)}s"></i>`).join("");
     html = `<span class="wwash"></span><div class="waves"><i></i><i></i><i></i></div><span class="kbig wha">🐋</span>${sp}<div class="tx" style="animation:none"><div class="bigt">${["WHITE", "WHALE"].map((c, i) => `<span style="--d:${(.6 + i * .2).toFixed(2)}s">${c}</span>`).join("")}</div><div class="who">${opt.name ? `特殊カードは無効！ <i style="color:${opt.c}">●</i> ${esc(opt.name)} の勝ち` : "数字がなくトリックは流された"}</div></div>`;
   } else if (kind === "round"){
-    html = `<span class="seawash soft"></span><div class="rtab"><b class="rt">ROUND ${opt.round} 終了</b>${(opt.rows || []).map((r, i) => `<span class="${r.hit ? "rh" : "rm"}" style="--pc:${r.c};--d:${(.3 + i * .12).toFixed(2)}s"><b>${esc(r.n)}</b><small>予想${r.bid}・獲得${r.won}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em></span>`).join("")}</div>`;
+    const rows = opt.rows || [], hits = rows.filter(r => r.hit).length, dl = i => .45 + i * .55;
+    const conf = () => Array.from({ length: 14 }, (_, k) => `<i class="rcf" style="--x:${rnd(-170, 170).toFixed(0)}px;--y:${rnd(-110, -30).toFixed(0)}px;--r:${rnd(-400, 400).toFixed(0)}deg;--c:${["#FFD23F", "#E2364F", "#1FB3BF", "#2DBE60", "#8B6CFF", "#FF8A3D"][k % 6]};--s:${rnd(.6, 1.2).toFixed(2)}"></i>`).join("");
+    html = `<span class="seawash soft"></span><div class="rtab"><b class="rt">ROUND ${opt.round} 終了</b>${rows.map((r, i) => `<span class="${r.hit ? "rh" : "rm"}" style="--pc:${r.c};--d:${dl(i).toFixed(2)}s"><b>${esc(r.n)}</b><small>予想${r.bid}・獲得${r.won}</small><em data-to="${r.pts}">0</em><i class="stamp">${r.hit ? "的中!" : "ハズレ"}</i>${r.hit ? `<i class="rcw">${conf()}</i>` : ""}</span>`).join("")}<div class="rhit ${hits ? "" : "none"}" style="--d:${(dl(rows.length) + .2).toFixed(2)}s">${hits ? `🎯 的中 <b>${hits}</b>人！` : "的中した人はいなかった…"}</div></div>`;
   }
   document.querySelectorAll(".sbfx").forEach(x => x.remove());
   const fx = document.createElement("div"); fx.className = "sbfx kg-" + kind; fx.style.cssText = `--pc:${opt.c || "#1FB3BF"};--ms:${ms}ms`;
   fx.innerHTML = html; document.body.appendChild(fx);
+  if (kind === "trick"){
+    // 勝者の席から衝撃波とコインが飛び散る
+    const seat = opt.p && [...document.querySelectorAll("#kgg .ks")].find(x => x.dataset.p === opt.p);
+    const r0 = seat ? seat.getBoundingClientRect() : null, cx = r0 ? r0.left + r0.width / 2 : innerWidth / 2, cy = r0 ? r0.top + r0.height / 2 : innerHeight / 2;
+    const hx = (opt.c || "#E8B12A").replace("#", ""), rgb = [0, 2, 4].map(i => parseInt(hx.slice(i, i + 2), 16));
+    fx.style.setProperty("--pcA", `rgba(${rgb.join(",")},.55)`); fx.style.setProperty("--gx", cx + "px"); fx.style.setProperty("--gy", cy + "px");
+    let h2 = [0, .18, .36].map(d => `<i class="tring" style="left:${cx}px;top:${cy}px;--d:${d}s"></i>`).join("");
+    h2 += Array.from({ length: 22 }, (_, i) => { const a2 = rnd(0, Math.PI * 2), d2 = rnd(70, 190); return `<i class="tcoin" style="left:${cx}px;top:${cy}px;--x:${(Math.cos(a2) * d2).toFixed(0)}px;--y:${(Math.sin(a2) * d2 - 60).toFixed(0)}px;--r:${rnd(-360, 360).toFixed(0)}deg;--d:${rnd(0, .2).toFixed(2)}s;--s:${rnd(.7, 1.3).toFixed(2)}">${["🪙", "✨", "💰", "⭐"][i % 4]}</i>`; }).join("");
+    fx.insertAdjacentHTML("beforeend", h2);
+    if (seat) seat.animate([{ transform: "translate(-50%,-50%) scale(1)" }, { transform: "translate(-50%,-50%) scale(1.35)" }, { transform: "translate(-50%,-50%) scale(1)" }, { transform: "translate(-50%,-50%) scale(1.2)" }, { transform: "translate(-50%,-50%) scale(1)" }], { duration: 900, easing: "ease-out" });
+  }
+  if (kind === "round"){
+    // 点数をカウントアップ
+    fx.querySelectorAll(".rtab em[data-to]").forEach((em, i) => {
+      const to = Number(em.dataset.to), st = (.45 + i * .55 + .35) * 1000;
+      setTimeout(() => { const t0 = performance.now(); const step = now => { const k = Math.min(1, (now - t0) / 500); em.textContent = (to >= 0 ? "+" : "") + Math.round(to * k); if (k < 1 && em.isConnected) requestAnimationFrame(step); }; requestAnimationFrame(step); }, st);
+    });
+  }
   const a = $("#kgg");
   if (kind === "yoho"){ [150, 600, 1050].forEach(t => setTimeout(() => { if (a){ a.classList.remove("knock"); void a.offsetWidth; a.classList.add("knock"); } }, t)); }
   if ((kind === "king" || kind === "mermaid" || kind === "kraken" || kind === "whale") && a){ a.classList.remove("quake2"); void a.offsetWidth; a.classList.add("quake2"); setTimeout(() => a.classList.remove("quake2"), 950); }
@@ -6693,13 +6750,13 @@ function kgDiff(g){
   } else if (tl && g.last && g.last.why === "whale"){
     const wp = g.last.plays[g.last.w].p; setTimeout(() => kgFx("whale", { name: pname(wp), c: pcolor(wp) }), t); t += 2700;
   } else if (tl && g.last && g.last.w >= 0){
-    const wp = g.last.plays[g.last.w].p, o = { name: pname(wp), c: pcolor(wp), bonus: g.last.bonus };
+    const wp = g.last.plays[g.last.w].p, o = { name: pname(wp), c: pcolor(wp), bonus: g.last.bonus, p: wp };
     const kind = g.last.why === "mermaid" ? "mermaid" : g.last.why === "king" && g.last.bonus >= 30 ? "king" : g.last.why === "pirmer" ? "pirmer" : "trick";
-    setTimeout(() => kgFx(kind, o), t); t += kind === "trick" ? 1300 : 2700;
+    setTimeout(() => kgFx(kind, o), t); t += kind === "trick" ? 1900 : 2700;
   }
   if (lines.some(m => /ラウンド終了/.test(m))){
     const h = (g.history || []).slice(-1)[0];
-    if (h){ const rows = g.players.map(p => ({ n: pname(p), c: pcolor(p), ...h.rows[p], hit: h.rows[p].bid === h.rows[p].won })); setTimeout(() => kgFx("round", { round: h.round, rows }), t); t += 2700; }
+    if (h){ const rows = g.players.map(p => ({ n: pname(p), c: pcolor(p), ...h.rows[p], hit: h.rows[p].bid === h.rows[p].won })); setTimeout(() => kgFx("round", { round: h.round, rows }), t); kgResAt = Date.now() + t + Math.max(4200, 1600 + rows.length * 550 + 2000) - 400; t += 2700; }
   }
   if (g.status === "finished" && lines.some(m => /優勝/.test(m))) setTimeout(() => sbFx("win", g.winner, "", "", ["優", "勝"]), t);
 }
@@ -6739,7 +6796,8 @@ function drawKg(){
   let resOv = "";
   if (ph === "roundend" && (g.history || []).length){
     const h = g.history[g.history.length - 1];
-    resOv = `<div class="kgres2"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
+    const rd = Math.max(0, kgResAt - Date.now());
+    resOv = `<div class="kgres2 ${rd ? "late" : ""}" style="--rd:${(rd / 1000).toFixed(2)}s"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
   }
   const thOf = {}; order.forEach((p, k) => { thOf[p] = 90 + 360 * k / N; });
   const wSeat = wPl ? thOf[wPl.p] : null;
@@ -6785,7 +6843,7 @@ function drawKg(){
     <div class="kbs"><b class="kbh">上級ルール</b>
       <div class="kbr"><em>🐙</em><p><b>クラーケン ${use("kraken")}</b>トリックは誰のものにもならない。本来勝つはずだった人が次の最初</p></div>
       <div class="kbr"><em>🐋</em><p><b>白鯨 ${use("whale")}</b>特殊カードは全部無効。色に関係なく<u>一番大きい数字</u>が勝ち（同じ数字なら先に出た方）。数字がなければ流れて白鯨の人が次の最初</p></div>
-      <div class="kbr sub"><p>クラーケンと白鯨が両方出たら<u>後から出た方</u>だけ有効</p></div>
+      <div class="kbr kbsub"><p>クラーケンと白鯨が両方出たら<u>後から出た方</u>だけ有効</p></div>
       <div class="kbr"><em>🪙</em><p><b>略奪品 ${use("loot")}</b>逃走と同じ。トリックを取った人と同盟になり、2人とも予想ぴったりなら<u>それぞれ+20</u></p></div>
       <div class="kbr"><em>⚔️</em><p><b>海賊の能力 ${use("abil")}</b>その海賊で勝った時に使う（最後のトリックはハリーだけ）</p></div>
       ${Object.values(KG_PIR).map(x => `<div class="kbr pir"><em>${x.h}</em><p><b>${x.n}</b>${x.d}</p></div>`).join("")}
