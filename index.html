@@ -1504,6 +1504,25 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 /* 早見表のリード色：緑・黄・紫の3色 */
 .ladder2 .c-ld{background:linear-gradient(115deg,#2DBE60 0 33.4%,#E8B12A 33.4% 66.7%,#8B6CFF 66.7%);border-color:#3A1E0C;text-shadow:0 1px 2px rgba(0,0,0,.45)}
 .ladder2 .c-ld small{color:#fff;-webkit-text-stroke:.3px #1B1838}
+/* スカルキング v5 */
+.compass .needle svg{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
+.compass .needle i,.compass .needle::after{display:none}
+.kgtable .kginfo{position:absolute;right:10px;top:8px;margin:0;padding:0;z-index:4}
+.kgtable .kginfo span{font-size:11px;background:rgba(255,248,231,.95)}
+.kgtable .kginfo b{font-family:var(--disp);font-weight:400;font-size:14px}
+.kgtable .lant{top:52px}
+.kgtable .felt{margin-top:-6px}
+.kgtable .felt .ring{top:6%;bottom:4%}
+.kgc.tb{width:42px;height:58px;border-width:2px;border-radius:7px}
+.kgc.tb b{font-size:23px}.kgc.tb b.len2{font-size:19px}.kgc.tb .ci{font-size:9px;left:4px;top:3px}.kgc.tb .ci.br{right:4px;bottom:3px}
+.kgc.tb.sp em{font-size:21px}.kgc.tb.sp small{font-size:5.5px}
+.kgc.mini{width:32px;height:44px}
+.kgc.mini b{font-size:17px}.kgc.mini b.len2{font-size:13px}.kgc.mini.sp em{font-size:16px}
+.ks.kme .nm{font-size:10.5px;max-width:78px;padding:1px 8px}
+.ks.kme .pips i{width:8px;height:8px}
+.kgtable .felt{display:flex;align-items:center;justify-content:center}
+.kgtable .fwrap{position:relative;flex:none}
+.kgtable .felt .ring{left:8%;right:8%;top:8%;bottom:8%}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -6543,7 +6562,7 @@ function drawKg(){
     const ord = pl ? show.indexOf(pl) + 1 : 0;
     return `<div class="ks ${mine ? "kme" : ""} ${on ? "on" : ""}" data-p="${p}" style="--x:${sx.toFixed(1)}%;--y:${sy.toFixed(1)}%;--pc:${pcolor(p)}">
         <b class="nm">${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b>${pips(p)}${(won[p] || 0) && ph !== "bid" ? `<span class="tstack" style="--n:${Math.min(won[p], 5)}">${Array.from({ length: Math.min(won[p], 5) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>` : ""}</div>
-      ${pl && !swept ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""} ${isLast && sweepNow ? "sweep" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--wx:${wx.toFixed(1)}%;--wy:${wy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 5 ? "mini" : "", "", pl.tg)}</div>` : ""}`;
+      ${pl && !swept ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""} ${isLast && sweepNow ? "sweep" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--wx:${wx.toFixed(1)}%;--wy:${wy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 5 ? "mini" : "tb", "", pl.tg)}</div>` : ""}`;
   }).join("");
   // 強さの早見表：今いちばん強いカードの段が光る
   const tier = !wPl ? "" : (() => { const k2 = kgKind(wPl); if (k2 === "num") return kgInfo(wPl.c).s === "b" ? "b" : "lead"; return k2; })();
@@ -6561,11 +6580,11 @@ function drawKg(){
     <span class="lbar"><b>強</b><i></i><b>弱</b></span>
   </div>`;
   const tno = Math.min(n, Object.values(won).reduce((a, b) => a + b, 0) + (plays.length || ph === "play" ? 1 : 0));
-  const info = `<div class="kginfo"><span>🃏 ${n}枚ラウンド</span>${ph === "play" ? `<span>トリック ${Math.max(1, tno)}/${n}</span>` : ""}${isLast ? `<span class="got" style="--pc:${pcolor(g.last.plays[g.last.w].p)}">${esc(pname(g.last.plays[g.last.w].p))} 獲得${g.last.bonus ? ` +${g.last.bonus}` : ""}</span>` : ph === "bid" ? `<span>予想 ${g.players.filter(p => bids[p] != null).length}/${N}</span>` : ""}</div>`;
+  const info = `<div class="kginfo">${ph === "play" ? `<span>トリック <b>${Math.max(1, tno)}</b>/${n}</span>` : ph === "bid" ? `<span>予想 <b>${g.players.filter(p => bids[p] != null).length}</b>/${N}</span>` : `<span>${n}枚ラウンド終了</span>`}</div>`;
 
-  const table = `<div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
+  const table = `<div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
       <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
-      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><i></i></span><span class="hub"></span></div>${seatsT}${resOv}</div>${ladder}</div>`;
+      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,9 58,50 42,50" style="fill:var(--pc)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#7A5A3A" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div>${ladder}</div>`;
   // 下部
   let bottom = "";
   if (ph === "roundend" && (g.history || []).length){
@@ -6607,6 +6626,9 @@ function drawKg(){
     ${table}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${over}`;
+  // 卓は常に同じ形（横長の楕円・比率固定）で、空いている場所の中央に置く
+  const fl = el.querySelector(".kgtable .felt"), fw = fl && fl.querySelector(".fwrap");
+  if (fw){ const r = fl.getBoundingClientRect(), k = 1.12, w = Math.min(r.width, r.height * k); fw.style.width = w + "px"; fw.style.height = (w / k) + "px"; }
   // トリック決着：場のカードが勝者の席へ吸い寄せられる
   const sw = [...el.querySelectorAll(".kp.sweep")];
   if (sw.length && g.last){
