@@ -1213,6 +1213,12 @@ svg.doll.headonly .dl-legs,svg.doll.headonly .dl-body,svg.doll.headonly .dl-arms
 .cotable.small .cos:not(.cme) .cocard.sp b{font-size:19px}.cotable.small .cos:not(.cme) .cocard.sp b.len2{font-size:16px}
 .cotable.small .cos:not(.cme) .cocard.sp b.l2{font-size:9px}.cotable.small .cos:not(.cme) .cocard.sp b.l2 span:last-child{font-size:12px}
 .cotable.small .cos:not(.cme) .cocard.fox b.l2{font-size:9px}
+/* 藁人形にプレイヤーカラーをほんのり */
+svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
+.cos .stk2 .dm,.cos .stk2{--dc:var(--pc);--tie:var(--pc)}
+.cos .stk2 .dm svg{filter:drop-shadow(0 0 3px color-mix(in srgb,var(--pc) 70%,transparent)) drop-shadow(0 1px 0 rgba(0,0,0,.5))}
+.cos .stk2 .dm.gone svg{filter:grayscale(1)}
+.sbfx.co-doll,.sbfx.co-duel .dsh{--dc:var(--pc);--tie:var(--pc)}
 /* デュエル演出 */
 .sbfx .iris{position:absolute;left:50%;top:44%;z-index:6;width:130vmax;height:130vmax;transform:translate(-50%,-50%);border-radius:50%;box-shadow:0 0 0 200vmax #000;pointer-events:none;opacity:0}
 .sbfx .tense{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;display:grid;place-items:center}
@@ -5639,17 +5645,17 @@ function coNextRound(){
 const CO_DOLL = (cls = "") => `<svg class="doll ${cls}" viewBox="0 0 100 160" aria-hidden="true">
   <g class="dl-legs"><rect x="34" y="114" width="13" height="38" rx="5" fill="#D9B26A"/><rect x="53" y="114" width="13" height="38" rx="5" fill="#D9B26A"/>
     <path d="M37 118v30M41 118v31M44 118v30M56 118v30M60 118v31M63 118v30" stroke="#9C7A3C" stroke-width="1.2"/>
-    <rect x="33" y="140" width="15" height="4" fill="#C0392B"/><rect x="52" y="140" width="15" height="4" fill="#C0392B"/>
+    <rect x="34" y="114" width="13" height="38" rx="5" class="tn"/><rect x="53" y="114" width="13" height="38" rx="5" class="tn"/><rect x="33" y="140" width="15" height="4" style="fill:var(--tie,#C0392B)"/><rect x="52" y="140" width="15" height="4" style="fill:var(--tie,#C0392B)"/>
     <path d="M35 152l-2 6M39 152l-1 6M43 152l1 6M46 152l2 6M55 152l-2 6M59 152l-1 6M63 152l1 6M66 152l2 6" stroke="#B88A3E" stroke-width="1.5" stroke-linecap="round"/></g>
   <g class="dl-body"><path d="M37 56L63 56L69 120L31 120Z" fill="#D9B26A"/><path d="M41 58l-3 60M46 58l-1 60M50 58v60M54 58l1 60M59 58l3 60" stroke="#9C7A3C" stroke-width="1.2"/>
-    <rect x="33" y="94" width="34" height="6" fill="#C0392B"/>
+    <path d="M37 56L63 56L69 120L31 120Z" class="tn"/><rect x="33" y="94" width="34" height="6" style="fill:var(--tie,#C0392B)"/>
     <rect x="42" y="66" width="16" height="22" fill="#FFF8E7" stroke="#8A6A3A" stroke-width=".8"/><path d="M45 71h10M45 75h8M45 79h10M45 83h6" stroke="#C0392B" stroke-width="1.4"/></g>
   <g class="dl-arms"><rect x="6" y="58" width="88" height="12" rx="6" fill="#E3C27C"/><path d="M10 61h80M10 64h80M10 67h80" stroke="#9C7A3C" stroke-width="1"/>
-    <rect x="14" y="57" width="4" height="14" fill="#C0392B"/><rect x="82" y="57" width="4" height="14" fill="#C0392B"/>
+    <rect x="6" y="58" width="88" height="12" rx="6" class="tn"/><rect x="14" y="57" width="4" height="14" style="fill:var(--tie,#C0392B)"/><rect x="82" y="57" width="4" height="14" style="fill:var(--tie,#C0392B)"/>
     <path d="M6 60l-5-3M6 64l-6 0M6 68l-5 3M94 60l5-3M94 64l6 0M94 68l5 3" stroke="#B88A3E" stroke-width="1.5" stroke-linecap="round"/></g>
   <g class="dl-head"><path d="M40 12l-4-9M46 10l-1-9M50 10v-9M54 10l1-9M60 12l4-9" stroke="#B88A3E" stroke-width="1.6" stroke-linecap="round"/>
     <ellipse cx="50" cy="31" rx="17" ry="21" fill="#E3C27C"/><path d="M40 14q-4 17 0 34M45 11q-3 20 0 40M50 10v42M55 11q3 20 0 40M60 14q4 17 0 34" stroke="#9C7A3C" stroke-width="1.2" fill="none"/>
-    <rect x="38" y="48" width="24" height="6" fill="#C0392B"/></g>
+    <ellipse cx="50" cy="31" rx="17" ry="21" class="tn"/><rect x="38" y="48" width="24" height="6" style="fill:var(--tie,#C0392B)"/></g>
 </svg>`;
 function coFx(kind, pid, opt = {}){
   const pc = pid ? pcolor(pid) : "#E8890C", rnd = (a, b) => a + Math.random() * (b - a);
@@ -5697,7 +5703,7 @@ function coDuel(r){
   const fx = document.createElement("div"); fx.className = "sbfx co-duel"; fx.style.cssText = `--ms:${ms}ms`;
   const ftr = (p, side, role) => `<div class="ftr ${side}" style="--fc:${pcolor(p)}"><div class="fav"><span class="band"></span><span class="fea">🪶</span><span class="eye"></span></div><span class="wpn">🪓</span><b class="fnm">${esc(pname(p))}</b><small class="frole">${role}</small></div>`;
   fx.innerHTML = `<span class="ground"></span><div class="vs">VS</div>${ftr(L, "L", "コヨーテ！")}${ftr(Rp, "R", `宣言 ${r.n}`)}
-    <div class="tense"><span class="hb"></span><b>…!?</b></div><div class="iris"></div><div class="dsh">${CO_DOLL()}</div><div class="dresult"><b>${r.out ? "KO!!" : "身代わり!!"}</b><small>${esc(pname(loser))}${r.out ? " ダウン…" : " の人形が身代わりに"}</small></div>`;
+    <div class="tense"><span class="hb"></span><b>…!?</b></div><div class="iris"></div><div class="dsh" style="--pc:${pcolor(loser)}">${CO_DOLL()}</div><div class="dresult"><b>${r.out ? "KO!!" : "身代わり!!"}</b><small>${esc(pname(loser))}${r.out ? " ダウン…" : " の人形が身代わりに"}</small></div>`;
   document.body.appendChild(fx);
   const fL = fx.querySelector(".ftr.L"), fR = fx.querySelector(".ftr.R"), sideOf = p => p === L ? fL : fR;
   const opt = (d, t, e = "ease-out", fill = "none") => ({ duration: d, delay: t, easing: e, fill });
