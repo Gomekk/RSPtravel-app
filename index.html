@@ -1254,6 +1254,198 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .sbfx .dresult b{font-family:var(--disp);font-weight:400;font-size:min(16vw,70px);line-height:1;color:#fff;-webkit-text-stroke:3px #7A2A0C;paint-order:stroke fill;filter:drop-shadow(0 5px 0 #7A2A0C)}
 .sbfx .dresult small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;background:#fff;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink)}
 .sbfx.co-duel.quake{animation:duelfade var(--ms) forwards,quake .4s ease}
+/* ---- スカルキング ---- */
+.arena.kgg{background:radial-gradient(circle at 50% 20%,rgba(31,179,191,.18),transparent 60%),linear-gradient(170deg,#F7FBFF,#E6F2F6 55%,#CFE3EA)}
+.ntop .nt.kgt{font-size:22px;letter-spacing:.06em;background:linear-gradient(90deg,#1B1838,#C0392B,#E8B12A,#1B1838);background-size:300% 100%;-webkit-background-clip:text;background-clip:text}
+.gic.kgi{background:radial-gradient(circle at 50% 35%,#2A6A8A,#123A52 60%,#0A1E2E);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(31,179,191,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
+.gic.kgi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
+.np .kpt{font-size:9px;font-weight:900;color:var(--mute)}
+.np .bw{font-family:var(--disp);font-weight:400;font-size:12px;color:var(--ink)}
+.np .bw.eq{color:#1E9E5A}.np .bw.ov{color:var(--crimson)}
+.kgtable{flex:1 1 auto;min-height:0;position:relative;display:flex;flex-direction:column;border-radius:20px;overflow:hidden;border:3px solid var(--ink);
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 58px),repeating-linear-gradient(0deg,#B07A44 0 30px,#A06A38 30px 32px,#B88350 32px 62px,#9A6434 62px 64px);
+  box-shadow:inset 0 0 0 3px #D9B04A,inset 0 0 0 6px #5A3416,inset 0 0 40px rgba(40,20,0,.45),0 4px 0 var(--ink)}
+.kgtable .sea{position:absolute;left:0;right:0;top:0;height:46px;overflow:hidden;background:linear-gradient(180deg,#5FD0F0,#1F8FBF);border-bottom:4px solid #5A3416}
+.kgtable .sea i{position:absolute;left:-50%;width:200%;height:20px;bottom:-4px;background:radial-gradient(circle at 10px -2px,transparent 12px,#E6FAFF 13px,#E6FAFF 15px,transparent 16px) 0 0/28px 20px repeat-x;animation:wavem 6s linear infinite;opacity:.8}
+.kgtable .sea i:last-child{bottom:6px;opacity:.45;animation-duration:9s;animation-direction:reverse}
+@keyframes wavem{to{transform:translateX(28px)}}
+.kgtable .lant{position:absolute;top:50px;width:16px;height:22px;border-radius:5px 5px 7px 7px;background:radial-gradient(circle at 50% 55%,#FFF3A0,#FFB300 55%,#C0392B);border:2px solid #2A1408;box-shadow:0 0 16px 6px rgba(255,190,60,.55);animation:candle2 2.6s infinite;z-index:1}
+.kgtable .lant.l1{left:10px}.kgtable .lant.l2{right:10px;animation-delay:-1.2s}
+.kgtable .rope{position:absolute;left:0;right:0;bottom:8px;height:6px;background:repeating-linear-gradient(-45deg,#D9B26A 0 4px,#9C7A3C 4px 8px);border-radius:3px;opacity:.85}
+.kginfo{position:relative;z-index:2;margin-top:50px;display:flex;justify-content:center;flex-wrap:wrap;gap:5px;padding:0 30px}
+.kginfo span{font-size:10.5px;font-weight:900;padding:2px 9px;border-radius:99px;background:rgba(255,248,231,.92);border:1.5px solid #5A3416;color:#3A1E0C;white-space:nowrap}
+.kginfo .got{background:var(--pc);color:#fff;border-color:var(--ink)}
+.tarea{position:relative;z-index:2;flex:1;display:flex;align-items:center;justify-content:center;padding:6px 8px 18px}
+.tempty{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 26px;border-radius:16px;background:rgba(255,248,231,.9);border:2px dashed #5A3416;color:#3A1E0C}
+.tempty b{font-family:var(--disp);font-weight:400;font-size:20px}
+.tempty small{font-size:11px;font-weight:900}
+.trick{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:10px 6px;max-width:100%}
+.trick.done{opacity:.85}
+.trick .tp{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;animation:tpin .45s cubic-bezier(.2,1.5,.4,1) both}
+.trick.done .tp{animation:none}
+@keyframes tpin{from{transform:translateY(80px) rotate(10deg);opacity:0}}
+.trick .tp>b{max-width:60px;padding:0 6px;border-radius:99px;background:var(--pc);color:#fff;font-size:9.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1.5px solid var(--ink)}
+.trick .tp.win .kgc{box-shadow:0 0 0 3px #FFE38A,0 0 18px #FFE38A,0 4px 0 var(--ink);transform:translateY(-6px)}
+.trick .tp .crown{position:absolute;top:-20px;font-size:18px;z-index:2;animation:nbeat 1s ease-in-out infinite}
+.kgc{position:relative;flex:none;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:50px;height:70px;border-radius:8px;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink);background:#FFF8E7;line-height:1;overflow:hidden}
+.kgc::before{content:"";position:absolute;inset:3px;border-radius:5px;border:2px solid var(--sc,#999);opacity:.9}
+.kgc b{position:relative;font-family:var(--disp);font-weight:400;font-size:28px;color:var(--sc)}
+.kgc b.len2{font-size:23px;letter-spacing:-.04em}
+.kgc .ci{position:absolute;left:5px;top:4px;font-style:normal;font-size:10px}
+.kgc .ci.br{left:auto;top:auto;right:5px;bottom:4px;transform:rotate(180deg)}
+.kgc.s-y{--sc:#C98E12;background:linear-gradient(170deg,#FFF8E7,#FFE9A8)}
+.kgc.s-g{--sc:#1E9E5A;background:linear-gradient(170deg,#F2FFF6,#C8F2D6)}
+.kgc.s-p{--sc:#6B3CE0;background:linear-gradient(170deg,#F6F2FF,#DCD0FA)}
+.kgc.s-b{--sc:#FFE38A;background:linear-gradient(170deg,#3A3450,#14101E)}
+.kgc.s-b b{-webkit-text-stroke:.6px #1B1838}
+.kgc.sp em{font-style:normal;font-size:26px;line-height:1}
+.kgc.sp small{position:relative;margin-top:4px;font-size:6.5px;font-weight:900;letter-spacing:.02em;white-space:nowrap}
+.kgc.sp-esc{--sc:#9AA1B4;background:linear-gradient(170deg,#FFFFFF,#E4E8EF);color:#5A6378}
+.kgc.sp-pir{--sc:#C0392B;background:linear-gradient(170deg,#FFE2D6,#F28B6B);color:#6A1F0C}
+.kgc.sp-tig{--sc:#E8890C;background:linear-gradient(170deg,#FFF0D6,#F7B84B);color:#6A3A0C}
+.kgc.sp-king{--sc:#E8B12A;background:linear-gradient(170deg,#3A1A2A,#120810);color:#FFE38A}
+.kgc.sp-king em{filter:drop-shadow(0 0 6px #FFB300)}
+.kgc.sp-mer{--sc:#1FB3BF;background:linear-gradient(170deg,#E6FAFB,#9BE4EA);color:#0C5A60}
+.kgc.mini{width:36px;height:50px;border-width:2px;border-radius:6px;box-shadow:0 2px 0 var(--ink)}
+.kgc.mini b{font-size:19px}.kgc.mini b.len2{font-size:15px}.kgc.mini .ci{font-size:7px;left:3px;top:3px}.kgc.mini .ci.br{right:3px;bottom:3px}
+.kgc.mini.sp em{font-size:18px}.kgc.mini.sp small{font-size:4.5px}
+.kghand{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;padding-top:10px}
+.kghand.two{max-width:300px;margin:0 auto;gap:4px 5px;padding-top:8px}
+.kghand.two .kgc{width:46px;height:62px}.kghand.two .kgc b{font-size:25px}.kghand.two .kgc b.len2{font-size:20px}.kghand.two .kgc.sp em{font-size:22px}
+.kghand .kh{padding:0;border:0;background:none;transition:transform .15s}
+.kghand .kh.sel{transform:translateY(-12px)}
+.kghand .kh.sel .kgc{box-shadow:0 0 0 3px #E2364F,0 0 16px rgba(226,54,79,.6),0 3px 0 var(--ink)}
+.kghand .kh.ng .kgc{filter:grayscale(.85) brightness(.75)}
+.kghand .kh:disabled{opacity:1}
+.kgres{display:flex;flex-direction:column;gap:3px;padding:6px 8px;border-radius:12px;background:#FFF8E7;border:2px solid #5A3416}
+.kgres>b{text-align:center;font-family:var(--disp);font-weight:400;font-size:14px;color:#3A1E0C}
+.kgres span{display:grid;grid-template-columns:1fr auto auto 44px;align-items:center;gap:6px;padding:2px 8px;border-radius:8px;background:#fff;border-left:5px solid var(--pc)}
+.kgres span i{font-style:normal;font-weight:900;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kgres span small{font-size:10px;font-weight:900;color:var(--mute);white-space:nowrap}
+.kgres span em{font-style:normal;font-weight:900;font-size:13px}
+.kgres span.hit em{color:#1E9E5A}.kgres span.miss em{color:var(--crimson)}
+.kgres span strong{text-align:right;font-family:var(--disp);font-weight:400;font-size:14px}
+.kgrank{display:flex;flex-direction:column;gap:5px;margin-top:12px;min-width:240px}
+.kgrank span{display:flex;align-items:center;gap:8px;padding:5px 10px;border-radius:10px;background:#fff;border:2px solid var(--pc);font-weight:900}
+.kgrank i{font-style:normal;font-family:var(--disp);width:20px}.kgrank b{flex:1;text-align:left}
+.kgsheet table{width:100%;border-collapse:collapse;font-size:12px}
+.kgsheet th,.kgsheet td{padding:4px 3px;text-align:center;border-bottom:1px solid var(--line)}
+.kgsheet td small{display:block;font-size:9px;color:var(--mute)}
+.kgsheet td.hit{color:#1E9E5A;font-weight:900}.kgsheet td.miss{color:var(--crimson)}
+.kgsheet tr.tot td{font-family:var(--disp);font-size:14px;border-top:2px solid var(--ink)}
+.arena.kgg.knock{animation:knock .18s ease-out}
+@keyframes knock{50%{transform:translateY(6px) scale(.995)}}
+.arena.kgg.quake2{animation:quake2 .9s cubic-bezier(.36,.07,.19,.97)}
+/* スカルキングの演出 */
+.sbfx .seawash{position:absolute;inset:0;background:linear-gradient(180deg,#5FD0F0,#1F8FBF 55%,#0A4A6A);animation:seaw var(--ms) forwards}
+@keyframes seaw{0%{opacity:0}8%,88%{opacity:.97}100%{opacity:0}}
+.sbfx .seawash.soft{opacity:.85}
+.sbfx .waves{position:absolute;left:0;right:0;bottom:0;height:30%}
+.sbfx .waves i{position:absolute;left:-50%;width:200%;height:40px;background:radial-gradient(circle at 20px -4px,transparent 24px,#E6FAFF 26px,#E6FAFF 30px,transparent 32px) 0 0/56px 40px repeat-x;animation:wavem2 2s linear infinite}
+.sbfx .waves i:nth-child(1){bottom:60px;opacity:.5}.sbfx .waves i:nth-child(2){bottom:30px;opacity:.7;animation-duration:2.6s;animation-direction:reverse}.sbfx .waves i:nth-child(3){bottom:0}
+@keyframes wavem2{to{transform:translateX(56px)}}
+.sbfx .yoho{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:-20vh}
+.sbfx .yoho b{font-family:var(--disp);font-weight:400;font-size:min(20vw,96px);line-height:1;color:#FFE38A;-webkit-text-stroke:3px #0A2A3A;paint-order:stroke fill;filter:drop-shadow(0 6px 0 #0A2A3A);animation:chslam .45s cubic-bezier(.2,1.8,.4,1) var(--d) both}
+.sbfx .yoho b:nth-child(2){color:#fff}
+.sbfx .bids{position:absolute;left:0;right:0;bottom:16%;z-index:2;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 12px}
+.sbfx .bids span{display:flex;flex-direction:column;align-items:center;min-width:56px;padding:4px 8px;border-radius:12px;background:#fff;border:3px solid var(--pc);box-shadow:0 4px 0 var(--ink);animation:chslam .45s cubic-bezier(.2,1.8,.4,1) var(--d) both}
+.sbfx .bids small{font-size:10px;font-weight:900;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbfx .bids b{font-family:var(--disp);font-weight:400;font-size:28px;line-height:1;color:var(--pc);-webkit-text-stroke:1px var(--ink)}
+.sbfx.kg-trick .tx small{color:#fff;border-color:var(--ink);font-size:16px}
+.sbfx.kg-trick .tx .bn{font-family:var(--disp);font-weight:400;font-size:44px;color:#FFE38A;-webkit-text-stroke:2px #3A1E0C}
+.sbfx .kwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,#5A1A2A,#1A0610 60%,#000);animation:seaw var(--ms) forwards}
+.sbfx .kbig{display:block;font-size:min(42vw,200px);line-height:1;filter:drop-shadow(0 0 30px #FFB300);animation:sklam .7s cubic-bezier(.2,1.8,.4,1) both}
+.sbfx .kcrown{position:absolute;top:-6%;left:50%;font-size:min(20vw,90px);transform:translateX(-50%);animation:crownd .6s .4s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes crownd{from{transform:translate(-50%,-60vh) rotate(-30deg)}}
+.sbfx.kg-king .tx,.sbfx.kg-mermaid .tx{position:relative}
+.sbfx.kg-king .bigt span:first-child,.sbfx.kg-mermaid .bigt span:first-child{margin-right:.25em}
+.sbfx.kg-king .bigt span{font-size:min(15vw,70px);color:#FFE38A;-webkit-text-stroke-color:#3A0A14}
+.sbfx.kg-king .bigt span.ex{color:#FF4D66}
+.sbfx .mwash{position:absolute;inset:0;background:linear-gradient(180deg,#9BF1F4,#1FB3BF 50%,#0A5A70);animation:seaw var(--ms) forwards}
+.sbfx .kbig.mer{filter:drop-shadow(0 0 30px #9BF1F4)}
+.sbfx.kg-mermaid .bigt span{font-size:min(15vw,70px);color:#fff;-webkit-text-stroke-color:#0A4A5A}
+.sbfx.kg-mermaid .bigt span:nth-child(2){color:#FFE38A}
+.sbfx .bub{position:absolute;bottom:-30px;width:calc(16px * var(--s));height:calc(16px * var(--s));border-radius:50%;border:2px solid rgba(255,255,255,.85);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.8),transparent 45%);animation:bubup var(--t) ease-in var(--d) forwards;opacity:0}
+@keyframes bubup{0%{opacity:0;transform:translateY(0)}15%{opacity:1}100%{opacity:0;transform:translate(20px,-105vh)}}
+.sbfx.kg-pirmer .bg{background:radial-gradient(circle at 50% 46%,rgba(242,139,107,.6),transparent 60%)}
+.sbfx.kg-pirmer .tx b{font-size:56px;color:#FF8A6B}
+.sbfx .rtab{position:relative;z-index:2;display:flex;flex-direction:column;gap:6px;width:min(88vw,360px)}
+.sbfx .rtab .rt{text-align:center;font-family:var(--disp);font-weight:400;font-size:34px;color:#FFE38A;-webkit-text-stroke:2px #0A2A3A;paint-order:stroke fill;margin-bottom:4px;animation:chslam .45s cubic-bezier(.2,1.8,.4,1) both}
+.sbfx .rtab span{display:grid;grid-template-columns:1fr auto 54px;align-items:center;gap:8px;padding:6px 12px;border-radius:12px;background:#fff;border:3px solid var(--pc);box-shadow:0 3px 0 var(--ink);animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both}
+@keyframes rowin{from{transform:translateX(-100vw)}}
+.sbfx .rtab span b{font-weight:900;font-size:14px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbfx .rtab span small{font-size:11px;font-weight:900;color:var(--mute)}
+.sbfx .rtab span em{font-style:normal;font-family:var(--disp);font-size:20px;text-align:right}
+.sbfx .rtab span.rh{background:#EDFAF2}.sbfx .rtab span.rh em{color:#1E9E5A}
+.sbfx .rtab span.rm em{color:var(--crimson)}
+.kgg .nseats2.tight{flex-wrap:nowrap;gap:3px}
+.kgg .nseats2.tight .nar{display:none}
+.kgg .nseats2.tight .np{min-width:0;flex:1 1 0;padding:5px 3px 3px}
+.kgg .nseats2.tight .np b{font-size:10.5px}
+.kgg .np .tg.now{left:-5px;transform:none;z-index:1}
+/* スカルキング v2：卓を囲む＋強さ早見表 */
+.kgtable .felt{position:relative;z-index:2;flex:1;min-height:0;margin:4px 8px 0}
+.kgtable .felt .ring{position:absolute;left:8%;right:8%;top:10%;bottom:6%;border-radius:50%;background:radial-gradient(ellipse,#2E7A5A,#1E5A42 70%,#143E2E);border:5px solid #5A3416;box-shadow:inset 0 0 0 3px #D9B04A,inset 0 0 30px rgba(0,0,0,.45),0 6px 0 rgba(40,20,0,.35)}
+.kgtable .felt .ring::after{content:"☠";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:70px;color:rgba(255,255,255,.07)}
+.ks{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ks .nm{display:flex;align-items:center;max-width:78px;padding:1px 8px;border-radius:99px;background:var(--pc);color:#fff;font-size:10.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1.5px solid var(--ink);box-shadow:0 2px 0 rgba(0,0,0,.3)}
+.ks .nm .sS{width:13px;height:13px;font-size:7.5px;margin-right:3px}
+.ks.on .nm{box-shadow:0 0 0 3px #FFE38A,0 0 14px #FFE38A;animation:nbeat 1s ease-in-out infinite}
+.ks.kme .nm{font-size:12px;max-width:110px;padding:2px 12px}
+.pips{display:flex;gap:2px;padding:2px 5px;border-radius:99px;background:rgba(255,248,231,.92);border:1.5px solid #5A3416;min-height:14px;align-items:center}
+.pips i{width:8px;height:8px;border-radius:50%}
+.pips i.f{background:radial-gradient(circle at 35% 30%,#FFF6D6,#E8B12A 60%);border:1px solid #8A5A0C}
+.pips i.e{border:1.5px dashed #8A5A0C}
+.pips i.x{background:var(--crimson);border:1px solid #6A0C1C}
+.pips.z{font-family:var(--disp);font-weight:400;font-size:10px;padding:0 6px;color:#1E9E5A}
+.pips.z.over{color:var(--crimson)}.pips.z .x{font-style:normal;margin-left:2px}
+.pips.q{font-size:10px;font-weight:900;color:#5A3416;padding:0 6px}
+.ks.kme .pips i{width:11px;height:11px}
+.kp{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);z-index:4;display:flex;flex-direction:column;align-items:center;animation:kpin .45s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes kpin{from{transform:translate(-50%,-50%) translateY(40px) scale(.6);opacity:0}}
+.kp.done{animation:none;opacity:.9}
+.kp.win .kgc{box-shadow:0 0 0 3px #FFE38A,0 0 20px #FFE38A,0 3px 0 var(--ink)}
+.kp .crown{position:absolute;top:-22px;font-size:18px;z-index:2;animation:nbeat 1s ease-in-out infinite}
+.kp .ld,.kp .od{position:absolute;left:-8px;top:-8px;z-index:2;font-size:8px;font-weight:900;padding:1px 4px;border-radius:5px;background:var(--pc);color:#fff;border:1.5px solid var(--ink)}
+.kp .od{width:15px;height:15px;padding:0;border-radius:50%;display:grid;place-items:center;font-size:9px}
+.kp.done .kgc{filter:saturate(.8)}
+.kp:not(.win).done .kgc{opacity:.7}
+.felt.many .ks .nm{max-width:64px;font-size:9.5px;padding:1px 6px}
+.ladder{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:3px;margin:4px 8px 8px;padding:4px 8px;border-radius:12px;background:rgba(255,248,231,.94);border:2px solid #5A3416;box-shadow:0 2px 0 rgba(40,20,0,.35)}
+.ladder .tri,.ladder .lad2{display:flex;align-items:center;gap:3px;white-space:nowrap}
+.ladder i{font-style:normal;font-weight:900;color:#8A5A0C;font-size:12px}
+.ladder span{font-size:10.5px;font-weight:900;padding:1px 6px;border-radius:99px;color:#3A1E0C;background:#fff;border:1.5px solid rgba(90,52,22,.35);line-height:1.4}
+.ladder .tri span{font-size:14px;padding:0 6px}
+.ladder .tri span.t-mer2{opacity:.45}
+.ladder span.hl{background:#FFE38A;border-color:#8A5A0C;box-shadow:0 0 0 2px rgba(255,227,138,.6),0 0 12px #FFE38A;animation:nbeat 1.1s ease-in-out infinite}
+.ladder .tri::before{content:"三すくみ";font-size:9px;font-weight:900;color:#8A5A0C;margin-right:3px}
+.kgtable .kginfo{margin-top:50px}
+/* 強さ早見表（リファレンスカード風） */
+.ladder2{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:4px;margin:4px 8px 8px;padding:6px 8px 14px;border-radius:12px;
+  background:radial-gradient(ellipse at 30% 20%,#FFF6DC,#F3DFB0 60%,#E3C58A);border:2px solid #5A3416;box-shadow:0 2px 0 rgba(40,20,0,.35),inset 0 0 14px rgba(140,90,30,.35)}
+.ladder2 .lcol{position:relative;display:flex;flex-direction:column;align-items:center}
+.ladder2 .cyc{width:120px;height:70px}
+.ladder2 .cyc .arr{position:absolute;inset:0;width:100%;height:100%}
+.ladder2 .cyc .c-king{position:absolute;left:50%;top:-2px;transform:translateX(-50%)}
+.ladder2 .cyc .c-pir{position:absolute;right:-2px;top:34px}
+.ladder2 .cyc .c-mer{position:absolute;left:-2px;top:34px}
+.ladder2 .lc{position:relative;display:flex;flex-direction:column;align-items:center;min-width:34px;padding:2px 4px 1px;border-radius:7px;background:#fff;border:1.5px solid #5A3416;font-size:16px;line-height:1.1;box-shadow:0 2px 0 rgba(90,52,22,.35)}
+.ladder2 .lc small{font-size:7.5px;font-weight:900;color:#3A1E0C;white-space:nowrap}
+.ladder2 .lc em{position:absolute;right:-9px;top:-7px;font-style:normal;font-size:11px;padding:0 2px;border-radius:5px;background:#FFE9C4;border:1px solid #E8890C}
+.ladder2 .c-king{background:#2A1020;border-color:#E8B12A}.ladder2 .c-king small{color:#FFE38A}
+.ladder2 .c-pir{background:#FFE2D6;border-color:#C0392B}
+.ladder2 .c-mer{background:#E6FAFB;border-color:#1FB3BF}
+.ladder2 .num{padding:12px 5px 4px;border-radius:9px;border:2px solid #1F8C8C;background:rgba(155,228,234,.35)}
+.ladder2 .num .lt{position:absolute;top:-1px;font-size:7.5px;font-weight:900;color:#1F6C6C;white-space:nowrap}
+.ladder2 .lrow{display:flex;align-items:center;gap:2px}
+.ladder2 .lrow i,.ladder2 .lgo{font-style:normal;font-weight:900;color:#1F8C8C;font-size:16px}
+.ladder2 .c-b{background:#2A2638;border-color:#1B1838}.ladder2 .c-b small{color:#FFE38A}
+.ladder2 .c-esc{background:#F1F2F6;border-color:#9AA1B4}
+.ladder2 .lc.hl{box-shadow:0 0 0 3px #FFE38A,0 0 14px #FFB300,0 2px 0 rgba(90,52,22,.35);animation:nbeat 1.1s ease-in-out infinite}
+.ladder2 .cyc .lc.hl.c-king{animation:none;transform:translateX(-50%) scale(1.1)}
+.ladder2 .lbar{position:absolute;left:12px;right:12px;bottom:3px;display:flex;align-items:center;gap:4px}
+.ladder2 .lbar b{font-size:8px;font-weight:900;color:#3A1E0C}
+.ladder2 .lbar i{flex:1;height:4px;border-radius:2px;background:linear-gradient(90deg,#1B1838,rgba(27,24,56,.15));clip-path:polygon(0 0,100% 40%,100% 60%,0 100%)}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -1974,6 +2166,7 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 <div class="arena neu sbg" id="sbg" hidden></div>
 <div class="arena neu skg" id="skg" hidden></div>
 <div class="arena neu cog" id="cog" hidden></div>
+<div class="arena neu kgg" id="kgg" hidden></div>
 <div class="sheet" id="sheet"><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -1988,7 +2181,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
 const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#5A6378"];
-const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games", "kg_games"];
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
@@ -2019,7 +2212,7 @@ const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
 const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
 
-const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [] };
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [], kg_games: [] };
 let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
@@ -2064,7 +2257,7 @@ const fail = (e, what) => { console.error(e); toast(`${what}できませんで�
 /* ---------- データ ---------- */
 async function loadTable(t){
   const { data, error } = await sb.from(t).select("*");
-  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
+  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
   if (error) throw error;
   db[t] = data || [];
 }
@@ -2080,7 +2273,7 @@ function subscribe(){
       if (!TABLES.includes(t)) return;
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); turnBuzz(); } catch (e) { console.error(e); }
+        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); turnBuzz(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -2122,7 +2315,7 @@ function render(){
   $("#neuIco").hidden = !loaded || !db.players.length;
   $("#neuIco").disabled = !player(me);
   $("#neuIco").title = player(me) ? "ゲーム一覧" : "自分を選ぶと遊べます";
-  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive();
+  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive() && !kgActive();
   const mp = player(me);
   const nlen = mp ? [...mp.name].length : 0, nfs = nlen <= 4 ? 12 : nlen <= 5 ? 11 : nlen <= 6 ? 10 : nlen <= 8 ? 9 : 8;
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span style="font-size:${nfs}px">${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
@@ -2164,9 +2357,9 @@ function viewHome(t){
   if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><span>今日の特権・<b class="who">${esc(pname(tp.player_id))}</b></span><small class="pno">特権${KANJI[tp.kind]}</small><b class="pnm">${PRIVS[tp.kind].name}</b></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
-  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive();
+  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中</b><small>${ng.status === "playing" && ng.turn && ng.turn.pid === me ? `<em class="yt">あなたの番！</em>第${ng.round}回戦・合計${ng.total}` : `第${ng.round}回戦・合計${ng.total}・タップで入る`}</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -2239,6 +2432,7 @@ function bindView(){
     openSb: () => { const g = sbActive(); if (g) openSb(g.id); },
     openSk: () => { const g = skActive(); if (g) openSk(g.id); },
     openCo: () => { const g = coActive(); if (g) openCo(g.id); },
+    openKg: () => { const g = kgActive(); if (g) openKg(g.id); },
     completeTrip: () => openCompleteTrip(curTrip()), reopenTrip: () => reopenTrip(curTrip()), listBack: () => { listTripId = null; render(); },
     togglePend: () => { localStorage.setItem("ojk:pendOpen", localStorage.getItem("ojk:pendOpen") === "0" ? "1" : "0"); render(); },
     travelTotal: () => openTravelTotal(curTrip()), resetTickets: () => resetTickets(curTrip()), rouletteReset: () => resetRoulette(curTrip(), rouletteDay),
@@ -3981,8 +4175,8 @@ document.addEventListener("click", e => { const b = e.target.closest && e.target
 
 /* ===================== ゲームのルール（図解） ===================== */
 function openGameRules(k){
-  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール" }[k];
-  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml }[k]();
+  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール", kg: "スカルキングのルール" }[k];
+  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml, kg: kgRulesHtml }[k]();
   let el = $("#artpop");
   if (!el){ el = document.createElement("div"); el.id = "artpop"; el.className = "artpop"; document.body.appendChild(el); el.addEventListener("click", e => { if (e.target === el || e.target.closest("[data-artclose]")) el.classList.remove("on"); }); }
   el.innerHTML = `<div class="artin wide" role="dialog" aria-modal="true"><div class="arth"><b>${title}</b><button class="artx" data-artclose aria-label="閉じる">×</button></div><div class="gr">${html}</div></div>`;
@@ -4168,8 +4362,8 @@ async function neuSave(g, patch, logLine){
 const turnSeen = {};
 function turnBuzz(){
   if (!me) return;
-  [neuActive(), csActive(), sbActive(), skActive(), coActive()].filter(Boolean).forEach(g => {
-    const now = g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
+  [neuActive(), csActive(), sbActive(), skActive(), coActive(), kgActive()].filter(Boolean).forEach(g => {
+    const now = g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
     const prev = turnSeen[g.id];
     turnSeen[g.id] = now;
     if (prev === false && now){ try { if (navigator.vibrate) navigator.vibrate([120, 70, 120, 70, 200]); } catch (e) {} }
@@ -4225,7 +4419,18 @@ const GAMES = [
       <g transform="translate(4 30) scale(.2)"><rect x="34" y="114" width="13" height="38" rx="5" fill="#D9B26A"/><rect x="53" y="114" width="13" height="38" rx="5" fill="#D9B26A"/><path d="M37 56L63 56L69 120L31 120Z" fill="#D9B26A"/><rect x="33" y="94" width="34" height="6" fill="#C0392B"/><rect x="6" y="58" width="88" height="12" rx="6" fill="#E3C27C"/><ellipse cx="50" cy="31" rx="17" ry="21" fill="#E3C27C"/><rect x="38" y="48" width="24" height="6" fill="#C0392B"/></g>
     </svg></span>`,
     count: () => coGames().filter(x => x.status === "finished").length,
-    active: () => coActive(), start: () => openCoNew(), open: g => openCo(g.id) }
+    active: () => coActive(), start: () => openCoNew(), open: g => openCo(g.id) },
+  { id: "kg", name: "スカルキング", desc: "何回勝てるかをぴったり当てるトリックテイキング。全10ラウンド、合計点で勝負", players: "2〜8人", time: "30〜45分",
+    icon: `<span class="gic kgi"><svg viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M0 50q8-5 16 0t16 0 16 0 16 0V64H0z" fill="#1F8FBF"/><path d="M0 54q8-4 16 0t16 0 16 0 16 0" stroke="#E6FAFF" stroke-width="1.5" fill="none" opacity=".8"/>
+      <g transform="rotate(-14 22 34)"><rect x="10" y="16" width="22" height="31" rx="3" fill="#3A3450" stroke="#1B1838" stroke-width="1.8"/><text x="21" y="37" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="13" fill="#FFE38A">14</text></g>
+      <g transform="rotate(10 42 32)"><rect x="30" y="12" width="24" height="34" rx="3" fill="#2A1020" stroke="#1B1838" stroke-width="1.8"/>
+        <circle cx="42" cy="28" r="7" fill="#F3EDE0"/><circle cx="39.4" cy="27.5" r="1.8" fill="#2A1020"/><circle cx="44.6" cy="27.5" r="1.8" fill="#2A1020"/><path d="M38.5 33h7v3h-7z" fill="#F3EDE0"/><path d="M39.8 33v3M42 33v3M44.2 33v3" stroke="#2A1020" stroke-width=".6"/>
+        <path d="M35 21l2.5-4 2.2 3 2.3-4 2.3 4 2.2-3 2.5 4z" fill="#FFD84A" stroke="#8A5A0C" stroke-width=".6"/></g>
+      <path d="M6 8l1.3 2.8 2.8 1.3-2.8 1.3L6 16.2l-1.3-2.8-2.8-1.3 2.8-1.3z" fill="#FFE38A"/>
+    </svg></span>`,
+    count: () => kgGames().filter(x => x.status === "finished").length,
+    active: () => kgActive(), start: () => openKgNew(), open: g => openKg(g.id) }
 ];
 function openGames(){
   const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
@@ -5979,6 +6184,411 @@ function coRulesHtml(){
   <div class="deckg">${[["1", "1〜5", "各4"], ["10", "10", "3"], ["15", "15", "2"], ["20", "20", "1"], ["0", "0", "3"], ["-5", "−5", "2"], ["-10", "−10", "1"], ["x2", "×2", "1"], ["max0", "MAX→0", "1"], ["q", "?", "1"], ["night", "夜", "1"]].map(([c, l, n]) => `<span>${C(c)}${l === "1〜5" ? "1〜5" : ""}×${n}</span>`).join("")}</div>`;
 }
 
+/* ===================== スカルキング ===================== */
+/* 数字カード：黄(宝箱)・緑(オウム)・紫(地図)・黒(海賊旗=切り札) 各1〜14。
+   特殊：逃走×5、海賊×5、ティグレス×1（海賊か逃走を選ぶ）、スカルキング×1、マーメイド×2。計70枚。10ラウンド */
+const KG_SUITS = { y: { n: "黄", i: "💰", c: "#E8B12A" }, g: { n: "緑", i: "🦜", c: "#2DBE60" }, p: { n: "紫", i: "🗺️", c: "#8B6CFF" }, b: { n: "黒", i: "🏴‍☠️", c: "#2A2638" } };
+const KG_SP = { esc: { i: "🏳️", t: "ESCAPE" }, pir: { i: "⚔️", t: "PIRATE" }, tig: { i: "🐯", t: "TIGRESS" }, king: { i: "👑", t: "SKULL KING" }, mer: { i: "🧜‍♀️", t: "MERMAID" } };
+const kgDeck = () => {
+  const d = [];
+  ["y", "g", "p", "b"].forEach(s => { for (let r = 1; r <= 14; r++) d.push(s + r); });
+  for (let i = 1; i <= 5; i++) d.push("esc" + i, "pir" + i);
+  d.push("tig", "king", "mer1", "mer2");
+  return d;
+};
+function kgInfo(c){
+  if (!c) return { t: "none" };
+  if (c.startsWith("esc")) return { t: "esc" };
+  if (c.startsWith("pir")) return { t: "pir" };
+  if (c.startsWith("mer")) return { t: "mer" };
+  if (c === "tig") return { t: "tig" };
+  if (c === "king") return { t: "king" };
+  return { t: "num", s: c[0], r: Number(c.slice(1)) };
+}
+const kgKind = pl => { const i = kgInfo(pl.c); return i.t === "tig" ? (pl.tg === "pirate" ? "pir" : "esc") : i.t; };
+// リードの色：最初の「逃走以外」のカードが数字ならその色、キャラクターなら色なし
+function kgLeadSuit(plays){
+  for (const pl of plays){ const k = kgKind(pl); if (k === "esc") continue; if (k === "num") return kgInfo(pl.c).s; return null; }
+  return null;
+}
+function kgLegal(hand, plays, c){
+  const i = kgInfo(c); if (i.t !== "num") return true;
+  const ls = kgLeadSuit(plays); if (!ls || i.s === ls) return true;
+  return !hand.some(x => { const j = kgInfo(x); return j.t === "num" && j.s === ls; });
+}
+// トリックの勝者とボーナス
+function kgResolve(plays){
+  const ks = plays.map(kgKind), idx = k => ks.indexOf(k), all = k => ks.filter(x => x === k).length;
+  let w = -1, why = "", bonus = 0;
+  if (idx("king") >= 0){
+    if (idx("mer") >= 0){ w = idx("mer"); why = "mermaid"; bonus += 40; }
+    else { w = idx("king"); why = "king"; bonus += 30 * all("pir"); }
+  } else if (idx("pir") >= 0){ w = idx("pir"); why = all("mer") ? "pirmer" : "pirate"; bonus += 20 * all("mer"); }
+  else if (idx("mer") >= 0){ w = idx("mer"); why = "mer"; }
+  else {
+    const nums = plays.map((pl, i) => ({ i, ...kgInfo(pl.c), k: ks[i] })).filter(x => x.k === "num");
+    if (!nums.length) w = 0, why = "escape";
+    else {
+      const blacks = nums.filter(x => x.s === "b");
+      const pool = blacks.length ? blacks : nums.filter(x => x.s === kgLeadSuit(plays));
+      w = pool.reduce((a, b) => b.r > a.r ? b : a).i; why = blacks.length ? "trump" : "high";
+    }
+  }
+  plays.forEach(pl => { const i = kgInfo(pl.c); if (i.t === "num" && i.r === 14) bonus += i.s === "b" ? 20 : 10; });
+  return { w, why, bonus };
+}
+const kgGames = () => db.kg_games || [];
+const kgActive = () => kgGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const kgById = id => kgGames().find(g => g.id === id);
+const kgCards = g => Math.min(g.round || 1, Math.floor(70 / g.players.length));
+const kgNext = (g, pid) => g.players[(g.players.indexOf(pid) + 1) % g.players.length];
+function kgMyTurn(g){
+  if (!g || g.status !== "playing" || !me || !g.players.includes(me)) return false;
+  if (g.phase === "bid") return (g.bids || {})[me] == null;
+  return g.phase === "play" && !!g.turn && g.turn.pid === me;
+}
+function kgDeal(g, round){
+  const d = shuffle(kgDeck()), n = Math.min(round, Math.floor(70 / g.players.length)), hands = {};
+  g.players.forEach((p, i) => { hands[p] = d.slice(i * n, i * n + n); });
+  return hands;
+}
+async function kgCommit(id, fn){
+  for (let tries = 0; tries < 5; tries++){
+    const g = kgById(id); if (!g) return false;
+    const r = fn(g); if (!r) return false;
+    const body = { ...r.patch, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
+    if (r.log){ const lg = (g.log || []).slice(), now = Date.now(); [].concat(r.log).forEach((m, i) => lg.push({ t: new Date(now + i).toISOString(), m })); body.log = lg.slice(-60); }
+    const { data, error } = await sb.from("kg_games").update(body).eq("id", id).eq("version", g.version || 1).select();
+    if (error){ fail(error, "保存"); return false; }
+    if (data && data.length){ Object.assign(g, data[0]); drawKg(); (r.push || []).forEach(to => pushCall({ type: "game_turn", game: "スカルキング", to })); return true; }
+    await loadTable("kg_games");
+  }
+  drawKg(); toast("混み合っています。もう一度タップしてください", 2000); return false;
+}
+function openKgNew(){
+  const t = curTrip();
+  let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 8);
+  const s = openSheet("スカルキングを始める", `
+    <p class="note">何回勝てるかをぴったり当てるトリックテイキング。全10ラウンド、1ラウンドごとに配る枚数が増えていく。合計点で勝負（2〜8人）。</p>
+    <button type="button" class="grbtn" data-grule="kg">ルールを見る</button>
+    <div class="f"><span>参加者（タップで選ぶ・最大8人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="gOrder" class="norder"></div><button class="shufbtn" id="gShuf">順番をシャッフル</button></div>
+    <div class="btns"><button class="btn" id="gGo">出航する</button></div>`);
+  s.querySelector("[data-close]").onclick = openGames;
+  const draw = () => { $("#gOrder").innerHTML = seatHtml(order); seatDrag($("#gOrder"), () => order, o => order = o, draw); };
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
+    if (on && order.length >= 8){ toast("最大8人です"); return; }
+    b.setAttribute("aria-pressed", String(on)); order = on ? [...order, id] : order.filter(x => x !== id); draw();
+  });
+  $("#gShuf").onclick = () => { order = shuffle(order); draw(); };
+  draw();
+  $("#gGo").onclick = async () => {
+    if (order.length < 2 || order.length > 8){ toast("参加者は2〜8人です"); return; }
+    const g0 = { players: order };
+    const row = { trip_id: t ? t.id : null, status: "playing", players: order, round: 1, phase: "bid", hands: kgDeal(g0, 1), bids: {}, won: {}, bonus: {},
+      trick: { plays: [] }, last: null, turn: { pid: order[0], start: order[0] }, scores: {}, history: [], created_by: me || null,
+      log: [{ t: new Date().toISOString(), m: `出航！第1ラウンド。全員、勝てる回数を予想しよう` }] };
+    const res = await q(sb.from("kg_games").insert(row).select().single(), "作成");
+    if (res){ await loadTable("kg_games"); closeSheet(); openKg(res.id); order.forEach(p => pushCall({ type: "game_turn", game: "スカルキング", to: p })); }
+  };
+}
+let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null;
+function openKg(id){ kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
+function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
+
+/* ---- 操作 ---- */
+function kgBid(n){
+  return kgCommit(kgId, g => {
+    if (g.status !== "playing" || g.phase !== "bid" || !g.players.includes(me)) return null;
+    if ((g.bids || {})[me] != null) return null;
+    const bids = { ...(g.bids || {}), [me]: n };
+    if (g.players.every(p => bids[p] != null)){
+      const st = g.turn.start;
+      return { patch: { bids, phase: "play", trick: { plays: [] }, turn: { pid: st, start: st } },
+        log: [`${pname(me)}が予想した`, `ヨーホーホー！ 予想：${g.players.map(p => `${pname(p)}${bids[p]}`).join("・")}`, `最初は${pname(st)}から`], push: [st] };
+    }
+    return { patch: { bids }, log: `${pname(me)}が予想した` };
+  });
+}
+function kgPlay(c, tg){
+  return kgCommit(kgId, g => {
+    if (!kgMyTurn(g) || g.phase !== "play") return null;
+    const hand = (g.hands || {})[me] || [], plays = (g.trick || {}).plays || [];
+    if (!hand.includes(c) || !kgLegal(hand, plays, c)) return null;
+    const np = [...plays, { p: me, c, ...(c === "tig" ? { tg: tg || "escape" } : {}) }];
+    const hands = { ...g.hands, [me]: hand.filter(x => x !== c) };
+    const lbl = kgLabel(c, tg);
+    if (np.length < g.players.length){
+      const nx = kgNext(g, me);
+      return { patch: { hands, trick: { plays: np }, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}：${lbl}`, push: [nx] };
+    }
+    // トリック決着
+    const { w, why, bonus } = kgResolve(np), wp = np[w].p;
+    const won = { ...(g.won || {}), [wp]: ((g.won || {})[wp] || 0) + 1 };
+    const bon = { ...(g.bonus || {}), [wp]: ((g.bonus || {})[wp] || 0) + bonus };
+    const tag = { mermaid: "🧜‍♀️マーメイドがスカルキングを捕獲！", king: np.some(x => kgKind(x) === "pir") ? "👑スカルキングが海賊を一掃！" : "", pirmer: "⚔️海賊がマーメイドを捕獲！" }[why] || "";
+    const lines = [`${pname(me)}：${lbl}`, `${pname(wp)}がトリックを獲得${tag ? "　" + tag : ""}${bonus ? `（ボーナス+${bonus}）` : ""}`];
+    const last = { plays: np, w, why, bonus };
+    if (Object.values(hands).every(h => !h.length)){
+      // ラウンド終了：得点計算
+      const n = kgCards(g), scores = { ...(g.scores || {}) }, rows = {};
+      g.players.forEach(p => {
+        const b = g.bids[p] || 0, x = won[p] || 0;
+        const pts = b === 0 ? (x === 0 ? 10 * n : -10 * n) : (x === b ? 20 * b + (bon[p] || 0) : -10 * Math.abs(x - b));
+        rows[p] = { bid: b, won: x, pts, bonus: x === b ? (bon[p] || 0) : 0 }; scores[p] = (scores[p] || 0) + pts;
+      });
+      const history = [...(g.history || []), { round: g.round, rows }];
+      lines.push(`第${g.round}ラウンド終了：${g.players.map(p => `${pname(p)}${rows[p].pts >= 0 ? "+" : ""}${rows[p].pts}`).join("・")}`);
+      const fin = g.round >= 10;
+      if (fin){ const wn = g.players.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0]; lines.push(`${pname(wn)}が優勝！`); return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, scores, history, phase: "roundend", status: "finished", winner: wn }, log: lines }; }
+      return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, scores, history, phase: "roundend" }, log: lines };
+    }
+    return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, turn: { ...g.turn, pid: wp } }, log: lines, push: [wp] };
+  });
+}
+function kgNextRound(){
+  return kgCommit(kgId, g => {
+    if (g.status !== "playing" || g.phase !== "roundend") return null;
+    const r = (g.round || 1) + 1, st = kgNext(g, g.turn.start);
+    return { patch: { round: r, phase: "bid", hands: kgDeal(g, r), bids: {}, won: {}, bonus: {}, trick: { plays: [] }, last: null, turn: { pid: st, start: st } },
+      log: `第${r}ラウンド（${Math.min(r, Math.floor(70 / g.players.length))}枚）。全員、勝てる回数を予想しよう`, push: g.players };
+  });
+}
+function kgLabel(c, tg){
+  const i = kgInfo(c);
+  if (i.t === "num") return `${KG_SUITS[i.s].i}${i.r}`;
+  if (i.t === "tig") return `🐯ティグレス（${tg === "pirate" ? "海賊" : "逃走"}）`;
+  return { esc: "🏳️逃走", pir: "⚔️海賊", king: "👑スカルキング", mer: "🧜‍♀️マーメイド" }[i.t];
+}
+function kgCard(c, cls = "", extra = "", tg){
+  const i = kgInfo(c);
+  if (i.t === "num") return `<span class="kgc s-${i.s} ${cls}" ${extra}><i class="ci">${KG_SUITS[i.s].i}</i><b class="${i.r >= 10 ? "len2" : ""}">${i.r}</b><i class="ci br">${KG_SUITS[i.s].i}</i></span>`;
+  const sp = KG_SP[i.t];
+  return `<span class="kgc sp sp-${i.t} ${cls}" ${extra}><em>${sp.i}</em><small>${tg ? (tg === "pirate" ? "PIRATE" : "ESCAPE") : sp.t}</small></span>`;
+}
+
+/* ---- 演出 ---- */
+function kgFx(kind, opt = {}){
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const ms = { yoho: 2800, trick: 1300, king: 2600, mermaid: 2800, pirmer: 2200, round: 2600 }[kind] || 1500;
+  let html = "";
+  const burst = (n, chars, dist = 260) => Array.from({ length: n }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(90, dist); return `<i class="su" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d - 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;--c:#fff;--d:${rnd(0, .25).toFixed(2)}s;--s:${rnd(.6, 1.4).toFixed(2)};-webkit-text-stroke:0">${chars[i % chars.length]}</i>`; }).join("");
+  if (kind === "yoho"){
+    const w = ["ヨー", "ホー", "ホー！"];
+    html = `<span class="seawash"></span><div class="waves"><i></i><i></i><i></i></div><div class="yoho">${w.map((x, i) => `<b style="--d:${(.15 + i * .45).toFixed(2)}s">${x}</b>`).join("")}</div>
+      <div class="bids">${(opt.bids || []).map((b, i) => `<span style="--pc:${b.c};--d:${(1.5 + i * .08).toFixed(2)}s"><small>${esc(b.n)}</small><b>${b.v}</b></span>`).join("")}</div>`;
+  } else if (kind === "trick"){
+    html = `<div class="tx"><small style="background:${opt.c}">${esc(opt.name)} が獲得</small>${opt.bonus ? `<b class="bn">+${opt.bonus}</b>` : ""}</div>`;
+  } else if (kind === "king"){
+    html = `<span class="kwash"></span>${burst(26, ["💀", "⚔️", "💰"], 320)}<div class="tx" style="animation:none"><span class="kbig">💀</span><span class="kcrown">👑</span><div class="bigt">${["SKULL", "KING"].map((c, i) => `<span style="--d:${(.3 + i * .2).toFixed(2)}s">${c}</span>`).join("")}<span class="ex" style="--d:.7s">!!</span></div><div class="who"><i style="color:${opt.c}">●</i> ${esc(opt.name)}${opt.bonus ? ` +${opt.bonus}` : ""}</div></div>`;
+  } else if (kind === "mermaid"){
+    const bub = Array.from({ length: 40 }, () => `<i class="bub" style="left:${rnd(0, 100).toFixed(1)}%;--s:${rnd(.5, 1.6).toFixed(2)};--d:${rnd(0, 1.2).toFixed(2)}s;--t:${rnd(1.6, 2.6).toFixed(2)}s"></i>`).join("");
+    html = `<span class="mwash"></span>${bub}<div class="waves"><i></i><i></i><i></i></div><div class="tx" style="animation:none"><span class="kbig mer">🧜‍♀️</span><div class="bigt">${["MER", "MAID"].map((c, i) => `<span style="--d:${(.3 + i * .2).toFixed(2)}s">${c}</span>`).join("")}<span class="ex" style="--d:.7s">!!</span></div><div class="who"><i style="color:${opt.c}">●</i> ${esc(opt.name)} がスカルキングを捕獲 +40</div></div>`;
+  } else if (kind === "pirmer"){
+    html = `<span class="bg"></span>${burst(18, ["⚔️", "🧜‍♀️", "💥"], 260)}<div class="tx"><b>⚔️ 捕獲!</b><small>${esc(opt.name)} がマーメイドを捕獲 +${opt.bonus}</small></div>`;
+  } else if (kind === "round"){
+    html = `<span class="seawash soft"></span><div class="rtab"><b class="rt">ROUND ${opt.round} 終了</b>${(opt.rows || []).map((r, i) => `<span class="${r.hit ? "rh" : "rm"}" style="--pc:${r.c};--d:${(.3 + i * .12).toFixed(2)}s"><b>${esc(r.n)}</b><small>予想${r.bid}・獲得${r.won}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em></span>`).join("")}</div>`;
+  }
+  document.querySelectorAll(".sbfx").forEach(x => x.remove());
+  const fx = document.createElement("div"); fx.className = "sbfx kg-" + kind; fx.style.cssText = `--pc:${opt.c || "#1FB3BF"};--ms:${ms}ms`;
+  fx.innerHTML = html; document.body.appendChild(fx);
+  const a = $("#kgg");
+  if (kind === "yoho"){ [150, 600, 1050].forEach(t => setTimeout(() => { if (a){ a.classList.remove("knock"); void a.offsetWidth; a.classList.add("knock"); } }, t)); }
+  if ((kind === "king" || kind === "mermaid") && a){ a.classList.remove("quake2"); void a.offsetWidth; a.classList.add("quake2"); setTimeout(() => a.classList.remove("quake2"), 950); }
+  try { if (navigator.vibrate) navigator.vibrate(kind === "yoho" ? [60, 390, 60, 390, 140] : kind === "king" || kind === "mermaid" ? [80, 50, 160] : 30); } catch (e) {}
+  setTimeout(() => fx.remove(), ms);
+}
+function kgDiff(g){
+  const log = g.log || [], last = log[log.length - 1];
+  const prev = kgPrev && kgPrev.id === g.id ? kgPrev : null;
+  kgPrev = { id: g.id, lastT: last ? last.t : null };
+  if (!prev) return;
+  const k = prev.lastT ? log.findIndex(x => x.t === prev.lastT) : -1;
+  const lines = (k >= 0 ? log.slice(k + 1) : (last && last.t !== prev.lastT ? [last] : [])).map(x => x.m);
+  if (!lines.length) return;
+  let t = 30;
+  if (lines.some(m => /^ヨーホーホー/.test(m))){
+    const bids = g.players.map(p => ({ n: pname(p), c: pcolor(p), v: (g.bids || {})[p] }));
+    setTimeout(() => kgFx("yoho", { bids }), t); return;
+  }
+  const tl = lines.find(m => /がトリックを獲得/.test(m));
+  if (tl && g.last){
+    const wp = g.last.plays[g.last.w].p, o = { name: pname(wp), c: pcolor(wp), bonus: g.last.bonus };
+    const kind = g.last.why === "mermaid" ? "mermaid" : g.last.why === "king" && g.last.bonus >= 30 ? "king" : g.last.why === "pirmer" ? "pirmer" : "trick";
+    setTimeout(() => kgFx(kind, o), t); t += kind === "trick" ? 1300 : 2700;
+  }
+  if (lines.some(m => /ラウンド終了/.test(m))){
+    const h = (g.history || []).slice(-1)[0];
+    if (h){ const rows = g.players.map(p => ({ n: pname(p), c: pcolor(p), ...h.rows[p], hit: h.rows[p].bid === h.rows[p].won })); setTimeout(() => kgFx("round", { round: h.round, rows }), t); t += 2700; }
+  }
+  if (g.status === "finished" && lines.some(m => /優勝/.test(m))) setTimeout(() => sbFx("win", g.winner, "", "", ["優", "勝"]), t);
+}
+
+/* ---- 画面 ---- */
+function drawKg(){
+  if (!kgId) return;
+  const g = kgById(kgId); if (!g) return closeKg();
+  kgDiff(g);
+  const el = $("#kgg"), t = g.turn || {}, ph = g.phase, playing = g.status === "playing";
+  const inGame = g.players.includes(me), mt = kgMyTurn(g), n = kgCards(g);
+  const bids = g.bids || {}, won = g.won || {}, plays = (g.trick || {}).plays || [];
+  const bidsOpen = ph !== "bid";
+  // 座席：予想と獲得
+  const seats = g.players.map(p => {
+    const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
+    const b = bids[p], w = won[p] || 0;
+    const info = !bidsOpen ? (b != null ? "予想済" : "考え中") : `<b class="bw ${w === b ? "eq" : w > b ? "ov" : ""}">${w}/${b}</b>`;
+    return `<div class="np ${on ? "on" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "bid" ? "待" : "今"}</em>` : ""}<b>${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${info}</small></span><small class="kpt">${g.scores && g.scores[p] != null ? g.scores[p] : 0}点</small></div>`;
+  }).join(`<span class="nar">›</span>`);
+  // テーブル：全員が卓を囲み、出したカードは各自の前に置かれる（トリックテイキングの卓）
+  const show = plays.length ? plays : (g.last && ph !== "bid" ? g.last.plays : []);
+  const isLast = !plays.length && g.last && ph !== "bid";
+  const lead = kgLeadSuit(show);
+  const curW = show.length ? (isLast ? g.last.w : kgResolve(show).w) : -1;
+  const wPl = curW >= 0 ? show[curW] : null;
+  const N = g.players.length, base = Math.max(0, g.players.indexOf(me));
+  const order = inGame ? Array.from({ length: N }, (_, k) => g.players[(base + k) % N]) : g.players.slice();
+  const pips = p => {
+    if (!bidsOpen) return `<span class="pips q">${bids[p] != null ? "✓" : "…"}</span>`;
+    const b = bids[p] || 0, w = won[p] || 0;
+    if (b === 0) return `<span class="pips z ${w ? "over" : "ok"}">0${w ? `<i class="x">+${w}</i>` : ""}</span>`;
+    return `<span class="pips">${Array.from({ length: Math.max(b, w) }, (_, k) => `<i class="${k < Math.min(w, b) ? "f" : k < b ? "e" : "x"}"></i>`).join("")}</span>`;
+  };
+  const seatsT = order.map((p, k) => {
+    const mine = inGame && k === 0;
+    const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
+    const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 52 + Math.sin(r) * 40;
+    const pl = show.find(x => x.p === p), wi = pl && show.indexOf(pl) === curW;
+    const cx = 50 + (sx - 50) * .5, cy = 52 + (sy - 52) * .5;
+    const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
+    const isLead = show.length && show[0].p === p;
+    const ord = pl ? show.indexOf(pl) + 1 : 0;
+    return `<div class="ks ${mine ? "kme" : ""} ${on ? "on" : ""}" style="--x:${sx.toFixed(1)}%;--y:${sy.toFixed(1)}%;--pc:${pcolor(p)}">
+        <b class="nm">${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b>${pips(p)}</div>
+      ${pl ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${wi ? `<span class="crown">${isLast ? "🏆" : "👑"}</span>` : ""}${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 6 ? "mini" : "", "", pl.tg)}</div>` : ""}`;
+  }).join("");
+  // 強さの早見表：今いちばん強いカードの段が光る
+  const tier = !wPl ? "" : (() => { const k2 = kgKind(wPl); if (k2 === "num") return kgInfo(wPl.c).s === "b" ? "b" : "lead"; return k2; })();
+  const hl = k2 => tier === k2 ? "hl" : "";
+  const ladder = `<div class="ladder2">
+    <div class="lcol cyc"><svg class="arr" viewBox="0 0 120 70" aria-hidden="true"><defs><marker id="kgah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1F8C8C"/></marker></defs>
+        <path d="M70 13Q92 12 98 30" stroke="#1F8C8C" stroke-width="4" fill="none" marker-end="url(#kgah)"/>
+        <path d="M92 52Q78 64 56 60" stroke="#1F8C8C" stroke-width="4" fill="none" marker-end="url(#kgah)"/>
+        <path d="M28 44Q24 28 40 16" stroke="#1F8C8C" stroke-width="4" fill="none" marker-end="url(#kgah)"/></svg>
+      <span class="lc c-king ${hl("king")}">👑<small>キング</small></span><span class="lc c-pir ${hl("pir")}">⚔️<small>海賊</small><em>🐯</em></span><span class="lc c-mer ${hl("mer")}">🧜‍♀️<small>マーメイド</small></span></div>
+    <i class="lgo">›</i>
+    <div class="lcol num"><b class="lt">数字・マストフォロー</b><div class="lrow"><span class="lc c-b ${hl("b")}">🏴‍☠️<small>黒(切り札)</small></span><i>›</i><span class="lc c-ld ${hl("lead")}">${lead ? KG_SUITS[lead].i : "🦜💰🗺️"}<small>リード色</small></span></div></div>
+    <i class="lgo">›</i>
+    <div class="lcol"><span class="lc c-esc">🏳️<small>逃走</small></span></div>
+    <span class="lbar"><b>強</b><i></i><b>弱</b></span>
+  </div>`;
+  const tno = Math.min(n, Object.values(won).reduce((a, b) => a + b, 0) + (plays.length || ph === "play" ? 1 : 0));
+  const info = `<div class="kginfo"><span>🃏 ${n}枚ラウンド</span>${ph === "play" ? `<span>トリック ${Math.max(1, tno)}/${n}</span>` : ""}${isLast ? `<span class="got" style="--pc:${pcolor(g.last.plays[g.last.w].p)}">${esc(pname(g.last.plays[g.last.w].p))} 獲得${g.last.bonus ? ` +${g.last.bonus}` : ""}</span>` : ph === "bid" ? `<span>予想 ${g.players.filter(p => bids[p] != null).length}/${N}</span>` : ""}</div>`;
+
+  const table = `<div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><span class="ring"></span>${seatsT}</div>${ladder}</div>`;
+  // 下部
+  let bottom = "";
+  if (ph === "roundend" && (g.history || []).length){
+    const h = g.history[g.history.length - 1];
+    bottom += `<div class="kgres"><b>ROUND ${h.round} の結果</b>${g.players.map(p => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "hit" : "miss"}" style="--pc:${pcolor(p)}"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
+    if (playing) bottom += `<div class="nbtns one"><button class="nb end big2 go" id="kgNext">次のラウンドへ（${Math.min(g.round + 1, 10)}/10）</button></div>`;
+  } else if (playing){
+    const hand = inGame ? ((g.hands || {})[me] || []).slice() : [];
+    const order = { y: 1, g: 2, p: 3, b: 4 };
+    hand.sort((a, b) => { const A = kgInfo(a), B = kgInfo(b); const ka = A.t === "num" ? order[A.s] * 100 + A.r : 1000 + ["esc", "tig", "pir", "mer", "king"].indexOf(A.t), kb = B.t === "num" ? order[B.s] * 100 + B.r : 1000 + ["esc", "tig", "pir", "mer", "king"].indexOf(B.t); return ka - kb; });
+    let msg = "";
+    if (!inGame) msg = `<span>観戦モード</span>`;
+    else if (ph === "bid") msg = bids[me] == null ? `<span><b class="tn">あなた</b>：何回勝てる？予想しよう</span>` : `<span>あなたの予想 <b class="tn">${bids[me]}</b>・みんなを待っています</span>`;
+    else msg = mt ? `<span><b class="tn">あなた</b>の番：カードを出そう</span>` : `<span>${turnName(t.pid, false)}</span>`;
+    bottom += `<div class="nturn ${mt ? "mine" : ""}" style="--pc:${pcolor(ph === "play" ? t.pid : me)}">${msg}</div>`;
+    if (inGame){
+      if (kgSel && !hand.includes(kgSel)) kgSel = null;
+      const canPlay = mt && ph === "play";
+      bottom += `<div class="kghand ${hand.length > 6 ? "two" : ""}">${hand.map((c, i) => { const ok = !canPlay || kgLegal(hand, plays, c); return `<button class="kh ${kgSel === c ? "sel" : ""} ${ok ? "" : "ng"}" data-kc="${c}" ${canPlay && ok ? "" : "disabled"}>${kgCard(c)}</button>`; }).join("")}</div>`;
+      if (ph === "bid" && bids[me] == null){
+        if (kgBidSel != null && kgBidSel > n) kgBidSel = null;
+        bottom += `<div class="skbids ${n > 8 ? "sm" : ""}">${Array.from({ length: n + 1 }, (_, v) => `<button class="skb ${kgBidSel === v ? "sel" : ""}" data-kb="${v}">${v}</button>`).join("")}</div>`;
+        bottom += `<div class="nbtns one"><button class="nb end ${kgBidSel != null ? "go" : ""}" id="kgBid" ${kgBidSel != null ? "" : "disabled"}>${kgBidSel != null ? `「${kgBidSel}回」と予想する` : "勝てる回数を選んでね"}</button></div>`;
+      } else if (canPlay){
+        if (kgSel === "tig") bottom += `<div class="nbtns two"><button class="nb draw go" id="kgTigE">🏳️ 逃走として出す</button><button class="nb end go" id="kgTigP">⚔️ 海賊として出す</button></div>`;
+        else bottom += `<div class="nbtns one"><button class="nb end ${kgSel ? "go" : ""}" id="kgPlay" ${kgSel ? "" : "disabled"}>${kgSel ? `${kgLabel(kgSel)} を出す` : "出すカードを選んでね"}</button></div>`;
+      }
+    }
+  }
+  const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
+  let over = "";
+  if (g.status === "finished"){
+    const rank = g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0));
+    over = `<div class="nover" style="--c:${pcolor(g.winner)}"><span class="ob"></span><div class="k">優勝</div><div class="p">${esc(pname(g.winner))}</div><div class="y">${g.scores[g.winner]}点</div><div class="kgrank">${rank.map((p, i) => `<span style="--pc:${pcolor(p)}"><i>${i + 1}</i><b>${esc(pname(p))}</b><em>${g.scores[p]}点</em></span>`).join("")}</div><div class="btns"><button class="btn" id="kgClose2">閉じる</button></div></div>`;
+  }
+  el.innerHTML = `<div class="nbg kgbg" aria-hidden="true">${["⚓", "🏴‍☠️", "💰", "🦜", "⚓", "🗺️", "💀", "🧭"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.18">${x}</i>`).join("")}</div>
+    <div class="ntop"><b class="nt kgt">SKULL KING</b><span class="nrd sbr"><small>ROUND</small><b>${g.round}</b><i>/10</i></span><span class="ndk"></span><button class="nmini" id="kgMenu" aria-label="メニュー">…</button><button class="nmini" id="kgClose" aria-label="閉じる">×</button></div>
+    <div class="nseats2 ${g.players.length >= 5 ? "tight" : ""}">${seats}</div>
+    ${table}
+    <div class="nlogw"><ul class="nlog">${lg}</ul></div>
+    <div class="nbottom">${bottom}</div>${over}`;
+  const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
+  const act = fn => async () => { if (kgBusy) return; kgBusy = true; try { await fn(); } finally { kgBusy = false; } };
+  on("kgClose", closeKg); on("kgClose2", closeKg); on("kgMenu", () => kgMenu(g));
+  on("kgBid", act(async () => { const v = kgBidSel; kgBidSel = null; if (v != null) await kgBid(v); }));
+  on("kgPlay", act(async () => { const c = kgSel; kgSel = null; if (c) await kgPlay(c); }));
+  on("kgTigE", act(async () => { kgSel = null; await kgPlay("tig", "escape"); }));
+  on("kgTigP", act(async () => { kgSel = null; await kgPlay("tig", "pirate"); }));
+  on("kgNext", act(kgNextRound));
+  el.querySelectorAll("[data-kb]").forEach(b => b.onclick = () => { const v = Number(b.dataset.kb); kgBidSel = kgBidSel === v ? null : v; drawKg(); });
+  el.querySelectorAll("[data-kc]").forEach(b => b.onclick = () => { kgSel = kgSel === b.dataset.kc ? null : b.dataset.kc; drawKg(); });
+}
+function kgMenu(g){
+  const s = openSheet("スカルキングのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="score">得点表を見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openGameRules("kg");
+  s.querySelector('[data-x="score"]').onclick = () => {
+    const h = g.history || [];
+    openSheet("得点表", `<div class="kgsheet"><table><tr><th>R</th>${g.players.map(p => `<th style="color:${pcolor(p)}">${esc(pname(p))}</th>`).join("")}</tr>
+      ${h.map(r => `<tr><td>${r.round}</td>${g.players.map(p => { const x = r.rows[p]; return `<td class="${x.bid === x.won ? "hit" : "miss"}"><small>${x.bid}/${x.won}</small>${x.pts >= 0 ? "+" : ""}${x.pts}</td>`; }).join("")}</tr>`).join("")}
+      <tr class="tot"><td>計</td>${g.players.map(p => `<td>${(g.scores || {})[p] || 0}</td>`).join("")}</tr></table><p class="note">小さい数字は「予想/獲得」</p></div>`);
+  };
+  s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await kgCommit(g.id, () => ({ patch: { status: "aborted" }, log: "対戦が中止されました" })); closeKg(); };
+}
+function kgRulesHtml(){
+  const C = c => kgCard(c, "mini");
+  return `
+  <div class="goal"><b>勝つ回数を<span class="r">ぴったり当てる</span>！</b><small>全10ラウンド。ラウンド1は1枚、ラウンド2は2枚…と配る枚数が増えていく。合計点が一番多い人の勝ち。</small></div>
+  <h4>1ラウンドの流れ</h4>
+  <div class="steps">
+    <div class="st"><b class="t">手札を見て「何回勝てるか」を<span class="r">予想</span></b><small>全員がそろったら「ヨーホーホー！」で一斉に公開</small></div>
+    <div class="st"><b class="t">1枚ずつ出して、一番強い人がトリック獲得</b><small>獲得した人が次の最初（リード）</small></div>
+    <div class="st"><b class="t">手札がなくなったら得点計算</b><small>次のラウンドは最初の人が左隣へ移る</small></div>
+  </div>
+  <h4 style="--hc:#E8B12A">色を合わせる（マストフォロー）</h4>
+  <div class="ex">${C("g9")}<span class="op">→</span>${C("g3")}${C("g12")}<span class="ok">OK</span><span class="cap">最初に出た色（リード）を持っていたら<b>必ずその色</b>を出す。持っていなければ何でもOK</span></div>
+  <div class="tip">特殊カード（🏳️⚔️🐯👑🧜‍♀️）は<b>いつでも出せる</b>。</div>
+  <h4 style="--hc:#2A2638">強さ</h4>
+  <div class="kv">
+    <div>${C("b5")}<p><b>黒（海賊旗）＝切り札</b>どの色の数字にも勝つ。黒どうしは大きい方</p></div>
+    <div>${C("y14")}${C("y2")}<p><b>同じ色なら大きい数字</b>リードと違う色の数字は勝てない</p></div>
+    <div>${C("mer1")}<p><b>マーメイド</b>数字（黒含む）に勝つ。<span class="r">スカルキングにも勝つ</span></p></div>
+    <div>${C("pir1")}<p><b>海賊</b>数字とマーメイドに勝つ</p></div>
+    <div>${C("king")}<p><b>スカルキング</b>海賊にも勝つ最強…でもマーメイドに負ける</p></div>
+    <div>${C("esc1")}<p><b>逃走</b>必ず負ける（全員逃走なら最初に出した人）</p></div>
+    <div>${C("tig")}<p><b>ティグレス</b>出すときに<span class="r">海賊</span>か<span class="a">逃走</span>を選ぶ</p></div>
+  </div>
+  <div class="tip">同じ特殊カードが複数出たら<b>先に出した方</b>が勝ち。</div>
+  <h4 style="--hc:#1E9E5A">得点</h4>
+  <table><tr><th>予想</th><th>結果</th></tr>
+    <tr><td>1回以上で<b>ぴったり</b></td><td>予想×20</td></tr>
+    <tr><td>1回以上で外れ</td><td class="r">ずれ×−10</td></tr>
+    <tr><td><b>0回</b>でぴったり</td><td>配った枚数×10</td></tr>
+    <tr><td>0回で外れ</td><td class="r">配った枚数×−10</td></tr></table>
+  <h4 style="--hc:#E2364F">ボーナス（予想ぴったりの時だけ）</h4>
+  <div class="kv">
+    <div>${C("y14")}<p><b>色の14を獲得</b>+10（黒の14は+20）</p></div>
+    <div>${C("pir1")}${C("mer1")}<p><b>海賊でマーメイドを獲得</b>1枚につき+20</p></div>
+    <div>${C("king")}${C("pir1")}<p><b>スカルキングで海賊を獲得</b>1枚につき+30</p></div>
+    <div>${C("mer1")}${C("king")}<p><b>マーメイドでスカルキングを獲得</b>+40</p></div>
+  </div>`;
+}
+
 /* ---------- 起動 ---------- */
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
 $("#gearBtn").onclick = openSettings;
@@ -6009,7 +6619,7 @@ clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
   clearBadge();
-  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); } catch (e) { console.error(e); }
+  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); } catch (e) { console.error(e); }
 });
 (async () => {
   try { await loadAll(); }
