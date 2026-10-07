@@ -1212,6 +1212,7 @@ svg.doll.headonly .dl-legs,svg.doll.headonly .dl-body,svg.doll.headonly .dl-arms
 .cotable.small .cos:not(.cme) .cocard.sp b.l2{font-size:9px}.cotable.small .cos:not(.cme) .cocard.sp b.l2 span:last-child{font-size:12px}
 .cotable.small .cos:not(.cme) .cocard.fox b.l2{font-size:9px}
 /* デュエル演出 */
+.sbfx .iris{position:absolute;left:50%;top:44%;z-index:6;width:130vmax;height:130vmax;transform:translate(-50%,-50%);border-radius:50%;box-shadow:0 0 0 200vmax #000;pointer-events:none;opacity:0}
 .sbfx .tense{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;display:grid;place-items:center}
 .sbfx .tense .hb{position:absolute;inset:0;background:radial-gradient(circle at 50% 44%,transparent 18%,rgba(40,8,20,.82) 62%);animation:hbeat .84s ease-in-out infinite}
 @keyframes hbeat{0%,100%{opacity:.75}12%{opacity:1}24%{opacity:.8}36%{opacity:1}}
@@ -5694,7 +5695,7 @@ function coDuel(r){
   const fx = document.createElement("div"); fx.className = "sbfx co-duel"; fx.style.cssText = `--ms:${ms}ms`;
   const ftr = (p, side, role) => `<div class="ftr ${side}" style="--fc:${pcolor(p)}"><div class="fav"><span class="band"></span><span class="fea">🪶</span><span class="eye"></span></div><span class="wpn">🪓</span><b class="fnm">${esc(pname(p))}</b><small class="frole">${role}</small></div>`;
   fx.innerHTML = `<span class="ground"></span><div class="vs">VS</div>${ftr(L, "L", "コヨーテ！")}${ftr(Rp, "R", `宣言 ${r.n}`)}
-    <div class="tense"><span class="hb"></span><b>…!?</b></div><div class="dsh">${CO_DOLL()}</div><div class="dresult"><b>${r.out ? "KO!!" : "身代わり!!"}</b><small>${esc(pname(loser))}${r.out ? " ダウン…" : " の人形が身代わりに"}</small></div>`;
+    <div class="tense"><span class="hb"></span><b>…!?</b></div><div class="iris"></div><div class="dsh">${CO_DOLL()}</div><div class="dresult"><b>${r.out ? "KO!!" : "身代わり!!"}</b><small>${esc(pname(loser))}${r.out ? " ダウン…" : " の人形が身代わりに"}</small></div>`;
   document.body.appendChild(fx);
   const fL = fx.querySelector(".ftr.L"), fR = fx.querySelector(".ftr.R"), sideOf = p => p === L ? fL : fR;
   const opt = (d, t, e = "ease-out", fill = "none") => ({ duration: d, delay: t, easing: e, fill });
@@ -5735,6 +5736,11 @@ function coDuel(r){
   [fL, fR].forEach((f, i) => f.querySelector(".fav").animate([{ transform: "none" }, { transform: "scale(1.04,.97)" }, { transform: "none" }], { duration: 420, delay: 3050 + i * 90, iterations: 7 }));
   setTimeout(() => { try { if (navigator.vibrate) navigator.vibrate([50, 120, 50, 420, 50, 120, 50, 420, 50, 120, 50, 360, 50, 100, 50]); } catch (e) {} }, 3150);
   const fin = 6050, ld = sideOf(loser), dir = ld === fR ? 1 : -1;
+  // 決め手の直前：真ん中にしぼるアイリスで一瞬ブラックアウト → カットで決着の瞬間へ
+  const iris = fx.querySelector(".iris");
+  iris.animate([{ width: "130vmax", height: "130vmax", opacity: 1, easing: "cubic-bezier(.5,0,.75,.3)" }, { width: "0px", height: "0px", opacity: 1, offset: .6 }, { width: "0px", height: "0px", opacity: 1, offset: .99 }, { width: "0px", height: "0px", opacity: 0 }],
+    { duration: 900, delay: fin - 900, fill: "both" });
+  setTimeout(() => { try { if (navigator.vibrate) navigator.vibrate(30); } catch (e) {} }, fin - 280);
   if (r.out){
     strike(winner, fin, true);
     ld.animate([{ transform: "none" }, { transform: `translate(${dir * 40}px,10px) rotate(${dir * 20}deg)`, offset: .3 }, { transform: `translate(${dir * 60}px,70px) rotate(${dir * 90}deg)`, opacity: .6 }], opt(700, fin + 150, "cubic-bezier(.3,.1,.5,1)", "forwards"));
@@ -5742,7 +5748,7 @@ function coDuel(r){
     // 決め手の直前に、負けた側の前へ藁人形が飛び込んで身代わりに
     const dsh = fx.querySelector(".dsh"), lb = ld === fR ? 74 : 26;
     dsh.style.left = `${lb - dir * 13}%`;
-    dsh.animate([{ transform: "translateY(60vh) rotate(-30deg)", opacity: 1 }, { transform: "translateY(-10px) rotate(4deg)", opacity: 1, offset: .7 }, { transform: "none", opacity: 1 }], opt(300, fin - 260, "cubic-bezier(.2,1.4,.4,1)", "forwards"));
+    dsh.animate([{ transform: "translateY(60vh) rotate(-30deg)", opacity: 1 }, { transform: "translateY(-10px) rotate(4deg)", opacity: 1, offset: .7 }, { transform: "none", opacity: 1 }], opt(220, fin - 240, "cubic-bezier(.2,1.4,.4,1)", "forwards"));
     strike(winner, fin, true);
     dsh.animate([{ transform: "none", opacity: 1 }, { transform: `translate(${dir * 120}px,-160px) rotate(${dir * 400}deg)`, opacity: 1, offset: .45 }, { transform: `translate(${dir * 220}px,60vh) rotate(${dir * 900}deg)`, opacity: 1 }], opt(1100, fin + 160, "cubic-bezier(.2,.6,.4,1)", "forwards"));
     setTimeout(() => {
