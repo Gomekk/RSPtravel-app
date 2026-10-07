@@ -1126,8 +1126,8 @@ svg.doll.headonly .dl-legs,svg.doll.headonly .dl-body,svg.doll.headonly .dl-arms
 .cos .av .fea{position:absolute;right:-10px;top:-14px;font-size:18px;transform:rotate(25deg)}
 .cos .av .sS{position:absolute;left:-10px;bottom:-4px}
 .cos .tagw{margin-top:3px;max-width:84px;padding:1px 8px;border-radius:5px;background:repeating-linear-gradient(0deg,#9A6430 0 3px,#8A5428 3px 6px);border:1.5px solid #3A1E0C;color:#fff;font-size:10.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:inset 0 0 0 1.5px var(--pc)}
-.cos .stk2{position:absolute;right:-4px;bottom:16px;display:flex;gap:0}
-.cos .stk2 .dm{width:13px;height:21px;display:block}
+.cos .stk2{position:absolute;right:-12px;bottom:14px;display:flex;gap:1px}
+.cos .stk2 .dm{width:19px;height:31px;display:block}
 .cos .stk2 .dm svg{width:100%;height:100%;display:block;filter:drop-shadow(0 1px 0 rgba(0,0,0,.6))}
 .cos .stk2 .dm.gone{opacity:.25;filter:grayscale(1)}
 .cos.on .av{animation:avon 1s ease-in-out infinite}
@@ -1146,6 +1146,8 @@ svg.doll.headonly .dl-legs,svg.doll.headonly .dl-body,svg.doll.headonly .dl-arms
 .cotable.small .cos:not(.cme) .cocard b{font-size:18px}.cotable.small .cos:not(.cme) .cocard.sp b{font-size:11px}.cotable.small .cos:not(.cme) .cocard.fox b{font-size:8px}
 .cotable.small .cos:not(.cme) .cocard i{font-size:11px}.cotable.small .cos:not(.cme) .cocard small{display:none}
 .cotable.small .cos:not(.cme) .av{width:38px;height:33px}
+.cotable.small .cos:not(.cme) .stk2{right:-8px}.cotable.small .cos:not(.cme) .stk2 .dm{width:16px;height:26px}
+.cos.cme .stk2{right:-20px}.cos.cme .stk2 .dm{width:22px;height:36px}
 .cotable.small .cos:not(.cme) .tagw{font-size:9.5px;max-width:72px}
 .cotable.camp.rev .cos.cme .cocard:not(.back){animation:cardin .6s cubic-bezier(.2,1.5,.4,1)}
 /* コヨーテ v3：明るい昼の砂漠 */
@@ -5918,7 +5920,7 @@ function drawCo(){
     } else if (mt){
       const lo = (bid ? bid.n : 0) + 1;
       if (coVal == null || coVal < lo) coVal = lo;
-      bottom += `<div class="costep"><button class="cob" data-add="-1" ${coVal <= lo ? "disabled" : ""}>−</button><b class="cov">${coVal}</b><button class="cob" data-add="1">＋</button><button class="cob q" data-add="5">+5</button><button class="cob q" data-add="10">+10</button></div>`;
+      bottom += `<div class="costep"><button class="cob" data-add="-1" ${coVal <= lo ? "disabled" : ""}>−</button><b class="cov">${coVal}</b><button class="cob" data-add="1">＋</button><button class="cob q" data-add="-5" ${coVal - 5 < lo ? "disabled" : ""}>−5</button><button class="cob q" data-add="5">+5</button><button class="cob q" data-add="10">+10</button></div>`;
       bottom += `<div class="nbtns two"><button class="nb lose ${bid ? "pulse" : ""}" id="yCall" ${bid ? "" : "disabled"}>コヨーテ！</button><button class="nb end go" id="yBid">「${coVal}」宣言</button></div>`;
     }
   }
