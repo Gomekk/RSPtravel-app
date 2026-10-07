@@ -1487,6 +1487,23 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kgres2 span em{font-style:normal;font-weight:900;font-size:14px}
 .kgres2 span.rh{background:#EDFAF2}.kgres2 span.rh em{color:#1E9E5A}.kgres2 span.rm em{color:var(--crimson)}
 .kgres2 span strong{text-align:right;font-family:var(--disp);font-weight:400;font-size:15px}
+/* 名前と羅針盤が隠れないように */
+.ks{z-index:6}
+.kp{z-index:4}
+.compass{width:18%;z-index:3}
+.felt.many .compass{width:14%}
+.kp .ld{left:50%;top:auto;bottom:-9px;transform:translateX(-50%)}
+.kp .od{left:-6px;top:-6px}
+/* 手札（重ね並べ）を崩れにくく */
+
+.kghand{height:80px;overflow:visible}
+.kghand .kh{line-height:0}
+.kghand.ov .kgc.sp small{display:none}
+.kghand.ov .kgc.sp em{left:4px;top:5px;font-size:17px}
+.kghand.ov .kgc::before{inset:2px}
+/* 早見表のリード色：緑・黄・紫の3色 */
+.ladder2 .c-ld{background:linear-gradient(115deg,#2DBE60 0 33.4%,#E8B12A 33.4% 66.7%,#8B6CFF 66.7%);border-color:#3A1E0C;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+.ladder2 .c-ld small{color:#fff;-webkit-text-stroke:.3px #1B1838}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -6519,14 +6536,14 @@ function drawKg(){
     const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
     const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 52 + Math.sin(r) * 40;
     const pl = show.find(x => x.p === p), wi = pl && show.indexOf(pl) === curW;
-    const cx = 50 + (sx - 50) * .5, cy = 52 + (sy - 52) * .5;
+    const cf = N >= 5 ? .54 : .6, cx = 50 + (sx - 50) * cf, cy = 52 + (sy - 52) * cf;
     const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 52 + Math.sin(wr) * 40;
     const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
     const isLead = show.length && show[0].p === p;
     const ord = pl ? show.indexOf(pl) + 1 : 0;
     return `<div class="ks ${mine ? "kme" : ""} ${on ? "on" : ""}" data-p="${p}" style="--x:${sx.toFixed(1)}%;--y:${sy.toFixed(1)}%;--pc:${pcolor(p)}">
         <b class="nm">${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b>${pips(p)}${(won[p] || 0) && ph !== "bid" ? `<span class="tstack" style="--n:${Math.min(won[p], 5)}">${Array.from({ length: Math.min(won[p], 5) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>` : ""}</div>
-      ${pl && !swept ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""} ${isLast && sweepNow ? "sweep" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--wx:${wx.toFixed(1)}%;--wy:${wy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 6 ? "mini" : "", "", pl.tg)}</div>` : ""}`;
+      ${pl && !swept ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""} ${isLast && sweepNow ? "sweep" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--wx:${wx.toFixed(1)}%;--wy:${wy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 5 ? "mini" : "", "", pl.tg)}</div>` : ""}`;
   }).join("");
   // 強さの早見表：今いちばん強いカードの段が光る
   const tier = !wPl ? "" : (() => { const k2 = kgKind(wPl); if (k2 === "num") return kgInfo(wPl.c).s === "b" ? "b" : "lead"; return k2; })();
