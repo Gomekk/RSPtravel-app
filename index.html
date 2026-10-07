@@ -1535,11 +1535,12 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 /* ---- スカルキング：ボードを裏返す・早見表・上級ルール ---- */
 .kgflip{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;perspective:1400px}
 .kgflip.fix{flex:none}
-.kg3{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.45,.05,.2,1)}
+.kg3{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
 .kgflip.fix .kg3{flex:none}
-.kgflip.on .kg3{transform:rotateY(180deg)}
-.kg3>.kgtable{-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.kgback{position:absolute;inset:0;transform:rotateY(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;gap:6px;padding:10px 10px 12px;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:20px;border:3px solid var(--ink);
+.kgflip.on .kg3>.kgtable{visibility:hidden;opacity:0}
+.kgflip.on .kgtable .compass,.kgflip.on .kgtable .kp,.kgflip.on .kgtable .ks{display:none}
+.kgflip:not(.on) .kgback{visibility:hidden}
+.kgback{position:absolute;inset:0;display:flex;flex-direction:column;gap:6px;padding:10px 10px 12px;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:20px;border:3px solid var(--ink);
   background:radial-gradient(ellipse at 20% 10%,#FFF8E2,#F3DFB0 55%,#DDB979);box-shadow:inset 0 0 0 3px #D9B04A,inset 0 0 0 6px #5A3416,inset 0 0 40px rgba(120,70,20,.4),0 4px 0 var(--ink)}
 .kgflipb{position:absolute;left:10px;top:8px;z-index:20;padding:4px 10px;border-radius:99px;font-size:11.5px;font-weight:900;color:#3A1E0C;background:rgba(255,248,231,.96);border:2px solid #5A3416;box-shadow:0 2px 0 #5A3416}
 .kgflipb:active{transform:translateY(2px);box-shadow:none}
@@ -6750,7 +6751,7 @@ function drawKg(){
     const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
     const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 50 + Math.sin(r) * 42;
     const pl = show.find(x => x.p === p), wi = pl && show.indexOf(pl) === curW;
-    const cf = N >= 5 ? .6 : .62, cx = 50 + (sx - 50) * cf, cy = 50 + (sy - 50) * (N >= 5 ? .5 : .51);
+    const cf = N >= 5 ? .52 : .54, cx = 50 + (sx - 50) * cf, cy = 50 + (sy - 50) * (N >= 5 ? .5 : .51);
     const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 50 + Math.sin(wr) * 42;
     const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && (pend ? pend.p === p : t.pid === p)));
     const isLead = show.length && show[0].p === p;
@@ -6905,7 +6906,14 @@ function drawKg(){
   on("kgTigE", act(async () => { kgSel = null; await kgPlay("tig", "escape"); }));
   on("kgTigP", act(async () => { kgSel = null; await kgPlay("tig", "pirate"); }));
   on("kgNext", act(kgNextRound));
-  on("kgFlip", () => { kgFlip = !kgFlip; const f = el.querySelector(".kgflip"); if (f){ f.classList.toggle("on", kgFlip); el.querySelector("#kgFlip").textContent = kgFlip ? "🧭 テーブル" : "📜 早見表"; } });
+  // 裏返し：半分回ったところで表と裏を入れ替える（iPhoneでも裏側が透けない）
+  on("kgFlip", () => {
+    const f = el.querySelector(".kgflip"), c = f && f.querySelector(".kg3"); if (!c || f.dataset.busy) return;
+    f.dataset.busy = "1"; kgFlip = !kgFlip;
+    const sw = () => { f.classList.toggle("on", kgFlip); el.querySelector("#kgFlip").textContent = kgFlip ? "🧭 テーブル" : "📜 早見表"; };
+    const a = c.animate([{ transform: "rotateY(0)" }, { transform: "rotateY(90deg)" }], { duration: 260, easing: "ease-in" });
+    a.onfinish = () => { sw(); const b = c.animate([{ transform: "rotateY(-90deg)" }, { transform: "rotateY(0)" }], { duration: 300, easing: "ease-out" }); b.onfinish = () => { delete f.dataset.busy; }; };
+  });
   on("kgPeek", () => {
     const dk = ((g.ex || {}).deck || []).slice(), ord = { y: 1, g: 2, p: 3, b: 4 };
     dk.sort((a, b) => { const A = kgInfo(a), B = kgInfo(b); return (A.t === "num" ? ord[A.s] * 100 + A.r : 1000 + A.t.charCodeAt(0)) - (B.t === "num" ? ord[B.s] * 100 + B.r : 1000 + B.t.charCodeAt(0)); });
