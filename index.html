@@ -1256,8 +1256,8 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .sbfx.co-duel.quake{animation:duelfade var(--ms) forwards,quake .4s ease}
 /* ---- スカルキング ---- */
 .arena.kgg{background:radial-gradient(circle at 50% 20%,rgba(31,179,191,.18),transparent 60%),linear-gradient(170deg,#F7FBFF,#E6F2F6 55%,#CFE3EA)}
-.ntop .nt.kgt{font-size:22px;letter-spacing:.06em;background:linear-gradient(90deg,#1B1838,#C0392B,#E8B12A,#1B1838);background-size:300% 100%;-webkit-background-clip:text;background-clip:text}
-.gic.kgi{background:radial-gradient(circle at 50% 35%,#2A6A8A,#123A52 60%,#0A1E2E);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(31,179,191,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
+.ntop .nt.kgt{font-size:min(5.2vw,21px);white-space:nowrap;letter-spacing:.03em;background:linear-gradient(90deg,#1B1838,#C0392B,#E8B12A,#1B1838);background-size:300% 100%;-webkit-background-clip:text;background-clip:text}
+.gic.kgi{background:linear-gradient(180deg,#5FD0F0,#1F8FBF 60%,#0A5A7A);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(31,179,191,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
 .gic.kgi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .np .kpt{font-size:9px;font-weight:900;color:var(--mute)}
 .np .bw{font-family:var(--disp);font-weight:400;font-size:12px;color:var(--ink)}
@@ -1446,6 +1446,47 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .ladder2 .lbar{position:absolute;left:12px;right:12px;bottom:3px;display:flex;align-items:center;gap:4px}
 .ladder2 .lbar b{font-size:8px;font-weight:900;color:#3A1E0C}
 .ladder2 .lbar i{flex:1;height:4px;border-radius:2px;background:linear-gradient(90deg,#1B1838,rgba(27,24,56,.15));clip-path:polygon(0 0,100% 40%,100% 60%,0 100%)}
+/* スカルキング v3：卓の大きさは固定、下部は固定の高さ */
+.kgg .kgtable{flex:1 1 auto;min-height:0}
+.kgg .nbottom{flex:none;height:178px;justify-content:flex-end}
+.kgg .nlogw{flex:none;height:46px;overflow:hidden;box-sizing:border-box}
+.kgg .nlog li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kgg .nlog li:nth-child(n+3){display:none}
+.kgg .ladder2{transform:scale(.92);margin:0 4px 4px}
+.kghand{position:relative;display:block;height:78px;width:calc(52px + (var(--n) - 1) * var(--step));max-width:100%;margin:0 auto;padding:0}
+.kghand .kh{position:absolute;left:calc(var(--i) * var(--step));bottom:0}
+.kghand .kgc{width:52px;height:72px}
+.kghand.ov .kgc b{position:absolute;left:4px;top:15px;font-size:19px}
+.kghand.ov .kgc b.len2{font-size:15px;letter-spacing:-.06em}
+.kghand.ov .kgc .ci{left:5px;top:3px}
+.kghand.ov .kgc.sp em{position:absolute;left:3px;top:4px;font-size:18px}
+.kghand.ov .kgc.sp small{position:absolute;left:3px;bottom:4px;transform:rotate(-90deg);transform-origin:left bottom;margin-left:9px}
+.kgbids{flex-wrap:nowrap;gap:3px}.kgbids .skb{min-width:26px;padding:0 2px}
+/* 羅針盤 */
+.compass{position:absolute;left:50%;top:52%;width:22%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:2;pointer-events:none;filter:drop-shadow(0 3px 0 rgba(0,0,0,.35))}
+.compass svg{width:100%;height:100%;display:block}
+.compass .needle{position:absolute;inset:0;display:block}
+.compass .needle i{position:absolute;left:50%;top:8%;width:16%;height:46%;margin-left:-8%;background:linear-gradient(90deg,var(--pc) 50%,color-mix(in srgb,var(--pc) 65%,#1B1838) 50%);clip-path:polygon(50% 0,100% 100%,0 100%);filter:drop-shadow(0 0 6px var(--pc))}
+.compass .needle::after{content:"";position:absolute;left:50%;top:50%;width:12%;height:40%;margin-left:-6%;background:#5A3416;clip-path:polygon(0 0,100% 0,50% 100%);opacity:.7}
+.compass .hub{position:absolute;left:50%;top:50%;width:14%;height:14%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6D6,#E8B12A 60%);border:2px solid #5A3416}
+.compass.idle .needle{animation:spin 8s linear infinite;opacity:.55}
+.compass.pt{animation:cmpg 1.4s ease-in-out infinite}
+@keyframes cmpg{50%{filter:drop-shadow(0 3px 0 rgba(0,0,0,.35)) drop-shadow(0 0 12px var(--pc))}}
+.felt .ring::after{display:none}
+.kp.win .kgc{box-shadow:0 0 0 3px var(--pc),0 0 0 6px #FFE38A,0 0 22px #FFE38A,0 3px 0 var(--ink);animation:wglow 1.1s ease-in-out infinite}
+@keyframes wglow{50%{box-shadow:0 0 0 3px var(--pc),0 0 0 6px #FFE38A,0 0 32px #FFB300,0 3px 0 var(--ink)}}
+.kp.done.win .kgc{animation:none}
+.kp.sweep{animation:none}
+.tstack{position:relative;display:block;width:calc(14px + (var(--n) - 1) * 3px);height:12px}
+.tstack i{position:absolute;left:calc(var(--i) * 3px);top:calc(var(--i) * -1px);width:10px;height:13px;border-radius:2px;background:repeating-linear-gradient(45deg,#2A1020 0 2px,#5A2A3A 2px 4px);border:1px solid #E8B12A}
+.kgres2{position:absolute;inset:6% 4%;z-index:6;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:10px;border-radius:16px;background:rgba(255,248,231,.97);border:3px solid #5A3416;box-shadow:0 0 0 4px #D9B04A,0 10px 30px rgba(0,0,0,.45);animation:fadein .4s both}
+.kgres2 .rt{text-align:center;font-family:var(--disp);font-weight:400;font-size:18px;color:#3A1E0C;margin-bottom:4px}
+.kgres2 span{display:grid;grid-template-columns:1fr auto auto 40px;align-items:center;gap:6px;padding:4px 8px;border-radius:9px;background:#fff;border-left:6px solid var(--pc);box-shadow:0 1px 0 rgba(0,0,0,.15);animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both}
+.kgres2 span i{font-style:normal;font-weight:900;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kgres2 span small{font-size:10px;font-weight:900;color:var(--mute);white-space:nowrap}
+.kgres2 span em{font-style:normal;font-weight:900;font-size:14px}
+.kgres2 span.rh{background:#EDFAF2}.kgres2 span.rh em{color:#1E9E5A}.kgres2 span.rm em{color:var(--crimson)}
+.kgres2 span strong{text-align:right;font-family:var(--disp);font-weight:400;font-size:15px}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -4421,14 +4462,7 @@ const GAMES = [
     count: () => coGames().filter(x => x.status === "finished").length,
     active: () => coActive(), start: () => openCoNew(), open: g => openCo(g.id) },
   { id: "kg", name: "スカルキング", desc: "何回勝てるかをぴったり当てるトリックテイキング。全10ラウンド、合計点で勝負", players: "2〜8人", time: "30〜45分",
-    icon: `<span class="gic kgi"><svg viewBox="0 0 64 64" aria-hidden="true">
-      <path d="M0 50q8-5 16 0t16 0 16 0 16 0V64H0z" fill="#1F8FBF"/><path d="M0 54q8-4 16 0t16 0 16 0 16 0" stroke="#E6FAFF" stroke-width="1.5" fill="none" opacity=".8"/>
-      <g transform="rotate(-14 22 34)"><rect x="10" y="16" width="22" height="31" rx="3" fill="#3A3450" stroke="#1B1838" stroke-width="1.8"/><text x="21" y="37" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="13" fill="#FFE38A">14</text></g>
-      <g transform="rotate(10 42 32)"><rect x="30" y="12" width="24" height="34" rx="3" fill="#2A1020" stroke="#1B1838" stroke-width="1.8"/>
-        <circle cx="42" cy="28" r="7" fill="#F3EDE0"/><circle cx="39.4" cy="27.5" r="1.8" fill="#2A1020"/><circle cx="44.6" cy="27.5" r="1.8" fill="#2A1020"/><path d="M38.5 33h7v3h-7z" fill="#F3EDE0"/><path d="M39.8 33v3M42 33v3M44.2 33v3" stroke="#2A1020" stroke-width=".6"/>
-        <path d="M35 21l2.5-4 2.2 3 2.3-4 2.3 4 2.2-3 2.5 4z" fill="#FFD84A" stroke="#8A5A0C" stroke-width=".6"/></g>
-      <path d="M6 8l1.3 2.8 2.8 1.3-2.8 1.3L6 16.2l-1.3-2.8-2.8-1.3 2.8-1.3z" fill="#FFE38A"/>
-    </svg></span>`,
+    icon: `<span class="gic kgi"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 58L54 18" stroke="#C9CED8" stroke-width="3.5" stroke-linecap="round"/><path d="M54 58L10 18" stroke="#C9CED8" stroke-width="3.5" stroke-linecap="round"/><rect x="6" y="54" width="9" height="4" rx="1" fill="#E8B12A" transform="rotate(-42 10 56)"/><rect x="49" y="54" width="9" height="4" rx="1" fill="#E8B12A" transform="rotate(42 54 56)"/><line x1="32" y1="38" x2="51.0" y2="38.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="53.0" cy="38.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="45.4" y2="51.4" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="46.8" cy="52.8" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="32.0" y2="57.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="32.0" cy="59.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="18.6" y2="51.4" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="17.2" cy="52.8" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="13.0" y2="38.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="11.0" cy="38.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="18.6" y2="24.6" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="17.2" cy="23.2" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="32.0" y2="19.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="32.0" cy="17.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="45.4" y2="24.6" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="46.8" cy="23.2" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><circle cx="32" cy="38" r="15" fill="none" stroke="#9A6430" stroke-width="5"/><circle cx="32" cy="38" r="15" fill="none" stroke="#4A2A0C" stroke-width="1"/><circle cx="32" cy="38" r="5" fill="#E8B12A" stroke="#4A2A0C" stroke-width="1.2"/><path d="M18 14l4 8h20l4-8-7 4-7-9-7 9z" fill="#FFD84A" stroke="#8A5A0C" stroke-width="1.2" stroke-linejoin="round"/><circle cx="32" cy="9" r="1.8" fill="#E2364F"/><circle cx="18" cy="13.5" r="1.4" fill="#1FB3BF"/><circle cx="46" cy="13.5" r="1.4" fill="#1FB3BF"/></svg></span>`,
     count: () => kgGames().filter(x => x.status === "finished").length,
     active: () => kgActive(), start: () => openKgNew(), open: g => openKg(g.id) }
 ];
@@ -6293,8 +6327,8 @@ function openKgNew(){
     if (res){ await loadTable("kg_games"); closeSheet(); openKg(res.id); order.forEach(p => pushCall({ type: "game_turn", game: "スカルキング", to: p })); }
   };
 }
-let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null;
-function openKg(id){ kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
+let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
+function openKg(id){ kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
@@ -6371,7 +6405,7 @@ function kgCard(c, cls = "", extra = "", tg){
 /* ---- 演出 ---- */
 function kgFx(kind, opt = {}){
   const rnd = (a, b) => a + Math.random() * (b - a);
-  const ms = { yoho: 2800, trick: 1300, king: 2600, mermaid: 2800, pirmer: 2200, round: 2600 }[kind] || 1500;
+  const ms = { yoho: 4600, trick: 1300, king: 2600, mermaid: 2800, pirmer: 2200, round: 4200 }[kind] || 1500;
   let html = "";
   const burst = (n, chars, dist = 260) => Array.from({ length: n }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(90, dist); return `<i class="su" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d - 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;--c:#fff;--d:${rnd(0, .25).toFixed(2)}s;--s:${rnd(.6, 1.4).toFixed(2)};-webkit-text-stroke:0">${chars[i % chars.length]}</i>`; }).join("");
   if (kind === "yoho"){
@@ -6396,6 +6430,21 @@ function kgFx(kind, opt = {}){
   const a = $("#kgg");
   if (kind === "yoho"){ [150, 600, 1050].forEach(t => setTimeout(() => { if (a){ a.classList.remove("knock"); void a.offsetWidth; a.classList.add("knock"); } }, t)); }
   if ((kind === "king" || kind === "mermaid") && a){ a.classList.remove("quake2"); void a.offsetWidth; a.classList.add("quake2"); setTimeout(() => a.classList.remove("quake2"), 950); }
+  if (kind === "yoho"){
+    fx.querySelectorAll(".seawash,.waves,.yoho").forEach(x => x.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, delay: 3000, fill: "forwards" }));
+    setTimeout(() => {
+      if (!fx.isConnected) return;
+      const seatsEl = [...document.querySelectorAll("#kgg .nseats2 .np")];
+      fx.querySelectorAll(".bids span").forEach((sp, i) => {
+        const tg = seatsEl[i]; if (!tg) return;
+        const a = sp.getBoundingClientRect(), b = tg.getBoundingClientRect();
+        const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
+        sp.style.animation = "none";
+        sp.animate([{ transform: "none", opacity: 1 }, { transform: `translate(${dx * .5}px,${dy * .5 - 30}px) scale(.8)`, opacity: 1, offset: .5 }, { transform: `translate(${dx}px,${dy}px) scale(.35)`, opacity: .2 }], { duration: 900, delay: i * 70, easing: "cubic-bezier(.4,0,.3,1)", fill: "forwards" });
+      });
+      setTimeout(() => document.querySelectorAll("#kgg .nseats2 .np").forEach((x, i) => x.animate([{ transform: "scale(1)" }, { transform: "scale(1.15)" }, { transform: "scale(1)" }], { duration: 380, delay: i * 70 })), 800);
+    }, 3200);
+  }
   try { if (navigator.vibrate) navigator.vibrate(kind === "yoho" ? [60, 390, 60, 390, 140] : kind === "king" || kind === "mermaid" ? [80, 50, 160] : 30); } catch (e) {}
   setTimeout(() => fx.remove(), ms);
 }
@@ -6455,18 +6504,29 @@ function drawKg(){
     if (b === 0) return `<span class="pips z ${w ? "over" : "ok"}">0${w ? `<i class="x">+${w}</i>` : ""}</span>`;
     return `<span class="pips">${Array.from({ length: Math.max(b, w) }, (_, k) => `<i class="${k < Math.min(w, b) ? "f" : k < b ? "e" : "x"}"></i>`).join("")}</span>`;
   };
+  let resOv = "";
+  if (ph === "roundend" && (g.history || []).length){
+    const h = g.history[g.history.length - 1];
+    resOv = `<div class="kgres2"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
+  }
+  const thOf = {}; order.forEach((p, k) => { thOf[p] = 90 + 360 * k / N; });
+  const wSeat = wPl ? thOf[wPl.p] : null;
+  const sweepKey = isLast ? `${g.round}:${Object.values(won).reduce((a, b) => a + b, 0)}` : null;
+  const sweepNow = sweepKey && kgSwept !== sweepKey, swept = sweepKey && kgSwept === sweepKey && kgSweptAt && Date.now() - kgSweptAt > 2600;
+  if (sweepNow){ kgSwept = sweepKey; kgSweptAt = Date.now(); setTimeout(() => { if (kgId) drawKg(); }, 2700); }
   const seatsT = order.map((p, k) => {
     const mine = inGame && k === 0;
     const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
     const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 52 + Math.sin(r) * 40;
     const pl = show.find(x => x.p === p), wi = pl && show.indexOf(pl) === curW;
     const cx = 50 + (sx - 50) * .5, cy = 52 + (sy - 52) * .5;
+    const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 52 + Math.sin(wr) * 40;
     const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
     const isLead = show.length && show[0].p === p;
     const ord = pl ? show.indexOf(pl) + 1 : 0;
-    return `<div class="ks ${mine ? "kme" : ""} ${on ? "on" : ""}" style="--x:${sx.toFixed(1)}%;--y:${sy.toFixed(1)}%;--pc:${pcolor(p)}">
-        <b class="nm">${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b>${pips(p)}</div>
-      ${pl ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${wi ? `<span class="crown">${isLast ? "🏆" : "👑"}</span>` : ""}${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 6 ? "mini" : "", "", pl.tg)}</div>` : ""}`;
+    return `<div class="ks ${mine ? "kme" : ""} ${on ? "on" : ""}" data-p="${p}" style="--x:${sx.toFixed(1)}%;--y:${sy.toFixed(1)}%;--pc:${pcolor(p)}">
+        <b class="nm">${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b>${pips(p)}${(won[p] || 0) && ph !== "bid" ? `<span class="tstack" style="--n:${Math.min(won[p], 5)}">${Array.from({ length: Math.min(won[p], 5) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>` : ""}</div>
+      ${pl && !swept ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""} ${isLast && sweepNow ? "sweep" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--wx:${wx.toFixed(1)}%;--wy:${wy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 6 ? "mini" : "", "", pl.tg)}</div>` : ""}`;
   }).join("");
   // 強さの早見表：今いちばん強いカードの段が光る
   const tier = !wPl ? "" : (() => { const k2 = kgKind(wPl); if (k2 === "num") return kgInfo(wPl.c).s === "b" ? "b" : "lead"; return k2; })();
@@ -6486,12 +6546,13 @@ function drawKg(){
   const tno = Math.min(n, Object.values(won).reduce((a, b) => a + b, 0) + (plays.length || ph === "play" ? 1 : 0));
   const info = `<div class="kginfo"><span>🃏 ${n}枚ラウンド</span>${ph === "play" ? `<span>トリック ${Math.max(1, tno)}/${n}</span>` : ""}${isLast ? `<span class="got" style="--pc:${pcolor(g.last.plays[g.last.w].p)}">${esc(pname(g.last.plays[g.last.w].p))} 獲得${g.last.bonus ? ` +${g.last.bonus}` : ""}</span>` : ph === "bid" ? `<span>予想 ${g.players.filter(p => bids[p] != null).length}/${N}</span>` : ""}</div>`;
 
-  const table = `<div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><span class="ring"></span>${seatsT}</div>${ladder}</div>`;
+  const table = `<div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
+      <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
+      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><i></i></span><span class="hub"></span></div>${seatsT}${resOv}</div>${ladder}</div>`;
   // 下部
   let bottom = "";
   if (ph === "roundend" && (g.history || []).length){
     const h = g.history[g.history.length - 1];
-    bottom += `<div class="kgres"><b>ROUND ${h.round} の結果</b>${g.players.map(p => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "hit" : "miss"}" style="--pc:${pcolor(p)}"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
     if (playing) bottom += `<div class="nbtns one"><button class="nb end big2 go" id="kgNext">次のラウンドへ（${Math.min(g.round + 1, 10)}/10）</button></div>`;
   } else if (playing){
     const hand = inGame ? ((g.hands || {})[me] || []).slice() : [];
@@ -6501,14 +6562,15 @@ function drawKg(){
     if (!inGame) msg = `<span>観戦モード</span>`;
     else if (ph === "bid") msg = bids[me] == null ? `<span><b class="tn">あなた</b>：何回勝てる？予想しよう</span>` : `<span>あなたの予想 <b class="tn">${bids[me]}</b>・みんなを待っています</span>`;
     else msg = mt ? `<span><b class="tn">あなた</b>の番：カードを出そう</span>` : `<span>${turnName(t.pid, false)}</span>`;
-    bottom += `<div class="nturn ${mt ? "mine" : ""}" style="--pc:${pcolor(ph === "play" ? t.pid : me)}">${msg}</div>`;
+    if (!(inGame && ph === "bid" && bids[me] == null)) bottom += `<div class="nturn ${mt ? "mine" : ""}" style="--pc:${pcolor(ph === "play" ? t.pid : me)}">${msg}</div>`;
     if (inGame){
       if (kgSel && !hand.includes(kgSel)) kgSel = null;
       const canPlay = mt && ph === "play";
-      bottom += `<div class="kghand ${hand.length > 6 ? "two" : ""}">${hand.map((c, i) => { const ok = !canPlay || kgLegal(hand, plays, c); return `<button class="kh ${kgSel === c ? "sel" : ""} ${ok ? "" : "ng"}" data-kc="${c}" ${canPlay && ok ? "" : "disabled"}>${kgCard(c)}</button>`; }).join("")}</div>`;
+      const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = step < cw + 2;
+      bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => { const ok = !canPlay || kgLegal(hand, plays, c); return `<button class="kh ${kgSel === c ? "sel" : ""} ${ok ? "" : "ng"}" data-kc="${c}" ${canPlay && ok ? "" : "disabled"} style="--i:${i}">${kgCard(c)}</button>`; }).join("")}</div>`;
       if (ph === "bid" && bids[me] == null){
         if (kgBidSel != null && kgBidSel > n) kgBidSel = null;
-        bottom += `<div class="skbids ${n > 8 ? "sm" : ""}">${Array.from({ length: n + 1 }, (_, v) => `<button class="skb ${kgBidSel === v ? "sel" : ""}" data-kb="${v}">${v}</button>`).join("")}</div>`;
+        bottom += `<div class="skbids sm kgbids">${Array.from({ length: n + 1 }, (_, v) => `<button class="skb ${kgBidSel === v ? "sel" : ""}" data-kb="${v}">${v}</button>`).join("")}</div>`;
         bottom += `<div class="nbtns one"><button class="nb end ${kgBidSel != null ? "go" : ""}" id="kgBid" ${kgBidSel != null ? "" : "disabled"}>${kgBidSel != null ? `「${kgBidSel}回」と予想する` : "勝てる回数を選んでね"}</button></div>`;
       } else if (canPlay){
         if (kgSel === "tig") bottom += `<div class="nbtns two"><button class="nb draw go" id="kgTigE">🏳️ 逃走として出す</button><button class="nb end go" id="kgTigP">⚔️ 海賊として出す</button></div>`;
@@ -6528,6 +6590,29 @@ function drawKg(){
     ${table}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${over}`;
+  // トリック決着：場のカードが勝者の席へ吸い寄せられる
+  const sw = [...el.querySelectorAll(".kp.sweep")];
+  if (sw.length && g.last){
+    const wp = g.last.plays[g.last.w].p, ws = [...el.querySelectorAll(".ks")].find(x => x.dataset.p === wp);
+    if (ws){
+      const b = ws.getBoundingClientRect();
+      sw.forEach((c, i) => {
+        const a = c.getBoundingClientRect(), dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
+        c.animate([{ transform: "translate(-50%,-50%)", opacity: 1 }, { transform: "translate(-50%,-50%)", opacity: 1, offset: .6 },
+          { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.3) rotate(${i % 2 ? 30 : -30}deg)`, opacity: 0 }], { duration: 2500, delay: i * 40, easing: "cubic-bezier(.6,0,.4,1)", fill: "forwards" });
+      });
+      ws.animate([{ transform: "translate(-50%,-50%) scale(1)" }, { transform: "translate(-50%,-50%) scale(1.25)" }, { transform: "translate(-50%,-50%) scale(1)" }], { duration: 450, delay: 2300 });
+    }
+  }
+  // 羅針盤の針：前の向きから今いちばん強いカードの方へ振れる
+  const nd = el.querySelector(".compass .needle");
+  if (nd && nd.dataset.a !== ""){
+    let to = Number(nd.dataset.a), from = kgNeedleA == null ? to - 200 : kgNeedleA;
+    while (to - from > 180) to -= 360; while (from - to > 180) to += 360;
+    nd.style.transform = `rotate(${to}deg)`;
+    if (from !== to) nd.animate([{ transform: `rotate(${from}deg)` }, { transform: `rotate(${to + (to > from ? 14 : -14)}deg)`, offset: .7 }, { transform: `rotate(${to}deg)` }], { duration: 900, easing: "cubic-bezier(.3,1.3,.5,1)" });
+    kgNeedleA = to;
+  }
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (kgBusy) return; kgBusy = true; try { await fn(); } finally { kgBusy = false; } };
   on("kgClose", closeKg); on("kgClose2", closeKg); on("kgMenu", () => kgMenu(g));
