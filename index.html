@@ -5689,7 +5689,7 @@ function coFx(kind, pid, opt = {}){
 /* コヨーテ！の後：言った側と言われた側が向かい合って打ち合い、負けた側が倒れる（人形が残っていれば身代わりが吹き飛ぶ） */
 function coDuel(r){
   const L = r.caller, Rp = r.bidder, loser = r.loser, winner = loser === L ? Rp : L, rnd = (a, b) => a + Math.random() * (b - a);
-  const ms = 6400;
+  const ms = 7700;
   document.querySelectorAll(".sbfx").forEach(x => x.remove());
   const fx = document.createElement("div"); fx.className = "sbfx co-duel"; fx.style.cssText = `--ms:${ms}ms`;
   const ftr = (p, side, role) => `<div class="ftr ${side}" style="--fc:${pcolor(p)}"><div class="fav"><span class="band"></span><span class="fea">🪶</span><span class="eye"></span></div><span class="wpn">🪓</span><b class="fnm">${esc(pname(p))}</b><small class="frole">${role}</small></div>`;
@@ -5731,10 +5731,10 @@ function coDuel(r){
   }, clash + 240);
   // 間：画面が暗くなり、鼓動に合わせて脈打つ。両者は肩で息をする
   const tense = fx.querySelector(".tense");
-  tense.animate([{ opacity: 0 }, { opacity: 1, offset: .12 }, { opacity: 1, offset: .88 }, { opacity: 0 }], { duration: 1700, delay: 3000, fill: "both" });
-  [fL, fR].forEach((f, i) => f.querySelector(".fav").animate([{ transform: "none" }, { transform: "scale(1.04,.97)" }, { transform: "none" }], { duration: 420, delay: 3050 + i * 90, iterations: 4 }));
-  setTimeout(() => { try { if (navigator.vibrate) navigator.vibrate([50, 120, 50, 420, 50, 120, 50]); } catch (e) {} }, 3150);
-  const fin = 4750, ld = sideOf(loser), dir = ld === fR ? 1 : -1;
+  tense.animate([{ opacity: 0 }, { opacity: 1, offset: .12 }, { opacity: 1, offset: .88 }, { opacity: 0 }], { duration: 3000, delay: 3000, fill: "both" });
+  [fL, fR].forEach((f, i) => f.querySelector(".fav").animate([{ transform: "none" }, { transform: "scale(1.04,.97)" }, { transform: "none" }], { duration: 420, delay: 3050 + i * 90, iterations: 7 }));
+  setTimeout(() => { try { if (navigator.vibrate) navigator.vibrate([50, 120, 50, 420, 50, 120, 50, 420, 50, 120, 50, 360, 50, 100, 50]); } catch (e) {} }, 3150);
+  const fin = 6050, ld = sideOf(loser), dir = ld === fR ? 1 : -1;
   if (r.out){
     strike(winner, fin, true);
     ld.animate([{ transform: "none" }, { transform: `translate(${dir * 40}px,10px) rotate(${dir * 20}deg)`, offset: .3 }, { transform: `translate(${dir * 60}px,70px) rotate(${dir * 90}deg)`, opacity: .6 }], opt(700, fin + 150, "cubic-bezier(.3,.1,.5,1)", "forwards"));
@@ -5772,8 +5772,8 @@ function coDiff(g){
   if (lines.some(m => /コヨーテ！$/.test(m)) && r){
     setTimeout(() => coFx("howl", r.caller, { small: `${pname(r.caller)}が叫んだ！` }), 30);
     setTimeout(() => coDuel(r), 1900);
-    setTimeout(() => r.out ? coFx("out", r.loser) : coFx("doll", r.loser, { dolls: r.dolls }), 1900 + 6200);
-    if (g.status === "finished") setTimeout(() => sbFx("win", g.winner, "", "", ["勝", "利"]), 1900 + 6200 + (r.out ? 3000 : 3400));
+    setTimeout(() => r.out ? coFx("out", r.loser) : coFx("doll", r.loser, { dolls: r.dolls }), 1900 + 7500);
+    if (g.status === "finished") setTimeout(() => sbFx("win", g.winner, "", "", ["勝", "利"]), 1900 + 7500 + (r.out ? 3000 : 3400));
     return;
   }
   const bl = lines.find(m => /を宣言/.test(m));
