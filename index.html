@@ -1473,8 +1473,8 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .compass.pt{animation:cmpg 1.4s ease-in-out infinite}
 @keyframes cmpg{50%{filter:drop-shadow(0 3px 0 rgba(0,0,0,.35)) drop-shadow(0 0 12px var(--pc))}}
 .felt .ring::after{display:none}
-.kp.win .kgc{box-shadow:0 0 0 3px var(--pc),0 0 0 6px #FFE38A,0 0 22px #FFE38A,0 3px 0 var(--ink);animation:wglow 1.1s ease-in-out infinite}
-@keyframes wglow{50%{box-shadow:0 0 0 3px var(--pc),0 0 0 6px #FFE38A,0 0 32px #FFB300,0 3px 0 var(--ink)}}
+.kp.win .kgc{box-shadow:0 0 0 3px #FFE38A,0 0 22px #FFE38A,0 3px 0 var(--ink);animation:wglow 1.1s ease-in-out infinite}
+@keyframes wglow{50%{box-shadow:0 0 0 3px #FFE38A,0 0 32px #FFB300,0 3px 0 var(--ink)}}
 .kp.done.win .kgc{animation:none}
 .kp.sweep{animation:none}
 .tstack{position:relative;display:block;width:calc(14px + (var(--n) - 1) * 3px);height:12px}
@@ -1513,9 +1513,10 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kgtable .lant{top:52px}
 .kgtable .felt{margin-top:-6px}
 .kgtable .felt .ring{top:6%;bottom:4%}
-.kgc.tb{width:42px;height:58px;border-width:2px;border-radius:7px}
-.kgc.tb b{font-size:23px}.kgc.tb b.len2{font-size:19px}.kgc.tb .ci{font-size:9px;left:4px;top:3px}.kgc.tb .ci.br{right:4px;bottom:3px}
-.kgc.tb.sp em{font-size:21px}.kgc.tb.sp small{font-size:5.5px}
+.kgc.tb{width:36px;height:50px;border-width:2px;border-radius:6px}
+.kgc.tb b{font-size:20px}.kgc.tb b.len2{font-size:16px}.kgc.tb .ci{font-size:8px;left:3px;top:2px}.kgc.tb .ci.br{right:3px;bottom:2px}
+.kgc.tb::before{inset:2px}
+.kgc.tb.sp em{font-size:18px}.kgc.tb.sp small{font-size:4.8px;margin-top:2px}
 .kgc.mini{width:32px;height:44px}
 .kgc.mini b{font-size:17px}.kgc.mini b.len2{font-size:13px}.kgc.mini.sp em{font-size:16px}
 .ks.kme .nm{font-size:10.5px;max-width:78px;padding:1px 8px}
@@ -6558,7 +6559,7 @@ function drawKg(){
     const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
     const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 52 + Math.sin(r) * 40;
     const pl = show.find(x => x.p === p), wi = pl && show.indexOf(pl) === curW;
-    const cf = N >= 5 ? .54 : .6, cx = 50 + (sx - 50) * cf, cy = 52 + (sy - 52) * cf;
+    const cf = N >= 5 ? .54 : .6, cx = 50 + (sx - 50) * cf, cy = 52 + (sy - 52) * (N >= 5 ? .44 : .48);
     const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 52 + Math.sin(wr) * 40;
     const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
     const isLead = show.length && show[0].p === p;
@@ -6605,7 +6606,7 @@ function drawKg(){
     if (inGame){
       if (kgSel && !hand.includes(kgSel)) kgSel = null;
       const canPlay = mt && ph === "play";
-      const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = step < cw + 2;
+      const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
       bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => { const ok = !canPlay || kgLegal(hand, plays, c); return `<button class="kh ${kgSel === c ? "sel" : ""} ${ok ? "" : "ng"}" data-kc="${c}" ${canPlay && ok ? "" : "disabled"} style="--i:${i}">${kgCard(c)}</button>`; }).join("")}</div>`;
       if (ph === "bid" && bids[me] == null){
         if (kgBidSel != null && kgBidSel > n) kgBidSel = null;
