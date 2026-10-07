@@ -1188,6 +1188,56 @@ svg.doll.headonly .dl-legs,svg.doll.headonly .dl-body,svg.doll.headonly .dl-arms
 .cotable .amb-mole .mw{position:absolute;left:-8px;right:-8px;bottom:3px;height:34px;overflow:hidden}
 .cotable .amb-mole .pop{display:block;font-size:24px;line-height:34px;text-align:center}
 .rug{z-index:2}
+/* コヨーテ v4：カードは数字メイン */
+.cocard{width:48px;height:66px;padding:0 4px}
+.cocard b{font-size:28px;line-height:1;letter-spacing:-.02em}
+.cocard b.len2{font-size:23px}
+.cocard b.len3{font-size:18px;letter-spacing:-.04em}
+.cocard b.l2{display:flex;flex-direction:column;align-items:center;font-size:13px;line-height:1.05}
+.cocard b.l2 span:last-child{font-size:17px}
+.cocard .ci{position:absolute;left:4px;top:3px;font-size:10px;line-height:1;opacity:.95}
+.cocard.sp b{font-size:24px}
+.cocard.sp b.len2{font-size:21px}
+.cocard.k-ghost b,.cocard.k-neg b{font-size:inherit}
+.cocard.k-ghost b{font-size:28px}.cocard.k-neg b.len2{font-size:23px}.cocard.k-neg b.len3{font-size:18px}
+.cocard.k-mini{width:34px;height:47px;padding:0 2px}.cocard.k-mini b{font-size:19px}.cocard.k-mini b.len2{font-size:15px}.cocard.k-mini b.len3{font-size:12px}
+.cocard.k-mini b.l2{font-size:8.5px}.cocard.k-mini b.l2 span:last-child{font-size:11px}.cocard.k-mini .ci{font-size:7px;left:2px;top:2px}
+.cotable.small .cos:not(.cme) .cocard{width:38px;height:52px;padding:0 3px}
+.cotable.small .cos:not(.cme) .cocard b{font-size:21px}.cotable.small .cos:not(.cme) .cocard b.len2{font-size:17px}.cotable.small .cos:not(.cme) .cocard b.len3{font-size:13px}
+.cotable.small .cos:not(.cme) .cocard b.l2{font-size:9px}.cotable.small .cos:not(.cme) .cocard b.l2 span:last-child{font-size:12px}
+.cotable.small .cos:not(.cme) .cocard .ci{font-size:8px}
+.cocard.sp b.l2{font-size:13px}.cocard.sp b.l2 span:last-child{font-size:17px}
+.cocard.k-mini.sp b{font-size:16px}.cocard.k-mini.sp b.len2{font-size:13px}.cocard.k-mini.sp b.l2{font-size:8.5px}.cocard.k-mini.sp b.l2 span:last-child{font-size:11px}
+.cotable.small .cos:not(.cme) .cocard.sp b{font-size:19px}.cotable.small .cos:not(.cme) .cocard.sp b.len2{font-size:16px}
+.cotable.small .cos:not(.cme) .cocard.sp b.l2{font-size:9px}.cotable.small .cos:not(.cme) .cocard.sp b.l2 span:last-child{font-size:12px}
+.cotable.small .cos:not(.cme) .cocard.fox b.l2{font-size:9px}
+/* デュエル演出 */
+.sbfx.co-duel{background:radial-gradient(circle at 50% 42%,#FFF3C4,#F7B84B 45%,#C2563A 85%);animation:fxfade var(--ms) forwards}
+.sbfx.co-duel::before{content:"";position:absolute;left:0;right:0;top:54%;height:8px;background:repeating-linear-gradient(90deg,#E2364F 0 12px,#FFE38A 12px 18px,#1FB3BF 18px 30px);opacity:.8}
+.sbfx.co-duel .ground{position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(180deg,#E8A84E,#B8743A);border-top:3px solid #8A5428}
+.sbfx.co-duel .vs{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:3;font-family:var(--disp);font-size:64px;color:#FFE38A;-webkit-text-stroke:3px #7A2A0C;paint-order:stroke fill;filter:drop-shadow(0 5px 0 #7A2A0C);animation:vsin .5s .35s cubic-bezier(.2,1.8,.4,1) both,vsout .3s 1s ease-in forwards}
+@keyframes vsin{0%{transform:translate(-50%,-50%) scale(4) rotate(-20deg);opacity:0}100%{transform:translate(-50%,-50%);opacity:1}}
+@keyframes vsout{to{transform:translate(-50%,-50%) scale(.2);opacity:0}}
+.sbfx .ftr{position:absolute;top:38%;z-index:2;display:flex;flex-direction:column;align-items:center;width:150px;margin-left:-75px}
+.sbfx .ftr.L{left:23%}.sbfx .ftr.R{left:77%}
+.sbfx .ftr .fav{position:relative;width:118px;height:104px;border-radius:50% 50% 44% 44%;background:radial-gradient(circle at 40% 35%,color-mix(in srgb,var(--fc) 70%,#fff),var(--fc) 55%,color-mix(in srgb,var(--fc) 60%,#1B1838));border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink)}
+.sbfx .ftr .fav .band{position:absolute;left:-4px;right:-4px;top:20px;height:17px;background:repeating-linear-gradient(90deg,#E2364F 0 10px,#FFE38A 10px 16px,#1FB3BF 16px 26px);border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
+.sbfx .ftr .fav .fea{position:absolute;top:-30px;font-size:38px}
+.sbfx .ftr.L .fav .fea{right:-14px;transform:rotate(25deg)}.sbfx .ftr.R .fav .fea{left:-14px;transform:rotate(-25deg) scaleX(-1)}
+.sbfx .ftr .fav .eye{position:absolute;top:52px;width:14px;height:14px;border-radius:50%;background:var(--ink)}
+.sbfx .ftr.L .fav .eye{right:18px}.sbfx .ftr.R .fav .eye{left:18px}
+.sbfx .ftr .wpn{position:absolute;top:14px;font-size:58px;transform-origin:50% 90%}
+.sbfx .ftr.L .wpn{right:-22px}.sbfx .ftr.R .wpn{left:-22px;transform:scaleX(-1)}
+.sbfx .ftr .fnm{margin-top:10px;max-width:130px;padding:2px 12px;border-radius:99px;background:var(--fc);color:#fff;font-weight:900;font-size:15px;border:2.5px solid var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbfx .ftr .frole{margin-top:4px;font-size:12px;font-weight:900;padding:1px 10px;border-radius:99px;background:#fff;border:2px solid var(--ink);white-space:nowrap}
+.sbfx .hit{position:absolute;z-index:4;font-style:normal;font-size:70px;line-height:1;margin:-35px 0 0 -35px;pointer-events:none}
+.sbfx .hitfl{position:absolute;inset:0;background:#fff;z-index:5;pointer-events:none}
+.sbfx .dsh{position:absolute;top:33%;z-index:3;width:100px;height:160px;margin-left:-50px;opacity:0}
+.sbfx .dsh svg{width:100%;height:100%;filter:drop-shadow(0 6px 8px rgba(0,0,0,.4))}
+.sbfx .dresult{position:absolute;left:0;right:0;top:72%;z-index:4;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0}
+.sbfx .dresult b{font-family:var(--disp);font-weight:400;font-size:min(16vw,70px);line-height:1;color:#fff;-webkit-text-stroke:3px #7A2A0C;paint-order:stroke fill;filter:drop-shadow(0 5px 0 #7A2A0C)}
+.sbfx .dresult small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;background:#fff;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink)}
+.sbfx.co-duel.quake{animation:fxfade var(--ms) forwards,quake .4s ease}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -5447,10 +5497,13 @@ const CO_INFO = {
 function coCard(c, cls = "", extra = ""){
   if (c == null) return `<span class="cocard back ${cls}" ${extra}><b>?</b></span>`;
   const sp = CO_INFO[c];
-  if (sp) return `<span class="cocard sp ${sp.c} ${cls}" ${extra}><i>${sp.i}</i><b>${sp.t}</b><small>${sp.n}</small></span>`;
-  const v = Number(c);
+  if (sp){
+    const face = c === "max0" ? `<b class="l2"><span>MAX</span><span>→0</span></b>` : `<b class="${sp.t.length >= 2 ? "len2" : ""}">${sp.t}</b>`;
+    return `<span class="cocard sp ${sp.c} ${cls}" ${extra}><i class="ci">${sp.i}</i>${face}</span>`;
+  }
+  const v = Number(c), txt = v < 0 ? "−" + Math.abs(v) : String(v);
   const k = v < 0 ? "k-neg" : v === 0 ? "k-ghost" : v >= 10 ? "k-big" : "k-num";
-  return `<span class="cocard ${k} ${cls}" ${extra}>${v === 0 ? `<i>👻</i>` : v < 0 ? `<i>🪖</i>` : ""}<b>${v < 0 ? "−" + Math.abs(v) : v}</b>${v === 0 ? `<small>おばけ</small>` : ""}</span>`;
+  return `<span class="cocard ${k} ${cls}" ${extra}>${v === 0 ? `<i class="ci">👻</i>` : v < 0 ? `<i class="ci">🪖</i>` : ""}<b class="${txt.length >= 3 ? "len3" : txt.length === 2 ? "len2" : ""}">${txt}</b></span>`;
 }
 // 合計の計算（ほらあなで引いたカードも含めて）。手順を文字で残す
 function coCompute(cards){
@@ -5625,6 +5678,65 @@ function coFx(kind, pid, opt = {}){
   try { if (navigator.vibrate) navigator.vibrate(kind === "doll" ? [0, 700, 120, 40, 220] : kind === "howl" ? [80, 60, 160] : kind === "out" ? [300, 100, 300] : 30); } catch (e) {}
   setTimeout(() => fx.remove(), ms);
 }
+
+/* コヨーテ！の後：言った側と言われた側が向かい合って打ち合い、負けた側が倒れる（人形が残っていれば身代わりが吹き飛ぶ） */
+function coDuel(r){
+  const L = r.caller, Rp = r.bidder, loser = r.loser, winner = loser === L ? Rp : L, rnd = (a, b) => a + Math.random() * (b - a);
+  const ms = 4200;
+  document.querySelectorAll(".sbfx").forEach(x => x.remove());
+  const fx = document.createElement("div"); fx.className = "sbfx co-duel"; fx.style.cssText = `--ms:${ms}ms`;
+  const ftr = (p, side, role) => `<div class="ftr ${side}" style="--fc:${pcolor(p)}"><div class="fav"><span class="band"></span><span class="fea">🪶</span><span class="eye"></span></div><span class="wpn">🪓</span><b class="fnm">${esc(pname(p))}</b><small class="frole">${role}</small></div>`;
+  fx.innerHTML = `<span class="ground"></span><div class="vs">VS</div>${ftr(L, "L", "コヨーテ！")}${ftr(Rp, "R", `宣言 ${r.n}`)}
+    <div class="dsh">${CO_DOLL()}</div><div class="dresult"><b>${r.out ? "KO!!" : "身代わり!!"}</b><small>${esc(pname(loser))}${r.out ? " ダウン…" : " の人形が身代わりに"}</small></div>`;
+  document.body.appendChild(fx);
+  const fL = fx.querySelector(".ftr.L"), fR = fx.querySelector(".ftr.R"), sideOf = p => p === L ? fL : fR;
+  const opt = (d, t, e = "ease-out", fill = "none") => ({ duration: d, delay: t, easing: e, fill });
+  fL.animate([{ transform: "translateX(-120vw)" }, { transform: "none" }], opt(500, 0, "cubic-bezier(.2,1.4,.4,1)", "backwards"));
+  fR.animate([{ transform: "translateX(120vw)" }, { transform: "none" }], opt(500, 0, "cubic-bezier(.2,1.4,.4,1)", "backwards"));
+  const spark = (el, t, big) => setTimeout(() => {
+    if (!fx.isConnected) return;
+    const b = el.getBoundingClientRect(), h = document.createElement("i"); h.className = "hit"; h.textContent = big ? "💥" : ["💥", "⚡", "✴️"][Math.floor(rnd(0, 3))];
+    h.style.left = `${b.left + b.width / 2 + rnd(-14, 14)}px`; h.style.top = `${b.top + 40 + rnd(-14, 14)}px`; fx.appendChild(h);
+    h.animate([{ transform: "scale(.2) rotate(-20deg)", opacity: 1 }, { transform: `scale(${big ? 2.4 : 1.4}) rotate(10deg)`, opacity: 1, offset: .4 }, { transform: `scale(${big ? 2.8 : 1.6})`, opacity: 0 }], { duration: big ? 700 : 450, fill: "forwards" });
+    if (big){ const f = document.createElement("span"); f.className = "hitfl"; fx.appendChild(f); f.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 350, fill: "forwards" }); }
+    fx.classList.remove("quake"); void fx.offsetWidth; fx.classList.add("quake");
+    try { if (navigator.vibrate) navigator.vibrate(big ? [120] : 40); } catch (e) {}
+  }, t);
+  const strike = (att, t, big) => {
+    const a = sideOf(att), d = a === fL ? fR : fL, dir = a === fL ? 1 : -1;
+    a.animate([{ transform: "none" }, { transform: `translateX(${dir * (big ? 90 : 60)}px) rotate(${dir * 10}deg)`, offset: .45 }, { transform: "none" }], opt(big ? 420 : 340, t));
+    a.querySelector(".wpn").animate([{ transform: `rotate(${-dir * 70}deg)${dir < 0 ? " scaleX(-1)" : ""}` }, { transform: `rotate(${dir * 90}deg)${dir < 0 ? " scaleX(-1)" : ""}`, offset: .45 }, { transform: `rotate(0)${dir < 0 ? " scaleX(-1)" : ""}` }], opt(big ? 420 : 340, t));
+    if (!(big && !r.out)) d.animate([{ transform: "none" }, { transform: `translateX(${dir * 34}px) rotate(${dir * 12}deg)`, offset: .4 }, { transform: "none" }], opt(380, t + 150));
+    spark(d, t + 150, big);
+  };
+  // 打ち合い（交互に4回）→ 勝った側の決め手
+  strike(L, 750, false); strike(Rp, 1150, false); strike(L, 1500, false); strike(Rp, 1820, false);
+  const fin = 2350, ld = sideOf(loser), dir = ld === fR ? 1 : -1;
+  if (r.out){
+    strike(winner, fin, true);
+    ld.animate([{ transform: "none" }, { transform: `translate(${dir * 40}px,10px) rotate(${dir * 20}deg)`, offset: .3 }, { transform: `translate(${dir * 60}px,70px) rotate(${dir * 90}deg)`, opacity: .6 }], opt(700, fin + 150, "cubic-bezier(.3,.1,.5,1)", "forwards"));
+  } else {
+    // 決め手の直前に、負けた側の前へ藁人形が飛び込んで身代わりに
+    const dsh = fx.querySelector(".dsh"), lb = ld === fR ? 74 : 26;
+    dsh.style.left = `${lb - dir * 13}%`;
+    dsh.animate([{ transform: "translateY(60vh) rotate(-30deg)", opacity: 1 }, { transform: "translateY(-10px) rotate(4deg)", opacity: 1, offset: .7 }, { transform: "none", opacity: 1 }], opt(380, fin - 380, "cubic-bezier(.2,1.4,.4,1)", "forwards"));
+    strike(winner, fin, true);
+    dsh.animate([{ transform: "none", opacity: 1 }, { transform: `translate(${dir * 120}px,-160px) rotate(${dir * 400}deg)`, opacity: 1, offset: .45 }, { transform: `translate(${dir * 220}px,60vh) rotate(${dir * 900}deg)`, opacity: 1 }], opt(1100, fin + 160, "cubic-bezier(.2,.6,.4,1)", "forwards"));
+    setTimeout(() => {
+      if (!fx.isConnected) return;
+      const b = dsh.getBoundingClientRect();
+      for (let i = 0; i < 40; i++){
+        const st = document.createElement("i"); st.className = "st"; const a = rnd(0, Math.PI * 2), dd = rnd(60, 220);
+        st.style.cssText = `left:${b.left + b.width / 2}px;top:${b.top + b.height / 2}px;--x:${(Math.cos(a) * dd).toFixed(0)}px;--y:${(Math.sin(a) * dd - 40).toFixed(0)}px;--r:${rnd(-700, 700).toFixed(0)}deg;--a:${rnd(0, 180).toFixed(0)}deg;--l:${rnd(10, 26).toFixed(0)}px;--c:${["#D9B26A", "#E3C27C", "#B88A3E", "#F0D58F"][i % 4]};--d:0s;--t:${rnd(1.1, 1.6).toFixed(2)}s`;
+        fx.appendChild(st);
+      }
+    }, fin + 150);
+  }
+  // 勝った側は勝ちポーズ
+  sideOf(winner).animate([{ transform: "none" }, { transform: "translateY(-24px) scale(1.08)", offset: .5 }, { transform: "none" }], { duration: 500, delay: fin + 700, iterations: 2 });
+  fx.querySelector(".dresult").animate([{ opacity: 0, transform: "scale(2.5)" }, { opacity: 1, transform: "scale(.9)", offset: .6 }, { opacity: 1, transform: "none" }], opt(450, fin + 400, "cubic-bezier(.2,1.6,.4,1)", "forwards"));
+  setTimeout(() => fx.remove(), ms);
+}
 function coDiff(g){
   const log = g.log || [], last = log[log.length - 1];
   const prev = coPrev && coPrev.id === g.id ? coPrev : null;
@@ -5636,8 +5748,9 @@ function coDiff(g){
   const r = g.result;
   if (lines.some(m => /コヨーテ！$/.test(m)) && r){
     setTimeout(() => coFx("howl", r.caller, { small: `${pname(r.caller)}が叫んだ！` }), 30);
-    setTimeout(() => r.out ? coFx("out", r.loser) : coFx("doll", r.loser, { dolls: r.dolls }), 2350);
-    if (g.status === "finished") setTimeout(() => sbFx("win", g.winner, "", "", ["勝", "利"]), r.out ? 5400 : 5800);
+    setTimeout(() => coDuel(r), 1900);
+    setTimeout(() => r.out ? coFx("out", r.loser) : coFx("doll", r.loser, { dolls: r.dolls }), 1900 + 4000);
+    if (g.status === "finished") setTimeout(() => sbFx("win", g.winner, "", "", ["勝", "利"]), 1900 + 4000 + (r.out ? 3000 : 3400));
     return;
   }
   const bl = lines.find(m => /を宣言/.test(m));
@@ -5661,9 +5774,10 @@ function coAmbient(on){
 }
 function coSpawn(tb, force){
   const W = tb.clientWidth, H = tb.clientHeight, rnd = (a, b) => a + Math.random() * (b - a);
-  const kinds = [["bird", 3], ["flock", 2], ["camel", 2], ["scorp", 2], ["lizard", 2], ["snake", 1], ["mole", 3], ["weed", 1]];
+  const kinds = [["bird", 3], ["camel", 2], ["scorp", 3], ["lizard", 2], ["snake", 2], ["weed", 2]];
   let kind = force;
   if (!kind){ let x = rnd(0, kinds.reduce((a, k) => a + k[1], 0)); for (const [k, w] of kinds){ if ((x -= w) <= 0){ kind = k; break; } } }
+  if (kind === "camel" && tb.querySelector(".amb-camel")) kind = "bird";   // ラクダは同時に1頭まで
   const el = document.createElement("i"); el.className = "amb amb-" + kind;
   const dir = Math.random() < .5 ? 1 : -1;          // 1 = 左から右へ
   const flip = dir > 0 ? " scaleX(-1)" : "";       // 絵文字はほぼ左向きなので、右へ進むときは反転
@@ -5681,7 +5795,7 @@ function coSpawn(tb, force){
     frames = Array.from({ length: 11 }, (_, i) => pos(x0 + (x1 - x0) * i / 10, y + (i % 2 ? -2 : 0)));
   } else if (kind === "scorp" || kind === "lizard"){
     el.textContent = kind === "scorp" ? "🦂" : "🦎";
-    const y = H * rnd(.8, .93); dur = kind === "scorp" ? rnd(7000, 9000) : rnd(4500, 6000);
+    const y = kind === "scorp" ? H * rnd(.5, .7) : H * rnd(.8, .93); dur = kind === "scorp" ? rnd(7000, 9000) : rnd(4500, 6000);
     // ちょこちょこ進んで止まる
     const stops = [0, .18, .26, .5, .58, .82, .9, 1];
     frames = stops.map((t, i) => ({ ...pos(x0 + (x1 - x0) * [0, .3, .3, .55, .55, .8, .8, 1][i], y), offset: t }));
@@ -5758,7 +5872,7 @@ function drawCo(){
   const fire = `<div class="rug ${reveal ? "roar" : ""}"><span class="rz"></span></div>
     <div class="sign"><span class="post"></span><div class="plank">${sign}</div></div>`;
   const table = `<div class="cotable camp day ${reveal ? "rev" : ""} ${small ? "small" : ""}"><span class="sun"></span><span class="cloud c1"></span><span class="cloud c2"></span><span class="mesa m1"></span><span class="mesa m2"></span><span class="mesa m3"></span><span class="dune"></span>${["🌵", "🌵", "🌵", "🪨"].map((x, i) => `<i class="cact" style="left:${[6, 88, 70, 18][i]}%;top:${[46, 44, 92, 93][i]}%;font-size:${[26, 22, 18, 14][i]}px">${x}</i>`).join("")}
-    ${fire}${seats2}${inGame ? seat(me, 50, 86, true) : ""}</div>`;
+    ${fire}${seats2}${inGame ? seat(me, 50, 81, true) : ""}</div>`;
   // 下部
   let bottom = "";
   if (playing || ph === "result"){
