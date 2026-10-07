@@ -1463,7 +1463,7 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kghand.ov .kgc.sp small{position:absolute;left:3px;bottom:4px;transform:rotate(-90deg);transform-origin:left bottom;margin-left:9px}
 .kgbids{flex-wrap:nowrap;gap:3px}.kgbids .skb{min-width:26px;padding:0 2px}
 /* 羅針盤 */
-.compass{position:absolute;left:50%;top:52%;width:22%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:2;pointer-events:none;filter:drop-shadow(0 3px 0 rgba(0,0,0,.35))}
+.compass{position:absolute;left:50%;top:50%;width:22%;aspect-ratio:1/1;transform:translate(-50%,-50%);z-index:2;pointer-events:none;filter:drop-shadow(0 3px 0 rgba(0,0,0,.35))}
 .compass svg{width:100%;height:100%;display:block}
 .compass .needle{position:absolute;inset:0;display:block}
 .compass .needle i{position:absolute;left:50%;top:8%;width:16%;height:46%;margin-left:-8%;background:linear-gradient(90deg,var(--pc) 50%,color-mix(in srgb,var(--pc) 65%,#1B1838) 50%);clip-path:polygon(50% 0,100% 100%,0 100%);filter:drop-shadow(0 0 6px var(--pc))}
@@ -1505,7 +1505,7 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .ladder2 .c-ld{background:linear-gradient(115deg,#2DBE60 0 33.4%,#E8B12A 33.4% 66.7%,#8B6CFF 66.7%);border-color:#3A1E0C;text-shadow:0 1px 2px rgba(0,0,0,.45)}
 .ladder2 .c-ld small{color:#fff;-webkit-text-stroke:.3px #1B1838}
 /* スカルキング v5 */
-.compass .needle svg{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
+.compass .needle svg{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 0 4px rgba(255,210,63,.85))}
 .compass .needle i,.compass .needle::after{display:none}
 .kgtable .kginfo{position:absolute;right:10px;top:8px;margin:0;padding:0;z-index:4}
 .kgtable .kginfo span{font-size:11px;background:rgba(255,248,231,.95)}
@@ -6557,10 +6557,10 @@ function drawKg(){
   const seatsT = order.map((p, k) => {
     const mine = inGame && k === 0;
     const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
-    const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 52 + Math.sin(r) * 40;
+    const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 50 + Math.sin(r) * 38;
     const pl = show.find(x => x.p === p), wi = pl && show.indexOf(pl) === curW;
-    const cf = N >= 5 ? .54 : .6, cx = 50 + (sx - 50) * cf, cy = 52 + (sy - 52) * (N >= 5 ? .44 : .48);
-    const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 52 + Math.sin(wr) * 40;
+    const cf = N >= 5 ? .54 : .6, cx = 50 + (sx - 50) * cf, cy = 50 + (sy - 50) * (N >= 5 ? .44 : .48);
+    const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 50 + Math.sin(wr) * 38;
     const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
     const isLead = show.length && show[0].p === p;
     const ord = pl ? show.indexOf(pl) + 1 : 0;
@@ -6588,7 +6588,7 @@ function drawKg(){
 
   const table = `<div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
       <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
-      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,9 58,50 42,50" style="fill:var(--pc)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#7A5A3A" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div>${ladder}</div>`;
+      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient></defs><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#7A5A3A" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div>${ladder}</div>`;
   // 下部
   let bottom = "";
   if (ph === "roundend" && (g.history || []).length){
