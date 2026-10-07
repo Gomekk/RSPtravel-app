@@ -1404,7 +1404,7 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kp{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);z-index:4;display:flex;flex-direction:column;align-items:center;animation:kpin .45s cubic-bezier(.2,1.5,.4,1) both}
 @keyframes kpin{from{transform:translate(-50%,-50%) translateY(40px) scale(.6);opacity:0}}
 .kp.done{animation:none;opacity:.9}
-.kp.win .kgc{box-shadow:0 0 0 3px #FFE38A,0 0 20px #FFE38A,0 3px 0 var(--ink)}
+.kp.win .kgc{box-shadow:0 3px 0 var(--ink)}
 .kp .crown{position:absolute;top:-22px;font-size:18px;z-index:2;animation:nbeat 1s ease-in-out infinite}
 .kp .ld,.kp .od{position:absolute;left:-8px;top:-8px;z-index:2;font-size:8px;font-weight:900;padding:1px 4px;border-radius:5px;background:var(--pc);color:#fff;border:1.5px solid var(--ink)}
 .kp .od{width:15px;height:15px;padding:0;border-radius:50%;display:grid;place-items:center;font-size:9px}
@@ -1473,7 +1473,7 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .compass.pt{animation:cmpg 1.4s ease-in-out infinite}
 @keyframes cmpg{50%{filter:drop-shadow(0 3px 0 rgba(0,0,0,.35)) drop-shadow(0 0 12px var(--pc))}}
 .felt .ring::after{display:none}
-.kp.win .kgc{box-shadow:0 0 0 3px #FFE38A,0 0 22px #FFE38A,0 3px 0 var(--ink);animation:wglow 1.1s ease-in-out infinite}
+.kp.win .kgc{box-shadow:0 3px 0 var(--ink);animation:none}
 @keyframes wglow{50%{box-shadow:0 0 0 3px #FFE38A,0 0 32px #FFB300,0 3px 0 var(--ink)}}
 .kp.done.win .kgc{animation:none}
 .kp.sweep{animation:none}
@@ -1490,8 +1490,8 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 /* 名前と羅針盤が隠れないように */
 .ks{z-index:6}
 .kp{z-index:4}
-.compass{width:18%;z-index:3}
-.felt.many .compass{width:14%}
+.compass{width:15%;z-index:3}
+.felt.many .compass{width:12.5%}
 .kp .ld{left:50%;top:auto;bottom:-9px;transform:translateX(-50%)}
 .kp .od{left:-6px;top:-6px}
 /* 手札（重ね並べ）を崩れにくく */
@@ -1505,8 +1505,11 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .ladder2 .c-ld{background:linear-gradient(115deg,#2DBE60 0 33.4%,#E8B12A 33.4% 66.7%,#8B6CFF 66.7%);border-color:#3A1E0C;text-shadow:0 1px 2px rgba(0,0,0,.45)}
 .ladder2 .c-ld small{color:#fff;-webkit-text-stroke:.3px #1B1838}
 /* スカルキング v5 */
-.compass .needle svg{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5)) drop-shadow(0 0 4px rgba(255,210,63,.85))}
+.compass .needle svg{position:absolute;inset:0;width:100%;height:100%;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
 .compass .needle i,.compass .needle::after{display:none}
+.compass .needle .glo{animation:kgglo 1s ease-in-out infinite}
+@keyframes kgglo{0%,100%{opacity:.2}50%{opacity:1}}
+.compass.idle .needle .glo{display:none}
 .kgtable .kginfo{position:absolute;right:10px;top:8px;margin:0;padding:0;z-index:4}
 .kgtable .kginfo span{font-size:11px;background:rgba(255,248,231,.95)}
 .kgtable .kginfo b{font-family:var(--disp);font-weight:400;font-size:14px}
@@ -1523,10 +1526,90 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .ks.kme .pips i{width:8px;height:8px}
 .kgtable .felt{display:flex;align-items:center;justify-content:center}
 .kgtable .fwrap{position:relative;flex:none}
-.kgtable .felt .ring{left:8%;right:8%;top:8%;bottom:8%}
+.kgtable .felt .ring{left:4%;right:4%;top:6%;bottom:6%}
+.kgg .kgtable .felt{margin-left:3px;margin-right:3px}
 .kgg .kgtable.fix{flex:none}
 .kgg .kgtable.fix .felt{flex:none}
 .kgg .nbottom{margin-top:auto}
+
+/* ---- スカルキング：ボードを裏返す・早見表・上級ルール ---- */
+.kgflip{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;perspective:1400px}
+.kgflip.fix{flex:none}
+.kg3{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.45,.05,.2,1)}
+.kgflip.fix .kg3{flex:none}
+.kgflip.on .kg3{transform:rotateY(180deg)}
+.kg3>.kgtable{-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.kgback{position:absolute;inset:0;transform:rotateY(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;gap:6px;padding:10px 10px 12px;overflow-y:auto;-webkit-overflow-scrolling:touch;border-radius:20px;border:3px solid var(--ink);
+  background:radial-gradient(ellipse at 20% 10%,#FFF8E2,#F3DFB0 55%,#DDB979);box-shadow:inset 0 0 0 3px #D9B04A,inset 0 0 0 6px #5A3416,inset 0 0 40px rgba(120,70,20,.4),0 4px 0 var(--ink)}
+.kgflipb{position:absolute;left:10px;top:8px;z-index:20;padding:4px 10px;border-radius:99px;font-size:11.5px;font-weight:900;color:#3A1E0C;background:rgba(255,248,231,.96);border:2px solid #5A3416;box-shadow:0 2px 0 #5A3416}
+.kgflipb:active{transform:translateY(2px);box-shadow:none}
+.kgflip.on .kgflipb{left:auto;right:10px}
+.kgback .kbt{align-self:flex-start;margin:2px 0 0 4px;font-family:var(--disp);font-weight:400;font-size:17px;color:#3A1E0C}
+.kgg .ladder2.big{transform:none;margin:0;flex:none}
+.kgback .kbs{flex:none;padding:6px 8px 7px;border-radius:12px;background:rgba(255,255,255,.55);border:1.5px solid rgba(90,52,22,.55)}
+.kgback .kbh{display:block;font-size:12px;font-weight:900;color:#5A3416;margin-bottom:4px}
+.kgback .kbh small{font-size:9.5px;font-weight:700;color:#8A6A4A}
+.kgback .kbn{display:flex;flex-wrap:wrap;gap:4px}
+.kgback .kbn span{font-size:11px;font-weight:800;padding:2px 7px;border-radius:99px;background:#fff;border:1.5px solid #D9B04A;white-space:nowrap}
+.kgback .kbn b{color:#C0392B}
+.kgback .kbr{display:grid;grid-template-columns:26px 1fr;gap:6px;align-items:start;padding:4px 0;border-top:1px dashed rgba(90,52,22,.3)}
+.kgback .kbr:first-of-type{border-top:0}
+.kgback .kbr em{font-style:normal;font-size:19px;line-height:1.2;text-align:center}
+.kgback .kbr p{margin:0;font-size:11px;line-height:1.45;color:#3A1E0C}
+.kgback .kbr p b{display:flex;align-items:center;gap:5px;font-size:12px}
+.kgback .kbr p u{text-decoration:none;font-weight:900;color:#C0392B}
+.kgback .kbr p b i{font-style:normal;font-size:9px;font-weight:900;padding:0 6px;border-radius:99px;background:#E4E0D8;color:#7A7268}
+.kgback .kbr p b i.on{background:#1E9E5A;color:#fff}
+.kgback .kbr.sub{grid-template-columns:1fr;padding-left:32px;border-top:0}
+.kgback .kbr.sub p{font-size:10.5px;color:#7A4A1A}
+.kgback .kbr.pir{padding-left:16px;grid-template-columns:22px 1fr}
+.kgback .kbr.pir em{font-size:11px;font-weight:900;width:20px;height:20px;line-height:17px;border-radius:50%;background:#FFE2D6;border:1.5px solid #C0392B;color:#6A1F0C}
+.kgc.sp-kra{--sc:#C04A9A;background:linear-gradient(170deg,#4A1A3A,#16060F);color:#FFB3D9}
+.kgc.sp-kra em{filter:drop-shadow(0 0 6px #C04A9A)}
+.kgc.sp-wha{--sc:#5FA0C8;background:linear-gradient(170deg,#FFFFFF,#CFE6F2);color:#1F4A66}
+.kgc.sp-loot{--sc:#B8860B;background:linear-gradient(170deg,#FFF6D6,#F2D27A);color:#6A4A0C}
+.kgc .pn{display:none}
+.kghand.ov .kgc .pn{display:block;position:absolute;left:4px;top:27px;font-style:normal;font-size:10px;font-weight:900;line-height:1;padding:2px 2px;border-radius:4px;background:#fff;color:#6A1F0C;border:1px solid #C0392B}
+.kghand .kh.nw .kgc::after{content:"NEW";position:absolute;right:2px;bottom:3px;font-size:7px;font-weight:900;padding:1px 3px;border-radius:4px;background:#E2364F;color:#fff}
+.kgopts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.kgop{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 6px;border-radius:12px;border:2px solid var(--ink);background:#fff;box-shadow:0 3px 0 var(--ink);color:var(--ink)}
+.kgop em{font-style:normal;font-size:24px;line-height:1;filter:grayscale(.7);opacity:.6}
+.kgop b{font-size:10.5px;font-weight:900;white-space:nowrap}
+.kgop[aria-pressed="true"]{background:#FFE38A;box-shadow:0 0 0 3px #E8B12A,0 3px 0 var(--ink)}
+.kgop[aria-pressed="true"] em{filter:none;opacity:1}
+.kgoph{display:block;margin-top:6px;font-size:11px;color:var(--mute)}
+.kgab{text-align:center;font-size:11.5px;font-weight:700;color:var(--mute);margin:-2px 0 2px}
+.kgabc{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:6px}
+.kgabc .skb{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;min-width:58px}
+.kgabc .skb small{font-family:var(--body,sans-serif);font-size:9.5px;font-weight:900}
+.kgabc .skb.sel{background:#E2364F;color:#fff}
+.kgpc{display:inline-block;max-width:84px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--body,sans-serif);font-size:12px;font-weight:900;padding:2px 8px;border-radius:99px;background:var(--pc);color:#fff}
+.kgpeek{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;padding:4px 0 10px}
+.sbfx .inkwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#3A0F35,#14040F 60%,#000);animation:seaw var(--ms) forwards}
+.sbfx .tent{position:absolute;bottom:-12px;z-index:1;width:46px;height:var(--h);margin-left:-23px;border-radius:50% 50% 8px 8px/22% 22% 8px 8px;
+  background:radial-gradient(circle,#F6B3D6 0 4px,transparent 5px) 6px 10px/14px 22px repeat-y,linear-gradient(90deg,#4A1240,#A33C86 50%,#4A1240);
+  transform-origin:50% 100%;animation:tentup 2.6s cubic-bezier(.3,.9,.4,1) var(--d) both}
+@keyframes tentup{0%{transform:translateY(105%) rotate(0)}30%{transform:translateY(0) rotate(var(--r))}55%{transform:translateY(0) rotate(calc(var(--r) * -1))}78%{transform:translateY(4%) rotate(var(--r))}100%{transform:translateY(105%) rotate(0)}}
+.sbfx.kg-kraken .tx,.sbfx.kg-whale .tx{position:relative;z-index:3}
+.sbfx .kbig.kra{filter:drop-shadow(0 0 30px #C04A9A)}
+.sbfx.kg-kraken .bigt span{font-size:min(15vw,70px);color:#FFB3D9;-webkit-text-stroke-color:#2A0620}
+.sbfx.kg-kraken .bigt span.ex{color:#FF4D66}
+.sbfx .wwash{position:absolute;inset:0;background:linear-gradient(180deg,#E6F7FF,#7FC6E8 45%,#1F6F9F);animation:seaw var(--ms) forwards}
+.sbfx .kbig.wha{position:absolute;left:50%;top:50%;z-index:2;margin:-.5em 0 0 -.5em;filter:drop-shadow(0 0 24px #fff);animation:whjump 1.5s cubic-bezier(.3,.6,.5,1) .05s both}
+@keyframes whjump{0%{transform:translate(-55vw,40vh) rotate(-35deg) scale(.7)}50%{transform:translate(0,-22vh) rotate(0) scale(1.05)}100%{transform:translate(55vw,45vh) rotate(40deg) scale(.7)}}
+.sbfx .spl{position:absolute;bottom:22%;z-index:2;width:calc(14px * var(--s));height:calc(14px * var(--s));border-radius:50%;background:#fff;box-shadow:0 0 6px #BFE8FF;opacity:0;animation:splash 1.2s ease-out var(--d) forwards}
+@keyframes splash{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--x),calc(var(--y) * -.2 + 200px))}50%{opacity:1;transform:translate(calc(var(--x) * .6),var(--y))}}
+.sbfx.kg-whale .tx{margin-top:34vh}
+.sbfx.kg-whale .bigt{display:flex;flex-direction:column;align-items:center}
+.sbfx.kg-whale .bigt span{font-size:min(15vw,66px);line-height:1;color:#fff;-webkit-text-stroke-color:#0A3A5A}
+.sbfx.kg-whale .who{max-width:92vw;font-size:15px;white-space:normal;text-align:center}
+
+/* 表のボードは早見表がなくなった分、カードを大きく */
+.kgc.tb{width:42px;height:58px;border-radius:7px}
+.kgc.tb b{font-size:23px}.kgc.tb b.len2{font-size:19px}.kgc.tb .ci{font-size:9px;left:4px;top:3px}.kgc.tb .ci.br{right:4px;bottom:3px}
+.kgc.tb.sp em{font-size:21px}.kgc.tb.sp small{font-size:5.5px}
+.kgc.mini{width:35px;height:48px}
+.kgc.mini b{font-size:19px}.kgc.mini b.len2{font-size:15px}.kgc.mini.sp em{font-size:17px}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -6262,17 +6345,38 @@ function coRulesHtml(){
 /* 数字カード：黄(宝箱)・緑(オウム)・紫(地図)・黒(海賊旗=切り札) 各1〜14。
    特殊：逃走×5、海賊×5、ティグレス×1（海賊か逃走を選ぶ）、スカルキング×1、マーメイド×2。計70枚。10ラウンド */
 const KG_SUITS = { y: { n: "黄", i: "💰", c: "#E8B12A" }, g: { n: "緑", i: "🦜", c: "#2DBE60" }, p: { n: "紫", i: "🗺️", c: "#8B6CFF" }, b: { n: "黒", i: "🏴‍☠️", c: "#2A2638" } };
-const KG_SP = { esc: { i: "🏳️", t: "ESCAPE" }, pir: { i: "⚔️", t: "PIRATE" }, tig: { i: "🐯", t: "TIGRESS" }, king: { i: "👑", t: "SKULL KING" }, mer: { i: "🧜‍♀️", t: "MERMAID" } };
-const kgDeck = () => {
+const KG_SP = { esc: { i: "🏳️", t: "ESCAPE" }, pir: { i: "⚔️", t: "PIRATE" }, tig: { i: "🐯", t: "TIGRESS" }, king: { i: "👑", t: "SKULL KING" }, mer: { i: "🧜‍♀️", t: "MERMAID" },
+  kra: { i: "🐙", t: "KRAKEN" }, wha: { i: "🐋", t: "WHITE WHALE" }, loot: { i: "🪙", t: "LOOT" } };
+// 上級ルール：海賊5人それぞれの能力（その海賊でトリックに勝ったときに使う）
+const KG_PIR = {
+  pir1: { k: "rosie", n: "ローズ", e: "ROSIE", h: "ロ", d: "次のトリックを最初に出す人を選べる（自分でもOK）" },
+  pir2: { k: "bendt", n: "ベント", e: "BENDT", h: "ベ", d: "山札から2枚引いて、手札から2枚捨てる" },
+  pir3: { k: "rascal", n: "ラスカル", e: "RASCAL", h: "ラ", d: "0・10・20点を賭ける。予想ぴったりならもらえる、外れたら失う" },
+  pir4: { k: "juanita", n: "フアニータ", e: "JUANITA", h: "フ", d: "配られていない残りの山札をこっそり見られる" },
+  pir5: { k: "harry", n: "ハリー", e: "HARRY", h: "ハ", d: "自分の予想を1増やすか1減らせる（そのままでもOK）" }
+};
+const KG_OPTS = [
+  { k: "kraken", i: "🐙", n: "クラーケン" }, { k: "whale", i: "🐋", n: "白鯨" }, { k: "loot", i: "🪙", n: "略奪品" }, { k: "abil", i: "⚔️", n: "海賊の能力" }
+];
+let kgAbilOn = false;
+const kgOpts = g => (g && g.opts) || {};
+const kgUsesEx = g => Object.values(kgOpts(g)).some(Boolean);
+const kgDeck = (o = {}) => {
   const d = [];
   ["y", "g", "p", "b"].forEach(s => { for (let r = 1; r <= 14; r++) d.push(s + r); });
   for (let i = 1; i <= 5; i++) d.push("esc" + i, "pir" + i);
   d.push("tig", "king", "mer1", "mer2");
+  if (o.kraken) d.push("kra");
+  if (o.whale) d.push("wha");
+  if (o.loot) d.push("loot1", "loot2");
   return d;
 };
 function kgInfo(c){
   if (!c) return { t: "none" };
   if (c.startsWith("esc")) return { t: "esc" };
+  if (c.startsWith("loot")) return { t: "loot" };
+  if (c === "kra") return { t: "kra" };
+  if (c === "wha") return { t: "wha" };
   if (c.startsWith("pir")) return { t: "pir" };
   if (c.startsWith("mer")) return { t: "mer" };
   if (c === "tig") return { t: "tig" };
@@ -6282,7 +6386,7 @@ function kgInfo(c){
 const kgKind = pl => { const i = kgInfo(pl.c); return i.t === "tig" ? (pl.tg === "pirate" ? "pir" : "esc") : i.t; };
 // リードの色：最初の「逃走以外」のカードが数字ならその色、キャラクターなら色なし
 function kgLeadSuit(plays){
-  for (const pl of plays){ const k = kgKind(pl); if (k === "esc") continue; if (k === "num") return kgInfo(pl.c).s; return null; }
+  for (const pl of plays){ const k = kgKind(pl); if (k === "esc" || k === "loot" || k === "kra" || k === "wha") continue; if (k === "num") return kgInfo(pl.c).s; return null; }
   return null;
 }
 function kgLegal(hand, plays, c){
@@ -6291,8 +6395,9 @@ function kgLegal(hand, plays, c){
   return !hand.some(x => { const j = kgInfo(x); return j.t === "num" && j.s === ls; });
 }
 // トリックの勝者とボーナス
-function kgResolve(plays){
-  const ks = plays.map(kgKind), idx = k => ks.indexOf(k), all = k => ks.filter(x => x === k).length;
+// 基本ルールでの勝者（略奪品・クラーケン・白鯨は逃走と同じ扱い）
+function kgResolveBase(plays){
+  const ks = plays.map(kgKind).map(k => k === "loot" || k === "kra" || k === "wha" ? "esc" : k), idx = k => ks.indexOf(k), all = k => ks.filter(x => x === k).length;
   let w = -1, why = "", bonus = 0;
   if (idx("king") >= 0){
     if (idx("mer") >= 0){ w = idx("mer"); why = "mermaid"; bonus += 40; }
@@ -6311,20 +6416,38 @@ function kgResolve(plays){
   plays.forEach(pl => { const i = kgInfo(pl.c); if (i.t === "num" && i.r === 14) bonus += i.s === "b" ? 20 : 10; });
   return { w, why, bonus };
 }
+// 上級ルール込みの勝者。w=-1 はトリックが流れた（誰のものにもならない）。next=次に最初に出す人
+function kgResolve(plays){
+  const ks = plays.map(kgKind), ki = ks.indexOf("kra"), wi = ks.indexOf("wha");
+  const eff = ki >= 0 && wi >= 0 ? (ki > wi ? "kra" : "wha") : ki >= 0 ? "kra" : wi >= 0 ? "wha" : null;   // 両方出たら後から出た方が有効
+  const b14 = () => plays.reduce((a, pl) => { const i = kgInfo(pl.c); return a + (i.t === "num" && i.r === 14 ? (i.s === "b" ? 20 : 10) : 0); }, 0);
+  if (eff === "wha"){
+    const nums = plays.map((pl, i) => ({ i, ...kgInfo(pl.c), k: ks[i] })).filter(x => x.k === "num");
+    if (!nums.length) return { w: -1, why: "whale0", bonus: 0, next: plays[wi].p };
+    const w = nums.reduce((a, b) => b.r > a.r ? b : a).i;
+    return { w, why: "whale", bonus: b14(), next: plays[w].p };
+  }
+  const b = kgResolveBase(plays);
+  if (eff === "kra") return { w: -1, why: "kraken", bonus: 0, next: plays[b.w].p };
+  const loot = plays.filter((pl, i) => ks[i] === "loot" && i !== b.w).map(pl => pl.p);
+  return { ...b, next: plays[b.w].p, loot };
+}
 const kgGames = () => db.kg_games || [];
 const kgActive = () => kgGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
 const kgById = id => kgGames().find(g => g.id === id);
-const kgCards = g => Math.min(g.round || 1, Math.floor(70 / g.players.length));
+const kgDeckN = g => kgDeck(kgOpts(g)).length;
+const kgCards = g => Math.min(g.round || 1, Math.floor(kgDeckN(g) / g.players.length));
 const kgNext = (g, pid) => g.players[(g.players.indexOf(pid) + 1) % g.players.length];
 function kgMyTurn(g){
   if (!g || g.status !== "playing" || !me || !g.players.includes(me)) return false;
   if (g.phase === "bid") return (g.bids || {})[me] == null;
+  if (g.ex && g.ex.pend) return false;
   return g.phase === "play" && !!g.turn && g.turn.pid === me;
 }
 function kgDeal(g, round){
-  const d = shuffle(kgDeck()), n = Math.min(round, Math.floor(70 / g.players.length)), hands = {};
+  const d = shuffle(kgDeck(kgOpts(g))), n = Math.min(round, Math.floor(d.length / g.players.length)), hands = {};
   g.players.forEach((p, i) => { hands[p] = d.slice(i * n, i * n + n); });
-  return hands;
+  return { hands, deck: d.slice(g.players.length * n) };
 }
 async function kgCommit(id, fn){
   for (let tries = 0; tries < 5; tries++){
@@ -6347,8 +6470,11 @@ function openKgNew(){
     <button type="button" class="grbtn" data-grule="kg">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・最大8人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="gOrder" class="norder"></div><button class="shufbtn" id="gShuf">順番をシャッフル</button></div>
+    <div class="f"><span>上級ルール（使うものをタップ）</span><div class="kgopts">${KG_OPTS.map(o => `<button type="button" class="kgop" data-ko="${o.k}" aria-pressed="false"><em>${o.i}</em><b>${o.n}</b></button>`).join("")}</div><small class="kgoph">内容はルールとボードの裏の早見表にのっています</small></div>
     <div class="btns"><button class="btn" id="gGo">出航する</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
+  const opts = {};
+  s.querySelectorAll("[data-ko]").forEach(b => b.onclick = () => { const on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", String(on)); opts[b.dataset.ko] = on; });
   const draw = () => { $("#gOrder").innerHTML = seatHtml(order); seatDrag($("#gOrder"), () => order, o => order = o, draw); };
   s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
@@ -6359,16 +6485,20 @@ function openKgNew(){
   draw();
   $("#gGo").onclick = async () => {
     if (order.length < 2 || order.length > 8){ toast("参加者は2〜8人です"); return; }
-    const g0 = { players: order };
-    const row = { trip_id: t ? t.id : null, status: "playing", players: order, round: 1, phase: "bid", hands: kgDeal(g0, 1), bids: {}, won: {}, bonus: {},
+    const o = {}; Object.keys(opts).forEach(k => { if (opts[k]) o[k] = true; });
+    const g0 = { players: order, opts: o }, dl = kgDeal(g0, 1), adv = Object.keys(o).length;
+    const row = { trip_id: t ? t.id : null, status: "playing", players: order, round: 1, phase: "bid", hands: dl.hands, bids: {}, won: {}, bonus: {},
       trick: { plays: [] }, last: null, turn: { pid: order[0], start: order[0] }, scores: {}, history: [], created_by: me || null,
-      log: [{ t: new Date().toISOString(), m: `出航！第1ラウンド。全員、勝てる回数を予想しよう` }] };
-    const res = await q(sb.from("kg_games").insert(row).select().single(), "作成");
+      log: [{ t: new Date().toISOString(), m: `出航！${adv ? `上級ルール：${KG_OPTS.filter(x => o[x.k]).map(x => x.n).join("・")}。` : ""}第1ラウンド。全員、勝てる回数を予想しよう` }] };
+    if (adv){ row.opts = o; row.ex = { deck: dl.deck }; }
+    const { data: res, error } = await sb.from("kg_games").insert(row).select().single();
+    if (error){ if (adv && /opts|ex|column/i.test(error.message || "")) toast("上級ルールを使うには schema13.sql を実行してください", 3500); else fail(error, "作成"); return; }
     if (res){ await loadTable("kg_games"); closeSheet(); openKg(res.id); order.forEach(p => pushCall({ type: "game_turn", game: "スカルキング", to: p })); }
   };
 }
-let kgFeltW = 0; addEventListener("resize", () => { kgFeltW = 0; if (kgId) drawKg(); }); let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
-function openKg(id){ kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
+let kgFeltW = 0, kgFeltH = 0; addEventListener("resize", () => { kgFeltW = 0; if (kgId) drawKg(); }); let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
+let kgFlip = false, kgDisc = [], kgAbSel = null;
+function openKg(id){ kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; kgFlip = false; kgDisc = []; kgAbSel = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
@@ -6398,54 +6528,103 @@ function kgPlay(c, tg){
       return { patch: { hands, trick: { plays: np }, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}：${lbl}`, push: [nx] };
     }
     // トリック決着
-    const { w, why, bonus } = kgResolve(np), wp = np[w].p;
-    const won = { ...(g.won || {}), [wp]: ((g.won || {})[wp] || 0) + 1 };
-    const bon = { ...(g.bonus || {}), [wp]: ((g.bonus || {})[wp] || 0) + bonus };
-    const tag = { mermaid: "🧜‍♀️マーメイドがスカルキングを捕獲！", king: np.some(x => kgKind(x) === "pir") ? "👑スカルキングが海賊を一掃！" : "", pirmer: "⚔️海賊がマーメイドを捕獲！" }[why] || "";
-    const lines = [`${pname(me)}：${lbl}`, `${pname(wp)}がトリックを獲得${tag ? "　" + tag : ""}${bonus ? `（ボーナス+${bonus}）` : ""}`];
-    const last = { plays: np, w, why, bonus };
-    if (Object.values(hands).every(h => !h.length)){
-      // ラウンド終了：得点計算
-      const n = kgCards(g), scores = { ...(g.scores || {}) }, rows = {};
-      g.players.forEach(p => {
-        const b = g.bids[p] || 0, x = won[p] || 0;
-        const pts = b === 0 ? (x === 0 ? 10 * n : -10 * n) : (x === b ? 20 * b + (bon[p] || 0) : -10 * Math.abs(x - b));
-        rows[p] = { bid: b, won: x, pts, bonus: x === b ? (bon[p] || 0) : 0 }; scores[p] = (scores[p] || 0) + pts;
-      });
-      const history = [...(g.history || []), { round: g.round, rows }];
-      lines.push(`第${g.round}ラウンド終了：${g.players.map(p => `${pname(p)}${rows[p].pts >= 0 ? "+" : ""}${rows[p].pts}`).join("・")}`);
-      const fin = g.round >= 10;
-      if (fin){ const wn = g.players.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0]; lines.push(`${pname(wn)}が優勝！`); return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, scores, history, phase: "roundend", status: "finished", winner: wn }, log: lines }; }
-      return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, scores, history, phase: "roundend" }, log: lines };
+    const r = kgResolve(np), wp = r.w >= 0 ? np[r.w].p : null, adv = kgUsesEx(g);
+    const won = { ...(g.won || {}) }, bon = { ...(g.bonus || {}) };
+    if (wp){ won[wp] = (won[wp] || 0) + 1; if (r.bonus) bon[wp] = (bon[wp] || 0) + r.bonus; }
+    const ex = { ...(g.ex || {}) };
+    if (wp && r.loot && r.loot.length) ex.loot = [...(ex.loot || []), ...r.loot.map(a => ({ a, b: wp }))];
+    const tag = { mermaid: "🧜‍♀️マーメイドがスカルキングを捕獲！", king: np.some(x => kgKind(x) === "pir") ? "👑スカルキングが海賊を一掃！" : "", pirmer: "⚔️海賊がマーメイドを捕獲！", whale: "🐋白鯨で特殊カードは無効、数字勝負！" }[r.why] || "";
+    const lines = [`${pname(me)}：${lbl}`];
+    if (wp) lines.push(`${pname(wp)}がトリックを獲得${tag ? "　" + tag : ""}${r.bonus ? `（ボーナス+${r.bonus}）` : ""}`);
+    else lines.push(r.why === "kraken" ? `🐙クラーケン！トリックは海の底へ。次は${pname(r.next)}から` : `🐋白鯨！数字がなくトリックは流された。次は${pname(r.next)}から`);
+    if (wp && r.loot && r.loot.length) lines.push(`🪙略奪品の同盟：${r.loot.map(a => pname(a)).join("・")}と${pname(wp)}`);
+    const last = { plays: np, w: r.w, why: r.why, bonus: r.bonus, next: r.next };
+    const final = Object.values(hands).every(h => !h.length);
+    // 海賊の能力
+    let pend = null;
+    if (kgOpts(g).abil && wp && kgInfo(np[r.w].c).t === "pir"){
+      const pi = KG_PIR[np[r.w].c];
+      if (pi && (pi.k === "harry" || !final)) pend = { k: pi.k, p: wp };
+      if (pend && pend.k === "bendt"){
+        const dk = (ex.deck || []).slice(), dr = dk.splice(0, 2);
+        if (!dr.length) pend = null; else { hands[wp] = [...hands[wp], ...dr]; ex.deck = dk; pend.drew = dr; }
+      }
+      if (pend) lines.push(`⚔️${pi.n}の能力：${pname(wp)}が使う`);
     }
-    return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, turn: { ...g.turn, pid: wp } }, log: lines, push: [wp] };
+    if (pend){
+      ex.pend = pend;
+      return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, ex, turn: { ...g.turn, pid: r.next } }, log: lines, push: [wp] };
+    }
+    if (final) return kgEndRound(g, { hands, won, bonus: bon, last, ex, bids: g.bids }, lines);
+    return { patch: { hands, won, bonus: bon, last, trick: { plays: [] }, turn: { ...g.turn, pid: r.next }, ...(adv ? { ex } : {}) }, log: lines, push: [r.next] };
+  });
+}
+// ラウンド終了：得点計算
+function kgEndRound(g, st, lines){
+  const n = kgCards(g), scores = { ...(g.scores || {}) }, rows = {}, ex = st.ex || {}, bids = st.bids || g.bids || {};
+  const hit = p => (bids[p] || 0) === (st.won[p] || 0);
+  const lp = {}; (ex.loot || []).forEach(x => { if (hit(x.a) && hit(x.b)){ lp[x.a] = (lp[x.a] || 0) + 20; lp[x.b] = (lp[x.b] || 0) + 20; } });
+  const rc = ex.rascal || {};
+  g.players.forEach(p => {
+    const b = bids[p] || 0, x = st.won[p] || 0, ok = b === x, ras = rc[p] || 0, lo = lp[p] || 0;
+    const pts = b === 0 ? (ok ? 10 * n + ras + lo : -10 * n - ras) : (ok ? 20 * b + (st.bonus[p] || 0) + ras + lo : -10 * Math.abs(x - b) - ras);
+    rows[p] = { bid: b, won: x, pts, bonus: ok ? (st.bonus[p] || 0) : 0, ...(ras ? { ras: ok ? ras : -ras } : {}), ...(lo ? { loot: lo } : {}) };
+    scores[p] = (scores[p] || 0) + pts;
+  });
+  const history = [...(g.history || []), { round: g.round, rows }];
+  lines = [].concat(lines, `第${g.round}ラウンド終了：${g.players.map(p => `${pname(p)}${rows[p].pts >= 0 ? "+" : ""}${rows[p].pts}`).join("・")}`);
+  const base = { hands: st.hands, won: st.won, bonus: st.bonus, last: st.last, trick: { plays: [] }, scores, history, phase: "roundend", bids, ...(kgUsesEx(g) ? { ex: { deck: [] } } : {}) };
+  if (g.round >= 10){ const wn = g.players.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0]; lines.push(`${pname(wn)}が優勝！`); return { patch: { ...base, status: "finished", winner: wn }, log: lines }; }
+  return { patch: base, log: lines };
+}
+// 海賊の能力を使う
+function kgAbil(val){
+  return kgCommit(kgId, g => {
+    const ex = { ...(g.ex || {}) }, pd = ex.pend;
+    if (g.status !== "playing" || !pd || pd.p !== me) return null;
+    delete ex.pend;
+    const patch = { ex }, hands = { ...g.hands }; let line = "", push = [g.turn.pid];
+    const nm = Object.values(KG_PIR).find(x => x.k === pd.k).n;
+    if (pd.k === "rosie"){ if (!g.players.includes(val)) return null; patch.turn = { ...g.turn, pid: val }; push = [val]; line = `⚔️${nm}：次は${pname(val)}から`; }
+    else if (pd.k === "bendt"){
+      const h = hands[me] || [], k = (pd.drew || []).length;
+      if (!Array.isArray(val) || val.length !== k || !val.every(c => h.includes(c))) return null;
+      hands[me] = h.filter(c => !val.includes(c)); patch.hands = hands; line = `⚔️${nm}：${k}枚引いて${k}枚捨てた`;
+    }
+    else if (pd.k === "rascal"){ if (![0, 10, 20].includes(val)) return null; ex.rascal = { ...(ex.rascal || {}), [me]: ((ex.rascal || {})[me] || 0) + val }; line = `⚔️${nm}：${pname(me)}が${val}点を賭けた`; }
+    else if (pd.k === "juanita") line = `⚔️${nm}：${pname(me)}が残りの山札をのぞいた`;
+    else if (pd.k === "harry"){ if (![-1, 0, 1].includes(val)) return null; const b = (g.bids || {})[me] || 0, nb = Math.max(0, b + val); patch.bids = { ...g.bids, [me]: nb }; line = nb === b ? `⚔️${nm}：${pname(me)}は予想${b}のまま` : `⚔️${nm}：${pname(me)}が予想を${b}→${nb}に変更`; }
+    if (Object.values(patch.hands || g.hands).every(h => !h.length))
+      return kgEndRound(g, { hands: patch.hands || g.hands, won: g.won || {}, bonus: g.bonus || {}, last: g.last, ex, bids: patch.bids || g.bids }, [line]);
+    return { patch, log: line, push };
   });
 }
 function kgNextRound(){
   return kgCommit(kgId, g => {
     if (g.status !== "playing" || g.phase !== "roundend") return null;
-    const r = (g.round || 1) + 1, st = kgNext(g, g.turn.start);
-    return { patch: { round: r, phase: "bid", hands: kgDeal(g, r), bids: {}, won: {}, bonus: {}, trick: { plays: [] }, last: null, turn: { pid: st, start: st } },
-      log: `第${r}ラウンド（${Math.min(r, Math.floor(70 / g.players.length))}枚）。全員、勝てる回数を予想しよう`, push: g.players };
+    const r = (g.round || 1) + 1, st = kgNext(g, g.turn.start), dl = kgDeal(g, r);
+    return { patch: { round: r, phase: "bid", hands: dl.hands, bids: {}, won: {}, bonus: {}, trick: { plays: [] }, last: null, turn: { pid: st, start: st }, ...(kgUsesEx(g) ? { ex: { deck: dl.deck } } : {}) },
+      log: `第${r}ラウンド（${Math.min(r, Math.floor(kgDeckN(g) / g.players.length))}枚）。全員、勝てる回数を予想しよう`, push: g.players };
   });
 }
 function kgLabel(c, tg){
   const i = kgInfo(c);
   if (i.t === "num") return `${KG_SUITS[i.s].i}${i.r}`;
   if (i.t === "tig") return `🐯ティグレス（${tg === "pirate" ? "海賊" : "逃走"}）`;
-  return { esc: "🏳️逃走", pir: "⚔️海賊", king: "👑スカルキング", mer: "🧜‍♀️マーメイド" }[i.t];
+  if (i.t === "pir" && kgAbilOn && KG_PIR[c]) return `⚔️海賊${KG_PIR[c].n}`;
+  return { esc: "🏳️逃走", pir: "⚔️海賊", king: "👑スカルキング", mer: "🧜‍♀️マーメイド", kra: "🐙クラーケン", wha: "🐋白鯨", loot: "🪙略奪品" }[i.t];
 }
 function kgCard(c, cls = "", extra = "", tg){
   const i = kgInfo(c);
   if (i.t === "num") return `<span class="kgc s-${i.s} ${cls}" ${extra}><i class="ci">${KG_SUITS[i.s].i}</i><b class="${i.r >= 10 ? "len2" : ""}">${i.r}</b><i class="ci br">${KG_SUITS[i.s].i}</i></span>`;
-  const sp = KG_SP[i.t];
-  return `<span class="kgc sp sp-${i.t} ${cls}" ${extra}><em>${sp.i}</em><small>${tg ? (tg === "pirate" ? "PIRATE" : "ESCAPE") : sp.t}</small></span>`;
+  const sp = KG_SP[i.t], pn = i.t === "pir" && kgAbilOn && KG_PIR[c] ? KG_PIR[c] : null;
+  return `<span class="kgc sp sp-${i.t} ${cls}" ${extra}><em>${sp.i}</em><small>${tg ? (tg === "pirate" ? "PIRATE" : "ESCAPE") : pn ? pn.e : sp.t}</small>${pn ? `<i class="pn">${pn.h}</i>` : ""}</span>`;
 }
 
 /* ---- 演出 ---- */
 function kgFx(kind, opt = {}){
   const rnd = (a, b) => a + Math.random() * (b - a);
-  const ms = { yoho: 4600, trick: 1300, king: 2600, mermaid: 2800, pirmer: 2200, round: 4200 }[kind] || 1500;
+  const ms = { yoho: 4600, trick: 1300, king: 2600, mermaid: 2800, pirmer: 2200, round: 4200, kraken: 2900, whale: 2700 }[kind] || 1500;
   let html = "";
   const burst = (n, chars, dist = 260) => Array.from({ length: n }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(90, dist); return `<i class="su" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d - 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;--c:#fff;--d:${rnd(0, .25).toFixed(2)}s;--s:${rnd(.6, 1.4).toFixed(2)};-webkit-text-stroke:0">${chars[i % chars.length]}</i>`; }).join("");
   if (kind === "yoho"){
@@ -6461,6 +6640,12 @@ function kgFx(kind, opt = {}){
     html = `<span class="mwash"></span>${bub}<div class="waves"><i></i><i></i><i></i></div><div class="tx" style="animation:none"><span class="kbig mer">🧜‍♀️</span><div class="bigt">${["MER", "MAID"].map((c, i) => `<span style="--d:${(.3 + i * .2).toFixed(2)}s">${c}</span>`).join("")}<span class="ex" style="--d:.7s">!!</span></div><div class="who"><i style="color:${opt.c}">●</i> ${esc(opt.name)} がスカルキングを捕獲 +40</div></div>`;
   } else if (kind === "pirmer"){
     html = `<span class="bg"></span>${burst(18, ["⚔️", "🧜‍♀️", "💥"], 260)}<div class="tx"><b>⚔️ 捕獲!</b><small>${esc(opt.name)} がマーメイドを捕獲 +${opt.bonus}</small></div>`;
+  } else if (kind === "kraken"){
+    const ten = Array.from({ length: 6 }, (_, i) => `<i class="tent" style="left:${(8 + i * 16 + rnd(-3, 3)).toFixed(1)}%;--d:${(.1 + (i % 3) * .14).toFixed(2)}s;--r:${(i % 2 ? 1 : -1) * rnd(6, 16).toFixed(0)}deg;--h:${rnd(38, 62).toFixed(0)}vh"></i>`).join("");
+    html = `<span class="inkwash"></span>${ten}<div class="tx" style="animation:none"><span class="kbig kra">🐙</span><div class="bigt">${["KRA", "KEN"].map((c, i) => `<span style="--d:${(.3 + i * .2).toFixed(2)}s">${c}</span>`).join("")}<span class="ex" style="--d:.7s">!!</span></div><div class="who">トリックは海の底へ… 次は ${esc(opt.name)}</div></div>`;
+  } else if (kind === "whale"){
+    const sp = Array.from({ length: 34 }, () => `<i class="spl" style="left:${rnd(30, 70).toFixed(1)}%;--x:${rnd(-180, 180).toFixed(0)}px;--y:${rnd(-320, -120).toFixed(0)}px;--s:${rnd(.5, 1.4).toFixed(2)};--d:${rnd(.5, .9).toFixed(2)}s"></i>`).join("");
+    html = `<span class="wwash"></span><div class="waves"><i></i><i></i><i></i></div><span class="kbig wha">🐋</span>${sp}<div class="tx" style="animation:none"><div class="bigt">${["WHITE", "WHALE"].map((c, i) => `<span style="--d:${(.6 + i * .2).toFixed(2)}s">${c}</span>`).join("")}</div><div class="who">${opt.name ? `特殊カードは無効！ <i style="color:${opt.c}">●</i> ${esc(opt.name)} の勝ち` : "数字がなくトリックは流された"}</div></div>`;
   } else if (kind === "round"){
     html = `<span class="seawash soft"></span><div class="rtab"><b class="rt">ROUND ${opt.round} 終了</b>${(opt.rows || []).map((r, i) => `<span class="${r.hit ? "rh" : "rm"}" style="--pc:${r.c};--d:${(.3 + i * .12).toFixed(2)}s"><b>${esc(r.n)}</b><small>予想${r.bid}・獲得${r.won}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em></span>`).join("")}</div>`;
   }
@@ -6469,7 +6654,7 @@ function kgFx(kind, opt = {}){
   fx.innerHTML = html; document.body.appendChild(fx);
   const a = $("#kgg");
   if (kind === "yoho"){ [150, 600, 1050].forEach(t => setTimeout(() => { if (a){ a.classList.remove("knock"); void a.offsetWidth; a.classList.add("knock"); } }, t)); }
-  if ((kind === "king" || kind === "mermaid") && a){ a.classList.remove("quake2"); void a.offsetWidth; a.classList.add("quake2"); setTimeout(() => a.classList.remove("quake2"), 950); }
+  if ((kind === "king" || kind === "mermaid" || kind === "kraken" || kind === "whale") && a){ a.classList.remove("quake2"); void a.offsetWidth; a.classList.add("quake2"); setTimeout(() => a.classList.remove("quake2"), 950); }
   if (kind === "yoho"){
     fx.querySelectorAll(".seawash,.waves,.yoho").forEach(x => x.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, delay: 3000, fill: "forwards" }));
     setTimeout(() => {
@@ -6502,7 +6687,11 @@ function kgDiff(g){
     setTimeout(() => kgFx("yoho", { bids }), t); return;
   }
   const tl = lines.find(m => /がトリックを獲得/.test(m));
-  if (tl && g.last){
+  if (g.last && g.last.w < 0 && lines.some(m => /クラーケン！|白鯨！/.test(m))){
+    setTimeout(() => kgFx(g.last.why === "kraken" ? "kraken" : "whale", { name: pname(g.last.next), c: pcolor(g.last.next) }), t); t += 2900;
+  } else if (tl && g.last && g.last.why === "whale"){
+    const wp = g.last.plays[g.last.w].p; setTimeout(() => kgFx("whale", { name: pname(wp), c: pcolor(wp) }), t); t += 2700;
+  } else if (tl && g.last && g.last.w >= 0){
     const wp = g.last.plays[g.last.w].p, o = { name: pname(wp), c: pcolor(wp), bonus: g.last.bonus };
     const kind = g.last.why === "mermaid" ? "mermaid" : g.last.why === "king" && g.last.bonus >= 30 ? "king" : g.last.why === "pirmer" ? "pirmer" : "trick";
     setTimeout(() => kgFx(kind, o), t); t += kind === "trick" ? 1300 : 2700;
@@ -6518,14 +6707,16 @@ function kgDiff(g){
 function drawKg(){
   if (!kgId) return;
   const g = kgById(kgId); if (!g) return closeKg();
+  kgAbilOn = !!kgOpts(g).abil;
   kgDiff(g);
   const el = $("#kgg"), t = g.turn || {}, ph = g.phase, playing = g.status === "playing";
+  const pend = playing && ph === "play" && g.ex && g.ex.pend ? g.ex.pend : null, opt = kgOpts(g);
   const inGame = g.players.includes(me), mt = kgMyTurn(g), n = kgCards(g);
   const bids = g.bids || {}, won = g.won || {}, plays = (g.trick || {}).plays || [];
   const bidsOpen = ph !== "bid";
   // 座席：予想と獲得
   const seats = g.players.map(p => {
-    const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
+    const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && (pend ? pend.p === p : t.pid === p)));
     const b = bids[p], w = won[p] || 0;
     const info = !bidsOpen ? (b != null ? "予想済" : "考え中") : `<b class="bw ${w === b ? "eq" : w > b ? "ov" : ""}">${w}/${b}</b>`;
     return `<div class="np ${on ? "on" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "bid" ? "待" : "今"}</em>` : ""}<b>${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${info}</small></span><small class="kpt">${g.scores && g.scores[p] != null ? g.scores[p] : 0}点</small></div>`;
@@ -6547,7 +6738,7 @@ function drawKg(){
   let resOv = "";
   if (ph === "roundend" && (g.history || []).length){
     const h = g.history[g.history.length - 1];
-    resOv = `<div class="kgres2"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
+    resOv = `<div class="kgres2"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
   }
   const thOf = {}; order.forEach((p, k) => { thOf[p] = 90 + 360 * k / N; });
   const wSeat = wPl ? thOf[wPl.p] : null;
@@ -6557,11 +6748,11 @@ function drawKg(){
   const seatsT = order.map((p, k) => {
     const mine = inGame && k === 0;
     const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
-    const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 50 + Math.sin(r) * 38;
+    const r = th * Math.PI / 180, sx = 50 + Math.cos(r) * 40, sy = 50 + Math.sin(r) * 42;
     const pl = show.find(x => x.p === p), wi = pl && show.indexOf(pl) === curW;
-    const cf = N >= 5 ? .54 : .6, cx = 50 + (sx - 50) * cf, cy = 50 + (sy - 50) * (N >= 5 ? .44 : .48);
-    const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 50 + Math.sin(wr) * 38;
-    const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && t.pid === p));
+    const cf = N >= 5 ? .6 : .62, cx = 50 + (sx - 50) * cf, cy = 50 + (sy - 50) * (N >= 5 ? .5 : .51);
+    const wr = wSeat != null ? wSeat * Math.PI / 180 : 0, wx = 50 + Math.cos(wr) * 40, wy = 50 + Math.sin(wr) * 42;
+    const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && (pend ? pend.p === p : t.pid === p)));
     const isLead = show.length && show[0].p === p;
     const ord = pl ? show.indexOf(pl) + 1 : 0;
     return `<div class="ks ${mine ? "kme" : ""} ${on ? "on" : ""}" data-p="${p}" style="--x:${sx.toFixed(1)}%;--y:${sy.toFixed(1)}%;--pc:${pcolor(p)}">
@@ -6571,7 +6762,7 @@ function drawKg(){
   // 強さの早見表：今いちばん強いカードの段が光る
   const tier = !wPl ? "" : (() => { const k2 = kgKind(wPl); if (k2 === "num") return kgInfo(wPl.c).s === "b" ? "b" : "lead"; return k2; })();
   const hl = k2 => tier === k2 ? "hl" : "";
-  const ladder = `<div class="ladder2">
+  const ladder = `<div class="ladder2 big">
     <div class="lcol cyc"><svg class="arr" viewBox="0 0 120 70" aria-hidden="true"><defs><marker id="kgah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1F8C8C"/></marker></defs>
         <path d="M70 13Q92 12 98 30" stroke="#1F8C8C" stroke-width="4" fill="none" marker-end="url(#kgah)"/>
         <path d="M92 52Q78 64 56 60" stroke="#1F8C8C" stroke-width="4" fill="none" marker-end="url(#kgah)"/>
@@ -6580,15 +6771,27 @@ function drawKg(){
     <i class="lgo">›</i>
     <div class="lcol num"><b class="lt">数字・マストフォロー</b><div class="lrow"><span class="lc c-b ${hl("b")}">🏴‍☠️<small>黒(切り札)</small></span><i>›</i><span class="lc c-ld ${hl("lead")}">${lead ? KG_SUITS[lead].i : "🦜💰🗺️"}<small>リード色</small></span></div></div>
     <i class="lgo">›</i>
-    <div class="lcol"><span class="lc c-esc">🏳️<small>逃走</small></span></div>
+    <div class="lcol"><span class="lc c-esc">🏳️<small>逃走</small>${opt.loot ? `<em>🪙</em>` : ""}</span></div>
     <span class="lbar"><b>強</b><i></i><b>弱</b></span>
   </div>`;
   const tno = Math.min(n, Object.values(won).reduce((a, b) => a + b, 0) + (plays.length || ph === "play" ? 1 : 0));
   const info = `<div class="kginfo">${ph === "play" ? `<span>トリック <b>${Math.max(1, tno)}</b>/${n}</span>` : ph === "bid" ? `<span>予想 <b>${g.players.filter(p => bids[p] != null).length}</b>/${N}</span>` : `<span>${n}枚ラウンド終了</span>`}</div>`;
 
-  const table = `<div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
+  const use = k => opt[k] ? `<i class="on">使用中</i>` : `<i>なし</i>`;
+  const back = `<div class="kgback"><b class="kbt">📜 強さ早見表</b>${ladder}
+    <div class="kbs"><b class="kbh">ボーナス<small>（予想ぴったりの時だけ）</small></b>
+      <div class="kbn"><span>🦜💰🗺️ 14 <b>+10</b></span><span>🏴‍☠️ 14 <b>+20</b></span><span>⚔️→🧜‍♀️ <b>+20</b></span><span>👑→⚔️ <b>+30</b></span><span>🧜‍♀️→👑 <b>+40</b></span></div></div>
+    <div class="kbs"><b class="kbh">上級ルール</b>
+      <div class="kbr"><em>🐙</em><p><b>クラーケン ${use("kraken")}</b>トリックは誰のものにもならない。本来勝つはずだった人が次の最初</p></div>
+      <div class="kbr"><em>🐋</em><p><b>白鯨 ${use("whale")}</b>特殊カードは全部無効。色に関係なく<u>一番大きい数字</u>が勝ち（同じ数字なら先に出た方）。数字がなければ流れて白鯨の人が次の最初</p></div>
+      <div class="kbr sub"><p>クラーケンと白鯨が両方出たら<u>後から出た方</u>だけ有効</p></div>
+      <div class="kbr"><em>🪙</em><p><b>略奪品 ${use("loot")}</b>逃走と同じ。トリックを取った人と同盟になり、2人とも予想ぴったりなら<u>それぞれ+20</u></p></div>
+      <div class="kbr"><em>⚔️</em><p><b>海賊の能力 ${use("abil")}</b>その海賊で勝った時に使う（最後のトリックはハリーだけ）</p></div>
+      ${Object.values(KG_PIR).map(x => `<div class="kbr pir"><em>${x.h}</em><p><b>${x.n}</b>${x.d}</p></div>`).join("")}
+    </div></div>`;
+  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
       <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
-      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient></defs><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#7A5A3A" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div>${ladder}</div>`;
+      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient><filter id="kgBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><polygon class="glo" points="50,9 58,50 42,50" fill="none" stroke="#FFE15A" stroke-width="11" stroke-linejoin="round" filter="url(#kgBlur)"/><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#7A5A3A" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div></div>${back}</div></div>`;
   // 下部
   let bottom = "";
   if (ph === "roundend" && (g.history || []).length){
@@ -6601,9 +6804,33 @@ function drawKg(){
     let msg = "";
     if (!inGame) msg = `<span>観戦モード</span>`;
     else if (ph === "bid") msg = bids[me] == null ? `<span><b class="tn">あなた</b>：何回勝てる？予想しよう</span>` : `<span>あなたの予想 <b class="tn">${bids[me]}</b>・みんなを待っています</span>`;
+    else if (pend){ const nm = Object.values(KG_PIR).find(x => x.k === pend.k).n; msg = pend.p === me ? `<span>⚔️<b class="tn">${nm}</b>の能力を使おう</span>` : `<span>${esc(pname(pend.p))}が⚔️<b class="tn">${nm}</b>の能力を使用中</span>`; }
     else msg = mt ? `<span><b class="tn">あなた</b>の番：カードを出そう</span>` : `<span>${turnName(t.pid, false)}</span>`;
-    if (!(inGame && ph === "bid" && bids[me] == null)) bottom += `<div class="nturn ${mt ? "mine" : ""}" style="--pc:${pcolor(ph === "play" ? t.pid : me)}">${msg}</div>`;
-    if (inGame){
+    const myAb = pend && pend.p === me;
+    if (!(inGame && ph === "bid" && bids[me] == null)) bottom += `<div class="nturn ${mt || myAb ? "mine" : ""}" style="--pc:${pcolor(pend ? pend.p : ph === "play" ? t.pid : me)}">${msg}</div>`;
+    if (inGame && myAb){
+      const pi = Object.values(KG_PIR).find(x => x.k === pend.k);
+      if (pend.k !== "bendt") bottom += `<div class="kgab"><small>${pi.d}</small></div>`;
+      if (pend.k === "bendt"){
+        const k = (pend.drew || []).length; kgDisc = kgDisc.filter(c => hand.includes(c));
+        const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
+        bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => `<button class="kh ${kgDisc.includes(c) ? "sel" : ""} ${(pend.drew || []).includes(c) ? "nw" : ""}" data-kd="${c}" style="--i:${i}">${kgCard(c)}</button>`).join("")}</div>`;
+        bottom += `<div class="nbtns one"><button class="nb end ${kgDisc.length === k ? "go" : ""}" id="kgAbGo" ${kgDisc.length === k ? "" : "disabled"}>${kgDisc.length === k ? `この${k}枚を捨てる` : `捨てるカードを${k}枚選んでね（${kgDisc.length}/${k}）`}</button></div>`;
+      } else {
+        let ch = [];
+        if (pend.k === "rosie") ch = g.players.map(p => ({ v: p, h: `<span class="kgpc" style="--pc:${pcolor(p)}">${esc(pname(p))}</span>` }));
+        if (pend.k === "rascal") ch = [0, 10, 20].map(v => ({ v, h: `${v}点` }));
+        if (pend.k === "harry"){ const b0 = bids[me] || 0; ch = [-1, 0, 1].filter(v => b0 + v >= 0).map(v => ({ v, h: `${v > 0 ? "+1" : v < 0 ? "−1" : "そのまま"}<small>予想${b0 + v}</small>` })); }
+        if (ch.length){
+          if (kgAbSel != null && !ch.some(x => x.v === kgAbSel)) kgAbSel = null;
+          bottom += `<div class="kgabc">${ch.map((x, i) => `<button class="skb ${kgAbSel === x.v ? "sel" : ""}" data-ka="${i}">${x.h}</button>`).join("")}</div>`;
+          bottom += `<div class="nbtns one"><button class="nb end ${kgAbSel != null ? "go" : ""}" id="kgAbGo" ${kgAbSel != null ? "" : "disabled"}>${kgAbSel != null ? "これに決める" : "選んでね"}</button></div>`;
+          bottom = bottom.replace(/data-ka="(\d+)"/g, (m, i) => `data-ka="${i}" data-kv='${JSON.stringify(ch[i].v)}'`);
+        }
+        if (pend.k === "juanita") bottom += `<div class="nbtns two"><button class="nb draw go" id="kgPeek">👀 残りの山札を見る</button><button class="nb end go" id="kgAbGo">見終わった</button></div>`;
+      }
+    }
+    else if (inGame){
       if (kgSel && !hand.includes(kgSel)) kgSel = null;
       const canPlay = mt && ph === "play";
       const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
@@ -6633,13 +6860,23 @@ function drawKg(){
   // 卓は常に同じ形（横長の楕円・比率固定）で、空いている場所の中央に置く
   const tb = el.querySelector(".kgtable"), fl = tb && tb.querySelector(".felt"), fw = fl && fl.querySelector(".fwrap");
   if (fw){
-    if (!kgFeltW){ const r = fl.getBoundingClientRect(), k = 1.12; kgFeltW = Math.floor(Math.min(r.width, r.height * k)); }
-    fw.style.width = kgFeltW + "px"; fw.style.height = Math.floor(kgFeltW / 1.12) + "px";
-    tb.classList.add("fix");   // 枠は中身ぴったり（伸び縮みしない）
+    // 横幅いっぱいを使い、縦に余裕があれば丸みを増やす（横長〜円まで。端末ごとに一度決めたら固定）
+    if (!kgFeltW){ const r = fl.getBoundingClientRect(); let W = r.width, H = Math.min(r.height, W); if (H < W / 1.12){ W = Math.min(r.width, r.height * 1.12); H = W / 1.12; } kgFeltW = Math.floor(W); kgFeltH = Math.floor(H); }
+    fw.style.width = kgFeltW + "px"; fw.style.height = kgFeltH + "px";
+    tb.classList.add("fix"); el.querySelector(".kgflip").classList.add("fix");   // 枠は中身ぴったり（伸び縮みしない）
   }
   // トリック決着：場のカードが勝者の席へ吸い寄せられる
   const sw = [...el.querySelectorAll(".kp.sweep")];
-  if (sw.length && g.last){
+  if (sw.length && g.last && g.last.w < 0){
+    // クラーケン・白鯨で流れたトリック：渦に吸い込まれて消える
+    const cp = el.querySelector(".compass"), b = cp && cp.getBoundingClientRect();
+    if (b) sw.forEach((c, i) => {
+      const a = c.getBoundingClientRect(), dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
+      c.animate([{ transform: "translate(-50%,-50%)", opacity: 1 }, { transform: "translate(-50%,-50%)", opacity: 1, offset: .55 },
+        { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.1) rotate(${540 + i * 40}deg)`, opacity: 0 }], { duration: 2500, delay: i * 50, easing: "cubic-bezier(.6,0,.4,1)", fill: "forwards" });
+    });
+  }
+  if (sw.length && g.last && g.last.w >= 0){
     const wp = g.last.plays[g.last.w].p, ws = [...el.querySelectorAll(".ks")].find(x => x.dataset.p === wp);
     if (ws){
       const b = ws.getBoundingClientRect();
@@ -6668,6 +6905,20 @@ function drawKg(){
   on("kgTigE", act(async () => { kgSel = null; await kgPlay("tig", "escape"); }));
   on("kgTigP", act(async () => { kgSel = null; await kgPlay("tig", "pirate"); }));
   on("kgNext", act(kgNextRound));
+  on("kgFlip", () => { kgFlip = !kgFlip; const f = el.querySelector(".kgflip"); if (f){ f.classList.toggle("on", kgFlip); el.querySelector("#kgFlip").textContent = kgFlip ? "🧭 テーブル" : "📜 早見表"; } });
+  on("kgPeek", () => {
+    const dk = ((g.ex || {}).deck || []).slice(), ord = { y: 1, g: 2, p: 3, b: 4 };
+    dk.sort((a, b) => { const A = kgInfo(a), B = kgInfo(b); return (A.t === "num" ? ord[A.s] * 100 + A.r : 1000 + A.t.charCodeAt(0)) - (B.t === "num" ? ord[B.s] * 100 + B.r : 1000 + B.t.charCodeAt(0)); });
+    openSheet("残りの山札（配られていないカード）", `<p class="note">${dk.length}枚。ほかの人には見えません</p><div class="kgpeek">${dk.map(c => kgCard(c, "mini")).join("")}</div>`);
+  });
+  on("kgAbGo", act(async () => {
+    if (!pend) return;
+    if (pend.k === "bendt"){ const v = kgDisc.slice(); kgDisc = []; await kgAbil(v); }
+    else if (pend.k === "juanita") await kgAbil(null);
+    else { const v = kgAbSel; kgAbSel = null; if (v != null) await kgAbil(v); }
+  }));
+  el.querySelectorAll("[data-kd]").forEach(b => b.onclick = () => { const c = b.dataset.kd, k = ((pend && pend.drew) || []).length; if (kgDisc.includes(c)) kgDisc = kgDisc.filter(x => x !== c); else if (kgDisc.length < k) kgDisc = [...kgDisc, c]; else kgDisc = [...kgDisc.slice(1), c]; drawKg(); });
+  el.querySelectorAll("[data-kv]").forEach(b => b.onclick = () => { const v = JSON.parse(b.dataset.kv); kgAbSel = kgAbSel === v ? null : v; drawKg(); });
   el.querySelectorAll("[data-kb]").forEach(b => b.onclick = () => { const v = Number(b.dataset.kb); kgBidSel = kgBidSel === v ? null : v; drawKg(); });
   el.querySelectorAll("[data-kc]").forEach(b => b.onclick = () => { kgSel = kgSel === b.dataset.kc ? null : b.dataset.kc; drawKg(); });
 }
@@ -6718,7 +6969,19 @@ function kgRulesHtml(){
     <div>${C("pir1")}${C("mer1")}<p><b>海賊でマーメイドを獲得</b>1枚につき+20</p></div>
     <div>${C("king")}${C("pir1")}<p><b>スカルキングで海賊を獲得</b>1枚につき+30</p></div>
     <div>${C("mer1")}${C("king")}<p><b>マーメイドでスカルキングを獲得</b>+40</p></div>
-  </div>`;
+  </div>
+  <h4 style="--hc:#7A1F5C">上級ルール（始めるときに選ぶ）</h4>
+  <div class="kv">
+    <div>${C("kra")}<p><b>クラーケン</b>トリックは<span class="r">誰のものにもならない</span>。本来勝つはずだった人が次の最初</p></div>
+    <div>${C("wha")}<p><b>白鯨</b>特殊カードは全部無効。色に関係なく<span class="r">一番大きい数字</span>が勝ち（同じ数字なら先に出た方）。数字がなければ流れて、白鯨を出した人が次の最初</p></div>
+  </div>
+  <div class="tip">クラーケンと白鯨が両方出たら<b>後から出た方</b>だけが有効。</div>
+  <div class="kv">
+    <div>${C("loot1")}<p><b>略奪品</b>逃走と同じ。トリックを取った人と<span class="r">同盟</span>になり、2人とも予想ぴったりなら<b>それぞれ+20</b></p></div>
+  </div>
+  <h4 style="--hc:#C0392B">海賊の能力（その海賊で勝ったとき）</h4>
+  <div class="kv">${Object.values(KG_PIR).map(x => `<div><span class="kgc sp sp-pir mini"><em>⚔️</em><small>${x.e}</small></span><p><b>${x.n}</b>${x.d}</p></div>`).join("")}</div>
+  <div class="tip">能力はすぐに使う。<b>そのラウンドの最後のトリック</b>で使えるのはハリーだけ。ティグレスを海賊として出しても能力はない。</div>`;
 }
 
 /* ---------- 起動 ---------- */
