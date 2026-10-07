@@ -1523,6 +1523,9 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kgtable .felt{display:flex;align-items:center;justify-content:center}
 .kgtable .fwrap{position:relative;flex:none}
 .kgtable .felt .ring{left:8%;right:8%;top:8%;bottom:8%}
+.kgg .kgtable.fix{flex:none}
+.kgg .kgtable.fix .felt{flex:none}
+.kgg .nbottom{margin-top:auto}
 /* ---- ゲームのルール（図解） ---- */
 .artin.wide{max-width:520px;max-height:88vh;padding:12px 14px 18px}
 .artin.wide .arth b{font-size:19px}
@@ -6363,8 +6366,8 @@ function openKgNew(){
     if (res){ await loadTable("kg_games"); closeSheet(); openKg(res.id); order.forEach(p => pushCall({ type: "game_turn", game: "スカルキング", to: p })); }
   };
 }
-let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
-function openKg(id){ kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
+let kgFeltW = 0; addEventListener("resize", () => { kgFeltW = 0; if (kgId) drawKg(); }); let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
+function openKg(id){ kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
@@ -6627,8 +6630,12 @@ function drawKg(){
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${over}`;
   // 卓は常に同じ形（横長の楕円・比率固定）で、空いている場所の中央に置く
-  const fl = el.querySelector(".kgtable .felt"), fw = fl && fl.querySelector(".fwrap");
-  if (fw){ const r = fl.getBoundingClientRect(), k = 1.12, w = Math.min(r.width, r.height * k); fw.style.width = w + "px"; fw.style.height = (w / k) + "px"; }
+  const tb = el.querySelector(".kgtable"), fl = tb && tb.querySelector(".felt"), fw = fl && fl.querySelector(".fwrap");
+  if (fw){
+    if (!kgFeltW){ const r = fl.getBoundingClientRect(), k = 1.12; kgFeltW = Math.floor(Math.min(r.width, r.height * k)); }
+    fw.style.width = kgFeltW + "px"; fw.style.height = Math.floor(kgFeltW / 1.12) + "px";
+    tb.classList.add("fix");   // 枠は中身ぴったり（伸び縮みしない）
+  }
   // トリック決着：場のカードが勝者の席へ吸い寄せられる
   const sw = [...el.querySelectorAll(".kp.sweep")];
   if (sw.length && g.last){
