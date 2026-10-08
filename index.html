@@ -1623,8 +1623,8 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 @keyframes tcoin{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}10%{opacity:1}55%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--x) * 1.15),calc(-50% + var(--y) + 170px)) rotate(var(--r));opacity:0}}
 /* ラウンド結果：1人ずつ判定、的中はハンコ＋紙吹雪、ハズレは揺れて沈む */
 .sbfx .rtab span{position:relative;overflow:visible}
-.sbfx .rtab span .stamp{position:absolute;left:40%;top:50%;font-style:normal;font-weight:900;font-size:15px;line-height:1;padding:4px 8px;border-radius:8px;border:3px solid #E2364F;color:#E2364F;background:rgba(255,255,255,.85);transform:translateY(-50%) rotate(-12deg);animation:stampin .4s cubic-bezier(.2,1.6,.4,1) calc(var(--d) + .35s) both}
-@keyframes stampin{0%{transform:translateY(-50%) rotate(-30deg) scale(3.2);opacity:0}60%{opacity:1;transform:translateY(-50%) rotate(-10deg) scale(.9)}100%{transform:translateY(-50%) rotate(-12deg) scale(1);opacity:1}}
+.sbfx .rtab span .stamp{position:relative;font-style:normal;font-weight:900;font-size:15px;line-height:1;padding:4px 8px;border-radius:8px;border:3px solid #E2364F;color:#E2364F;background:rgba(255,255,255,.85);transform:rotate(-12deg);animation:stampin .4s cubic-bezier(.2,1.6,.4,1) calc(var(--d) + .35s) both}
+@keyframes stampin{0%{transform:rotate(-30deg) scale(3.2);opacity:0}60%{opacity:1;transform:rotate(-10deg) scale(.9)}100%{transform:rotate(-12deg) scale(1);opacity:1}}
 .sbfx .rtab span.rm .stamp{border-color:#9AA1B4;color:#7A8296;font-size:12px}
 .sbfx .rtab span.rh{animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both,rhpop 1.4s ease-out calc(var(--d) + .5s) both}
 @keyframes rhpop{0%{box-shadow:0 3px 0 var(--ink)}15%{transform:scale(1.07);box-shadow:0 3px 0 var(--ink),0 0 0 4px #FFE38A,0 0 26px #FFD23F}35%{transform:scale(1)}100%{box-shadow:0 3px 0 var(--ink),0 0 0 3px #FFE38A,0 0 14px rgba(255,210,63,.7)}}
@@ -1639,8 +1639,29 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .sbfx .rtab .rhit b{font-family:var(--disp);font-weight:400;font-size:26px;color:#FFE38A}
 .sbfx .rtab .rhit.none{background:#7A8296;font-size:15px}
 .kgres2 span{position:relative}
-.kgres2 span.rh::after{content:"的中";position:absolute;right:44px;top:-7px;font-size:10px;font-weight:900;line-height:1;padding:2px 5px;border:2px solid #E2364F;border-radius:6px;color:#E2364F;background:rgba(255,255,255,.85);transform:rotate(-14deg)}
+.kgres2 span b.hm:empty{display:none}
+.kgres2 span b.hm{font-size:10px;font-weight:900;line-height:1;padding:2px 5px;border:2px solid #E2364F;border-radius:6px;color:#E2364F;background:rgba(255,255,255,.85);transform:rotate(-14deg)}
 .kgres2.late{animation-delay:var(--rd)}
+
+.sbfx .rtab span{grid-template-columns:minmax(0,1fr) auto auto 54px}
+.kgres2>span{grid-template-columns:minmax(0,1fr) auto auto 40px}
+.kgres2>span.rm{grid-template-columns:minmax(0,1fr) auto 40px}
+.kgres2 .nm2{display:flex;flex-direction:column;align-items:flex-start;text-align:left;justify-self:stretch;min-width:0;padding:0;border:0;background:none;box-shadow:none;animation:none;gap:0}
+.kgres2 .nm2 small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kgscb{position:absolute;left:10px;bottom:10px;z-index:20;padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:900;color:#3A1E0C;background:rgba(255,248,231,.96);border:2px solid #5A3416;box-shadow:0 2px 0 #5A3416}
+.kgscb:active{transform:translateY(2px);box-shadow:none}
+.kgflip.on .kgscb{display:none}
+.kgpop{position:fixed !important;inset:0;z-index:46;margin:0 !important;display:grid;place-items:center;padding:16px;background:rgba(20,10,30,.45);animation:fadein .2s both}
+.kgpopin{width:min(100%,420px);max-height:78vh;overflow:auto;padding:12px 12px 8px;border-radius:16px;background:#FFFDF7;border:3px solid var(--ink);box-shadow:0 6px 0 var(--ink);animation:chslam .3s cubic-bezier(.2,1.5,.4,1) both}
+.kgpoph{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.kgpoph b{font-size:16px;font-weight:900}
+
+/* 予想の丸：細かい点で描いた円、最大5個×2段 */
+.pips.g{display:grid;grid-template-columns:repeat(var(--c),8px);grid-auto-rows:8px;align-content:center;align-items:center;height:auto !important;min-height:0;gap:2px;padding:2px 4px;border-radius:7px;justify-content:center}
+.pips.g i{width:8px;height:8px;margin:0;padding:0;display:block}
+.pips.g i.pf{background:radial-gradient(circle at 35% 30%,#FFF6D6,#E8B12A 60%);border:1px solid #8A5A0C;box-sizing:border-box}
+.pips.g i.px{background:var(--crimson);border:1px solid #6A0C1C;box-sizing:border-box}
+.pips.g i.pe{border:0;background:repeating-conic-gradient(#8A5A0C 0 14deg,transparent 14deg 30deg);-webkit-mask:radial-gradient(circle,transparent 2.6px,#000 2.9px);mask:radial-gradient(circle,transparent 2.6px,#000 2.9px)}
 /* 表のボードは早見表がなくなった分、カードを大きく */
 .kgc.tb{width:42px;height:58px;border-radius:7px}
 .kgc.tb b{font-size:23px}.kgc.tb b.len2{font-size:19px}.kgc.tb .ci{font-size:9px;left:4px;top:3px}.kgc.tb .ci.br{right:4px;bottom:3px}
@@ -6534,8 +6555,8 @@ function openKgNew(){
   };
 }
 let kgFeltW = 0, kgFeltH = 0; addEventListener("resize", () => { kgFeltW = 0; if (kgId) drawKg(); }); let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
-let kgFlip = false, kgDisc = [], kgAbSel = null, kgResAt = 0;
-function openKg(id){ kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; kgFlip = false; kgDisc = []; kgAbSel = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
+let kgFlip = false, kgDisc = [], kgAbSel = null, kgResAt = 0, kgScoreOpen = false;
+function openKg(id){ kgScoreOpen = false; kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; kgFlip = false; kgDisc = []; kgAbSel = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
@@ -6687,7 +6708,7 @@ function kgFx(kind, opt = {}){
   } else if (kind === "round"){
     const rows = opt.rows || [], hits = rows.filter(r => r.hit).length, dl = i => .45 + i * .55;
     const conf = () => Array.from({ length: 14 }, (_, k) => `<i class="rcf" style="--x:${rnd(-170, 170).toFixed(0)}px;--y:${rnd(-110, -30).toFixed(0)}px;--r:${rnd(-400, 400).toFixed(0)}deg;--c:${["#FFD23F", "#E2364F", "#1FB3BF", "#2DBE60", "#8B6CFF", "#FF8A3D"][k % 6]};--s:${rnd(.6, 1.2).toFixed(2)}"></i>`).join("");
-    html = `<span class="seawash soft"></span><div class="rtab"><b class="rt">ROUND ${opt.round} 終了</b>${rows.map((r, i) => `<span class="${r.hit ? "rh" : "rm"}" style="--pc:${r.c};--d:${dl(i).toFixed(2)}s"><b>${esc(r.n)}</b><small>予想${r.bid}・獲得${r.won}</small><em data-to="${r.pts}">0</em><i class="stamp">${r.hit ? "的中!" : "ハズレ"}</i>${r.hit ? `<i class="rcw">${conf()}</i>` : ""}</span>`).join("")}<div class="rhit ${hits ? "" : "none"}" style="--d:${(dl(rows.length) + .2).toFixed(2)}s">${hits ? `🎯 的中 <b>${hits}</b>人！` : "的中した人はいなかった…"}</div></div>`;
+    html = `<span class="seawash soft"></span><div class="rtab"><b class="rt">ROUND ${opt.round} 終了</b>${rows.map((r, i) => `<span class="${r.hit ? "rh" : "rm"}" style="--pc:${r.c};--d:${dl(i).toFixed(2)}s"><b>${esc(r.n)}</b><i class="stamp">${r.hit ? "的中!" : "ハズレ"}</i><small>予想${r.bid}・獲得${r.won}</small><em data-to="${r.pts}">0</em>${r.hit ? `<i class="rcw">${conf()}</i>` : ""}</span>`).join("")}<div class="rhit ${hits ? "" : "none"}" style="--d:${(dl(rows.length) + .2).toFixed(2)}s">${hits ? `🎯 的中 <b>${hits}</b>人！` : "的中した人はいなかった…"}</div></div>`;
   }
   document.querySelectorAll(".sbfx").forEach(x => x.remove());
   const fx = document.createElement("div"); fx.className = "sbfx kg-" + kind; fx.style.cssText = `--pc:${opt.c || "#1FB3BF"};--ms:${ms}ms`;
@@ -6791,13 +6812,13 @@ function drawKg(){
     if (!bidsOpen) return `<span class="pips q">${bids[p] != null ? "✓" : "…"}</span>`;
     const b = bids[p] || 0, w = won[p] || 0;
     if (b === 0) return `<span class="pips z ${w ? "over" : "ok"}">0${w ? `<i class="x">+${w}</i>` : ""}</span>`;
-    return `<span class="pips">${Array.from({ length: Math.max(b, w) }, (_, k) => `<i class="${k < Math.min(w, b) ? "f" : k < b ? "e" : "x"}"></i>`).join("")}</span>`;
+    return `<span class="pips g" style="--c:${Math.min(5, Math.max(b, w))}">${Array.from({ length: Math.max(b, w) }, (_, k) => `<i class="${k < Math.min(w, b) ? "pf" : k < b ? "pe" : "px"}"></i>`).join("")}</span>`;
   };
   let resOv = "";
   if (ph === "roundend" && (g.history || []).length){
     const h = g.history[g.history.length - 1];
     const rd = Math.max(0, kgResAt - Date.now());
-    resOv = `<div class="kgres2 ${rd ? "late" : ""}" style="--rd:${(rd / 1000).toFixed(2)}s"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
+    resOv = `<div class="kgres2 ${rd ? "late" : ""}" style="--rd:${(rd / 1000).toFixed(2)}s"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><span class="nm2"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small></span><b class="hm">${r.bid === r.won ? "的中" : ""}</b><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
   }
   const thOf = {}; order.forEach((p, k) => { thOf[p] = 90 + 360 * k / N; });
   const wSeat = wPl ? thOf[wPl.p] : null;
@@ -6848,9 +6869,9 @@ function drawKg(){
       <div class="kbr"><em>⚔️</em><p><b>海賊の能力 ${use("abil")}</b>その海賊で勝った時に使う（最後のトリックはハリーだけ）</p></div>
       ${Object.values(KG_PIR).map(x => `<div class="kbr pir"><em>${x.h}</em><p><b>${x.n}</b>${x.d}</p></div>`).join("")}
     </div></div>`;
-  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
+  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><button class="kgscb" id="kgScore">得点表</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
       <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
-      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient><filter id="kgBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><polygon class="glo" points="50,9 58,50 42,50" fill="none" stroke="#FFE15A" stroke-width="11" stroke-linejoin="round" filter="url(#kgBlur)"/><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#7A5A3A" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div></div>${back}</div></div>`;
+      <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient><filter id="kgBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><polygon class="glo" points="50,9 58,50 42,50" fill="none" stroke="#FFE15A" stroke-width="11" stroke-linejoin="round" filter="url(#kgBlur)"/><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#D5D8DE" stroke="#A4AAB6" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div></div>${back}</div></div>`;
   // 下部
   let bottom = "";
   if (ph === "roundend" && (g.history || []).length){
@@ -6915,7 +6936,7 @@ function drawKg(){
     <div class="nseats2 ${g.players.length >= 5 ? "tight" : ""}">${seats}</div>
     ${table}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
-    <div class="nbottom">${bottom}</div>${over}`;
+    <div class="nbottom">${bottom}</div>${over}${kgScoreOpen ? `<div class="kgpop" id="kgPopBg"><div class="kgpopin"><div class="kgpoph"><b>得点表</b><button class="nmini" id="kgPopX" aria-label="閉じる">×</button></div>${kgScoreHtml(g)}</div></div>` : ""}`;
   // 卓は常に同じ形（横長の楕円・比率固定）で、空いている場所の中央に置く
   const tb = el.querySelector(".kgtable"), fl = tb && tb.querySelector(".felt"), fw = fl && fl.querySelector(".fwrap");
   if (fw){
@@ -6958,6 +6979,9 @@ function drawKg(){
   }
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (kgBusy) return; kgBusy = true; try { await fn(); } finally { kgBusy = false; } };
+  on("kgScore", () => { kgScoreOpen = true; drawKg(); });
+  on("kgPopX", () => { kgScoreOpen = false; drawKg(); });
+  { const bg = el.querySelector("#kgPopBg"); if (bg) bg.onclick = e => { if (e.target === bg){ kgScoreOpen = false; drawKg(); } }; }
   on("kgClose", closeKg); on("kgClose2", closeKg); on("kgMenu", () => kgMenu(g));
   on("kgBid", act(async () => { const v = kgBidSel; kgBidSel = null; if (v != null) await kgBid(v); }));
   on("kgPlay", act(async () => { const c = kgSel; kgSel = null; if (c) await kgPlay(c); }));
@@ -6991,13 +7015,14 @@ function drawKg(){
 function kgMenu(g){
   const s = openSheet("スカルキングのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="score">得点表を見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
   s.querySelector('[data-x="rule"]').onclick = () => openGameRules("kg");
-  s.querySelector('[data-x="score"]').onclick = () => {
-    const h = g.history || [];
-    openSheet("得点表", `<div class="kgsheet"><table><tr><th>R</th>${g.players.map(p => `<th style="color:${pcolor(p)}">${esc(pname(p))}</th>`).join("")}</tr>
-      ${h.map(r => `<tr><td>${r.round}</td>${g.players.map(p => { const x = r.rows[p]; return `<td class="${x.bid === x.won ? "hit" : "miss"}"><small>${x.bid}/${x.won}</small>${x.pts >= 0 ? "+" : ""}${x.pts}</td>`; }).join("")}</tr>`).join("")}
-      <tr class="tot"><td>計</td>${g.players.map(p => `<td>${(g.scores || {})[p] || 0}</td>`).join("")}</tr></table><p class="note">小さい数字は「予想/獲得」</p></div>`);
-  };
+  s.querySelector('[data-x="score"]').onclick = () => { closeSheet(); kgScoreOpen = true; drawKg(); };
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await kgCommit(g.id, () => ({ patch: { status: "aborted" }, log: "対戦が中止されました" })); closeKg(); };
+}
+function kgScoreHtml(g){
+    const h = g.history || [];
+    return `<div class="kgsheet"><table><tr><th>R</th>${g.players.map(p => `<th style="color:${pcolor(p)}">${esc(pname(p))}</th>`).join("")}</tr>
+      ${h.map(r => `<tr><td>${r.round}</td>${g.players.map(p => { const x = r.rows[p]; return `<td class="${x.bid === x.won ? "hit" : "miss"}"><small>${x.bid}/${x.won}</small>${x.pts >= 0 ? "+" : ""}${x.pts}</td>`; }).join("")}</tr>`).join("")}
+      <tr class="tot"><td>計</td>${g.players.map(p => `<td>${(g.scores || {})[p] || 0}</td>`).join("")}</tr></table><p class="note">小さい数字は「予想/獲得」${h.length ? "" : "・まだ記録はありません"}</p></div>`;
 }
 function kgRulesHtml(){
   const C = c => kgCard(c, "mini");
