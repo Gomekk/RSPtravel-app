@@ -1470,13 +1470,16 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .compass .needle::after{content:"";position:absolute;left:50%;top:50%;width:12%;height:40%;margin-left:-6%;background:#5A3416;clip-path:polygon(0 0,100% 0,50% 100%);opacity:.7}
 .compass .hub{position:absolute;left:50%;top:50%;width:14%;height:14%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6D6,#E8B12A 60%);border:2px solid #5A3416}
 .compass.idle .needle{animation:spin 8s linear infinite;opacity:.55}
-.compass.pt{animation:cmpg 1.4s ease-in-out infinite}
+.compass.pt{animation:none}
 @keyframes cmpg{50%{filter:drop-shadow(0 3px 0 rgba(0,0,0,.35)) drop-shadow(0 0 12px var(--pc))}}
 .felt .ring::after{display:none}
 .kp.win .kgc{box-shadow:0 3px 0 var(--ink);animation:none}
 @keyframes wglow{50%{box-shadow:0 0 0 3px #FFE38A,0 0 32px #FFB300,0 3px 0 var(--ink)}}
 .kp.done.win .kgc{animation:none}
-.kp.sweep{animation:none}
+.kp.sweep{animation:none;will-change:transform,opacity}
+.kp.sweep .kgc{filter:none !important;opacity:1 !important}
+.kp.sweep::after{content:"";position:absolute;left:50%;top:50%;width:150%;height:150%;margin:-75% 0 0 -75%;border-radius:50%;background:radial-gradient(circle,rgba(255,222,100,.8),rgba(255,210,63,0) 65%);z-index:-1;pointer-events:none;opacity:0;animation:kpglow 3.3s linear var(--sd,0s) both}
+@keyframes kpglow{0%{opacity:0}10%{opacity:.8}45%{opacity:1}55%{opacity:1}92%{opacity:.9}100%{opacity:0}}
 .tstack{position:relative;display:block;width:calc(14px + (var(--n) - 1) * 3px);height:12px}
 .tstack i{position:absolute;left:calc(var(--i) * 3px);top:calc(var(--i) * -1px);width:10px;height:13px;border-radius:2px;background:repeating-linear-gradient(45deg,#2A1020 0 2px,#5A2A3A 2px 4px);border:1px solid #E8B12A}
 .kgres2{position:absolute;inset:6% 4%;z-index:6;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:10px;border-radius:16px;background:rgba(255,248,231,.97);border:3px solid #5A3416;box-shadow:0 0 0 4px #D9B04A,0 10px 30px rgba(0,0,0,.45);animation:fadein .4s both}
@@ -1678,8 +1681,8 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .compass .chalo,.compass .corb{opacity:1;animation-delay:var(--ph,0s)}
 .compass.idle .chalo{opacity:.55}
 .compass .cburst{position:absolute;inset:-10%;border-radius:50%;border:4px solid #FFE38A;box-shadow:0 0 16px #FFD23F,inset 0 0 10px #FFD23F;pointer-events:none}
-.kgring{position:fixed;z-index:46;width:46px;height:46px;border-radius:50%;border:4px solid #FFE38A;box-shadow:0 0 18px #FFD23F,inset 0 0 12px #FFD23F;pointer-events:none}
-.kgspk{position:fixed;z-index:46;width:8px;height:8px;border-radius:50%;background:#FFF6C8;box-shadow:0 0 8px #FFD23F,0 0 14px #FFB300;pointer-events:none}
+.kgring{position:fixed;z-index:46;width:46px;height:46px;border-radius:50%;border:4px solid #FFE38A;pointer-events:none;will-change:transform,opacity}
+.kgspk{position:fixed;z-index:46;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#FFF6C8 0 25%,rgba(255,210,63,.7) 40%,rgba(255,180,0,0) 70%);pointer-events:none;will-change:transform,opacity}
 
 /* 獲得した束：縁に沿って1つずつ並べる */
 .kgtable .kzone{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
@@ -7013,22 +7016,22 @@ function drawKg(){
       sw.forEach((c, i) => {
         const a = c.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2;
         const k = c.classList.contains("win") ? n : i, ox = (k - n / 2) * 1.6, oy = -(k - n / 2) * 1.6, fan = (i - (n - 1) / 2) * 11;
-        c.style.zIndex = c.classList.contains("win") ? 30 : 10 + i;
+        c.style.zIndex = c.classList.contains("win") ? 30 : 10 + i; c.style.setProperty("--sd", (-sweepEl / 1000).toFixed(3) + "s");
         c.animate([
-          { transform: T(0, 0), filter: "none", offset: 0 },
-          { transform: T(0, -6, 1.12), filter: "drop-shadow(0 0 8px rgba(255,226,90,.9))", offset: .1 },
-          { transform: T(cx - ax + ox, cy - ay + oy, 1.05, fan), filter: "drop-shadow(0 0 10px rgba(255,226,90,.9))", offset: .36, easing: "cubic-bezier(.3,1.4,.5,1)" },
-          { transform: T(cx - ax + ox, cy - ay + oy, 1.22, 0), filter: "drop-shadow(0 0 18px rgba(255,210,63,1))", offset: .5 },
-          { transform: T(cx - ax + ox, cy - ay + oy, 1.05, 0), filter: "drop-shadow(0 0 12px rgba(255,210,63,.9))", offset: .6 },
-          { transform: T(cx - ax + ox, cy - ay + oy - 14, 1.12, 0), filter: "drop-shadow(0 0 14px rgba(255,210,63,.9))", offset: .68, easing: "cubic-bezier(.55,0,.35,1)" },
-          { transform: T(bx - ax + ox * .4, by - ay + oy * .4, .5, 0), filter: "drop-shadow(0 0 16px rgba(255,210,63,1))", opacity: 1, offset: .92 },
-          { transform: T(bx - ax, by - ay, .32, 0), filter: "none", opacity: 0, offset: 1 }
+          { transform: T(0, 0), offset: 0 },
+          { transform: T(0, -6, 1.12), offset: .1 },
+          { transform: T(cx - ax + ox, cy - ay + oy, 1.05, fan), offset: .36, easing: "cubic-bezier(.3,1.4,.5,1)" },
+          { transform: T(cx - ax + ox, cy - ay + oy, 1.22, 0), offset: .5 },
+          { transform: T(cx - ax + ox, cy - ay + oy, 1.05, 0), offset: .6 },
+          { transform: T(cx - ax + ox, cy - ay + oy - 14, 1.12, 0), offset: .68, easing: "cubic-bezier(.55,0,.35,1)" },
+          { transform: T(bx - ax + ox * .4, by - ay + oy * .4, .5, 0), opacity: 1, offset: .92 },
+          { transform: T(bx - ax, by - ay, .32, 0), opacity: 0, offset: 1 }
         ], { duration: D, easing: "cubic-bezier(.5,0,.3,1)", fill: "forwards" }).currentTime = sweepEl;
       });
       // 束がまとまった瞬間：中央で光の輪
       const fxAt = (x, y, cls, ms, kf) => { const e = document.createElement("i"); e.className = cls; e.style.left = x + "px"; e.style.top = y + "px"; document.body.appendChild(e); e.animate(kf, { duration: ms, easing: "ease-out", fill: "forwards" }).onfinish = () => e.remove(); };
       if (sweepNow) setTimeout(() => { if (!el.isConnected) return; [0, 140].forEach(d => setTimeout(() => fxAt(cx, cy, "kgring", 700, [{ transform: "translate(-50%,-50%) scale(.3)", opacity: 1 }, { transform: "translate(-50%,-50%) scale(3.4)", opacity: 0 }]), d));
-        for (let j = 0; j < 12; j++){ const an = j / 12 * Math.PI * 2, r = 70 + Math.random() * 30; fxAt(cx, cy, "kgspk", 650, [{ transform: "translate(-50%,-50%) scale(.4)", opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(an) * r}px),calc(-50% + ${Math.sin(an) * r}px)) scale(1)`, opacity: 0 }]); } }, D * .48);
+        for (let j = 0; j < 8; j++){ const an = j / 8 * Math.PI * 2, r = 70 + Math.random() * 30; fxAt(cx, cy, "kgspk", 650, [{ transform: "translate(-50%,-50%) scale(.4)", opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(an) * r}px),calc(-50% + ${Math.sin(an) * r}px)) scale(1)`, opacity: 0 }]); } }, D * .48);
       // 手元に置かれた瞬間：席と獲得の束が弾む
       if (sweepNow) setTimeout(() => { const s2 = [...document.querySelectorAll("#kgg .ks")].find(x => x.dataset.p === wp); if (!s2) return;
         s2.animate([{ transform: "translate(-50%,-50%) scale(1)" }, { transform: "translate(-50%,-50%) scale(1.3)" }, { transform: "translate(-50%,-50%) scale(1)" }], { duration: 500, easing: "cubic-bezier(.3,1.6,.5,1)" });
