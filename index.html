@@ -1549,7 +1549,9 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kgflipb:active{transform:translateY(2px);box-shadow:none}
 .kgflip.on .kgflipb{left:auto;right:10px}
 .kgback .kbt{align-self:flex-start;margin:2px 0 0 4px;font-family:var(--disp);font-weight:400;font-size:17px;color:#3A1E0C}
-.kgg .ladder2.big{transform:none;margin:0;flex:none}
+.kgg .ladder2.lbk{transform:none;margin:0;flex:none}
+.kgback .kbtie{margin:-1px 4px 0;font-size:11.5px;font-weight:700;color:#3A1E0C;text-align:center}
+.kgback .kbtie b{color:#C0392B}
 .kgback .kbs{flex:none;padding:6px 8px 7px;border-radius:12px;background:rgba(255,255,255,.55);border:1.5px solid rgba(90,52,22,.55)}
 .kgback .kbh{display:block;font-size:12px;font-weight:900;color:#5A3416;margin-bottom:4px}
 .kgback .kbh small{font-size:9.5px;font-weight:700;color:#8A6A4A}
@@ -6892,7 +6894,7 @@ function drawKg(){
   // 強さの早見表：今いちばん強いカードの段が光る
   const tier = !wPl ? "" : (() => { const k2 = kgKind(wPl); if (k2 === "num") return kgInfo(wPl.c).s === "b" ? "b" : "lead"; return k2; })();
   const hl = k2 => tier === k2 ? "hl" : "";
-  const ladder = `<div class="ladder2 big">
+  const ladder = `<div class="ladder2 lbk">
     <div class="lcol cyc"><svg class="arr" viewBox="0 0 120 70" aria-hidden="true"><defs><marker id="kgah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1F8C8C"/></marker></defs>
         <path d="M70 13Q92 12 98 30" stroke="#1F8C8C" stroke-width="4" fill="none" marker-end="url(#kgah)"/>
         <path d="M92 52Q78 64 56 60" stroke="#1F8C8C" stroke-width="4" fill="none" marker-end="url(#kgah)"/>
@@ -6908,7 +6910,7 @@ function drawKg(){
   const info = `<div class="kginfo">${ph === "play" ? `<span>トリック <b>${Math.max(1, tno)}</b>/${n}</span>` : ph === "bid" ? `<span>予想 <b>${g.players.filter(p => bids[p] != null).length}</b>/${N}</span>` : `<span>${n}枚ラウンド終了</span>`}</div>`;
 
   const use = k => opt[k] ? `<i class="on">使用中</i>` : `<i>なし</i>`;
-  const back = `<div class="kgback"><b class="kbt">📜 強さ早見表</b>${ladder}
+  const back = `<div class="kgback"><b class="kbt">📜 強さ早見表</b>${ladder}<p class="kbtie">同じ強さのカードが出たら<b>先に出した方</b>の勝ち</p>
     <div class="kbs"><b class="kbh">ボーナス<small>（予想ぴったりの時だけ）</small></b>
       <div class="kbn"><span>🦜💰🗺️ 14 <b>+10</b></span><span>🏴‍☠️ 14 <b>+20</b></span><span>⚔️→🧜‍♀️ <b>+20</b></span><span>👑→⚔️ <b>+30</b></span><span>🧜‍♀️→👑 <b>+40</b></span></div></div>
     <div class="kbs"><b class="kbh">上級ルール</b>
