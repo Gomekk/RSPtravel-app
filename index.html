@@ -1662,6 +1662,24 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .pips.g i.pf{background:radial-gradient(circle at 35% 30%,#FFF6D6,#E8B12A 60%);border:1px solid #8A5A0C;box-sizing:border-box}
 .pips.g i.px{background:var(--crimson);border:1px solid #6A0C1C;box-sizing:border-box}
 .pips.g i.pe{border:0;background:repeating-conic-gradient(#8A5A0C 0 14deg,transparent 14deg 30deg);-webkit-mask:radial-gradient(circle,transparent 2.6px,#000 2.9px);mask:radial-gradient(circle,transparent 2.6px,#000 2.9px)}
+
+/* 方位磁針：回る光の輪・周りを回る光の粒・指す先が変わると弾けて光る */
+.compass .chalo{position:absolute;inset:-26%;border-radius:50%;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:conic-gradient(from 0deg,transparent 0 14%,rgba(255,226,90,.95) 22%,transparent 30%,transparent 64%,rgba(255,255,255,.9) 72%,transparent 80%);
+  -webkit-mask:radial-gradient(circle,transparent 50%,#000 54%,#000 66%,transparent 70%);mask:radial-gradient(circle,transparent 50%,#000 54%,#000 66%,transparent 70%);animation:spin 2.2s linear infinite}
+.compass.pt .chalo{opacity:1}
+.compass::before{content:"";position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(circle,rgba(255,215,80,.6),transparent 66%);opacity:0;pointer-events:none}
+.compass.pt::before{opacity:1;animation:cpulse 1.2s ease-in-out infinite}
+@keyframes cpulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.3);opacity:.35}}
+.compass .corb{position:absolute;inset:-34%;pointer-events:none;opacity:0;transition:opacity .4s;animation:spin 3.2s linear infinite reverse}
+.compass.pt .corb{opacity:1}
+.compass .corb i{position:absolute;inset:0}
+.compass .corb i::before{content:"";position:absolute;left:50%;top:0;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#FFF6C8;box-shadow:0 0 6px #FFD23F,0 0 12px #FFB300}
+.compass .corb i:nth-child(2){transform:rotate(120deg)}.compass .corb i:nth-child(3){transform:rotate(240deg)}
+.compass .corb i:nth-child(2)::before{width:4px;height:4px;margin-left:-2px}
+.compass .cburst{position:absolute;inset:-10%;border-radius:50%;border:4px solid #FFE38A;box-shadow:0 0 16px #FFD23F,inset 0 0 10px #FFD23F;pointer-events:none}
+.kgring{position:fixed;z-index:46;width:46px;height:46px;border-radius:50%;border:4px solid #FFE38A;box-shadow:0 0 18px #FFD23F,inset 0 0 12px #FFD23F;pointer-events:none}
+.kgspk{position:fixed;z-index:46;width:8px;height:8px;border-radius:50%;background:#FFF6C8;box-shadow:0 0 8px #FFD23F,0 0 14px #FFB300;pointer-events:none}
 /* 表のボードは早見表がなくなった分、カードを大きく */
 .kgc.tb{width:42px;height:58px;border-radius:7px}
 .kgc.tb b{font-size:23px}.kgc.tb b.len2{font-size:19px}.kgc.tb .ci{font-size:9px;left:4px;top:3px}.kgc.tb .ci.br{right:4px;bottom:3px}
@@ -6773,7 +6791,7 @@ function kgDiff(g){
   } else if (tl && g.last && g.last.w >= 0){
     const wp = g.last.plays[g.last.w].p, o = { name: pname(wp), c: pcolor(wp), bonus: g.last.bonus, p: wp };
     const kind = g.last.why === "mermaid" ? "mermaid" : g.last.why === "king" && g.last.bonus >= 30 ? "king" : g.last.why === "pirmer" ? "pirmer" : "trick";
-    setTimeout(() => kgFx(kind, o), t); t += kind === "trick" ? 1900 : 2700;
+    t = Math.max(t, 3000); setTimeout(() => kgFx(kind, o), t); t += kind === "trick" ? 1900 : 2700;
   }
   if (lines.some(m => /ラウンド終了/.test(m))){
     const h = (g.history || []).slice(-1)[0];
@@ -6823,8 +6841,8 @@ function drawKg(){
   const thOf = {}; order.forEach((p, k) => { thOf[p] = 90 + 360 * k / N; });
   const wSeat = wPl ? thOf[wPl.p] : null;
   const sweepKey = isLast ? `${g.round}:${Object.values(won).reduce((a, b) => a + b, 0)}` : null;
-  const sweepNow = sweepKey && kgSwept !== sweepKey, swept = sweepKey && kgSwept === sweepKey && kgSweptAt && Date.now() - kgSweptAt > 2600;
-  if (sweepNow){ kgSwept = sweepKey; kgSweptAt = Date.now(); setTimeout(() => { if (kgId) drawKg(); }, 2700); }
+  const sweepNow = sweepKey && kgSwept !== sweepKey, swept = sweepKey && kgSwept === sweepKey && kgSweptAt && Date.now() - kgSweptAt > 3300;
+  if (sweepNow){ kgSwept = sweepKey; kgSweptAt = Date.now(); setTimeout(() => { if (kgId) drawKg(); }, 3400); }
   const seatsT = order.map((p, k) => {
     const mine = inGame && k === 0;
     const th = 90 + 360 * k / N;   // 自分は手前、ほかは時計回りに卓を囲む
@@ -6869,7 +6887,7 @@ function drawKg(){
       <div class="kbr"><em>⚔️</em><p><b>海賊の能力 ${use("abil")}</b>その海賊で勝った時に使う（最後のトリックはハリーだけ）</p></div>
       ${Object.values(KG_PIR).map(x => `<div class="kbr pir"><em>${x.h}</em><p><b>${x.n}</b>${x.d}</p></div>`).join("")}
     </div></div>`;
-  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><button class="kgscb" id="kgScore">得点表</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
+  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><button class="kgscb" id="kgScore">得点表</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><span class="chalo"></span><span class="corb"><i></i><i></i><i></i></span><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
       <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
       <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient><filter id="kgBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><polygon class="glo" points="50,9 58,50 42,50" fill="none" stroke="#FFE15A" stroke-width="11" stroke-linejoin="round" filter="url(#kgBlur)"/><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#D5D8DE" stroke="#A4AAB6" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${seatsT}</div>${resOv}</div></div>${back}</div></div>`;
   // 下部
@@ -6959,13 +6977,34 @@ function drawKg(){
   if (sw.length && g.last && g.last.w >= 0){
     const wp = g.last.plays[g.last.w].p, ws = [...el.querySelectorAll(".ks")].find(x => x.dataset.p === wp);
     if (ws){
-      const b = ws.getBoundingClientRect();
+      // ①みんなのカードが卓の中央へ集まる → ②1つの束にまとまって光る → ③束が勝者の手元へ飛んでいく
+      const b = ws.getBoundingClientRect(), cp = el.querySelector(".compass"), cr = cp ? cp.getBoundingClientRect() : b;
+      const cx = cr.left + cr.width / 2, cy = cr.top + cr.height / 2, bx = b.left + b.width / 2, by = b.top + b.height / 2, n = sw.length, D = 3300;
+      const T = (x, y, sc = 1, r = 0) => `translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) rotate(${r}deg) scale(${sc})`;
       sw.forEach((c, i) => {
-        const a = c.getBoundingClientRect(), dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
-        c.animate([{ transform: "translate(-50%,-50%)", opacity: 1 }, { transform: "translate(-50%,-50%)", opacity: 1, offset: .6 },
-          { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.3) rotate(${i % 2 ? 30 : -30}deg)`, opacity: 0 }], { duration: 2500, delay: i * 40, easing: "cubic-bezier(.6,0,.4,1)", fill: "forwards" });
+        const a = c.getBoundingClientRect(), ax = a.left + a.width / 2, ay = a.top + a.height / 2;
+        const k = c.classList.contains("win") ? n : i, ox = (k - n / 2) * 1.6, oy = -(k - n / 2) * 1.6, fan = (i - (n - 1) / 2) * 11;
+        c.style.zIndex = c.classList.contains("win") ? 30 : 10 + i;
+        c.animate([
+          { transform: T(0, 0), filter: "none", offset: 0 },
+          { transform: T(0, -6, 1.12), filter: "drop-shadow(0 0 8px rgba(255,226,90,.9))", offset: .1 },
+          { transform: T(cx - ax + ox, cy - ay + oy, 1.05, fan), filter: "drop-shadow(0 0 10px rgba(255,226,90,.9))", offset: .36, easing: "cubic-bezier(.3,1.4,.5,1)" },
+          { transform: T(cx - ax + ox, cy - ay + oy, 1.22, 0), filter: "drop-shadow(0 0 18px rgba(255,210,63,1))", offset: .5 },
+          { transform: T(cx - ax + ox, cy - ay + oy, 1.05, 0), filter: "drop-shadow(0 0 12px rgba(255,210,63,.9))", offset: .6 },
+          { transform: T(cx - ax + ox, cy - ay + oy - 14, 1.12, 0), filter: "drop-shadow(0 0 14px rgba(255,210,63,.9))", offset: .68, easing: "cubic-bezier(.55,0,.35,1)" },
+          { transform: T(bx - ax + ox * .4, by - ay + oy * .4, .5, 0), filter: "drop-shadow(0 0 16px rgba(255,210,63,1))", opacity: 1, offset: .92 },
+          { transform: T(bx - ax, by - ay, .32, 0), filter: "none", opacity: 0, offset: 1 }
+        ], { duration: D, easing: "cubic-bezier(.5,0,.3,1)", fill: "forwards" });
       });
-      ws.animate([{ transform: "translate(-50%,-50%) scale(1)" }, { transform: "translate(-50%,-50%) scale(1.25)" }, { transform: "translate(-50%,-50%) scale(1)" }], { duration: 450, delay: 2300 });
+      // 束がまとまった瞬間：中央で光の輪
+      const fxAt = (x, y, cls, ms, kf) => { const e = document.createElement("i"); e.className = cls; e.style.left = x + "px"; e.style.top = y + "px"; document.body.appendChild(e); e.animate(kf, { duration: ms, easing: "ease-out", fill: "forwards" }).onfinish = () => e.remove(); };
+      setTimeout(() => { if (!el.isConnected) return; [0, 140].forEach(d => setTimeout(() => fxAt(cx, cy, "kgring", 700, [{ transform: "translate(-50%,-50%) scale(.3)", opacity: 1 }, { transform: "translate(-50%,-50%) scale(3.4)", opacity: 0 }]), d));
+        for (let j = 0; j < 12; j++){ const an = j / 12 * Math.PI * 2, r = 70 + Math.random() * 30; fxAt(cx, cy, "kgspk", 650, [{ transform: "translate(-50%,-50%) scale(.4)", opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(an) * r}px),calc(-50% + ${Math.sin(an) * r}px)) scale(1)`, opacity: 0 }]); } }, D * .48);
+      // 手元に置かれた瞬間：席と獲得の束が弾む
+      setTimeout(() => { const s2 = [...document.querySelectorAll("#kgg .ks")].find(x => x.dataset.p === wp); if (!s2) return;
+        s2.animate([{ transform: "translate(-50%,-50%) scale(1)" }, { transform: "translate(-50%,-50%) scale(1.3)" }, { transform: "translate(-50%,-50%) scale(1)" }], { duration: 500, easing: "cubic-bezier(.3,1.6,.5,1)" });
+        const st = s2.querySelector(".tstack"); if (st) st.animate([{ transform: "scale(1)" }, { transform: "scale(1.6)" }, { transform: "scale(1)" }], { duration: 500 });
+        const r2 = s2.getBoundingClientRect(); fxAt(r2.left + r2.width / 2, r2.top + r2.height / 2, "kgring", 650, [{ transform: "translate(-50%,-50%) scale(.3)", opacity: 1 }, { transform: "translate(-50%,-50%) scale(2.6)", opacity: 0 }]); }, D * .93);
     }
   }
   // 羅針盤の針：前の向きから今いちばん強いカードの方へ振れる
@@ -6974,6 +7013,12 @@ function drawKg(){
     let to = Number(nd.dataset.a), from = kgNeedleA == null ? to - 200 : kgNeedleA;
     while (to - from > 180) to -= 360; while (from - to > 180) to += 360;
     nd.style.transform = `rotate(${to}deg)`;
+    if (from !== to && kgNeedleA != null){
+      const cp = el.querySelector(".compass");
+      cp.animate([{ transform: "translate(-50%,-50%) scale(1)" }, { transform: "translate(-50%,-50%) scale(1.35)", offset: .35 }, { transform: "translate(-50%,-50%) scale(.95)", offset: .7 }, { transform: "translate(-50%,-50%) scale(1)" }], { duration: 700, easing: "ease-out" });
+      const bu = document.createElement("span"); bu.className = "cburst"; cp.appendChild(bu);
+      bu.animate([{ transform: "scale(.6)", opacity: 1 }, { transform: "scale(2.6)", opacity: 0 }], { duration: 700, easing: "ease-out", fill: "forwards" }).onfinish = () => bu.remove();
+    }
     if (from !== to) nd.animate([{ transform: `rotate(${from}deg)` }, { transform: `rotate(${to + (to > from ? 14 : -14)}deg)`, offset: .7 }, { transform: `rotate(${to}deg)` }], { duration: 900, easing: "cubic-bezier(.3,1.3,.5,1)" });
     kgNeedleA = to;
   }
