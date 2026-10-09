@@ -2618,6 +2618,9 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 /* ゲーム中は長押しで文字を選ばない */
 .arena,.arena *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .arena input,.arena textarea{-webkit-user-select:text;user-select:text}
+.dmgain{position:fixed;z-index:46;width:56px;height:80px;pointer-events:none;display:flex;flex-direction:column;align-items:center}
+.dmgain .dmc{box-shadow:0 0 0 2px #FFE38A,0 0 24px #FFE38A,0 3px 0 var(--ink)}
+.dmgain small{position:absolute;top:84px;left:50%;transform:translateX(-50%) scale(.5);transform-origin:top center;white-space:nowrap;font-size:20px;font-weight:900;color:#fff;padding:3px 14px;border-radius:99px;border:2.5px solid var(--ink)}
 .gic.dmi{background:linear-gradient(180deg,#9FE0B4,#2D8A4A 60%,#14532B);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(45,138,74,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
 .gic.dmi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .menu button[data-x="abort"]{color:var(--crimson)}
@@ -7197,7 +7200,7 @@ function drawKg(){
     const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && (pend ? pend.p === p : t.pid === p)));
     const b = bids[p], w = won[p] || 0;
     const info = !bidsOpen ? (b != null ? "予想済" : "考え中") : `<b class="bw ${w === b ? "eq" : w > b ? "ov" : ""}">${w}/${b}</b>`;
-    return `<div class="np ${on ? "on" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "bid" ? "待" : "今"}</em>` : ""}<b>${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${info}</small></span><small class="kpt">${g.scores && g.scores[p] != null ? g.scores[p] : 0}点</small></div>`;
+    return `<div class="np ${on ? "on" : ""}" data-pp="${p}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "bid" ? "待" : "今"}</em>` : ""}<b>${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${info}</small></span><small class="kpt">${g.scores && g.scores[p] != null ? g.scores[p] : 0}点</small></div>`;
   }).join(`<span class="nar">›</span>`);
   // テーブル：全員が卓を囲み、出したカードは各自の前に置かれる（トリックテイキングの卓）
   const show = plays.length ? plays : (g.last && ph !== "bid" ? g.last.plays : []);
@@ -7916,7 +7919,7 @@ function openDmNew(){
 }
 
 /* ---- 画面 ---- */
-let dmDealDelay = 0, dmReveal = null, dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
+let dmGains = [], dmDealDelay = 0, dmReveal = null, dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
 let dmId = null, dmBusy = false, dmSel = [], dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
 function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
 function closeDm(){ dmId = null; $("#dmg").hidden = true; document.body.style.overflow = ""; render(); }
@@ -8183,6 +8186,7 @@ function drawDm(){
   on("dmNo", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, false); }));
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
   dmAnimHand(g, el, P);
+  dmAnimGains(el, st);
 }
 /* 演出：①捨て札へ「ふわっ→シャッ」 ②シャッフル ③山札から1枚ずつ配る */
 function dmAnimHand(g, el, P){
@@ -8281,6 +8285,43 @@ function dmPileSheet(title, cards, note, empty){
     s2.querySelector("#svBack").onclick = () => dmPileSheet(title, cards, note, empty);
   });
 }
+/* サプライから獲得：一旦画面の中央に大きく見せてから、その人の捨て札（または席）へ */
+function dmAnimGains(el, st){
+  const list = dmGains; dmGains = [];
+  if (!list.length) return;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  let t = 0;
+  list.forEach(ev => {
+    const start = Math.max(t, ev.wait || 0); t = start + 1250;
+    setTimeout(() => {
+      const root = $("#dmg"); if (!root || root.hidden) return;
+      const tile = root.querySelector(`[data-dc="${ev.c}"]`), tr = tile && tile.getBoundingClientRect();
+      const dest = ev.p === me ? (ev.dest === "hand" ? root.querySelector(".dmhand") : ev.dest === "deck" ? root.querySelector("#dmDeck .bk") : root.querySelector("#dmDisc .dmc,#dmDisc .emp")) : root.querySelector(`.np[data-pp="${ev.p}"]`);
+      const dr = dest && dest.getBoundingClientRect();
+      const W = innerWidth, H = innerHeight, cx = W / 2, cy = H * .44;
+      const sx = tr ? tr.left + tr.width / 2 : cx, sy = tr ? tr.top + tr.height / 2 : 0, s0 = tr ? tr.width / 56 : .5;
+      const dx = dr ? dr.left + dr.width / 2 : cx, dy = dr ? dr.top + dr.height / 2 : H;
+      const w = document.createElement("div"); w.className = "dmgain"; w.innerHTML = `${dmCardHtml(ev.c)}<small style="background:${pcolor(ev.p)}">${esc(pname(ev.p))}が${ev.k === "gain" ? "獲得" : "購入"}</small>`;
+      w.style.left = (cx - 28) + "px"; w.style.top = (cy - 40) + "px"; document.body.appendChild(w);
+      const lab = w.querySelector("small");
+      w.animate([
+        { transform: `translate(${sx - cx}px,${sy - cy}px) scale(${s0})`, opacity: 1 },
+        { transform: "translate(0,0) scale(2.1) rotate(-4deg)", opacity: 1, offset: .3, easing: "cubic-bezier(.2,1.6,.4,1)" },
+        { transform: "translate(0,0) scale(1.95) rotate(0)", opacity: 1, offset: .62 },
+        { transform: `translate(${dx - cx}px,${dy - cy}px) scale(.28) rotate(${rnd(-30, 30)}deg)`, opacity: .3 }
+      ], { duration: 1500, easing: "ease-in-out", fill: "forwards" }).onfinish = () => w.remove();
+      lab.animate([{ opacity: 0 }, { opacity: 1, offset: .25 }, { opacity: 1, offset: .6 }, { opacity: 0, offset: .7 }, { opacity: 0 }], { duration: 1500, fill: "forwards" });
+      setTimeout(() => {
+        for (let i = 0; i < 16; i++){
+          const e = document.createElement("i"); e.className = "dmspk"; e.style.left = cx + "px"; e.style.top = cy + "px"; e.style.background = ["#FFE38A", "#fff", pcolor(ev.p)][i % 3]; document.body.appendChild(e);
+          const a = rnd(0, Math.PI * 2), d = rnd(80, 150);
+          e.animate([{ transform: "translate(-50%,-50%) scale(1.3)", opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px),calc(-50% + ${Math.sin(a) * d}px)) scale(.2)`, opacity: 0 }], { duration: 600, easing: "cubic-bezier(.2,.8,.3,1)", fill: "forwards" }).onfinish = () => e.remove();
+        }
+      }, 420);
+      setTimeout(() => { if (dest && dest.isConnected) dest.animate([{ transform: "scale(1)" }, { transform: "scale(1.2)" }, { transform: "scale(1)" }], { duration: 320 }); }, 1450);
+    }, start);
+  });
+}
 function dmAskHtml(a, st){
   let h = `<div class="dmask"><b class="dqt">${esc(a.title)}</b>${a.desc ? `<small>${esc(a.desc)}</small>` : ""}`;
   if (a.k === "hand"){
@@ -8329,9 +8370,7 @@ function dmFxCheck(g){
     if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
     if (e.k === "clean"){ if (e.p === me){ dmCleanNow = true; dmSnap("clean"); } return; }
     if (e.k === "dis"){ if (e.p === me) dmSnap("dis", e.cs); return; }
-    if (e.p === me && (e.k === "buy" || e.k === "gain") && (e.dest || "disc") === "disc"){ dmSnap("tile", [e.c]); return; }
-    if (e.p === me && e.k === "prov") dmSnap("tile", [e.c]);
-    if (e.p === me && (e.k === "buy" || e.k === "gain")) return;
+    if (e.k === "buy" || e.k === "gain" || e.k === "prov"){ dmGains.push({ ...e, wait: e.k === "prov" ? 2500 : 0 }); if (e.k !== "prov") return; }
     if (e.k === "play" && e.p === me) dmDealDelay += 1350;
     const d = { buy: 1400, prov: 2600, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 1450, tre: 900, end: 0 }[e.k] || 900;
     setTimeout(() => dmFx(e, g), t); t += Math.min(d, 1600);
