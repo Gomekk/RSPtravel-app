@@ -2547,6 +2547,35 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmc.dfxb{transform:scale(1.2);margin:14px 0}
 .sbfx .dtr .dmc.dfx{width:74px;height:106px;padding-top:18px}
 .sbfx .dtr .dmc.dfx .dmart.em{font-size:38px}.sbfx .dtr .dmc.dfx>.dcn{font-size:11px}
+
+/* ドミニオン v2：イラスト・購入表示・山札 */
+.dmart.ill{display:block;line-height:0}
+.dmart.ill svg{display:block;width:48px;height:36px}
+.dmp.k .dmart.ill svg{width:52px;height:39px}
+.dmp.b .dmart.ill svg{width:34px;height:26px}
+.dmc.sm .dmart.ill svg{width:38px;height:28px}
+.dmc.pl .dmart.ill svg{width:27px;height:20px}
+.dmbig .dar .dmart.ill svg{width:140px;height:105px}
+.dmcl .dmbig .dar .dmart.ill svg{width:92px;height:69px}
+.dmc.dfx .dmart.ill svg{width:96px;height:72px}
+.sbfx .dtr .dmc.dfx .dmart.ill svg{width:66px;height:50px}
+.dmkc .dmart.ill svg{width:36px;height:27px}
+.dmp.cb{animation:dmblink 1s ease-in-out infinite;z-index:1}
+@keyframes dmblink{0%,100%{box-shadow:0 0 0 2px #fff,0 0 4px rgba(255,255,255,.5)}50%{box-shadow:0 0 0 3.5px #fff,0 0 16px #fff,0 0 26px rgba(255,255,255,.8)}}
+.dmp.na{filter:grayscale(.9) brightness(.55)}
+.dmp.na .cnt{opacity:.7}
+.dh.ng .dmc{filter:grayscale(.55) brightness(.85)}
+.dmpile{gap:8px;align-items:center}
+.dpk{display:inline-flex;align-items:center;gap:4px;padding:2px 8px 2px 4px;border-radius:99px;background:#fff;border:1.5px solid var(--line);font-size:10.5px;font-weight:800;color:var(--mute)}
+.dpk.tr{padding-left:8px}
+.dpk .bk{position:relative;width:16px;height:21px}
+.dpk .bk i{position:absolute;inset:0;border-radius:3px;border:1.2px solid #E8B12A;background:repeating-linear-gradient(45deg,#1E6B3A 0 2px,#2D8A4A 2px 4px)}
+.dpk .bk i:nth-child(2){transform:translate(-1.5px,1.5px)}.dpk .bk i:nth-child(3){transform:translate(-3px,3px)}
+.dpk .emp{width:16px;height:21px;border-radius:3px;border:1.2px dashed var(--line)}
+.dmc.dpl2{width:16px;height:21px;padding:0;border-width:1.2px;border-radius:3px;box-shadow:none}
+.dmc.dpl2>*{display:none}
+.dmshf{position:fixed;z-index:46;width:16px;height:21px;border-radius:3px;border:1.2px solid #E8B12A;background:repeating-linear-gradient(45deg,#1E6B3A 0 2px,#2D8A4A 2px 4px);pointer-events:none}
+.dmshl{position:fixed;z-index:46;font-size:13px;font-weight:900;color:#fff;padding:2px 10px;border-radius:99px;background:#1E6B3A;border:2px solid var(--ink);white-space:nowrap;pointer-events:none}
 .gic.dmi{background:linear-gradient(180deg,#9FE0B4,#2D8A4A 60%,#14532B);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(45,138,74,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
 .gic.dmi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .menu button[data-x="abort"]{color:var(--crimson)}
@@ -7684,7 +7713,7 @@ function openDmNew(){
   s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#gOrder").innerHTML = seatHtml(order); seatDrag($("#gOrder"), () => order, o => order = o, draw); };
   const drawK = () => {
-    $("#dmKd").innerHTML = `<div class="dmkpick"><b class="dmkn">${esc(setName)}<em>${kd.length}/10</em></b>${DM_KINGDOM.slice().sort((a, b) => DM[a].c - DM[b].c).map(k => `<button type="button" class="dmkc ${kd.includes(k) ? "on" : ""}" data-k="${k}"><i>${DM[k].c}</i>${DM[k].ic}<b>${DM[k].n}</b></button>`).join("")}</div>`;
+    $("#dmKd").innerHTML = `<div class="dmkpick"><b class="dmkn">${esc(setName)}<em>${kd.length}/10</em></b>${DM_KINGDOM.slice().sort((a, b) => DM[a].c - DM[b].c).map(k => `<button type="button" class="dmkc ${kd.includes(k) ? "on" : ""}" data-k="${k}"><i>${DM[k].c}</i><span class="dmart ill">${DM_ART[k]}</span><b>${DM[k].n}</b></button>`).join("")}</div>`;
     $("#dmKd").querySelectorAll("[data-k]").forEach(b => b.onclick = () => { const k = b.dataset.k; if (kd.includes(k)) kd = kd.filter(x => x !== k); else if (kd.length < 10) kd = [...kd, k]; else { toast("10種類までです。先に外してください"); return; } setName = "自分で選ぶ"; drawK(); });
     s.querySelectorAll("[data-set]").forEach(b => b.setAttribute("aria-pressed", String(b.textContent === setName)));
   };
@@ -7709,15 +7738,128 @@ function openDmNew(){
 }
 
 /* ---- 画面 ---- */
+let dmShufNow = false, dmPrevHand = {};
 let dmId = null, dmBusy = false, dmSel = null, dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
-function openDm(id){ dmId = id; dmSel = null; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
+function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = null; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
 function closeDm(){ dmId = null; $("#dmg").hidden = true; document.body.style.overflow = ""; render(); }
+
+/* ドミニオン：カードごとのオリジナルイラスト（SVG） */
+const DMS = b => `<svg viewBox="0 0 64 48" aria-hidden="true"><g stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">${b}</g></svg>`;
+const DM_ART = {
+  cellar: DMS(`<path d="M6 47V20Q32-2 58 20V47Z" fill="#7D6A60"/><path d="M13 47V22Q32 6 51 22V47Z" fill="#3A2C26"/>
+    <path d="M10 18l4 3M20 10l2 4M32 6v4M44 10l-2 4M54 18l-4 3" stroke="#5A4A44"/>
+    <rect x="15" y="27" width="15" height="19" rx="5" fill="#B5763A"/><path d="M15 32h15M15 41h15" stroke-width="1.8"/><path d="M22.5 27v19" stroke="#8A5228"/>
+    <rect x="31" y="31" width="13" height="15" rx="4" fill="#C98A48"/><path d="M31 35h13M31 42h13" stroke-width="1.8"/>
+    <path d="M48 46V36q0-3 1.5-4v-4h3v4q1.5 1 1.5 4v10z" fill="#7A1F3A"/><rect x="49.5" y="25" width="3" height="3" fill="#E8B12A"/>`),
+  chapel: DMS(`<g transform="translate(0 3)"><circle cx="50" cy="10" r="6" fill="#FFE38A" stroke="none"/><path d="M4 47Q32 40 60 47Z" fill="#7CC36A"/>
+    <rect x="17" y="24" width="30" height="22" fill="#F3E9D2"/><path d="M13 26L32 11L51 26Z" fill="#A8432E"/>
+    <rect x="28" y="6" width="8" height="10" fill="#F3E9D2"/><path d="M26.5 7L32 2L37.5 7Z" fill="#A8432E"/><path d="M32 -2v6M30 0h4" stroke="#E8B12A" stroke-width="1.8"/>
+    <circle cx="32" cy="29" r="4.2" fill="#5FB0E8"/><path d="M32 25v8M28 29h8" stroke-width="1"/>
+    <path d="M28 46V39Q32 34 36 39V46Z" fill="#7A4A1A"/><rect x="20" y="33" width="4" height="6" rx="2" fill="#5FB0E8"/><rect x="40" y="33" width="4" height="6" rx="2" fill="#5FB0E8"/></g>`),
+  moat: DMS(`<rect x="3" y="10" width="26" height="28" fill="#CFC4B0"/><path d="M3 10V5h5v5h4V5h5v5h4V5h5v5h3V5" fill="none"/><path d="M3 10V5h5v5h4V5h5v5h4V5h5v5h3" fill="#CFC4B0" stroke="none"/>
+    <path d="M10 38V27Q16 21 22 27V38Z" fill="#3A2C26"/><path d="M9 18h4M19 18h4" stroke="#8A7E6C"/>
+    <path d="M22 38L42 31" stroke="#5A3416" stroke-width="1.2"/><path d="M10 38L22 38L40 30L33 28Z" fill="#9C6A36"/>
+    <path d="M0 37Q8 33 16 37T32 37T48 37T64 37V48H0Z" fill="#3FA7D6"/><path d="M6 42q4-2 8 0M28 43q4-2 8 0M48 41q4-2 8 0" stroke="#E6FAFF" stroke-width="1.3" fill="none"/>
+    <path d="M44 22q4-6 8 0q4 6 8 0" stroke="#3FA7D6" fill="none" stroke-width="1.8"/>`),
+  harbinger: DMS(`<circle cx="17" cy="14" r="10" fill="#FFE38A" stroke="none"/><path d="M6 44q10-4 20 0M36 42q10-4 22 0" stroke="#A8C8E0" fill="none"/>
+    <path d="M10 31Q20 20 36 24Q45 26 51 21L48 30Q40 39 25 37Q16 36 10 31Z" fill="#FFFFFF"/>
+    <path d="M24 26Q27 8 43 4Q41 17 33 28Z" fill="#EEF4FA"/><path d="M28 23q4-8 11-14M30 25q5-6 9-9" stroke="#A8B8C8" stroke-width="1" fill="none"/>
+    <path d="M10 31L3 28L6 34Z" fill="#FFFFFF"/><circle cx="49" cy="22" r="4.5" fill="#FFFFFF"/><circle cx="50" cy="21" r=".9" fill="#2A1A0E" stroke="none"/>
+    <path d="M53 22L58 23L53 24.5Z" fill="#E8890C"/><rect x="55" y="23" width="8" height="6" rx="1" fill="#F3E9D2" transform="rotate(12 59 26)"/><path d="M56.5 25.5l3 2 3-1" stroke-width="1" fill="none"/>`),
+  merchant: DMS(`<path d="M5 8H59L55 19H9Z" fill="#E2364F"/><path d="M14 8l-1 11M23 8v11M32 8v11M41 8v11M50 8l1 11" stroke="#fff" stroke-width="3.2"/><path d="M5 8H59L55 19H9Z" fill="none"/>
+    <path d="M12 19v9M52 19v9" /><rect x="8" y="30" width="48" height="16" fill="#B5763A"/><path d="M8 35h48" stroke="#8A5228"/>
+    <path d="M24 30V20M16 22h16" /><path d="M14 22l-2.5 5h5zM34 22l-2.5 5h5z" fill="#E8B12A" stroke-width="1"/><path d="M11.5 27h5M31.5 27h5" stroke-width="1.6"/>
+    <path d="M43 30q-6 0-6-6q0-5 5-6l-1-3h6l-1 3q5 1 5 6q0 6-6 6z" fill="#C9951A"/><path d="M42 21.5v6M40.5 23h3M40.5 26h3" stroke="#FFE38A" stroke-width="1.1"/>`),
+  vassal: DMS(`<path d="M52 2v44" stroke="#7A4A1A" stroke-width="2.6"/><path d="M48.5 8L52 0L55.5 8Z" fill="#C9CED8"/>
+    <path d="M14 8H40V26Q40 40 27 46Q14 40 14 26Z" fill="#2F6FB5"/><path d="M27 8V46M14 22H40" stroke="#FFE38A" stroke-width="4"/><path d="M14 8H40V26Q40 40 27 46Q14 40 14 26Z" fill="none"/>
+    <circle cx="27" cy="22" r="5" fill="#FFE38A"/><path d="M24.5 22l2 2 3.5-4" stroke-width="1.3" fill="none"/>`),
+  village: DMS(`<path d="M0 44Q32 36 64 44V48H0Z" fill="#7CC36A"/><path d="M26 47Q30 42 38 40" stroke="#D9B26A" stroke-width="3" fill="none"/>
+    <rect x="6" y="24" width="20" height="19" fill="#F3E9D2"/><path d="M3 26L16 12L29 26Z" fill="#C0392B"/><rect x="13" y="34" width="6" height="9" fill="#7A4A1A"/><rect x="8" y="28" width="4" height="4" fill="#5FB0E8"/>
+    <rect x="34" y="28" width="18" height="15" fill="#FFF6D6"/><path d="M31 30L43 18L55 30Z" fill="#2F6FB5"/><rect x="40" y="35" width="5" height="8" fill="#7A4A1A"/><rect x="47" y="32" width="3.5" height="3.5" fill="#5FB0E8"/>
+    <path d="M58 44V34" stroke="#7A4A1A" stroke-width="2"/><circle cx="58" cy="28" r="6" fill="#3E9A50"/><path d="M38 18V12h3v4" fill="#A8432E" stroke-width="1.2"/>`),
+  workshop: DMS(`<rect x="4" y="26" width="56" height="6" rx="1" fill="#B5763A"/><path d="M9 32V46M55 32V46M9 40h46" stroke="#8A5228" stroke-width="2.4"/>
+    <rect x="8" y="20" width="22" height="6" fill="#E3C27C"/><path d="M12 20v6M18 20v6M24 20v6" stroke="#B5763A" stroke-width="1"/>
+    <path d="M40 24L50 6" stroke="#8A5228" stroke-width="3"/><rect x="44" y="2" width="13" height="7" rx="1.5" fill="#8A93A6" transform="rotate(30 50.5 5.5)"/>
+    <path d="M28 8L42 14L40 18L26 12Z" fill="#C9CED8"/><path d="M27 12l1.5 1M30 13.3l1.5 1M33 14.6l1.5 1M36 15.9l1.5 1" stroke-width="1"/><rect x="20" y="6" width="8" height="5" rx="2" fill="#7A4A1A" transform="rotate(22 24 8.5)"/>`),
+  bureaucrat: DMS(`<rect x="13" y="7" width="34" height="34" fill="#F3E9D2"/><ellipse cx="30" cy="7" rx="17" ry="3.5" fill="#E3D4B0"/><ellipse cx="30" cy="41" rx="17" ry="3.5" fill="#E3D4B0"/>
+    <path d="M19 15h22M19 20h22M19 25h16M19 30h12" stroke="#8A7E6C" stroke-width="1.2"/>
+    <circle cx="41" cy="33" r="6" fill="#C0392B"/><path d="M38.5 33l2.5-2.5 2.5 2.5-2.5 2.5z" fill="#FFE38A" stroke-width=".8"/><path d="M38 38l-2 7 3-2 2 3 1-6" fill="#C0392B" stroke-width="1"/>
+    <path d="M58 2Q46 8 44 24L47 22Q52 12 58 2Z" fill="#FFFFFF"/><path d="M44 24l-2 6" stroke-width="1.2"/>`),
+  gardens: DMS(`<path d="M0 46Q32 38 64 46V48H0Z" fill="#7CC36A"/><path d="M2 46V30Q2 20 12 20Q22 20 22 30V46Z" fill="#2F7A3E"/><path d="M42 46V30Q42 20 52 20Q62 20 62 30V46Z" fill="#2F7A3E"/>
+    <ellipse cx="32" cy="42" rx="12" ry="4" fill="#B8C4CC"/><path d="M29 41V30h6v11" fill="#C9D3DA"/><path d="M32 29q-6-10-12 0M32 29q6-10 12 0" stroke="#3FA7D6" stroke-width="2" fill="none"/>
+    <circle cx="8" cy="27" r="2" fill="#FF7AA8" stroke-width="1"/><circle cx="15" cy="34" r="2" fill="#FFE38A" stroke-width="1"/><circle cx="10" cy="40" r="2" fill="#FF7AA8" stroke-width="1"/>
+    <circle cx="50" cy="28" r="2" fill="#FFE38A" stroke-width="1"/><circle cx="56" cy="35" r="2" fill="#FF7AA8" stroke-width="1"/><circle cx="48" cy="40" r="2" fill="#B9A3FF" stroke-width="1"/>`),
+  militia: DMS(`<path d="M10 46L48 6" stroke="#7A4A1A" stroke-width="2.8"/><path d="M44 3L52 2L51 10Z" fill="#C9CED8"/>
+    <path d="M54 46L18 8" stroke="#7A4A1A" stroke-width="2.8"/><path d="M14 13L9 4M18 9L15 1M22 6L22 -1" stroke="#8A93A6" stroke-width="2.2"/><path d="M12 14L23 4" stroke="#8A93A6" stroke-width="2.2"/>
+    <path d="M18 34Q18 18 32 18Q46 18 46 34Z" fill="#9AA3B4"/><path d="M14 34H50" stroke-width="2.6"/><path d="M32 18v16" stroke="#C9CED8" stroke-width="2"/><circle cx="32" cy="17" r="2.5" fill="#C0392B"/>`),
+  moneylender: DMS(`<rect x="34" y="10" width="24" height="32" rx="2" fill="#A8432E"/><rect x="36" y="12" width="20" height="28" fill="#F3E9D2"/><path d="M39 18h14M39 23h14M39 28h10M39 33h12" stroke="#8A7E6C" stroke-width="1.1"/>
+    ${[0, 1, 2, 3, 4].map(i => `<ellipse cx="17" cy="${42 - i * 5}" rx="11" ry="3.5" fill="#F2C23A"/>`).join("")}<path d="M6 42v-20M28 42v-20" stroke="none"/>
+    <ellipse cx="17" cy="22" rx="11" ry="3.5" fill="#FFE38A"/><text x="17" y="25" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="6" fill="#8A5A0C" stroke="none">$</text>`),
+  poacher: DMS(`<path d="M0 46L10 18L20 46Z" fill="#2F7A3E"/><path d="M14 46L26 12L38 46Z" fill="#3E9A50"/><path d="M0 46H64" stroke="#5A8A3A" stroke-width="2"/>
+    <path d="M40 6Q60 24 40 42" stroke="#8A5228" stroke-width="2.8" fill="none"/><path d="M40 6V42" stroke="#E3D4B0" stroke-width="1"/>
+    <path d="M26 24H58" stroke="#7A4A1A" stroke-width="1.8"/><path d="M58 24l-5-3v6z" fill="#C9CED8"/><path d="M26 24l-3-3M26 24l-3 3M29 24l-3-3M29 24l-3 3" stroke="#C0392B" stroke-width="1.4"/>`),
+  remodel: DMS(`<path d="M0 46H64" stroke-width="2"/><path d="M8 46V24L24 12L40 24V46Z" fill="#E3C27C"/>
+    <path d="M8 32h32M8 39h32M16 24v8M24 32v7M32 24v8M16 39v7M32 39v7" stroke="#B5763A" stroke-width="1"/><path d="M8 46V24L24 12L40 24V46Z" fill="none"/>
+    <path d="M44 46V10M58 46V10M44 18h14M44 30h14M44 18l14 12M44 30l14 12" stroke="#7A4A1A" stroke-width="1.8"/>
+    <path d="M22 8L30 0" stroke="#8A5228" stroke-width="2.6"/><rect x="26" y="-2" width="10" height="5" rx="1" fill="#8A93A6" transform="rotate(45 31 0.5)"/>`),
+  smithy: DMS(`<path d="M10 22H50Q50 28 42 30V34H48V40H16V34H22V30Q12 28 10 22Z" fill="#4A4E5A"/><path d="M10 22H50" stroke="#8A93A6" stroke-width="1"/><rect x="18" y="40" width="28" height="6" fill="#3A3E48"/>
+    <rect x="20" y="17" width="20" height="5" rx="2" fill="#FF8A3D"/>
+    <path d="M44 12L58 2" stroke="#8A5228" stroke-width="3"/><rect x="34" y="6" width="13" height="8" rx="1.5" fill="#8A93A6" transform="rotate(-35 40.5 10)"/>
+    <path d="M28 12l-3-6M33 11l1-7M38 13l5-5M24 14l-6-3" stroke="#FFD23F" stroke-width="1.8"/>`),
+  throne: DMS(`<path d="M16 46V16Q16 6 32 6Q48 6 48 16V46" fill="#C0392B"/><path d="M20 30V17Q20 10 32 10Q44 10 44 17V30Z" fill="#E2364F" stroke-width="1"/>
+    <path d="M16 16Q16 6 32 6Q48 6 48 16" stroke="#E8B12A" stroke-width="2.4" fill="none"/>
+    <rect x="12" y="30" width="40" height="7" rx="2" fill="#E8B12A"/><path d="M16 37V46M48 37V46" stroke="#8A5A0C" stroke-width="3"/>
+    <path d="M24 6l2-6 4 4 2-6 2 6 4-4 2 6z" fill="#FFE38A" transform="translate(0 4)"/>`),
+  bandit: DMS(`<path d="M6 20Q32 10 58 20Q48 24 32 24Q16 24 6 20Z" fill="#2A2638"/><path d="M18 20Q18 4 32 4Q46 4 46 20Z" fill="#3A3650"/><path d="M18 17h28" stroke="#C0392B" stroke-width="2.4"/>
+    <path d="M20 24Q20 42 32 42Q44 42 44 24Z" fill="#F2C9A0"/><path d="M19 27h26v6H19Z" fill="#2A2638"/><circle cx="27" cy="30" r="1.6" fill="#fff" stroke="none"/><circle cx="37" cy="30" r="1.6" fill="#fff" stroke="none"/>
+    <path d="M28 37q4 2 8 0" fill="none"/><path d="M48 44L60 30" stroke="#C9CED8" stroke-width="2.6"/><path d="M50 36l4 4" stroke="#7A4A1A" stroke-width="2.6"/>`),
+  council: DMS(`<path d="M32 2V8" stroke="#2A1A0E"/><path d="M32 2l8 2-8 2z" fill="#E2364F" stroke-width="1"/>
+    <path d="M6 18L32 8L58 18Z" fill="#F3E9D2"/><rect x="6" y="18" width="52" height="4" fill="#E3D4B0"/>
+    ${[11, 22, 33, 44].map(x => `<rect x="${x}" y="22" width="7" height="18" fill="#FFFFFF"/>`).join("")}
+    <rect x="4" y="40" width="56" height="3" fill="#E3D4B0"/><rect x="2" y="43" width="60" height="3" fill="#CFC4B0"/><circle cx="32" cy="15" r="2" fill="#E8B12A" stroke-width="1"/>`),
+  festival: DMS(`<path d="M8 46L32 8L56 46Z" fill="#FFE38A"/><path d="M32 8L20 46M32 8L44 46" stroke="none"/><path d="M32 8L14 46H24ZM32 8L34 46H44Z" fill="#E2364F" stroke="none"/><path d="M8 46L32 8L56 46Z" fill="none"/>
+    <path d="M32 8V2" /><path d="M32 2l6 2-6 2z" fill="#1FB3BF" stroke-width="1"/><path d="M28 46V38Q32 34 36 38V46" fill="#7A1F3A"/>
+    <path d="M0 10Q12 18 24 12" stroke-width="1" fill="none"/><path d="M4 12l2 5 3-4M12 15l2 5 3-4" fill="#1FB3BF" stroke-width="1"/>
+    <circle cx="54" cy="12" r="5" fill="#8B6CFF"/><path d="M54 17q-2 6 1 12" stroke-width="1" fill="none"/><circle cx="60" cy="18" r="4" fill="#2DBE60"/>`),
+  lab: DMS(`<path d="M10 46H28L22 32V20H16V32Z" fill="#E6FAFB"/><path d="M11.5 44H26.5L22.5 35H15.5Z" fill="#2DBE60" stroke="none"/><path d="M10 46H28L22 32V20H16V32Z" fill="none"/><path d="M15 20h8"/>
+    <circle cx="44" cy="35" r="10" fill="#E6FAFB"/><path d="M34.5 37A10 10 0 0 0 53.5 37Z" fill="#8B6CFF" stroke="none"/><circle cx="44" cy="35" r="10" fill="none"/><rect x="41" y="14" width="6" height="12" fill="#E6FAFB"/><path d="M40 14h8"/>
+    <circle cx="19" cy="14" r="2" fill="#9BF1F4" stroke-width="1"/><circle cx="22" cy="8" r="1.5" fill="#9BF1F4" stroke-width="1"/><circle cx="46" cy="8" r="2" fill="#D9C6FF" stroke-width="1"/><circle cx="42" cy="3" r="1.4" fill="#D9C6FF" stroke-width="1"/>`),
+  library: DMS(`<rect x="6" y="2" width="52" height="44" fill="#8A5228"/><rect x="9" y="5" width="46" height="11" fill="#5A3416"/><rect x="9" y="19" width="46" height="11" fill="#5A3416"/><rect x="9" y="33" width="46" height="10" fill="#5A3416"/>
+    ${[["#C0392B", 10, 5, 4], ["#2F6FB5", 15, 6, 5], ["#E8B12A", 21, 5, 4], ["#2DBE60", 26, 4, 5], ["#8B6CFF", 33, 6, 4], ["#E2364F", 38, 5, 5], ["#1FB3BF", 44, 5, 4],
+      ["#2DBE60", 10, 19, 5], ["#E8B12A", 16, 20, 4], ["#C0392B", 21, 19, 5], ["#2F6FB5", 27, 21, 4], ["#E2364F", 40, 19, 5], ["#8B6CFF", 46, 20, 4],
+      ["#1FB3BF", 10, 33, 4], ["#8B6CFF", 15, 34, 5], ["#E8B12A", 21, 33, 4], ["#C0392B", 26, 34, 5], ["#2DBE60", 32, 33, 4], ["#2F6FB5", 37, 34, 5]].map(([c, x, y, w]) => `<rect x="${x}" y="${y + 1}" width="${w}" height="${y === 33 ? 9 : 10}" fill="${c}" stroke-width="1"/>`).join("")}
+    <path d="M33 30l7-9" stroke="#E3D4B0" stroke-width="3.2"/>`),
+  market: DMS(`<path d="M2 6H62L58 16H6Z" fill="#2DBE60"/><path d="M12 6l-1 10M22 6v10M32 6v10M42 6v10M52 6l1 10" stroke="#fff" stroke-width="3.2"/><path d="M2 6H62L58 16H6Z" fill="none"/>
+    <path d="M8 16v12M56 16v12"/><path d="M4 30H60V46H4Z" fill="#B5763A"/>
+    <path d="M8 30Q8 22 18 22Q28 22 28 30Z" fill="#8A5228"/>${[[12, 25], [17, 23], [22, 25], [15, 27], [20, 27]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3" fill="#E2364F" stroke-width="1"/>`).join("")}
+    <path d="M34 30Q34 22 44 22Q54 22 54 30Z" fill="#8A5228"/>${[[38, 25], [43, 23], [48, 25], [41, 27], [46, 27]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3" fill="#FF8A3D" stroke-width="1"/>`).join("")}`),
+  mine: DMS(`<path d="M0 46L18 10L32 24L44 8L64 46Z" fill="#8A7E6C"/><path d="M16 46V32Q24 20 32 32V46Z" fill="#2A1A0E"/><path d="M14 46V30Q24 16 34 30V46" stroke="#7A4A1A" stroke-width="2.6" fill="none"/>
+    <path d="M30 46H62" stroke="#5A3416" stroke-width="1.6"/><path d="M38 34H58L55 42H41Z" fill="#6B6F7A"/><circle cx="43" cy="44" r="2.2" fill="#2A1A0E"/><circle cx="53" cy="44" r="2.2" fill="#2A1A0E"/>
+    <path d="M40 34l3-4 3 3 3-4 3 3 3-3 2 5" fill="#F2C23A" stroke-width="1.2"/><path d="M50 4L60 16" stroke="#7A4A1A" stroke-width="2.4"/><path d="M48 12Q54 2 62 6" stroke="#8A93A6" stroke-width="2.6" fill="none"/>`),
+  sentry: DMS(`<rect x="10" y="16" width="22" height="30" fill="#CFC4B0"/><path d="M8 16V9h5v4h4V9h5v4h4V9h5v7Z" fill="#CFC4B0"/><path d="M17 28h8v8h-8z" fill="#3A2C26"/><path d="M14 22h4M24 40h4" stroke="#8A7E6C"/>
+    <path d="M50 2V46" stroke="#7A4A1A" stroke-width="2.4"/><path d="M47 9L50 1L53 9Z" fill="#C9CED8"/>
+    <path d="M38 22Q38 12 46 12Q54 12 54 22Z" fill="#9AA3B4"/><path d="M36 22H56" stroke-width="2.2"/><path d="M40 22Q40 32 46 32Q52 32 52 22" fill="#F2C9A0"/><circle cx="43.5" cy="26" r="1" fill="#2A1A0E" stroke="none"/><circle cx="48.5" cy="26" r="1" fill="#2A1A0E" stroke="none"/>
+    <path d="M38 46V36Q46 32 54 36V46Z" fill="#2F6FB5"/><path d="M21 9V2"/><path d="M21 2l6 2-6 2z" fill="#E2364F" stroke-width="1"/>`),
+  witch: DMS(`<path d="M22 46Q16 46 18 40H46Q48 46 42 46Z" fill="#FF8A3D" stroke="none"/><path d="M24 46l2-4 2 4M34 46l2-5 2 5" stroke="#FFD23F" stroke-width="1.4"/>
+    <path d="M12 26H52Q52 42 32 42Q12 42 12 26Z" fill="#2A2638"/><ellipse cx="32" cy="26" rx="20" ry="4" fill="#5FD068"/>
+    <circle cx="26" cy="20" r="3" fill="#9BEA8A" stroke-width="1"/><circle cx="34" cy="16" r="2.2" fill="#9BEA8A" stroke-width="1"/><circle cx="39" cy="21" r="1.8" fill="#9BEA8A" stroke-width="1"/>
+    <g transform="translate(0 5)"><path d="M40 10L54 -2L52 12Z" fill="#6B3CA0"/><path d="M36 12Q48 6 60 12" stroke-width="2.4" fill="#6B3CA0"/><path d="M45 6.5l6 1" stroke="#E8B12A" stroke-width="2"/></g>`),
+  artisan: DMS(`<path d="M6 30Q4 12 24 10Q42 8 40 22Q39 28 32 28Q28 28 29 33Q30 40 20 40Q8 40 6 30Z" fill="#F3E9D2"/><circle cx="31" cy="34" r="0" />
+    <circle cx="14" cy="22" r="3.2" fill="#E2364F" stroke-width="1"/><circle cx="22" cy="16" r="3.2" fill="#2F6FB5" stroke-width="1"/><circle cx="31" cy="17" r="3.2" fill="#E8B12A" stroke-width="1"/><circle cx="14" cy="31" r="3.2" fill="#2DBE60" stroke-width="1"/>
+    <path d="M26 44L42 22" stroke="#7A4A1A" stroke-width="2.4"/><path d="M42 22l3-5 2 2-3 5z" fill="#8B6CFF" stroke-width="1"/>
+    <path d="M48 46Q42 46 44 38Q46 32 44 28H58Q56 32 58 38Q60 46 54 46Z" fill="#C98A48"/><path d="M45 34h12" stroke="#2F6FB5" stroke-width="1.6"/><ellipse cx="51" cy="28" rx="7" ry="2" fill="#A86A30"/>`),
+  curse: DMS(`<circle cx="32" cy="24" r="21" fill="#B9A3FF" stroke="none" opacity=".55"/><circle cx="32" cy="24" r="14" fill="#8B6CFF" stroke="none" opacity=".4"/>
+    <path d="M10 44H54" stroke="#4A2E16" stroke-width="2.6"/>
+    <path d="M20 38Q16 26 26 18Q34 12 42 16Q48 20 46 30Q44 38 34 40Z" fill="#1B1626"/><path d="M24 30Q30 22 44 24Q40 34 28 36Z" fill="#2E2840" stroke-width="1.2"/>
+    <path d="M20 38L10 42L14 34Z" fill="#1B1626"/><circle cx="40" cy="20" r="4" fill="#1B1626"/><circle cx="41" cy="19.5" r="1.3" fill="#E2364F" stroke="none"/>
+    <path d="M44 19L52 21L44 23Z" fill="#3A3650"/><path d="M30 40v4M36 40v4" stroke="#3A3650" stroke-width="1.6"/>`)
+};
+
 function dmArt(c){
   const d = DM[c];
   if (c === "copper" || c === "silver" || c === "gold") return `<span class="dmart dcoin ${c}"><span class="dmn">${d.v}</span></span>`;
   if (c === "estate" || c === "duchy" || c === "province") return `<span class="dmart vp ${c}"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3L35 9V20Q35 32 20 38Q5 32 5 20V9Z" class="sh"/><path d="M20 7L31 11.5V20Q31 29 20 34Q9 29 9 20V11.5Z" class="in"/></svg><span class="dmn">${d.vp}</span></span>`;
-  if (c === "curse") return `<span class="dmart cur">💀</span>`;
-  return `<span class="dmart em">${d.ic}</span>`;
+  return `<span class="dmart ill">${DM_ART[c] || ""}</span>`;
 }
 const dmTyCls = c => { const t = DM[c].ty; return t.includes("c") ? "ty-c" : t.includes("t") ? "ty-t" : t.includes("v") ? "ty-v" : t.includes("re") ? "ty-re" : t.includes("atk") ? "ty-atk" : "ty-a"; };
 function dmCardHtml(c, cls = "", extra = ""){
@@ -7743,12 +7885,15 @@ function drawDm(){
   // 席
   const seats = st.players.map(p => {
     const on = playing && (myAsk || waitAsk.length ? (st.asks || []).some(a => a.pid === p) : T.pid === p);
-    return `<div class="np ${on ? "on" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${(st.asks || []).some(a => a.pid === p) && T.pid !== p ? "待" : "今"}</em>` : ""}<b>${esc(pname(p))}</b><span class="dvp">★${dmVP(st, p)}</span><small class="kpt">手札${st.pl[p].hand.length}・${dmCount(st, p)}枚</small></div>`;
+    return `<div class="np ${on ? "on" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${(st.asks || []).some(a => a.pid === p) && T.pid !== p ? "待" : "今"}</em>` : ""}<b>${esc(pname(p))}</b><small class="kpt">手札${st.pl[p].hand.length}・山札${st.pl[p].deck.length}</small></div>`;
   }).join(`<span class="nar">›</span>`);
   // サプライ
   const canBuy = c => myTurn && idle && T.buys > 0 && st.supply[c] > 0 && T.coins >= DM[c].c;
+  // 買えるカードは白く点滅、買えないカードは暗く（購入フェイズから。0コストのカードだけはアクションフェイズから）
+  const buyMode = c => myTurn && idle && T.buys > 0 && (T.phase === "buy" || DM[c].c === 0);
+  const buyCls = c => !buyMode(c) ? "" : canBuy(c) ? "cb" : "na";
   const gainOk = c => myAsk && myAsk.k === "supply" && st.supply[c] > 0 && DM[c].c <= myAsk.max && (!myAsk.filter || dmIs(c, myAsk.filter));
-  const tile = (c, big) => `<button class="dmp ${dmTyCls(c)} ${big ? "k" : "b"} ${st.supply[c] ? "" : "out"} ${canBuy(c) ? "cb" : ""} ${gainOk(c) ? "gk" : ""} ${dmGainSel === c ? "gsel" : ""}" data-dc="${c}">
+  const tile = (c, big) => `<button class="dmp ${dmTyCls(c)} ${big ? "k" : "b"} ${st.supply[c] ? "" : "out"} ${myAsk ? "" : buyCls(c)} ${gainOk(c) ? "gk" : myAsk && myAsk.k === "supply" ? "na" : ""} ${dmGainSel === c ? "gsel" : ""}" data-dc="${c}">
       <i class="dco">${DM[c].c}</i>${dmArt(c)}<b>${DM[c].n}</b><em class="cnt">${st.supply[c]}</em></button>`;
   const supply = `<div class="dmsup"><div class="dmk">${st.kingdom.map(c => tile(c, true)).join("")}</div><div class="dmb">${DM_BASE.map(c => tile(c, false)).join("")}</div></div>`;
   // 場
@@ -7765,19 +7910,19 @@ function drawDm(){
   else msg = myTurn ? `<span><b class="tn">あなた</b>の番：${T.phase === "action" ? "アクションを使う・財宝を出す" : "カードを買う"}</span>` : `<span>${turnName(T.pid, false)}</span>`;
   bottom += `<div class="nturn ${myTurn || myAsk ? "mine" : ""}" style="--pc:${pcolor(myAsk ? me : waitAsk[0] ? waitAsk[0].pid : T.pid)}">${msg}</div>`;
   if (P){
-    if (dmSel && !P.hand.includes(dmSel)) dmSel = null;
+    if (dmSel && P.hand[dmSel.i] !== dmSel.c) dmSel = null;
     const hand = P.hand.map((c, i) => ({ c, i })).sort((a, b) => { const o = c => dmIs(c, "a") ? 0 : dmIs(c, "t") ? 1 : 2; return o(a.c) - o(b.c) || DM[a.c].c - DM[b.c].c || a.c.localeCompare(b.c); });
     const handAsk = myAsk && myAsk.k === "hand";
     const canUse = c => myTurn && idle && ((dmIs(c, "a") && T.phase === "action" && T.actions > 0) || (dmIs(c, "t") && !T.bought));
     const W = Math.min(window.innerWidth, 480) - 30, cw = 56, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0;
     bottom += `<div class="dmhand ${step < cw + 2 && hand.length > 1 ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map(({ c, i }, k) => {
-      const okA = handAsk ? (!myAsk.filter || dmIs(c, myAsk.filter)) : canUse(c), sel = handAsk ? dmPick.sel.includes(i) : dmSel === c;
-      return `<button class="dh ${sel ? "sel" : ""} ${okA ? "" : "ng"}" data-dh="${i}" data-c="${c}" style="--i:${k}" ${okA ? "" : "disabled"}>${dmCardHtml(c)}</button>`; }).join("")}</div>`;
-    if (!myAsk) bottom += `<div class="dmpile"><span>山札 <b>${P.deck.length}</b></span><span>捨て札 <b>${P.disc.length}</b>${P.disc.length ? `<i>${esc(DM[P.disc[P.disc.length - 1]].n)}</i>` : ""}</span><span>廃棄置き場 <b>${st.trash.length}</b></span></div>`;
+      const okA = handAsk ? (!myAsk.filter || dmIs(c, myAsk.filter)) : canUse(c), sel = handAsk ? dmPick.sel.includes(i) : dmSel && dmSel.i === i;
+      return `<button class="dh ${sel ? "sel" : ""} ${okA ? "" : "ng"}" data-dh="${i}" data-c="${c}" data-ok="${okA ? 1 : 0}" style="--i:${k}">${dmCardHtml(c)}</button>`; }).join("")}</div>`;
+    if (!myAsk) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b>${P.deck.length}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b>${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button></div>`;
     if (myAsk && (myAsk.k === "hand" || myAsk.k === "supply")) bottom += dmAskHtml(myAsk, st);
     else if (myTurn && idle){
       const hasT = !T.bought && P.hand.some(c => dmIs(c, "t"));
-      const selBtn = dmSel ? `<button class="nb end go" id="dmUse">${esc(DM[dmSel].n)}を使う</button>` : `<button class="nb end" disabled>${T.phase === "action" && T.actions > 0 && P.hand.some(c => dmIs(c, "a")) ? "カードを選んでね" : "サプライをタップ"}</button>`;
+      const selBtn = dmSel ? `<button class="nb end go" id="dmUse">${esc(DM[dmSel.c].n)}を使う</button>` : `<button class="nb end" disabled>${T.phase === "action" && T.actions > 0 && P.hand.some(c => dmIs(c, "a")) ? "カードを選んでね" : "サプライをタップ"}</button>`;
       bottom += `<div class="nbtns"><button class="nb draw ${hasT ? "" : "off"}" id="dmAllT" ${hasT ? "" : "disabled"}>財宝を全部出す</button>${selBtn}<button class="nb lose" id="dmEnd">ターン終了</button></div>`;
     }
   }
@@ -7790,9 +7935,9 @@ function drawDm(){
   }
   let pop = "";
   if (dmView){
-    const c = dmView, cb = canBuy(c);
-    pop = `<div class="kgpop dmpop" id="dmPopBg"><div class="dmpopin">${dmBigCard(c)}<p class="dmleft">残り <b>${st.supply[c] != null ? st.supply[c] : "-"}</b>枚</p>
-      <div class="dmpbtn">${cb ? `<button class="nb end go" id="dmBuy">💰${DM[c].c}で買う</button>` : myTurn && idle && st.supply[c] > 0 ? `<button class="nb end" disabled>${T.buys < 1 ? "購入はもうできません" : `お金が足りません（💰${T.coins}）`}</button>` : ""}<button class="nb draw" id="dmPopX">閉じる</button></div></div></div>`;
+    const c = dmView.c, cb = !dmView.h && canBuy(c);
+    pop = `<div class="kgpop dmpop" id="dmPopBg"><div class="dmpopin">${dmBigCard(c)}${dmView.h ? "" : `<p class="dmleft">残り <b>${st.supply[c] != null ? st.supply[c] : "-"}</b>枚</p>`}
+      <div class="dmpbtn">${cb ? `<button class="nb end go" id="dmBuy">💰${DM[c].c}で買う</button>` : !dmView.h && myTurn && idle && st.supply[c] > 0 ? `<button class="nb end" disabled>${T.buys < 1 ? "購入はもうできません" : `お金が足りません（💰${T.coins}）`}</button>` : ""}<button class="nb draw" id="dmPopX">閉じる</button></div></div></div>`;
   }
   el.innerHTML = `<div class="nbg dmbg" aria-hidden="true">${["🏰", "🪙", "👑", "🌳", "🏰", "🪙", "⚔️", "📜"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.14">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt dmt">DOMINION</b><span class="nrd sbr"><small>ROUND</small><b>${st.round}</b></span><span class="ndk"></span><button class="nmini" id="dmMenu" aria-label="メニュー">…</button><button class="nmini" id="dmClose" aria-label="閉じる">×</button></div>
@@ -7803,7 +7948,7 @@ function drawDm(){
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (dmBusy) return; dmBusy = true; try { await fn(); } finally { dmBusy = false; } };
   on("dmClose", closeDm); on("dmClose2", closeDm); on("dmMenu", () => dmMenu(g));
-  on("dmUse", act(async () => { const c = dmSel; dmSel = null; if (c) await dmDoPlay(c); }));
+  on("dmUse", act(async () => { const c = dmSel && dmSel.c; dmSel = null; if (c) await dmDoPlay(c); }));
   on("dmAllT", act(async () => { dmSel = null; await dmDoTreasures(); }));
   on("dmEnd", act(async () => {
     const P2 = st.pl[me], left = !T.bought && T.buys > 0 && T.coins >= 2;
@@ -7811,24 +7956,29 @@ function drawDm(){
     else if (left && T.coins >= 3 && !confirm(`💰${T.coins}残っています。何も買わずにターンを終えますか？`)) return;
     dmSel = null; await dmDoEnd();
   }));
-  on("dmBuy", act(async () => { const c = dmView; dmView = null; await dmDoBuy(c); }));
+  on("dmBuy", act(async () => { const c = dmView && dmView.c; dmView = null; if (c) await dmDoBuy(c); }));
+  on("dmDeck", () => toast(`山札は${P ? P.deck.length : 0}枚（中身は見られません）`));
+  on("dmDisc", () => { const d = (P && P.disc) || []; openSheet(`自分の捨て札（${d.length}枚）`, d.length ? `<p class="note">上に積まれた順（左が一番上）</p><div class="kgpeek">${d.slice().reverse().map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">捨て札はまだありません</p>`); });
+  on("dmTrash", () => { const tr = st.trash || []; openSheet(`廃棄置き場（${tr.length}枚）`, tr.length ? `<div class="kgpeek">${tr.map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだ何も廃棄されていません</p>`); });
   on("dmPopX", () => { dmView = null; drawDm(); });
   { const bg = el.querySelector("#dmPopBg"); if (bg) bg.onclick = e => { if (e.target === bg){ dmView = null; drawDm(); } }; }
   el.querySelectorAll("[data-dc]").forEach(b => b.onclick = () => {
     const c = b.dataset.dc;
-    if (myAsk && myAsk.k === "supply"){ if (gainOk(c)){ dmGainSel = dmGainSel === c ? null : c; drawDm(); } else { dmView = c; drawDm(); } return; }
-    dmView = c; drawDm();
+    if (myAsk && myAsk.k === "supply"){ if (gainOk(c)){ dmGainSel = dmGainSel === c ? null : c; drawDm(); } else { dmView = { c }; drawDm(); } return; }
+    dmView = { c }; drawDm();
   });
   el.querySelectorAll("[data-dh]").forEach(b => b.onclick = () => {
     const i = Number(b.dataset.dh), c = b.dataset.c;
     if (myAsk && myAsk.k === "hand"){
+      if (b.dataset.ok !== "1") return;
       const s = dmPick.sel;
       if (s.includes(i)) dmPick.sel = s.filter(x => x !== i);
       else if (s.length < myAsk.max) dmPick.sel = [...s, i];
       else if (myAsk.max === 1) dmPick.sel = [i];
       drawDm(); return;
     }
-    dmSel = dmSel === c ? null : c; drawDm();
+    if (b.dataset.ok !== "1"){ dmView = { c, h: 1 }; drawDm(); return; }
+    dmSel = dmSel && dmSel.i === i ? null : { i, c }; drawDm();
   });
   el.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => {
     const i = Number(b.dataset.dl), s = dmPick.sel;
@@ -7844,7 +7994,40 @@ function drawDm(){
   }));
   on("dmYes", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, true); }));
   on("dmNo", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, false); }));
-  on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = myAsk.card; drawDm(); } });
+  on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
+  dmAnimHand(g, el, P);
+}
+/* 手札が増えたら山札から飛んでくる・シャッフルの演出 */
+function dmAnimHand(g, el, P){
+  if (!P) return;
+  const key = g.id, prev = dmPrevHand[key], cur = {};
+  P.hand.forEach(c => { cur[c] = (cur[c] || 0) + 1; });
+  dmPrevHand[key] = cur;
+  const deck = el.querySelector("#dmDeck"), disc = el.querySelector("#dmDisc");
+  let delay = 0;
+  if (dmShufNow){
+    dmShufNow = false;
+    if (deck && disc){
+      const a = disc.getBoundingClientRect(), b = deck.getBoundingClientRect();
+      for (let i = 0; i < 6; i++){
+        const e = document.createElement("i"); e.className = "dmshf"; e.style.left = (a.left + 14) + "px"; e.style.top = (a.top + 4) + "px"; document.body.appendChild(e);
+        e.animate([{ transform: "translate(0,0) rotate(0)", opacity: 1 }, { transform: `translate(${(b.left - a.left) / 2}px,-40px) rotate(${i % 2 ? 160 : -160}deg)`, opacity: 1, offset: .5 }, { transform: `translate(${b.left - a.left}px,0) rotate(${i % 2 ? 360 : -360}deg)`, opacity: .9 }], { duration: 650, delay: i * 70, easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
+      }
+      deck.animate([{ transform: "none" }, { transform: "rotate(-8deg) scale(1.1)" }, { transform: "rotate(8deg) scale(1.1)" }, { transform: "rotate(-5deg)" }, { transform: "none" }], { duration: 600, delay: 650 });
+      const lb = document.createElement("b"); lb.className = "dmshl"; lb.textContent = "シャッフル！"; lb.style.left = (b.left + b.width / 2) + "px"; lb.style.top = (b.top - 8) + "px"; document.body.appendChild(lb);
+      lb.animate([{ transform: "translate(-50%,0) scale(.5)", opacity: 0 }, { transform: "translate(-50%,-14px) scale(1.1)", opacity: 1, offset: .3 }, { transform: "translate(-50%,-20px) scale(1)", opacity: 1, offset: .8 }, { transform: "translate(-50%,-26px)", opacity: 0 }], { duration: 1300, fill: "forwards" }).onfinish = () => lb.remove();
+      delay = 900;
+    }
+  }
+  if (!prev || !deck) return;
+  const left = { ...prev }, news = [];
+  el.querySelectorAll(".dmhand .dh").forEach(b => { const c = b.dataset.c; if (left[c] > 0) left[c]--; else news.push(b); });
+  if (!news.length || news.length > 10) return;
+  const d = deck.getBoundingClientRect();
+  news.forEach((b, k) => {
+    const r = b.getBoundingClientRect(), dx = d.left + d.width / 2 - (r.left + r.width / 2), dy = d.top + d.height / 2 - (r.top + r.height / 2);
+    b.animate([{ transform: `translate(${dx}px,${dy}px) scale(.3) rotate(-25deg)`, opacity: 0 }, { transform: `translate(${dx * .4}px,${dy * .4 - 30}px) scale(.8) rotate(-8deg)`, opacity: 1, offset: .55 }, { transform: "none", opacity: 1 }], { duration: 480, delay: delay + k * 110, easing: "cubic-bezier(.3,.9,.4,1)", fill: "backwards" });
+  });
 }
 function dmAskHtml(a, st){
   let h = `<div class="dmask"><b class="dqt">${esc(a.title)}</b>${a.desc ? `<small>${esc(a.desc)}</small>` : ""}`;
@@ -7878,7 +8061,8 @@ function dmFxCheck(g){
   const evs = (st.fx || []).filter(e => e.n > seen);
   let t = 0;
   evs.forEach(e => {
-    if (e.k === "shuf" || e.k === "play" && e.p === me) return;
+    if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
+    if (e.k === "play" && e.p === me) return;
     const d = { buy: 1400, prov: 2600, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 1100, end: 0 }[e.k] || 900;
     setTimeout(() => dmFx(e, g), t); t += Math.min(d, 1600);
   });
