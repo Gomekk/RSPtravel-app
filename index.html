@@ -2588,6 +2588,8 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmshl.drw{background:linear-gradient(90deg,#E8B12A,#E2364F);font-size:15px;padding:3px 14px}
 .dmshl.shf{font-size:15px;padding:3px 14px}
 .dmhand .dh{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.dpv{padding:0;border:0;background:none;line-height:0;cursor:pointer}
+.dmsv{display:flex;justify-content:center;padding:6px 0 4px}
 .gic.dmi{background:linear-gradient(180deg,#9FE0B4,#2D8A4A 60%,#14532B);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(45,138,74,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
 .gic.dmi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .menu button[data-x="abort"]{color:var(--crimson)}
@@ -8044,7 +8046,7 @@ function drawDm(){
   const P = inGame ? st.pl[me] : null;
   const AP = st.pl[T.pid];
   const stat = `<div class="dmstat" style="--pc:${pcolor(T.pid)}"><span class="who">${esc(pname(T.pid))}</span><span class="ch ${T.phase === "action" ? "on" : ""}">アクション <b>${T.actions}</b></span><span class="ch">購入 <b>${T.buys}</b></span><span class="ch cn">💰 <b>${T.coins}</b></span><span class="ph">${T.phase === "action" ? "アクションフェイズ" : "購入フェイズ"}</span></div>
-    <div class="dmplay">${AP.play.length ? AP.play.map(c => dmCardHtml(c, "pl")).join("") : `<small>ここに使ったカードが並びます</small>`}</div>`;
+    <div class="dmplay">${AP.play.length ? AP.play.map(c => `<button class="dpv" data-pv="${c}">${dmCardHtml(c, "pl")}</button>`).join("") : `<small>ここに使ったカードが並びます</small>`}</div>`;
   // 下部
   let bottom = "";
   let msg = "";
@@ -8102,8 +8104,9 @@ function drawDm(){
   }));
   on("dmBuy", act(async () => { const c = dmView && dmView.c; dmView = null; if (c) await dmDoBuy(c); }));
   on("dmDeck", () => toast(`山札は${P ? P.deck.length : 0}枚（中身は見られません）`));
-  on("dmDisc", () => { const d = (P && P.disc) || []; openSheet(`自分の捨て札（${d.length}枚）`, d.length ? `<p class="note">上に積まれた順（左が一番上）</p><div class="kgpeek">${d.slice().reverse().map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">捨て札はまだありません</p>`); });
-  on("dmTrash", () => { const tr = st.trash || []; openSheet(`廃棄置き場（${tr.length}枚）`, tr.length ? `<div class="kgpeek">${tr.map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだ何も廃棄されていません</p>`); });
+  on("dmDisc", () => dmPileSheet(`自分の捨て札`, ((P && P.disc) || []).slice().reverse(), "上に積まれた順（左が一番上）・タップで効果を見る", "捨て札はまだありません"));
+  on("dmTrash", () => dmPileSheet(`廃棄置き場`, st.trash || [], "タップで効果を見る", "まだ何も廃棄されていません"));
+  el.querySelectorAll("[data-pv]").forEach(b => b.onclick = () => { dmView = { c: b.dataset.pv, h: 1 }; drawDm(); });
   on("dmPopX", () => { dmView = null; drawDm(); });
   { const bg = el.querySelector("#dmPopBg"); if (bg) bg.onclick = e => { if (e.target === bg){ dmView = null; drawDm(); } }; }
   el.querySelectorAll("[data-dc]").forEach(b => b.onclick = () => {
@@ -8182,7 +8185,6 @@ function dmAnimHand(g, el, P){
     });
     const tEnd = 640 + (out.length - 1) * 70;
     setTimeout(() => { if (!disc.isConnected) return; disc.animate([{ transform: "scale(1)" }, { transform: "scale(1.25)" }, { transform: "scale(1)" }], { duration: 300 }); spark(zx, zy, 10, ["#FFE38A", "#fff", "#C9A06A"], 34); }, Math.min(tEnd, 640 + 4 * 70));
-    label("シャッ！", zx, zy - 46, "dis", 420);
     delay = tEnd + 120;
   }
   // ② シャッフル
@@ -8204,7 +8206,6 @@ function dmAnimHand(g, el, P){
           { transform: "translate(0,0) rotate(0) scale(.75)", opacity: 0 }], { duration: 950, delay: s0 + 600 + (i >> 1) * 28 + (L ? 0 : 14), easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
       }
       setTimeout(() => spark(cx, cy - 30, 14, ["#FFE38A", "#9BEA8A", "#fff"], 60), s0 + 1450);
-      label("シャッフル！", cx, cy - 110, "shf", s0 + 450);
       delay = s0 + 1600;
     }
   }
@@ -8214,7 +8215,6 @@ function dmAnimHand(g, el, P){
   if (!news.length || news.length > 10) return;
   // ③ 山札から：光の尾を引いて大きく弧を描き、手札でくるっと表に返ってキラッ
   const cx = d.left + d.width / 2, cy = d.top + d.height / 2;
-  if (news.length >= 2) label(`DRAW ${news.length}!`, cx + 40, cy - 70, "drw", delay);
   news.forEach((b, k) => {
     b.style.opacity = "0";
     const r = b.getBoundingClientRect(), t0 = delay + k * 190;
@@ -8231,6 +8231,14 @@ function dmAnimHand(g, el, P){
       };
     };
     if (dk) dk.animate([{ transform: "none" }, { transform: "translateY(-5px) scale(1.25)", filter: "brightness(1.5)" }, { transform: "none" }], { duration: 260, delay: t0 });
+  });
+}
+/* 捨て札・廃棄置き場の一覧（タップでカードの効果） */
+function dmPileSheet(title, cards, note, empty){
+  const s = openSheet(`${title}（${cards.length}枚）`, cards.length ? `<p class="note">${note}</p><div class="kgpeek">${cards.map(c => `<button class="dpv" data-sv="${c}">${dmCardHtml(c, "sm")}</button>`).join("")}</div>` : `<p class="note">${empty}</p>`);
+  s.querySelectorAll("[data-sv]").forEach(b => b.onclick = () => {
+    const c = b.dataset.sv, s2 = openSheet(DM[c].n, `<div class="dmsv">${dmBigCard(c)}</div><div class="btns"><button class="btn ghost" id="svBack">一覧に戻る</button></div>`);
+    s2.querySelector("#svBack").onclick = () => dmPileSheet(title, cards, note, empty);
   });
 }
 function dmAskHtml(a, st){
