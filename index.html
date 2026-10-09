@@ -2579,6 +2579,15 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmfly{position:fixed;z-index:46;width:56px;height:80px;border-radius:7px;border:2px solid #E8B12A;box-shadow:0 3px 0 var(--ink),0 6px 14px rgba(0,0,0,.25);
   background:radial-gradient(circle at 50% 50%,#FFE38A 0 6px,transparent 7px),repeating-linear-gradient(45deg,#1E6B3A 0 4px,#2D8A4A 4px 8px);pointer-events:none;transform-origin:50% 50%}
 .dmfly.sm{width:24px;height:34px;border-radius:4px}
+.dmout{position:fixed;z-index:46;width:56px;height:80px;pointer-events:none;transform-origin:50% 50%}
+.dmout .dmc{box-shadow:0 0 0 2px #FFE38A,0 0 18px rgba(255,226,138,.9),0 3px 0 var(--ink)}
+.dmfly.glow{box-shadow:0 0 0 2px #FFE38A,0 0 22px #FFE38A,0 0 40px rgba(255,210,63,.8),0 3px 0 var(--ink)}
+.dmfly.ghost{box-shadow:none;filter:blur(2px)}
+.dmspk{position:fixed;z-index:47;width:7px;height:7px;border-radius:50%;pointer-events:none;box-shadow:0 0 8px currentColor}
+.dmshl.dis{background:#5A3416}
+.dmshl.drw{background:linear-gradient(90deg,#E8B12A,#E2364F);font-size:15px;padding:3px 14px}
+.dmshl.shf{font-size:15px;padding:3px 14px}
+.dmhand .dh{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .gic.dmi{background:linear-gradient(180deg,#9FE0B4,#2D8A4A 60%,#14532B);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(45,138,74,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
 .gic.dmi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .menu button[data-x="abort"]{color:var(--crimson)}
@@ -7643,9 +7652,9 @@ const DMT = {
     hit.forEach(o => DMA[t.c](st, o, t.pid));
   },
   replay(st, t){ dmPlayCard(st, t.pid, t.c); },
-  cellar(st, t){ const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); const n = dmDraw(st, t.pid, t.sel.length); dmL(st, `地下貯蔵庫：${t.sel.length}枚捨てて${n}枚引いた`); },
+  cellar(st, t){ const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); if (t.sel.length) dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); const n = dmDraw(st, t.pid, t.sel.length); dmL(st, `地下貯蔵庫：${t.sel.length}枚捨てて${n}枚引いた`); },
   trash(st, t){ if (!t.sel.length) return; dmTake(st.pl[t.pid].hand, t.sel); st.trash.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: t.sel }); },
-  discard(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmL(st, `${pname(t.pid)}が${t.sel.length}枚捨てた`); },
+  discard(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); dmL(st, `${pname(t.pid)}が${t.sel.length}枚捨てた`); },
   todeck(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.deck.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を山札の上に置いた`); },
   harb(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid], c = t.sel[0]; dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `前駆者：${DM[c].n}を山札の上に`); },
   vassal(st, t){ if (!t.yes) return; const P = st.pl[t.pid]; dmTake(P.disc, [t.c]); P.play.push(t.c); dmL(st, `家臣で${DM[t.c].n}を使った`); dmPlayCard(st, t.pid, t.c); },
@@ -7653,7 +7662,7 @@ const DMT = {
   remodel(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: DM[c].c + 2, dest: "disc", title: `改築：獲得するカード（コスト${DM[c].c + 2}以下）` }); },
   askgain(st, t){ dmAskGain(st, t.pid, t.max, t.filter, t.dest, t.title, t.after); },
   gain(st, t){
-    if (t.card && dmGain(st, t.pid, t.card, t.dest)){ dmL(st, `${pname(t.pid)}が${DM[t.card].n}を${t.dest === "hand" ? "手札に" : t.dest === "deck" ? "山札の上に" : ""}獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: t.card }); }
+    if (t.card && dmGain(st, t.pid, t.card, t.dest)){ dmL(st, `${pname(t.pid)}が${DM[t.card].n}を${t.dest === "hand" ? "手札に" : t.dest === "deck" ? "山札の上に" : ""}獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: t.card, dest: t.dest || "disc" }); }
     if (t.after) dmPush(st, { ...t.after, pid: t.pid });
   },
   throne(st, t){ if (!t.sel.length) return; const c = t.sel[0], P = st.pl[t.pid]; dmTake(P.hand, [c]); P.play.push(c); dmL(st, `玉座の間：${DM[c].n}を2回使う`); dmPush(st, { t: "replay", pid: t.pid, c }, { t: "replay", pid: t.pid, c }); },
@@ -8102,7 +8111,15 @@ function drawDm(){
     if (myAsk && myAsk.k === "supply"){ if (gainOk(c)){ dmGainSel = dmGainSel === c ? null : c; drawDm(); } else { dmView = { c }; drawDm(); } return; }
     dmView = { c }; drawDm();
   });
+  // 長押しでカードの効果を見る
+  el.querySelectorAll("[data-dh]").forEach(b => {
+    let tm = null;
+    b.addEventListener("pointerdown", () => { tm = setTimeout(() => { tm = null; b.dataset.lp = "1"; try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} dmView = { c: b.dataset.c, h: 1 }; drawDm(); }, 450); });
+    ["pointerup", "pointerleave", "pointercancel"].forEach(ev => b.addEventListener(ev, () => { if (tm){ clearTimeout(tm); tm = null; } }));
+    b.addEventListener("contextmenu", e => e.preventDefault());
+  });
   el.querySelectorAll("[data-dh]").forEach(b => b.onclick = () => {
+    if (b.dataset.lp === "1"){ b.dataset.lp = ""; return; }
     const i = Number(b.dataset.dh), c = b.dataset.c;
     if (myAsk && myAsk.k === "hand"){
       if (b.dataset.ok !== "1") return;
@@ -8132,62 +8149,88 @@ function drawDm(){
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
   dmAnimHand(g, el, P);
 }
-/* 山札のシャッフル→山札から1枚ずつ手札に配られる演出 */
+/* 演出：①捨て札へ「ふわっ→シャッ」 ②シャッフル ③山札から1枚ずつ配る */
 function dmAnimHand(g, el, P){
-  if (!P) return;
+  if (!P){ dmOut = []; return; }
   const key = g.id, cur = {};
   let prev = dmPrevHand[key];
   if (dmCleanNow){ dmCleanNow = false; if (prev) prev = {}; }
   P.hand.forEach(c => { cur[c] = (cur[c] || 0) + 1; });
   dmPrevHand[key] = cur;
   const deck = el.querySelector("#dmDeck"), disc = el.querySelector("#dmDisc");
+  const rnd = (a, b) => a + Math.random() * (b - a);
   const back = (x, y, cls = "") => { const e = document.createElement("i"); e.className = "dmfly " + cls; e.style.left = x + "px"; e.style.top = y + "px"; document.body.appendChild(e); return e; };
-  let delay = 0;
+  const spark = (x, y, n, cols, dist = 40) => { for (let i = 0; i < n; i++){ const e = document.createElement("i"); e.className = "dmspk"; e.style.left = x + "px"; e.style.top = y + "px"; e.style.background = cols[i % cols.length]; document.body.appendChild(e); const a = rnd(0, Math.PI * 2), d = rnd(dist * .5, dist); e.animate([{ transform: "translate(-50%,-50%) scale(1)", opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px),calc(-50% + ${Math.sin(a) * d}px)) scale(.2)`, opacity: 0 }], { duration: rnd(380, 620), easing: "cubic-bezier(.2,.8,.3,1)", fill: "forwards" }).onfinish = () => e.remove(); } };
+  const label = (txt, x, y, cls, dl) => { const lb = document.createElement("b"); lb.className = "dmshl " + (cls || ""); lb.textContent = txt; lb.style.left = x + "px"; lb.style.top = y + "px"; document.body.appendChild(lb);
+    lb.animate([{ transform: "translate(-50%,0) scale(.4)", opacity: 0 }, { transform: "translate(-50%,-14px) scale(1.15)", opacity: 1, offset: .25 }, { transform: "translate(-50%,-18px) scale(1)", opacity: 1, offset: .8 }, { transform: "translate(-50%,-26px)", opacity: 0 }], { duration: 1200, delay: dl || 0, fill: "both" }).onfinish = () => lb.remove(); };
   const dk = deck && deck.querySelector(".bk"), d = (dk || deck) && (dk || deck).getBoundingClientRect();
+  const dz = disc && (disc.querySelector(".dmc,.emp") || disc), z = dz && dz.getBoundingClientRect();
+  let delay = 0;
+  // ① 捨て札へ：ふわっと浮いて、シャッと吸い込まれる
+  const out = dmOut; dmOut = [];
+  if (out.length && z){
+    const zx = z.left + z.width / 2, zy = z.top + z.height / 2;
+    out.forEach((o, k) => {
+      const w = document.createElement("div"); w.className = "dmout"; w.innerHTML = dmCardHtml(o.c); w.style.left = (o.x - 28) + "px"; w.style.top = (o.y - 40) + "px"; document.body.appendChild(w);
+      const dx = zx - o.x, dy = zy - o.y, rot = rnd(-25, 25), t0 = k * 70;
+      w.animate([
+        { transform: `scale(${o.s}) rotate(0)`, opacity: 1, filter: "none" },
+        { transform: `translate(${rnd(-10, 10)}px,-34px) scale(${o.s * 1.12}) rotate(${rot * .3}deg)`, opacity: 1, offset: .38, easing: "cubic-bezier(.6,0,.9,.5)" },
+        { transform: `translate(${dx * .55}px,${dy * .55 - 20}px) scale(${o.s * .7},${o.s * .55}) rotate(${rot}deg)`, opacity: 1, offset: .75 },
+        { transform: `translate(${dx}px,${dy}px) scale(.18) rotate(${rot * 2}deg)`, opacity: .2 }
+      ], { duration: 640, delay: t0, fill: "both" }).onfinish = () => w.remove();
+    });
+    const tEnd = 640 + (out.length - 1) * 70;
+    setTimeout(() => { if (!disc.isConnected) return; disc.animate([{ transform: "scale(1)" }, { transform: "scale(1.25)" }, { transform: "scale(1)" }], { duration: 300 }); spark(zx, zy, 10, ["#FFE38A", "#fff", "#C9A06A"], 34); }, Math.min(tEnd, 640 + 4 * 70));
+    label("シャッ！", zx, zy - 46, "dis", 420);
+    delay = tEnd + 120;
+  }
+  // ② シャッフル
   if (dmShufNow){
     dmShufNow = false;
-    if (deck && disc){
-      const a = disc.getBoundingClientRect(), cx = d.left + d.width / 2, cy = d.top + d.height / 2;
-      // ① 捨て札が山札の場所へ集まる
-      for (let i = 0; i < 6; i++){
-        const e = back(a.left + 4, a.top + 2, "sm");
-        e.animate([{ transform: "translate(0,0) rotate(0)", opacity: 1 }, { transform: `translate(${(cx - a.left) / 2}px,-46px) rotate(${i % 2 ? 160 : -160}deg)`, offset: .5 }, { transform: `translate(${cx - a.left - 12}px,${cy - a.top - 14}px) rotate(${i % 2 ? 360 : -360}deg)` }], { duration: 560, delay: i * 60, easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
+    if (deck && disc && d && z){
+      const a = z, cx = d.left + d.width / 2, cy = d.top + d.height / 2, s0 = delay;
+      for (let i = 0; i < 7; i++){
+        const e = back(a.left - 4, a.top - 6, "sm"); e.style.opacity = "0";
+        e.animate([{ transform: "translate(0,0) rotate(0)", opacity: 1 }, { transform: `translate(${(cx - a.left) / 2}px,-60px) rotate(${i % 2 ? 200 : -200}deg)`, opacity: 1, offset: .5 }, { transform: `translate(${cx - a.left - 8}px,${cy - a.top - 10}px) rotate(${i % 2 ? 360 : -360}deg)`, opacity: 1 }], { duration: 560, delay: s0 + i * 55, easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
       }
-      // ② 山札を2つに割ってパラパラと混ぜる（リフルシャッフル）
-      for (let i = 0; i < 10; i++){
-        const L = i % 2 === 0, e = back(cx - 28, cy - 40 - 20);
+      for (let i = 0; i < 12; i++){
+        const L = i % 2 === 0, e = back(cx - 28, cy - 64);
         e.style.opacity = "0";
-        e.animate([{ transform: "translate(0,0) rotate(0) scale(.7)", opacity: 1 },
-          { transform: `translate(${L ? -34 : 34}px,${-4 - (i >> 1) * 2}px) rotate(${L ? -14 : 14}deg) scale(.7)`, opacity: 1, offset: .35 },
-          { transform: `translate(${L ? -30 : 30}px,${-10 - (i >> 1) * 2}px) rotate(${L ? -24 : 24}deg) scale(.7)`, opacity: 1, offset: .55 },
-          { transform: `translate(0,${-(i * 1.2)}px) rotate(0) scale(.7)`, opacity: 1, offset: .92 },
-          { transform: "translate(0,0) rotate(0) scale(.7)", opacity: 0 }], { duration: 900, delay: 620 + (i >> 1) * 25 + (L ? 0 : 12), easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
+        e.animate([{ transform: "translate(0,0) rotate(0) scale(.75)", opacity: 1 },
+          { transform: `translate(${L ? -40 : 40}px,${-4 - (i >> 1) * 2}px) rotate(${L ? -16 : 16}deg) scale(.75)`, opacity: 1, offset: .3 },
+          { transform: `translate(${L ? -34 : 34}px,${-14 - (i >> 1) * 2}px) rotate(${L ? -28 : 28}deg) scale(.75)`, opacity: 1, offset: .5 },
+          { transform: `translate(0,${-(i * 1.3)}px) rotate(0) scale(.75)`, opacity: 1, offset: .9 },
+          { transform: "translate(0,0) rotate(0) scale(.75)", opacity: 0 }], { duration: 950, delay: s0 + 600 + (i >> 1) * 28 + (L ? 0 : 14), easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
       }
-      const lb = document.createElement("b"); lb.className = "dmshl"; lb.textContent = "シャッフル！"; lb.style.left = cx + "px"; lb.style.top = (cy - 90) + "px"; document.body.appendChild(lb);
-      lb.animate([{ transform: "translate(-50%,0) scale(.5)", opacity: 0 }, { transform: "translate(-50%,-12px) scale(1.1)", opacity: 1, offset: .25 }, { transform: "translate(-50%,-16px) scale(1)", opacity: 1, offset: .8 }, { transform: "translate(-50%,-22px)", opacity: 0 }], { duration: 1500, delay: 500, fill: "both" }).onfinish = () => lb.remove();
-      delay = 1550;
+      setTimeout(() => spark(cx, cy - 30, 14, ["#FFE38A", "#9BEA8A", "#fff"], 60), s0 + 1450);
+      label("シャッフル！", cx, cy - 110, "shf", s0 + 450);
+      delay = s0 + 1600;
     }
   }
-  if (!prev || !deck) return;
+  if (!prev || !deck || !d) return;
   const left = { ...prev }, news = [];
   el.querySelectorAll(".dmhand .dh").forEach(b => { const c = b.dataset.c; if (left[c] > 0) left[c]--; else news.push(b); });
   if (!news.length || news.length > 10) return;
-  // ③ 山札の上から1枚ずつ裏向きで飛んできて、手札の位置で表に返る
+  // ③ 山札から：光の尾を引いて大きく弧を描き、手札でくるっと表に返ってキラッ
+  const cx = d.left + d.width / 2, cy = d.top + d.height / 2;
+  if (news.length >= 2) label(`DRAW ${news.length}!`, cx + 40, cy - 70, "drw", delay);
   news.forEach((b, k) => {
     b.style.opacity = "0";
-    const r = b.getBoundingClientRect(), t0 = delay + k * 170;
-    const e = back(r.left, r.top);
-    e.style.opacity = "0";
-    const dx = d.left + d.width / 2 - (r.left + r.width / 2), dy = d.top + d.height / 2 - (r.top + r.height / 2);
-    e.animate([{ transform: `translate(${dx}px,${dy}px) scale(.28) rotate(-12deg)`, opacity: 1 }, { transform: `translate(${dx * .45}px,${dy * .45 - 46}px) scale(.85) rotate(-6deg)`, opacity: 1, offset: .55 }, { transform: "none", opacity: 1 }],
-      { duration: 420, delay: t0, easing: "cubic-bezier(.3,.8,.4,1)", fill: "both" }).onfinish = () => {
-        e.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: 110, fill: "forwards" }).onfinish = () => {
-          e.remove(); if (!b.isConnected) return;
-          b.style.opacity = "";
-          b.animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1.08)", offset: .7 }, { transform: "scaleX(1)" }], { duration: 200, easing: "ease-out" });
-        };
+    const r = b.getBoundingClientRect(), t0 = delay + k * 190;
+    const dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2), up = 90 + rnd(0, 30);
+    const kf = [{ transform: `translate(${dx}px,${dy}px) scale(.3) rotate(-30deg)`, opacity: 1 }, { transform: `translate(${dx * .45}px,${dy * .45 - up}px) scale(1.05) rotate(${k % 2 ? 200 : -160}deg)`, opacity: 1, offset: .55 }, { transform: "translate(0,-10px) scale(1.12) rotate(360deg)", opacity: 1, offset: .88 }, { transform: "none", opacity: 1 }];
+    [2, 1].forEach(g2 => { const gh = back(r.left, r.top, "ghost"); gh.style.opacity = "0"; gh.animate(kf.map(f => ({ ...f, opacity: .35 / g2 })), { duration: 520, delay: t0 + g2 * 45, easing: "cubic-bezier(.3,.8,.4,1)", fill: "forwards" }).onfinish = () => gh.remove(); });
+    const e = back(r.left, r.top, "glow"); e.style.opacity = "0";
+    e.animate(kf, { duration: 520, delay: t0, easing: "cubic-bezier(.3,.8,.4,1)", fill: "forwards" }).onfinish = () => {
+      e.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: 100, fill: "forwards" }).onfinish = () => {
+        e.remove(); if (!b.isConnected) return;
+        b.style.opacity = "";
+        b.animate([{ transform: "scaleX(0) scaleY(1.1)", filter: "brightness(2.2)" }, { transform: "scaleX(1.12) scaleY(1.05)", filter: "brightness(1.6)", offset: .6 }, { transform: "none", filter: "none" }], { duration: 300, easing: "ease-out" });
+        const rr = b.getBoundingClientRect(); spark(rr.left + rr.width / 2, rr.top + rr.height / 2, 8, ["#FFE38A", "#fff", "#9BEA8A"], 46);
       };
-    if (k === 0 && dk) dk.animate([{ transform: "none" }, { transform: "translateY(-3px) scale(1.15)" }, { transform: "none" }], { duration: 300, delay: t0, iterations: news.length });
+    };
+    if (dk) dk.animate([{ transform: "none" }, { transform: "translateY(-5px) scale(1.25)", filter: "brightness(1.5)" }, { transform: "none" }], { duration: 260, delay: t0 });
   });
 }
 function dmAskHtml(a, st){
@@ -8215,6 +8258,19 @@ function dmMenu(g){
 }
 
 /* ---- 演出 ---- */
+/* 画面が描き直される前に、捨て札へ行くカードの位置を覚えておく */
+let dmOut = [];
+function dmSnap(kind, cs){
+  const root = $("#dmg"); if (!root) return;
+  const add = (c, el) => { if (!el || !DM[c]) return; const r = el.getBoundingClientRect(); if (!r.width) return; dmOut.push({ c, x: r.left + r.width / 2, y: r.top + r.height / 2, s: r.width / 56 }); };
+  if (kind === "clean"){
+    root.querySelectorAll(".dmhand .dh").forEach(b => add(b.dataset.c, b));
+    root.querySelectorAll(".dmplay .dmc").forEach(b => { const c = Object.keys(DM).find(k => b.querySelector(".dcn") && DM[k].n === b.querySelector(".dcn").textContent); add(c, b); });
+  } else if (kind === "dis"){
+    const used = new Set();
+    (cs || []).forEach(c => { const b = [...root.querySelectorAll(`.dmhand .dh[data-c="${c}"]`)].find(x => !used.has(x)); if (b){ used.add(b); add(c, b); } });
+  } else if (kind === "tile") (cs || []).forEach(c => add(c, root.querySelector(`[data-dc="${c}"]`)));
+}
 function dmFxCheck(g){
   const st = g.st, n = st.fxn || 0, seen = dmSeen[g.id];
   dmSeen[g.id] = n;
@@ -8223,8 +8279,12 @@ function dmFxCheck(g){
   let t = 0;
   evs.forEach(e => {
     if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
-    if (e.k === "clean"){ if (e.p === me) dmCleanNow = true; return; }
+    if (e.k === "clean"){ if (e.p === me){ dmCleanNow = true; dmSnap("clean"); } return; }
+    if (e.k === "dis"){ if (e.p === me) dmSnap("dis", e.cs); return; }
+    if (e.p === me && (e.k === "buy" || e.k === "gain") && (e.dest || "disc") === "disc"){ dmSnap("tile", [e.c]); return; }
+    if (e.p === me && e.k === "prov") dmSnap("tile", [e.c]);
     if (e.k === "play" && e.p === me) return;
+    if (e.p === me && (e.k === "buy" || e.k === "gain")) return;
     const d = { buy: 1400, prov: 2600, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 1100, end: 0 }[e.k] || 900;
     setTimeout(() => dmFx(e, g), t); t += Math.min(d, 1600);
   });
