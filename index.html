@@ -2592,22 +2592,24 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmsv{display:flex;justify-content:center;padding:6px 0 4px}
 
 /* ドミニオン：使ったカードの発動演出 */
-.sbfx.dm-act{background:rgba(10,8,20,.35)}
+.sbfx.dm-act{background:rgba(10,8,20,.35);animation:dmactfade var(--ms) forwards}
+@keyframes dmactfade{0%,88%{opacity:1}100%{opacity:0}}
 .sbfx .aglow{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,var(--tc),transparent 58%);opacity:0;animation:aglow var(--ms) ease-out forwards}
-@keyframes aglow{0%{opacity:0}25%{opacity:.85}60%{opacity:.6}100%{opacity:0}}
+@keyframes aglow{0%{opacity:0}12%{opacity:.85}80%{opacity:.6}100%{opacity:0}}
 .sbfx .aring{position:absolute;left:50%;top:46%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:6px solid var(--tc);box-shadow:0 0 24px var(--tc),inset 0 0 18px var(--tc);opacity:0;animation:aring .7s ease-out .32s forwards}
 .sbfx .aring.r2{border-color:#FFE38A;animation-delay:.44s}
 @keyframes aring{0%{transform:scale(.4);opacity:1}100%{transform:scale(3.4);opacity:0}}
 .sbfx .acard{position:absolute;left:50%;top:46%;z-index:3;animation:acard var(--ms) cubic-bezier(.2,1.1,.3,1) forwards}
 .sbfx .acard .dmc.dfx{transform:translate(-50%,-50%) scale(1.35);box-shadow:0 0 0 3px #FFE38A,0 0 40px #FFE38A,0 6px 0 var(--ink)}
-@keyframes acard{0%{transform:translate(0,40vh) rotate(-40deg) scale(.3);opacity:0}24%{transform:translate(0,0) rotate(6deg) scale(1.08);opacity:1}32%{transform:rotate(-3deg) scale(1)}72%{transform:none;opacity:1}100%{transform:translate(0,-34vh) scale(.25);opacity:0}}
+@keyframes acard{0%{transform:translate(0,40vh) rotate(-40deg) scale(.3);opacity:0}13%{transform:translate(0,0) rotate(6deg) scale(1.08);opacity:1}18%{transform:rotate(-3deg) scale(1)}86%{transform:none;opacity:1}100%{transform:translate(0,-34vh) scale(.25);opacity:0}}
 .sbfx .aflash{position:absolute;left:50%;top:50%;width:150px;height:210px;transform:translate(-50%,-50%);border-radius:14px;background:#fff;opacity:0;animation:aflash .5s ease-out .3s forwards;pointer-events:none}
 @keyframes aflash{0%{opacity:0}20%{opacity:.95}100%{opacity:0}}
 .sbfx .asp{position:absolute;left:50%;top:46%;z-index:2;width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);opacity:0;animation:asp .7s cubic-bezier(.2,.8,.3,1) var(--d) forwards}
 @keyframes asp{0%{transform:translate(-50%,-50%) scale(1.4);opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(.2);opacity:0}}
 .sbfx .aplus{position:absolute;left:0;right:0;top:calc(46% + 130px);z-index:4;display:flex;flex-direction:column;align-items:center;gap:6px}
-.sbfx .aplus b{font-family:var(--disp);font-weight:400;font-size:24px;color:#FFE38A;-webkit-text-stroke:2px #3A1E0C;paint-order:stroke fill;animation:aplus calc(var(--ms) - var(--d)) cubic-bezier(.2,1.8,.4,1) var(--d) both}
-@keyframes aplus{0%{transform:scale(0);opacity:0}18%{transform:scale(1.25);opacity:1}30%{transform:scale(1)}80%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.sbfx .aplus b{font-family:var(--disp);font-weight:400;font-size:24px;color:#FFE38A;-webkit-text-stroke:1.5px #3A1E0C;paint-order:stroke fill;padding:2px 16px;border-radius:99px;background:rgba(27,24,56,.88);border:2px solid #FFE38A;animation:aplus calc(var(--ms) - var(--d)) cubic-bezier(.2,1.8,.4,1) var(--d) both}
+@keyframes aplus{0%{transform:scale(0);opacity:0}8%{transform:scale(1.25);opacity:1}14%{transform:scale(1)}88%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.sbfx .aplus .atx{max-width:min(84vw,320px);margin:4px 0 0;padding:6px 12px;border-radius:12px;background:rgba(255,248,231,.96);border:2px solid var(--ink);font-size:13px;font-weight:800;line-height:1.5;color:#3A1E0C;text-align:center;animation:aplus calc(var(--ms) - var(--d)) ease-out var(--d) both}
 .sbfx .aplus small{font-weight:900;font-size:13px;padding:2px 12px;border-radius:99px;color:#fff;border:2px solid var(--ink);animation:fadein .3s .3s both}
 .sbfx.dm-tre{background:none}
 .sbfx .tbox{position:absolute;left:50%;top:58%;z-index:2}
@@ -7821,7 +7823,7 @@ function dmDoPlay(list){
   return dmCommit(dmId, st => {
     const T = st.turn, P = st.pl[me];
     if (T.pid !== me || !dmIdle(st)) return null;
-    let n = 0; dmSkipped = 0;
+    let n = 0, treV = 0; const treCs = []; dmSkipped = 0;
     for (const c of ord){
       if (!dmIdle(st) || !P.hand.includes(c)){ dmSkipped++; continue; }
       if (dmIs(c, "a")){
@@ -7834,10 +7836,11 @@ function dmDoPlay(list){
         const c0 = T.coins;
         dmTake(P.hand, [c]); P.play.push(c); T.phase = "buy";
         T.coins += DM[c].v; if (c === "silver" && !T.silver){ T.coins += T.merch; T.silver = true; }
-        dmFxAdd(st, { k: "tre", p: me, v: T.coins - c0, cs: [c] });
+        treV += T.coins - c0; treCs.push(c);
         n++;
       } else dmSkipped++;
     }
+    if (treCs.length) dmFxAdd(st, { k: "tre", p: me, v: treV, cs: treCs });   // まとめて出した財宝は合計額で1回
     return n ? true : null;
   });
 }
@@ -8371,9 +8374,9 @@ function dmFxCheck(g){
     if (e.k === "clean"){ if (e.p === me){ dmCleanNow = true; dmSnap("clean"); } return; }
     if (e.k === "dis"){ if (e.p === me) dmSnap("dis", e.cs); return; }
     if (e.k === "buy" || e.k === "gain" || e.k === "prov"){ dmGains.push({ ...e, wait: e.k === "prov" ? 2500 : 0 }); if (e.k !== "prov") return; }
-    if (e.k === "play" && e.p === me) dmDealDelay += 1350;
-    const d = { buy: 1400, prov: 2600, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 1450, tre: 900, end: 0 }[e.k] || 900;
-    setTimeout(() => dmFx(e, g), t); t += Math.min(d, 1600);
+    if (e.k === "play" && e.p === me) dmDealDelay += 2600;
+    const d = { buy: 1400, prov: 2600, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    setTimeout(() => dmFx(e, g), t); t += e.k === "play" ? d : Math.min(d, 1600);
   });
 }
 function dmFx(e, g){
@@ -8383,12 +8386,12 @@ function dmFx(e, g){
   if (e.k === "buy" || e.k === "gain"){
     ms = 1400; html = `<div class="dfly">${dmCardHtml(e.c, "dfx")}<small style="background:${pc}">${esc(pname(e.p))}が${e.k === "buy" ? "購入" : "獲得"}</small></div>`;
   } else if (e.k === "play"){
-    ms = 1450; kind = "act";
+    ms = 2700; kind = "act";
     const tc = { "ty-atk": "#E2364F", "ty-re": "#2F7FC9", "ty-a": "#E8B12A" }[dmTyCls(e.c)] || "#E8B12A";
     const plus = dmPlusText(e.c), sp = Array.from({ length: 22 }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(110, 220); return `<i class="asp" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--c:${["#FFE38A", "#fff", tc][i % 3]};--d:${rnd(.32, .45).toFixed(2)}s"></i>`; }).join("");
     html = `<span class="aglow" style="--tc:${tc}"></span><span class="aring" style="--tc:${tc}"></span><span class="aring r2" style="--tc:${tc}"></span>${sp}
       <div class="acard">${dmCardHtml(e.c, "dfx")}<span class="aflash"></span></div>
-      <div class="aplus">${plus.map((x, i) => `<b style="--d:${(.42 + i * .09).toFixed(2)}s">${x}</b>`).join("")}${e.p !== me ? `<small style="background:${pc}">${esc(pname(e.p))}</small>` : ""}</div>`;
+      <div class="aplus">${plus.map((x, i) => `<b style="--d:${(.42 + i * .12).toFixed(2)}s">${x}</b>`).join("")}${DM[e.c].tx ? `<p class="atx" style="--d:${(.5 + plus.length * .12).toFixed(2)}s">${esc(DM[e.c].tx)}</p>` : ""}${e.p !== me ? `<small style="background:${pc}">${esc(pname(e.p))}</small>` : ""}</div>`;
   } else if (e.k === "tre"){
     ms = 950; if (!e.v) return;
     const coins = Array.from({ length: Math.min(14, 4 + e.v * 2) }, () => { const a = rnd(-Math.PI, 0), d = rnd(60, 150); return `<i class="tco" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${rnd(0, .15).toFixed(2)}s"></i>`; }).join("");
