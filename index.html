@@ -7434,7 +7434,7 @@ function drawKg(){
   const act = fn => async () => { if (kgBusy) return; kgBusy = true; try { await fn(); } finally { kgBusy = false; } };
   on("kgScore", () => { kgScoreOpen = true; drawKg(); });
   on("kgPopX", () => { kgScoreOpen = false; drawKg(); });
-  { const bg = el.querySelector("#kgPopBg"); if (bg) bg.onclick = e => { if (e.target === bg){ kgScoreOpen = false; drawKg(); } }; }
+  { const bg = el.querySelector("#kgPopBg"); if (bg) bg.onclick = e => { if (e.target === bg && Date.now() - (window.dmLpAt || 0) > 700){ kgScoreOpen = false; drawKg(); } }; }
   on("kgClose", closeKg); on("kgClose2", closeKg); on("kgMenu", () => kgMenu(g));
   on("kgBid", act(async () => { const v = kgBidSel; kgBidSel = null; if (v != null) await kgBid(v); }));
   on("kgPlay", act(async () => { const c = kgSel; kgSel = null; if (c) await kgPlay(c); }));
@@ -8147,7 +8147,14 @@ function drawDm(){
   el.querySelectorAll("[data-pv]").forEach(b => b.onclick = () => { dmView = { c: b.dataset.pv, h: 1 }; drawDm(); });
   on("dmPopX", () => { dmView = null; drawDm(); });
   { const bg = el.querySelector("#dmPopBg"); if (bg) bg.onclick = e => { if (e.target === bg){ dmView = null; drawDm(); } }; }
+  el.querySelectorAll("[data-dc]").forEach(b => {
+    let tm = null;
+    b.addEventListener("pointerdown", () => { tm = setTimeout(() => { tm = null; b.dataset.lp = "1"; window.dmLpAt = Date.now(); try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} dmView = { c: b.dataset.dc }; drawDm(); }, 450); });
+    ["pointerup", "pointerleave", "pointercancel"].forEach(ev => b.addEventListener(ev, () => { if (tm){ clearTimeout(tm); tm = null; } }));
+    b.addEventListener("contextmenu", e => e.preventDefault());
+  });
   el.querySelectorAll("[data-dc]").forEach(b => b.onclick = () => {
+    if (b.dataset.lp === "1"){ b.dataset.lp = ""; return; }
     const c = b.dataset.dc;
     if (myAsk && myAsk.k === "supply"){ if (gainOk(c)){ dmGainSel = dmGainSel === c ? null : c; drawDm(); } else { dmView = { c }; drawDm(); } return; }
     dmView = { c }; drawDm();
@@ -8155,7 +8162,7 @@ function drawDm(){
   // 長押しでカードの効果を見る
   el.querySelectorAll("[data-dh]").forEach(b => {
     let tm = null;
-    b.addEventListener("pointerdown", () => { tm = setTimeout(() => { tm = null; b.dataset.lp = "1"; try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} dmView = { c: b.dataset.c, h: 1 }; drawDm(); }, 450); });
+    b.addEventListener("pointerdown", () => { tm = setTimeout(() => { tm = null; b.dataset.lp = "1"; window.dmLpAt = Date.now(); try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} dmView = { c: b.dataset.c, h: 1 }; drawDm(); }, 450); });
     ["pointerup", "pointerleave", "pointercancel"].forEach(ev => b.addEventListener(ev, () => { if (tm){ clearTimeout(tm); tm = null; } }));
     b.addEventListener("contextmenu", e => e.preventDefault());
   });
