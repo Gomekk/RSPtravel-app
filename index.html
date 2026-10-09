@@ -2576,9 +2576,28 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmc.dpl2>*{display:none}
 .dmshf{position:fixed;z-index:46;width:16px;height:21px;border-radius:3px;border:1.2px solid #E8B12A;background:repeating-linear-gradient(45deg,#1E6B3A 0 2px,#2D8A4A 2px 4px);pointer-events:none}
 .dmshl{position:fixed;z-index:46;font-size:13px;font-weight:900;color:#fff;padding:2px 10px;border-radius:99px;background:#1E6B3A;border:2px solid var(--ink);white-space:nowrap;pointer-events:none}
+.dmfly{position:fixed;z-index:46;width:56px;height:80px;border-radius:7px;border:2px solid #E8B12A;box-shadow:0 3px 0 var(--ink),0 6px 14px rgba(0,0,0,.25);
+  background:radial-gradient(circle at 50% 50%,#FFE38A 0 6px,transparent 7px),repeating-linear-gradient(45deg,#1E6B3A 0 4px,#2D8A4A 4px 8px);pointer-events:none;transform-origin:50% 50%}
+.dmfly.sm{width:24px;height:34px;border-radius:4px}
 .gic.dmi{background:linear-gradient(180deg,#9FE0B4,#2D8A4A 60%,#14532B);border-color:#1B1838;transform:none;box-shadow:0 0 14px rgba(45,138,74,.5),inset 0 0 0 2px #D9B04A;overflow:hidden}
 .gic.dmi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .menu button[data-x="abort"]{color:var(--crimson)}
+
+/* ゲスト */
+.card.guestreq{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center;margin-bottom:12px;border:2.5px solid var(--crimson);background:linear-gradient(170deg,#FFF6F7,#FFE3E8);animation:pulse 2s ease-in-out infinite}
+.card.guestreq .gri{font-size:30px}
+.card.guestreq>div:not(.grb){display:flex;flex-direction:column;gap:2px}
+.card.guestreq b{font-weight:900}.card.guestreq .gnm{font-size:16px;color:var(--crimson)}
+.card.guestreq small{font-size:11px;color:var(--mute)}
+.card.guestreq .grb{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;align-items:center}
+.card.guestreq .grb .btn{flex:none;padding:8px 18px}
+.card.guestin,.card.guestme{margin-top:12px;display:flex;flex-direction:column;gap:6px;border:2px dashed var(--line)}
+.card.guestme{border:2px solid #E8B12A;background:#FFF9E6}
+.card.guestme span{font-size:12px;font-weight:800;color:var(--mute)}
+.guestwait{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:10px 0}
+.guestwait .gwi{font-size:44px;animation:nbeat 1.4s ease-in-out infinite}
+.plist.gst .gtl{margin-left:auto;font-size:11px;font-weight:800;color:#C9951A}
+.plist.gst.exp{opacity:.6}.plist.gst.exp .gtl{color:var(--mute)}
 </style>
 </head>
 <body>
@@ -2657,7 +2676,7 @@ let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
 /* ---------- 便利関数 ---------- */
-const player = id => db.players.find(p => p.id === id);
+const player = id => (db.allPlayers || db.players).find(p => p.id === id);
 const pname = id => (player(id) || {}).name || "（不明）";
 const pcolor = id => (player(id) || {}).color || "#3A4585";
 const setting = k => (db.app_settings.find(s => s.key === k) || {}).value;
@@ -2700,6 +2719,18 @@ async function loadTable(t){
   if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games" || t === "dm_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
   if (error) throw error;
   db[t] = data || [];
+  if (t === "players"){ db.allPlayers = db[t]; applyGuestFilter(); }
+  if (t === "app_settings") applyGuestFilter();
+}
+/* ゲスト：期限切れのゲストは一覧に出さない（名前の表示用には残す） */
+const guests = () => { try { return setting("guests") || {}; } catch (e) { return {}; } };
+const isGuest = id => !!guests()[id];
+const guestAlive = id => { const g = guests()[id]; return !!(g && Date.parse(g.exp) > Date.now()); };
+const guestLeft = id => { const g = guests()[id]; if (!g) return ""; const m = Math.max(0, Math.round((Date.parse(g.exp) - Date.now()) / 60000)); return m >= 60 ? `残り${Math.floor(m / 60)}時間${m % 60 ? `${m % 60}分` : ""}` : `残り${m}分`; };
+function applyGuestFilter(){
+  const all = db.allPlayers || db.players;
+  db.allPlayers = all;
+  db.players = all.filter(p => !isGuest(p.id) || guestAlive(p.id));
 }
 async function loadAll(){
   await Promise.all(TABLES.map(loadTable));
@@ -2750,7 +2781,7 @@ function render(){
   const v = $("#view");
   const t = curTrip();
   $("#tripsub").textContent = t ? t.name : "";
-  $("#gearBtn").classList.toggle("alert", ruleAlert());
+  $("#gearBtn").classList.toggle("alert", ruleAlert() || guestAlert());
   { const n = ruleAlert() ? Object.keys(setting("rule_requests") || {}).length : 0; if (n !== lastBadgeN){ lastBadgeN = n; clearBadge(); } }
   $("#neuIco").hidden = !loaded || !db.players.length;
   $("#neuIco").disabled = !player(me);
@@ -2761,11 +2792,14 @@ function render(){
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span style="font-size:${nfs}px">${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
   document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
   if (!loaded){ v.innerHTML = `<div class="loading">読み込み中…</div>`; return; }
-  v.innerHTML = artLinks(tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
+  applyGuestFilter();
+  v.innerHTML = artLinks(tab === "home" ? guestReqCards() + viewHome(t) : tab === "list" ? viewList(t)
     : tab === "stats" ? viewStats(t)
     : tab === "tickets" ? viewTickets(t)
     : viewHistory(t));
   bindView();
+  bindGuestCards(v);
+  guestCheck();
   checkClaim();
   neuTurnNotice();
   turnBuzz();
@@ -3017,7 +3051,8 @@ function openMe(){
     <div class="chips">${db.players.map(p => { const other = claimedByOther(p.id); return `<button type="button" class="pc" style="--pc:${p.color}" data-p="${p.id}" aria-pressed="${p.id === me}" ${other ? "disabled" : ""}><span class="dot" style="background:${p.color}"></span>${esc(p.name)}${other ? `<small class="inuse">使用中</small>` : ""}</button>`; }).join("")}</div>
     ${isHost && Object.keys(cl).some(id => claimedByOther(id)) ? `<div class="card hostc" style="margin-top:12px"><b class="hc">オーナー：ログインの解除</b><p class="note" style="margin:2px 0 6px">端末をなくしたときなどに、別の端末のログインを解除できます。</p>${Object.keys(cl).filter(id => claimedByOther(id) && player(id)).map(id => `<div class="plist"><span class="dot" style="background:${pcolor(id)}"></span><b>${esc(pname(id))}</b><button class="mini" data-release="${id}">解除</button></div>`).join("")}</div>` : ""}
     <div class="btns"><button class="btn ghost" data-back>戻る</button>${me ? `<button class="btn danger" id="meOut">ログアウト</button>` : ""}<button class="btn" id="meOk">決定</button></div>
-    ${isHost ? `<button class="linkbtn" id="pinChange">オーナーのパスワードを変更</button>` : `<p class="note" style="margin-top:10px">オーナー（${esc(pname(hostId()) || "ごめ")}）を選ぶときだけ、パスワードの入力が必要です。</p>`}`);
+    ${isHost ? `<button class="linkbtn" id="pinChange">オーナーのパスワードを変更</button>` : `<p class="note" style="margin-top:10px">オーナー（${esc(pname(hostId()) || "ごめ")}）を選ぶときだけ、パスワードの入力が必要です。</p>`}
+    ${me && isGuest(me) ? `<div class="card guestme"><b>ゲストとして利用中</b><span>${esc(guestLeft(me))}で自動的にログアウトします</span></div>` : !me ? `<div class="card guestin"><b>メンバー以外の人へ</b><p class="note">ゲームに参加したいときは、オーナーに申請すると<b>24時間だけ</b>ゲストとして使えます。</p><button class="btn ghost" id="guestReq">ゲストとして申請する</button></div>` : ""}`);
   s.querySelector("[data-back]").onclick = openSettings;
   bindChips(s, "data-p", false);
   const login = async id => {
@@ -3032,6 +3067,7 @@ function openMe(){
     login(id);
   };
   const pc = s.querySelector("#pinChange"); if (pc) pc.onclick = openPinChange;
+  const gr = s.querySelector("#guestReq"); if (gr) gr.onclick = openGuestReq;
   const out = s.querySelector("#meOut");
   if (out) out.onclick = async () => {
     if (!confirm(`${pname(me)}からログアウトしますか？\nこの端末の通知も止まります。`)) return;
@@ -3047,12 +3083,98 @@ function openMe(){
   });
 }
 
+/* ---------- ゲスト（オーナーの許可で24時間だけ使える） ---------- */
+const guestReqs = () => { try { return setting("guest_reqs") || {}; } catch (e) { return {}; } };
+const guestPending = () => Object.entries(guestReqs()).filter(([, r]) => r && r.st === "wait");
+const guestAlert = () => !!me && me === hostId() && guestPending().length > 0;
+function openGuestReq(){
+  const r = guestReqs()[DEVICE];
+  if (r && r.st === "wait"){
+    const s = openSheet("ゲストの申請中", `<div class="guestwait"><span class="gwi">⏳</span><b>「${esc(r.name)}」で申請中</b><p class="note">オーナー（${esc(pname(hostId()) || "ごめ")}）の許可を待っています。許可されると自動的に使えるようになります。</p></div>
+      <div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn danger" id="gCancel">申請を取り消す</button></div>`);
+    s.querySelector("[data-back]").onclick = openMe;
+    $("#gCancel").onclick = async () => { await loadTable("app_settings"); const q2 = { ...guestReqs() }; delete q2[DEVICE]; if (await putSetting("guest_reqs", q2)){ await loadTable("app_settings"); toast("申請を取り消しました"); openMe(); } };
+    return;
+  }
+  const s = openSheet("ゲストとして申請", `<p class="note">オーナーが許可すると、この端末で<b>24時間だけ</b>ゲストとしてゲームに参加できます。時間が過ぎると自動でログアウトします。</p>
+    <label class="f"><span>ニックネーム</span><input id="gName" maxlength="12" placeholder="例：たろう"></label>
+    <div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="gSend">オーナーに申請する</button></div>`);
+  s.querySelector("[data-back]").onclick = openMe;
+  setTimeout(() => $("#gName").focus(), 250);
+  $("#gSend").onclick = async () => {
+    const name = $("#gName").value.trim(); if (!name){ toast("ニックネームを入力してください"); return; }
+    await loadTable("app_settings");
+    const q2 = { ...guestReqs(), [DEVICE]: { name, at: new Date().toISOString(), st: "wait" } };
+    if (!(await putSetting("guest_reqs", q2))) return;
+    await loadTable("app_settings");
+    if (hostId()) pushCall({ type: "guest_request", host: hostId(), name });
+    toast("オーナーに申請しました。許可を待っています", 3000); openGuestReq();
+  };
+}
+function guestReqCards(){
+  if (!loaded || !guestAlert()) return "";
+  return guestPending().map(([dev, r]) => `<div class="card guestreq"><span class="gri">🙋</span><div><b>ゲストの利用申請</b><span><b class="gnm">${esc(r.name)}</b>さんが24時間だけ使いたいと申請しています</span><small>${fmtTime(r.at)}</small></div>
+    <div class="grb"><button class="mini" data-gng="${dev}">見送る</button><button class="btn" data-gok="${dev}">許可する</button></div></div>`).join("");
+}
+function bindGuestCards(v){
+  v.querySelectorAll("[data-gok]").forEach(b => b.onclick = () => approveGuest(b.dataset.gok));
+  v.querySelectorAll("[data-gng]").forEach(b => b.onclick = async () => {
+    const dev = b.dataset.gng; await loadTable("app_settings");
+    const r = guestReqs()[dev]; if (!r) return;
+    if (await putSetting("guest_reqs", { ...guestReqs(), [dev]: { ...r, st: "ng" } })){ await loadTable("app_settings"); toast(`${r.name}さんの申請を見送りました`); render(); }
+  });
+}
+let guestBusy = false;
+async function approveGuest(dev){
+  if (guestBusy) return; guestBusy = true;
+  try {
+    await loadTable("app_settings"); await loadTable("players");
+    const r = guestReqs()[dev]; if (!r || r.st !== "wait"){ render(); return; }
+    const all = db.allPlayers || db.players, live = all.filter(p => !isGuest(p.id) || guestAlive(p.id));
+    const taken = live.map(x => (x.color || "").toUpperCase());
+    const color = COLORS.find(c => !taken.includes(c.toUpperCase())) || COLORS[all.length % COLORS.length];
+    let name = r.name; if (live.some(p => p.name === name)) name = (name + "★").slice(0, 12);
+    const { data: np, error } = await sb.from("players").insert({ name, color, sort: 900 + all.length }).select().single();
+    if (error){ fail(error, "許可"); return; }
+    const exp = new Date(Date.now() + 864e5).toISOString();
+    const ok = await putSetting("guests", { ...guests(), [np.id]: { device: dev, exp, name } })
+      && await putSetting("claims", { ...claims(), [np.id]: { device: dev, at: new Date().toISOString() } })
+      && await putSetting("guest_reqs", { ...guestReqs(), [dev]: { ...r, st: "ok", pid: np.id } });
+    await loadTable("app_settings"); await loadTable("players");
+    if (ok){ toast(`${name}さんを24時間のゲストとして許可しました`, 3000); pushCall({ type: "guest_ok", to: np.id }); }
+    render();
+  } finally { guestBusy = false; }
+}
+let guestChecking = false;
+async function guestCheck(){
+  if (!loaded || guestChecking) return;
+  guestChecking = true;
+  try {
+    const r = guestReqs()[DEVICE];
+    if (r && r.st === "ok" && r.pid && !me && player(r.pid) && guestAlive(r.pid)){
+      me = r.pid; localStorage.setItem("ojk:me", me);
+      const q2 = { ...guestReqs() }; delete q2[DEVICE]; await putSetting("guest_reqs", q2); await loadTable("app_settings");
+      flash(`ようこそ ${pname(me)}さん`, "ゲストとして24時間使えます"); closeSheet(); render();
+    } else if (r && r.st === "ng"){
+      const q2 = { ...guestReqs() }; delete q2[DEVICE]; await putSetting("guest_reqs", q2); await loadTable("app_settings");
+      toast("ゲストの申請は見送られました", 3500);
+    }
+    if (me && isGuest(me) && !guestAlive(me)){
+      const name = pname(me);
+      const c = { ...claims() }; if (c[me] && c[me].device === DEVICE){ delete c[me]; await putSetting("claims", c); }
+      me = ""; localStorage.removeItem("ojk:me"); await syncPushOwner(); await loadTable("app_settings"); render();
+      toast(`${name}さんのゲスト利用時間（24時間）が終わりました`, 4000);
+    }
+  } catch (e) { console.error(e); } finally { guestChecking = false; }
+}
+setInterval(() => { if (loaded && me && isGuest(me) && !guestAlive(me)) guestCheck(); }, 60000);
+
 /* ---------- 設定 ---------- */
 function openSettings(){
   const t = curTrip();
   const s = openSheet("設定", `<div class="menu">
     <button data-m="me">この端末の自分<span>${esc(player(me)?.name || "未設定")}</span></button>
-    <button data-m="players">プレイヤー<span>${db.players.length}人</span></button>
+    <button data-m="players">プレイヤー${guestAlert() ? `<i class="bang">!</i>` : ""}<span>${db.players.filter(p => !isGuest(p.id)).length}人${Object.keys(guests()).some(guestAlive) ? `＋ゲスト${Object.keys(guests()).filter(guestAlive).length}人` : ""}</span></button>
     <button data-m="thr">免除券使用確認の基準額<span>${yen(threshold())}以上</span></button>
     <button data-m="ntf">通知<span>受け取り・時刻の設定</span></button>
     <button data-m="rule">実施要綱${ruleAlert() ? `<i class="bang">!</i>` : ""}<span>確認</span></button>
@@ -3063,10 +3185,15 @@ function openSettings(){
 
 function openPlayers(){
   const list = [...db.players].sort((a, b) => a.sort - b.sort || a.created_at.localeCompare(b.created_at));
-  const s = openSheet("プレイヤー", `${list.map(p => `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}</b><button class="mini" data-pe="${p.id}">編集</button></div>`).join("") || `<p class="note">まだ登録がありません。</p>`}
+  const gl = (db.allPlayers || db.players).filter(p => isGuest(p.id)), isHost = !!me && me === hostId();
+  const s = openSheet("プレイヤー", `${list.filter(p => !isGuest(p.id)).map(p => `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}</b><button class="mini" data-pe="${p.id}">編集</button></div>`).join("") || `<p class="note">まだ登録がありません。</p>`}
+    ${gl.length ? `<div class="h2" style="margin-top:14px">ゲスト<small>24時間だけ使える</small></div>${gl.map(p => { const a = guestAlive(p.id); return `<div class="plist gst ${a ? "" : "exp"}"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}</b><small class="gtl">${a ? esc(guestLeft(p.id)) : "期限切れ"}</small>${isHost ? `<button class="mini" data-gext="${p.id}">+24時間</button>${a ? `<button class="mini" data-gend="${p.id}">終了</button>` : `<button class="mini" data-gdel="${p.id}">削除</button>`}` : ""}</div>`; }).join("")}` : ""}
     <div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="addP">追加する</button></div>`);
   s.querySelector("[data-back]").onclick = openSettings;
   $("#addP").onclick = () => editPlayer(null);
+  s.querySelectorAll("[data-gext]").forEach(b => b.onclick = async () => { const id = b.dataset.gext; await loadTable("app_settings"); const g = { ...guests() }; if (!g[id]) return; g[id] = { ...g[id], exp: new Date(Math.max(Date.now(), Date.parse(g[id].exp)) + 864e5).toISOString() }; if (await putSetting("guests", g)){ await loadTable("app_settings"); toast(`${pname(id)}を24時間延長しました`); render(); openPlayers(); } });
+  s.querySelectorAll("[data-gend]").forEach(b => b.onclick = async () => { const id = b.dataset.gend; if (!confirm(`${pname(id)}のゲスト利用を終了しますか？`)) return; await loadTable("app_settings"); const g = { ...guests() }; if (!g[id]) return; g[id] = { ...g[id], exp: new Date(Date.now() - 1000).toISOString() }; const c = { ...claims() }; delete c[id]; if (await putSetting("guests", g) && await putSetting("claims", c)){ await loadTable("app_settings"); toast(`${pname(id)}のゲスト利用を終了しました`); render(); openPlayers(); } });
+  s.querySelectorAll("[data-gdel]").forEach(b => b.onclick = async () => { const id = b.dataset.gdel; if (db.payments.some(x => x.payer_id === id || (x.participants || []).includes(id))){ toast("支払いの記録があるので削除できません", 3000); return; } if (!confirm(`${pname(id)}（期限切れのゲスト）を削除しますか？`)) return; if (await q(sb.from("players").delete().eq("id", id), "削除")){ const g = { ...guests() }; delete g[id]; await putSetting("guests", g); await loadTable("app_settings"); await loadTable("players"); render(); openPlayers(); } });
   s.querySelectorAll("[data-pe]").forEach(b => b.onclick = () => editPlayer(b.dataset.pe));
 }
 function editPlayer(id){
@@ -3125,7 +3252,7 @@ function editTrip(id){
   if (!db.players.length){ toast("先にプレイヤーを登録してください"); openPlayers(); return; }
   const t = id ? db.trips.find(x => x.id === id) : null;
   const last = [...db.trips].sort((a, b) => b.no - a.no)[0];
-  const members = t ? t.members : (last ? last.members : db.players.map(p => p.id));
+  const members = (t ? t.members : (last ? last.members : db.players.map(p => p.id))).filter(id => !isGuest(id));
   const no = t ? t.no : (last ? last.no + 1 : 0);
   let season = t ? t.season : (Number(setting("last_season")) || (last ? last.season : 1));
   let term = t ? (t.term || "") : "";
@@ -3137,7 +3264,7 @@ function editTrip(id){
     <div class="f"><span>季節</span><div class="chips terms">${TERMS.map(x => `<button type="button" data-term="${x}" aria-pressed="${x === term}">${x}</button>`).join("")}</div></div></div>
     <label class="f"><span>場所（都道府県名で書くと地図に反映されます）</span><input id="tpl" value="${esc(t ? (t.place || t.name || "") : "")}" placeholder="例：長崎・佐賀"></label>
     <div class="f"><span>旅行期間</span><div class="period"><input id="tsd" type="date" value="${t ? (t.start_date || "") : ""}"><span>〜</span><input id="ted" type="date" value="${t ? (tripEnd(t) || "") : ""}"></div><p class="note" id="tpd" style="margin:6px 0 0"></p></div>
-    <div class="f"><span>参加者</span>${chipPlayers(db.players.map(p => p.id), members)}</div>
+    <div class="f"><span>参加者</span>${chipPlayers(db.players.filter(p => !isGuest(p.id)).map(p => p.id), members)}</div>
     <div class="f"><span>3連覇達成者（この旅はじゃんけんに参加しない）</span><select id="tch"><option value="">なし</option>${db.players.map(p => `<option value="${p.id}" ${(t ? t.champion_out : threePeatHolder()) === p.id ? "selected" : ""}>${esc(p.name)}</option>`).join("")}</select>${!t && threePeatHolder() ? `<p class="note" style="margin:6px 0 0">${esc(pname(threePeatHolder()))}が3連覇中のため、この旅はシーズン${season}のファイナルです。</p>` : ""}</div>
     <div class="btns">${t ? `<button class="btn danger" id="tdel">削除</button>` : ""}<button class="btn" id="tsave">${t ? "保存" : "旅を始める"}</button></div>`);
   bindChips(s, "data-p", true);
@@ -7591,6 +7718,7 @@ const dmCount = (st, pid) => { const P = st.pl[pid]; return P.deck.length + P.ha
 function dmEndTurn(st){
   const T = st.turn, P = st.pl[T.pid];
   P.disc.push(...P.hand, ...P.play); P.hand = []; P.play = [];
+  dmFxAdd(st, { k: "clean", p: T.pid });
   dmDraw(st, T.pid, 5);
   st.turns[T.pid] = (st.turns[T.pid] || 0) + 1;
   const ended = st.supply.province === 0 || dmEmpty(st) >= (st.players.length >= 5 ? 4 : 3);
@@ -7643,23 +7771,30 @@ async function dmCommit(id, fn){
   drawDm(); toast("混み合っています。もう一度タップしてください", 2000); return false;
 }
 const dmOk = st => true;
-function dmDoPlay(c){
+// 選んだカードを順番に使う（アクション→財宝の順。途中で選択が必要になったらそこで止める）
+let dmSkipped = 0;
+function dmDoPlay(list){
+  list = [].concat(list);
+  const ord = list.filter(c => dmIs(c, "a")).concat(list.filter(c => !dmIs(c, "a")));
   return dmCommit(dmId, st => {
     const T = st.turn, P = st.pl[me];
-    if (T.pid !== me || !dmIdle(st) || !P.hand.includes(c)) return null;
-    if (dmIs(c, "a")){
-      if (T.phase !== "action" || T.actions < 1) return null;
-      T.actions--; dmTake(P.hand, [c]); P.play.push(c);
-      dmL(st, `${pname(me)}：${DM[c].n}`); dmFxAdd(st, { k: "play", p: me, c });
-      dmPlayCard(st, me, c); dmRun(st); return true;
+    if (T.pid !== me || !dmIdle(st)) return null;
+    let n = 0; dmSkipped = 0;
+    for (const c of ord){
+      if (!dmIdle(st) || !P.hand.includes(c)){ dmSkipped++; continue; }
+      if (dmIs(c, "a")){
+        if (T.phase !== "action" || T.actions < 1){ dmSkipped++; continue; }
+        T.actions--; dmTake(P.hand, [c]); P.play.push(c);
+        dmL(st, `${pname(me)}：${DM[c].n}`); dmFxAdd(st, { k: "play", p: me, c });
+        dmPlayCard(st, me, c); dmRun(st); n++;
+      } else if (dmIs(c, "t")){
+        if (T.bought){ dmSkipped++; continue; }
+        dmTake(P.hand, [c]); P.play.push(c); T.phase = "buy";
+        T.coins += DM[c].v; if (c === "silver" && !T.silver){ T.coins += T.merch; T.silver = true; }
+        n++;
+      } else dmSkipped++;
     }
-    if (dmIs(c, "t")){
-      if (T.bought) return null;
-      dmTake(P.hand, [c]); P.play.push(c); T.phase = "buy";
-      T.coins += DM[c].v; if (c === "silver" && !T.silver){ T.coins += T.merch; T.silver = true; }
-      return true;
-    }
-    return null;
+    return n ? true : null;
   });
 }
 function dmDoTreasures(){
@@ -7738,9 +7873,9 @@ function openDmNew(){
 }
 
 /* ---- 画面 ---- */
-let dmShufNow = false, dmPrevHand = {};
-let dmId = null, dmBusy = false, dmSel = null, dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
-function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = null; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
+let dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
+let dmId = null, dmBusy = false, dmSel = [], dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
+function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
 function closeDm(){ dmId = null; $("#dmg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ドミニオン：カードごとのオリジナルイラスト（SVG） */
@@ -7910,19 +8045,19 @@ function drawDm(){
   else msg = myTurn ? `<span><b class="tn">あなた</b>の番：${T.phase === "action" ? "アクションを使う・財宝を出す" : "カードを買う"}</span>` : `<span>${turnName(T.pid, false)}</span>`;
   bottom += `<div class="nturn ${myTurn || myAsk ? "mine" : ""}" style="--pc:${pcolor(myAsk ? me : waitAsk[0] ? waitAsk[0].pid : T.pid)}">${msg}</div>`;
   if (P){
-    if (dmSel && P.hand[dmSel.i] !== dmSel.c) dmSel = null;
+    dmSel = (dmSel || []).filter(x => P.hand[x.i] === x.c);
     const hand = P.hand.map((c, i) => ({ c, i })).sort((a, b) => { const o = c => dmIs(c, "a") ? 0 : dmIs(c, "t") ? 1 : 2; return o(a.c) - o(b.c) || DM[a.c].c - DM[b.c].c || a.c.localeCompare(b.c); });
     const handAsk = myAsk && myAsk.k === "hand";
     const canUse = c => myTurn && idle && ((dmIs(c, "a") && T.phase === "action" && T.actions > 0) || (dmIs(c, "t") && !T.bought));
     const W = Math.min(window.innerWidth, 480) - 30, cw = 56, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0;
     bottom += `<div class="dmhand ${step < cw + 2 && hand.length > 1 ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map(({ c, i }, k) => {
-      const okA = handAsk ? (!myAsk.filter || dmIs(c, myAsk.filter)) : canUse(c), sel = handAsk ? dmPick.sel.includes(i) : dmSel && dmSel.i === i;
+      const okA = handAsk ? (!myAsk.filter || dmIs(c, myAsk.filter)) : canUse(c), sel = handAsk ? dmPick.sel.includes(i) : dmSel.some(x => x.i === i);
       return `<button class="dh ${sel ? "sel" : ""} ${okA ? "" : "ng"}" data-dh="${i}" data-c="${c}" data-ok="${okA ? 1 : 0}" style="--i:${k}">${dmCardHtml(c)}</button>`; }).join("")}</div>`;
     if (!myAsk) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b>${P.deck.length}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b>${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button></div>`;
     if (myAsk && (myAsk.k === "hand" || myAsk.k === "supply")) bottom += dmAskHtml(myAsk, st);
     else if (myTurn && idle){
       const hasT = !T.bought && P.hand.some(c => dmIs(c, "t"));
-      const selBtn = dmSel ? `<button class="nb end go" id="dmUse">${esc(DM[dmSel.c].n)}を使う</button>` : `<button class="nb end" disabled>${T.phase === "action" && T.actions > 0 && P.hand.some(c => dmIs(c, "a")) ? "カードを選んでね" : "サプライをタップ"}</button>`;
+      const selBtn = dmSel.length ? `<button class="nb end go" id="dmUse">${dmSel.length === 1 ? `${esc(DM[dmSel[0].c].n)}を使う` : `${dmSel.length}枚まとめて使う`}</button>` : `<button class="nb end" disabled>${T.phase === "action" && T.actions > 0 && P.hand.some(c => dmIs(c, "a")) ? "カードを選んでね" : "サプライをタップ"}</button>`;
       bottom += `<div class="nbtns"><button class="nb draw ${hasT ? "" : "off"}" id="dmAllT" ${hasT ? "" : "disabled"}>財宝を全部出す</button>${selBtn}<button class="nb lose" id="dmEnd">ターン終了</button></div>`;
     }
   }
@@ -7948,13 +8083,13 @@ function drawDm(){
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (dmBusy) return; dmBusy = true; try { await fn(); } finally { dmBusy = false; } };
   on("dmClose", closeDm); on("dmClose2", closeDm); on("dmMenu", () => dmMenu(g));
-  on("dmUse", act(async () => { const c = dmSel && dmSel.c; dmSel = null; if (c) await dmDoPlay(c); }));
-  on("dmAllT", act(async () => { dmSel = null; await dmDoTreasures(); }));
+  on("dmUse", act(async () => { const cs = (dmSel || []).map(x => x.c); dmSel = []; if (cs.length){ await dmDoPlay(cs); if (dmSkipped) toast(`${dmSkipped}枚は使えなかったので手札に残しました`); } }));
+  on("dmAllT", act(async () => { dmSel = []; await dmDoTreasures(); }));
   on("dmEnd", act(async () => {
     const P2 = st.pl[me], left = !T.bought && T.buys > 0 && T.coins >= 2;
-    if (P2.hand.some(c => dmIs(c, "t")) && !T.bought && !confirm("まだ財宝を出していません。何も買わずにターンを終えますか？")) return;
-    else if (left && T.coins >= 3 && !confirm(`💰${T.coins}残っています。何も買わずにターンを終えますか？`)) return;
-    dmSel = null; await dmDoEnd();
+    const warn = P2.hand.some(c => dmIs(c, "t")) && !T.bought ? "まだ財宝を出していません。何も買わずにターンを終えますか？" : left && T.coins >= 3 ? `💰${T.coins}残っています。何も買わずにターンを終えますか？` : "";
+    if (warn && !confirm(warn)) return;
+    dmSel = []; await dmDoEnd();
   }));
   on("dmBuy", act(async () => { const c = dmView && dmView.c; dmView = null; if (c) await dmDoBuy(c); }));
   on("dmDeck", () => toast(`山札は${P ? P.deck.length : 0}枚（中身は見られません）`));
@@ -7978,7 +8113,7 @@ function drawDm(){
       drawDm(); return;
     }
     if (b.dataset.ok !== "1"){ dmView = { c, h: 1 }; drawDm(); return; }
-    dmSel = dmSel && dmSel.i === i ? null : { i, c }; drawDm();
+    dmSel = dmSel.some(x => x.i === i) ? dmSel.filter(x => x.i !== i) : [...dmSel, { i, c }]; drawDm();
   });
   el.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => {
     const i = Number(b.dataset.dl), s = dmPick.sel;
@@ -7997,36 +8132,62 @@ function drawDm(){
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
   dmAnimHand(g, el, P);
 }
-/* 手札が増えたら山札から飛んでくる・シャッフルの演出 */
+/* 山札のシャッフル→山札から1枚ずつ手札に配られる演出 */
 function dmAnimHand(g, el, P){
   if (!P) return;
-  const key = g.id, prev = dmPrevHand[key], cur = {};
+  const key = g.id, cur = {};
+  let prev = dmPrevHand[key];
+  if (dmCleanNow){ dmCleanNow = false; if (prev) prev = {}; }
   P.hand.forEach(c => { cur[c] = (cur[c] || 0) + 1; });
   dmPrevHand[key] = cur;
   const deck = el.querySelector("#dmDeck"), disc = el.querySelector("#dmDisc");
+  const back = (x, y, cls = "") => { const e = document.createElement("i"); e.className = "dmfly " + cls; e.style.left = x + "px"; e.style.top = y + "px"; document.body.appendChild(e); return e; };
   let delay = 0;
+  const dk = deck && deck.querySelector(".bk"), d = (dk || deck) && (dk || deck).getBoundingClientRect();
   if (dmShufNow){
     dmShufNow = false;
     if (deck && disc){
-      const a = disc.getBoundingClientRect(), b = deck.getBoundingClientRect();
+      const a = disc.getBoundingClientRect(), cx = d.left + d.width / 2, cy = d.top + d.height / 2;
+      // ① 捨て札が山札の場所へ集まる
       for (let i = 0; i < 6; i++){
-        const e = document.createElement("i"); e.className = "dmshf"; e.style.left = (a.left + 14) + "px"; e.style.top = (a.top + 4) + "px"; document.body.appendChild(e);
-        e.animate([{ transform: "translate(0,0) rotate(0)", opacity: 1 }, { transform: `translate(${(b.left - a.left) / 2}px,-40px) rotate(${i % 2 ? 160 : -160}deg)`, opacity: 1, offset: .5 }, { transform: `translate(${b.left - a.left}px,0) rotate(${i % 2 ? 360 : -360}deg)`, opacity: .9 }], { duration: 650, delay: i * 70, easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
+        const e = back(a.left + 4, a.top + 2, "sm");
+        e.animate([{ transform: "translate(0,0) rotate(0)", opacity: 1 }, { transform: `translate(${(cx - a.left) / 2}px,-46px) rotate(${i % 2 ? 160 : -160}deg)`, offset: .5 }, { transform: `translate(${cx - a.left - 12}px,${cy - a.top - 14}px) rotate(${i % 2 ? 360 : -360}deg)` }], { duration: 560, delay: i * 60, easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
       }
-      deck.animate([{ transform: "none" }, { transform: "rotate(-8deg) scale(1.1)" }, { transform: "rotate(8deg) scale(1.1)" }, { transform: "rotate(-5deg)" }, { transform: "none" }], { duration: 600, delay: 650 });
-      const lb = document.createElement("b"); lb.className = "dmshl"; lb.textContent = "シャッフル！"; lb.style.left = (b.left + b.width / 2) + "px"; lb.style.top = (b.top - 8) + "px"; document.body.appendChild(lb);
-      lb.animate([{ transform: "translate(-50%,0) scale(.5)", opacity: 0 }, { transform: "translate(-50%,-14px) scale(1.1)", opacity: 1, offset: .3 }, { transform: "translate(-50%,-20px) scale(1)", opacity: 1, offset: .8 }, { transform: "translate(-50%,-26px)", opacity: 0 }], { duration: 1300, fill: "forwards" }).onfinish = () => lb.remove();
-      delay = 900;
+      // ② 山札を2つに割ってパラパラと混ぜる（リフルシャッフル）
+      for (let i = 0; i < 10; i++){
+        const L = i % 2 === 0, e = back(cx - 28, cy - 40 - 20);
+        e.style.opacity = "0";
+        e.animate([{ transform: "translate(0,0) rotate(0) scale(.7)", opacity: 1 },
+          { transform: `translate(${L ? -34 : 34}px,${-4 - (i >> 1) * 2}px) rotate(${L ? -14 : 14}deg) scale(.7)`, opacity: 1, offset: .35 },
+          { transform: `translate(${L ? -30 : 30}px,${-10 - (i >> 1) * 2}px) rotate(${L ? -24 : 24}deg) scale(.7)`, opacity: 1, offset: .55 },
+          { transform: `translate(0,${-(i * 1.2)}px) rotate(0) scale(.7)`, opacity: 1, offset: .92 },
+          { transform: "translate(0,0) rotate(0) scale(.7)", opacity: 0 }], { duration: 900, delay: 620 + (i >> 1) * 25 + (L ? 0 : 12), easing: "ease-in-out", fill: "forwards" }).onfinish = () => e.remove();
+      }
+      const lb = document.createElement("b"); lb.className = "dmshl"; lb.textContent = "シャッフル！"; lb.style.left = cx + "px"; lb.style.top = (cy - 90) + "px"; document.body.appendChild(lb);
+      lb.animate([{ transform: "translate(-50%,0) scale(.5)", opacity: 0 }, { transform: "translate(-50%,-12px) scale(1.1)", opacity: 1, offset: .25 }, { transform: "translate(-50%,-16px) scale(1)", opacity: 1, offset: .8 }, { transform: "translate(-50%,-22px)", opacity: 0 }], { duration: 1500, delay: 500, fill: "both" }).onfinish = () => lb.remove();
+      delay = 1550;
     }
   }
   if (!prev || !deck) return;
   const left = { ...prev }, news = [];
   el.querySelectorAll(".dmhand .dh").forEach(b => { const c = b.dataset.c; if (left[c] > 0) left[c]--; else news.push(b); });
   if (!news.length || news.length > 10) return;
-  const d = deck.getBoundingClientRect();
+  // ③ 山札の上から1枚ずつ裏向きで飛んできて、手札の位置で表に返る
   news.forEach((b, k) => {
-    const r = b.getBoundingClientRect(), dx = d.left + d.width / 2 - (r.left + r.width / 2), dy = d.top + d.height / 2 - (r.top + r.height / 2);
-    b.animate([{ transform: `translate(${dx}px,${dy}px) scale(.3) rotate(-25deg)`, opacity: 0 }, { transform: `translate(${dx * .4}px,${dy * .4 - 30}px) scale(.8) rotate(-8deg)`, opacity: 1, offset: .55 }, { transform: "none", opacity: 1 }], { duration: 480, delay: delay + k * 110, easing: "cubic-bezier(.3,.9,.4,1)", fill: "backwards" });
+    b.style.opacity = "0";
+    const r = b.getBoundingClientRect(), t0 = delay + k * 170;
+    const e = back(r.left, r.top);
+    e.style.opacity = "0";
+    const dx = d.left + d.width / 2 - (r.left + r.width / 2), dy = d.top + d.height / 2 - (r.top + r.height / 2);
+    e.animate([{ transform: `translate(${dx}px,${dy}px) scale(.28) rotate(-12deg)`, opacity: 1 }, { transform: `translate(${dx * .45}px,${dy * .45 - 46}px) scale(.85) rotate(-6deg)`, opacity: 1, offset: .55 }, { transform: "none", opacity: 1 }],
+      { duration: 420, delay: t0, easing: "cubic-bezier(.3,.8,.4,1)", fill: "both" }).onfinish = () => {
+        e.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: 110, fill: "forwards" }).onfinish = () => {
+          e.remove(); if (!b.isConnected) return;
+          b.style.opacity = "";
+          b.animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1.08)", offset: .7 }, { transform: "scaleX(1)" }], { duration: 200, easing: "ease-out" });
+        };
+      };
+    if (k === 0 && dk) dk.animate([{ transform: "none" }, { transform: "translateY(-3px) scale(1.15)" }, { transform: "none" }], { duration: 300, delay: t0, iterations: news.length });
   });
 }
 function dmAskHtml(a, st){
@@ -8062,6 +8223,7 @@ function dmFxCheck(g){
   let t = 0;
   evs.forEach(e => {
     if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
+    if (e.k === "clean"){ if (e.p === me) dmCleanNow = true; return; }
     if (e.k === "play" && e.p === me) return;
     const d = { buy: 1400, prov: 2600, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 1100, end: 0 }[e.k] || 900;
     setTimeout(() => dmFx(e, g), t); t += Math.min(d, 1600);
@@ -8145,7 +8307,7 @@ async function clearBadge(){
   // アプリを開いたら通知の未読は0に。オーナーは未処理の編集リクエスト数だけバッジを残す
   try {
     let n = 0;
-    try { if (loaded && me && me === hostId()) n = Object.keys(setting("rule_requests") || {}).length; } catch (_) {}
+    try { if (loaded && me && me === hostId()) n = Object.keys(setting("rule_requests") || {}).length + guestPending().length; } catch (_) {}
     if (n > 0 && navigator.setAppBadge) await navigator.setAppBadge(n); else if (navigator.clearAppBadge) await navigator.clearAppBadge();
     const c = await caches.open("ojk-badge"); await c.put("/badge", new Response(String(n)));
   } catch (e) {}
@@ -8155,7 +8317,7 @@ clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
   clearBadge();
-  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); } catch (e) { console.error(e); }
+  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); } catch (e) { console.error(e); }
 });
 (async () => {
   try { await loadAll(); }
