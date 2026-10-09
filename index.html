@@ -2560,8 +2560,9 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmc.dfx .dmart.ill svg{width:96px;height:72px}
 .sbfx .dtr .dmc.dfx .dmart.ill svg{width:66px;height:50px}
 .dmkc .dmart.ill svg{width:36px;height:27px}
-.dmp.cb{animation:dmblink 1s ease-in-out infinite;z-index:1}
-@keyframes dmblink{0%,100%{box-shadow:0 0 0 2px #fff,0 0 4px rgba(255,255,255,.5)}50%{box-shadow:0 0 0 3.5px #fff,0 0 16px #fff,0 0 26px rgba(255,255,255,.8)}}
+.dmp.cb{box-shadow:0 0 0 2px #fff,0 0 8px rgba(255,255,255,.7);z-index:1}
+.dmp.cb::after{content:"";position:absolute;inset:0;border-radius:5px;box-shadow:inset 0 0 0 2.5px #fff,inset 0 0 14px rgba(255,255,255,.95);pointer-events:none;will-change:opacity;animation:dmblink 1s ease-in-out infinite}
+@keyframes dmblink{0%,100%{opacity:.15}50%{opacity:1}}
 .dmp.na{filter:grayscale(.9) brightness(.55)}
 .dmp.na .cnt{opacity:.7}
 .dh.ng .dmc{filter:grayscale(.55) brightness(.85)}
@@ -2786,9 +2787,14 @@ function subscribe(){
     .on("postgres_changes", { event: "*", schema: "public" }, payload => {
       const t = payload.table;
       if (!TABLES.includes(t)) return;
+      if (t === "dm_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
+        const nw = payload.new, cur = (db.dm_games || []).find(x => x.id === nw.id);
+        if (cur && (cur.version || 1) >= (nw.version || 1)) return;      // 自分の保存のこだま（もう反映済み）
+        if (cur){ Object.assign(cur, nw); if (dmId === nw.id){ clearTimeout(reloadTimer.dmDraw); reloadTimer.dmDraw = setTimeout(() => { drawDm(); turnBuzz(); }, 30); } else if (!dmId) render(); return; }
+      }
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); turnBuzz(); } catch (e) { console.error(e); }
+        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); turnBuzz(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -7434,7 +7440,7 @@ function drawKg(){
   const act = fn => async () => { if (kgBusy) return; kgBusy = true; try { await fn(); } finally { kgBusy = false; } };
   on("kgScore", () => { kgScoreOpen = true; drawKg(); });
   on("kgPopX", () => { kgScoreOpen = false; drawKg(); });
-  { const bg = el.querySelector("#kgPopBg"); if (bg) bg.onclick = e => { if (e.target === bg && Date.now() - (window.dmLpAt || 0) > 700){ kgScoreOpen = false; drawKg(); } }; }
+  { const bg = el.querySelector("#kgPopBg"); if (bg) bg.onclick = e => { if (e.target === bg && !dmJustLp()){ kgScoreOpen = false; drawKg(); } }; }
   on("kgClose", closeKg); on("kgClose2", closeKg); on("kgMenu", () => kgMenu(g));
   on("kgBid", act(async () => { const v = kgBidSel; kgBidSel = null; if (v != null) await kgBid(v); }));
   on("kgPlay", act(async () => { const c = kgSel; kgSel = null; if (c) await kgPlay(c); }));
@@ -7688,7 +7694,7 @@ const DMT = {
   },
   replay(st, t){ dmPlayCard(st, t.pid, t.c); },
   cellar(st, t){ const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); if (t.sel.length) dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); const n = dmDraw(st, t.pid, t.sel.length); dmL(st, `地下貯蔵庫：${t.sel.length}枚捨てて${n}枚引いた`); },
-  trash(st, t){ if (!t.sel.length) return; dmTake(st.pl[t.pid].hand, t.sel); st.trash.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: t.sel }); },
+  trash(st, t){ if (!t.sel.length) return; dmTake(st.pl[t.pid].hand, t.sel); st.trash.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: t.sel, h: 1 }); },
   discard(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); dmL(st, `${pname(t.pid)}が${t.sel.length}枚捨てた`); },
   todeck(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.deck.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を山札の上に置いた`); },
   harb(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid], c = t.sel[0]; dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `前駆者：${DM[c].n}を山札の上に`); },
@@ -8123,21 +8129,18 @@ function drawDm(){
     pop = `<div class="kgpop dmpop" id="dmPopBg"><div class="dmpopin">${dmBigCard(c)}${dmView.h ? "" : `<p class="dmleft">残り <b>${st.supply[c] != null ? st.supply[c] : "-"}</b>枚</p>`}
       <div class="dmpbtn">${cb ? `<button class="nb end go" id="dmBuy">💰${DM[c].c}で買う</button>` : !dmView.h && myTurn && idle && st.supply[c] > 0 ? `<button class="nb end" disabled>${T.buys < 1 ? "購入はもうできません" : `お金が足りません（💰${T.coins}）`}</button>` : ""}<button class="nb draw" id="dmPopX">閉じる</button></div></div></div>`;
   }
-  el.innerHTML = `<div class="nbg dmbg" aria-hidden="true">${["🏰", "🪙", "👑", "🌳", "🏰", "🪙", "⚔️", "📜"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.14">${x}</i>`).join("")}</div>
+  dmPatch(el, `<div class="nbg dmbg" aria-hidden="true">${["🏰", "🪙", "👑", "🌳", "🏰", "🪙", "⚔️", "📜"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.14">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt dmt">DOMINION</b><span class="nrd sbr"><small>ROUND</small><b>${st.round}</b></span><span class="ndk"></span><button class="nmini" id="dmMenu" aria-label="メニュー">…</button><button class="nmini" id="dmClose" aria-label="閉じる">×</button></div>
     <div class="nseats2 ${st.players.length >= 5 ? "tight" : ""}">${seats}</div>
     ${supply}${stat}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
-    <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn") && !dmView ? `<div class="kgpop dmmodal">${dmAskHtml(myAsk, st)}</div>` : ""}${over}${pop}`;
+    <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn") && !dmView ? `<div class="kgpop dmmodal">${dmAskHtml(myAsk, st)}</div>` : ""}${over}${pop}`);
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (dmBusy) return; dmBusy = true; try { await fn(); } finally { dmBusy = false; } };
   on("dmClose", closeDm); on("dmClose2", closeDm); on("dmMenu", () => dmMenu(g));
   on("dmUse", act(async () => { const cs = (dmSel || []).map(x => x.c); dmSel = []; if (cs.length){ await dmDoPlay(cs); if (dmSkipped) toast(`${dmSkipped}枚は使えなかったので手札に残しました`); } }));
   on("dmAllT", act(async () => { dmSel = []; await dmDoTreasures(); }));
   on("dmEnd", act(async () => {
-    const P2 = st.pl[me], left = !T.bought && T.buys > 0 && T.coins >= 2;
-    const warn = P2.hand.some(c => dmIs(c, "t")) && !T.bought ? "まだ財宝を出していません。何も買わずにターンを終えますか？" : left && T.coins >= 3 ? `💰${T.coins}残っています。何も買わずにターンを終えますか？` : "";
-    if (warn && !confirm(warn)) return;
     dmSel = []; await dmDoEnd();
   }));
   on("dmBuy", act(async () => { const c = dmView && dmView.c; dmView = null; if (c) await dmDoBuy(c); }));
@@ -8147,27 +8150,18 @@ function drawDm(){
   el.querySelectorAll("[data-pv]").forEach(b => b.onclick = () => { dmView = { c: b.dataset.pv, h: 1 }; drawDm(); });
   on("dmPopX", () => { dmView = null; drawDm(); });
   { const bg = el.querySelector("#dmPopBg"); if (bg) bg.onclick = e => { if (e.target === bg){ dmView = null; drawDm(); } }; }
-  el.querySelectorAll("[data-dc]").forEach(b => {
-    let tm = null;
-    b.addEventListener("pointerdown", () => { tm = setTimeout(() => { tm = null; b.dataset.lp = "1"; window.dmLpAt = Date.now(); try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} dmView = { c: b.dataset.dc }; drawDm(); }, 450); });
-    ["pointerup", "pointerleave", "pointercancel"].forEach(ev => b.addEventListener(ev, () => { if (tm){ clearTimeout(tm); tm = null; } }));
-    b.addEventListener("contextmenu", e => e.preventDefault());
-  });
+  el.querySelectorAll("[data-dc]").forEach(b => dmLongPress(b, () => { dmView = { c: b.dataset.dc }; drawDm(); }));
   el.querySelectorAll("[data-dc]").forEach(b => b.onclick = () => {
-    if (b.dataset.lp === "1"){ b.dataset.lp = ""; return; }
+    if (dmJustLp()) return;
     const c = b.dataset.dc;
     if (myAsk && myAsk.k === "supply"){ if (gainOk(c)){ dmGainSel = dmGainSel === c ? null : c; drawDm(); } else { dmView = { c }; drawDm(); } return; }
     dmView = { c }; drawDm();
   });
   // 長押しでカードの効果を見る
-  el.querySelectorAll("[data-dh]").forEach(b => {
-    let tm = null;
-    b.addEventListener("pointerdown", () => { tm = setTimeout(() => { tm = null; b.dataset.lp = "1"; window.dmLpAt = Date.now(); try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} dmView = { c: b.dataset.c, h: 1 }; drawDm(); }, 450); });
-    ["pointerup", "pointerleave", "pointercancel"].forEach(ev => b.addEventListener(ev, () => { if (tm){ clearTimeout(tm); tm = null; } }));
-    b.addEventListener("contextmenu", e => e.preventDefault());
-  });
+  el.querySelectorAll("[data-dh]").forEach(b => dmLongPress(b, () => { dmView = { c: b.dataset.c, h: 1 }; drawDm(); }));
+
   el.querySelectorAll("[data-dh]").forEach(b => b.onclick = () => {
-    if (b.dataset.lp === "1"){ b.dataset.lp = ""; return; }
+    if (dmJustLp()) return;
     const i = Number(b.dataset.dh), c = b.dataset.c;
     if (myAsk && myAsk.k === "hand"){
       if (b.dataset.ok !== "1") return;
@@ -8198,6 +8192,32 @@ function drawDm(){
   dmAnimHand(g, el, P);
   dmAnimGains(el, st);
 }
+/* 長押しでカードの効果（描き直しても二重に登録しない） */
+let dmLpTm = null, dmLpAt = 0;
+const dmJustLp = () => Date.now() - dmLpAt < 700;
+function dmLongPress(b, fn){
+  b.onpointerdown = () => { clearTimeout(dmLpTm); dmLpTm = setTimeout(() => { dmLpTm = null; dmLpAt = Date.now(); try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} fn(); }, 450); };
+  b.onpointerup = b.onpointerleave = b.onpointercancel = () => { clearTimeout(dmLpTm); dmLpTm = null; };
+  b.oncontextmenu = e => e.preventDefault();
+}
+/* 画面の差し替えは、変わったところだけ（全部作り直すと重い・動いている演出も止まる） */
+function dmPatch(el, html){ const t = document.createElement("template"); t.innerHTML = html; dmMorphKids(el, t.content); }
+function dmMorphKids(a, b){
+  const ac = [...a.childNodes], bc = [...b.childNodes];
+  bc.forEach((y, i) => { if (i < ac.length) dmMorph(ac[i], y); else a.appendChild(y); });
+  for (let i = bc.length; i < ac.length; i++) ac[i].remove();
+}
+function dmMorph(x, y){
+  if (x.isEqualNode(y)) return;
+  if (x.nodeType !== y.nodeType || x.nodeName !== y.nodeName){ x.replaceWith(y); return; }
+  if (x.nodeType !== 1){ x.data = y.data; return; }
+  if (x.namespaceURI !== "http://www.w3.org/1999/xhtml"){ x.replaceWith(y); return; }
+  // class / style 以外の属性（id・data-○○など）が違えば別の部品として作り直す（ボタンの役割の取り違え防止）
+  const key = n => [...n.attributes].filter(a => a.name !== "class" && a.name !== "style").map(a => a.name + "=" + a.value).sort().join("|");
+  if (key(x) !== key(y)){ x.replaceWith(y); return; }
+  ["class", "style"].forEach(k => { const v = y.getAttribute(k); if (v == null) x.removeAttribute(k); else if (x.getAttribute(k) !== v) x.setAttribute(k, v); });
+  dmMorphKids(x, y);
+}
 /* 演出：①捨て札へ「ふわっ→シャッ」 ②シャッフル ③山札から1枚ずつ配る */
 function dmAnimHand(g, el, P){
   if (!P){ dmOut = []; return; }
@@ -8223,7 +8243,7 @@ function dmAnimHand(g, el, P){
       const w = document.createElement("div"); w.className = "dmout"; w.innerHTML = dmCardHtml(o.c); w.style.left = (o.x - 28) + "px"; w.style.top = (o.y - 40) + "px"; document.body.appendChild(w);
       const dx = zx - o.x, dy = zy - o.y, rot = rnd(-25, 25), t0 = k * 70;
       w.animate([
-        { transform: `scale(${o.s}) rotate(0)`, opacity: 1, filter: "none" },
+        { transform: `scale(${o.s}) rotate(0)`, opacity: 1 },
         { transform: `translate(${rnd(-10, 10)}px,-34px) scale(${o.s * 1.12}) rotate(${rot * .3}deg)`, opacity: 1, offset: .38, easing: "cubic-bezier(.6,0,.9,.5)" },
         { transform: `translate(${dx * .55}px,${dy * .55 - 20}px) scale(${o.s * .7},${o.s * .55}) rotate(${rot}deg)`, opacity: 1, offset: .75 },
         { transform: `translate(${dx}px,${dy}px) scale(.18) rotate(${rot * 2}deg)`, opacity: .2 }
@@ -8280,11 +8300,11 @@ function dmAnimHand(g, el, P){
       e.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: 100, fill: "forwards" }).onfinish = () => {
         e.remove(); if (!b.isConnected) return;
         b.style.opacity = "";
-        b.animate([{ transform: "scaleX(0) scaleY(1.1)", filter: "brightness(2.2)" }, { transform: "scaleX(1.12) scaleY(1.05)", filter: "brightness(1.6)", offset: .6 }, { transform: "none", filter: "none" }], { duration: 300, easing: "ease-out" });
+        b.animate([{ transform: "scaleX(0) scaleY(1.1)" }, { transform: "scaleX(1.12) scaleY(1.05)", offset: .6 }, { transform: "none" }], { duration: 300, easing: "ease-out" });
         const rr = b.getBoundingClientRect(); spark(rr.left + rr.width / 2, rr.top + rr.height / 2, 8, ["#FFE38A", "#fff", "#9BEA8A"], 46);
       };
     };
-    if (dk) dk.animate([{ transform: "none" }, { transform: "translateY(-5px) scale(1.25)", filter: "brightness(1.5)" }, { transform: "none" }], { duration: 260, delay: t0 });
+    if (dk) dk.animate([{ transform: "none" }, { transform: "translateY(-5px) scale(1.25)" }, { transform: "none" }], { duration: 260, delay: t0 });
   });
 }
 /* 捨て札・廃棄置き場の一覧（タップでカードの効果） */
@@ -8376,6 +8396,9 @@ function dmFxCheck(g){
   if (seen == null) return;
   const evs = (st.fx || []).filter(e => e.n > seen);
   let t = 0;
+  // 手札から出ていったカードは「前の手札」から引いておく（同じ名前のカードを引き直しても、新しく引いたカードとして見せる）
+  const ph = dmPrevHand[g.id];
+  if (ph) evs.forEach(e => { if (e.p !== me) return; const cs = e.k === "dis" || e.k === "tre" || (e.k === "trash" && e.h) ? (e.cs || []) : e.k === "play" ? [e.c] : []; cs.forEach(c => { if (ph[c] > 0) ph[c]--; }); });
   evs.forEach(e => {
     if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
     if (e.k === "clean"){ if (e.p === me){ dmCleanNow = true; dmSnap("clean"); } return; }
