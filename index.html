@@ -2910,7 +2910,8 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .sbpile .deckc,.sbpile .disc .pcd{box-sizing:border-box;flex:none;width:44px;height:60px;margin:0}
 .sbpile .deckc b{font-size:18px}
 .sbpile .pcd.empty{background:rgba(255,255,255,.5);border:2px dashed var(--mute);box-shadow:none}
-.sbg .nlog{max-height:84px;overflow-y:auto;font-size:10.5px;line-height:1.35}
+.sbg .nlog{max-height:none;overflow:hidden;font-size:10.5px;line-height:1.35}
+.sbg .nlog li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .arena.sbg>.nover{position:fixed;inset:auto;left:50%;top:50%;z-index:8;width:min(90vw,380px);max-height:86dvh;overflow:hidden;padding:22px 18px 18px;border-radius:22px;border:3px solid var(--ink);transform:translate(-50%,-50%);box-shadow:0 0 0 100vmax rgba(14,10,30,.55),0 10px 0 var(--ink);animation:sbovin .5s cubic-bezier(.2,1.4,.4,1) both}
 .arena.sbg>.nover .p{font-size:clamp(30px,9vw,46px)}
 @keyframes sbovin{0%{transform:translate(-50%,-50%) scale(.6);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
@@ -3065,6 +3066,28 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .sbfx.pvk-max .pv-vp{background:linear-gradient(90deg,#E2364F,#E8B12A,#1E9E5A,#1FB3BF,#8B3CFF);font-size:30px}
 .sbfx.pvk-max .pv-crown{font-size:52px;top:-46px;margin-left:-28px;filter:drop-shadow(0 0 14px #fff)}
 .sbfx.pvk-max .pv-ring{border-width:8px}
+.sbres span{flex-wrap:wrap}
+.sbrh{flex-basis:100%;display:flex;flex-wrap:wrap;gap:2px;margin-top:4px}
+.sbrh .pcd{width:24px;height:33px;border-width:1.5px}.sbrh .pcd b{font-size:11px}.sbrh .pcd i{font-size:10px}.sbrh .pcd.joker small{display:none}
+.sbcalc{flex-basis:100%;text-align:left;font-size:11px;font-weight:800;color:var(--mute)}
+.sbcalc b{color:var(--crimson);font-size:13px}
+.arena.sbg>.nover{overflow-x:hidden;overflow-y:auto}
+.dmstat{gap:3px}
+.dmstat .who{flex:0 1 auto;min-width:40px;max-width:96px}
+.dmstat .ch{flex:none;padding:2px 6px}
+.dmstat .ph{flex:none;font-size:8.5px;line-height:1.1;text-align:right}
+.tpwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(30,107,58,.35),rgba(10,20,15,.35));animation:hwash 1.7s ease-out forwards}
+.tpbox{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
+.tpdeck{position:relative;width:84px;height:118px}
+.tpdeck>.tpback,.tpc{position:absolute;inset:0}
+.tpback{display:block;border-radius:10px;border:3px solid var(--ink);background:repeating-linear-gradient(45deg,#1E6B3A 0 5px,#2D8A4A 5px 10px);box-shadow:0 4px 0 var(--ink)}
+.tpback i{position:absolute;inset:8px;border-radius:6px;border:2px solid #E8B12A}
+.tpdeck>.tpback.b2{transform:translate(4px,4px);z-index:-1}
+.tpc{z-index:2;animation:tpdrop .7s cubic-bezier(.3,1.5,.5,1) calc(.15s + var(--i) * .18s) both}
+.tpc .tpback{position:absolute;inset:0}
+.tpc .dmc{width:84px;height:118px}
+@keyframes tpdrop{0%{transform:translateY(-60vh) rotate(-25deg) scale(1.3);opacity:0}60%{opacity:1}100%{transform:translate(calc(var(--i) * -2px),calc(var(--i) * -3px)) rotate(0)}}
+.tpbox small{font-size:14px;font-weight:900;color:#fff;padding:4px 14px;border-radius:99px;border:2px solid var(--ink);animation:hpop .4s ease-out .5s both}
 .dpk.vt{background:#E6F6EA;border-color:#8FD0A8;color:#1E7E46}
 .dpk.du{background:#FFF3E6;border-color:#F0B070}
 .dmopts{display:flex;flex-direction:column;gap:6px;margin:8px 0;width:100%;align-self:stretch}
@@ -3144,7 +3167,19 @@ body.bgpause *,body.bgpause *::before,body.bgpause *::after{animation-play-state
 "use strict";
 const SUPABASE_URL = "https://mspzgfkommmuucjvdvbm.supabase.co";
 const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+/* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
+   送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
+const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
+const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
+async function sbFetch(url, init){
+  const rest = typeof url === "string" ? url.includes("/rest/v1/") : String(url && url.url || url).includes("/rest/v1/");
+  if (rest && init && typeof init.body === "string" && init.body.includes("cpu")) init = { ...init, body: init.body.replace(CPU_UUID_RE, (_, k, n) => `"${k}":"00000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}"`) };
+  const res = await fetch(url, init);
+  if (!rest || [101, 204, 205, 304].includes(res.status)) return res;
+  const txt = await res.text();
+  return new Response(cpuUuidIn(txt), { status: res.status, statusText: res.statusText, headers: res.headers });
+}
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false }, global: { fetch: sbFetch } });
 
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
@@ -3257,7 +3292,7 @@ function subscribe(){
       const t = payload.table;
       if (!TABLES.includes(t)) return;
       if (t === "dm_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
-        const nw = payload.new, cur = (db.dm_games || []).find(x => x.id === nw.id);
+        const nw = JSON.parse(cpuUuidIn(JSON.stringify(payload.new))), cur = (db.dm_games || []).find(x => x.id === nw.id);
         if (cur && (cur.version || 1) >= (nw.version || 1)) return;      // 自分の保存のこだま（もう反映済み）
         if (cur){ Object.assign(cur, nw); if (dmId === nw.id){ clearTimeout(reloadTimer.dmDraw); reloadTimer.dmDraw = setTimeout(() => { drawDm(); turnBuzz(); }, 30); } else if (!dmId) render(); setTimeout(cpuKick, 0); return; }
       }
@@ -6234,6 +6269,14 @@ function sbChiCards(hand, card){
   }
   return null;
 }
+// 失点の計算式（結果画面に表示する）
+function sbPenParts(hand){
+  let base = 0, sev = 0, jk = 0; const parts = [];
+  hand.forEach(c => { if (c === "JK"){ jk++; return; } const r = sbRank(c); if (r === 7) sev++; const v = (r === 1 || r >= 11) ? 10 : r; base += v; parts.push(v); });
+  const tot = base * Math.pow(2, sev) * Math.pow(5, jk);
+  const txt = !hand.length ? "" : `${parts.length ? parts.join("+") + ` = ${base}` : "0"}${sev ? ` ×2${sev > 1 ? `<sup>${sev}</sup>` : ""}（7が${sev}枚）` : ""}${jk ? ` ×5${jk > 1 ? `<sup>${jk}</sup>` : ""}（JOKER）` : ""} → <b>−${tot}</b>`;
+  return { base, sev, jk, tot, txt };
+}
 // 残った手札の失点：A・絵札10、2〜10は数字どおり。7は1枚ごとに2倍、ジョーカーは5倍
 function sbPenalty(hand){
   let base = 0, sev = 0, jk = 0;
@@ -6251,7 +6294,7 @@ async function sbSave(g, patch, logLine){
 function sbDeal(players, first){
   let deck = shuffle(sbDeck()); const hands = {};
   players.forEach(p => { hands[p] = deck.slice(0, 7); deck = deck.slice(7); });
-  return { hands, deck, discard: [], melds: [], claim: null, turn: { pid: first, phase: "draw" }, round_result: null };
+  return { hands, deck, discard: [], melds: [], claim: null, turn: { pid: first, phase: "draw", n: 0 }, round_result: null };
 }
 function openSbNew(){
   const t = curTrip();
@@ -6302,9 +6345,13 @@ function drawSb(){
   const seats = g.players.map(p => `<div class="np ${opened(p) ? "op" : "cl"} ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}<b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚・${g.scores[p] || 0}点</small></div>`).join(`<span class="nar">›</span>`);
   const canAttTo = m => sbAttachMode && sbSel.length === 1 && !!sbAttach(m, sbSel[0]);
   const meldBtn = (m, i) => { const ok = canAttTo(m); return `<button class="meld ${ok ? "pick" : sbAttachMode ? "dim" : ""} ${fresh.has(i) ? "new" : ""}" data-meld="${i}" style="--pc:${pcolor(m.owner)}" ${ok ? "" : "disabled"}>${m.cards.map(c => sbCardHtml(c)).join("")}</button>`; };
-  const zones = g.players.map(p => {
+  // 卓のプレイヤー配置は時計回り（上段 左→右、右列を下へ、下段 右→左、左列を上へ）
+  const nP = g.players.length, cols2 = nP <= 2 ? 1 : 2, rowsN = Math.ceil(nP / cols2);
+  const cellOf = k => { if (cols2 === 1) return [k, 0]; if (k === 0) return [0, 0]; if (k <= rowsN) return [k - 1, 1]; return [rowsN - (k - rowsN), 0]; };
+  const zones = g.players.map((p, k) => {
+    const [zr, zc] = cellOf(k);
     const ms = (g.melds || []).map((m, i) => m.owner === p ? meldBtn(m, i) : "").join(""), op = opened(p), on = t.pid === p && g.status === "playing";
-    return `<div class="sbz ${op ? "op" : "cl"} ${on ? "on" : ""}" style="--pc:${pcolor(p)}"><div class="zh"><b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚</small><em class="zs">${op ? "✓ OPEN" : "未公開"}</em></div><div class="zb">${ms || `<span class="zl"><i></i>まだ公開なし</span>`}</div></div>`;
+    return `<div class="sbz ${op ? "op" : "cl"} ${on ? "on" : ""}" style="--pc:${pcolor(p)};grid-row:${zr + 1};grid-column:${zc + 1}"><div class="zh"><b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚</small><em class="zs">${op ? "✓ OPEN" : "未公開"}</em></div><div class="zb">${ms || `<span class="zl"><i></i>まだ公開なし</span>`}</div></div>`;
   }).join("");
   const melds = `<div class="sbtable" style="--cols:${g.players.length <= 2 ? 1 : 2}">${zones}</div>`;
   let mid = `<div class="sbmid"><div class="sbpile"><div class="disc"><div class="deckc"><b class="num">${(g.deck || []).length}</b></div><small>山札</small></div><div class="disc">${top ? sbCardHtml(top) : `<span class="pcd empty"></span>`}<small>捨て札</small></div></div></div>`;
@@ -6318,14 +6365,14 @@ function drawSb(){
   }
   let bottom = "";
   if (g.status === "playing"){
-    const who = cl ? "ポン・チーの受付中…" : myTurn ? (t.phase === "draw" ? `${turnName(t.pid, true)}山札から引こう` : (sbSel.length === 1 ? `<b class="tn">あなた</b>：「捨てて終了」で番を終える` : `<b class="tn">あなた</b>：いらないカードを1枚選んで捨てよう`)) : turnName(t.pid, false);
+    const who = cl ? "ポン・チーの受付中…" : myTurn ? (t.phase === "draw" ? `${turnName(t.pid, true)}山札から引こう` : (t.called ? `<b class="tn">あなた</b>：ポン・チーの後は1枚捨てるだけ` : sbSel.length === 1 ? `<b class="tn">あなた</b>：「捨てて終了」で番を終える` : `<b class="tn">あなた</b>：いらないカードを1枚選んで捨てよう`)) : turnName(t.pid, false);
     bottom += `<div class="nturn ${myTurn ? "mine" : ""}" style="--pc:${pcolor(t.pid)}"><span>${who}</span></div>`;
     if (hand){
       bottom += `<div class="sbhand">${hand.map(c => `<button class="hc ${sbSel.includes(c) ? "sel" : ""}" data-hc="${c}">${sbCardHtml(c)}</button>`).join("")}</div>`;
       if (myTurn && t.phase === "draw" && !cl) bottom += `<div class="nbtns one"><button class="nb end big2" id="bDraw">山札から引く</button></div>`;
       else if (myTurn && t.phase === "play"){
-        const canMeld = sbSel.length && sbMeld(sbSel) && hand.length - sbSel.length >= 1;
-        const canAtt = sbSel.length === 1 && opened(me) && hand.length >= 2;
+        const canMeld = !t.called && sbSel.length && sbMeld(sbSel) && hand.length - sbSel.length >= 1;
+        const canAtt = !t.called && sbSel.length === 1 && opened(me) && hand.length >= 2;
         bottom += `<div class="nbtns three"><button class="nb draw" id="bMeld" ${canMeld ? "" : "disabled"}>公開</button><button class="nb draw ${sbAttachMode ? "on" : ""}" id="bAtt" ${canAtt ? "" : "disabled"}>${sbAttachMode ? "付ける役をタップ" : "付け札"}</button><button class="nb end ${sbSel.length === 1 ? "go" : ""}" id="bDisc" ${sbSel.length === 1 ? "" : "disabled"}>${sbSel.length > 1 ? "1枚だけ選ぶ" : "捨てて終了"}</button></div>`;
       } else bottom += `<div class="nwait">${cl ? "" : "ほかの人の番です"}</div>`;
     } else bottom += `<div class="nwait">観戦中</div>`;
@@ -6335,10 +6382,11 @@ function drawSb(){
     const rr = g.round_result || {}, fin = g.status === "finished";
     const best = fin ? g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0))[0] : rr.winner;
     over = `<div class="nover" style="--c:${best ? pcolor(best) : "#8A8FA3"}"><span class="ob"></span><div class="k">${fin ? "最終結果" : `第${g.round}ラウンド`}</div><div class="p">${best ? esc(pname(best)) : "流局"}</div>
-      <div class="sbres">${g.players.map(p => `<span style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><em>${rr.pen && rr.pen[p] ? `−${rr.pen[p]}` : p === rr.winner ? "上がり" : "0"}</em><strong class="num">${g.scores[p] || 0}点</strong></span>`).join("")}</div>
+      <div class="sbres">${g.players.map(p => { const h = rr.winner && p !== rr.winner ? (rr.hands && rr.hands[p]) || (g.hands || {})[p] || [] : []; const pp = sbPenParts(h);
+        return `<span style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><em>${rr.pen && rr.pen[p] ? `−${rr.pen[p]}` : p === rr.winner ? "上がり" : "0"}</em><strong class="num">${g.scores[p] || 0}点</strong>${h.length ? `<div class="sbrh">${sbSort(h).map(c => sbCardHtml(c)).join("")}</div><div class="sbcalc">${pp.txt}</div>` : ""}</span>`; }).join("")}</div>
       <div class="btns">${fin ? `<button class="btn" id="bClose2">閉じる</button>` : `<button class="btn" id="bNext">次のラウンドへ</button>`}</div></div>`;
   }
-  const lg = sbLogLines(g).map(m => `<li>${colorizeLog(g.players, m)}</li>`).join("");
+  const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span>${["♠", "♥", "♦", "♣", "7", "★", "♥", "♠"].map((x, i) => `<i style="left:${(i * 13 + 5) % 92}%;top:${(i * 31 + 6) % 90}%;font-size:${28 + (i % 3) * 20}px;color:${i % 2 ? "#E2364F" : "#1B1838"};--dur:${7 + i}s;--dl:-${i}s;--dx:${(i % 2 ? 1 : -1) * 40}px;--dy:-50px;--rot:${i * 20 - 60}deg">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt sbt">SEVEN BRIDGE</b><span class="nrd sbr"><small>ROUND</small><b>${g.round}</b><i>/${g.rounds}</i></span><span class="ndk"></span><button class="nmini" id="bMenu" aria-label="メニュー">…</button><button class="nmini" id="bClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
@@ -6408,7 +6456,7 @@ async function sbDraw(g, who = me){
     return;
   }
   const c = deck.shift();
-  await sbSave(g, { deck, discard, hands: { ...g.hands, [who]: [...g.hands[who], c] }, turn: { pid: who, phase: "play" } });
+  await sbSave(g, { deck, discard, hands: { ...g.hands, [who]: [...g.hands[who], c] }, turn: { pid: who, phase: "play", n: t.n || 0 } });
 }
 const sbRemove = (hand, cards) => { const h = hand.slice(); cards.forEach(c => { const i = h.indexOf(c); if (i >= 0) h.splice(i, 1); }); return h; };
 /* ---- セブンブリッジの演出（ログの変化を見て全員の画面で再生） ---- */
@@ -6495,13 +6543,14 @@ function sbDiff(g){
   return fresh;
 }
 async function sbDoMeld(g){
+  if (g.turn && g.turn.called) return;
   const m = sbMeld(sbSel); const hand = g.hands[me] || [];
   if (!m || hand.length - sbSel.length < 1) return;
   const used = sbSel.slice(); sbSel = [];
   await sbSave(g, { hands: { ...g.hands, [me]: sbRemove(hand, used) }, melds: [...(g.melds || []), { ...m, owner: me }] }, `${pname(me)}が役を公開：${used.map(c => c === "JK" ? "JK" : SB_MARK[sbSuit(c)] + sbRankTxt(sbRank(c))).join(" ")}`);
 }
 async function sbDoAttach(g, i){
-  if (!sbAttachMode || sbSel.length !== 1) return;
+  if (!sbAttachMode || sbSel.length !== 1 || (g.turn && g.turn.called)) return;
   const c = sbSel[0], m = (g.melds || [])[i], hand = g.hands[me] || [];
   const nm = m && sbAttach(m, c);
   if (!nm){ toast("その役には付けられません"); return; }
@@ -6523,7 +6572,8 @@ async function sbDiscard(g){
       `${pname(me)}が${txt}を捨てて上がり！`);
     return;
   }
-  await sbSave(g, { hands: { ...g.hands, [me]: hand }, discard, claim: { card: c, from: me, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, me), phase: "draw" } }, `${pname(me)}：${txt}を捨てた`);
+  const n1 = (g.turn.n || 0) + 1, first = n1 <= g.players.length;   // 1巡目はポン・チーできない
+  await sbSave(g, { hands: { ...g.hands, [me]: hand }, discard, claim: first ? null : { card: c, from: me, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, me), phase: "draw", n: n1 } }, `${pname(me)}：${txt}を捨てた`);
 }
 async function sbDiscardAs(g, c0, who){
   if (g.turn.pid !== who || g.turn.phase !== "play" || !(g.hands[who] || []).includes(c0)) return;
@@ -6539,7 +6589,8 @@ async function sbDiscardAs(g, c0, who){
       `${pname(who)}が${txt}を捨てて上がり！`);
     return;
   }
-  await sbSave(g, { hands: { ...g.hands, [who]: hand }, discard, claim: { card: c, from: who, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, who), phase: "draw" } }, `${pname(who)}：${txt}を捨てた`);
+  const n1 = (g.turn.n || 0) + 1, first = n1 <= g.players.length;
+  await sbSave(g, { hands: { ...g.hands, [who]: hand }, discard, claim: first ? null : { card: c, from: who, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, who), phase: "draw", n: n1 } }, `${pname(who)}：${txt}を捨てた`);
 }
 async function sbClaim(g, type, who = me){
   const cl = g.claim; if (!cl || (cl.claims || []).some(x => x.pid === who)) return;
@@ -6560,7 +6611,7 @@ async function sbResolve(g){
   const m = sbMeld([...use, cl.card]);
   if (!m){ await sbSave(g, { claim: null }, null); return; }
   const discard = (g.discard || []).slice(0, -1);
-  await sbSave(g, { claim: null, discard, hands: { ...g.hands, [who.pid]: sbRemove(hand, use) }, melds: [...(g.melds || []), { ...m, owner: who.pid }], turn: { pid: who.pid, phase: "play" } },
+  await sbSave(g, { claim: null, discard, hands: { ...g.hands, [who.pid]: sbRemove(hand, use) }, melds: [...(g.melds || []), { ...m, owner: who.pid }], turn: { pid: who.pid, phase: "play", n: g.turn.n || 0, called: true } },
     `${pname(who.pid)}が${who.type === "pon" ? "ポン" : "チー"}して公開 → 1枚捨てる番`);
   pushCall({ type: "game_turn", game: "セブンブリッジ", to: who.pid });
 }
@@ -8312,7 +8363,7 @@ const DM = {
   bridge: { x: "int", n: "橋", c: 4, ty: ["a"], p: { buys: 1, coins: 1 }, tx: "このターン、すべてのカードのコストが$1少なくなる" },
   conspirator: { x: "int", n: "共謀者", c: 4, ty: ["a"], p: { coins: 2 }, tx: "このターンにアクションを3回以上使っていたら、+1カード +1アクション" },
   diplomat: { x: "int", n: "外交官", c: 4, ty: ["a", "re"], p: { cards: 2 }, tx: "引いた後の手札が5枚以下なら+2アクション。（他の人のアタック時、手札5枚以上なら2枚引いて3枚捨てる）" },
-  ironworks: { x: "int", n: "鉄工所", c: 4, ty: ["a"], tx: "コスト4以下のカードを獲得。アクションなら+1アクション、財宝なら+$1、勝利点なら+1カード" },
+  ironworks: { x: "int", n: "鉄工所", c: 4, ty: ["a"], tx: "コスト4以下のカードを獲得。アクションなら+1アクション、財宝なら+$1、勝利点なら+1カード（種類が複数あてはまるときは、それぞれ順に行う）" },
   mill: { x: "int", n: "風車", c: 4, ty: ["a", "v"], vp: 1, p: { cards: 1, actions: 1 }, tx: "手札2枚を捨てて+$2してもよい。1勝利点" },
   miningvillage: { x: "int", n: "鉱山の村", c: 4, ty: ["a"], p: { cards: 1, actions: 2 }, tx: "このカードを廃棄して+$2してもよい" },
   secretpassage: { x: "int", n: "秘密の抜け道", c: 4, ty: ["a"], p: { cards: 2, actions: 1 }, tx: "手札1枚を山札の一番上か一番下に置く" },
@@ -8807,8 +8858,8 @@ const DMT = {
   cellar(st, t){ const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); if (t.sel.length) dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); const n = dmDraw(st, t.pid, t.sel.length); dmL(st, `地下貯蔵庫：${t.sel.length}枚捨てて${n}枚引いた`); },
   trash(st, t){ if (!t.sel.length) return; dmTake(st.pl[t.pid].hand, t.sel); st.trash.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: t.sel, h: 1 }); },
   discard(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); dmL(st, `${pname(t.pid)}が${t.sel.length}枚捨てた`); },
-  todeck(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.deck.push(...t.sel); dmL(st, t.pub ? `${pname(t.pid)}が${dmNames(t.sel)}を山札の上に置いた` : `${pname(t.pid)}が手札${t.sel.length}枚を山札の上に置いた`); },   // 手札から伏せて置くカードは名前を出さない（役人は公開するので出す）
-  harb(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid], c = t.sel[0]; dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `前駆者：${DM[c].n}を山札の上に`); },
+  todeck(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.deck.push(...t.sel); dmL(st, t.pub ? `${pname(t.pid)}が${dmNames(t.sel)}を山札の上に置いた` : `${pname(t.pid)}が手札${t.sel.length}枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, n: t.sel.length, cs: t.pub ? t.sel.slice() : null }); },   // 手札から伏せて置くカードは名前を出さない（役人は公開するので出す）
+  harb(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid], c = t.sel[0]; dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `${pname(t.pid)}が捨て札から1枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, n: 1 }); },
   vassal(st, t){ if (!t.yes) return; const P = st.pl[t.pid]; dmTake(P.disc, [t.c]); P.play.push(t.c); dmL(st, `家臣で${DM[t.c].n}を使った`); dmPlayCard(st, t.pid, t.c); },
   ml(st, t){ if (!t.yes) return; dmTake(st.pl[t.pid].hand, ["copper"]); st.trash.push("copper"); st.turn.coins += 3; dmL(st, "金貸し：銅貨を廃棄して +$3"); },
   remodel(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 2, dest: "disc", title: `改築：獲得するカード（コスト${DM[c].c + 2}以下）` }); },
@@ -8904,7 +8955,7 @@ const DMT = {
   rep1(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 2, dest: "disc", title: `交換：獲得するカード（コスト${dmCost(st, c) + 2}以下）`, after: { t: "rep2" } }); },
   rep2(st, t){
     const c = t.card, P = st.pl[t.pid]; if (!c) return;
-    if ((dmIs(c, "a") || dmIs(c, "t")) && P.disc.includes(c)){ dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `交換：${DM[c].n}を山札の上に置いた`); }
+    if ((dmIs(c, "a") || dmIs(c, "t")) && P.disc.includes(c)){ dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `${pname(t.pid)}が獲得したカードを山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, n: 1 }); }
     if (dmIs(c, "v")) st.turn.repCurse = true;
   },
   tort(st, t){
@@ -8977,12 +9028,12 @@ const DMT = {
   gplay(st, t){ st.pl[t.pid].play.push(t.c); dmPlayCard(st, t.pid, t.c); },
   appr(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }); const n = dmCost(st, c) + (DM[c].pot ? 2 : 0); if (n) dmDraw(st, t.pid, n); dmL(st, `弟子：${DM[c].n}を廃棄して +${n}カード`); },
   /* --- 繁栄 --- */
-  topgain(st, t){ if (!t.yes) return; const P = st.pl[t.pid], from = t.dest === "hand" ? P.hand : t.dest === "deck" ? null : P.disc; if (from && from.includes(t.c)){ dmTake(from, [t.c]); P.deck.push(t.c); dmL(st, `${DM[t.c].n}を山札の上に置いた`); } },
+  topgain(st, t){ if (!t.yes) return; const P = st.pl[t.pid], from = t.dest === "hand" ? P.hand : t.dest === "deck" ? null : P.disc; if (from && from.includes(t.c)){ dmTake(from, [t.c]); P.deck.push(t.c); dmL(st, `${pname(t.pid)}が獲得したカードを山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, n: 1 }); } },
   wt(st, t){
     const P = st.pl[t.pid], i = t.sel[0]; if (!i) return;
     const zone = t.dest === "hand" ? P.hand : t.dest === "deck" ? P.deck : t.dest === "haven" ? (P.haven || []) : P.disc;
     if (!zone.includes(t.c)) return; dmTake(zone, [t.c]);
-    if (i === 1){ st.trash.push(t.c); dmL(st, `望楼：${DM[t.c].n}を廃棄`); } else { P.deck.push(t.c); dmL(st, `望楼：${DM[t.c].n}を山札の上に`); }
+    if (i === 1){ st.trash.push(t.c); dmL(st, `望楼：${DM[t.c].n}を廃棄`); } else { P.deck.push(t.c); dmL(st, `${pname(t.pid)}が獲得したカードを山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, n: 1 }); }
   },
   anvil(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); dmAskGain(st, t.pid, 4, null, "disc", "金床：獲得するカード（コスト4以下）"); },
   tiara2(st, t){ if (!t.sel.length) return; const c = t.sel[0]; dmPlayTre(st, t.pid, c); dmTreEff(st, t.pid, c); dmL(st, `ティアラ：${DM[c].n}を2回使った`); },
@@ -9058,10 +9109,10 @@ const dmCount = (st, pid) => dmDeckOf(st, pid).length;
 function dmEndTurn(st){
   const T = st.turn, P = st.pl[T.pid];
   // 錬金術師：場にポーションがあれば山札の上へ ／ 薬草商：場の財宝を山札の上へ
-  if (P.play.includes("potion")){ let k = 0; while (P.play.includes("alchemist")){ dmTake(P.play, ["alchemist"]); P.deck.push("alchemist"); k++; } if (k) dmL(st, "錬金術師を山札の上に置いた"); }
-  for (let i = 0; i < (T.herb || 0); i++){ const tr = ["potion", "platinum", "gold", "philosophersstone", "silver"].find(x => P.play.includes(x)); if (!tr) break; dmTake(P.play, [tr]); P.deck.push(tr); dmL(st, `薬草商：${DM[tr].n}を山札の上に置いた`); }
+  if (P.play.includes("potion")){ let k = 0; while (P.play.includes("alchemist")){ dmTake(P.play, ["alchemist"]); P.deck.push("alchemist"); k++; } if (k){ dmL(st, `${pname(T.pid)}がカード${k}枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: T.pid, n: k }); } }
+  for (let i = 0; i < (T.herb || 0); i++){ const tr = ["potion", "platinum", "gold", "philosophersstone", "silver"].find(x => P.play.includes(x)); if (!tr) break; dmTake(P.play, [tr]); P.deck.push(tr); dmL(st, `${pname(T.pid)}がカード1枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: T.pid, n: 1 }); }
   // 宝物庫：勝利点カードを獲得しなかったら山札の上へ
-  if (!T.gainedV){ let k = 0; while (P.play.includes("treasury")){ dmTake(P.play, ["treasury"]); P.deck.push("treasury"); k++; } if (k) dmL(st, `宝物庫${k > 1 ? `${k}枚` : ""}を山札の上に置いた`); }
+  if (!T.gainedV){ let k = 0; while (P.play.includes("treasury")){ dmTake(P.play, ["treasury"]); P.deck.push("treasury"); k++; } if (k){ dmL(st, `${pname(T.pid)}がカード${k}枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: T.pid, n: k }); } }
   // 持続カードは次のターンまで場に残す
   P.stay = P.stay || []; (P.next || []).forEach(e => { if (!e.kept && P.play.includes(e.c)){ dmTake(P.play, [e.c]); P.stay.push(e.c); e.kept = true; } });
   P.disc.push(...P.hand, ...P.play); P.hand = []; P.play = [];
@@ -9260,6 +9311,8 @@ CPU_AI.sb_games = g => {
   const p = t.pid, hand = g.hands[p] || [];
   if (t.phase === "draw") return { wait: 1300, run: () => sbDraw(G(), p) };
   if (t.phase !== "play") return null;
+  // ポン・チーの後は捨てるだけ
+  if (t.called) return { wait: 1500, run: () => sbDiscardAs(G(), sbAiDiscard(hand), p) };
   // ① 役を出す（手札は1枚以上残す）
   const m = sbAiMeld(hand);
   if (m && hand.length - m.length >= 1){
@@ -10172,8 +10225,19 @@ function dmArt(c){
   return `<span class="dmart ill">${DM_ART[c] || ""}</span>`;
 }
 const dmTyCls = c => { const t = DM[c].ty; return t.includes("dur") && !t.includes("t") ? "ty-dur" : t.includes("c") ? "ty-c" : t.includes("t") ? "ty-t" : t.includes("a") && t.includes("v") ? (t.includes("atk") ? "ty-atk" : "ty-a") : t.includes("v") ? "ty-v" : t.includes("re") ? "ty-re" : t.includes("atk") ? "ty-atk" : "ty-a"; };
+// 種類が複数あるカード（アクション＋持続、アクション＋勝利点など）は、カードの地の色をその数だけ分ける
+const DM_TYC = { a: ["#FFF9EA", "#F1E2BC"], t: ["#FFF7D6", "#F2CF6A"], v: ["#EEFBEA", "#BFE7B2"], re: ["#EEF7FF", "#BFDDF7"], atk: ["#FFF3EE", "#F2CDBE"], dur: ["#FFF3E6", "#F7C28A"] };
+const dmTyList = c => ["a", "t", "v", "re", "atk", "dur"].filter(k => DM[c].ty.includes(k));
+const dmTmCls = c => dmTyList(c).length > 1 ? "tm-" + dmTyList(c).join("-") : "";
+(() => {
+  const css = new Set();
+  Object.keys(DM).forEach(c => { const L = dmTyList(c); if (L.length < 2) return; const n = L.length, w = 100 / n;
+    const NB = { a: "#C9AE6E", t: "#C9951A", v: "#2D8A4A", re: "#2F7FC9", atk: "#C0392B", dur: "#E07A1F" };
+    css.add(`.tm-${L.join("-")}.tm-${L.join("-")}{--cb:linear-gradient(100deg,${L.map((k, i) => `${DM_TYC[k][0]} ${(i * w).toFixed(1)}%,${DM_TYC[k][1]} ${((i + 1) * w).toFixed(1)}%`).join(",")});--nb:linear-gradient(90deg,${L.map((k, i) => `${NB[k]} ${(i * w).toFixed(1)}%,${NB[k]} ${((i + 1) * w).toFixed(1)}%`).join(",")});--nc:#fff}`); });
+  const st = document.createElement("style"); st.textContent = [...css].join("\n"); document.head.appendChild(st);
+})();
 function dmCardHtml(c, cls = "", extra = ""){
-  return `<span class="dmc ${dmTyCls(c)} ${cls}" ${extra}><span class="dco ${DM[c].pot ? "pt" : ""}">${DM[c].c}</span>${dmBn(c)}${dmArt(c)}<span class="dcn">${DM[c].n}</span></span>`;
+  return `<span class="dmc ${dmTyCls(c)} ${dmTmCls(c)} ${cls}" ${extra}><span class="dco ${DM[c].pot ? "pt" : ""}">${DM[c].c}</span>${dmBn(c)}${dmArt(c)}<span class="dcn">${DM[c].n}</span></span>`;
 }
 /* ガイド表示（+カード・+アクション・+購入の印）のオン／オフ。端末ごとに覚える */
 let dmGuide = (() => { try { return localStorage.getItem("ojk:dmGuide") !== "0"; } catch (_) { return true; } })();
@@ -10198,7 +10262,7 @@ function dmBigCard(c){
   // 大きな「+$n」は、説明が「+$n」だけの基本の財宝のときだけ（それ以外は説明文を出す）
   const plainT = d.ty.includes("t") && d.v != null && (!d.tx || d.tx === `+$${d.v}`);
   const main = plainT ? `<b class="dbg">+$${d.v}</b>` : (["estate", "duchy", "province", "curse"].includes(c) ? `<b class="dbg">${d.vp}勝利点</b>` : "");
-  return `<div class="dmbig ${dmTyCls(c)}"><i class="dco">${d.c}</i><b class="dnm ${d.n.length >= 7 ? "ln ln2" : d.n.length >= 6 ? "ln" : ""}">${d.n}</b><div class="dar">${dmArt(c)}</div>
+  return `<div class="dmbig ${dmTyCls(c)} ${dmTmCls(c)}"><i class="dco">${d.c}</i><b class="dnm ${d.n.length >= 7 ? "ln ln2" : d.n.length >= 6 ? "ln" : ""}">${d.n}</b><div class="dar">${dmArt(c)}</div>
     <div class="dtx">${plus.length ? `<span class="dpls">` : ""}${plus.map(x => `<b>${(k => k ? `<span class="dbn il">${dmBadge(k, x.match(/\d+/)[0])}</span>` : "")(/カード/.test(x) ? "pc" : /アクション/.test(x) ? "pa" : /購入/.test(x) ? "pb" : /\$/.test(x) ? "pmo" : "")}${x}</b>`).join("")}${plus.length ? "</span>" : ""}${main}${d.tx && !main ? `<p>${esc(d.tx)}</p>` : ""}</div><small class="dty">${dmTyName(c)}</small></div>`;
 }
 let dmPlayKey = "";
@@ -10227,13 +10291,13 @@ function drawDm(){
   const buyMode = c => playing && idle && T.buys > 0 && (T.phase === "buy" || dmCost(st, c) === 0);
   const buyCls = c => !buyMode(c) ? "" : canBuyT(c) ? "cb" : "na";
   const gainOk = c => myAsk && myAsk.k === "supply" && dmFits(st, c, myAsk);
-  const tile = (c, big) => `<button class="dmp ${dmTyCls(c)} ${big ? "k" : "b"} ${st.supply[c] ? "" : "out"} ${myAsk ? "" : buyCls(c)} ${gainOk(c) ? "gk" : myAsk && myAsk.k === "supply" ? "na" : ""} ${dmGainSel === c ? "gsel" : ""}" data-dc="${c}">
+  const tile = (c, big) => `<button class="dmp ${dmTyCls(c)} ${dmTmCls(c)} ${big ? "k" : "b"} ${st.supply[c] ? "" : "out"} ${myAsk ? "" : buyCls(c)} ${gainOk(c) ? "gk" : myAsk && myAsk.k === "supply" ? "na" : ""} ${dmGainSel === c ? "gsel" : ""}" data-dc="${c}">
       <i class="dco ${dmCost(st, c) < DM[c].c ? "cut" : ""} ${DM[c].pot ? "pt" : ""}">${dmCost(st, c)}</i>${st.bane === c ? `<em class="bane">災い</em>` : ""}${dmBn(c)}${dmArt(c)}<b>${DM[c].n}</b><em class="cnt">${st.supply[c]}</em></button>`;
   const supply = `<div class="dmsup"><div class="dmk">${st.kingdom.map(c => tile(c, true)).join("")}</div><div class="dmb ${st.supply.colony != null ? "wide" : ""}">${DM_BASE.filter(c => st.supply[c] != null).map(c => tile(c, false)).join("")}</div></div>`;
   // 場
   const P = inGame ? st.pl[me] : null;
   const AP = st.pl[T.pid];
-  const stat = `<div class="dmstat" style="--pc:${pcolor(T.pid)}"><span class="who">${esc(pname(T.pid))}</span><span class="ch ${T.phase === "action" ? "on" : ""}">${dmSti("pa")}アクション <b>${T.actions}</b></span><span class="ch">${dmSti("pb")}購入 <b>${T.buys}</b></span><span class="ch cn">${dmSti("pmo")}<b>${T.coins}</b></span>${T.pots ? `<span class="ch cn">🧪 <b>${T.pots}</b></span>` : ""}<span class="ph">${T.phase === "action" ? "アクションフェイズ" : "購入フェイズ"}</span></div>
+  const stat = `<div class="dmstat" style="--pc:${pcolor(T.pid)}"><span class="who">${esc(pname(T.pid))}</span><span class="ch ${T.phase === "action" ? "on" : ""}">${dmSti("pa")}アクション <b>${T.actions}</b></span><span class="ch">${dmSti("pb")}購入 <b>${T.buys}</b></span><span class="ch cn">${dmSti("pmo")}<b>${T.coins}</b></span>${T.pots ? `<span class="ch cn">🧪 <b>${T.pots}</b></span>` : ""}<span class="ph">${T.phase === "action" ? "アクション<br>フェイズ" : "購入<br>フェイズ"}</span></div>
     <div class="dmplay">${AP.play.length ? AP.play.map(c => `<button class="dpv" data-pv="${c}">${dmCardHtml(c, "pl")}</button>`).join("") : `<small>ここに使ったカードが並びます</small>`}</div>`;
   // 下部
   let bottom = "";
@@ -10710,7 +10774,7 @@ function dmFxCheck(g){
     if (e.k === "hoard"){ const st0 = Math.max(t, gq); setTimeout(() => dmFx(e, g), st0); t = st0 + 2300; hEnd = t; return; }
     if (e.k === "play" && e.p === me) dmDealDelay += 2600;
     if (e.k === "end"){ dmEndFresh[g.id] = t + 300; }
-    const d = { hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
     setTimeout(() => dmFx(e, g), t); t += e.k === "play" || e.k === "prov" ? d : Math.min(d, 1600);
   });
 }
@@ -10731,6 +10795,11 @@ function dmFx(e, g){
     ms = 2300;
     const coins = Array.from({ length: 26 }, () => `<i class="hco" style="left:${rnd(5, 95).toFixed(1)}%;--d:${rnd(0, .9).toFixed(2)}s;--t:${rnd(1, 1.6).toFixed(2)}s;--r:${rnd(-540, 540).toFixed(0)}deg;--s:${rnd(.7, 1.3).toFixed(2)}"></i>`).join("");
     html = `<span class="hwash"></span>${coins}<div class="hbox"><div class="hchest">${dmCardHtml("hoard", "dfx")}</div><b class="htx">埋蔵金!!</b><div class="hgold">${dmCardHtml("gold", "dfx")}</div><small style="background:${pc}">${esc(pname(e.p))}が金貨を獲得</small></div>`;
+  } else if (e.k === "top"){
+    // 山札の上に置く：カード（伏せたまま）が上から落ちてきて山札に重なる
+    ms = 1700; const n = Math.min(4, e.n || 1);
+    const cards = (e.cs && e.cs.length ? e.cs.slice(0, 4).map(c => dmCardHtml(c, "dfx")) : Array.from({ length: n }, () => `<span class="tpback"><i></i></span>`)).map((h, i) => `<span class="tpc" style="--i:${i}">${h}</span>`).join("");
+    html = `<span class="tpwash"></span><div class="tpbox"><div class="tpdeck"><span class="tpback"><i></i></span><span class="tpback b2"><i></i></span>${cards}</div><small style="background:${pc}">${esc(pname(e.p))}が${e.n > 1 ? `${e.n}枚を` : ""}山札の上に置いた</small></div>`;
   } else if (e.k === "tre"){
     ms = 950; if (!e.v) return;
     const coins = Array.from({ length: Math.min(14, 4 + e.v * 2) }, () => { const a = rnd(-Math.PI, 0), d = rnd(60, 150); return `<i class="tco" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${rnd(0, .15).toFixed(2)}s"></i>`; }).join("");
