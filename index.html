@@ -3028,6 +3028,21 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .dmbig .dnm.ln{font-size:17px;margin-top:-20px;letter-spacing:-.03em}
 .dmcl .dmbig .dnm.ln{font-size:12px;margin-top:-14px;padding-left:14px}
 .dmbig .dnm.ln2{font-size:15px;padding-left:18px}.dmcl .dmbig .dnm.ln2{font-size:10.5px;padding-left:24px}
+.dmstat .sti{display:inline-grid;place-items:center;width:15px;height:15px;margin-right:3px;border-radius:4px;vertical-align:-3px;box-shadow:0 0 0 1px rgba(27,24,56,.35)}
+.dmstat .sti svg{width:11px;height:11px;display:block}
+.dmstat .sti.pa{background:linear-gradient(180deg,#F79446,#E86A1C)}.dmstat .sti.pb{background:linear-gradient(180deg,#34B86E,#1E9E5A)}.dmstat .sti.pmo{background:linear-gradient(180deg,#E9B53A,#C98A0B)}
+.sbfx.hoard,.dmfx.hoard{background:none}
+.hwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,215,80,.55),rgba(120,70,0,.35) 60%,rgba(0,0,0,.25));animation:hwash 2.3s ease-out forwards}
+@keyframes hwash{0%{opacity:0}12%{opacity:1}75%{opacity:1}100%{opacity:0}}
+.hco{position:absolute;top:-30px;width:calc(22px * var(--s));height:calc(22px * var(--s));border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6C8,#FFD23F 45%,#C98E12 80%);border:2px solid #8A5A1C;box-shadow:0 0 8px rgba(255,210,63,.9);animation:hcofall var(--t) cubic-bezier(.4,0,.8,.6) var(--d) both}
+@keyframes hcofall{0%{transform:translateY(0) rotate(0) scaleX(1);opacity:1}50%{transform:translateY(55vh) rotate(calc(var(--r) / 2)) scaleX(.3)}100%{transform:translateY(110vh) rotate(var(--r)) scaleX(1);opacity:.9}}
+.hbox{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px}
+.hchest{animation:hpop .5s cubic-bezier(.2,1.6,.4,1) both}
+.htx{font-family:var(--disp);font-weight:400;font-size:min(11vw,48px);color:#FFE38A;-webkit-text-stroke:2px #5A3416;paint-order:stroke fill;text-shadow:0 0 18px #FFD23F;white-space:nowrap;animation:hpop .5s cubic-bezier(.2,1.8,.4,1) .25s both}
+.hgold{animation:hgold .7s cubic-bezier(.2,1.5,.4,1) .55s both}
+.hbox small{font-size:13px;font-weight:900;color:#fff;padding:3px 12px;border-radius:99px;border:2px solid var(--ink);animation:hpop .4s ease-out .8s both}
+@keyframes hpop{0%{transform:scale(.3);opacity:0}100%{transform:none;opacity:1}}
+@keyframes hgold{0%{transform:translateY(-60px) scale(.2) rotate(-200deg);opacity:0;filter:brightness(2)}70%{transform:translateY(4px) scale(1.15) rotate(8deg);opacity:1;filter:brightness(1.4) drop-shadow(0 0 20px #FFD23F)}100%{transform:none;filter:drop-shadow(0 0 14px #FFD23F)}}
 .dpk.vt{background:#E6F6EA;border-color:#8FD0A8;color:#1E7E46}
 .dpk.du{background:#FFF3E6;border-color:#F0B070}
 .dmopts{display:flex;flex-direction:column;gap:6px;margin:8px 0;width:100%;align-self:stretch}
@@ -8342,7 +8357,7 @@ const DM = {
   expand: { x: "pro", n: "拡張", c: 7, ty: ["a"], tx: "手札1枚を廃棄し、コストが最大3多いカードを獲得する" },
   forge: { x: "pro", n: "鍛造", c: 7, ty: ["a"], tx: "手札を好きな枚数廃棄し、コストの合計とちょうど同じコストのカードを獲得する" },
   kingscourt: { x: "pro", n: "王宮", c: 7, ty: ["a"], tx: "手札のアクションカード1枚を3回使ってもよい" },
-  peddler: { x: "pro", n: "行商人", c: 8, ty: ["a"], p: { cards: 1, actions: 1, coins: 1 }, tx: "購入フェイズ中、場のアクションカード1枚につきコストが$2少なくなる" },
+  peddler: { x: "pro", n: "行商人", c: 8, ty: ["a"], p: { cards: 1, actions: 1, coins: 1 }, tx: "購入フェイズ中、場のアクションカード1枚につき、このカードの「購入」コストが$2少なくなる（最低$0）" },
   platinum: { n: "白金貨", c: 9, ty: ["t"], v: 5, tx: "+$5" },
   colony: { n: "植民地", c: 11, ty: ["v"], vp: 10, tx: "10勝利点" },
   /* ===== 拡張：収穫祭（＋褒賞） ===== */
@@ -8463,7 +8478,7 @@ function dmOnGain(st, pid, c, dest){
   if (T && pid === T.pid){
     (T.gained = T.gained || []).push(c); if (dmIs(c, "v")) T.gainedV = true;
     if (c === "mint" && T.phase === "buy"){ const tr = P.play.filter(x => dmIs(x, "t") && !dmIs(x, "dur")); if (tr.length){ tr.forEach(x => dmTake(P.play, [x])); st.trash.push(...tr); dmL(st, `造幣所：場の財宝${tr.length}枚を廃棄`); dmFxAdd(st, { k: "trash", p: pid, cs: tr }); } }
-    if (dmIs(c, "v") && T.hoard) for (let i = 0; i < T.hoard; i++) if ((st.supply.gold || 0) > 0){ st.supply.gold--; P.disc.push("gold"); dmL(st, "埋蔵金：金貨を獲得"); }
+    if (dmIs(c, "v") && T.hoard) for (let i = 0; i < T.hoard; i++) if ((st.supply.gold || 0) > 0){ st.supply.gold--; P.disc.push("gold"); dmL(st, "埋蔵金：金貨を獲得"); dmFxAdd(st, { k: "hoard", p: pid, c: "gold" }); dmFxAdd(st, { k: "gain", p: pid, c: "gold", dest: "disc" }); }
     if (dmIs(c, "a") && T.coll) dmVpt(st, pid, T.coll, "収集品");
     if (T.tiara && c !== "curse") dmAsk(st, { pid, k: "yn", card: c, title: `ティアラ：${DM[c].n}を山札の上に置く？`, then: { t: "topgain", c, dest: dest || "disc" } });
   }
@@ -10149,6 +10164,7 @@ const DM_BI = {
   pb: `<path d="M4.1 4.2V3.4a1.9 1.9 0 0 1 3.8 0v.8" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M2.3 4.2h7.4l-.6 6.6H2.9z" fill="#fff"/>`,
   pmo: `<circle cx="6" cy="6" r="4.9" fill="#FFF3C4"/><circle cx="6" cy="6" r="3.3" fill="none" stroke="#C98A0B" stroke-width="1"/>`
 };
+const dmSti = k => `<i class="sti ${k}"><svg viewBox="0 0 12 12" aria-hidden="true">${DM_BI[k]}</svg></i>`;   // 画面中央の「アクション・購入・お金」の印（ガイドと同じ）
 const dmBadge = (k, n) => `<i class="${k}"><svg viewBox="0 0 12 12" aria-hidden="true">${DM_BI[k]}</svg><span class="bn">${n}</span></i>`;
 function dmBn(c){
   const p = DM[c].p || {};
@@ -10191,7 +10207,7 @@ function drawDm(){
   // 場
   const P = inGame ? st.pl[me] : null;
   const AP = st.pl[T.pid];
-  const stat = `<div class="dmstat" style="--pc:${pcolor(T.pid)}"><span class="who">${esc(pname(T.pid))}</span><span class="ch ${T.phase === "action" ? "on" : ""}">アクション <b>${T.actions}</b></span><span class="ch">購入 <b>${T.buys}</b></span><span class="ch cn">💰 <b>${T.coins}</b></span>${T.pots ? `<span class="ch cn">🧪 <b>${T.pots}</b></span>` : ""}<span class="ph">${T.phase === "action" ? "アクションフェイズ" : "購入フェイズ"}</span></div>
+  const stat = `<div class="dmstat" style="--pc:${pcolor(T.pid)}"><span class="who">${esc(pname(T.pid))}</span><span class="ch ${T.phase === "action" ? "on" : ""}">${dmSti("pa")}アクション <b>${T.actions}</b></span><span class="ch">${dmSti("pb")}購入 <b>${T.buys}</b></span><span class="ch cn">${dmSti("pmo")}<b>${T.coins}</b></span>${T.pots ? `<span class="ch cn">🧪 <b>${T.pots}</b></span>` : ""}<span class="ph">${T.phase === "action" ? "アクションフェイズ" : "購入フェイズ"}</span></div>
     <div class="dmplay">${AP.play.length ? AP.play.map(c => `<button class="dpv" data-pv="${c}">${dmCardHtml(c, "pl")}</button>`).join("") : `<small>ここに使ったカードが並びます</small>`}</div>`;
   // 下部
   let bottom = "";
@@ -10645,7 +10661,7 @@ function dmFxCheck(g){
     if (e.k === "buy" || e.k === "gain" || e.k === "prov"){ dmGains.push({ ...e, wait: e.k === "prov" ? 4600 : 0 }); if (e.k !== "prov") return; }
     if (e.k === "play" && e.p === me) dmDealDelay += 2600;
     if (e.k === "end"){ dmEndFresh[g.id] = t + 300; }
-    const d = { buy: 1400, prov: 4800, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    const d = { hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
     setTimeout(() => dmFx(e, g), t); t += e.k === "play" || e.k === "prov" ? d : Math.min(d, 1600);
   });
 }
@@ -10662,6 +10678,10 @@ function dmFx(e, g){
     html = `<span class="aglow" style="--tc:${tc}"></span><span class="aring" style="--tc:${tc}"></span><span class="aring r2" style="--tc:${tc}"></span>${sp}
       <div class="acard">${dmCardHtml(e.c, "dfx")}<span class="aflash"></span></div>
       <div class="aplus">${plus.map((x, i) => `<b style="--d:${(.42 + i * .12).toFixed(2)}s">${x}</b>`).join("")}${DM[e.c].tx ? `<p class="atx" style="--d:${(.5 + plus.length * .12).toFixed(2)}s">${esc(DM[e.c].tx)}</p>` : ""}${e.p !== me ? `<small style="background:${pc}">${esc(pname(e.p))}</small>` : ""}</div>`;
+  } else if (e.k === "hoard"){
+    ms = 2300;
+    const coins = Array.from({ length: 26 }, () => `<i class="hco" style="left:${rnd(5, 95).toFixed(1)}%;--d:${rnd(0, .9).toFixed(2)}s;--t:${rnd(1, 1.6).toFixed(2)}s;--r:${rnd(-540, 540).toFixed(0)}deg;--s:${rnd(.7, 1.3).toFixed(2)}"></i>`).join("");
+    html = `<span class="hwash"></span>${coins}<div class="hbox"><div class="hchest">${dmCardHtml("hoard", "dfx")}</div><b class="htx">埋蔵金!!</b><div class="hgold">${dmCardHtml("gold", "dfx")}</div><small style="background:${pc}">${esc(pname(e.p))}が金貨を獲得</small></div>`;
   } else if (e.k === "tre"){
     ms = 950; if (!e.v) return;
     const coins = Array.from({ length: Math.min(14, 4 + e.v * 2) }, () => { const a = rnd(-Math.PI, 0), d = rnd(60, 150); return `<i class="tco" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${rnd(0, .15).toFixed(2)}s"></i>`; }).join("");
