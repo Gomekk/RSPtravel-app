@@ -10641,13 +10641,15 @@ function dmAnimHand(g, el, P){
     pend.forEach(x => { const b = [...el.querySelectorAll(`.dmhand .dh[data-c="${x.c}"]`)].find(y => !used.has(y)); if (!b) return; used.add(b); b.style.opacity = "0"; setTimeout(() => { if (b.isConnected) b.style.opacity = ""; }, x.at - Date.now()); });
     if (!pend.length) dmReveal = null;
   }
-  if (!prev || !deck || !d) return;
+  // 選択中（風車など）で山札の表示がないときも、引いたカードの演出は出す（画面左下から飛んでくる）
+  const dd = d || (() => { const h = el.querySelector(".dmhand"); if (!h) return null; const r = h.getBoundingClientRect(); return { left: r.left + 4, top: r.bottom + 24, width: 40, height: 56 }; })();
+  if (!prev || !dd) return;
   const left = { ...prev }, news = [];
   el.querySelectorAll(".dmhand .dh").forEach(b => { const c = b.dataset.c; if (left[c] > 0) left[c]--; else news.push(b); });
   if (!news.length || news.length > 10) return;
   dmReveal = { key, list: news.map((b, k) => ({ c: b.dataset.c, at: Date.now() + delay + k * 190 + 640 })) };
   // ③ 山札から：光の尾を引いて大きく弧を描き、手札でくるっと表に返ってキラッ
-  const cx = d.left + d.width / 2, cy = d.top + d.height / 2;
+  const cx = dd.left + dd.width / 2, cy = dd.top + dd.height / 2;
   news.forEach((b, k) => {
     b.style.opacity = "0";
     const r = b.getBoundingClientRect(), t0 = delay + k * 190;
