@@ -2617,19 +2617,22 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 
 /* +カード・+アクション・+購入の小さな印 */
 /* ガイドの印（同じ形・同じ大きさのバッジを左端にそろえて縦に並べる） */
-.dbn{position:absolute;left:3px;top:18px;z-index:2;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;max-height:calc(var(--s) * 3.4 + 1px);align-items:flex-start;gap:calc(var(--s) * .2);pointer-events:none;--s:12px}
-.dbn i{display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;width:calc(var(--s) * 1.85);height:var(--s);padding:0 calc(var(--s) * .14) 0 calc(var(--s) * .1);border-radius:calc(var(--s) * .32);font-style:normal;line-height:1;color:#fff;box-shadow:0 0 0 calc(var(--s) * .09) #fff,0 calc(var(--s) * .1) calc(var(--s) * .22) rgba(27,24,56,.45)}
+.dbn{position:absolute;left:3px;top:18px;z-index:2;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;max-height:calc(var(--s) * 3.4 + 1px);align-items:flex-start;gap:calc(var(--s) * .2);pointer-events:none;--s:10px}
+.dbn i{display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;width:calc(var(--s) * 1.8);height:var(--s);padding:0 calc(var(--s) * .14) 0 calc(var(--s) * .1);border-radius:calc(var(--s) * .32);font-style:normal;line-height:1;color:#fff;box-shadow:0 0 0 calc(var(--s) * .09) #fff,0 calc(var(--s) * .1) calc(var(--s) * .22) rgba(27,24,56,.45)}
 .dbn i svg{display:block;flex:none;width:calc(var(--s) * .74);height:calc(var(--s) * .74)}
 .dbn i .bn{flex:1;text-align:center;font-family:var(--disp);font-weight:400;font-size:calc(var(--s) * .8);letter-spacing:0;text-shadow:0 1px 0 rgba(0,0,0,.28)}
 .dbn .pc{background:linear-gradient(180deg,#4B88EC,#2F6FD6)}
 .dbn .pa{background:linear-gradient(180deg,#F79446,#E86A1C)}
 .dbn .pb{background:linear-gradient(180deg,#34B86E,#1E9E5A)}
 .dbn .pmo{background:linear-gradient(180deg,#E9B53A,#C98A0B)}
-.dmp .dbn{top:16px;left:3px;--s:11px}
-.dmc.sm .dbn{top:14px;left:2.5px;--s:10px}
-.dmc.pl .dbn{display:none}
-.dmc.dfx .dbn{left:7px;top:36px;--s:15px;max-height:none}
-.dbn.il{max-height:none;position:static;display:inline-flex;vertical-align:-3px;margin-right:6px;--s:17px}
+.dmp .dbn{top:15px;left:2.5px;--s:9px}
+.dmc.sm .dbn{top:13px;left:2px;--s:8.5px}
+.dmc.pl .dbn{left:0;right:0;top:1px;--s:8px;max-height:none;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:1px}
+.dmc.pl .dbn i{width:var(--s);padding:0;justify-content:center;border-radius:2.5px;box-shadow:0 0 0 .8px #fff}
+.dmc.pl .dbn i svg{display:none}
+.dmc.pl .dbn i .bn{font-size:6.8px}
+.dmc.dfx .dbn{left:7px;top:36px;--s:13px;max-height:none}
+.dbn.il{max-height:none;position:static;display:inline-flex;vertical-align:-3px;margin-right:6px;--s:15px}
 body.dmnoguide .dbn:not(.lg){display:none}
 .dmgd{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:3px;height:30px;margin-right:5px;padding:0 4px 0 6px;border-radius:10px;border:2px solid var(--ink);background:#fff;font-size:10.5px;font-weight:900;color:var(--ink);box-shadow:0 2px 0 var(--ink)}
 .dmgd i{font-style:normal;font-size:9.5px;padding:2px 5px;border-radius:6px;background:#D8D2C8;color:#6A5A4A}
@@ -2760,6 +2763,35 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .guestwait .gwi{font-size:44px;animation:nbeat 1.4s ease-in-out infinite}
 .plist.gst .gtl{margin-left:auto;font-size:11px;font-weight:800;color:#C9951A}
 .plist.gst.exp{opacity:.6}.plist.gst.exp .gtl{color:var(--mute)}
+
+/* ===== 発熱対策：見た目はそのまま、描き直しの多い動きを軽い方式に ===== */
+/* ゲーム画面を開いている間は、裏に隠れているホーム画面を描かない・動かさない */
+body:has(>.arena:not([hidden])) > #view,body:has(>.arena:not([hidden])) > .deco,body.ovl > #view,body.ovl > .deco{visibility:hidden}
+body:has(>.arena:not([hidden])) > #view *,body:has(>.arena:not([hidden])) > .deco *,body.ovl > #view *,body.ovl > .deco *{animation-play-state:paused!important}
+/* アプリが裏に回ったら全部止める */
+body.bgpause *,body.bgpause *::before,body.bgpause *::after{animation-play-state:paused!important}
+/* 光る脈動：影そのものを毎フレーム描き直すのをやめ、光った影を重ねて明るさ（不透明度）だけ動かす */
+@keyframes glowop{0%,100%{opacity:0}50%{opacity:1}}
+@keyframes segscale{50%{transform:scale(1.08)}}
+.nseat2.on{animation:segscale 1.6s ease-in-out infinite!important}
+.nseat2.on::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;box-shadow:0 0 18px 6px rgba(255,227,138,.95),0 0 40px 14px rgba(255,200,80,.55),0 4px 0 var(--ink);opacity:0;will-change:opacity;animation:glowop 1.6s ease-in-out infinite}
+.nb.end.go{animation:none}
+.nb.end.go::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;box-shadow:0 0 0 4px rgba(232,177,42,.5),0 0 18px rgba(232,177,42,.9);opacity:0;will-change:opacity;animation:glowop 1.1s ease-in-out infinite}
+.nb.lose.pulse{animation:none}
+.nb.lose.pulse::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;box-shadow:0 0 22px 4px rgba(226,54,79,.45);opacity:0;will-change:opacity;animation:glowop 1.2s ease-in-out infinite}
+.nturn.mine{position:relative;animation:none!important}
+.nturn.mine::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;box-shadow:0 0 18px 4px color-mix(in srgb,var(--pc) 70%,transparent);opacity:0;will-change:opacity;animation:glowop 1.6s ease-in-out infinite}
+.np.on{animation:none}
+.np.on::after{content:"";position:absolute;inset:-2px;border-radius:inherit;pointer-events:none;box-shadow:0 0 18px color-mix(in srgb,var(--pc) 80%,transparent);opacity:0;will-change:opacity;animation:glowop 1.2s ease-in-out infinite}
+/* 光のすじ：位置（left）を動かすと毎フレーム配置計算になるので、移動（transform）に置き換え */
+@keyframes shineT{0%,60%{transform:translateX(0) skewX(-20deg)}100%{transform:translateX(567%) skewX(-20deg)}}
+@keyframes sweepT{0%,30%{transform:translateX(0) skewX(-20deg)}100%{transform:translateX(600%) skewX(-20deg)}}
+@keyframes sweepT2{0%,30%{transform:translateX(0) skewX(-20deg)}100%{transform:translateX(818%) skewX(-20deg)}}
+.big::after{animation-name:shineT}
+.rank.top .r1fx .sweep{animation-name:sweepT}
+.rank .shine2{animation-name:sweepT2}
+/* 流れる色の文字：なめらかさはそのままで描き直し回数を減らす */
+.ntop .nt{animation-timing-function:steps(96)!important}
 </style>
 </head>
 <body>
@@ -8048,6 +8080,8 @@ function openDmNew(){
 let dmGains = [], dmDealDelay = 0, dmReveal = null, dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
 let dmId = null, dmBusy = false, dmSel = [], dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
 function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
+document.addEventListener("visibilitychange", () => document.body.classList.toggle("bgpause", document.hidden));
+(() => { const upd = () => document.body.classList.toggle("ovl", [...document.querySelectorAll("body>.arena")].some(a => !a.hidden)); new MutationObserver(upd).observe(document.body, { subtree: false, childList: false, attributes: true, attributeFilter: ["hidden"] }); document.querySelectorAll("body>.arena").forEach(a => new MutationObserver(upd).observe(a, { attributes: true, attributeFilter: ["hidden"] })); upd(); })();
 function closeDm(){ if (dmId) delete dmEndCounted[dmId]; dmId = null; $("#dmg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ドミニオン：カードごとのオリジナルイラスト（SVG） */
