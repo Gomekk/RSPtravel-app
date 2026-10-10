@@ -711,8 +711,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .gic.ski svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
 .skd{display:inline-grid;place-items:center;flex:none;position:relative;width:var(--sz,40px);height:var(--sz,40px);border-radius:50%;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink);line-height:1;vertical-align:middle}
 .skd em{font-style:normal;font-size:calc(var(--sz,40px) * .52);line-height:1;display:grid;place-items:center;width:100%;height:100%;text-align:center}
-.skd.kf{background:radial-gradient(circle at 38% 32%,#FFFFFF,#FFE1E8 55%,#FFB8C8)}
-.skd.ks{background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26 60%,#0A0410)}
+.skd.dkf{background:radial-gradient(circle at 38% 32%,#FFFFFF,#FFE1E8 55%,#FFB8C8)}
+.skd.dks{background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26 60%,#0A0410)}
 .skd.back{background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--pc) 45%,#fff),var(--pc) 50%,color-mix(in srgb,var(--pc) 55%,#1B1838))}
 .skd.back::after{content:"";position:absolute;inset:20%;border-radius:50%;border:2px dashed rgba(255,255,255,.6)}
 .skd.mini{--sz:22px;border-width:1.5px;box-shadow:0 1.5px 0 var(--ink)}
@@ -792,7 +792,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sbfx .spot{position:absolute;inset:0;background:radial-gradient(circle at 50% 46%,transparent 0 22%,rgba(10,4,16,.85) 48%);animation:spot 2.3s ease-out forwards}
 @keyframes spot{0%{background-size:400% 400%}}
 .sbfx.sk-chal .speed{background:repeating-conic-gradient(rgba(255,227,138,.55) 0 1deg,transparent 1deg 8deg)}
-.sbfx.sk-chal .tx b{font-size:min(15vw,64px);color:#FFE38A}
+.sbfx.sk-chal .tx b{font-size:min(8vw,44px);white-space:nowrap;letter-spacing:0;color:#FFE38A}
+.sbfx.sk-chal .tx{max-width:100vw;box-sizing:border-box;padding:0 8px}
 .sbfx.sk-succ{--pc:#E2364F}
 .sbfx.sk-succ .bg{background:radial-gradient(circle at 50% 46%,rgba(255,184,200,.85),rgba(255,227,138,.35) 45%,transparent 70%)}
 .sbfx.sk-succ .rays{background:repeating-conic-gradient(rgba(255,143,160,.45) 0 6deg,transparent 6deg 14deg)}
@@ -891,8 +892,8 @@ details.sgroup[open]>summary{margin-bottom:6px}
 .sd em{position:relative;z-index:1;display:grid;place-items:center;width:100%;height:100%;font-style:normal;font-size:calc(var(--dz0) * .5);line-height:1;text-align:center}
 .sd.back em{font-size:calc(var(--dz0) * .5);filter:drop-shadow(0 1px 1px rgba(0,0,0,.6))}
 .sd.back:has(em)::after{display:none}
-.sd.kf{background:radial-gradient(circle at 38% 32%,#FFFFFF,#FFE1E8 55%,#FFB8C8)}
-.sd.ks{background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26 60%,#0A0410)}
+.sd.dkf{background:radial-gradient(circle at 38% 32%,#FFFFFF,#FFE1E8 55%,#FFB8C8)}
+.sd.dks{background:radial-gradient(circle at 38% 32%,#5B4A66,#1E0E26 60%,#0A0410)}
 .sd.open{animation:sdflip .5s cubic-bezier(.2,1.5,.4,1)}
 @keyframes sdflip{0%{transform:rotateY(90deg) scale(1.3)}100%{transform:none}}
 .sd.top{box-shadow:0 0 12px 3px rgba(255,227,138,.85),0 0 26px 8px rgba(255,200,80,.45),0 4px 0 var(--ink);animation:topglow 1s ease-in-out infinite}
@@ -2212,16 +2213,16 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .cboard{position:relative}
 .cboard.reach{border-color:var(--rc);background:linear-gradient(90deg,rgba(255,227,138,.6),rgba(232,177,42,.5),rgba(255,111,181,.5),rgba(139,60,255,.45),rgba(31,179,191,.5),rgba(255,227,138,.6));background-size:300% 100%;animation:reachb 1s ease-in-out infinite,nshine 2.5s linear infinite}
 @keyframes reachb{50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--rc) 40%,transparent),0 0 30px var(--rc)}}
-.reachfx{position:absolute;top:10px;z-index:3;display:flex;flex-direction:column;align-items:center;pointer-events:none;width:34%}
+.reachfx{position:absolute;top:10px;z-index:3;display:flex;flex-direction:column;align-items:center;pointer-events:none;width:auto;padding:4px 6px 0}
 .reachfx.l{left:6px}.reachfx.r{right:6px}
-.reachfx b{font-family:var(--disp);font-weight:400;font-size:clamp(20px,6.5vw,30px);line-height:1;color:var(--rc);-webkit-text-stroke:1.5px #1B1838;paint-order:stroke fill;filter:drop-shadow(0 0 10px var(--rc));animation:reachtxt 1s ease-in-out infinite}
+.reachfx b{font-family:var(--disp);font-weight:400;font-size:clamp(18px,5.6vw,26px);line-height:1.15;white-space:nowrap;padding:0 4px;color:var(--rc);-webkit-text-stroke:1.5px #1B1838;paint-order:stroke fill;filter:drop-shadow(0 0 10px var(--rc));animation:reachtxt 1s ease-in-out infinite}
 .reachfx.r{height:70px}
 .reachfx.r .chance{position:absolute;top:18px;font-size:clamp(18px,5.6vw,26px);font-style:italic;letter-spacing:.04em;background:linear-gradient(90deg,#FFE38A,#E8B12A,#FF6FB5,#8B3CFF,#1FB3BF,#FFE38A);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px #1B1838;filter:drop-shadow(0 0 8px rgba(232,177,42,.9));animation:nshine 2.5s linear infinite}
 @keyframes roam{0%,100%{transform:translate(0,0) rotate(-6deg) scale(1)}25%{transform:translate(-14px,10px) rotate(4deg) scale(1.1)}50%{transform:translate(8px,22px) rotate(-3deg) scale(.95)}75%{transform:translate(12px,4px) rotate(7deg) scale(1.08)}}
 .reachfx .rsp{position:absolute;width:16px;height:16px;background:var(--glint-gold) center/contain no-repeat;animation:twinkle 1.2s ease-in-out infinite}
 .reachfx .rsp.s1{left:6%;top:6px}.reachfx .rsp.s2{right:4%;top:2px;background-image:var(--glint-aqua);animation-delay:.3s}
 .reachfx .rsp.s3{left:18%;top:52px;width:12px;height:12px;background-image:var(--glint-red);animation-delay:.6s}.reachfx .rsp.s4{right:16%;top:56px;animation-delay:.9s}
-.reachfx small{margin-top:4px;text-align:center;font-size:11px;font-weight:900;color:#1B1838;padding:2px 8px;border-radius:8px;background:#fff;border:2px solid var(--rc)}
+.reachfx small{margin-top:4px;text-align:center;white-space:nowrap;line-height:1.35;font-size:11px;font-weight:900;color:#1B1838;padding:2px 8px;border-radius:8px;background:#fff;border:2px solid var(--rc)}
 @keyframes reachtxt{50%{transform:scale(1.12) rotate(-3deg)}}
 .csfx.bust{background:radial-gradient(circle at 50% 48%,rgba(255,138,61,.4),transparent 60%)}
 .csfx.bust .core{display:none}
@@ -2876,6 +2877,57 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .cpuskip .spin{display:inline-block;width:14px;height:14px;margin-right:6px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);border-top-color:#FFE38A;animation:pvspin .8s linear infinite;vertical-align:-2px}
 .dco.pt::after{content:"🧪";position:absolute;right:-9px;top:-3px;font-size:9px}
 .dmp .bane{position:absolute;left:50%;bottom:13px;transform:translateX(-50%);padding:0 5px;border-radius:5px;background:#6A3A8A;color:#fff;font-size:8px;font-style:normal;font-weight:900;z-index:2}
+.copts.picked .copt.no{opacity:.35}
+.copts.picked .copt.pk{position:relative;border-color:#E8B12A;background:#FFF6D2;box-shadow:0 0 0 3px #FFE38A,0 0 18px rgba(255,210,63,.9);opacity:1;animation:nbeat 1s ease-in-out infinite}
+.copts.picked .copt.pk em{position:absolute;top:-9px;right:-6px;padding:1px 7px;border-radius:99px;background:#E2364F;color:#fff;font-style:normal;font-size:10px;font-weight:900}
+.cspop .kgpopin{display:flex;flex-direction:column;align-items:center;gap:6px;width:min(88vw,330px);padding:18px 16px 14px;border-radius:18px;background:#fff;border:3px solid var(--ink);text-align:center}
+.cspop .csq{font-size:16px;font-weight:900}.cspop small{font-size:11.5px;color:var(--mute);font-weight:700}.cspop .nbtns{width:100%;margin-top:6px}
+#neu .nbtns .nb{height:48px;padding:0 4px;display:flex;align-items:center;justify-content:center;gap:4px;line-height:1}
+#neu .nb small.cnt{display:inline;font-size:11px;padding:1px 5px;border-radius:6px;background:rgba(0,0,0,.08);color:inherit}
+.nstage{position:relative}
+.ndbl{position:absolute;right:2px;top:-2px;z-index:3;display:flex;flex-direction:column;align-items:center;padding:5px 10px 6px;border-radius:14px;background:linear-gradient(160deg,#FF4D66,#E8890C);color:#fff;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink),0 0 18px rgba(255,77,102,.55);transform:rotate(4deg);animation:ndblp 1s ease-in-out infinite}
+.ndbl b{font-family:var(--disp);font-size:30px;line-height:1;-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill;color:#FFE38A}
+.ndbl span{font-family:var(--disp);font-size:12px;letter-spacing:1px;line-height:1.1}
+.ndbl small{font-size:10.5px;font-weight:900;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis}
+.ndbl.nxt{background:linear-gradient(160deg,#8B6CFF,#1FB3BF);animation-duration:1.6s}
+@keyframes ndblp{0%,100%{transform:rotate(4deg) scale(1)}50%{transform:rotate(4deg) scale(1.08)}}
+.nover.gloom{overflow:hidden;border-radius:16px;background:linear-gradient(#2B2F3A,#4A505E 55%,#5E6472)}
+.nover.gloom .k{background:#8A90A0;color:#1B1838}
+.nover.gloom .p{color:color-mix(in srgb,var(--c) 45%,#7A8090);-webkit-text-stroke:2px #1B1838;filter:grayscale(.4);animation:gsink 1.2s cubic-bezier(.3,.6,.3,1) both}
+.nover.gloom .y{color:#C9CEDA}
+.nover.gloom .btns .btn{background:#C9CEDA}
+@keyframes gsink{0%{transform:translateY(-30px);opacity:0}60%{transform:translateY(6px);opacity:1}100%{transform:translateY(0) rotate(-2deg)}}
+.gcloud{position:absolute;left:0;right:0;top:6%;height:120px;pointer-events:none}
+.gcloud i{position:absolute;top:0;width:180px;height:60px;border-radius:40px;background:#262A33;box-shadow:40px -22px 0 6px #262A33,90px -6px 0 0 #262A33;opacity:.85;animation:gcl 9s ease-in-out infinite alternate}
+.gcloud i:nth-child(1){left:-20px}.gcloud i:nth-child(2){left:42%;top:30px;transform:scale(.8);animation-delay:-3s;opacity:.7}.gcloud i:nth-child(3){right:-60px;top:6px;animation-delay:-6s}
+@keyframes gcl{to{margin-left:30px}}
+.grain{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.grain i{position:absolute;top:-40px;width:2px;height:var(--h);border-radius:2px;background:linear-gradient(transparent,rgba(190,205,230,.6));animation:grain 1.2s linear var(--d) infinite}
+@keyframes grain{to{transform:translateY(110vh)}}
+.nover.gloom>*:not(.gcloud):not(.grain){position:relative}
+.nover.gloom>.gcloud,.nover.gloom>.grain{position:absolute}
+.sbpile .disc{flex:none;width:44px}
+.sbpile .deckc,.sbpile .disc .pcd{box-sizing:border-box;flex:none;width:44px;height:60px;margin:0}
+.sbpile .deckc b{font-size:18px}
+.sbpile .pcd.empty{background:rgba(255,255,255,.5);border:2px dashed var(--mute);box-shadow:none}
+.sbg .nlog{max-height:84px;overflow-y:auto;font-size:10.5px;line-height:1.35}
+.arena.sbg>.nover{position:fixed;inset:auto;left:50%;top:50%;z-index:8;width:min(90vw,380px);max-height:86dvh;overflow:hidden;padding:22px 18px 18px;border-radius:22px;border:3px solid var(--ink);transform:translate(-50%,-50%);box-shadow:0 0 0 100vmax rgba(14,10,30,.55),0 10px 0 var(--ink);animation:sbovin .5s cubic-bezier(.2,1.4,.4,1) both}
+.arena.sbg>.nover .p{font-size:clamp(30px,9vw,46px)}
+@keyframes sbovin{0%{transform:translate(-50%,-50%) scale(.6);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.glives{grid-column:1/3;display:flex;flex-direction:column;gap:6px}
+.glv{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 10px;border-radius:12px;background:rgba(139,108,255,.08);border:1.5px dashed #8B3CFF}
+.glv.mine{background:rgba(232,177,42,.14);border:2px solid #E8B12A}
+.glv .gld{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:3px 5px;font-size:11px;font-weight:900}
+.glv .gld em{font-style:normal;font-size:10px;padding:1px 6px;border-radius:6px;background:#8B3CFF;color:#fff}
+.glv.mine .gld em{background:#E8B12A;color:var(--ink)}
+.glv .gld i{font-style:normal;color:var(--pc);white-space:nowrap}
+.glv .btn{flex:none;width:auto;padding:8px 14px;font-size:13px;margin:0}
+.glv .btn.watch{background:#fff;color:#5B2EC9;border-color:#8B3CFF}
+.gcard .gact .btn.sub2{background:#fff}
+.np .tg.now.done{background:#1E9E5A}
+.sd .sdn{position:absolute;right:-5px;top:-6px;z-index:2;min-width:13px;height:13px;padding:0 2px;box-sizing:border-box;border-radius:7px;background:#fff;color:var(--ink);border:1.5px solid var(--ink);font-size:8.5px;font-weight:900;line-height:10px;text-align:center;text-decoration:none;font-family:var(--num,inherit)}
+.sd.top.watch{animation:topglow 1.4s ease-in-out infinite}
+.sd.top.watch::before{content:"↓";position:absolute;left:50%;top:-17px;transform:translateX(-50%);font-size:13px;font-weight:900;color:#FFE38A;text-shadow:0 0 6px #E8B12A,0 1px 0 #1B1838}
 .dpk.vt{background:#E6F6EA;border-color:#8FD0A8;color:#1E7E46}
 .dpk.du{background:#FFF3E6;border-color:#F0B070}
 .dmopts{display:flex;flex-direction:column;gap:6px;margin:8px 0;width:100%;align-self:stretch}
@@ -5317,7 +5369,8 @@ function neuCardHtml(c, extra = ""){
   return `<span class="ncard inst i-${c.toLowerCase()}" ${extra}><i>${ic}</i><b>${c}</b><small>${NEU_INST[c]}</small></span>`;
 }
 const neuGames = () => (db.neu_games || []);
-const neuActive = () => neuGames().filter(g => g.status === "playing" || g.status === "round_over").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const neuLive = () => neuGames().filter(g => g.status === "playing" || g.status === "round_over").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const neuActive = () => pickMine(neuLive());
 const neuById = id => neuGames().find(g => g.id === id);
 const neuAlive = g => g.players.filter(p => (g.chips[p] || 0) > 0);
 function neuNext(g, pid, dir){
@@ -5348,11 +5401,13 @@ async function neuSave(g, patch, logLine, quiet){
   Object.assign(g, data[0]); drawNeu(); return true;
 }
 
+/* 同じゲームが同時に複数あるときは、自分が参加している対戦を優先 */
+function pickMine(list){ return list.find(g => me && (g.players || []).includes(me)) || list[0] || null; }
 /* どのゲームでも、自分の番が回ってきたら振動させる */
 const turnSeen = {};
 function turnBuzz(){
   if (!me) return;
-  [neuActive(), csActive(), sbActive(), skActive(), coActive(), kgActive(), dmActive()].filter(Boolean).forEach(g => {
+  [...neuLive(), ...csLive(), ...sbLive(), ...skLive(), ...coLive(), ...kgLive(), ...dmLive()].filter(g => (g.players || []).includes(me)).forEach(g => {
     const now = g.st ? dmMyTurn(g) : g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
     const prev = turnSeen[g.id];
     turnSeen[g.id] = now;
@@ -5379,16 +5434,16 @@ const GAMES = [
       <text x="32" y="35" text-anchor="middle" font-family="Dela Gothic One,Arial Black,Arial" font-size="10.5" fill="url(#gN)" stroke="#1B1838" stroke-width=".5">101</text>
       <circle cx="52" cy="12" r="3" fill="#E8B12A"/><circle cx="10" cy="20" r="2" fill="#1FB3BF"/><path d="M50 50l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#E2364F"/></svg></span>`,
     count: () => neuGames().filter(x => x.status === "finished").length,
-    active: () => neuActive(), start: () => openNeuNew(), open: g => openNeu(g.id) },
+    live: () => neuLive(), active: () => neuActive(), start: () => openNeuNew(), open: g => openNeu(g.id) },
   { id: "cs", name: "キャントストップ", desc: "ダイス4個でレーンを登る。振り続けるか、止めて確定するか。3本制覇で勝ち", players: "2〜6人", time: "20〜30分",
     icon: `<span class="gic csi"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="30" width="7" height="22" rx="2" fill="#1FB3BF" stroke="#fff" stroke-width="1.5"/><rect x="20" y="20" width="7" height="32" rx="2" fill="#E8B12A" stroke="#fff" stroke-width="1.5"/><rect x="30" y="10" width="7" height="42" rx="2" fill="#E2364F" stroke="#fff" stroke-width="1.5"/><path d="M33.5 4l2 4 4 .6-3 2.8.8 4.2-3.8-2-3.8 2 .8-4.2-3-2.8 4-.6z" fill="#FFE38A"/>
       <g transform="rotate(14 48 44)"><rect x="39" y="35" width="18" height="18" rx="4" fill="#fff" stroke="#1B1838" stroke-width="2"/><circle cx="44" cy="40" r="1.8" fill="#1B1838"/><circle cx="48" cy="44" r="1.8" fill="#E2364F"/><circle cx="52" cy="48" r="1.8" fill="#1B1838"/></g></svg></span>`,
     count: () => csGames().filter(x => x.status === "finished").length,
-    active: () => csActive(), start: () => openCsNew(), open: g => openCs(g.id) },
+    live: () => csLive(), active: () => csActive(), start: () => openCsNew(), open: g => openCs(g.id) },
   { id: "sb", name: "セブンブリッジ", desc: "同じ数字や連番をそろえて公開し、手札を早くなくす。ポン・チーで捨て札も奪える", players: "2〜6人", time: "1ラウンド10分",
     icon: `<span class="gic sbi"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="gSB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6D6"/><stop offset=".5" stop-color="#FFD84A"/><stop offset="1" stop-color="#E8B12A"/></linearGradient></defs><rect x="3" y="5" width="47" height="24" rx="5" fill="rgba(255,255,255,.12)" stroke="#FFE38A" stroke-width="1.2" stroke-dasharray="2 2"/><rect x="3" y="33" width="47" height="24" rx="5" fill="rgba(255,255,255,.12)" stroke="#9BF1F4" stroke-width="1.2" stroke-dasharray="2 2"/><g><rect x="6" y="8" width="13" height="18" rx="2" fill="#fff" stroke="#1B1838" stroke-width="1.4"/><text x="12.5" y="16.5" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8" fill="#1B1838">7</text><text x="12.5" y="24" text-anchor="middle" font-family="Arial" font-size="7" fill="#1B1838">♠</text></g><g><rect x="20" y="8" width="13" height="18" rx="2" fill="#fff" stroke="#1B1838" stroke-width="1.4"/><text x="26.5" y="16.5" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8" fill="#E2364F">7</text><text x="26.5" y="24" text-anchor="middle" font-family="Arial" font-size="7" fill="#E2364F">♥</text></g><g><rect x="34" y="8" width="13" height="18" rx="2" fill="#fff" stroke="#1B1838" stroke-width="1.4"/><text x="40.5" y="16.5" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8" fill="#E2364F">7</text><text x="40.5" y="24" text-anchor="middle" font-family="Arial" font-size="7" fill="#E2364F">♦</text></g><g><rect x="6" y="36" width="13" height="18" rx="2" fill="#fff" stroke="#1B1838" stroke-width="1.4"/><text x="12.5" y="44.5" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8" fill="#1B1838">3</text><text x="12.5" y="52" text-anchor="middle" font-family="Arial" font-size="7" fill="#1B1838">♣</text></g><g><rect x="20" y="36" width="13" height="18" rx="2" fill="#fff" stroke="#1B1838" stroke-width="1.4"/><text x="26.5" y="44.5" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8" fill="#1B1838">4</text><text x="26.5" y="52" text-anchor="middle" font-family="Arial" font-size="7" fill="#1B1838">♣</text></g><g><rect x="34" y="36" width="13" height="18" rx="2" fill="#fff" stroke="#1B1838" stroke-width="1.4"/><text x="40.5" y="44.5" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8" fill="#1B1838">5</text><text x="40.5" y="52" text-anchor="middle" font-family="Arial" font-size="7" fill="#1B1838">♣</text></g><path d="M58 22 q2 6 -4 10" fill="none" stroke="#FFE38A" stroke-width="2" stroke-linecap="round"/><path d="M52.5 29.5l2 3.5 3-2.6" fill="none" stroke="#FFE38A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g transform="rotate(14 52.5 39)"><rect x="46" y="30" width="13" height="18" rx="2" fill="url(#gSB)" stroke="#1B1838" stroke-width="1.4"/><text x="52.5" y="38.5" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8" fill="#1B1838">6</text><text x="52.5" y="46" text-anchor="middle" font-family="Arial" font-size="7" fill="#1B1838">♣</text></g><path d="M56 4l1.2 2.6 2.6 1.2-2.6 1.2L56 11.6l-1.2-2.6-2.6-1.2 2.6-1.2z" fill="#FFE38A"/></svg></span>`,
     count: () => sbGames().filter(x => x.status === "finished").length,
-    active: () => sbActive(), start: () => openSbNew(), open: g => openSb(g.id) },
+    live: () => sbLive(), active: () => sbActive(), start: () => openSbNew(), open: g => openSb(g.id) },
   { id: "sk", name: "スカル", desc: "花とドクロを伏せて、何枚めくれるか宣言し合うはったりゲーム。チャレンジ2回成功で勝ち", players: "2〜6人", time: "15〜30分",
     icon: `<span class="gic ski"><svg viewBox="0 0 64 64" aria-hidden="true">
       <ellipse cx="32" cy="52" rx="24" ry="7" fill="#B23A5A" stroke="#1B1838" stroke-width="1.6"/>
@@ -5399,7 +5454,7 @@ const GAMES = [
       <rect x="47" y="35" width="13" height="11" rx="3" fill="#FFE38A" stroke="#1B1838" stroke-width="1.4"/><text x="53.5" y="43.7" text-anchor="middle" font-family="Arial Black,Arial" font-weight="900" font-size="8.5" fill="#1B1838">3</text>
     </svg></span>`,
     count: () => skGames().filter(x => x.status === "finished").length,
-    active: () => skActive(), start: () => openSkNew(), open: g => openSk(g.id) },
+    live: () => skLive(), active: () => skActive(), start: () => openSkNew(), open: g => openSk(g.id) },
   { id: "co", name: "コヨーテ", desc: "自分のカードだけ見えない！みんなの合計を推理して宣言を上げ、ウソだと思ったら「コヨーテ！」", players: "2〜8人", time: "15〜30分",
     icon: `<span class="gic coi"><svg viewBox="0 0 64 64" aria-hidden="true">
       <circle cx="44" cy="17" r="10" fill="#FFE38A"/><circle cx="44" cy="17" r="13" fill="none" stroke="#FFE38A" stroke-opacity=".35" stroke-width="3"/>
@@ -5409,11 +5464,11 @@ const GAMES = [
       <g transform="translate(4 30) scale(.2)"><rect x="34" y="114" width="13" height="38" rx="5" fill="#D9B26A"/><rect x="53" y="114" width="13" height="38" rx="5" fill="#D9B26A"/><path d="M37 56L63 56L69 120L31 120Z" fill="#D9B26A"/><rect x="33" y="94" width="34" height="6" fill="#C0392B"/><rect x="6" y="58" width="88" height="12" rx="6" fill="#E3C27C"/><ellipse cx="50" cy="31" rx="17" ry="21" fill="#E3C27C"/><rect x="38" y="48" width="24" height="6" fill="#C0392B"/></g>
     </svg></span>`,
     count: () => coGames().filter(x => x.status === "finished").length,
-    active: () => coActive(), start: () => openCoNew(), open: g => openCo(g.id) },
+    live: () => coLive(), active: () => coActive(), start: () => openCoNew(), open: g => openCo(g.id) },
   { id: "kg", name: "スカルキング", desc: "何回勝てるかをぴったり当てるトリックテイキング。全10ラウンド、合計点で勝負", players: "2〜8人", time: "30〜45分",
     icon: `<span class="gic kgi"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 58L54 18" stroke="#C9CED8" stroke-width="3.5" stroke-linecap="round"/><path d="M54 58L10 18" stroke="#C9CED8" stroke-width="3.5" stroke-linecap="round"/><rect x="6" y="54" width="9" height="4" rx="1" fill="#E8B12A" transform="rotate(-42 10 56)"/><rect x="49" y="54" width="9" height="4" rx="1" fill="#E8B12A" transform="rotate(42 54 56)"/><line x1="32" y1="38" x2="51.0" y2="38.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="53.0" cy="38.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="45.4" y2="51.4" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="46.8" cy="52.8" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="32.0" y2="57.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="32.0" cy="59.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="18.6" y2="51.4" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="17.2" cy="52.8" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="13.0" y2="38.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="11.0" cy="38.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="18.6" y2="24.6" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="17.2" cy="23.2" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="32.0" y2="19.0" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="32.0" cy="17.0" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><line x1="32" y1="38" x2="45.4" y2="24.6" stroke="#7A4A1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="46.8" cy="23.2" r="2.6" fill="#B8803E" stroke="#4A2A0C" stroke-width="1"/><circle cx="32" cy="38" r="15" fill="none" stroke="#9A6430" stroke-width="5"/><circle cx="32" cy="38" r="15" fill="none" stroke="#4A2A0C" stroke-width="1"/><circle cx="32" cy="38" r="5" fill="#E8B12A" stroke="#4A2A0C" stroke-width="1.2"/><path d="M18 14l4 8h20l4-8-7 4-7-9-7 9z" fill="#FFD84A" stroke="#8A5A0C" stroke-width="1.2" stroke-linejoin="round"/><circle cx="32" cy="9" r="1.8" fill="#E2364F"/><circle cx="18" cy="13.5" r="1.4" fill="#1FB3BF"/><circle cx="46" cy="13.5" r="1.4" fill="#1FB3BF"/></svg></span>`,
     count: () => kgGames().filter(x => x.status === "finished").length,
-    active: () => kgActive(), start: () => openKgNew(), open: g => openKg(g.id) },
+    live: () => kgLive(), active: () => kgActive(), start: () => openKgNew(), open: g => openKg(g.id) },
   { id: "dm", name: "ドミニオン", desc: "カードを買って自分の山札を育てるデッキ構築ゲーム。属州を集めて勝利点を競う（基本セット）", players: "2〜6人", time: "30〜45分",
     icon: `<span class="gic dmi"><svg viewBox="0 0 64 64" aria-hidden="true">
       <path d="M4 64V46Q18 40 32 44Q46 40 60 46V64Z" fill="#1E6B3A"/>
@@ -5427,15 +5482,16 @@ const GAMES = [
       <path d="M50 52l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#FFE38A" stroke="#1B1838" stroke-width="1.2" transform="translate(0 -8)"/>
     </svg></span>`,
     count: () => dmGames().filter(x => x.status === "finished").length,
-    active: () => dmActive(), start: () => openDmNew(), open: g => openDm(g.id) }
+    live: () => dmLive(), active: () => dmActive(), start: () => openDmNew(), open: g => openDm(g.id) }
 ];
 function openGames(){
   const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
-    <div class="glist">${GAMES.map(gm => { const a = gm.active(); return `<div class="gcard ${a ? "glive" : ""}">${gm.icon}<div class="gb"><b>${gm.name}</b><small>${gm.players}・${gm.time}・プレイ${gm.count()}回</small><span>${gm.desc}</span></div>
-      <div class="gact"><button type="button" class="grbtn" data-grule="${gm.id}">ルール</button>${a ? `<button class="btn" data-gopen="${gm.id}">対戦中・入る</button>` : `<button class="btn" data-gstart="${gm.id}">遊ぶ</button>`}</div></div>`; }).join("")}
+    <div class="glist">${GAMES.map(gm => { const lv = gm.live(); return `<div class="gcard ${lv.length ? "glive" : ""}">${gm.icon}<div class="gb"><b>${gm.name}</b><small>${gm.players}・${gm.time}・プレイ${gm.count()}回</small><span>${gm.desc}</span></div>
+      ${lv.length ? `<div class="glives">${lv.map(g => { const mine = !!me && (g.players || []).includes(me); return `<div class="glv ${mine ? "mine" : ""}"><span class="gld"><em>${mine ? "参加中" : "対戦中"}</em>${(g.players || []).map(p => `<i style="--pc:${pcolor(p)}">${esc(pname(p))}</i>`).join("")}</span>${mine ? `<button class="btn" data-gopen="${gm.id}" data-gid="${g.id}">参加する</button>` : `<button class="btn watch" data-gwatch="${gm.id}" data-gid="${g.id}">観戦する</button>`}</div>`; }).join("")}</div>` : ""}
+      <div class="gact"><button type="button" class="grbtn" data-grule="${gm.id}">ルール</button><button class="btn ${lv.length ? "sub2" : ""}" data-gstart="${gm.id}">${lv.length ? "新しく遊ぶ" : "遊ぶ"}</button></div></div>`; }).join("")}
       <div class="gcard gsoon"><span class="gic more">＋</span><div class="gb"><b>新しいゲーム</b><span>ここにゲームが増えていきます</span></div></div></div>`);
   s.querySelectorAll("[data-gstart]").forEach(b => b.onclick = () => GAMES.find(x => x.id === b.dataset.gstart).start());
-  s.querySelectorAll("[data-gopen]").forEach(b => b.onclick = () => { const gm = GAMES.find(x => x.id === b.dataset.gopen); closeSheet(); gm.open(gm.active()); });
+  s.querySelectorAll("[data-gopen],[data-gwatch]").forEach(b => b.onclick = () => { const gm = GAMES.find(x => x.id === (b.dataset.gopen || b.dataset.gwatch)), g = gm.live().find(x => x.id === b.dataset.gid) || gm.active(); if (!g) return; closeSheet(); gm.open(g); });
 }
 /* ログの名前をプレイヤーカラーに */
 function colorizeLog(players, txt){
@@ -5552,17 +5608,14 @@ function drawNeu(){
   const last = (g.discard || [])[(g.discard || []).length - 1];
   const playing = g.status === "playing" && t.pid;
   const nextP = playing ? (t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, t.pid, g.dir)) : null;
-  // 回る順に並べた席（今の人が先頭）。脱落者は最後にグレーで
-  const ring = []; if (playing){ let p = t.pid; const n = neuAlive(g).length; for (let k = 0; k < n; k++){ ring.push(p); p = neuNext(g, p, g.dir); } }
-  else ring.push(...neuAlive(g));
-  const outs = g.players.filter(p => (g.chips[p] || 0) <= 0);
   const pill = (p, k) => {
     const c = g.chips[p] || 0, out = c <= 0, on = playing && t.pid === p;
     return `<div class="np ${on ? "on" : ""} ${p === nextP ? "nx" : ""} ${out ? "out" : ""}" style="--pc:${pcolor(p)}">
       ${on ? `<em class="tg now">今</em>` : p === nextP ? `<em class="tg">次</em>` : ""}${p === g.dealer ? `<em class="tg dl">親</em>` : ""}
       <b>${esc(pname(p))}</b><span class="nc">${out ? "脱落" : `<i class="on">${"●".repeat(c)}</i><i>${"●".repeat(Math.max(0, 3 - c))}</i>`}</span>${out ? "" : `<small>${(g.hands[p] || []).length}枚</small>`}</div>`;
   };
-  const seats = ring.map(pill).join(`<span class="nar">›</span>`) + outs.map(pill).join("");
+  // 席は固定（参加順）。「今」「次」の印だけが動く。脱落者もその位置のままグレーで
+  const seats = g.players.map(pill).join(`<span class="nar ${g.dir === 1 ? "" : "ccw"}">›</span>`);
   // 合計のゲージ
   const pct = Math.max(0, Math.min(1, g.total / NEU_LIMIT)), C = 2 * Math.PI * 62;
   const gcol = g.total >= NEU_LIMIT ? "#E2364F" : g.total >= 90 ? "#FF8A3D" : g.total >= 70 ? "#E8B12A" : "#1FB3BF";
@@ -5584,7 +5637,7 @@ function drawNeu(){
       bottom += `<div class="nhand">${mine.length ? mine.map((c, i) => { const ok = myTurn && neuLegal(g, c); return `<button class="nslot ${ok ? "ok" : "ng"}" style="--d:${i * .25}s" data-play="${i}" ${ok ? "" : "disabled"}>${neuCardHtml(c)}</button>`; }).join("") : `<p class="note">手札がありません</p>`}</div>`;
       if (myTurn){
         const any = mine.some(c => neuLegal(g, c));
-        bottom += `<div class="nbtns"><button class="nb draw" id="nDraw" ${canDraw ? "" : "disabled"}>引く${t.played ? `<small>${t.drawn}/${t.played}</small>` : ""}</button><button class="nb end" id="nEnd" ${t.done ? "" : "disabled"}>ターン終了</button><button class="nb lose ${!any && !t.done ? "pulse" : ""}" id="nLose">負け宣言</button></div>`;
+        bottom += `<div class="nbtns"><button class="nb draw" id="nDraw" ${canDraw ? "" : "disabled"}>引く${t.played ? `<small class="cnt">${t.drawn}/${t.played}</small>` : ""}</button><button class="nb end" id="nEnd" ${t.done ? "" : "disabled"}>ターン終了</button><button class="nb lose ${!any && !t.done ? "pulse" : ""}" id="nLose">負け宣言</button></div>`;
       } else bottom += `<div class="nwait">ほかの人の番です</div>`;
     } else bottom += `<div class="nwait">観戦中（この対戦に参加していません）</div>`;
     // 脱落した人だけ、ほかの人の手札が見える
@@ -5596,7 +5649,7 @@ function drawNeu(){
   let over = "";
   if (g.status === "round_over" || g.status === "finished"){
     const fin = g.status === "finished";
-    over = `<div class="nover" style="--c:${pcolor(fin ? g.winner : g.loser)}"><span class="ob"></span><div class="k">${fin ? "優勝" : `第${g.round}回戦 終了`}</div>
+    over = `<div class="nover ${fin ? "" : "gloom"}" style="--c:${pcolor(fin ? g.winner : g.loser)}">${fin ? `<span class="ob"></span>` : `<span class="gcloud" aria-hidden="true"><i></i><i></i><i></i></span><span class="grain" aria-hidden="true">${Array.from({ length: 18 }, (_, k) => `<i style="left:${(k * 37) % 100}%;--d:${(k * .13) % 1.2}s;--h:${18 + (k * 7) % 22}px"></i>`).join("")}</span>`}<div class="k">${fin ? "優勝" : `第${g.round}回戦 終了`}</div>
       <div class="p">${esc(pname(fin ? g.winner : g.loser))}</div>
       <div class="y">${fin ? "最後まで生き残った！" : `チップを1枚失った${(g.chips[g.loser] || 0) <= 0 ? "…脱落" : `（残り${g.chips[g.loser]}枚）`}`}</div>
       <div class="btns">${fin ? `<button class="btn" id="nClose2">閉じる</button>` : `<button class="btn" id="nNext">次の回戦へ</button>`}</div></div>`;
@@ -5604,7 +5657,7 @@ function drawNeu(){
   el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span><i style="left:55%;top:82%;font-size:51px;color:#1B1838;--dur:7.9s;--dl:-2.2s;--dx:26px;--dy:-80px;--rot:-7deg">♠</i><i style="left:60%;top:63%;font-size:66px;color:#E2364F;--dur:6.6s;--dl:-6.7s;--dx:18px;--dy:-36px;--rot:-45deg">♦</i><i style="left:89%;top:52%;font-size:38px;color:#1B1838;--dur:10.9s;--dl:-5.4s;--dx:32px;--dy:-53px;--rot:-30deg">♣</i><i style="left:17%;top:34%;font-size:31px;color:#E2364F;--dur:6.8s;--dl:-6.1s;--dx:58px;--dy:-43px;--rot:-42deg">♥</i><i style="left:84%;top:53%;font-size:34px;color:#E8B12A;--dur:12.4s;--dl:-2.5s;--dx:-32px;--dy:-34px;--rot:3deg">★</i><i style="left:7%;top:38%;font-size:41px;color:#1FB3BF;--dur:8.8s;--dl:-4.1s;--dx:-55px;--dy:-68px;--rot:40deg">✦</i><i style="left:-4%;top:56%;font-size:31px;color:#1B1838;--dur:12.3s;--dl:-10.1s;--dx:-43px;--dy:-79px;--rot:-20deg">♠</i><i style="left:50%;top:18%;font-size:66px;color:#E2364F;--dur:6.0s;--dl:-9.2s;--dx:-35px;--dy:-68px;--rot:-8deg">♦</i><i style="left:-3%;top:14%;font-size:36px;color:#1B1838;--dur:9.8s;--dl:-0.2s;--dx:-50px;--dy:-44px;--rot:13deg">♣</i><i style="left:64%;top:29%;font-size:54px;color:#E2364F;--dur:6.5s;--dl:-2.3s;--dx:37px;--dy:-75px;--rot:39deg">♥</i><i style="left:70%;top:22%;font-size:39px;color:#E8B12A;--dur:12.6s;--dl:-8.6s;--dx:-55px;--dy:-77px;--rot:-16deg">★</i><i style="left:67%;top:91%;font-size:66px;color:#1FB3BF;--dur:12.0s;--dl:-8.9s;--dx:34px;--dy:-44px;--rot:-46deg">✦</i><i style="left:11%;top:55%;font-size:43px;color:#1B1838;--dur:7.1s;--dl:-6.1s;--dx:34px;--dy:-57px;--rot:36deg">♠</i><i style="left:62%;top:79%;font-size:64px;color:#E2364F;--dur:11.4s;--dl:-1.0s;--dx:-16px;--dy:-73px;--rot:24deg">♦</i><i style="left:42%;top:61%;font-size:41px;color:#1B1838;--dur:8.8s;--dl:-11.8s;--dx:13px;--dy:-33px;--rot:-48deg">♣</i><i style="left:44%;top:81%;font-size:49px;color:#E2364F;--dur:6.0s;--dl:-1.3s;--dx:-32px;--dy:-52px;--rot:-16deg">♥</i></div>
     <div class="ntop"><b class="nt">NEU</b><span class="nrd">ROUND ${g.round}</span><span class="ndk">山札 ${deckN}</span><button class="nmini" id="nMenu" aria-label="メニュー">…</button><button class="nmini" id="nClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
-    <div class="nstage ${g.total >= 90 ? "hot" : ""} ${g.total >= NEU_LIMIT ? "max" : ""}">
+    <div class="nstage ${g.total >= 90 ? "hot" : ""} ${g.total >= NEU_LIMIT ? "max" : ""}">${playing && t.need === 2 && !t.done ? `<div class="ndbl" style="--pc:${pcolor(t.pid)}"><b>×2</b><span>DOUBLE</span><small>${esc(t.pid === me ? "あなた" : pname(t.pid))}は あと${2 - t.played}枚</small></div>` : playing && t.dbl ? `<div class="ndbl nxt" style="--pc:${pcolor(nextP)}"><b>×2</b><span>DOUBLE</span><small>次の${esc(nextP === me ? "あなた" : pname(nextP))}は2枚</small></div>` : ""}
       <div class="ngauge ${bump ? "bump" : ""}">
         <svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="74" class="dash ${g.dir === 1 ? "cw" : "ccw"}"/><circle cx="80" cy="80" r="62" class="trk"/><circle cx="80" cy="80" r="62" class="bar" style="stroke:${gcol};stroke-dasharray:${C};stroke-dashoffset:${C * (1 - pct)}"/></svg>
         <div class="nv"><small>合計</small><b class="num ${String(g.total).length >= 4 ? "l4" : String(g.total).length === 3 ? "l3" : ""}" id="ntot">${g.total}</b><small>/ 101</small></div>
@@ -5767,7 +5820,8 @@ function csFx(kind, big, small){
 const CS_H = { 2: 3, 3: 5, 4: 7, 5: 9, 6: 11, 7: 13, 8: 11, 9: 9, 10: 7, 11: 5, 12: 3 };
 const CS_COLS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const csGames = () => db.cs_games || [];
-const csActive = () => csGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const csLive = () => csGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const csActive = () => pickMine(csLive());
 const csById = id => csGames().find(g => g.id === id);
 const csNext = (g, pid) => g.players[(g.players.indexOf(pid) + 1) % g.players.length];
 const csCur = (g, pid, col, temp) => (temp && temp[col] != null) ? temp[col] : ((g.pos[pid] || {})[col] || 0);
@@ -5795,6 +5849,8 @@ function csOptions(g, pid, temp, dice){
       if (csApply(g, pid, temp, [y])) add([y]);
     }
   });
+  out.forEach(o => o.sort((x, y) => x - y));
+  out.sort((a, b) => a[0] - b[0] || (a[1] ?? 99) - (b[1] ?? 99) || b.length - a.length);
   return out;
 }
 async function csSave(g, patch, logLine, quiet){
@@ -5837,6 +5893,7 @@ let csId = null, csBusy = false, csPrevRoll = null, csReveal = null, csGuide = f
 function openCs(id){ csId = id; csPrevRoll = null; $("#cs").hidden = false; document.body.style.overflow = "hidden"; drawCs(); }
 function closeCs(){ csId = null; $("#cs").hidden = true; document.body.style.overflow = ""; render(); }
 const dieFace = n => `<span class="die d${n}">${Array.from({ length: 9 }, (_, i) => `<i class="${[[4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]][n - 1].includes(i) ? "on" : ""}"></i>`).join("")}</span>`;
+let csPrevClaim = {};
 function drawCs(){
   setTimeout(cpuKick, 0);
   if (cpuSkipping) return;
@@ -5844,6 +5901,15 @@ function drawCs(){
   const g = csById(csId); if (!g) return closeCs();
   const el = $("#cs"), t = g.turn || {}, myTurn = g.status === "playing" && t.pid === me;
   const owned = p => Object.values(g.claimed).filter(x => x === p).length;
+  {
+    const pc = csPrevClaim[g.id], now = g.claimed || {};
+    if (pc){
+      const neu = Object.keys(now).filter(c => !pc[c]);
+      if (g.status === "finished" && !pc.__fin) setTimeout(() => csFx("claim", "キャントストップ 優勝！", pname(g.winner)), 0);
+      else if (neu.length) setTimeout(() => csFx("claim", `${neu.join("・")}レーン獲得！`, pname(now[neu[0]])), 0);
+    }
+    csPrevClaim[g.id] = { ...now, __fin: g.status === "finished" };
+  }
   const seats = g.players.map(p => `<div class="np ${t.pid === p && g.status === "playing" ? "on" : ""}" style="--pc:${pcolor(p)}">${t.pid === p && g.status === "playing" ? `<em class="tg now">今</em>` : ""}<b>${esc(pname(p))}</b><span class="cstars">${"★".repeat(owned(p))}<i>${"★".repeat(Math.max(0, 3 - owned(p)))}</i></span></div>`).join(`<span class="nar">›</span>`);
   // ボード
   const temp = t.temp || {};
@@ -5872,9 +5938,12 @@ function drawCs(){
     bottom += `<div class="cdice">${t.dice && !hidden ? t.dice.map(dieFace).join("") : hidden ? `<span class="note">ダイスを振っています…</span>` : `<span class="note">ダイスを振ってください</span>`}</div>`;
     if (hidden){ bottom += `<div class="copts ghost"><span>…</span></div>`; }
     else if (t.phase === "choose"){
-      bottom += `<div class="copts ${csGuide ? "guide" : ""}">${(t.opts || []).map((o, i) => `<button class="copt" data-opt="${i}" ${myTurn ? "" : "disabled"}>${o.map(x => `<b>${x}</b>`).join("<i>と</i>")}${o.length === 1 ? "<small>だけ</small>" : ""}</button>`).join("")}</div>`;
+      bottom += `<div class="copts ${csGuide ? "guide" : ""}">${(t.opts || []).map((o, i) => `<button class="copt" data-opt="${i}" ${myTurn ? "" : "disabled"}>${o.map(x => `<b>${x}</b>`).join("<i>と</i>")}</button>`).join("")}</div>`;
     } else if (t.phase === "bust"){
       bottom += `<div class="cbust">強制終了！<small>この番に進めた分はなくなりました</small></div>${myTurn ? `<div class="nbtns one"><button class="nb end" id="cPass">番を終える</button></div>` : ""}`;
+    } else if (!myTurn && t.phase === "decide" && (t.lastOpts || []).length){
+      // ほかの人の画面：どの組み合わせを選んだか光らせる
+      bottom += `<div class="copts picked">${t.lastOpts.map((o, i) => `<button class="copt ${i === t.lastPick ? "pk" : "no"}" disabled>${o.map(x => `<b>${x}</b>`).join("<i>と</i>")}${i === t.lastPick ? `<em>選択</em>` : ""}</button>`).join("")}</div><div class="nwait">${esc(pname(t.pid))}が考え中…</div>`;
     } else if (myTurn){
       bottom += t.phase === "roll" && !Object.keys(temp).length
         ? `<div class="nbtns one"><button class="nb end big2" id="cRoll">ダイスを振る</button></div>`
@@ -5893,7 +5962,15 @@ function drawCs(){
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (csBusy) return; csBusy = true; try { const cur = csById(csId); if (cur) await fn(cur); } finally { csBusy = false; } };
   on("cClose", closeCs); on("cClose2", closeCs); on("cMenu", () => csMenu(g));
-  on("cRoll", act(csRoll)); on("cStop", act(csStop)); on("cPass", act(csPass));
+  on("cRoll", act(csRoll)); on("cPass", act(csPass));
+  on("cStop", () => {   // 確定の前に確認
+    const bg = document.createElement("div"); bg.className = "kgpop cspop";
+    bg.innerHTML = `<div class="kgpopin"><b class="csq">ここで確定して、番を終えますか？</b><small>確定すると、この番に進めた分がボードに残ります</small><div class="nbtns two"><button class="nb draw" data-x="no">やめない</button><button class="nb end go" data-x="yes">確定する</button></div></div>`;
+    el.appendChild(bg);
+    bg.onclick = e => { if (e.target === bg) bg.remove(); };
+    bg.querySelector('[data-x="no"]').onclick = () => bg.remove();
+    bg.querySelector('[data-x="yes"]').onclick = () => { bg.remove(); act(csStop)(); };
+  });
   el.querySelectorAll("[data-opt]").forEach(b => b.onclick = act(cur => csChoose(cur, Number(b.dataset.opt))));
 }
 function csMenu(g){
@@ -5910,12 +5987,12 @@ async function csRoll(g, who = me){
     await csSave(g, { turn: { ...t, dice, opts: [], phase: "bust" } }, `${pname(who)}：${dice.join("・")} → 強制終了！`, who !== me);
     return;
   }
-  await csSave(g, { turn: { ...t, dice, opts, phase: "choose" } }, `${pname(who)}：${dice.join("・")}`, who !== me);
+  await csSave(g, { turn: { ...t, dice, opts, phase: "choose", lastOpts: null, lastPick: null } }, `${pname(who)}：${dice.join("・")}`, who !== me);
 }
 async function csChoose(g, i, who = me){
   const t = g.turn, o = (t.opts || [])[i]; if (!o || t.pid !== who) return;
   const temp = csApply(g, who, t.temp || {}, o); if (!temp) return;
-  await csSave(g, { turn: { ...t, temp, opts: [], phase: "decide" } }, `${pname(who)}：${o.join("と")}を進めた`, who !== me);
+  await csSave(g, { turn: { ...t, temp, opts: [], phase: "decide", lastOpts: t.opts, lastPick: i } }, `${pname(who)}：${o.join("と")}を進めた`, who !== me);
 }
 async function csStop(g, who = me){
   const t = g.turn; if (t.pid !== who) return;
@@ -5925,11 +6002,10 @@ async function csStop(g, who = me){
   const mine = Object.values(claimed).filter(x => x === who).length;
   if (mine >= 3){
     await csSave(g, { pos, claimed, status: "finished", winner: who, turn: { ...t, phase: "done" } }, `${pname(who)}が確定。${got.length ? `${got.join("・")}レーンを獲得！` : ""}3本制覇で優勝！`, who !== me);
-    csFx("claim", "キャントストップ 優勝！", pname(who)); return;
+    return;
   }
   const nx = csNext(g, who);
   if (await csSave(g, { pos, claimed, turn: { pid: nx, temp: {}, dice: null, phase: "roll", opts: [] } }, `${pname(who)}が確定${got.length ? `。${got.join("・")}レーンを獲得！` : ""} → ${pname(nx)}の番`, who !== me)){
-    if (got.length) csFx("claim", `${got.join("・")}レーン獲得！`, pname(who));
     pushCall({ type: "game_turn", game: "キャントストップ", to: nx });
   }
 }
@@ -5948,7 +6024,8 @@ const sbSuit = c => c === "JK" ? null : c[0];
 const sbRank = c => c === "JK" ? null : Number(c.slice(1));
 const sbRankTxt = r => ({ 1: "A", 11: "J", 12: "Q", 13: "K" }[r] || String(r));
 const sbGames = () => db.sb_games || [];
-const sbActive = () => sbGames().filter(g => g.status === "playing" || g.status === "round_over").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const sbLive = () => sbGames().filter(g => g.status === "playing" || g.status === "round_over").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const sbActive = () => pickMine(sbLive());
 const sbById = id => sbGames().find(g => g.id === id);
 const sbNext = (g, pid) => g.players[(g.players.indexOf(pid) + 1) % g.players.length];
 const sbSort = h => h.slice().sort((a, b) => (sbRank(a) ?? 99) - (sbRank(b) ?? 99) || String(a).localeCompare(String(b)));
@@ -5992,8 +6069,8 @@ function sbAttach(m, c){
   // 7が1枚だけの役：同じマークの6・8を付けると連番になる
   if (m.type === "set" && m.cards.length === 1 && m.rank === 7 && c !== "JK"){
     const s7 = sbSuit(m.cards[0]), r = sbRank(c);
-    if (sbSuit(c) === s7 && r === 6) return { type: "run", suit: s7, lo: 6, hi: 7, cards: [c, m.cards[0]] };
-    if (sbSuit(c) === s7 && r === 8) return { type: "run", suit: s7, lo: 7, hi: 8, cards: [m.cards[0], c] };
+    if (sbSuit(c) === s7 && r === 6) return { ...m, type: "run", suit: s7, lo: 6, hi: 7, cards: [c, m.cards[0]] };   // ...m で持ち主（owner）を引き継ぐ
+    if (sbSuit(c) === s7 && r === 8) return { ...m, type: "run", suit: s7, lo: 7, hi: 8, cards: [m.cards[0], c] };
   }
   if (m.type === "set") return (c === "JK" || sbRank(c) === m.rank) ? { ...m, cards: [...m.cards, c] } : null;
   if (c === "JK"){ if (m.hi < 13) return { ...m, hi: m.hi + 1, cards: [...m.cards, c] }; if (m.lo > 1) return { ...m, lo: m.lo - 1, cards: [c, ...m.cards] }; return null; }
@@ -6093,7 +6170,7 @@ function drawSb(){
     return `<div class="sbz ${op ? "op" : "cl"} ${on ? "on" : ""}" style="--pc:${pcolor(p)}"><div class="zh"><b>${esc(pname(p))}</b><small>${(g.hands[p] || []).length}枚</small><em class="zs">${op ? "✓ OPEN" : "未公開"}</em></div><div class="zb">${ms || `<span class="zl"><i></i>まだ公開なし</span>`}</div></div>`;
   }).join("");
   const melds = `<div class="sbtable" style="--cols:${g.players.length <= 2 ? 1 : 2}">${zones}</div>`;
-  let mid = `<div class="sbmid"><div class="sbpile"><div class="deckc"><span>山札</span><b class="num">${(g.deck || []).length}</b></div><div class="disc">${top ? sbCardHtml(top) : `<span class="pcd empty">捨て札</span>`}<small>捨て札</small></div></div></div>`;
+  let mid = `<div class="sbmid"><div class="sbpile"><div class="disc"><div class="deckc"><b class="num">${(g.deck || []).length}</b></div><small>山札</small></div><div class="disc">${top ? sbCardHtml(top) : `<span class="pcd empty"></span>`}<small>捨て札</small></div></div></div>`;
   let claimBar = "";
   if (cl && g.status === "playing"){
     const canPon = hand && hand.length >= 3 && cl.from !== me && sbPonCards(hand, cl.card) && !(cl.claims || []).some(x => x.pid === me);
@@ -6124,7 +6201,7 @@ function drawSb(){
       <div class="sbres">${g.players.map(p => `<span style="--pc:${pcolor(p)}"><b>${esc(pname(p))}</b><em>${rr.pen && rr.pen[p] ? `−${rr.pen[p]}` : p === rr.winner ? "上がり" : "0"}</em><strong class="num">${g.scores[p] || 0}点</strong></span>`).join("")}</div>
       <div class="btns">${fin ? `<button class="btn" id="bClose2">閉じる</button>` : `<button class="btn" id="bNext">次のラウンドへ</button>`}</div></div>`;
   }
-  const lg = (g.log || []).slice(-2).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
+  const lg = sbLogLines(g).map(m => `<li>${colorizeLog(g.players, m)}</li>`).join("");
   el.innerHTML = `<div class="nbg" aria-hidden="true"><span class="nrays"></span>${["♠", "♥", "♦", "♣", "7", "★", "♥", "♠"].map((x, i) => `<i style="left:${(i * 13 + 5) % 92}%;top:${(i * 31 + 6) % 90}%;font-size:${28 + (i % 3) * 20}px;color:${i % 2 ? "#E2364F" : "#1B1838"};--dur:${7 + i}s;--dl:-${i}s;--dx:${(i % 2 ? 1 : -1) * 40}px;--dy:-50px;--rot:${i * 20 - 60}deg">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt sbt">SEVEN BRIDGE</b><span class="nrd sbr"><small>ROUND</small><b>${g.round}</b><i>/${g.rounds}</i></span><span class="ndk"></span><button class="nmini" id="bMenu" aria-label="メニュー">…</button><button class="nmini" id="bClose" aria-label="閉じる">×</button></div>
     <div class="nseats2">${seats}</div>
@@ -6153,6 +6230,17 @@ function drawSb(){
       if ((rest <= 0 && nx === me) || rest <= -2500){ clearInterval(sbTimer); act(sbResolve)(); }
     }, 300);
   }
+}
+// 直近の流れ：直前2人のプレイヤーの行動をすべて（新しい順）
+function sbLogLines(g){
+  const log = g.log || [], byLen = g.players.slice().sort((a, b) => pname(b).length - pname(a).length), seen = [], out = [];
+  for (let i = log.length - 1; i >= 0 && out.length < 16; i--){
+    const m = log[i].m, who = byLen.find(p => m.startsWith(pname(p)));
+    if (who && !seen.includes(who)){ if (seen.length >= (seen[0] === (g.turn || {}).pid ? 3 : 2)) break; seen.push(who); }   // 今の番の人＋直前2人
+    out.push(m);
+    if (!who && /ラウンド開始/.test(m)) break;
+  }
+  return out;
 }
 function sbMenu(g){
   const s = openSheet("セブンブリッジのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
@@ -6304,7 +6392,8 @@ async function sbDiscardAs(g, c0, who){
 }
 async function sbClaim(g, type, who = me){
   const cl = g.claim; if (!cl || (cl.claims || []).some(x => x.pid === who)) return;
-  await sbSave(g, { claim: { ...cl, claims: [...(cl.claims || []), { pid: who, type }] } }, `${pname(who)}：${type === "pon" ? "ポン" : "チー"}！`);
+  const ok = await sbSave(g, { claim: { ...cl, claims: [...(cl.claims || []), { pid: who, type }] } }, `${pname(who)}：${type === "pon" ? "ポン" : "チー"}！`);
+  if (ok && type === "pon"){ const cur = sbById(g.id) || g; if (cur.claim) await sbResolve(cur); }
 }
 async function sbResolve(g){
   const cl = g.claim; if (!cl) return;
@@ -6333,7 +6422,8 @@ async function sbNextRound(g){
 /* ===================== スカル ===================== */
 /* ディスク：F=花（バラ） / S=ドクロ。各自 花3枚＋ドクロ1枚。チャレンジを2回成功させるか、最後の1人になったら勝ち */
 const skGames = () => db.sk_games || [];
-const skActive = () => skGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const skLive = () => skGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const skActive = () => pickMine(skLive());
 const skById = id => skGames().find(g => g.id === id);
 const skStack = (g, p) => ((g.stacks || {})[p] || []);
 const skOwn = (g, p) => ((g.discs || {})[p] || []);
@@ -6354,7 +6444,7 @@ function skMyTurn(g){
   if (g.phase === "challenge") return !!g.ch && g.ch.pid === me;
   return false;
 }
-const skDisc = (d, cls = "", extra = "") => `<span class="skd ${d === "S" ? "ks" : d === "F" ? "kf" : "back"} ${cls}" ${extra}>${d === "S" || d === "F" ? `<em>${skFace(d)}</em>` : ""}</span>`;
+const skDisc = (d, cls = "", extra = "") => `<span class="skd ${d === "S" ? "dks" : d === "F" ? "dkf" : "back"} ${cls}" ${extra}>${d === "S" || d === "F" ? `<em>${skFace(d)}</em>` : ""}</span>`;
 
 /* 保存：同時に操作して重なったら、最新の状態で自動でやり直す */
 async function skCommit(id, fn){
@@ -6499,7 +6589,7 @@ function skFx(kind, pid, big, small, extra){
       + Array.from({ length: 40 }, () => `<i class="rain em" style="--x:${rnd(-3, 100).toFixed(1)}vw;--s:1;--d:${rnd(0, 1.4).toFixed(2)}s;--t:${rnd(2.4, 3.4).toFixed(2)}s;--sw:${rnd(-40, 40).toFixed(0)}px;--r:${rnd(-500, 500).toFixed(0)}deg;font-size:${rnd(16, 30).toFixed(0)}px">🌸</i>`).join("");
     const cannon = side => Array.from({ length: 45 }, () => `<i class="cn ${Math.random() < .35 ? "rb" : ""}" style="--l:${side ? "100%" : "0%"};--x:${((side ? -1 : 1) * rnd(60, 380)).toFixed(0)}px;--y:${(-rnd(300, 680)).toFixed(0)}px;--c:${pick()};--s:${rnd(.6, 1.4).toFixed(2)};--d:${rnd(.1, .4).toFixed(2)}s;--t:${rnd(2.2, 3.2).toFixed(2)}s;--r:${rnd(-1080, 1080).toFixed(0)}deg"></i>`).join("");
     const fw = (l, tp, d) => `<div class="fw" style="--l:${l}%;--tp:${tp}%">${Array.from({ length: 24 }, (_, i) => { const a = i / 24 * Math.PI * 2, r = rnd(60, 110); return `<i style="--x:${(Math.cos(a) * r).toFixed(0)}px;--y:${(Math.sin(a) * r).toFixed(0)}px;--c:${pick()};--d:${d}s"></i>`; }).join("")}</div>`;
-    const flips = ((extra && extra.flips) || []).slice(-6).map((f, i) => `<span class="sd open ${f.d === "S" ? "ks" : "kf"}" style="--dz:44px;--dd:${(.5 + i * .12).toFixed(2)}s"><em>${skFace(f.d)}</em></span>`).join("");
+    const flips = ((extra && extra.flips) || []).slice(-6).map((f, i) => `<span class="sd open ${f.d === "S" ? "dks" : "dkf"}" style="--dz:44px;--dd:${(.5 + i * .12).toFixed(2)}s"><em>${skFace(f.d)}</em></span>`).join("");
     const chars = ["成", "功"].map((c, i) => `<span style="--d:${(.15 + i * .16).toFixed(2)}s">${c}</span>`).join("") + `<span class="ex" style="--d:.5s">!!</span>`;
     html = `<span class="wash"></span><span class="fl"></span>${rings(4)}${fw(18, 16, .4)}${fw(82, 20, .7)}${fw(22, 70, 1)}${fw(78, 66, 1.3)}${cannon(0)}${cannon(1)}${rain}
       <div class="tx" style="animation:none"><div class="bigt">${chars}</div>${small ? `<div class="who"><i>●</i> ${esc(small)}</div>` : ""}${extra && extra.wins === 1 ? `<div class="rbig">REACH!</div>` : ""}</div>${flips ? `<div class="frow">${flips}</div>` : ""}`;
@@ -6586,16 +6676,18 @@ function drawSk(){
   const seats = g.players.map(p => {
     const out = !skAliveP(g, p), on = playing && !out && (ph === "setup" ? !skStack(g, p).length : actor === p);
     const tag = (g.passed || []).includes(p) && ph === "bid" ? `<em class="tg no">PASS</em>` : bid && bid.pid === p && (ph === "bid" || ph === "challenge") ? `<em class="tg ok">宣言${bid.n}</em>` : "";
-    return `<div class="np ${on ? "on" : ""} ${out ? "out" : ""} ${wins(p) ? "rch" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "setup" ? "待" : "今"}</em>` : ""}${tag}<b>${(t.start || null) === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${out ? "脱落" : `持ち${skOwn(g, p).length}`}</small></span></div>`;
+    return `<div class="np ${on ? "on" : ""} ${out ? "out" : ""} ${wins(p) ? "rch" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "setup" ? "待" : "今"}</em>` : playing && !out && ph === "setup" ? `<em class="tg now done">✓</em>` : ""}${tag}<b>${(t.start || null) === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${out ? "脱落" : `持ち${skOwn(g, p).length}`}</small></span></div>`;
   }).join(`<span class="nar">›</span>`);
   // テーブル：プレイヤーごとの横長フィールド（ディスクは置いた順に左から右へ並べる。自分は一番下）
   const n = g.players.length, base = Math.max(0, g.players.indexOf(me));
-  const canFlip = p => ph === "challenge" && ch && ch.pid === me && playing && skStack(g, p).length > ((ch.fc || {})[p] || 0) && (p === me || ((ch.fc || {})[me] || 0) >= skStack(g, me).length);
+  const flipOk = p => ph === "challenge" && ch && playing && skStack(g, p).length > ((ch.fc || {})[p] || 0) && (p === ch.pid || ((ch.fc || {})[ch.pid] || 0) >= skStack(g, ch.pid).length);
+  const canFlip = p => flipOk(p) && ch.pid === me;
   const field = (p, mine) => {
-    const st = skStack(g, p), nDown = st.length - (ch ? ((ch.fc || {})[p] || 0) : 0), cf = canFlip(p);
-    const discs = st.map((d, j) => j < nDown
-      ? `<span class="sd back ${cf && j === nDown - 1 ? "top" : ""}" style="--pc:${pcolor(p)}">${p === me ? `<em>${skFace(d)}</em>` : ""}</span>`
-      : `<span class="sd open ${d === "S" ? "ks" : "kf"}"><em>${skFace(d)}</em></span>`).join("");
+    const st = skStack(g, p), nDown = st.length - (ch ? ((ch.fc || {})[p] || 0) : 0), cf = canFlip(p), fo = flipOk(p);
+    // 置いた順の番号（1＝最初に伏せた）。めくれる一番上は光らせる（チャレンジしていない人の画面でも）
+    const discs = st.map((d, j) => (j < nDown
+      ? `<span class="sd back ${fo && j === nDown - 1 ? `top ${cf ? "" : "watch"}` : ""}" style="--pc:${pcolor(p)}">${p === me ? `<em>${skFace(d)}</em>` : ""}<u class="sdn">${j + 1}</u></span>`
+      : `<span class="sd open ${d === "S" ? "dks" : "dkf"}"><em>${skFace(d)}</em><u class="sdn">${j + 1}</u></span>`)).join("");
     const isStart = (t.start || null) === p, isPass = ph === "bid" && (g.passed || []).includes(p);
     const out = !skAliveP(g, p), on = playing && !out && (ph === "setup" ? !st.length : actor === p);
     return `<div class="skp ${mine ? "me" : ""} ${cf ? "can" : ""} ${on ? "on" : ""} ${out ? "out" : ""} ${isPass ? "passed" : ""} ${wins(p) ? "rch" : ""}" style="--pc:${pcolor(p)}" ${cf ? `data-flip="${p}"` : ""}>
@@ -6635,7 +6727,7 @@ function drawSk(){
     }
     const banPid = ph === "challenge" && ch ? ch.pid : ph === "result" && res ? res.pid : ph === "setup" ? me : t.pid;
     bottom += `<div class="nturn ${mt ? "mine" : ""}" style="--pc:${pcolor(banPid || me)}">${msg}</div>`;
-    if (ph === "result" && res && res.type === "fail" && res.pid === me) bottom += `<div class="sklost">失ったディスク：<span class="sd open ${res.lost === "S" ? "ks" : "kf"}" style="--dz:28px"><em>${skFace(res.lost)}</em></span><b>${res.lost === "S" ? "ドクロ" : "花"}</b>（ほかの人には見えません）</div>`;
+    if (ph === "result" && res && res.type === "fail" && res.pid === me) bottom += `<div class="sklost">失ったディスク：<span class="sd open ${res.lost === "S" ? "dks" : "dkf"}" style="--dz:28px"><em>${skFace(res.lost)}</em></span><b>${res.lost === "S" ? "ドクロ" : "花"}</b>（ほかの人には見えません）</div>`;
     else if (ph === "result" && res && res.type === "fail") bottom += `<div class="sklost">${esc(pname(res.pid))}はディスクを1枚失った${res.out ? "…脱落" : ""}</div>`;
     if (alive){
       const hand = skHand(g, me), canPick = ph === "setup" ? !skStack(g, me).length : ph === "place" && mt;
@@ -6722,7 +6814,8 @@ const coDeck = () => {
   return d;
 };
 const coGames = () => db.co_games || [];
-const coActive = () => coGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const coLive = () => coGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const coActive = () => pickMine(coLive());
 const coById = id => coGames().find(g => g.id === id);
 const coLoss = (g, p) => ((g.lives || {})[p] || 0);
 const coAliveP = (g, p) => coLoss(g, p) < 3;
@@ -7304,7 +7397,8 @@ function kgResolve(plays){
   return { ...b, next: plays[b.w].p, loot };
 }
 const kgGames = () => db.kg_games || [];
-const kgActive = () => kgGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const kgLive = () => kgGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const kgActive = () => pickMine(kgLive());
 const kgById = id => kgGames().find(g => g.id === id);
 const kgDeckN = g => kgDeck(kgOpts(g)).length;
 const kgCards = g => Math.min(g.round || 1, Math.floor(kgDeckN(g) / g.players.length));
@@ -8768,7 +8862,8 @@ function dmResult(st){
 
 /* ---- 保存 ---- */
 const dmGames = () => db.dm_games || [];
-const dmActive = () => dmGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at))[0] || null;
+const dmLive = () => dmGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const dmActive = () => pickMine(dmLive());
 const dmById = id => dmGames().find(g => g.id === id);
 function dmMyTurn(g){
   if (!g || g.status !== "playing" || !me || !g.st) return false;
@@ -8930,7 +9025,8 @@ CPU_AI.sb_games = g => {
       ((sbPonCards(g.hands[x], cl.card) && Math.random() < .85) || (x === nx && sbChiCards(g.hands[x], cl.card) && Math.random() < .6)));
     if (p && Date.now() < cl.until - 600) return { wait: 900, run: () => sbClaim(G(), sbPonCards(g.hands[p], cl.card) ? "pon" : "chi", p) };
     // 時間切れの決着は、だれの端末でも進めてよい
-    return { wait: Math.max(300, cl.until - Date.now() + 1500), run: () => { const g2 = G(); if (g2.claim && Date.now() > g2.claim.until) return sbResolve(g2); } };
+    const ponNow = (cl.claims || []).some(x => x.type === "pon");
+    return { wait: ponNow ? 300 : Math.max(300, cl.until - Date.now() + 400), run: () => { const g2 = G(); if (g2.claim && (ponNow || Date.now() > g2.claim.until)) return sbResolve(g2); } };
   }
   const t = g.turn; if (!t || !isCpu(t.pid)) return null;
   const p = t.pid, hand = g.hands[p] || [];
@@ -8969,7 +9065,7 @@ CPU_AI.cs_games = g => {
     const keys = Object.keys(temp), steps = keys.reduce((a, k) => a + temp[k] - ((g.pos[p] || {})[k] || 0), 0);
     const top = keys.some(k => temp[k] >= CS_H[k]);
     const stop = top || (keys.length >= 3 && steps >= 3) || steps >= 6 + (keys.length < 3 ? 2 : 0);
-    return { wait: 1500, run: () => stop ? csStop(G(), p) : csRoll(G(), p) };
+    return { wait: 2400, run: () => stop ? csStop(G(), p) : csRoll(G(), p) };
   }
   return null;
 };
