@@ -2862,8 +2862,12 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .cpuskip small{font-size:11px;font-weight:800;opacity:.85}
 .cpuskip:disabled{opacity:.9}
 .cpuskip .spin{display:inline-block;width:14px;height:14px;margin-right:6px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);border-top-color:#FFE38A;animation:pvspin .8s linear infinite;vertical-align:-2px}
-.cpuchips{margin-top:8px;padding:8px;border-radius:12px;background:#F3F5FA;border:1.5px dashed #C9CFDC}
-.cpuchips small{display:block;margin:0 0 6px;font-size:11px;font-weight:900;color:var(--mute)}
+.cpuchips{margin-top:8px;padding:8px 10px;border-radius:12px;background:#F3F5FA;border:1.5px dashed #C9CFDC}
+.cpuchips summary{display:flex;align-items:center;gap:6px;list-style:none;cursor:pointer;font-size:12px;font-weight:900;color:var(--mute)}
+.cpuchips summary::-webkit-details-marker{display:none}
+.cpuchips summary::after{content:"開く ▾";margin-left:auto;padding:2px 8px;border-radius:999px;background:#fff;border:1.5px solid #C9CFDC;font-size:10.5px}
+.cpuchips[open] summary::after{content:"閉じる ▴"}
+.cpuchips[open] summary{margin-bottom:8px}
 /* ===== 発熱対策：見た目はそのまま、描き直しの多い動きを軽い方式に ===== */
 /* ゲーム画面を開いている間は、裏に隠れているホーム画面を描かない・動かさない */
 body:has(>.arena:not([hidden])) > #view,body:has(>.arena:not([hidden])) > .deco,body.ovl > #view,body.ovl > .deco{visibility:hidden}
@@ -3097,7 +3101,7 @@ function render(){
   document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
   if (!loaded){ v.innerHTML = `<div class="loading">読み込み中…</div>`; return; }
   applyGuestFilter();
-  v.innerHTML = artLinks(tab === "home" ? guestReqCards() + viewHome(t) : tab === "list" ? viewList(t)
+  v.innerHTML = artLinks(tab === "home" ? viewHome(t) : tab === "list" ? viewList(t)
     : tab === "stats" ? viewStats(t)
     : tab === "tickets" ? viewTickets(t)
     : viewHistory(t));
@@ -3342,7 +3346,7 @@ $("#sheet").addEventListener("click", e => { if (e.target.id === "sheet") closeS
 
 const chipPlayers = (ids, selected, attr = "data-p") => `<div class="chips">${ids.map(id => `<button type="button" class="pc" style="--pc:${pcolor(id)}" ${attr}="${id}" aria-pressed="${selected.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div>`;
 /* 対戦の参加者：コンピューターの札（同じ data-p なので、各ゲームの選択処理がそのまま使える） */
-const cpuChips = order => `<div class="cpuchips"><small>🤖 コンピューターを追加（タップで参加）</small><div class="chips">${CPU_IDS.map(id => `<button type="button" class="pc cpu" style="--pc:${pcolor(id)}" data-p="${id}" aria-pressed="${order.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div></div>`;
+const cpuChips = order => `<details class="cpuchips" ${order.some(isCpu) ? "open" : ""}><summary>🤖 コンピューターを追加</summary><div class="chips">${CPU_IDS.map(id => `<button type="button" class="pc cpu" style="--pc:${pcolor(id)}" data-p="${id}" aria-pressed="${order.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div></details>`;
 function bindChips(root, attr, multi, onChange){
   root.querySelectorAll(`[${attr}]`).forEach(b => b.onclick = () => {
     if (!multi) root.querySelectorAll(`[${attr}]`).forEach(x => x.setAttribute("aria-pressed", "false"));
