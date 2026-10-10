@@ -1360,11 +1360,11 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 @keyframes crownd{from{transform:translate(-50%,-60vh) rotate(-30deg)}}
 .sbfx.kg-king .tx,.sbfx.kg-mermaid .tx{position:relative}
 .sbfx.kg-king .bigt span:first-child,.sbfx.kg-mermaid .bigt span:first-child{margin-right:.25em}
-.sbfx.kg-king .bigt span{font-size:min(15vw,70px);color:#FFE38A;-webkit-text-stroke-color:#3A0A14}
+.sbfx.kg-king .bigt span{font-size:min(9vw,46px);color:#FFE38A;-webkit-text-stroke-color:#3A0A14}
 .sbfx.kg-king .bigt span.ex{color:#FF4D66}
 .sbfx .mwash{position:absolute;inset:0;background:linear-gradient(180deg,#9BF1F4,#1FB3BF 50%,#0A5A70);animation:seaw var(--ms) forwards}
 .sbfx .kbig.mer{filter:drop-shadow(0 0 30px #9BF1F4)}
-.sbfx.kg-mermaid .bigt span{font-size:min(15vw,70px);color:#fff;-webkit-text-stroke-color:#0A4A5A}
+.sbfx.kg-mermaid .bigt span{font-size:min(9vw,46px);color:#fff;-webkit-text-stroke-color:#0A4A5A}
 .sbfx.kg-mermaid .bigt span:nth-child(2){color:#FFE38A}
 .sbfx .bub{position:absolute;bottom:-30px;width:calc(16px * var(--s));height:calc(16px * var(--s));border-radius:50%;border:2px solid rgba(255,255,255,.85);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.8),transparent 45%);animation:bubup var(--t) ease-in var(--d) forwards;opacity:0}
 @keyframes bubup{0%{opacity:0;transform:translateY(0)}15%{opacity:1}100%{opacity:0;transform:translate(20px,-105vh)}}
@@ -1599,7 +1599,7 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 @keyframes tentup{0%{transform:translateY(105%) rotate(0)}30%{transform:translateY(0) rotate(var(--r))}55%{transform:translateY(0) rotate(calc(var(--r) * -1))}78%{transform:translateY(4%) rotate(var(--r))}100%{transform:translateY(105%) rotate(0)}}
 .sbfx.kg-kraken .tx,.sbfx.kg-whale .tx{position:relative;z-index:3}
 .sbfx .kbig.kra{filter:drop-shadow(0 0 30px #C04A9A)}
-.sbfx.kg-kraken .bigt span{font-size:min(15vw,70px);color:#FFB3D9;-webkit-text-stroke-color:#2A0620}
+.sbfx.kg-kraken .bigt span{font-size:min(10vw,52px);color:#FFB3D9;-webkit-text-stroke-color:#2A0620}
 .sbfx.kg-kraken .bigt span.ex{color:#FF4D66}
 .sbfx .wwash{position:absolute;inset:0;background:linear-gradient(180deg,#E6F7FF,#7FC6E8 45%,#1F6F9F);animation:seaw var(--ms) forwards}
 .sbfx .kbig.wha{position:absolute;left:50%;top:50%;z-index:2;margin:-.5em 0 0 -.5em;filter:drop-shadow(0 0 24px #fff);animation:whjump 1.5s cubic-bezier(.3,.6,.5,1) .05s both}
@@ -1636,7 +1636,7 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 @keyframes rhpop{0%{box-shadow:0 3px 0 var(--ink)}15%{transform:scale(1.07);box-shadow:0 3px 0 var(--ink),0 0 0 4px #FFE38A,0 0 26px #FFD23F}35%{transform:scale(1)}100%{box-shadow:0 3px 0 var(--ink),0 0 0 3px #FFE38A,0 0 14px rgba(255,210,63,.7)}}
 .sbfx .rtab span.rh b{animation:rhjump .6s cubic-bezier(.3,1.8,.5,1) calc(var(--d) + .55s) 2 both}
 @keyframes rhjump{50%{transform:translateY(-7px)}}
-.sbfx .rtab span.rm{animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both,rmshake .5s ease-in-out calc(var(--d) + .45s) both}
+.sbfx .rtab span.rm{animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both,rmshake .5s ease-in-out calc(var(--d) + .45s) forwards}
 @keyframes rmshake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}100%{filter:saturate(.5);opacity:.82}}
 .sbfx .rtab .rcw{position:absolute;left:30%;top:50%;width:0;height:0}
 .sbfx .rtab .rcf{position:absolute;left:0;top:0;width:calc(8px * var(--s));height:calc(12px * var(--s));border-radius:2px;background:var(--c);opacity:0;animation:rcf 1.3s cubic-bezier(.2,.8,.4,1) calc(var(--d) + .5s) both}
@@ -2928,6 +2928,100 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .sd .sdn{position:absolute;right:-5px;top:-6px;z-index:2;min-width:13px;height:13px;padding:0 2px;box-sizing:border-box;border-radius:7px;background:#fff;color:var(--ink);border:1.5px solid var(--ink);font-size:8.5px;font-weight:900;line-height:10px;text-align:center;text-decoration:none;font-family:var(--num,inherit)}
 .sd.top.watch{animation:topglow 1.4s ease-in-out infinite}
 .sd.top.watch::before{content:"↓";position:absolute;left:50%;top:-17px;transform:translateX(-50%);font-size:13px;font-weight:900;color:#FFE38A;text-shadow:0 0 6px #E8B12A,0 1px 0 #1B1838}
+.cotable .oasis{position:absolute;left:1%;bottom:1.5%;width:31%;height:20%;z-index:2;pointer-events:none}
+.oasis .pond{position:absolute;left:4%;right:2%;bottom:6%;height:46%;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#9BF1F4,#3FB8D6 55%,#1E7FA8);border:2px solid #C8A462;box-shadow:inset 0 3px 8px rgba(255,255,255,.6),0 2px 0 rgba(120,80,30,.4);overflow:hidden}
+.oasis .pond i{position:absolute;left:-30%;top:30%;width:60%;height:3px;border-radius:2px;background:rgba(255,255,255,.7);animation:ripple 3.2s ease-in-out infinite}
+@keyframes ripple{0%{transform:translateX(0);opacity:0}30%{opacity:1}100%{transform:translateX(230%);opacity:0}}
+.oasis .palm{position:absolute;font-style:normal;transform-origin:50% 100%;filter:drop-shadow(0 2px 0 rgba(0,0,0,.2));animation:palmsway 4s ease-in-out infinite}
+.oasis .palm.p1{left:-2%;bottom:30%;font-size:28px}.oasis .palm.p2{right:-6%;bottom:36%;font-size:22px;animation-delay:-2s}
+.oasis .reed{position:absolute;left:40%;bottom:40%;font-size:13px;font-style:normal}
+@keyframes palmsway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.oasis .cobtn{pointer-events:auto;position:absolute;left:14%;bottom:12%;z-index:2;display:flex;align-items:center;gap:3px;padding:4px 8px 4px 6px;border-radius:10px;border:2px solid #5A3416;background:linear-gradient(180deg,#F3D58F,#D9A954);box-shadow:0 3px 0 #5A3416,0 0 10px rgba(255,227,138,.7);color:#4A2A0C;font-weight:900;font-size:10.5px;white-space:nowrap}
+.oasis .cobtn span{font-size:13px}
+.oasis .cobtn:active{transform:translateY(2px);box-shadow:0 1px 0 #5A3416}
+.colist{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.coli{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 4px 6px;border-radius:12px;background:#FFF8EC;border:1.5px solid #E6D2B0;text-align:center}
+.coli b{font-size:13px;font-weight:900}.coli small{font-size:9.5px;line-height:1.25;color:var(--mute);font-weight:700}
+.coli .cou{position:absolute;right:4px;top:3px;font-size:9px;font-weight:900;color:#C0392B}
+.coli .cpip{display:flex;gap:3px;margin-top:2px}.coli .cpip i{width:9px;height:9px;border-radius:50%;background:#E8B12A;border:1.5px solid #8A5A1C}.coli .cpip i.u{background:#D3D8E3;border-color:#A0A6B5}
+.coli.gone{opacity:.5}
+.arena .nlogw{cursor:pointer;position:relative}
+.arena .nlogw::after{content:"詳しく ›";position:absolute;right:8px;top:4px;font-size:9px;font-weight:900;color:var(--mute);opacity:.8}
+.logpop{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+.logpop li{padding:7px 10px;border-radius:10px;background:#F6F7FA;border:1.5px solid var(--line);font-size:13px;font-weight:700;line-height:1.45}
+.logpop li:first-child{background:#FFF8E1;border-color:#E8B12A}
+.logpop .lgn{font-weight:900;color:var(--pc)}
+/* ---- スカルキング v179 ---- */
+.kgc.b14c::after{content:"";position:absolute;right:0;top:0;width:0;height:0;border-style:solid;border-width:0 16px 16px 0;border-color:transparent #FFD23F transparent transparent;filter:drop-shadow(-1px 1px 0 #8A5A1C)}
+.kgc .b14{position:absolute;right:-1px;top:0;z-index:2;font-style:normal;font-size:7px;font-weight:900;line-height:1;color:#5A3416;transform:rotate(45deg) translate(3px,-1px)}
+.kgc.s-b .b14{color:#5A3416}
+.kgc.sp-loot{background:#fff !important;color:#6A4A0C}
+.kgc.sp-loot em{font-size:0 !important;line-height:0}
+.kgc.sp-loot em::before{content:"";display:inline-block;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6C8,#FFD23F 45%,#C98E12 80%);border:2px solid #8A5A1C;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35),0 0 8px rgba(255,210,63,.8)}
+.kghand.ov .kgc.sp-loot em::before{width:18px;height:18px}
+.kgc.sp-tig.tg-p{background:linear-gradient(170deg,#FF8A8A,#D0283C) !important;color:#fff;--sc:#fff}
+.kgc.sp-tig.tg-e{background:#fff !important;color:#5A6378;--sc:#5A6378}
+.kp .od.lead{background:#E8B12A;color:#1B1838}
+.kp .kgc{cursor:pointer}
+.kp.win .kgc,.kp.win.done .kgc{box-shadow:0 0 0 3px #FFD23F,0 0 0 5px #8A5A1C,0 0 22px 6px rgba(255,210,63,.85),0 3px 0 var(--ink) !important;animation:kgwin 1.1s ease-in-out infinite !important}
+@keyframes kgwin{50%{box-shadow:0 0 0 3px #FFF3B0,0 0 0 5px #8A5A1C,0 0 34px 12px rgba(255,210,63,1),0 3px 0 var(--ink)}}
+.kbeam{position:absolute;left:50%;top:50%;z-index:3;width:var(--len);height:0;transform:rotate(var(--ang));transform-origin:0 0;pointer-events:none}
+.kbeam i{position:absolute;left:0;top:-15px;width:100%;height:30px;clip-path:polygon(0 40%,100% 0,100% 100%,0 60%);background:linear-gradient(90deg,rgba(255,255,220,1),rgba(255,215,70,.9) 55%,rgba(255,210,63,.35));filter:drop-shadow(0 0 6px #FFD23F);animation:kbeam 1.2s ease-in-out infinite}
+.kbeam::after{content:"";position:absolute;left:0;top:-2px;width:100%;height:4px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0));border-radius:2px;animation:kbeam 1.2s ease-in-out infinite reverse}
+@keyframes kbeam{0%,100%{opacity:.65}50%{opacity:1}}
+.compass.lc svg circle:first-child{transition:fill .4s}
+.fart{position:absolute;inset:14% 18%;z-index:1;pointer-events:none;display:grid;place-items:center}
+.fart i{position:absolute;font-style:normal;line-height:1}
+.fart .a1{font-size:min(30vw,130px);opacity:.3;filter:drop-shadow(0 0 18px rgba(255,255,255,.5));animation:fart1 3s ease-in-out infinite}
+.fart .a2,.fart .a3{font-size:min(10vw,40px);opacity:.35;animation:fart2 2.4s ease-in-out infinite}
+.fart .a2{left:4%;top:8%}.fart .a3{right:4%;bottom:8%;animation-delay:-1.2s}
+@keyframes fart1{0%,100%{transform:translateY(0) scale(1) rotate(-4deg)}50%{transform:translateY(-8px) scale(1.06) rotate(4deg)}}
+@keyframes fart2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(12deg)}}
+.fart.a-king .a1{animation:fartk 1.6s ease-in-out infinite;opacity:.38}
+@keyframes fartk{0%,100%{transform:scale(1);filter:drop-shadow(0 0 10px #FFD23F)}50%{transform:scale(1.12);filter:drop-shadow(0 0 30px #FFD23F)}}
+.fart.a-mer .a1{animation:fartm 3.4s ease-in-out infinite}
+@keyframes fartm{0%,100%{transform:translateX(-12px) rotate(-8deg)}50%{transform:translateX(12px) rotate(8deg)}}
+.fart.a-pir .a1,.fart.a-tigp .a1{animation:fartp 1s ease-in-out infinite}
+@keyframes fartp{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.08)}}
+.fart.a-kra .a1{animation:fartw 2s ease-in-out infinite}
+@keyframes fartw{0%,100%{transform:scale(1,1) rotate(0)}25%{transform:scale(1.08,.94) rotate(-6deg)}75%{transform:scale(.94,1.08) rotate(6deg)}}
+.fart.a-wha .a1{animation:fartwh 3s ease-in-out infinite}
+@keyframes fartwh{0%,100%{transform:translateY(14px)}50%{transform:translateY(-14px)}}
+.fart.a-esc .a1,.fart.a-tige .a1{animation:farte 1.8s ease-in-out infinite;transform-origin:20% 100%}
+@keyframes farte{0%,100%{transform:skewX(-6deg)}50%{transform:skewX(8deg)}}
+.fart.a-loot .a1{animation:fartl 2s linear infinite}
+@keyframes fartl{0%{transform:rotateY(0)}100%{transform:rotateY(360deg)}}
+.kgcpop{z-index:60}
+.kgcpop .kgpopin{display:flex;flex-direction:column;align-items:center;gap:8px;width:min(84vw,320px);padding:18px 16px 14px;border-radius:18px;background:#FFF8E7;border:3px solid var(--ink);text-align:center}
+.kgcbig .kgc{width:84px;height:118px;border-width:3px}.kgcbig .kgc b{font-size:44px}.kgcbig .kgc .ci{font-size:15px}.kgcbig .kgc.sp em{font-size:40px}
+.kgct{font-size:17px;font-weight:900}.kgcd{margin:0;font-size:13px;line-height:1.6;font-weight:700;color:#3A2A1C}
+.kgcpop .nb{width:100%}
+.kghand .kh.dis{cursor:default}
+.kgsrule{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:#FFF8E7;border:2px solid #D9B04A}
+.kgsrule b{font-size:13px}.kgsrule ul{margin:6px 0 0;padding-left:18px;font-size:12px;line-height:1.6;font-weight:700}
+.kgsrule em{font-style:normal;font-weight:900}.kgsrule em.ok{color:#1E9E5A}.kgsrule em.ng{color:var(--crimson)}
+.kgchart{margin:0 0 12px;padding:8px 6px 6px;border-radius:12px;background:#fff;border:1.5px solid var(--line)}
+.kgcht{display:block;font-size:13px;margin:0 0 4px 6px}
+.kgchx{display:flex;justify-content:space-between;padding:0 10px 0 44px;font-size:9px;font-weight:900;color:var(--mute)}
+.kgpop .kgpopin{max-height:86dvh;overflow-y:auto}
+.arena.kgg>.kgfinal,.kgfinal{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:calc(var(--safe-t,0px) + 20px) 16px calc(var(--safe-b,0px) + 20px);background:radial-gradient(circle at 50% 30%,#1E5A6A,#0B2633 60%,#06151D);overflow:hidden}
+.kgfinal .kfrays{position:absolute;left:50%;top:30%;width:160vmax;height:160vmax;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(255,227,138,.08) 0 6deg,transparent 6deg 14deg);animation:spin 40s linear infinite;pointer-events:none}
+.kgfinal>*{position:relative}
+.kft{display:flex;flex-direction:column;align-items:center;color:#FFE38A}
+.kft small{font-size:12px;font-weight:900;color:#9BD8E6;letter-spacing:.1em}
+.kft b{font-family:var(--disp);font-weight:400;font-size:38px;-webkit-text-stroke:2px #0A2A3A;paint-order:stroke fill;text-shadow:0 0 18px rgba(255,210,63,.6)}
+.kfl{display:flex;flex-direction:column;gap:7px;width:min(92vw,380px)}
+.kfr{display:grid;grid-template-columns:40px 1fr auto auto;align-items:center;gap:8px;padding:9px 12px;border-radius:14px;background:#fff;border:3px solid var(--pc);box-shadow:0 4px 0 rgba(0,0,0,.4);animation:kfpop .6s cubic-bezier(.2,1.6,.4,1) var(--d) both}
+.kgfinal.seen .kfr,.kgfinal.seen .kfb{animation:none}
+@keyframes kfpop{0%{transform:translateY(40px) scale(.4);opacity:0}100%{transform:none;opacity:1}}
+.kfr .kfn{font-style:normal;font-family:var(--disp);font-size:20px;text-align:center}
+.kfr b{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kfr>small{font-size:10.5px;font-weight:900;color:var(--mute)}
+.kfr em{font-style:normal;font-family:var(--disp);font-size:24px}.kfr em small{font-size:11px;margin-left:2px}
+.kfr.r1{background:linear-gradient(90deg,#FFF6C8,#FFE38A);border-color:#E8B12A;transform-origin:center;box-shadow:0 0 0 3px #8A5A1C,0 0 30px rgba(255,210,63,.9),0 5px 0 rgba(0,0,0,.4);padding:13px 12px}
+.kfr.r1 .kfn{font-size:26px}.kfr.r1 b{font-size:19px}.kfr.r1 em{font-size:30px;color:#8A5A1C}
+.kfb{display:flex;gap:10px;width:min(92vw,380px);animation:kfpop .5s ease-out var(--d) both}
+.kfb .btn{flex:1;margin:0}
 .dpk.vt{background:#E6F6EA;border-color:#8FD0A8;color:#1E7E46}
 .dpk.du{background:#FFF3E6;border-color:#F0B070}
 .dmopts{display:flex;flex-direction:column;gap:6px;margin:8px 0;width:100%;align-self:stretch}
@@ -6232,16 +6326,30 @@ function drawSb(){
   }
 }
 // 直近の流れ：直前2人のプレイヤーの行動をすべて（新しい順）
-function sbLogLines(g){
-  const log = g.log || [], byLen = g.players.slice().sort((a, b) => pname(b).length - pname(a).length), seen = [], out = [];
-  for (let i = log.length - 1; i >= 0 && out.length < 16; i--){
+function sbLogLines(g, max = 16){
+  const players = g.players || (g.st && g.st.players) || [], tp = (g.turn || {}).pid || (g.st && g.st.turn && g.st.turn.pid);
+  const log = g.log || [], byLen = players.slice().sort((a, b) => pname(b).length - pname(a).length), seen = [], out = [];
+  for (let i = log.length - 1; i >= 0 && out.length < max; i--){
     const m = log[i].m, who = byLen.find(p => m.startsWith(pname(p)));
-    if (who && !seen.includes(who)){ if (seen.length >= (seen[0] === (g.turn || {}).pid ? 3 : 2)) break; seen.push(who); }   // 今の番の人＋直前2人
+    if (who && !seen.includes(who)){ if (seen.length >= (seen[0] === tp ? 3 : 2)) break; seen.push(who); }
     out.push(m);
-    if (!who && /ラウンド開始/.test(m)) break;
+    if (!who && /(ラウンド|回戦).*(開始|スタート)|^第\d+ラウンド/.test(m)) break;
   }
   return out;
 }
+/* 直近の流れ：タップでポップアップ（直前2人ぶんの行動をすべて） */
+const LOG_SRC = { neu: () => neuId && neuById(neuId), cs: () => csId && csById(csId), sbg: () => sbId && sbById(sbId), skg: () => skId && skById(skId), cog: () => coId && coById(coId), kgg: () => kgId && kgById(kgId), dmg: () => dmId && dmById(dmId) };
+function openLogPop(g){
+  const players = g.players || (g.st && g.st.players) || [];
+  if (coHold && coHold.id === g.id && Date.now() < coHold.until){ const L = g.log || [], ci = L.map(x => /コヨーテ！$/.test(x.m)).lastIndexOf(true); if (ci >= 0) g = { ...g, log: L.slice(0, ci + 1) }; }
+  const lines = sbLogLines(g, 40);
+  openSheet("直近の流れ", `<p class="note">今の番の人と、その前の2人の行動です（新しい順）。</p><ol class="logpop">${lines.map(m => `<li>${colorizeLog(players, m)}</li>`).join("") || "<li>まだありません</li>"}</ol>`);
+}
+document.addEventListener("click", e => {
+  const w = e.target.closest && e.target.closest(".arena .nlogw"); if (!w) return;
+  const ar = w.closest(".arena"), f = ar && LOG_SRC[ar.id], g = f && f();
+  if (g) openLogPop(g);
+});
 function sbMenu(g){
   const s = openSheet("セブンブリッジのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
   s.querySelector('[data-x="rule"]').onclick = () => openGameRules("sb");
@@ -6621,7 +6729,7 @@ function skDiff(g){
   const log = g.log || [], last = log[log.length - 1];
   const prev = skPrev && skPrev.id === g.id ? skPrev : null;
   let fx = null;
-  if (prev){
+  if (prev && Date.now() >= fxMuteUntil){
     const k = prev.lastT ? log.findIndex(x => x.t === prev.lastT) : -1;
     const lines = (k >= 0 ? log.slice(k + 1) : (last && last.t !== prev.lastT ? [last] : [])).map(x => x.m);
     const rank = { win: 9, skull: 8, succ: 7, chal: 6, ready: 5, out: 5, bid: 4, rose: 3, pass: 2 };
@@ -7098,16 +7206,20 @@ function coDuel(r){
   fx.querySelector(".dresult").animate([{ opacity: 0, transform: "scale(2.5)" }, { opacity: 1, transform: "scale(.9)", offset: .6 }, { opacity: 1, transform: "none" }], opt(450, fin + 400, "cubic-bezier(.2,1.6,.4,1)", "forwards"));
   setTimeout(() => fx.remove(), ms);
 }
+let coHold = null;
 function coDiff(g){
   const log = g.log || [], last = log[log.length - 1];
   const prev = coPrev && coPrev.id === g.id ? coPrev : null;
-  coPrev = { id: g.id, lastT: last ? last.t : null };
+  coPrev = { id: g.id, lastT: last ? last.t : null, lives: { ...(g.lives || {}) } };
   if (!prev) return;
+  if (Date.now() < fxMuteUntil) return;
   const k = prev.lastT ? log.findIndex(x => x.t === prev.lastT) : -1;
   const lines = (k >= 0 ? log.slice(k + 1) : (last && last.t !== prev.lastT ? [last] : [])).map(x => x.m);
   if (!lines.length) return;
   const r = g.result;
   if (lines.some(m => /コヨーテ！$/.test(m)) && r){
+    if (coHold && coHold.t) clearTimeout(coHold.t);
+    coHold = { id: g.id, until: Date.now() + 1900 + 7500 + 200, lives: prev.lives || {}, t: null };
     setTimeout(() => coFx("howl", r.caller, { small: `${pname(r.caller)}が叫んだ！` }), 30);
     setTimeout(() => coDuel(r), 1900);
     setTimeout(() => r.out ? coFx("out", r.loser) : coFx("doll", r.loser, { dolls: r.dolls }), 1900 + 7500);
@@ -7194,8 +7306,12 @@ function drawCo(){
   setTimeout(cpuKick, 0); setTimeout(cpuSkipUi, 0);
   if (cpuSkipping) return;
   if (!coId) return;
-  const g = coById(coId); if (!g) return closeCo();
-  coDiff(g);
+  const g0 = coById(coId); if (!g0) return closeCo();
+  coDiff(g0);
+  // コヨーテ！の対決演出が終わるまでは、人形・脱落・優勝を前の状態のまま見せる
+  const hold = !!(coHold && coHold.id === g0.id && Date.now() < coHold.until && (g0.phase === "result" || g0.status === "finished"));
+  if (hold && !coHold.t) coHold.t = setTimeout(() => { if (coHold) coHold.t = null; drawCo(); }, coHold.until - Date.now() + 60);
+  const g = hold ? { ...g0, lives: coHold.lives || g0.lives, status: "playing", winner: null } : g0;
   const el = $("#cog"), t = g.turn || {}, ph = g.phase, playing = g.status === "playing";
   const inGame = g.players.includes(me), alive = inGame && coAliveP(g, me), mt = coMyTurn(g);
   const bid = g.bid || null, res = g.result || null, reveal = ph === "result" || g.status === "finished";
@@ -7213,7 +7329,7 @@ function drawCo(){
   const seat = (p, x, y, mine) => {
     const out = !coAliveP(g, p), on = playing && ph === "bid" && t.pid === p, c = (g.hands || {})[p];
     const show = !out && c != null && (p !== me || reveal || !inGame || !alive);
-    const lost = reveal && res && res.loser === p;
+    const lost = reveal && !hold && res && res.loser === p;
     const card = out ? `<span class="cocard k-out"><b>✕</b></span>` : show ? coCard(c) : coCard(null, mine ? "mine" : "");
     const drawn = reveal && c === "q" && res && res.drawn ? `<span class="qd">${coCard(res.drawn, "k-mini drawn")}</span>` : "";
     const dl = coDolls(g, p);
@@ -7222,7 +7338,7 @@ function drawCo(){
       <div class="av"><span class="band"></span><span class="fea">🪶</span>${(t.start || null) === p ? `<span class="sS">S</span>` : ""}</div>
       <b class="tagw">${esc(pname(p))}</b>
       <span class="stk2">${[0, 1].map(i => `<span class="dm ${dl > i ? "" : "gone"}">${CO_DOLL()}</span>`).join("")}</span>
-      ${mine && !reveal && alive ? `<small class="mytip">見えない</small>` : ""}</div>`;
+      </div>`;
   };
   const seats2 = others.map((p, i) => {
     const th = k === 1 ? 270 : 135 + 270 * (i + 1) / (k + 1);
@@ -7231,10 +7347,12 @@ function drawCo(){
   }).join("");
   let sign = "";
   if (ph === "bid") sign = bid ? `<small><span class="snm" style="--pc:${pcolor(bid.pid)}">${esc(pname(bid.pid))}</span>の宣言</small><b class="num">${bid.n}</b>` : `<small>まだ宣言なし</small><b class="num">—</b>`;
+  else if (res && hold) sign = `<small>宣言${res.n}に</small><b class="num">⚔️</b><small>コヨーテ！</small>`;
   else if (res){ const lie = res.n > res.sum; sign = `<small>合計</small><b class="num">${res.sum}</b><small>宣言${res.n}は<span class="${lie ? "lie" : "ok"}">${lie ? "ウソ" : "セーフ"}</span></small>`; }
   const fire = `<div class="rug ${reveal ? "roar" : ""}"><span class="rz"></span></div>
     <div class="sign"><span class="post"></span><div class="plank">${sign}</div></div>`;
-  const table = `<div class="cotable camp day ${reveal ? "rev" : ""} ${small ? "small" : ""}"><span class="sun"></span><span class="cloud c1"></span><span class="cloud c2"></span><span class="mesa m1"></span><span class="mesa m2"></span><span class="mesa m3"></span><span class="dune"></span>${["🌵", "🌵", "🌵", "🪨"].map((x, i) => `<i class="cact" style="left:${[6, 88, 70, 18][i]}%;top:${[46, 44, 92, 93][i]}%;font-size:${[26, 22, 18, 14][i]}px">${x}</i>`).join("")}
+  const table = `<div class="cotable camp day ${reveal ? "rev" : ""} ${small ? "small" : ""}"><span class="sun"></span><span class="cloud c1"></span><span class="cloud c2"></span><span class="mesa m1"></span><span class="mesa m2"></span><span class="mesa m3"></span><span class="dune"></span>${["🌵", "🌵", "🌵", "🪨", "🪨"].map((x, i) => `<i class="cact" style="left:${[6, 88, 94, 82, 89][i]}%;top:${[46, 44, 97, 98, 91][i]}%;font-size:${[26, 22, 18, 15, 11][i]}px">${x}</i>`).join("")}
+    <div class="oasis"><span class="pond"><i></i></span><i class="palm p1">🌴</i><i class="palm p2">🌴</i><i class="reed">🌿</i><button class="cobtn" id="yCards"><span>📜</span><b>カード一覧</b></button></div>
     ${fire}${seats2}${inGame ? seat(me, 50, 81, true) : ""}</div>`;
   // 下部
   let bottom = "";
@@ -7243,10 +7361,11 @@ function drawCo(){
     if (!inGame) msg = `<span>観戦モード</span>`;
     else if (!alive) msg = `<span>脱落しました・観戦モード</span>`;
     else if (ph === "bid") msg = mt ? `<span><b class="tn">あなた</b>の番：${bid ? "上げる？コヨーテ？" : "最初の宣言"}</span>` : `<span>${turnName(t.pid, false)}</span>`;
-    if (ph === "result" && res) msg = `<span><b class="tn">${esc(pname(res.loser))}</b>の負け${res.out ? "…脱落" : `（人形残り${res.dolls}）`}</span>`;
+    if (ph === "result" && res) msg = hold ? `<span><b class="tn">${esc(pname(res.caller))}</b>のコヨーテ！ 対決中…</span>` : `<span><b class="tn">${esc(pname(res.loser))}</b>の負け${res.out ? "…脱落" : `（人形残り${res.dolls}）`}</span>`;
     const banPid = ph === "result" && res ? res.loser : t.pid;
     bottom += `<div class="nturn ${mt ? "mine" : ""}" style="--pc:${pcolor(banPid || me)}">${msg}</div>`;
-    if (ph === "result" && res){
+    if (ph === "result" && res && hold){ /* 対決が終わるまで計算と次へボタンは出さない */ }
+    else if (ph === "result" && res){
       bottom += `<div class="cocalc">${res.steps.length ? res.steps.map(s => `<span>${esc(s)}</span>`).join("") : `<span>特殊効果なし</span>`}${res.drawn ? `<span>🕳️ ほらあなで${esc(res.drawn === "x2" ? "×2" : res.drawn === "max0" ? "MAX→0" : res.drawn === "night" ? "夜(0)" : res.drawn)}を引いた</span>` : ""}${res.night ? `<span>🌙 夜：次は山札リセット</span>` : ""}</div>`;
       if (playing) bottom += `<div class="nbtns one"><button class="nb end big2 go" id="yNext">次のラウンドへ</button></div>`;
     } else if (mt){
@@ -7256,7 +7375,9 @@ function drawCo(){
       bottom += `<div class="nbtns two"><button class="nb lose ${bid ? "pulse" : ""}" id="yCall" ${bid ? "" : "disabled"}>コヨーテ！</button><button class="nb end go" id="yBid">「${coVal}」宣言</button></div>`;
     }
   }
-  const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
+  // 対決演出中は、勝ち負けが書かれたログを伏せる
+  const lgAll = g.log || [], ci = hold ? lgAll.map(x => /コヨーテ！$/.test(x.m)).lastIndexOf(true) : -1;
+  const lg = (ci >= 0 ? lgAll.slice(0, ci + 1) : lgAll).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   let over = "";
   if (g.status === "finished") over = `<div class="nover" style="--c:${pcolor(g.winner)}"><span class="ob"></span><div class="k">優勝</div><div class="p">${esc(pname(g.winner))}</div><div class="y">最後まで生き残った！</div><div class="btns"><button class="btn" id="yClose2">閉じる</button></div></div>`;
   el.innerHTML = `<div class="nbg cobg" aria-hidden="true">${["🌵", "🌙", "🪶", "🌵", "⭐", "🦊", "🌵", "🪶"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${24 + (i % 3) * 16}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.2">${x}</i>`).join("")}</div>
@@ -7269,8 +7390,17 @@ function drawCo(){
   const act = fn => async () => { if (coBusy) return; coBusy = true; try { await fn(); } finally { coBusy = false; } };
   on("yClose", closeCo); on("yClose2", closeCo); on("yMenu", () => coMenu(g));
   on("yBid", act(async () => { const v = coVal; coVal = null; await coBid(v); }));
-  on("yCall", act(coCall)); on("yNext", act(coNextRound));
+  on("yCall", act(coCall)); on("yNext", act(coNextRound)); on("yCards", () => coCardList(g0));
   el.querySelectorAll("[data-add]").forEach(b => b.onclick = () => { const lo = (bid ? bid.n : 0) + 1; coVal = Math.max(lo, (coVal || lo) + Number(b.dataset.add)); drawCo(); });
+}
+function coCardList(g){
+  const C = c => coCard(c, "k-mini");
+  const used = {}; (g.discard || []).forEach(c => used[c] = (used[c] || 0) + 1);
+  const rows = [["1", 4], ["2", 4], ["3", 4], ["4", 4], ["5", 4], ["10", 3], ["15", 2], ["20", 1], ["0", 3], ["-5", 2], ["-10", 1], ["x2", 1], ["max0", 1], ["q", 1], ["night", 1]];
+  const tip = { x2: "合計を2倍", max0: "一番大きい数を0に", q: "山札から1枚引いて数える", night: "0。次は山札をまぜ直す", "0": "0として数える" };
+  openSheet("コヨーテのカード一覧", `<p class="note">全36枚。<b>出た</b>は、すでに使われて捨て札にあるカード（夜のカードが出るとリセット）。</p>
+    <div class="colist">${rows.map(([c, n]) => { const u = Math.min(n, used[c] || 0); return `<div class="coli ${u >= n ? "gone" : ""}">${C(c)}<b>×${n}</b>${tip[c] ? `<small>${tip[c]}</small>` : ""}<span class="cou">${u ? `出た${u}` : ""}</span><span class="cpip">${Array.from({ length: n }, (_, i) => `<i class="${i < u ? "u" : ""}"></i>`).join("")}</span></div>`; }).join("")}</div>
+    <p class="note">場に出ていない残り：${(g.deck || []).length}枚（山札）</p>`);
 }
 function coMenu(g){
   const s = openSheet("コヨーテのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
@@ -7354,7 +7484,7 @@ function kgLeadSuit(plays){
   return null;
 }
 function kgLegal(hand, plays, c){
-  const i = kgInfo(c); if (i.t !== "num") return true;
+  const i = kgInfo(c); if (i.t !== "num" || i.s === "b") return true;   // 黒（切り札）はマストフォローに関係なく出せる
   const ls = kgLeadSuit(plays); if (!ls || i.s === ls) return true;
   return !hand.some(x => { const j = kgInfo(x); return j.t === "num" && j.s === ls; });
 }
@@ -7463,7 +7593,7 @@ function openKgNew(){
   };
 }
 let kgFeltW = 0, kgFeltH = 0; addEventListener("resize", () => { kgFeltW = 0; if (kgId) drawKg(); }); let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
-let kgFlip = false, kgDisc = [], kgAbSel = null, kgResAt = 0, kgScoreOpen = false;
+let kgFlip = false, kgDisc = [], kgAbSel = null, kgResAt = 0, kgScoreOpen = false, kgFinAt = 0;
 function openKg(id){ kgScoreOpen = false; kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; kgFlip = false; kgDisc = []; kgAbSel = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
@@ -7582,9 +7712,38 @@ function kgLabel(c, tg){
 }
 function kgCard(c, cls = "", extra = "", tg){
   const i = kgInfo(c);
-  if (i.t === "num") return `<span class="kgc s-${i.s} ${cls}" ${extra}><i class="ci">${KG_SUITS[i.s].i}</i><b class="${i.r >= 10 ? "len2" : ""}">${i.r}</b><i class="ci br">${KG_SUITS[i.s].i}</i></span>`;
+  if (i.t === "num") return `<span class="kgc s-${i.s} ${i.r === 14 ? "b14c" : ""} ${cls}" ${extra} data-kci="${c}"><i class="ci">${KG_SUITS[i.s].i}</i><b class="${i.r >= 10 ? "len2" : ""}">${i.r}</b><i class="ci br">${KG_SUITS[i.s].i}</i>${i.r === 14 ? `<i class="b14">+${i.s === "b" ? 20 : 10}</i>` : ""}</span>`;
   const sp = KG_SP[i.t], pn = i.t === "pir" && kgAbilOn && KG_PIR[c] ? KG_PIR[c] : null;
-  return `<span class="kgc sp sp-${i.t} ${cls}" ${extra}><em>${sp.i}</em><small>${tg ? (tg === "pirate" ? "PIRATE" : "ESCAPE") : pn ? pn.e : sp.t}</small>${pn ? `<i class="pn">${pn.h}</i>` : ""}</span>`;
+  return `<span class="kgc sp sp-${i.t} ${tg ? (tg === "pirate" ? "tg-p" : "tg-e") : ""} ${cls}" ${extra} data-kci="${c}"${tg ? ` data-ktg="${tg}"` : ""}><em>${sp.i}</em><small>${tg ? (tg === "pirate" ? "PIRATE" : "ESCAPE") : pn ? pn.e : sp.t}</small>${pn ? `<i class="pn">${pn.h}</i>` : ""}</span>`;
+}
+
+function kgDesc(c, tg){
+  const i = kgInfo(c);
+  if (i.t === "num"){
+    const su = KG_SUITS[i.s];
+    return { t: `${su.i} ${su.n}の${i.r}`, d: i.s === "b" ? `黒は<b>切り札</b>。ほかの色の数字より強い（黒どうしは大きい方が勝ち）。<b>いつでも出せる</b>（マストフォローなし）。${i.r === 14 ? "<br>このカードで勝つと<b>+20点</b>のボーナス。" : ""}`
+      : `数字カード。最初に出た色（リード色）と同じ色を持っていたら、その色を出す（マストフォロー）。リード色の中で一番大きい数字が勝ち。${i.r === 14 ? "<br>このカードで勝つと<b>+10点</b>のボーナス。" : ""}` };
+  }
+  const pi = i.t === "pir" && KG_PIR[c];
+  const D = {
+    esc: ["🏳️ 逃走", "必ず負ける。全員が逃走なら最初に出した人の勝ち。いつでも出せる。"],
+    pir: [pi ? `⚔️ 海賊${pi.n}` : "⚔️ 海賊", `数字カードとマーメイドに勝つ。スカルキングには負ける。マーメイドを捕まえると+20点。${pi && kgAbilOn ? `<br><b>能力</b>：${pi.d}` : ""}`],
+    tig: ["🐯 ティグレス", `出すときに<b>海賊</b>か<b>逃走</b>を選ぶ。${tg ? `<br>このトリックでは<b>${tg === "pirate" ? "海賊" : "逃走"}</b>として出された。` : ""}`],
+    king: ["👑 スカルキング", "海賊に勝つ（海賊1人につき+30点）。マーメイドには負ける。"],
+    mer: ["🧜‍♀️ マーメイド", "数字カードに勝つ。海賊には負けるが、スカルキングを捕まえると+40点。"],
+    kra: ["🐙 クラーケン", "このトリックは誰のものにもならない。本来勝つはずだった人が次の最初に出す。"],
+    wha: ["🐋 白鯨", "特殊カードは全部無効。色に関係なく一番大きい数字が勝ち。"],
+    loot: ["🪙 略奪品", "逃走と同じ。トリックを取った人と同盟になり、2人とも予想ぴったりならそれぞれ+20点。"]
+  }[i.t] || ["", ""];
+  return { t: D[0], d: D[1] };
+}
+function kgShowCard(c, tg){
+  const d = kgDesc(c, tg);
+  document.querySelectorAll(".kgcpop").forEach(x => x.remove());
+  const bg = document.createElement("div"); bg.className = "kgpop kgcpop";
+  bg.innerHTML = `<div class="kgpopin"><div class="kgcbig">${kgCard(c, "", "", tg)}</div><b class="kgct">${d.t}</b><p class="kgcd">${d.d}</p><button class="nb end" data-x="ok">閉じる</button></div>`;
+  bg.onclick = e => { if (e.target === bg || e.target.dataset.x === "ok") bg.remove(); };
+  ($("#kgg") || document.body).appendChild(bg);
 }
 
 /* ---- 演出 ---- */
@@ -7683,11 +7842,11 @@ function kgDiff(g){
     const kind = g.last.why === "mermaid" ? "mermaid" : g.last.why === "king" && g.last.bonus >= 30 ? "king" : g.last.why === "pirmer" ? "pirmer" : "trick";
     t = Math.max(t, 3000); setTimeout(() => kgFx(kind, o), t); t += kind === "trick" ? 1900 : 2700;
   }
-  if (lines.some(m => /ラウンド終了/.test(m))){
+  if (lines.some(m => /ラウンド終了/.test(m)) && g.status !== "finished"){
     const h = (g.history || []).slice(-1)[0];
     if (h){ const rows = g.players.map(p => ({ n: pname(p), c: pcolor(p), ...h.rows[p], hit: h.rows[p].bid === h.rows[p].won })); setTimeout(() => kgFx("round", { round: h.round, rows }), t); kgResAt = Date.now() + t + Math.max(4200, 1600 + rows.length * 550 + 2000) - 400; t += 2700; }
   }
-  if (g.status === "finished" && lines.some(m => /優勝/.test(m))) setTimeout(() => sbFx("win", g.winner, "", "", ["優", "勝"]), t);
+  if (g.status === "finished" && lines.some(m => /優勝/.test(m))){ kgFinAt = Date.now() + t; setTimeout(() => { if (kgId) drawKg(); }, t + 20); setTimeout(() => sbFx("win", g.winner, "", "", ["優", "勝"]), t + 900 + g.players.length * 700); }
 }
 
 /* ---- 画面 ---- */
@@ -7708,7 +7867,7 @@ function drawKg(){
     const on = playing && ((ph === "bid" && bids[p] == null) || (ph === "play" && (pend ? pend.p === p : t.pid === p)));
     const b = bids[p], w = won[p] || 0;
     const info = !bidsOpen ? (b != null ? "予想済" : "考え中") : `<b class="bw ${w === b ? "eq" : w > b ? "ov" : ""}">${w}/${b}</b>`;
-    return `<div class="np ${on ? "on" : ""}" data-pp="${p}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "bid" ? "待" : "今"}</em>` : ""}<b>${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${info}</small></span><small class="kpt">${g.scores && g.scores[p] != null ? g.scores[p] : 0}点</small></div>`;
+    return `<div class="np ${on ? "on" : ""}" data-pp="${p}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${ph === "bid" ? "待" : "今"}</em>` : playing && ph === "bid" && bids[p] != null ? `<em class="tg now done">✓</em>` : ""}<b>${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b><span class="skw"><small>${info}</small></span><small class="kpt">${g.scores && g.scores[p] != null ? g.scores[p] : 0}点</small></div>`;
   }).join(`<span class="nar">›</span>`);
   // テーブル：全員が卓を囲み、出したカードは各自の前に置かれる（トリックテイキングの卓）
   const show = plays.length ? plays : (g.last && ph !== "bid" ? g.last.plays : []);
@@ -7719,18 +7878,19 @@ function drawKg(){
   const N = g.players.length, base = Math.max(0, g.players.indexOf(me));
   const order = inGame ? Array.from({ length: N }, (_, k) => g.players[(base + k) % N]) : g.players.slice();
   const pips = p => {
-    if (!bidsOpen) return `<span class="pips q">${bids[p] != null ? "✓" : "…"}</span>`;
+    if (!bidsOpen) return "";
     const b = bids[p] || 0, w = won[p] || 0;
     if (b === 0) return `<span class="pips z ${w ? "over" : "ok"}">0${w ? `<i class="x">+${w}</i>` : ""}</span>`;
     return `<span class="pips g" style="--c:${Math.min(5, Math.max(b, w))}">${Array.from({ length: Math.max(b, w) }, (_, k) => `<i class="${k < Math.min(w, b) ? "pf" : k < b ? "pe" : "px"}"></i>`).join("")}</span>`;
   };
   let resOv = "";
-  if (ph === "roundend" && (g.history || []).length){
+  if (ph === "roundend" && (g.history || []).length && g.status !== "finished"){
     const h = g.history[g.history.length - 1];
     const rd = Math.max(0, kgResAt - Date.now());
     resOv = `<div class="kgres2 ${rd ? "late" : ""}" style="--rd:${(rd / 1000).toFixed(2)}s"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><span class="nm2"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small></span><b class="hm">${r.bid === r.won ? "的中" : ""}</b><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
   }
   const thOf = {}; order.forEach((p, k) => { thOf[p] = 90 + 360 * k / N; });
+
   const wSeat = wPl ? thOf[wPl.p] : null;
   const sweepKey = isLast ? `${g.round}:${Object.values(won).reduce((a, b) => a + b, 0)}` : null;
   const sweepNow = sweepKey && kgSwept !== sweepKey, swept = sweepKey && kgSwept === sweepKey && kgSweptAt && Date.now() - kgSweptAt > 3300;
@@ -7768,8 +7928,21 @@ function drawKg(){
     const ord = pl ? show.indexOf(pl) + 1 : 0;
     return `<div class="ks ${mine ? "kme" : ""} ${on ? "on" : ""}" data-p="${p}" style="--x:${sx.toFixed(1)}%;--y:${sy.toFixed(1)}%;--pc:${pcolor(p)}">
         <b class="nm">${t.start === p ? `<span class="sS">S</span>` : ""}${esc(pname(p))}</b>${pips(p)}</div>
-      ${pl && !swept ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""} ${isLast && sweepEl >= 0 ? "sweep" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--wx:${wx.toFixed(1)}%;--wy:${wy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}">${isLead ? `<span class="ld">LEAD</span>` : `<span class="od">${ord}</span>`}${kgCard(pl.c, N >= 5 ? "mini" : "tb", "", pl.tg)}</div>` : ""}`;
+      ${pl && !swept ? `<div class="kp ${wi ? "win" : ""} ${isLast ? "done" : ""} ${isLast && sweepEl >= 0 ? "sweep" : ""}" style="--x:${cx.toFixed(1)}%;--y:${cy.toFixed(1)}%;--wx:${wx.toFixed(1)}%;--wy:${wy.toFixed(1)}%;--pc:${pcolor(p)};--o:${ord}"><span class="od ${isLead ? "lead" : ""}">${ord}</span>${kgCard(pl.c, N >= 5 ? "mini" : "tb", "", pl.tg)}</div>` : ""}`;
   }).join("");
+  // 場に出た特殊カード（最後に出たもの）を卓の背景に大きく描く
+  const spLast = show.slice().reverse().find(x => kgKind(x) !== "num");
+  const artK = spLast ? (kgInfo(spLast.c).t === "tig" ? (spLast.tg === "pirate" ? "tigp" : "tige") : kgInfo(spLast.c).t) : null;
+  const ART = { king: ["👑", "💀"], mer: ["🧜‍♀️", "🌊"], pir: ["⚔️", "🏴‍☠️"], tigp: ["🐯", "⚔️"], tige: ["🐯", "🏳️"], esc: ["🏳️", "💨"], kra: ["🐙", "🌀"], wha: ["🐋", "💦"], loot: ["🪙", "✨"] };
+  const fart = artK && !swept ? `<div class="fart a-${artK}" aria-hidden="true"><i class="a1">${ART[artK][0]}</i><i class="a2">${ART[artK][1]}</i><i class="a3">${ART[artK][1]}</i></div>` : "";
+  // 羅針盤から今いちばん強いカードへ伸びる光の線
+  let beam = "";
+  if (wPl && !swept && !(isLast && sweepEl >= 0)){
+    const k = order.indexOf(wPl.p), th2 = (90 + 360 * k / N) * Math.PI / 180, sx2 = 50 + Math.cos(th2) * 40, sy2 = 50 + Math.sin(th2) * 42;
+    const cx2 = 50 + (sx2 - 50) * (N >= 5 ? .52 : .54), cy2 = 50 + (sy2 - 50) * (N >= 5 ? .5 : .51);
+    const dx = (cx2 - 50) * W0 / 100, dy = (cy2 - 50) * H0 / 100, len = Math.hypot(dx, dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
+    beam = `<span class="kbeam" style="--len:${len.toFixed(0)}px;--ang:${ang.toFixed(1)}deg"><i></i></span>`;
+  }
   // 強さの早見表：今いちばん強いカードの段が光る
   const tier = !wPl ? "" : (() => { const k2 = kgKind(wPl); if (k2 === "num") return kgInfo(wPl.c).s === "b" ? "b" : "lead"; return k2; })();
   const hl = k2 => tier === k2 ? "hl" : "";
@@ -7785,8 +7958,8 @@ function drawKg(){
     <div class="lcol"><span class="lc c-esc">🏳️<small>逃走</small>${opt.loot ? `<em>🪙</em>` : ""}</span></div>
     <span class="lbar"><b>強</b><i></i><b>弱</b></span>
   </div>`;
-  const tno = Math.min(n, Object.values(won).reduce((a, b) => a + b, 0) + (plays.length || ph === "play" ? 1 : 0));
-  const info = `<div class="kginfo">${ph === "play" ? `<span>トリック <b>${Math.max(1, tno)}</b>/${n}</span>` : ph === "bid" ? `<span>予想 <b>${g.players.filter(p => bids[p] != null).length}</b>/${N}</span>` : `<span>${n}枚ラウンド終了</span>`}</div>`;
+  const rem = Math.max(0, ...g.players.map(p => ((g.hands || {})[p] || []).length));
+  const info = `<div class="kginfo">${ph === "play" ? `<span>残りトリック <b>${rem}</b>/${n}</span>` : ph === "bid" ? `<span>予想 <b>${g.players.filter(p => bids[p] != null).length}</b>/${N}</span>` : `<span>${n}枚ラウンド終了</span>`}</div>`;
 
   const use = k => opt[k] ? `<i class="on">使用中</i>` : `<i>なし</i>`;
   const back = `<div class="kgback"><b class="kbt">📜 強さ早見表</b>${ladder}<p class="kbtie">同じ強さのカードが出たら<b>先に出した方</b>の勝ち</p>
@@ -7800,7 +7973,7 @@ function drawKg(){
       <div class="kbr"><em>⚔️</em><p><b>海賊の能力 ${use("abil")}</b>その海賊で勝った時に使う（最後のトリックはハリーだけ）</p></div>
       ${Object.values(KG_PIR).map(x => `<div class="kbr pir"><em>${x.h}</em><p><b>${x.n}</b>${x.d}</p></div>`).join("")}
     </div></div>`;
-  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><button class="kgscb" id="kgScore">得点表</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span><div class="compass ${wSeat != null ? "pt" : "idle"}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"}"><span class="chalo" style="--ph:-${((performance.now() % 2200) / 1000).toFixed(3)}s"></span><span class="corb" style="--ph:-${((performance.now() % 3200) / 1000).toFixed(3)}s"><i></i><i></i><i></i></span><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#F3DFB0" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
+  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><button class="kgscb" id="kgScore">得点表</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span>${fart}${beam}<div class="compass ${wSeat != null ? "pt" : "idle"} ${lead ? "lc" : ""}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"};--lc:${lead ? KG_SUITS[lead].c : "#F3DFB0"}"><span class="chalo" style="--ph:-${((performance.now() % 2200) / 1000).toFixed(3)}s"></span><span class="corb" style="--ph:-${((performance.now() % 3200) / 1000).toFixed(3)}s"><i></i><i></i><i></i></span><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" style="fill:color-mix(in srgb,var(--lc) 55%,#F3DFB0)" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
       <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
       <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient><filter id="kgBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><polygon class="glo" points="50,9 58,50 42,50" fill="none" stroke="#FFE15A" stroke-width="11" stroke-linejoin="round" filter="url(#kgBlur)"/><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#D5D8DE" stroke="#A4AAB6" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${zonesT}${seatsT}</div>${resOv}</div></div>${back}</div></div>`;
   // 下部
@@ -7821,7 +7994,11 @@ function drawKg(){
     if (!(inGame && ph === "bid" && bids[me] == null)) bottom += `<div class="nturn ${mt || myAb ? "mine" : ""}" style="--pc:${pcolor(pend ? pend.p : ph === "play" ? t.pid : me)}">${msg}</div>`;
     if (inGame && myAb){
       const pi = Object.values(KG_PIR).find(x => x.k === pend.k);
-      if (pend.k !== "bendt") bottom += `<div class="kgab"><small>${pi.d}</small></div>`;
+      if (pend.k !== "bendt"){
+        const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
+        if (hand.length) bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => `<button class="kh dis" data-kc="${c}" style="--i:${i}">${kgCard(c)}</button>`).join("")}</div>`;
+        bottom += `<div class="kgab"><small>${pi.d}</small></div>`;
+      }
       if (pend.k === "bendt"){
         const k = (pend.drew || []).length; kgDisc = kgDisc.filter(c => hand.includes(c));
         const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
@@ -7845,7 +8022,7 @@ function drawKg(){
       if (kgSel && !hand.includes(kgSel)) kgSel = null;
       const canPlay = mt && ph === "play";
       const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
-      bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => { const ok = !canPlay || kgLegal(hand, plays, c); return `<button class="kh ${kgSel === c ? "sel" : ""} ${ok ? "" : "ng"}" data-kc="${c}" ${canPlay && ok ? "" : "disabled"} style="--i:${i}">${kgCard(c)}</button>`; }).join("")}</div>`;
+      bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => { const ok = !canPlay || kgLegal(hand, plays, c); return `<button class="kh ${kgSel === c ? "sel" : ""} ${ok ? "" : "ng"} ${canPlay && ok ? "" : "dis"}" data-kc="${c}" style="--i:${i}">${kgCard(c)}</button>`; }).join("")}</div>`;
       if (ph === "bid" && bids[me] == null){
         if (kgBidSel != null && kgBidSel > n) kgBidSel = null;
         bottom += `<div class="skbids sm kgbids">${Array.from({ length: n + 1 }, (_, v) => `<button class="skb ${kgBidSel === v ? "sel" : ""}" data-kb="${v}">${v}</button>`).join("")}</div>`;
@@ -7858,9 +8035,12 @@ function drawKg(){
   }
   const lg = (g.log || []).slice(-3).reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("");
   let over = "";
-  if (g.status === "finished"){
-    const rank = g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0));
-    over = `<div class="nover" style="--c:${pcolor(g.winner)}"><span class="ob"></span><div class="k">優勝</div><div class="p">${esc(pname(g.winner))}</div><div class="y">${g.scores[g.winner]}点</div><div class="kgrank">${rank.map((p, i) => `<span style="--pc:${pcolor(p)}"><i>${i + 1}</i><b>${esc(pname(p))}</b><em>${g.scores[p]}点</em></span>`).join("")}</div><div class="btns"><button class="btn" id="kgClose2">閉じる</button></div></div>`;
+  if (g.status === "finished" && Date.now() >= kgFinAt){
+    const rank = g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0)), M = rank.length;
+    const fresh = Date.now() - kgFinAt < 1500;
+    over = `<div class="kgfinal ${fresh ? "" : "seen"}"><span class="kfrays"></span><div class="kft"><small>全10ラウンド終了</small><b>最終結果</b></div>
+      <div class="kfl">${rank.map((p, i) => { const h = (g.history || []).filter(r => r.rows[p] && r.rows[p].bid === r.rows[p].won).length; return `<div class="kfr r${i + 1}" style="--pc:${pcolor(p)};--d:${((M - 1 - i) * .7 + .3).toFixed(2)}s"><i class="kfn">${i === 0 ? "👑" : i + 1}</i><b>${esc(pname(p))}</b><small>的中${h}回</small><em class="num">${g.scores[p]}<small>点</small></em></div>`; }).join("")}</div>
+      <div class="btns kfb" style="--d:${(M * .7 + .4).toFixed(2)}s"><button class="btn" id="kgFinScore">得点表</button><button class="btn sub2" id="kgClose2">閉じる</button></div></div>`;
   }
   el.innerHTML = `<div class="nbg kgbg" aria-hidden="true">${["⚓", "🏴‍☠️", "💰", "🦜", "⚓", "🗺️", "💀", "🧭"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.18">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt kgt">SKULL KING</b><span class="nrd sbr"><small>ROUND</small><b>${g.round}</b><i>/10</i></span><span class="ndk"></span><button class="nmini" id="kgMenu" aria-label="メニュー">…</button><button class="nmini" id="kgClose" aria-label="閉じる">×</button></div>
@@ -7969,17 +8149,22 @@ function drawKg(){
   el.querySelectorAll("[data-kd]").forEach(b => b.onclick = () => { const c = b.dataset.kd, k = ((pend && pend.drew) || []).length; if (kgDisc.includes(c)) kgDisc = kgDisc.filter(x => x !== c); else if (kgDisc.length < k) kgDisc = [...kgDisc, c]; else kgDisc = [...kgDisc.slice(1), c]; drawKg(); });
   el.querySelectorAll("[data-kv]").forEach(b => b.onclick = () => { const v = JSON.parse(b.dataset.kv); kgAbSel = kgAbSel === v ? null : v; drawKg(); });
   el.querySelectorAll("[data-kb]").forEach(b => b.onclick = () => { const v = Number(b.dataset.kb); kgBidSel = kgBidSel === v ? null : v; drawKg(); });
-  el.querySelectorAll("[data-kc]").forEach(b => b.onclick = () => { kgSel = kgSel === b.dataset.kc ? null : b.dataset.kc; drawKg(); });
+  el.querySelectorAll("[data-kc]").forEach(b => { dmLongPress(b, () => kgShowCard(b.dataset.kc)); b.onclick = () => { if (dmJustLp() || b.classList.contains("dis")) return; kgSel = kgSel === b.dataset.kc ? null : b.dataset.kc; drawKg(); }; });
+  // 場のカードはタップで説明
+  el.querySelectorAll(".kp .kgc[data-kci]").forEach(x => x.onclick = () => kgShowCard(x.dataset.kci, x.dataset.ktg));
+  on("kgFinScore", () => { kgScoreOpen = true; drawKg(); });
 }
 function kgMenu(g){
-  const s = openSheet("スカルキングのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="score">得点表を見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  const s = openSheet("スカルキングのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
   s.querySelector('[data-x="rule"]').onclick = () => openGameRules("kg");
-  s.querySelector('[data-x="score"]').onclick = () => { closeSheet(); kgScoreOpen = true; drawKg(); };
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await kgCommit(g.id, () => ({ patch: { status: "aborted" }, log: "対戦が中止されました" })); closeKg(); };
 }
 function kgScoreHtml(g){
     const h = g.history || [];
-    return `<div class="kgsheet"><table><tr><th>R</th>${g.players.map(p => `<th style="color:${pcolor(p)}">${esc(pname(p))}</th>`).join("")}</tr>
+    const rule = `<div class="kgsrule"><b>🎯 得点のルール</b><ul><li><b>予想ぴったり</b>：予想1以上 → <em class="ok">20点×予想数</em>＋ボーナス</li><li><b>外れ</b>：<em class="ng">−10点×ずれた数</em></li><li><b>予想0</b>：当たり <em class="ok">10点×配った枚数</em>／外れ <em class="ng">−10点×配った枚数</em></li><li>ボーナス（14・キャラ捕獲など）は<b>ぴったりの時だけ</b></li></ul></div>`;
+    const cum = {}; g.players.forEach(p => { let s2 = 0; cum[p] = [0, ...h.map(r => (s2 += (r.rows[p] || {}).pts || 0))]; });
+    const chart = h.length ? `<div class="kgchart"><b class="kgcht">📈 点数の推移</b>${lineChart(g.players.map(p => ({ color: pcolor(p), pts: cum[p] })), h.length + 1, { zero: true, label: "点数の推移" })}<div class="kgchx">${["開始", ...h.map(r => `R${r.round}`)].map(x => `<span>${x}</span>`).join("")}</div>${legend(g.players)}</div>` : "";
+    return `${rule}${chart}<div class="kgsheet"><table><tr><th>R</th>${g.players.map(p => `<th style="color:${pcolor(p)}">${esc(pname(p))}</th>`).join("")}</tr>
       ${h.map(r => `<tr><td>${r.round}</td>${g.players.map(p => { const x = r.rows[p]; return `<td class="${x.bid === x.won ? "hit" : "miss"}"><small>${x.bid}/${x.won}</small>${x.pts >= 0 ? "+" : ""}${x.pts}</td>`; }).join("")}</tr>`).join("")}
       <tr class="tot"><td>計</td>${g.players.map(p => `<td>${(g.scores || {})[p] || 0}</td>`).join("")}</tr></table><p class="note">小さい数字は「予想/獲得」${h.length ? "" : "・まだ記録はありません"}</p></div>`;
 }
@@ -8977,7 +9162,7 @@ function cpuKick(){
       if (cur && cur.ver === ver) return;            // この状態はもう予約済み
       if (cur) clearTimeout(cur.tm);
       let mv = null;
-      try { const nx = CPU_NEXT[tb] && CPU_NEXT[tb](g); mv = nx ? { wait: CPU_NEXT_WAIT, run: nx } : g.status === "playing" ? CPU_AI[tb](g) : null; } catch (e) { console.error(e); }
+      try { const nx = CPU_NEXT[tb] && CPU_NEXT[tb](g); mv = nx ? { wait: CPU_NEXT_WAITS[tb] || CPU_NEXT_WAIT, run: nx } : g.status === "playing" ? CPU_AI[tb](g) : null; } catch (e) { console.error(e); }
       if (!mv){ delete cpuTimers[key]; return; }
       const humans = g.players.filter(x => !isCpu(x)), my = Math.max(0, humans.indexOf(me));
       const wait = (mv.wait || 1200) + my * 900 + Math.random() * 300;   // 端末ごとに少しずらす
@@ -9183,8 +9368,9 @@ CPU_AI.kg_games = g => {
   return null;
 };
 /* ラウンドの切り替え：次に始める人がCPU（または人間が全員脱落）なら、結果を少し見せてから自動で次へ */
-const CPU_NEXT_WAIT = 6000;
-const cpuNextOk = (g, starter, alive) => isCpu(starter) || !(alive || g.players).some(x => !isCpu(x));
+const CPU_NEXT_WAIT = 6000, CPU_NEXT_WAITS = { co_games: 11500 };
+// 「次へ」は人間が押す。CPUが自動で進めるのは、生き残りがCPUだけになったときだけ
+const cpuNextOk = (g, starter, alive) => !(alive || g.players).some(x => !isCpu(x));
 const CPU_NEXT = {
   neu_games: g => { if (g.status !== "round_over") return null; const d = g.loser || g.dealer, st = (g.chips[d] || 0) > 0 ? d : neuNext(g, d, 1); return cpuNextOk(g, st, neuAlive(g)) ? () => neuNextRound(neuById(g.id) || g) : null; },
   sb_games: g => { if (g.status !== "round_over") return null; const st = g.players[g.round % g.players.length]; return cpuNextOk(g, st) ? () => sbNextRound(sbById(g.id) || g) : null; },
@@ -9193,6 +9379,7 @@ const CPU_NEXT = {
   kg_games: g => { if (g.phase !== "roundend" || g.status !== "playing") return null; return cpuNextOk(g, kgNext(g, g.turn.start)) ? () => kgNextRound(g.id) : null; }
 };
 /* ---- 人間が全員脱落したら：最終結果までスキップ ---- */
+let fxMuteUntil = 0;
 let cpuSkipping = false;
 const CPU_SKIP = {
   neu_games: { id: () => neuId, alive: g => neuAlive(g), draw: () => drawNeu() },
@@ -9258,7 +9445,7 @@ async function cpuSkipRun(tb, id){
   const { data, error } = await sb.from(tb).update(body).eq("id", id).eq("version", v0).select();
   cpuSkipping = false;
   if (error || !data || !data.length){ Object.assign(fin, snap); await loadTable(tb); toast("ほかの端末で進んでいたので、スキップを取り消しました", 3000); }
-  else Object.assign(fin, data[0]);
+  else { Object.assign(fin, data[0]); fxMuteUntil = Date.now() + 800; if (fin.winner) setTimeout(() => sbFx("win", fin.winner, "", "", ["勝", "利"]), 300); }
   cpuSkipUi();
   CPU_SKIP[tb].draw();
 }
