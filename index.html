@@ -8550,7 +8550,7 @@ function dmAnimGains(el, st){
       const W = innerWidth, H = innerHeight, cx = W / 2, cy = H * .44;
       const sx = tr ? tr.left + tr.width / 2 : cx, sy = tr ? tr.top + tr.height / 2 : 0, s0 = tr ? tr.width / 56 : .5;
       const dx = dr ? dr.left + dr.width / 2 : cx, dy = dr ? dr.top + dr.height / 2 : H;
-      const w = document.createElement("div"); w.className = "dmgain"; w.innerHTML = `${dmCardHtml(ev.c)}<small style="background:${pcolor(ev.p)}">${esc(pname(ev.p))}が${ev.k === "gain" ? "獲得" : "購入"}</small>`;
+      const w = document.createElement("div"); w.className = "dmgain"; w.innerHTML = `${dmCardHtml(ev.c)}<small style="background:${pcolor(ev.p)}">${esc(pname(ev.p))}が${ev.k === "gain" || ev.how === "gain" ? "獲得" : "購入"}</small>`;
       w.style.left = (cx - 28) + "px"; w.style.top = (cy - 40) + "px"; document.body.appendChild(w);
       const lab = w.querySelector("small");
       w.animate([
@@ -8618,7 +8618,9 @@ function dmFxCheck(g){
   // 手札から出ていったカードは「前の手札」から引いておく（同じ名前のカードを引き直しても、新しく引いたカードとして見せる）
   const ph = dmPrevHand[g.id];
   if (ph) evs.forEach(e => { if (e.p !== me) return; const cs = e.k === "dis" || e.k === "tre" || (e.k === "trash" && e.h) ? (e.cs || []) : e.k === "play" ? [e.c] : []; cs.forEach(c => { if (ph[c] > 0) ph[c]--; }); });
-  evs.forEach(e => {
+  evs.forEach(e0 => {
+    // 属州は、買っても改築などで獲得しても、同じ大演出
+    const e = e0.k === "gain" && e0.c === "province" ? { ...e0, k: "prov", how: "gain" } : e0;
     if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
     if (e.k === "clean"){ if (e.p === me){ dmCleanNow = true; dmSnap("clean"); } return; }
     if (e.k === "dis"){ if (e.p === me) dmSnap("dis", e.cs); return; }
