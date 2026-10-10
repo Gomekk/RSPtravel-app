@@ -3022,6 +3022,12 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .kfr.r1 .kfn{font-size:26px}.kfr.r1 b{font-size:19px}.kfr.r1 em{font-size:30px;color:#8A5A1C}
 .kfb{display:flex;gap:10px;width:min(92vw,380px);animation:kfpop .5s ease-out var(--d) both}
 .kfb .btn{flex:1;margin:0}
+.dmuse{margin:0 0 14px;padding:4px 10px 8px;border-radius:14px;background:#FFF4F0;border:2.5px solid #E2364F;box-shadow:0 3px 0 rgba(226,54,79,.25)}
+.dmuse h4{margin-top:6px}
+.dmbig .dnm{white-space:nowrap}
+.dmbig .dnm.ln{font-size:17px;margin-top:-20px;letter-spacing:-.03em}
+.dmcl .dmbig .dnm.ln{font-size:12px;margin-top:-14px;padding-left:14px}
+.dmbig .dnm.ln2{font-size:15px;padding-left:18px}.dmcl .dmbig .dnm.ln2{font-size:10.5px;padding-left:24px}
 .dpk.vt{background:#E6F6EA;border-color:#8FD0A8;color:#1E7E46}
 .dpk.du{background:#FFF3E6;border-color:#F0B070}
 .dmopts{display:flex;flex-direction:column;gap:6px;margin:8px 0;width:100%;align-self:stretch}
@@ -10151,8 +10157,10 @@ function dmBn(c){
 }
 function dmBigCard(c){
   const d = DM[c], plus = dmPlusText(c);
-  const main = d.ty.includes("t") ? `<b class="dbg">+$${d.v}</b>` : (["estate", "duchy", "province", "curse"].includes(c) ? `<b class="dbg">${d.vp}勝利点</b>` : "");
-  return `<div class="dmbig ${dmTyCls(c)}"><i class="dco">${d.c}</i><b class="dnm">${d.n}</b><div class="dar">${dmArt(c)}</div>
+  // 大きな「+$n」は、説明が「+$n」だけの基本の財宝のときだけ（それ以外は説明文を出す）
+  const plainT = d.ty.includes("t") && d.v != null && (!d.tx || d.tx === `+$${d.v}`);
+  const main = plainT ? `<b class="dbg">+$${d.v}</b>` : (["estate", "duchy", "province", "curse"].includes(c) ? `<b class="dbg">${d.vp}勝利点</b>` : "");
+  return `<div class="dmbig ${dmTyCls(c)}"><i class="dco">${d.c}</i><b class="dnm ${d.n.length >= 7 ? "ln ln2" : d.n.length >= 6 ? "ln" : ""}">${d.n}</b><div class="dar">${dmArt(c)}</div>
     <div class="dtx">${plus.length ? `<span class="dpls">` : ""}${plus.map(x => `<b>${(k => k ? `<span class="dbn il">${dmBadge(k, x.match(/\d+/)[0])}</span>` : "")(/カード/.test(x) ? "pc" : /アクション/.test(x) ? "pa" : /購入/.test(x) ? "pb" : /\$/.test(x) ? "pmo" : "")}${x}</b>`).join("")}${plus.length ? "</span>" : ""}${main}${d.tx && !main ? `<p>${esc(d.tx)}</p>` : ""}</div><small class="dty">${dmTyName(c)}</small></div>`;
 }
 function drawDm(){
@@ -10600,7 +10608,7 @@ function dmAskHtml(a, st){
 function dmMenu(g){
   const s = openSheet("ドミニオンのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="cards">カード一覧<span></span></button><button data-x="trash">廃棄置き場を見る<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
   s.querySelector('[data-x="rule"]').onclick = () => openGameRules("dm");
-  s.querySelector('[data-x="cards"]').onclick = () => openSheet("このゲームのカード", `<div class="dmcl">${[...g.st.kingdom, ...DM_BASE].map(c => dmBigCard(c)).join("")}</div>`);
+  s.querySelector('[data-x="cards"]').onclick = () => openSheet("このゲームのカード", `<div class="dmcl">${[...g.st.kingdom, ...DM_BASE.filter(c => !g.st.supply || g.st.supply[c] != null)].map(c => dmBigCard(c)).join("")}</div>`);
   s.querySelector('[data-x="trash"]').onclick = () => { const tr = g.st.trash || []; openSheet("廃棄置き場", tr.length ? `<div class="kgpeek">${tr.map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだ何も廃棄されていません</p>`); };
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await dmCommit(g.id, () => ({ status: { status: "aborted" } })); closeDm(); };
 }
@@ -10699,7 +10707,12 @@ function dmFx(e, g){
 }
 function dmRulesHtml(){
   const C = c => dmCardHtml(c, "sm");
-  return `
+  const row = c => `<div>${C(c)}<p><b>${DM[c].n}（💰${DM[c].c}${DM[c].pot ? "🧪" : ""}）</b>${[...dmPlusText(c), DM[c].tx].filter(Boolean).join("　")}</p></div>`;
+  // 対戦中に開いたときは、このゲームで使っているカードを一番上にまとめる
+  const cur = dmId && dmById(dmId), st0 = cur && cur.st;
+  const used = st0 ? [...st0.kingdom.slice().sort((a, b) => DM[a].c - DM[b].c), ...["platinum", "colony", "potion"].filter(c => st0.supply && st0.supply[c] != null)] : [];
+  const top = used.length ? `<div class="dmuse"><h4 style="--hc:#E2364F">🎴 このゲームで使っているカード</h4><div class="kv">${used.map(row).join("")}</div></div>` : "";
+  return `${top}
   <div class="goal"><b>自分の<span class="r">山札（デッキ）</span>を育てて、勝利点を集める！</b><small>ゲーム終了時に、持っているカードの勝利点の合計が一番多い人の勝ち。</small></div>
   <h4>はじめに</h4>
   <div class="ex">${C("copper")}<span class="op">×7</span>${C("estate")}<span class="op">×3</span><span class="cap">全員この10枚の山札から始める。よく混ぜて5枚引く</span></div>
@@ -10723,7 +10736,7 @@ function dmRulesHtml(){
   <div class="ex">${C("province")}<span class="op">0枚</span><span class="cap"><b>属州</b>がなくなる、または<b>サプライの山が3つ</b>（5人以上は4つ）なくなったら、その人の番の終わりで終了</span></div>
   <div class="tip">同点なら手番の少ない人の勝ち。それでも同じなら引き分け。</div>
   ${DM_EXP.map(x => `<h4 style="--hc:#8B6CFF">王国カード（${x.id === "base" ? "基本セット" : "拡張：" + x.n}）</h4>
-  <div class="kv">${DM_KINGDOM.filter(c => dmX(c) === x.id).sort((a, b) => DM[a].c - DM[b].c).map(c => `<div>${C(c)}<p><b>${DM[c].n}（💰${DM[c].c}）</b>${[...dmPlusText(c), DM[c].tx].filter(Boolean).join("　")}</p></div>`).join("")}</div>`).join("")}`;
+  <div class="kv">${DM_KINGDOM.filter(c => dmX(c) === x.id).sort((a, b) => DM[a].c - DM[b].c).map(row).join("")}</div>`).join("")}`;
 }
 
 document.addEventListener("contextmenu", e => { if (e.target.closest && e.target.closest(".arena")) e.preventDefault(); });
