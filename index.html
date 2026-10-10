@@ -3046,18 +3046,20 @@ body.dmnoguide .dbn:not(.lg){display:none}
 @keyframes hgold{0%{transform:translateY(-60px) scale(.2) rotate(-200deg);opacity:0;filter:brightness(2)}70%{transform:translateY(4px) scale(1.15) rotate(8deg);opacity:1;filter:brightness(1.4) drop-shadow(0 0 20px #FFD23F)}100%{transform:none;filter:drop-shadow(0 0 14px #FFD23F)}}
 .dmstat .ch{display:inline-flex;align-items:center;gap:3px}
 .dmstat .ch .sti{vertical-align:0;flex:none;margin-right:0}
-/* 属州：ゲーム終了に向かう、紅と紫の重厚な演出 */
-.sbfx.pvk-end .pv-bg{background:radial-gradient(circle at 50% 40%,rgba(210,40,72,.9),rgba(84,10,52,.95) 55%,rgba(22,2,16,.97))}
-.sbfx.pvk-end .pv-beam{background:linear-gradient(to bottom,rgba(255,220,230,.95),rgba(255,120,150,.55) 60%,rgba(255,120,150,0))}
-.sbfx.pvk-end .pv-ring{border-color:#FF8FA0}.sbfx.pvk-end .pv-ring.r3{border-color:#FFD23F}
-.sbfx.pvk-end .pv-flash{background:#FFE6EC}
-.sbfx.pvk-end .pv-card{box-shadow:0 0 0 3px #FF8FA0,0 0 36px 8px rgba(255,90,120,.75)}
-.sbfx.pvk-end .pv-t span{color:#FFE1E7;-webkit-text-stroke-color:#4A0418;text-shadow:0 5px 0 #4A0418,0 0 22px rgba(255,90,120,.85)}
-.sbfx.pvk-end .pv-vp{background:#C0283C;box-shadow:0 4px 0 #5A0A18}
-.sbfx.pvk-end .pv-co{background:radial-gradient(circle at 35% 30%,#FFE1E7,#E2364F 60%,#7A0A22);border-color:#4A0418}
-.sbfx .pv-left{margin-top:12px;padding:6px 16px;border-radius:12px;background:rgba(20,0,10,.6);border:2px solid #FF8FA0;color:#FFE1E7;font-weight:900;font-size:14px;white-space:nowrap;box-shadow:0 0 18px rgba(255,90,120,.6);animation:pvwho .5s cubic-bezier(.2,1.4,.4,1) 2.7s both}
-.sbfx .pv-left b{font-family:var(--disp);font-weight:400;font-size:24px;color:#FFD23F;margin:0 3px;display:inline-block;animation:pvleft 1s ease-in-out 3.1s infinite}
-@keyframes pvleft{50%{transform:scale(1.3);text-shadow:0 0 12px #FFD23F}}
+/* 属州：明るくポップな緑（ゲーム終了に近づくので、残り枚数を出す） */
+.sbfx.pvk-end .pv-bg{background:radial-gradient(circle at 50% 40%,rgba(214,255,170,.95),rgba(80,210,110,.93) 45%,rgba(20,140,80,.95) 80%,rgba(10,90,60,.97))}
+.sbfx.pvk-end .pv-beam{background:linear-gradient(to bottom,rgba(255,255,230,.98),rgba(220,255,140,.6) 60%,rgba(220,255,140,0))}
+.sbfx.pvk-end .pv-ring{border-color:#FFF27A}.sbfx.pvk-end .pv-ring.r2{border-color:#fff}.sbfx.pvk-end .pv-ring.r3{border-color:#FF8FD0}
+.sbfx.pvk-end .pv-flash{background:#F4FFE0}
+.sbfx.pvk-end .pv-card{box-shadow:0 0 0 4px #fff,0 0 0 7px #7CF0A0,0 0 40px 10px rgba(200,255,120,.9)}
+.sbfx.pvk-end .pv-t span{color:#fff;-webkit-text-stroke:3px #127A3A;text-shadow:0 5px 0 #0B5A2A,0 0 20px rgba(255,255,160,.9)}
+.sbfx.pvk-end .pv-t span:nth-child(3n+1){color:#FFF27A}.sbfx.pvk-end .pv-t span:nth-child(3n+2){color:#BFFFD0}
+.sbfx.pvk-end .pv-vp{background:linear-gradient(90deg,#2DBE60,#7CD957);box-shadow:0 4px 0 #0B5A2A}
+.sbfx.pvk-end .pv-co{background:radial-gradient(circle at 35% 30%,#FFF6C8,#FFD23F 55%,#C98E12);border-color:#8A5A1C}
+.sbfx.pvk-end .pv-crown{filter:drop-shadow(0 0 10px #fff)}
+.sbfx .pv-left{margin-top:12px;padding:6px 16px;border-radius:999px;background:#fff;border:3px solid #2DBE60;color:#127A3A;font-weight:900;font-size:14px;white-space:nowrap;box-shadow:0 4px 0 #0B5A2A,0 0 18px rgba(255,255,160,.8);animation:pvwho .5s cubic-bezier(.2,1.4,.4,1) 2.7s both}
+.sbfx .pv-left b{font-family:var(--disp);font-weight:400;font-size:24px;color:#E2364F;margin:0 3px;display:inline-block;animation:pvleft 1s ease-in-out 3.1s infinite}
+@keyframes pvleft{50%{transform:scale(1.35) rotate(-6deg)}}
 /* 植民地・白金貨：いちばん派手な、虹と黄金の演出 */
 .sbfx.pvk-max .pv-bg{background:radial-gradient(circle at 50% 40%,rgba(255,246,190,.96),rgba(232,177,42,.92) 38%,rgba(110,40,150,.95) 72%,rgba(20,6,40,.98))}
 .sbfx .pv-rb{position:absolute;left:50%;top:38%;width:180vmax;height:180vmax;transform:translate(-50%,-50%);background:repeating-conic-gradient(rgba(255,90,120,.28) 0 7deg,rgba(255,210,63,.28) 7deg 14deg,rgba(124,240,160,.28) 14deg 21deg,rgba(90,180,255,.28) 21deg 28deg,rgba(200,140,255,.28) 28deg 35deg,transparent 35deg 45deg);opacity:0;animation:pvin .5s ease-out .78s forwards,pvspin 6s linear .78s infinite;mix-blend-mode:screen}
@@ -3086,7 +3088,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .tpc{z-index:2;animation:tpdrop .7s cubic-bezier(.3,1.5,.5,1) calc(.15s + var(--i) * .18s) both}
 .tpc .tpback{position:absolute;inset:0}
 .tpc .dmc{width:84px;height:118px}
-@keyframes tpdrop{0%{transform:translateY(-60vh) rotate(-25deg) scale(1.3);opacity:0}60%{opacity:1}100%{transform:translate(calc(var(--i) * -2px),calc(var(--i) * -3px)) rotate(0)}}
+@keyframes tpdrop{0%{transform:translateY(-60vh) rotate(-25deg) scale(1.3);opacity:0}60%{opacity:1}100%{transform:translate(calc(var(--i) * 5px),calc(var(--i) * -6px)) rotate(0)}}
 .tpbox small{font-size:14px;font-weight:900;color:#fff;padding:4px 14px;border-radius:99px;border:2px solid var(--ink);animation:hpop .4s ease-out .5s both}
 .dpk.vt{background:#E6F6EA;border-color:#8FD0A8;color:#1E7E46}
 .dpk.du{background:#FFF3E6;border-color:#F0B070}
@@ -10233,7 +10235,7 @@ const dmTmCls = c => dmTyList(c).length > 1 ? "tm-" + dmTyList(c).join("-") : ""
   const css = new Set();
   Object.keys(DM).forEach(c => { const L = dmTyList(c); if (L.length < 2) return; const n = L.length, w = 100 / n;
     const NB = { a: "#C9AE6E", t: "#C9951A", v: "#2D8A4A", re: "#2F7FC9", atk: "#C0392B", dur: "#E07A1F" };
-    css.add(`.tm-${L.join("-")}.tm-${L.join("-")}{--cb:linear-gradient(100deg,${L.map((k, i) => `${DM_TYC[k][0]} ${(i * w).toFixed(1)}%,${DM_TYC[k][1]} ${((i + 1) * w).toFixed(1)}%`).join(",")});--nb:linear-gradient(90deg,${L.map((k, i) => `${NB[k]} ${(i * w).toFixed(1)}%,${NB[k]} ${((i + 1) * w).toFixed(1)}%`).join(",")});--nc:#fff}`); });
+    css.add(`.tm-${L.join("-")}.tm-${L.join("-")}{--cb:linear-gradient(90deg,${L.map((k, i) => `${DM_TYC[k][0]} ${(i * w).toFixed(1)}%,${DM_TYC[k][1]} ${((i + 1) * w).toFixed(1)}%`).join(",")});--nb:linear-gradient(90deg,${L.map((k, i) => `${NB[k]} ${(i * w).toFixed(1)}%,${NB[k]} ${((i + 1) * w).toFixed(1)}%`).join(",")});--nc:#fff}`); });
   const st = document.createElement("style"); st.textContent = [...css].join("\n"); document.head.appendChild(st);
 })();
 function dmCardHtml(c, cls = "", extra = ""){
@@ -10797,9 +10799,9 @@ function dmFx(e, g){
     html = `<span class="hwash"></span>${coins}<div class="hbox"><div class="hchest">${dmCardHtml("hoard", "dfx")}</div><b class="htx">埋蔵金!!</b><div class="hgold">${dmCardHtml("gold", "dfx")}</div><small style="background:${pc}">${esc(pname(e.p))}が金貨を獲得</small></div>`;
   } else if (e.k === "top"){
     // 山札の上に置く：カード（伏せたまま）が上から落ちてきて山札に重なる
-    ms = 1700; const n = Math.min(4, e.n || 1);
-    const cards = (e.cs && e.cs.length ? e.cs.slice(0, 4).map(c => dmCardHtml(c, "dfx")) : Array.from({ length: n }, () => `<span class="tpback"><i></i></span>`)).map((h, i) => `<span class="tpc" style="--i:${i}">${h}</span>`).join("");
-    html = `<span class="tpwash"></span><div class="tpbox"><div class="tpdeck"><span class="tpback"><i></i></span><span class="tpback b2"><i></i></span>${cards}</div><small style="background:${pc}">${esc(pname(e.p))}が${e.n > 1 ? `${e.n}枚を` : ""}山札の上に置いた</small></div>`;
+    ms = 1700; const n = Math.min(6, e.n || 1);
+    const cards = (e.cs && e.cs.length ? e.cs.slice(0, 6).map(c => dmCardHtml(c, "dfx")) : Array.from({ length: n }, () => `<span class="tpback"><i></i></span>`)).map((h, i) => `<span class="tpc" style="--i:${i}">${h}</span>`).join("");
+    html = `<span class="tpwash"></span><div class="tpbox"><div class="tpdeck">${cards}</div><small style="background:${pc}">${esc(pname(e.p))}が${e.n > 1 ? `${e.n}枚を` : ""}山札の上に置いた</small></div>`;
   } else if (e.k === "tre"){
     ms = 950; if (!e.v) return;
     const coins = Array.from({ length: Math.min(14, 4 + e.v * 2) }, () => { const a = rnd(-Math.PI, 0), d = rnd(60, 150); return `<i class="tco" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--d:${rnd(0, .15).toFixed(2)}s"></i>`; }).join("");
@@ -10807,7 +10809,7 @@ function dmFx(e, g){
   } else if (e.k === "prov"){
     ms = 4800; kind = "pv";
     const c = DM_BIGFX.includes(e.c) ? e.c : "province", left = g && g.st && g.st.supply ? (g.st.supply.province || 0) : 0, max = c !== "province";
-    const PV = { province: { w: "PROVINCE", vp: "+6 勝利点", ic: "⏳" }, colony: { w: "COLONY", vp: "+10 勝利点", ic: "👑" }, platinum: { w: "PLATINUM", vp: "+$5", ic: "💎" } }[c];
+    const PV = { province: { w: "PROVINCE", vp: "+6 勝利点", ic: "🎉" }, colony: { w: "COLONY", vp: "+10 勝利点", ic: "👑" }, platinum: { w: "PLATINUM", vp: "+$5", ic: "💎" } }[c];
     const R = (a, b) => (a + Math.random() * (b - a)).toFixed(2);
     // 着地の衝撃で飛び散る金のかけら
     const shards = Array.from({ length: 26 }, (_, k) => { const a = (k / 26) * 360 + +R(-6, 6), d = R(120, 230); return `<span class="pv-sh" style="--a:${a}deg;--d:${d}px;--c:${["#FFE38A", "#fff", "#E8B12A", "#9BEA8A"][k % 4]};--t:${R(.55, .9)}s"></span>`; }).join("");
@@ -10823,7 +10825,7 @@ function dmFx(e, g){
         <div class="pv-t">${PV.w.split("").map((ch, k) => `<span style="--k:${k}">${ch}</span>`).join("")}</div>
         <div class="pv-vp">${PV.vp}</div>
         <div class="pv-who" style="--pc:${pc}"><span>${esc(pname(e.p))}</span> が${DM[c].n}を獲得！</div>
-        ${c === "province" ? `<div class="pv-left">⏳ 属州 残り<b>${left}</b>枚${left <= 3 ? "・ゲーム終了が迫る！" : "・終わりが近づく…"}</div>` : ""}
+        ${c === "province" ? `<div class="pv-left">🏰 属州 残り<b>${left}</b>枚${left <= 3 ? "！ゲーム終了が迫る！" : ""}</div>` : ""}
       </div>`;
     kind = c === "province" ? "pv pvk-end" : "pv pvk-max";
   } else if (e.k === "atk"){
