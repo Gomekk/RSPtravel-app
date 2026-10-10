@@ -2409,6 +2409,7 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .ty-t{--cb:linear-gradient(170deg,#FFF7D6,#F2CF6A);--nb:#C9951A;--nc:#fff}
 .ty-v{--cb:linear-gradient(170deg,#EEFBEA,#BFE7B2);--nb:#2D8A4A;--nc:#fff}
 .ty-c{--cb:linear-gradient(170deg,#F3EAFF,#C8B0EE);--nb:#6B3CA0;--nc:#fff}
+.ty-dur{--cb:linear-gradient(170deg,#FFF3E6,#F7C28A);--nb:#E07A1F;--nc:#fff}
 .dmart{display:grid;place-items:center;line-height:1}
 .dmart.em{font-size:30px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.18))}
 .dmart.cur{font-size:28px}
@@ -2507,6 +2508,11 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .dmcl .dmbig .dtx b{font-size:12px}.dmcl .dmbig .dtx b.dbg{font-size:20px}.dmcl .dmbig .dtx p{font-size:10.5px}
 /* 作成 */
 .dmsets{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.dmxtabs{display:flex;gap:4px;margin-bottom:6px;overflow-x:auto;scrollbar-width:none}
+.dmxt{flex:none;padding:6px 12px;border-radius:10px 10px 4px 4px;border:2px solid var(--line);background:#F3F5FA;font-size:12px;font-weight:900;color:var(--mute)}
+.dmxt small{margin-left:4px;font-size:9.5px;opacity:.8}
+.dmxt[aria-pressed="true"]{background:#1B1838;border-color:#1B1838;color:#FFE38A}
+.dmkoth{grid-column:1/-1;font-size:10.5px;font-weight:800;color:var(--mute)}
 .dmset{padding:5px 10px;border-radius:99px;border:2px solid var(--ink);background:#fff;font-size:11.5px;font-weight:900}
 .dmset[aria-pressed="true"]{background:#FFE38A;box-shadow:0 0 0 2px #E8B12A}
 .dmset.rnd{background:linear-gradient(90deg,#E6FAFB,#F3EAFF)}
@@ -2862,6 +2868,13 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .cpuskip small{font-size:11px;font-weight:800;opacity:.85}
 .cpuskip:disabled{opacity:.9}
 .cpuskip .spin{display:inline-block;width:14px;height:14px;margin-right:6px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);border-top-color:#FFE38A;animation:pvspin .8s linear infinite;vertical-align:-2px}
+.dpk.du{background:#FFF3E6;border-color:#F0B070}
+.dmopts{display:flex;flex-direction:column;gap:6px;margin:8px 0;width:100%;align-self:stretch}
+.dmopt{width:100%;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:#fff;font-size:14px;font-weight:900;color:var(--ink);text-align:left}
+.dmopt.sel{border-color:#E8B12A;background:#FFF6D2;box-shadow:0 0 0 2px #FFE38A}
+.dmopt.sel::before{content:"✓ ";color:#C98A0B}
+.dmopt:disabled{opacity:.35}
+.dco.cut{background:radial-gradient(circle at 35% 30%,#C8F5D8,#2DBE60)!important;color:#0B4A22!important}
 .cpuchips{margin-top:8px;padding:8px 10px;border-radius:12px;background:#F3F5FA;border:1.5px dashed #C9CFDC}
 .cpuchips summary{display:flex;align-items:center;gap:6px;list-style:none;cursor:pointer;font-size:12px;font-weight:900;color:var(--mute)}
 .cpuchips summary::-webkit-details-marker{display:none}
@@ -7954,20 +7967,88 @@ const DM = {
   mine: { n: "鉱山", c: 5, ty: ["a"], ic: "⛏️", tx: "手札の財宝1枚を廃棄してもよい。そうしたらコストが最大3多い財宝を手札に獲得する" },
   sentry: { n: "衛兵", c: 5, ty: ["a"], ic: "💂", p: { cards: 1, actions: 1 }, tx: "山札の上2枚を見て、好きな枚数を廃棄・捨て札にし、残りを好きな順で戻す" },
   witch: { n: "魔女", c: 5, ty: ["a", "atk"], ic: "🧙‍♀️", p: { cards: 2 }, tx: "他の人は呪いを1枚獲得する" },
-  artisan: { n: "職人", c: 6, ty: ["a"], ic: "🎨", tx: "コスト5以下のカードを手札に獲得する。手札1枚を山札の上に置く" }
+  artisan: { n: "職人", c: 6, ty: ["a"], ic: "🎨", tx: "コスト5以下のカードを手札に獲得する。手札1枚を山札の上に置く" },
+  /* ===== 拡張：陰謀 ===== */
+  courtyard: { x: "int", n: "中庭", c: 2, ty: ["a"], p: { cards: 3 }, tx: "手札1枚を山札の上に置く" },
+  lurker: { x: "int", n: "待ち伏せ", c: 2, ty: ["a"], p: { actions: 1 }, tx: "サプライのアクションを1枚廃棄する／廃棄置き場のアクションを1枚獲得する、のどちらか" },
+  pawn: { x: "int", n: "手先", c: 2, ty: ["a"], tx: "+1カード・+1アクション・+1購入・+$1 から異なる2つを選ぶ" },
+  masquerade: { x: "int", n: "仮面舞踏会", c: 3, ty: ["a"], p: { cards: 2 }, tx: "手札のある人は全員1枚を次の人に渡す。そのあと手札1枚を廃棄してもよい" },
+  shanty: { x: "int", n: "貧民街", c: 3, ty: ["a"], p: { actions: 2 }, tx: "手札を公開し、アクションカードがなければ+2カード" },
+  steward: { x: "int", n: "執事", c: 3, ty: ["a"], tx: "+2カード／+$2／手札2枚を廃棄、から1つを選ぶ" },
+  swindler: { x: "int", n: "詐欺師", c: 3, ty: ["a", "atk"], p: { coins: 2 }, tx: "他の人は山札の一番上を廃棄し、あなたが選んだ同じコストのカードを獲得する" },
+  wishingwell: { x: "int", n: "願いの井戸", c: 3, ty: ["a"], p: { cards: 1, actions: 1 }, tx: "カード名を1つ言い、山札の一番上を公開。当たれば手札に入れる" },
+  baron: { x: "int", n: "男爵", c: 4, ty: ["a"], p: { buys: 1 }, tx: "屋敷1枚を捨てて+$4してもよい。捨てなければ屋敷を獲得する" },
+  bridge: { x: "int", n: "橋", c: 4, ty: ["a"], p: { buys: 1, coins: 1 }, tx: "このターン、すべてのカードのコストが$1少なくなる" },
+  conspirator: { x: "int", n: "共謀者", c: 4, ty: ["a"], p: { coins: 2 }, tx: "このターンにアクションを3回以上使っていたら、+1カード +1アクション" },
+  diplomat: { x: "int", n: "外交官", c: 4, ty: ["a", "re"], p: { cards: 2 }, tx: "引いた後の手札が5枚以下なら+2アクション。（他の人のアタック時、手札5枚以上なら2枚引いて3枚捨てる）" },
+  ironworks: { x: "int", n: "鉄工所", c: 4, ty: ["a"], tx: "コスト4以下のカードを獲得。アクションなら+1アクション、財宝なら+$1、勝利点なら+1カード" },
+  mill: { x: "int", n: "風車", c: 4, ty: ["a", "v"], vp: 1, p: { cards: 1, actions: 1 }, tx: "手札2枚を捨てて+$2してもよい。1勝利点" },
+  miningvillage: { x: "int", n: "鉱山の村", c: 4, ty: ["a"], p: { cards: 1, actions: 2 }, tx: "このカードを廃棄して+$2してもよい" },
+  secretpassage: { x: "int", n: "秘密の抜け道", c: 4, ty: ["a"], p: { cards: 2, actions: 1 }, tx: "手札1枚を山札の一番上か一番下に置く" },
+  courtier: { x: "int", n: "廷臣", c: 5, ty: ["a"], tx: "手札1枚を公開し、その種類の数だけ選ぶ：+1アクション／+1購入／+$3／金貨を獲得" },
+  duke: { x: "int", n: "公爵", c: 5, ty: ["v"], tx: "持っている公領1枚につき1勝利点" },
+  minion: { x: "int", n: "寵臣", c: 5, ty: ["a", "atk"], p: { actions: 1 }, tx: "+$2、または手札を捨てて4枚引く（このとき手札5枚以上の他の人も同じく）" },
+  patrol: { x: "int", n: "巡回", c: 5, ty: ["a"], p: { cards: 3 }, tx: "山札の上4枚を公開し、勝利点と呪いを手札に。残りは山札に戻す" },
+  replace: { x: "int", n: "交換", c: 5, ty: ["a", "atk"], tx: "手札1枚を廃棄し、コストが最大2多いカードを獲得。アクションか財宝なら山札の上に、勝利点なら他の人は呪いを獲得" },
+  torturer: { x: "int", n: "拷問人", c: 5, ty: ["a", "atk"], p: { cards: 3 }, tx: "他の人は、手札2枚を捨てるか、呪いを手札に獲得するかを選ぶ" },
+  tradingpost: { x: "int", n: "交易場", c: 5, ty: ["a"], tx: "手札2枚を廃棄する。2枚廃棄したら銀貨を手札に獲得" },
+  upgrade: { x: "int", n: "改良", c: 5, ty: ["a"], p: { cards: 1, actions: 1 }, tx: "手札1枚を廃棄し、コストがちょうど1多いカードを獲得する" },
+  farm: { x: "int", n: "農場", c: 6, ty: ["t", "v"], v: 2, vp: 2, tx: "+$2。2勝利点" },
+  nobles: { x: "int", n: "貴族", c: 6, ty: ["a", "v"], vp: 2, tx: "+3カード または +2アクション を選ぶ。2勝利点" },
+  /* ===== 拡張：海辺 ===== */
+  haven: { x: "sea", n: "停泊所", c: 2, ty: ["a", "dur"], p: { cards: 1, actions: 1 }, tx: "手札1枚を脇に置く。次のターンの最初に手札に加える" },
+  lighthouse: { x: "sea", n: "灯台", c: 2, ty: ["a", "dur"], p: { actions: 1, coins: 1 }, tx: "次のターンの最初に+$1。それまで他の人のアタックを受けない" },
+  nativevillage: { x: "sea", n: "原住民の村", c: 2, ty: ["a"], p: { actions: 2 }, tx: "山札の一番上を自分のマットに置く／マットのカードを全部手札に入れる、のどちらか" },
+  astrolabe: { x: "sea", n: "アストロラーベ", c: 3, ty: ["t", "dur"], v: 1, tx: "今と次のターンの最初に：+$1 +1購入" },
+  fishingvillage: { x: "sea", n: "漁村", c: 3, ty: ["a", "dur"], p: { actions: 2, coins: 1 }, tx: "次のターンの最初に：+1アクション +$1" },
+  lookout: { x: "sea", n: "見張り", c: 3, ty: ["a"], p: { actions: 1 }, tx: "山札の上3枚を見て、1枚を廃棄、1枚を捨て札、1枚を山札に戻す" },
+  monkey: { x: "sea", n: "猿", c: 3, ty: ["a", "dur"], tx: "次のターンまで、右隣の人がカードを獲得するたびに+1カード。次のターンの最初に+1カード" },
+  seachart: { x: "sea", n: "海図", c: 3, ty: ["a"], p: { cards: 1, actions: 1 }, tx: "山札の一番上を公開し、同じカードを場に出していれば手札に入れる" },
+  smugglers: { x: "sea", n: "密輸人", c: 3, ty: ["a"], tx: "右隣の人が直前のターンに獲得したコスト6以下のカードと同じものを獲得する" },
+  warehouse: { x: "sea", n: "倉庫", c: 3, ty: ["a"], p: { cards: 3, actions: 1 }, tx: "手札3枚を捨てる" },
+  blockade: { x: "sea", n: "封鎖", c: 4, ty: ["a", "dur", "atk"], tx: "コスト4以下のカードを獲得して脇に置き、次のターンの最初に手札に。それまで他の人が自分の番に同じカードを獲得したら呪いも獲得" },
+  caravan: { x: "sea", n: "隊商", c: 4, ty: ["a", "dur"], p: { cards: 1, actions: 1 }, tx: "次のターンの最初に+1カード" },
+  cutpurse: { x: "sea", n: "巾着切り", c: 4, ty: ["a", "atk"], p: { coins: 2 }, tx: "他の人は手札の銅貨を1枚捨てる" },
+  island: { x: "sea", n: "島", c: 4, ty: ["a", "v"], vp: 2, tx: "このカードと手札1枚を島マットに置く（ゲーム終了まで山札に戻らない）。2勝利点" },
+  sailor: { x: "sea", n: "船乗り", c: 4, ty: ["a", "dur"], p: { actions: 1 }, tx: "次のターンの最初に+$2。手札1枚を廃棄してもよい" },
+  salvager: { x: "sea", n: "サルベージ船", c: 4, ty: ["a"], p: { buys: 1 }, tx: "手札1枚を廃棄し、そのコスト分の+$" },
+  tidepools: { x: "sea", n: "潮だまり", c: 4, ty: ["a", "dur"], p: { cards: 3, actions: 1 }, tx: "次のターンの最初に手札2枚を捨てる" },
+  treasuremap: { x: "sea", n: "宝の地図", c: 4, ty: ["a"], tx: "このカードと手札の宝の地図を廃棄。2枚廃棄したら金貨4枚を山札の上に獲得" },
+  bazaar: { x: "sea", n: "バザー", c: 5, ty: ["a"], p: { cards: 1, actions: 2, coins: 1 }, tx: "" },
+  corsair: { x: "sea", n: "私掠船", c: 5, ty: ["a", "dur", "atk"], p: { coins: 2 }, tx: "次のターンの最初に+1カード。それまで他の人は各ターン最初に使う銀貨か金貨を廃棄する" },
+  merchantship: { x: "sea", n: "商船", c: 5, ty: ["a", "dur"], p: { coins: 2 }, tx: "次のターンの最初に+$2" },
+  outpost: { x: "sea", n: "前哨地", c: 5, ty: ["a", "dur"], tx: "このターンの終わりは3枚だけ引き、もう1ターン続けて行う（連続はしない）" },
+  pirate: { x: "sea", n: "海賊", c: 5, ty: ["a", "dur"], tx: "次のターンの最初に、コスト6以下の財宝を手札に獲得する" },
+  seawitch: { x: "sea", n: "海の魔女", c: 5, ty: ["a", "dur", "atk"], p: { cards: 2 }, tx: "他の人は呪いを獲得。次のターンの最初に+2カードして手札2枚を捨てる" },
+  tactician: { x: "sea", n: "策士", c: 5, ty: ["a", "dur"], tx: "手札を全部捨てる。捨てたら次のターンの最初に+5カード +1アクション +1購入" },
+  treasury: { x: "sea", n: "宝物庫", c: 5, ty: ["a"], p: { cards: 1, actions: 1, coins: 1 }, tx: "このターン勝利点カードを獲得しなかったら、ターンの終わりにこのカードを山札の上に置く" },
+  wharf: { x: "sea", n: "波止場", c: 5, ty: ["a", "dur"], p: { cards: 2, buys: 1 }, tx: "次のターンの最初に+2カード +1購入" }
 };
 const DM_KINGDOM = Object.keys(DM).filter(k => !["copper", "silver", "gold", "estate", "duchy", "province", "curse"].includes(k));
 const DM_BASE = ["copper", "silver", "gold", "estate", "duchy", "province", "curse"];
+const DM_EXP = [{ id: "base", n: "基本" }, { id: "int", n: "陰謀" }, { id: "sea", n: "海辺" }];
+const dmX = c => DM[c].x || "base";
 const DM_SETS = [
   { n: "はじめてのドミニオン", k: ["cellar", "market", "merchant", "militia", "mine", "moat", "remodel", "smithy", "village", "workshop"] },
   { n: "サイズの歪み", k: ["artisan", "bandit", "bureaucrat", "chapel", "festival", "gardens", "sentry", "throne", "witch", "workshop"] },
   { n: "山札の上", k: ["artisan", "bureaucrat", "council", "festival", "harbinger", "lab", "moneylender", "sentry", "vassal", "village"] },
   { n: "手品", k: ["cellar", "council", "festival", "gardens", "library", "harbinger", "militia", "poacher", "smithy", "throne"] },
   { n: "改良", k: ["artisan", "cellar", "market", "merchant", "mine", "moat", "moneylender", "poacher", "remodel", "witch"] },
+  { x: "int", n: "勝利の舞", k: ["baron", "courtier", "duke", "farm", "ironworks", "masquerade", "mill", "nobles", "patrol", "replace"] },
+  { x: "int", n: "陰謀の計画", k: ["conspirator", "courtyard", "diplomat", "lurker", "minion", "pawn", "secretpassage", "shanty", "swindler", "tradingpost"] },
+  { x: "int", n: "最善の願い", k: ["baron", "conspirator", "courtyard", "diplomat", "duke", "secretpassage", "shanty", "torturer", "upgrade", "wishingwell"] },
+  { x: "mix", xs: ["base", "int"], n: "解体（基本＋陰謀）", k: ["bridge", "mill", "miningvillage", "patrol", "torturer", "bandit", "harbinger", "moneylender", "remodel", "sentry"] },
+  { x: "mix", xs: ["base", "int"], n: "手札狂乱（基本＋陰謀）", k: ["courtier", "diplomat", "minion", "pawn", "upgrade", "cellar", "council", "library", "militia", "smithy"] },
+  { x: "mix", xs: ["base", "int"], n: "手下たち（基本＋陰謀）", k: ["courtier", "farm", "lurker", "minion", "steward", "cellar", "festival", "library", "sentry", "witch"] },
+  { x: "sea", n: "海辺の旅", k: ["bazaar", "caravan", "cutpurse", "fishingvillage", "haven", "island", "lookout", "merchantship", "seawitch", "warehouse"] },
+  { x: "sea", n: "海賊の財宝", k: ["blockade", "corsair", "lighthouse", "nativevillage", "pirate", "salvager", "smugglers", "tactician", "treasuremap", "wharf"] },
+  { x: "sea", n: "潮の満ち引き", k: ["astrolabe", "monkey", "outpost", "sailor", "seachart", "tidepools", "treasury", "bazaar", "fishingvillage", "lookout"] },
+  { x: "mix", xs: ["base", "sea"], n: "海の幸（基本＋海辺）", k: ["cellar", "harbinger", "market", "moat", "workshop", "caravan", "haven", "lookout", "seawitch", "wharf"] },
+  { x: "mix", xs: ["int", "sea"], n: "交易航路（陰謀＋海辺）", k: ["courtyard", "ironworks", "mill", "upgrade", "nobles", "astrolabe", "bazaar", "monkey", "salvager", "treasury"] },
   { n: "銀と金", k: ["bandit", "bureaucrat", "chapel", "harbinger", "lab", "merchant", "mine", "moneylender", "throne", "vassal"] }
 ];
 const dmIs = (c, t) => !!(DM[c] && DM[c].ty.includes(t));
-const dmTyName = c => DM[c].ty.map(t => ({ a: "アクション", t: "財宝", v: "勝利点", c: "呪い", atk: "アタック", re: "リアクション" }[t])).join("・");
+const dmTyName = c => DM[c].ty.map(t => ({ a: "アクション", t: "財宝", v: "勝利点", c: "呪い", atk: "アタック", re: "リアクション", dur: "持続" }[t])).join("・");
 const dmPlusText = c => { const p = DM[c].p || {}; return [p.cards && `+${p.cards} カード`, p.actions && `+${p.actions} アクション`, p.buys && `+${p.buys} 購入`, p.coins && `+$${p.coins}`].filter(Boolean); };
 
 /* ---- 状態 ---- */
@@ -7975,11 +8056,12 @@ function dmFreshTurn(pid){ return { pid, phase: "action", actions: 1, buys: 1, c
 function dmSetup(players, kingdom){
   const N = players.length, vc = N === 2 ? 8 : 12;
   const supply = { copper: 60 - 7 * N, silver: 40, gold: 30, estate: vc, duchy: vc, province: N <= 2 ? 8 : N <= 4 ? 12 : N === 5 ? 15 : 18, curse: 10 * (N - 1) };
-  kingdom.forEach(k => { supply[k] = k === "gardens" ? vc : 10; });
+  kingdom.forEach(k => { supply[k] = dmIs(k, "v") ? vc : 10; });
   const pl = {}, turns = {};
   players.forEach(p => { const d = shuffle([..."ccccccc".split("").map(() => "copper"), "estate", "estate", "estate"]); pl[p] = { deck: d.slice(5), hand: d.slice(0, 5), disc: [], play: [], aside: [] }; turns[p] = 0; });
   return { players, kingdom: kingdom.slice().sort((a, b) => DM[a].c - DM[b].c || DM[a].n.localeCompare(DM[b].n, "ja")), supply, trash: [], pl, turn: dmFreshTurn(players[0]), q: [], asks: [], turns, round: 1, fx: [], fxn: 0 };
 }
+const dmCost = (st, c) => Math.max(0, DM[c].c - ((st && st.turn && st.turn.red) || 0));
 const dmL = (st, m) => { (st._log || (st._log = [])).push(m); };
 const dmFxAdd = (st, e) => { st.fxn = (st.fxn || 0) + 1; st.fx = [...(st.fx || []), { ...e, n: st.fxn }].slice(-12); };
 function dmTop(st, pid){
@@ -7991,8 +8073,49 @@ function dmDraw(st, pid, n){ const P = st.pl[pid]; let k = 0; for (let i = 0; i 
 function dmGain(st, pid, c, dest = "disc"){
   if (!(st.supply[c] > 0)) return false;
   st.supply[c]--; const P = st.pl[pid];
-  if (dest === "hand") P.hand.push(c); else if (dest === "deck") P.deck.push(c); else P.disc.push(c);
+  if (dest === "hand") P.hand.push(c); else if (dest === "deck") P.deck.push(c); else if (dest === "haven") (P.haven = P.haven || []).push(c); else P.disc.push(c);
+  dmOnGain(st, pid, c);
   return true;
+}
+const dmRight = (st, pid) => { const i = st.players.indexOf(pid), n = st.players.length; return st.players[(i - 1 + n) % n]; };
+const dmNextHas = (st, pid, k) => (st.pl[pid].next || []).filter(e => e.k === k).length;
+function dmOnGain(st, pid, c){
+  const T = st.turn;
+  if (T && pid === T.pid){ (T.gained = T.gained || []).push(c); if (dmIs(c, "v")) T.gainedV = true; }
+  st.players.forEach(o => { if (o === pid) return; const n = dmNextHas(st, o, "monkey"); if (n && dmRight(st, o) === pid){ dmDraw(st, o, n); dmL(st, `🐒${pname(o)}は猿で${n}枚引いた`); } });
+  if (T && pid === T.pid && c !== "curse") st.players.forEach(o => { if (o === pid) return; if ((st.pl[o].next || []).some(e => e.blk && e.card === c) && (st.supply.curse || 0) > 0){ st.supply.curse--; st.pl[pid].disc.push("curse"); dmL(st, `🚧封鎖：${pname(pid)}は呪いも獲得`); dmFxAdd(st, { k: "curse", p: pid }); } });
+}
+/* 持続：次のターンの最初に効果。カードはそれまで場に残る */
+const dmDur = (st, pid, c, e = {}) => { const P = st.pl[pid]; P.next = [...(P.next || []), { c, ...e }]; };
+function dmStartTurn(st, pid){
+  const P = st.pl[pid], es = P.next || [], T = st.turn;
+  P.next = []; if (P.stay && P.stay.length){ P.play.push(...P.stay); P.stay = []; }
+  if (!es.length) return;
+  const tasks = [];
+  es.forEach(e => {
+    if (e.cards) dmDraw(st, pid, e.cards); if (e.actions) T.actions += e.actions; if (e.buys) T.buys += e.buys; if (e.coins) T.coins += e.coins;
+    if (e.k === "haven" && e.card && (P.haven || []).includes(e.card)){ dmTake(P.haven, [e.card]); P.hand.push(e.card); }
+    if (e.k === "tact"){ dmDraw(st, pid, 5); T.actions++; T.buys++; }
+    // 選ぶものは1つずつ順番に（同じ手札から同時に選ぶと食い違うため）
+    if (e.k === "sailor"){ T.coins += 2; tasks.push({ t: "ask", a: { pid, k: "hand", min: 0, max: 1, title: "船乗り：廃棄するカード", desc: "廃棄しなくてもよい", ok: "廃棄する", then: { t: "trash" } } }); }
+    if (e.k === "seawitch") dmDraw(st, pid, 2);
+    if (e.k === "tide" || e.k === "seawitch") tasks.push({ t: "ask", a: { pid, k: "hand", min: 2, max: 2, title: `${DM[e.c].n}：捨てる2枚`, ok: "捨てる", then: { t: "discard" } } });
+    if (e.k === "pirate") tasks.push({ t: "askgain", pid, max: 6, filter: "t", dest: "hand", title: "海賊：手札に獲得する財宝（コスト6以下）" });
+  });
+  dmL(st, `⏳持続：${es.map(e => DM[e.c].n).join("・")}の効果`);
+  if (tasks.length){ dmPush(st, ...tasks); dmRun(st); }
+}
+/* 財宝を使う（アストロラーベ・私掠船・商人の銀貨もここで） */
+function dmPlayTre(st, pid, c){
+  const T = st.turn, P = st.pl[pid], c0 = T.coins;
+  dmTake(P.hand, [c]); P.play.push(c); T.phase = "buy";
+  T.coins += DM[c].v || 0;
+  if (c === "silver" && !T.silver){ T.coins += T.merch; T.silver = true; }
+  if (c === "astrolabe"){ T.buys++; dmDur(st, pid, c, { coins: 1, buys: 1 }); }
+  if ((c === "silver" || c === "gold") && !T.corsairHit && st.players.some(o => o !== pid && dmNextHas(st, o, "cors"))){
+    T.corsairHit = true; dmTake(P.play, [c]); st.trash.push(c); dmL(st, `🏴‍☠️私掠船：${pname(pid)}の${DM[c].n}は廃棄された`); dmFxAdd(st, { k: "trash", p: pid, cs: [c] });
+  }
+  return T.coins - c0;
 }
 const dmTake = (arr, cards) => { cards.forEach(c => { const i = arr.lastIndexOf(c); if (i >= 0) arr.splice(i, 1); }); };
 const dmPush = (st, ...ts) => { for (let i = ts.length - 1; i >= 0; i--) st.q.push(ts[i]); };   // 先に書いたものから実行
@@ -8005,6 +8128,7 @@ const dmEmpty = st => Object.keys(st.supply).filter(k => st.supply[k] === 0).len
 /* カードを使う（場にはもう置いてある） */
 function dmPlayCard(st, pid, c){
   const d = DM[c], T = st.turn, p = d.p || {};
+  if (pid === T.pid && d.ty.includes("a")) T.nact = (T.nact || 0) + 1;
   if (d.ty.includes("atk")) st.q.push({ t: "atk", c, pid });   // 自分の効果のあとに攻撃
   if (p.cards) dmDraw(st, pid, p.cards);
   if (p.actions) T.actions += p.actions;
@@ -8042,12 +8166,85 @@ const DMF = {
     const look = []; for (let i = 0; i < 2; i++){ const c = dmTop(st, pid); if (c != null) look.push(c); }
     if (look.length) dmAsk(st, { pid, k: "list", cards: look, min: 0, max: look.length, title: "衛兵：廃棄するカード", desc: "山札の上のカード", ok: "決定", then: { t: "sen1", look } });
   },
-  artisan(st, pid){ dmAskGain(st, pid, 5, null, "hand", "職人：手札に獲得するカード（コスト5以下）", { t: "art2" }); }
+  artisan(st, pid){ dmAskGain(st, pid, 5, null, "hand", "職人：手札に獲得するカード（コスト5以下）", { t: "art2" }); },
+  /* --- 陰謀 --- */
+  courtyard(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "中庭：山札の上に置くカード", ok: "山札の上に置く", then: { t: "todeck" } }); },
+  lurker(st, pid){
+    const hasS = Object.keys(st.supply).some(c => st.supply[c] > 0 && dmIs(c, "a")), hasT = st.trash.some(c => dmIs(c, "a"));
+    if (!hasS && !hasT) return;
+    dmAsk(st, { pid, k: "opt", opts: ["サプライのアクションを1枚廃棄", "廃棄置き場のアクションを1枚獲得"], dis: [hasS ? 0 : 1, hasT ? 0 : 1], min: 1, max: 1, title: "待ち伏せ：どちらにする？", then: { t: "lurk" } });
+  },
+  pawn(st, pid){ dmAsk(st, { pid, k: "opt", opts: ["+1カード", "+1アクション", "+1購入", "+$1"], min: 2, max: 2, title: "手先：異なる2つを選ぶ", then: { t: "pawn" } }); },
+  masquerade(st, pid){
+    const ps = st.players.filter(p => st.pl[p].hand.length);
+    dmPush(st, { t: "mqpass", pid, ps });
+    ps.forEach(p => dmAsk(st, { pid: p, k: "hand", min: 1, max: 1, title: "仮面舞踏会：次の人に渡すカード", desc: `${pname(dmOthers(st, p).find(o => ps.includes(o)) || p)}に渡す`, ok: "渡す", then: { t: "mq1" } }));
+  },
+  shanty(st, pid){ const h = st.pl[pid].hand; if (!h.some(c => dmIs(c, "a"))){ dmDraw(st, pid, 2); dmL(st, "貧民街：手札にアクションがないので+2カード"); } else dmL(st, "貧民街：手札にアクションがある"); },
+  steward(st, pid){ dmAsk(st, { pid, k: "opt", opts: ["+2カード", "+$2", "手札2枚を廃棄"], min: 1, max: 1, title: "執事：1つ選ぶ", then: { t: "steward" } }); },
+  wishingwell(st, pid){ const cs = Object.keys(st.supply).filter(c => DM[c]); dmAsk(st, { pid, k: "list", cards: cs, min: 1, max: 1, title: "願いの井戸：山札の一番上にありそうなカード", ok: "これを願う", then: { t: "wish", cards: cs } }); },
+  baron(st, pid){
+    if (st.pl[pid].hand.includes("estate")) dmAsk(st, { pid, k: "yn", card: "estate", title: "男爵：屋敷を捨てて +$4？", desc: "捨てなければ屋敷を獲得", then: { t: "baron" } });
+    else if (dmGain(st, pid, "estate")){ dmL(st, `${pname(pid)}が屋敷を獲得`); dmFxAdd(st, { k: "gain", p: pid, c: "estate", dest: "disc" }); }
+  },
+  bridge(st, pid){ st.turn.red = (st.turn.red || 0) + 1; dmL(st, `橋：このターン、コストが$${st.turn.red}少なくなる`); },
+  conspirator(st, pid){ if ((st.turn.nact || 0) >= 3){ dmDraw(st, pid, 1); st.turn.actions++; dmL(st, "共謀者：アクション3回目以上なので +1カード +1アクション"); } },
+  diplomat(st, pid){ if (st.pl[pid].hand.length <= 5){ st.turn.actions += 2; dmL(st, "外交官：手札5枚以下なので +2アクション"); } },
+  ironworks(st, pid){ dmAskGain(st, pid, 4, null, "disc", "鉄工所：獲得するカード（コスト4以下）", { t: "iron" }); },
+  mill(st, pid){ if (st.pl[pid].hand.length >= 2) dmAsk(st, { pid, k: "hand", min: 0, max: 2, title: "風車：2枚捨てて +$2？", desc: "捨てなくてもよい（2枚捨てたときだけ+$2）", ok: "捨てる", then: { t: "mill" } }); },
+  miningvillage(st, pid){ if (st.pl[pid].play.includes("miningvillage")) dmAsk(st, { pid, k: "yn", card: "miningvillage", title: "鉱山の村を廃棄して +$2？", then: { t: "mv" } }); },
+  secretpassage(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "秘密の抜け道：山札に戻すカード", ok: "このカード", then: { t: "sp1" } }); },
+  courtier(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "廷臣：公開するカード", desc: "種類の数だけ効果を選べる", ok: "公開する", then: { t: "court1" } }); },
+  minion(st, pid){ st.turn.minion = false; dmAsk(st, { pid, k: "opt", opts: ["+$2", "手札を捨てて4枚引く（他の人も）"], min: 1, max: 1, title: "寵臣：どちらにする？", then: { t: "minion" } }); },
+  patrol(st, pid){
+    const P = st.pl[pid], rev = []; for (let i = 0; i < 4; i++){ const c = dmTop(st, pid); if (c != null) rev.push(c); }
+    if (!rev.length) return;
+    const take = rev.filter(c => dmIs(c, "v") || c === "curse"), back = rev.filter(c => !(dmIs(c, "v") || c === "curse"));
+    P.hand.push(...take); P.deck.push(...back.reverse());
+    dmL(st, `巡回：${dmNames(rev)}を公開${take.length ? `、${dmNames(take)}を手札に` : ""}`);
+  },
+  replace(st, pid){ st.turn.repCurse = false; if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "交換：廃棄するカード", desc: "コストが最大2多いカードを獲得", ok: "廃棄する", then: { t: "rep1" } }); },
+  tradingpost(st, pid){ const h = st.pl[pid].hand; if (h.length) dmAsk(st, { pid, k: "hand", min: Math.min(2, h.length), max: 2, title: "交易場：廃棄する2枚", desc: "2枚廃棄すると銀貨を手札に獲得", ok: "廃棄する", then: { t: "tp" } }); },
+  upgrade(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "改良：廃棄するカード", desc: "コストがちょうど1多いカードを獲得", ok: "廃棄する", then: { t: "upg" } }); },
+  nobles(st, pid){ dmAsk(st, { pid, k: "opt", opts: ["+3カード", "+2アクション"], min: 1, max: 1, title: "貴族：どちらにする？", then: { t: "nobles" } }); },
+  /* --- 海辺 --- */
+  haven(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "停泊所：脇に置くカード", desc: "次のターンの最初に手札に戻る", ok: "脇に置く", then: { t: "haven" } }); else dmDur(st, pid, "haven", {}); },
+  lighthouse(st, pid){ dmDur(st, pid, "lighthouse", { coins: 1, k: "lh" }); },
+  nativevillage(st, pid){ const n = (st.pl[pid].nv || []).length; dmAsk(st, { pid, k: "opt", opts: ["山札の一番上をマットに置く", `マットのカードを全部手札に（${n}枚）`], dis: [0, n ? 0 : 1], min: 1, max: 1, title: "原住民の村：どちらにする？", then: { t: "nv" } }); },
+  fishingvillage(st, pid){ dmDur(st, pid, "fishingvillage", { actions: 1, coins: 1 }); },
+  lookout(st, pid){ const look = []; for (let i = 0; i < 3; i++){ const c = dmTop(st, pid); if (c != null) look.push(c); } if (look.length) dmAsk(st, { pid, k: "list", cards: look, min: 1, max: 1, title: "見張り：廃棄するカード", ok: "廃棄する", then: { t: "look1", look } }); },
+  monkey(st, pid){ dmDur(st, pid, "monkey", { cards: 1, k: "monkey" }); },
+  seachart(st, pid){ const P = st.pl[pid], c = dmTop(st, pid); if (c == null) return; if (P.play.includes(c)){ P.hand.push(c); dmL(st, `海図：${DM[c].n}を手札に`); } else { P.deck.push(c); dmL(st, `海図：${DM[c].n}を公開（場にないので戻す）`); } },
+  smugglers(st, pid){
+    const r = dmRight(st, pid), cs = [...new Set(((st.lastGains || {})[r] || []).filter(c => st.supply[c] > 0 && dmCost(st, c) <= 6))];
+    if (!cs.length){ dmL(st, `密輸人：${pname(r)}の獲得したカードで手に入るものがない`); return; }
+    dmAsk(st, { pid, k: "list", cards: cs, min: 1, max: 1, title: `密輸人：${pname(r)}が獲得したカードから選ぶ`, ok: "獲得する", then: { t: "smug", cards: cs } });
+  },
+  warehouse(st, pid){ const h = st.pl[pid].hand; if (h.length) dmAsk(st, { pid, k: "hand", min: Math.min(3, h.length), max: 3, title: "倉庫：捨てる3枚", ok: "捨てる", then: { t: "discard" } }); },
+  blockade(st, pid){ dmAskGain(st, pid, 4, null, "haven", "封鎖：獲得するカード（コスト4以下・次のターンに手札へ）", { t: "blk" }); },
+  caravan(st, pid){ dmDur(st, pid, "caravan", { cards: 1 }); },
+  island(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "島：一緒に島マットに置くカード", ok: "島に置く", then: { t: "isl" } }); else dmPush(st, { t: "isl", pid, sel: [] }); },
+  sailor(st, pid){ dmDur(st, pid, "sailor", { k: "sailor" }); },
+  salvager(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "サルベージ船：廃棄するカード", desc: "そのコスト分の+$", ok: "廃棄する", then: { t: "salv" } }); },
+  tidepools(st, pid){ dmDur(st, pid, "tidepools", { k: "tide" }); },
+  treasuremap(st, pid){
+    const P = st.pl[pid], two = P.hand.includes("treasuremap");
+    if (P.play.includes("treasuremap")){ dmTake(P.play, ["treasuremap"]); st.trash.push("treasuremap"); }
+    if (two){ dmTake(P.hand, ["treasuremap"]); st.trash.push("treasuremap"); let k = 0; for (let i = 0; i < 4; i++) if (dmGain(st, pid, "gold", "deck")) k++; dmL(st, `🗺️宝の地図2枚！ 金貨${k}枚を山札の上に獲得`); dmFxAdd(st, { k: "gain", p: pid, c: "gold", dest: "deck" }); }
+    else dmL(st, "宝の地図：1枚だけなので何も見つからなかった");
+  },
+  corsair(st, pid){ dmDur(st, pid, "corsair", { cards: 1, k: "cors" }); },
+  merchantship(st, pid){ dmDur(st, pid, "merchantship", { coins: 2 }); },
+  outpost(st, pid){ if (!st.turn.extra){ st.turn.outpost = true; dmDur(st, pid, "outpost", {}); dmL(st, "前哨地：このターンのあと、もう1ターン"); } else dmL(st, "前哨地：もう続けてターンはできない"); },
+  pirate(st, pid){ dmDur(st, pid, "pirate", { k: "pirate" }); },
+  seawitch(st, pid){ dmDur(st, pid, "seawitch", { k: "seawitch" }); },
+  tactician(st, pid){ const P = st.pl[pid]; if (!P.hand.length){ dmL(st, "策士：手札がないので効果なし"); return; } dmFxAdd(st, { k: "dis", p: pid, cs: P.hand.slice() }); P.disc.push(...P.hand); P.hand = []; dmDur(st, pid, "tactician", { k: "tact" }); dmL(st, "策士：手札を全部捨てた（次のターンに+5カード）"); },
+  wharf(st, pid){ dmDur(st, pid, "wharf", { cards: 2, buys: 1 }); },
 };
-function dmAskGain(st, pid, max, filter, dest, title, after){
-  const ok = Object.keys(st.supply).some(c => st.supply[c] > 0 && DM[c].c <= max && (!filter || dmIs(c, filter)));
+function dmAskGain(st, pid, max, filter, dest, title, after, exact){
+  const ok = Object.keys(st.supply).some(c => st.supply[c] > 0 && (exact ? dmCost(st, c) === max : dmCost(st, c) <= max) && (!filter || dmIs(c, filter)));
   if (!ok){ dmL(st, "獲得できるカードがない"); if (after) dmPush(st, { ...after, pid }); return; }
-  dmAsk(st, { pid, k: "supply", max, filter, dest, title, then: { t: "gain", dest, after } });
+  dmAsk(st, { pid, k: "supply", max, exact: !!exact, filter, dest, title, then: { t: "gain", dest, after } });
 }
 /* アタック（他の人へ） */
 const DMA = {
@@ -8066,16 +8263,32 @@ const DMA = {
     if (new Set(tr).size > 1) dmAsk(st, { pid: tg, k: "list", cards: rev, filterList: tr, min: 1, max: 1, title: "山賊：廃棄する財宝", ok: "廃棄する", then: { t: "bandit", rev } });
     else dmPush(st, { t: "bandit", pid: tg, rev, sel: tr.length ? [rev.indexOf(tr[0])] : [] });
   },
-  witch(st, tg){ if (dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } }
+  witch(st, tg){ if (dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
+  /* --- 陰謀 --- */
+  swindler(st, tg, pid){
+    const c = dmTop(st, tg); if (c == null) return;
+    st.trash.push(c); dmL(st, `詐欺師：${pname(tg)}の${DM[c].n}を廃棄`); dmFxAdd(st, { k: "trash", p: tg, cs: [c] });
+    const cost = dmCost(st, c);
+    if (Object.keys(st.supply).some(x => st.supply[x] > 0 && dmCost(st, x) === cost)) dmAsk(st, { pid, k: "supply", max: cost, exact: true, title: `詐欺師：${pname(tg)}に獲得させるカード（コスト${cost}）`, then: { t: "gainTo", tg } });
+  },
+  minion(st, tg){ if (!st.turn.minion) return; const P = st.pl[tg]; if (P.hand.length < 5) return; P.disc.push(...P.hand); dmFxAdd(st, { k: "dis", p: tg, cs: P.hand.slice() }); P.hand = []; dmDraw(st, tg, 4); dmL(st, `${pname(tg)}は手札を捨てて4枚引いた`); },
+  replace(st, tg){ if (st.turn.repCurse && dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
+  torturer(st, tg){ dmAsk(st, { pid: tg, k: "opt", opts: ["手札を2枚捨てる", "呪いを手札に獲得する"], min: 1, max: 1, title: "拷問人：どちらにする？", then: { t: "tort" } }); },
+  /* --- 海辺 --- */
+  blockade(){}, corsair(){},
+  cutpurse(st, tg){ const P = st.pl[tg]; if (P.hand.includes("copper")){ dmTake(P.hand, ["copper"]); P.disc.push("copper"); dmL(st, `${pname(tg)}は銅貨を捨てた`); dmFxAdd(st, { k: "dis", p: tg, cs: ["copper"] }); } else dmL(st, `${pname(tg)}は手札を公開（銅貨なし）`); },
+  seawitch(st, tg){ if (dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
 };
 /* 続きの処理 */
 const DMT = {
   atk(st, t){
     const tg = dmOthers(st, t.pid), hit = [], safe = [];
-    tg.forEach(o => { if (st.pl[o].hand.includes("moat")){ safe.push(o); dmL(st, `🛡️${pname(o)}は堀で防いだ`); } else hit.push(o); });
+    tg.forEach(o => { if (st.pl[o].hand.includes("moat")){ safe.push(o); dmL(st, `🛡️${pname(o)}は堀で防いだ`); } else if (dmNextHas(st, o, "lh")){ safe.push(o); dmL(st, `🗼${pname(o)}は灯台で守られている`); } else hit.push(o); });
     dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, hit, safe });
-    hit.forEach(o => DMA[t.c](st, o, t.pid));
+    dmPush(st, { t: "atk2", c: t.c, pid: t.pid, hit });
+    tg.forEach(o => { const P = st.pl[o]; if (P.hand.includes("diplomat") && P.hand.length >= 5){ dmDraw(st, o, 2); dmL(st, `🤝${pname(o)}は外交官で2枚引いて3枚捨てる`); dmAsk(st, { pid: o, k: "hand", min: Math.min(3, P.hand.length), max: 3, title: "外交官：捨てる3枚", ok: "捨てる", then: { t: "discard" } }); } });
   },
+  atk2(st, t){ t.hit.forEach(o => DMA[t.c](st, o, t.pid)); },
   replay(st, t){ dmPlayCard(st, t.pid, t.c); },
   cellar(st, t){ const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); if (t.sel.length) dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); const n = dmDraw(st, t.pid, t.sel.length); dmL(st, `地下貯蔵庫：${t.sel.length}枚捨てて${n}枚引いた`); },
   trash(st, t){ if (!t.sel.length) return; dmTake(st.pl[t.pid].hand, t.sel); st.trash.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: t.sel, h: 1 }); },
@@ -8084,11 +8297,11 @@ const DMT = {
   harb(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid], c = t.sel[0]; dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `前駆者：${DM[c].n}を山札の上に`); },
   vassal(st, t){ if (!t.yes) return; const P = st.pl[t.pid]; dmTake(P.disc, [t.c]); P.play.push(t.c); dmL(st, `家臣で${DM[t.c].n}を使った`); dmPlayCard(st, t.pid, t.c); },
   ml(st, t){ if (!t.yes) return; dmTake(st.pl[t.pid].hand, ["copper"]); st.trash.push("copper"); st.turn.coins += 3; dmL(st, "金貸し：銅貨を廃棄して +$3"); },
-  remodel(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: DM[c].c + 2, dest: "disc", title: `改築：獲得するカード（コスト${DM[c].c + 2}以下）` }); },
-  askgain(st, t){ dmAskGain(st, t.pid, t.max, t.filter, t.dest, t.title, t.after); },
+  remodel(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 2, dest: "disc", title: `改築：獲得するカード（コスト${DM[c].c + 2}以下）` }); },
+  askgain(st, t){ dmAskGain(st, t.pid, t.max, t.filter, t.dest, t.title, t.after, t.exact); },
   gain(st, t){
     if (t.card && dmGain(st, t.pid, t.card, t.dest)){ dmL(st, `${pname(t.pid)}が${DM[t.card].n}を${t.dest === "hand" ? "手札に" : t.dest === "deck" ? "山札の上に" : ""}獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: t.card, dest: t.dest || "disc" }); }
-    if (t.after) dmPush(st, { ...t.after, pid: t.pid });
+    if (t.after) dmPush(st, { ...t.after, pid: t.pid, card: t.card });
   },
   throne(st, t){ if (!t.sel.length) return; const c = t.sel[0], P = st.pl[t.pid]; dmTake(P.hand, [c]); P.play.push(c); dmL(st, `玉座の間：${DM[c].n}を2回使う`); dmPush(st, { t: "replay", pid: t.pid, c }, { t: "replay", pid: t.pid, c }); },
   lib(st, t){
@@ -8100,7 +8313,7 @@ const DMT = {
     else { P.hand.push(c); dmPush(st, { t: "lib", pid: t.pid }); }
   },
   lib2(st, t){ const P = st.pl[t.pid]; if (t.yes) P.aside.push(t.c); else P.hand.push(t.c); dmPush(st, { t: "lib", pid: t.pid }); },
-  mine(st, t){ if (!t.sel.length) return; const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: DM[c].c + 3, filter: "t", dest: "hand", title: `鉱山：手札に獲得する財宝（コスト${DM[c].c + 3}以下）` }); },
+  mine(st, t){ if (!t.sel.length) return; const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 3, filter: "t", dest: "hand", title: `鉱山：手札に獲得する財宝（コスト${DM[c].c + 3}以下）` }); },
   sen1(st, t){
     const tr = t.sel.map(i => t.look[i]), rest = t.look.filter((_, i) => !t.sel.includes(i));
     if (tr.length){ st.trash.push(...tr); dmL(st, `衛兵：${dmNames(tr)}を廃棄`); }
@@ -8118,7 +8331,96 @@ const DMT = {
     const P = st.pl[t.pid], tr = t.sel.map(i => t.rev[i]), rest = t.rev.filter((_, i) => !t.sel.includes(i));
     if (tr.length){ st.trash.push(...tr); dmL(st, `山賊：${pname(t.pid)}の${dmNames(tr)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: tr }); }
     P.disc.push(...rest);
-  }
+  },
+  /* --- 陰謀 --- */
+  lurk(st, t){
+    if (t.sel[0] === 0) dmAsk(st, { pid: t.pid, k: "supply", max: 99, filter: "a", title: "待ち伏せ：サプライから廃棄するアクション", then: { t: "lurkTrash" } });
+    else { const cs = [...new Set(st.trash.filter(c => dmIs(c, "a")))]; dmAsk(st, { pid: t.pid, k: "list", cards: cs, min: 1, max: 1, title: "待ち伏せ：廃棄置き場から獲得するアクション", ok: "獲得する", then: { t: "lurkGain", cards: cs } }); }
+  },
+  lurkTrash(st, t){ if (!(st.supply[t.card] > 0)) return; st.supply[t.card]--; st.trash.push(t.card); dmL(st, `待ち伏せ：サプライの${DM[t.card].n}を廃棄`); },
+  lurkGain(st, t){ const c = t.cards[t.sel[0]]; if (!c) return; dmTake(st.trash, [c]); st.pl[t.pid].disc.push(c); dmL(st, `待ち伏せ：廃棄置き場の${DM[c].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c, dest: "disc" }); },
+  pawn(st, t){ const T = st.turn; t.sel.forEach(i => { if (i === 0) dmDraw(st, t.pid, 1); if (i === 1) T.actions++; if (i === 2) T.buys++; if (i === 3) T.coins++; }); },
+  mq1(st, t){ st.mq = { ...(st.mq || {}), [t.pid]: t.sel[0] }; },
+  mqpass(st, t){
+    const mq = st.mq || {}; delete st.mq;
+    const ps = t.ps.filter(p => mq[p] != null);
+    ps.forEach(p => dmTake(st.pl[p].hand, [mq[p]]));
+    ps.forEach(p => { const to = dmOthers(st, p).find(o => ps.includes(o)) || p; st.pl[to].hand.push(mq[p]); });
+    dmL(st, "仮面舞踏会：全員が1枚ずつ次の人に渡した");
+    if (st.pl[t.pid].hand.length) dmAsk(st, { pid: t.pid, k: "hand", min: 0, max: 1, title: "仮面舞踏会：廃棄するカード", desc: "廃棄しなくてもよい", ok: "廃棄する", then: { t: "trash" } });
+  },
+  steward(st, t){
+    const i = t.sel[0], T = st.turn, h = st.pl[t.pid].hand;
+    if (i === 0) dmDraw(st, t.pid, 2); else if (i === 1) T.coins += 2;
+    else if (h.length) dmAsk(st, { pid: t.pid, k: "hand", min: Math.min(2, h.length), max: 2, title: "執事：廃棄する2枚", ok: "廃棄する", then: { t: "trash" } });
+  },
+  gainTo(st, t){ if (dmGain(st, t.tg, t.card)){ dmL(st, `${pname(t.tg)}が${DM[t.card].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.tg, c: t.card, dest: "disc" }); } },
+  wish(st, t){
+    const name = t.cards[t.sel[0]], c = dmTop(st, t.pid); if (c == null) return;
+    if (c === name){ st.pl[t.pid].hand.push(c); dmL(st, `願いの井戸：${DM[c].n}！ 願いがかなった`); }
+    else { st.pl[t.pid].deck.push(c); dmL(st, `願いの井戸：${DM[name].n}を願ったが${DM[c].n}だった`); }
+  },
+  baron(st, t){
+    if (t.yes && st.pl[t.pid].hand.includes("estate")){ const P = st.pl[t.pid]; dmTake(P.hand, ["estate"]); P.disc.push("estate"); st.turn.coins += 4; dmL(st, "男爵：屋敷を捨てて +$4"); dmFxAdd(st, { k: "dis", p: t.pid, cs: ["estate"] }); }
+    else if (dmGain(st, t.pid, "estate")){ dmL(st, `${pname(t.pid)}が屋敷を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: "estate", dest: "disc" }); }
+  },
+  iron(st, t){
+    const c = t.card; if (!c) return; const T = st.turn, g = [];
+    if (dmIs(c, "a")){ T.actions++; g.push("+1アクション"); }
+    if (dmIs(c, "t")){ T.coins++; g.push("+$1"); }
+    if (dmIs(c, "v")){ dmDraw(st, t.pid, 1); g.push("+1カード"); }
+    if (g.length) dmL(st, `鉄工所：${g.join("・")}`);
+  },
+  mill(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); if (t.sel.length === 2){ st.turn.coins += 2; dmL(st, "風車：2枚捨てて +$2"); } },
+  mv(st, t){ const P = st.pl[t.pid]; if (!t.yes || !P.play.includes("miningvillage")) return; dmTake(P.play, ["miningvillage"]); st.trash.push("miningvillage"); st.turn.coins += 2; dmL(st, "鉱山の村を廃棄して +$2"); dmFxAdd(st, { k: "trash", p: t.pid, cs: ["miningvillage"] }); },
+  sp1(st, t){ const c = t.sel[0]; dmAsk(st, { pid: t.pid, k: "opt", opts: ["山札の一番上", "山札の一番下"], min: 1, max: 1, title: `秘密の抜け道：${DM[c].n}をどこに置く？`, then: { t: "sp2", c } }); },
+  sp2(st, t){ const P = st.pl[t.pid]; if (!P.hand.includes(t.c)) return; dmTake(P.hand, [t.c]); if (t.sel[0] === 1) P.deck.unshift(t.c); else P.deck.push(t.c); dmL(st, `秘密の抜け道：1枚を山札の${t.sel[0] === 1 ? "一番下" : "一番上"}に置いた`); },
+  court1(st, t){
+    const c = t.sel[0], n = Math.min(4, DM[c].ty.length);
+    dmL(st, `廷臣：${DM[c].n}を公開（${n}種類）`);
+    dmAsk(st, { pid: t.pid, k: "opt", opts: ["+1アクション", "+1購入", "+$3", "金貨を獲得"], min: n, max: n, title: `廷臣：${n}つ選ぶ`, then: { t: "court2" } });
+  },
+  court2(st, t){ const T = st.turn; t.sel.forEach(i => { if (i === 0) T.actions++; if (i === 1) T.buys++; if (i === 2) T.coins += 3; if (i === 3 && dmGain(st, t.pid, "gold")){ dmL(st, `${pname(t.pid)}が金貨を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: "gold", dest: "disc" }); } }); },
+  minion(st, t){
+    if (t.sel[0] === 0){ st.turn.coins += 2; return; }
+    const P = st.pl[t.pid]; st.turn.minion = true;
+    if (P.hand.length){ P.disc.push(...P.hand); dmFxAdd(st, { k: "dis", p: t.pid, cs: P.hand.slice() }); P.hand = []; }
+    dmDraw(st, t.pid, 4); dmL(st, `寵臣：${pname(t.pid)}は手札を捨てて4枚引いた`);
+  },
+  rep1(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 2, dest: "disc", title: `交換：獲得するカード（コスト${dmCost(st, c) + 2}以下）`, after: { t: "rep2" } }); },
+  rep2(st, t){
+    const c = t.card, P = st.pl[t.pid]; if (!c) return;
+    if ((dmIs(c, "a") || dmIs(c, "t")) && P.disc.includes(c)){ dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `交換：${DM[c].n}を山札の上に置いた`); }
+    if (dmIs(c, "v")) st.turn.repCurse = true;
+  },
+  tort(st, t){
+    const P = st.pl[t.pid];
+    if (t.sel[0] === 1){ if (dmGain(st, t.pid, "curse", "hand")){ dmL(st, `${pname(t.pid)}は呪いを手札に獲得`); dmFxAdd(st, { k: "curse", p: t.pid }); } return; }
+    if (P.hand.length <= 2){ if (P.hand.length) dmPush(st, { t: "discard", pid: t.pid, sel: P.hand.slice() }); return; }
+    dmAsk(st, { pid: t.pid, k: "hand", min: 2, max: 2, title: "拷問人：捨てる2枚", ok: "捨てる", then: { t: "discard" } });
+  },
+  tp(st, t){ dmPush(st, { t: "trash", pid: t.pid, sel: t.sel }); if (t.sel.length === 2) dmPush(st, { t: "tp2", pid: t.pid }); },
+  tp2(st, t){ if (dmGain(st, t.pid, "silver", "hand")){ dmL(st, `交易場：銀貨を手札に獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: "silver", dest: "hand" }); } },
+  upg(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 1, exact: true, dest: "disc", title: `改良：獲得するカード（コストちょうど${dmCost(st, c) + 1}）` }); },
+  nobles(st, t){ if (t.sel[0] === 0) dmDraw(st, t.pid, 3); else st.turn.actions += 2; },
+  /* --- 海辺 --- */
+  ask(st, t){ const a = { ...t.a }, h = st.pl[a.pid].hand; if (a.k === "hand"){ if (!h.length) return; a.min = Math.min(a.min, h.length); } dmAsk(st, a); },
+  haven(st, t){ const P = st.pl[t.pid], c = t.sel[0]; dmTake(P.hand, [c]); (P.haven = P.haven || []).push(c); dmDur(st, t.pid, "haven", { k: "haven", card: c }); dmL(st, "停泊所：1枚を脇に置いた"); },
+  nv(st, t){
+    const P = st.pl[t.pid];
+    if (t.sel[0] === 1){ const n = (P.nv || []).length; P.hand.push(...(P.nv || [])); P.nv = []; dmL(st, `原住民の村：マットの${n}枚を手札に`); }
+    else { const c = dmTop(st, t.pid); if (c != null){ (P.nv = P.nv || []).push(c); dmL(st, "原住民の村：山札の一番上をマットに置いた"); } }
+  },
+  look1(st, t){
+    const c = t.look[t.sel[0]], rest = t.look.filter((_, i) => i !== t.sel[0]);
+    st.trash.push(c); dmL(st, `見張り：${DM[c].n}を廃棄`);
+    if (rest.length) dmAsk(st, { pid: t.pid, k: "list", cards: rest, min: 1, max: 1, title: "見張り：捨て札にするカード", ok: "捨てる", then: { t: "look2", rest } });
+  },
+  look2(st, t){ const P = st.pl[t.pid], c = t.rest[t.sel[0]], keep = t.rest.filter((_, i) => i !== t.sel[0]); P.disc.push(c); P.deck.push(...keep); },
+  smug(st, t){ const c = t.cards[t.sel[0]]; if (c && dmGain(st, t.pid, c)){ dmL(st, `密輸人：${pname(t.pid)}が${DM[c].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c, dest: "disc" }); } },
+  blk(st, t){ if (t.card) dmDur(st, t.pid, "blockade", { k: "haven", card: t.card, blk: true }); },
+  isl(st, t){ const P = st.pl[t.pid], cs = []; if (P.play.includes("island")){ dmTake(P.play, ["island"]); cs.push("island"); } if (t.sel.length){ dmTake(P.hand, t.sel); cs.push(...t.sel); } (P.isl = P.isl || []).push(...cs); dmL(st, `島：${dmNames(cs)}を島マットに置いた`); },
+  salv(st, t){ const c = t.sel[0], v = dmCost(st, c); dmPush(st, { t: "trash", pid: t.pid, sel: [c] }); st.turn.coins += v; dmL(st, `サルベージ船：+$${v}`); },
 };
 /* 選択への回答 */
 function dmAnswer(st, pid, id, val){
@@ -8135,9 +8437,13 @@ function dmAnswer(st, pid, id, val){
     if (idx.length < a.min || idx.length > a.max) return false;
     if (a.filterList && idx.some(x => !a.filterList.includes(a.cards[x]))) return false;
     then.sel = a.k === "list" && a.then.t === "harb" ? idx.map(x => a.cards[x]) : idx;
+  } else if (a.k === "opt"){
+    const idx = [...new Set(val || [])].filter(x => x >= 0 && x < a.opts.length && !(a.dis && a.dis[x]));
+    if (idx.length < a.min || idx.length > a.max) return false;
+    then.sel = idx.sort((x, y) => x - y);
   } else if (a.k === "yn") then.yes = !!val;
   else if (a.k === "supply"){
-    if (!(st.supply[val] > 0) || DM[val].c > a.max || (a.filter && !dmIs(val, a.filter))) return false;
+    if (!(st.supply[val] > 0) || (a.exact ? dmCost(st, val) !== a.max : dmCost(st, val) > a.max) || (a.filter && !dmIs(val, a.filter))) return false;
     then.card = val;
   }
   st.asks.splice(i, 1);
@@ -8147,19 +8453,29 @@ function dmAnswer(st, pid, id, val){
 }
 /* ---- 手番の操作 ---- */
 const dmIdle = st => !st.q.length && !st.asks.length;
-function dmVP(st, pid){ const P = st.pl[pid], a = [...P.deck, ...P.hand, ...P.disc, ...P.play, ...P.aside]; return a.reduce((s, c) => s + (c === "gardens" ? Math.floor(a.length / 10) : (DM[c].vp || 0)), 0); }
-const dmCount = (st, pid) => { const P = st.pl[pid]; return P.deck.length + P.hand.length + P.disc.length + P.play.length + P.aside.length; };
+function dmVP(st, pid){ const a = dmDeckOf(st, pid); const du = a.filter(c => c === "duchy").length; return a.reduce((s, c) => s + (c === "gardens" ? Math.floor(a.length / 10) : c === "duke" ? du : (DM[c].vp || 0)), 0); }
+const dmCount = (st, pid) => dmDeckOf(st, pid).length;
 function dmEndTurn(st){
   const T = st.turn, P = st.pl[T.pid];
+  // 宝物庫：勝利点カードを獲得しなかったら山札の上へ
+  if (!T.gainedV){ let k = 0; while (P.play.includes("treasury")){ dmTake(P.play, ["treasury"]); P.deck.push("treasury"); k++; } if (k) dmL(st, `宝物庫${k > 1 ? `${k}枚` : ""}を山札の上に置いた`); }
+  // 持続カードは次のターンまで場に残す
+  P.stay = P.stay || []; (P.next || []).forEach(e => { if (!e.kept && P.play.includes(e.c)){ dmTake(P.play, [e.c]); P.stay.push(e.c); e.kept = true; } });
   P.disc.push(...P.hand, ...P.play); P.hand = []; P.play = [];
   dmFxAdd(st, { k: "clean", p: T.pid });
-  dmDraw(st, T.pid, 5);
-  st.turns[T.pid] = (st.turns[T.pid] || 0) + 1;
+  const extra = T.outpost && !T.extra;
+  dmDraw(st, T.pid, extra ? 3 : 5);
+  st.lastGains = { ...(st.lastGains || {}), [T.pid]: T.gained || [] };
+  if (!T.extra) st.turns[T.pid] = (st.turns[T.pid] || 0) + 1;
   const ended = st.supply.province === 0 || dmEmpty(st) >= (st.players.length >= 5 ? 4 : 3);
   if (ended) return true;
-  const nx = st.players[(st.players.indexOf(T.pid) + 1) % st.players.length];
-  if (nx === st.players[0]) st.round++;
-  st.turn = dmFreshTurn(nx);
+  if (extra){ st.turn = dmFreshTurn(T.pid); st.turn.extra = true; dmL(st, `🏰前哨地：${pname(T.pid)}がもう1ターン`); }
+  else {
+    const nx = st.players[(st.players.indexOf(T.pid) + 1) % st.players.length];
+    if (nx === st.players[0]) st.round++;
+    st.turn = dmFreshTurn(nx);
+  }
+  dmStartTurn(st, st.turn.pid);
   return false;
 }
 function dmResult(st){
@@ -8223,10 +8539,7 @@ function dmDoPlay(list, who = me, gid = dmId){
         dmPlayCard(st, who, c); dmRun(st); n++;
       } else if (dmIs(c, "t")){
         if (T.bought){ dmSkipped++; continue; }
-        const c0 = T.coins;
-        dmTake(P.hand, [c]); P.play.push(c); T.phase = "buy";
-        T.coins += DM[c].v; if (c === "silver" && !T.silver){ T.coins += T.merch; T.silver = true; }
-        treV += T.coins - c0; treCs.push(c);
+        treV += dmPlayTre(st, who, c); treCs.push(c);
         n++;
       } else dmSkipped++;
     }
@@ -8241,7 +8554,7 @@ function dmDoTreasures(who = me, gid = dmId){
     const ts = P.hand.filter(c => dmIs(c, "t")); if (!ts.length) return null;
     ts.sort((a, b) => (b === "silver") - (a === "silver"));
     const c0 = T.coins;
-    ts.forEach(c => { dmTake(P.hand, [c]); P.play.push(c); T.coins += DM[c].v; if (c === "silver" && !T.silver){ T.coins += T.merch; T.silver = true; } });
+    ts.forEach(c => dmPlayTre(st, who, c));
     dmFxAdd(st, { k: "tre", p: who, v: T.coins - c0, cs: ts });
     T.phase = "buy"; return true;
   });
@@ -8249,8 +8562,8 @@ function dmDoTreasures(who = me, gid = dmId){
 function dmDoBuy(c, who = me, gid = dmId){
   return dmCommit(gid, st => {
     const T = st.turn;
-    if (T.pid !== who || !dmIdle(st) || T.buys < 1 || T.coins < DM[c].c || !(st.supply[c] > 0)) return null;
-    T.coins -= DM[c].c; T.buys--; T.bought = true; T.phase = "buy";
+    if (T.pid !== who || !dmIdle(st) || T.buys < 1 || T.coins < dmCost(st, c) || !(st.supply[c] > 0)) return null;
+    T.coins -= dmCost(st, c); T.buys--; T.bought = true; T.phase = "buy";
     dmGain(st, who, c); dmL(st, `${pname(who)}が${DM[c].n}を購入`); dmFxAdd(st, { k: c === "province" ? "prov" : "buy", p: who, c });
     return true;
   });
@@ -8573,35 +8886,75 @@ async function cpuSkipRun(tb, id){
   CPU_SKIP[tb].draw();
 }
 /* ---- ドミニオン ---- */
-const DMAI_PRI = ["village", "festival", "market", "lab", "merchant", "harbinger", "sentry", "poacher", "cellar", "throne", "witch", "council", "smithy", "library", "militia", "bandit", "moneylender", "mine", "artisan", "remodel", "bureaucrat", "workshop", "vassal", "chapel", "moat"];
-const DMAI_BUY5 = ["lab", "witch", "market", "festival", "council", "library", "sentry", "mine"];
-const DMAI_BUY4 = ["smithy", "militia", "moneylender", "poacher", "gardens", "throne", "remodel", "bureaucrat"];
-const DMAI_BUY3 = ["village", "merchant", "harbinger", "vassal", "workshop"];
-const dmVal = c => c === "curse" ? -3 : dmIs(c, "v") ? -1 : dmIs(c, "t") ? DM[c].v * 2 : DM[c].c;
+/* カードごとの「欲しさ」（買う・獲得するときの目安。高いほど欲しい） */
+const DMAI_VAL = {
+  lab: 8, market: 7, festival: 6, witch: 9, council: 6, library: 6, sentry: 5, mine: 3, smithy: 7, militia: 6, moneylender: 5, poacher: 5, throne: 4, remodel: 3,
+  bureaucrat: 4, village: 5, merchant: 4, harbinger: 4, vassal: 4, workshop: 3, cellar: 3, moat: 3, chapel: 2, artisan: 5, bandit: 5, gardens: 0,
+  courtyard: 6, lurker: 3, pawn: 4, masquerade: 6, shanty: 5, steward: 5, swindler: 5, wishingwell: 4, baron: 5, bridge: 5, conspirator: 5, diplomat: 5,
+  ironworks: 5, mill: 4, miningvillage: 5, secretpassage: 5, courtier: 6, duke: 0, minion: 7, patrol: 6, replace: 5, torturer: 8, tradingpost: 4, upgrade: 5, farm: 6, nobles: 6,
+  haven: 3, lighthouse: 4, nativevillage: 3, astrolabe: 5, fishingvillage: 6, lookout: 4, monkey: 4, seachart: 4, smugglers: 4, warehouse: 4, blockade: 5, caravan: 6,
+  cutpurse: 5, island: 4, sailor: 4, salvager: 4, tidepools: 6, treasuremap: 3, bazaar: 7, corsair: 6, merchantship: 6, outpost: 5, pirate: 6, seawitch: 8, tactician: 5, treasury: 6, wharf: 8
+};
+const dmAiActs = c => { const p = DM[c].p || {}; return c === "nobles" || c === "pawn" ? 1 : (p.actions || 0); };
+const dmAiPri = c => { const a = dmAiActs(c); return (a >= 2 ? 0 : a === 1 ? 10 : 20) - (DMAI_VAL[c] || 0) * .5; };
+const dmVal = c => c === "curse" ? -3 : dmIs(c, "v") && !dmIs(c, "t") && !dmIs(c, "a") ? -1 : dmIs(c, "t") ? (DM[c].v || 0) * 2 : DM[c].c;
 function dmAiPick(st, pid, coins, opt = {}){
-  const P = st.pl[pid], all = dmDeckOf(st, pid), cnt = c => all.filter(x => x === c).length;
-  const pv = st.supply.province, ok = c => st.supply[c] > 0 && DM[c].c <= coins && (!opt.filter || dmIs(c, opt.filter)) && (st.kingdom.includes(c) || DM_BASE.includes(c));
-  const term = all.filter(c => dmIs(c, "a") && !(DM[c].p || {}).actions).length, vill = all.filter(c => (DM[c].p || {}).actions >= 2).length;
-  const actOk = c => st.kingdom.includes(c) && ok(c) && cnt(c) < (["lab", "market", "festival", "village"].includes(c) ? 4 : 2) && ((DM[c].p || {}).actions || term < 1 + vill + Math.floor(all.length / 12));
-  if (opt.filter === "t") return ["gold", "silver", "copper"].find(ok) || null;
+  const all = dmDeckOf(st, pid), cnt = c => all.filter(x => x === c).length;
+  const cost = c => dmCost(st, c);
+  const pv = st.supply.province, ok = c => st.supply[c] > 0 && (opt.exact ? cost(c) === coins : cost(c) <= coins) && (!opt.filter || dmIs(c, opt.filter)) && (st.kingdom.includes(c) || DM_BASE.includes(c));
+  if (opt.exact){   // ちょうどのコスト：いちばん良さそうなもの
+    const cand = Object.keys(st.supply).filter(ok);
+    if (opt.worst) return cand.sort((a, b) => dmVal(a) - dmVal(b))[0] || null;
+    return cand.sort((a, b) => ((DMAI_VAL[b] || dmVal(b)) + (b === "province" ? 20 : b === "duchy" && pv <= 5 ? 10 : 0)) - ((DMAI_VAL[a] || dmVal(a)) + (a === "province" ? 20 : a === "duchy" && pv <= 5 ? 10 : 0)))[0] || null;
+  }
+  const term = all.filter(c => dmIs(c, "a") && dmAiActs(c) === 0).length, vill = all.filter(c => dmAiActs(c) >= 2).length;
+  const actOk = c => st.kingdom.includes(c) && ok(c) && dmIs(c, "a") && cnt(c) < (dmAiActs(c) >= 1 ? 4 : 2) && (dmAiActs(c) || term < 1 + vill + Math.floor(all.length / 12));
+  if (opt.filter === "t") return ["gold", "farm", "silver", "copper"].find(ok) || null;
   const golds = cnt("gold");
   if (ok("province") && (golds > 0 || all.length > 15)) return "province";
   if (pv <= 4 && ok("duchy")) return "duchy";
+  if (st.kingdom.includes("duke") && ok("duke") && pv <= 6 && cnt("duchy") >= 2) return "duke";
+  if (coins >= 6 && ok("nobles") && cnt("nobles") < 2 && Math.random() < .35) return "nobles";
   if (ok("gold")) return "gold";
+  if (ok("farm") && pv <= 6) return "farm";
   if (pv <= 2 && ok("estate")) return "estate";
-  if (coins >= 5){ const k = DMAI_BUY5.find(actOk); if (k) return k; }
   if (st.kingdom.includes("gardens") && ok("gardens") && pv <= 5) return "gardens";
-  if (coins >= 4){ const k = DMAI_BUY4.find(c => c !== "gardens" && actOk(c)); if (k && Math.random() < .7) return k; }
-  if (coins >= 3 && Math.random() < .35){ const k = DMAI_BUY3.find(actOk); if (k) return k; }
+  // 王国カード：欲しさ＋コストで選ぶ（毎回同じにならないよう少しゆらす）
+  const ks = st.kingdom.filter(c => actOk(c) && (DMAI_VAL[c] || 0) >= 3).map(c => ({ c, v: (DMAI_VAL[c] || 0) + cost(c) * .6 + Math.random() * 1.5 })).sort((a, b) => b.v - a.v);
+  if (ks.length && (coins >= 5 || Math.random() < (coins >= 4 ? .7 : .35))) return ks[0].c;
   if (ok("silver")) return "silver";
-  if (opt.gain && coins >= 2){ const k = ["cellar", "moat", "chapel"].find(actOk); if (k) return k; }
+  if (opt.gain){ const k = st.kingdom.filter(actOk).sort((a, b) => (DMAI_VAL[b] || 0) - (DMAI_VAL[a] || 0))[0]; if (k) return k; }
   return opt.gain ? (["silver", "copper"].find(ok) || null) : null;
 }
 function dmAiAnswer(st, a){
   const pid = a.pid, P = st.pl[pid], h = P.hand, t = a.then.t, T = st.turn;
   const order = (arr, f) => arr.map((c, i) => ({ c, i })).sort((x, y) => f(x.c) - f(y.c));
-  if (a.k === "yn"){ if (t === "lib2") return T.actions < 1; return true; }
-  if (a.k === "supply") return dmAiPick(st, pid, a.max, { filter: a.filter, gain: true }) || Object.keys(st.supply).find(c => st.supply[c] > 0 && DM[c].c <= a.max && (!a.filter || dmIs(c, a.filter)));
+  const junk = c => c === "curse" || c === "estate" || (c === "copper" && st.supply.province > 3);
+  if (a.k === "yn"){
+    if (t === "lib2") return T.actions < 1;
+    if (t === "mv") return st.supply.province <= 6 || Math.random() < .25;
+    return true;
+  }
+  if (a.k === "opt"){
+    const free = a.opts.map((_, i) => i).filter(i => !(a.dis && a.dis[i]));
+    const pick = pref => pref.filter(i => free.includes(i)).slice(0, a.max).concat(free.filter(i => !pref.includes(i))).slice(0, a.min);
+    const tre = h.filter(c => dmIs(c, "t")).reduce((s2, c) => s2 + (DM[c].v || 0), 0) + T.coins;
+    if (t === "pawn") return pick(h.some(c => dmIs(c, "a")) && T.actions < 1 ? [1, 0] : [0, 3]);
+    if (t === "steward") return pick(h.filter(junk).length >= 2 ? [2] : tre >= 6 || tre === 4 ? [1] : [0]);
+    if (t === "minion") return pick(tre + 2 >= 6 || tre >= 5 ? [0] : [1]);
+    if (t === "nobles") return pick(h.some(c => dmIs(c, "a")) && T.actions < 1 ? [1] : [0]);
+    if (t === "lurk") return pick(st.trash.some(c => dmIs(c, "a")) ? [1] : [0]);
+    if (t === "tort") return pick(h.length >= 4 || h.filter(junk).length >= 2 ? [0] : [1]);
+    if (t === "court2") return pick(st.supply.gold > 0 ? [3, 2, 1, 0] : [2, 1, 0]);
+    if (t === "sp2"){ const c = a.then.c; return pick(junk(c) ? [1] : [0]); }
+    if (t === "nv"){ const n = (P.nv || []).length; return pick(n >= 3 || (n && st.supply.province <= 4) ? [1] : [0]); }
+    return pick([]);
+  }
+  if (a.k === "supply"){
+    if (t === "gainTo") return dmAiPick(st, pid, a.max, { exact: true, worst: true });
+    if (t === "lurkTrash") return Object.keys(st.supply).filter(c => st.supply[c] > 0 && dmIs(c, "a")).sort((x, y) => (DMAI_VAL[y] || 0) - (DMAI_VAL[x] || 0))[0];
+    return dmAiPick(st, pid, a.max, { filter: a.filter, gain: true, exact: a.exact }) || Object.keys(st.supply).find(c => st.supply[c] > 0 && (a.exact ? dmCost(st, c) === a.max : dmCost(st, c) <= a.max) && (!a.filter || dmIs(c, a.filter)));
+  }
   if (a.k === "list"){
     const cs = a.cards;
     if (t === "harb"){ const b = order(cs, c => -dmVal(c))[0]; return b && dmVal(b.c) >= 4 ? [b.i] : []; }
@@ -8609,25 +8962,40 @@ function dmAiAnswer(st, a){
     if (t === "sen2") return cs.map((c, i) => ({ c, i })).filter(x => dmIs(x.c, "v") || x.c === "curse").map(x => x.i);
     if (t === "sen3") return [order(cs, c => -dmVal(c))[0].i];
     if (t === "bandit"){ const f = cs.map((c, i) => ({ c, i })).filter(x => (a.filterList || []).includes(x.c)).sort((x, y) => dmVal(x.c) - dmVal(y.c)); return [f[0].i]; }
+    if (t === "lurkGain") return [order(cs, c => -(DMAI_VAL[c] || 0))[0].i];
+    if (t === "look1") return [order(cs, dmVal)[0].i];
+    if (t === "look2") return [order(cs, dmVal)[0].i];
+    if (t === "smug") return [order(cs, c => -((DMAI_VAL[c] || 0) + (c === "gold" ? 9 : 0) + (c === "duchy" && st.supply.province <= 4 ? 8 : 0)))[0].i];
+    if (t === "wish"){ const dk = P.deck.length ? P.deck : dmDeckOf(st, pid), cnt = {}; dk.forEach(c => cnt[c] = (cnt[c] || 0) + 1); const best = Object.keys(cnt).sort((x, y) => cnt[y] - cnt[x])[0]; const i = cs.indexOf(best); return [i >= 0 ? i : 0]; }
     return cs.map((_, i) => i).slice(0, a.min);
   }
   // 手札から選ぶ
-  const idx = (c => h.map((x, i) => ({ c: x, i })))();
+  const idx = h.map((x, i) => ({ c: x, i }));
   const pickLow = n => order(h, dmVal).filter(x => !a.filter || dmIs(x.c, a.filter)).slice(0, n).map(x => x.i);
-  if (t === "cellar") return idx.filter(x => dmIs(x.c, "v") || x.c === "curse").map(x => x.i);
+  if (t === "cellar") return idx.filter(x => dmIs(x.c, "v") && !dmIs(x.c, "t") || x.c === "curse").map(x => x.i);
   if (t === "trash"){
-    const money = dmDeckOf(st, pid).filter(c => dmIs(c, "t")).reduce((s2, c) => s2 + DM[c].v, 0);
+    const money = dmDeckOf(st, pid).filter(c => dmIs(c, "t")).reduce((s2, c) => s2 + (DM[c].v || 0), 0);
     let left = money;
-    return idx.filter(x => x.c === "curse" || (x.c === "estate" && st.supply.province > 4) || (x.c === "copper" && (left -= 1) >= 6)).slice(0, a.max).map(x => x.i);
+    const tr = idx.filter(x => x.c === "curse" || (x.c === "estate" && st.supply.province > 4) || (x.c === "copper" && (left -= 1) >= 6)).slice(0, a.max).map(x => x.i);
+    return tr.length >= a.min ? tr : pickLow(a.min);
   }
-  if (t === "discard") return pickLow(a.min);
-  if (t === "remodel"){
+  if (t === "discard" || t === "tort") return pickLow(a.min);
+  if (t === "mill"){ const v = idx.filter(x => (dmIs(x.c, "v") && !dmIs(x.c, "t")) || x.c === "curse").map(x => x.i); return v.length >= 2 ? v.slice(0, 2) : []; }
+  if (t === "mq1") return pickLow(1);
+  if (t === "remodel" || t === "rep1"){
     const g = idx.find(x => x.c === "gold" && st.supply.province > 0 && st.supply.province <= 6) || idx.find(x => x.c === "curse") || idx.find(x => x.c === "estate") || idx.find(x => x.c === "copper");
     return g ? [g.i] : pickLow(1);
   }
-  if (t === "throne"){ const b = idx.filter(x => dmIs(x.c, "a") && x.c !== "throne").sort((x, y) => DMAI_PRI.indexOf(y.c) - DMAI_PRI.indexOf(x.c))[0]; return b ? [b.i] : []; }
+  if (t === "upg"){ const g = idx.find(x => x.c === "estate") || idx.find(x => x.c === "curse") || idx.find(x => x.c === "silver" && st.kingdom.some(k => DM[k].c === 4)) || idx.find(x => x.c === "copper"); return g ? [g.i] : pickLow(1); }
+  if (t === "tp") return pickLow(Math.min(2, a.max));
+  if (t === "court1"){ const b = idx.slice().sort((x, y) => DM[y.c].ty.length - DM[x.c].ty.length || dmVal(y.c) - dmVal(x.c))[0]; return [b.i]; }
+  if (t === "throne"){ const b = idx.filter(x => dmIs(x.c, "a") && x.c !== "throne").sort((x, y) => (DMAI_VAL[y.c] || 0) - (DMAI_VAL[x.c] || 0))[0]; return b ? [b.i] : []; }
   if (t === "mine"){ const b = idx.find(x => x.c === "silver") || idx.find(x => x.c === "copper"); return b ? [b.i] : []; }
-  if (t === "todeck") return pickLow(1);
+  if (t === "todeck"){ const ac = idx.find(x => dmIs(x.c, "a") && T.pid === pid); if (a.title.startsWith("中庭") && ac) return [ac.i]; return pickLow(1); }
+  if (t === "sp1") return pickLow(1);
+  if (t === "haven"){ const b = (T.actions < 1 ? idx.find(x => dmIs(x.c, "a")) : null) || order(h, c => -dmVal(c))[0]; return [b.i]; }
+  if (t === "isl"){ const v = idx.find(x => x.c === "curse") || idx.find(x => (dmIs(x.c, "v") && !dmIs(x.c, "a") && !dmIs(x.c, "t"))); return v ? [v.i] : pickLow(1); }
+  if (t === "salv"){ const v = idx.find(x => x.c === "curse") || idx.find(x => x.c === "estate") || (st.supply.province <= 2 ? null : idx.find(x => x.c === "gold" && T.coins < 2)) || idx.find(x => x.c === "copper"); return v ? [v.i] : pickLow(1); }
   return pickLow(a.min);
 }
 CPU_AI.dm_games = g => {
@@ -8638,8 +9006,8 @@ CPU_AI.dm_games = g => {
   const pid = st.turn.pid, T = st.turn, P = st.pl[pid];
   // ① アクション
   if (T.phase === "action" && T.actions > 0 && !T.bought){
-    const acts = P.hand.filter(c => dmIs(c, "a")).sort((x, y) => DMAI_PRI.indexOf(x) - DMAI_PRI.indexOf(y));
-    const c = acts.find(c => !(c === "moneylender" && !P.hand.includes("copper")) && !(c === "chapel" && st.supply.province < 6) && !(c === "throne" && !P.hand.some(x => dmIs(x, "a") && x !== "throne")));
+    const acts = P.hand.filter(c => dmIs(c, "a")).sort((x, y) => dmAiPri(x) - dmAiPri(y));
+    const c = acts.find(c => !(c === "moneylender" && !P.hand.includes("copper")) && !(c === "chapel" && st.supply.province < 6) && !(c === "throne" && !P.hand.some(x => dmIs(x, "a") && x !== "throne")) && !(c === "mine" && !P.hand.some(x => dmIs(x, "t"))) && !((c === "remodel" || c === "upgrade" || c === "replace" || c === "tradingpost" || c === "salvager") && P.hand.length < 2) && !(c === "treasuremap" && P.hand.filter(x => x === "treasuremap").length < 2) && !(c === "tactician" && P.hand.some(x => dmIs(x, "t") && x !== "copper")));
     if (c) return { wait: 2400, run: () => dmDoPlay([c], pid, g.id) };
   }
   // ② 財宝を全部出す
@@ -8659,17 +9027,22 @@ function openDmNew(){
     <button type="button" class="grbtn" data-grule="dm">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="gOrder" class="norder"></div><button class="shufbtn" id="gShuf">順番をシャッフル</button></div>
-    <div class="f"><span>使う王国カード（10種類）</span><div class="dmsets">${DM_SETS.map((x, i) => `<button type="button" class="dmset" data-set="${i}">${x.n}</button>`).join("")}<button type="button" class="dmset rnd" data-set="r">ランダム</button></div>
+    <div class="f"><span>使う王国カード（10種類）</span><div class="dmxtabs" id="dmXt"></div><div class="dmsets" id="dmSets"></div>
       <div id="dmKd"></div><small class="kgoph">カードをタップすると入れ替えできます（10種類ちょうど）</small></div>
     <div class="btns"><button class="btn" id="gGo">ゲーム開始</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#gOrder").innerHTML = seatHtml(order); seatDrag($("#gOrder"), () => order, o => order = o, draw); };
+  let xt = "all";
+  const xPool = () => DM_KINGDOM.filter(k => xt === "all" || dmX(k) === xt);
   const drawK = () => {
-    $("#dmKd").innerHTML = `<div class="dmkpick"><b class="dmkn">${esc(setName)}<em>${kd.length}/10</em></b>${DM_KINGDOM.slice().sort((a, b) => DM[a].c - DM[b].c).map(k => `<button type="button" class="dmkc ${kd.includes(k) ? "on" : ""}" data-k="${k}"><i>${DM[k].c}</i><span class="dmart ill">${DM_ART[k]}</span><b>${DM[k].n}</b></button>`).join("")}</div>`;
+    $("#dmXt").innerHTML = [{ id: "all", n: "すべて" }, ...DM_EXP].map(x => `<button type="button" class="dmxt" data-xt="${x.id}" aria-pressed="${xt === x.id}">${x.n}<small>${x.id === "all" ? DM_KINGDOM.length : DM_KINGDOM.filter(k => dmX(k) === x.id).length}</small></button>`).join("");
+    $("#dmSets").innerHTML = DM_SETS.map((x, i) => ({ x, i })).filter(({ x }) => xt === "all" || (x.x || "base") === xt || (x.x === "mix" && x.xs.includes(xt))).map(({ x, i }) => `<button type="button" class="dmset" data-set="${i}" aria-pressed="${x.n === setName}">${x.n}</button>`).join("") + `<button type="button" class="dmset rnd" data-set="r" aria-pressed="${setName === "ランダム"}">ランダム${xt === "all" ? "" : `（${DM_EXP.find(e => e.id === xt).n}）`}</button>`;
+    $("#dmXt").querySelectorAll("[data-xt]").forEach(b => b.onclick = () => { xt = b.dataset.xt; drawK(); });
+    $("#dmSets").querySelectorAll("[data-set]").forEach(b => b.onclick = () => { if (b.dataset.set === "r"){ kd = shuffle(xPool()).slice(0, 10); setName = "ランダム"; } else { const x = DM_SETS[Number(b.dataset.set)]; kd = x.k.slice(); setName = x.n; } drawK(); });
+    const others = kd.filter(k => !xPool().includes(k));
+    $("#dmKd").innerHTML = `<div class="dmkpick"><b class="dmkn">${esc(setName)}<em>${kd.length}/10</em></b>${others.length ? `<small class="dmkoth">ほかの拡張から：${others.map(k => esc(DM[k].n)).join("・")}</small>` : ""}${xPool().slice().sort((a, b) => DM[a].c - DM[b].c).map(k => `<button type="button" class="dmkc ${kd.includes(k) ? "on" : ""}" data-k="${k}"><i>${DM[k].c}</i><span class="dmart ill">${DM_ART[k]}</span><b>${DM[k].n}</b></button>`).join("")}</div>`;
     $("#dmKd").querySelectorAll("[data-k]").forEach(b => b.onclick = () => { const k = b.dataset.k; if (kd.includes(k)) kd = kd.filter(x => x !== k); else if (kd.length < 10) kd = [...kd, k]; else { toast("10種類までです。先に外してください"); return; } setName = "自分で選ぶ"; drawK(); });
-    s.querySelectorAll("[data-set]").forEach(b => b.setAttribute("aria-pressed", String(b.textContent === setName)));
   };
-  s.querySelectorAll("[data-set]").forEach(b => b.onclick = () => { if (b.dataset.set === "r"){ kd = shuffle(DM_KINGDOM).slice(0, 10); setName = "ランダム"; } else { const x = DM_SETS[Number(b.dataset.set)]; kd = x.k.slice(); setName = x.n; } drawK(); });
   s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
     if (on && order.length >= 6){ toast("最大6人です"); return; }
@@ -8701,6 +9074,201 @@ function closeDm(){ clearTimeout(dmEndTm); if (dmId){ delete dmEndCounted[dmId];
 /* ドミニオン：カードごとのオリジナルイラスト（SVG） */
 const DMS = b => `<svg viewBox="0 0 64 48" aria-hidden="true"><g stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">${b}</g></svg>`;
 const DM_ART = {
+  haven: DMS(`<path d="M0 34Q16 30 32 34T64 34V48H0Z" fill="#3FA7D6"/><path d="M6 40q4-2 8 0M40 42q4-2 8 0" stroke="#E6FAFF" stroke-width="1.3" fill="none"/>
+    <path d="M40 34V14h20v20" fill="#B59A6A"/><path d="M38 16l12-8 12 8" fill="#7A4A2A"/><rect x="46" y="24" width="6" height="10" fill="#4A3424"/>
+    <path d="M8 34l4-8h18l4 8z" fill="#9C6A36"/><path d="M20 26V8" stroke-width="1.6"/><path d="M20 9l10 12H20z" fill="#F3F0E8"/>
+    <path d="M30 34h10" stroke-width="2"/><circle cx="34" cy="30" r="1.6" fill="#E8B12A"/>`),
+  lighthouse: DMS(`<path d="M0 38Q16 34 32 38T64 38V48H0Z" fill="#3FA7D6"/><path d="M18 40l4-10h20l4 10z" fill="#8A8A9A"/>
+    <path d="M24 30l2-20h12l2 20z" fill="#F3F0E8"/><path d="M25 22h14M25.6 16h12.8" stroke="#E2364F" stroke-width="3.5"/>
+    <rect x="26" y="5" width="12" height="6" fill="#FFE38A"/><path d="M24 5h16l-8-5z" fill="#C0392B"/>
+    <path d="M38 8L62 2v12z" fill="#FFE38A" opacity=".6" stroke="none"/><path d="M26 8L2 2v12z" fill="#FFE38A" opacity=".6" stroke="none"/>`),
+  nativevillage: DMS(`<path d="M0 42Q32 36 64 42V48H0Z" fill="#E8C35A"/><path d="M50 42V20" stroke="#7A4A1A" stroke-width="2"/><path d="M50 20q-10-2-14 6M50 20q10-2 14 6M50 20q-6-8-12-6M50 20q6-8 12-6" stroke="#3E8A3A" stroke-width="3" fill="none"/>
+    <path d="M6 42L18 20L30 42Z" fill="#B59A6A"/><path d="M12 30l12 0M9 36h18" stroke="#8A7048" stroke-width="1"/><path d="M15 42l3-8 3 8z" fill="#4A3424"/>
+    <path d="M28 42L38 26L48 42Z" fill="#C8A878"/><path d="M36 42l2-6 2 6z" fill="#4A3424"/><path d="M18 20l-2-4M18 20l2-4" stroke-width="1.2"/>`),
+  astrolabe: DMS(`<circle cx="32" cy="24" r="19" fill="#E8B12A"/><circle cx="32" cy="24" r="14" fill="#F7D774"/><path d="M32 5v6M32 37v6M13 24h6M45 24h6M18.6 10.6l4 4M41.4 33.4l4 4M45.4 10.6l-4 4M22.6 33.4l-4 4" stroke-width="1.2"/>
+    <path d="M32 24L44 16" stroke-width="2.2"/><path d="M32 24L22 34" stroke-width="1.6"/><circle cx="32" cy="24" r="2.4" fill="#7A4A1A"/>
+    <circle cx="32" cy="3" r="2.5" fill="#E8B12A"/><path d="M26 14q6-4 12 0" stroke="#C99A1A" fill="none" stroke-width="1"/>`),
+  fishingvillage: DMS(`<path d="M0 36Q16 32 32 36T64 36V48H0Z" fill="#3FA7D6"/><path d="M8 42q4-2 8 0M44 42q4-2 8 0" stroke="#E6FAFF" stroke-width="1.3" fill="none"/>
+    <path d="M4 36V22h14v14" fill="#F3E9D2"/><path d="M2 23l9-7 9 7" fill="#2F6FB5"/><path d="M22 36V24h12v12" fill="#E3D6B8"/><path d="M20 25l8-6 8 6" fill="#C0392B"/>
+    <path d="M38 36h22" stroke="#7A4A1A" stroke-width="2"/><path d="M42 36v6M56 36v6" stroke="#7A4A1A" stroke-width="2"/>
+    <path d="M44 28q6-6 12 0q-6 6-12 0z" fill="#9FD8FF"/><path d="M56 28l5-3v6z" fill="#9FD8FF"/><circle cx="47" cy="27" r=".9" fill="#1B1838" stroke="none"/>`),
+  lookout: DMS(`<path d="M0 44Q32 38 64 44V48H0Z" fill="#7CC36A"/><path d="M20 44L24 18h16l4 26" fill="#9C6A36"/><path d="M22 30h20M21 37h22" stroke="#7A4A2A" stroke-width="1.4"/><path d="M24 18l8 12 8-12M22 30l10 7 10-7" stroke="#7A4A2A" stroke-width="1" fill="none"/>
+    <rect x="18" y="10" width="28" height="8" fill="#B5763A"/><path d="M16 10l16-8 16 8z" fill="#A8432E"/>
+    <circle cx="32" cy="14" r="3" fill="#F2C9A0"/><path d="M35 13l10-3" stroke-width="2.2"/><circle cx="46" cy="9.6" r="2" fill="#5FB0E8"/>`),
+  monkey: DMS(`<path d="M52 4q-6 10 2 20" stroke="#7A4A1A" stroke-width="2.4" fill="none"/>
+    <circle cx="30" cy="20" r="12" fill="#9C6A36"/><circle cx="16" cy="18" r="5" fill="#9C6A36"/><circle cx="44" cy="18" r="5" fill="#9C6A36"/><circle cx="16" cy="18" r="2.4" fill="#F2C9A0" stroke="none"/><circle cx="44" cy="18" r="2.4" fill="#F2C9A0" stroke="none"/>
+    <path d="M22 22q8-10 16 0q0 8-8 8t-8-8z" fill="#F2C9A0"/><circle cx="26" cy="19" r="1.4" fill="#1B1838" stroke="none"/><circle cx="34" cy="19" r="1.4" fill="#1B1838" stroke="none"/><path d="M27 25q3 2 6 0" fill="none" stroke-width="1.2"/>
+    <path d="M20 46q2-14 10-14t10 14z" fill="#9C6A36"/><path d="M40 40q10 0 12-16" stroke="#9C6A36" stroke-width="3" fill="none"/><path d="M48 30l6-4 2 6z" fill="#E8B12A"/>`),
+  seachart: DMS(`<rect x="6" y="6" width="52" height="36" rx="2" fill="#F3E9D2"/><path d="M6 6q-4 0-4 4v28q0 4 4 4M58 6q4 0 4 4v28q0 4-4 4" fill="#E3D6B8"/>
+    <path d="M14 30q8-10 14-4t14-8q6-4 10 2" stroke="#E2364F" stroke-width="1.6" stroke-dasharray="3 2" fill="none"/>
+    <path d="M48 16l2 4M50 16l-2 4" stroke="#E2364F" stroke-width="1.8"/><path d="M12 14q4-4 8 0t8 0" stroke="#5FB0E8" fill="none" stroke-width="1.2"/>
+    <circle cx="18" cy="34" r="5" fill="none" stroke-width="1"/><path d="M18 29v10M13 34h10" stroke-width="1"/>`),
+  smugglers: DMS(`<path d="M0 40Q32 34 64 40V48H0Z" fill="#2A3A5A"/><circle cx="52" cy="10" r="5" fill="#F3E9D2" stroke="none"/>
+    <path d="M8 40l6-8h28l6 8z" fill="#5A3A20"/><path d="M28 32V12" stroke-width="1.6"/><path d="M28 13l-12 15h12z" fill="#3A3A4A"/>
+    <rect x="14" y="26" width="10" height="6" fill="#B5763A"/><rect x="32" y="24" width="10" height="8" fill="#B5763A"/><path d="M37 24v8M32 28h10" stroke="#8A5228" stroke-width="1"/>
+    <path d="M44 22h8l-1 4h-6z" fill="#1A1424"/><path d="M45 22q3-6 6 0" fill="#1A1424"/>`),
+  warehouse: DMS(`<path d="M4 46V18L32 6L60 18V46Z" fill="#B59A6A"/><path d="M4 18L32 6L60 18" fill="none" stroke-width="2"/>
+    <rect x="12" y="28" width="12" height="10" fill="#C98A48"/><rect x="40" y="28" width="12" height="10" fill="#C98A48"/><rect x="26" y="34" width="12" height="12" fill="#C98A48"/><rect x="26" y="22" width="12" height="12" fill="#D9A060"/>
+    <path d="M12 33h12M40 33h12M26 40h12M26 28h12M18 28v10M46 28v10M32 34v12M32 22v12" stroke="#8A5228" stroke-width="1"/>`),
+  blockade: DMS(`<path d="M0 36Q16 32 32 36T64 36V48H0Z" fill="#3FA7D6"/>
+    <path d="M2 34l3-6h14l3 6z" fill="#5A3A20"/><path d="M12 28V12" stroke-width="1.4"/><path d="M12 13l8 12h-8z" fill="#E2364F"/>
+    <path d="M42 34l3-6h14l3 6z" fill="#5A3A20"/><path d="M52 28V12" stroke-width="1.4"/><path d="M52 13l-8 12h8z" fill="#E2364F"/>
+    <path d="M22 30h20" stroke="#8A8A9A" stroke-width="3" stroke-dasharray="3 2"/><path d="M28 18l8 8M36 18l-8 8" stroke="#E2364F" stroke-width="3"/>`),
+  caravan: DMS(`<path d="M0 40Q32 34 64 40V48H0Z" fill="#E8C35A"/><circle cx="54" cy="10" r="5" fill="#FFE38A" stroke="none"/>
+    <path d="M6 34q2-10 10-10l4-6 3 2-2 5q8 0 10 9z" fill="#C98A48"/><path d="M10 34v8M26 34v8M14 34v8M30 34v8" stroke-width="2"/>
+    <path d="M34 34q2-10 10-10l4-6 3 2-2 5q8 0 10 9z" fill="#B5763A"/><path d="M38 34v8M54 34v8M42 34v8M58 34v8" stroke-width="2"/>
+    <rect x="14" y="20" width="10" height="6" fill="#E2364F"/><rect x="42" y="20" width="10" height="6" fill="#2F6FB5"/>`),
+  cutpurse: DMS(`<path d="M10 30q0-14 14-14h6q14 0 14 14q0 14-17 14T10 30z" fill="#9C6A36"/><path d="M18 18q9-8 18 0" fill="none" stroke-width="2"/><path d="M22 16l5 4 5-4" fill="#7A4A1A"/>
+    <circle cx="27" cy="32" r="4" fill="#E8B12A"/><path d="M44 10l14 14" stroke="#C9CED8" stroke-width="2.4"/><path d="M42 8l4 4" stroke="#7A4A1A" stroke-width="3"/>
+    <circle cx="48" cy="40" r="3" fill="#E8B12A"/><circle cx="56" cy="36" r="2.4" fill="#E8B12A"/>`),
+  island: DMS(`<path d="M0 34Q16 30 32 34T64 34V48H0Z" fill="#3FA7D6"/><ellipse cx="32" cy="34" rx="22" ry="6" fill="#E8C35A"/>
+    <path d="M30 34q2-14 0-24" stroke="#7A4A1A" stroke-width="2.4" fill="none"/><path d="M30 10q-12-2-16 6M30 10q12-2 16 6M30 10q-8-8-14-4M30 10q8-8 14-4" stroke="#3E8A3A" stroke-width="3.4" fill="none"/>
+    <circle cx="33" cy="13" r="2" fill="#7A4A1A"/><circle cx="28" cy="14" r="2" fill="#7A4A1A"/>`),
+  sailor: DMS(`<path d="M0 40Q16 36 32 40T64 40V48H0Z" fill="#3FA7D6"/><path d="M18 48V30q0-8 14-8t14 8v18Z" fill="#F3F0E8"/><path d="M24 26l8 6 8-6" fill="#2F6FB5"/>
+    <path d="M20 34h24M20 40h24" stroke="#2F6FB5" stroke-width="2"/><circle cx="32" cy="14" r="8" fill="#F2C9A0"/><path d="M23 10q9-8 18 0" fill="#fff"/><path d="M22 10h20" stroke="#2F6FB5" stroke-width="2"/>
+    <path d="M50 18v14M46 22h8M46 30q4 4 8 0" stroke="#5A5A6A" stroke-width="2" fill="none"/>`),
+  salvager: DMS(`<path d="M0 30Q16 26 32 30T64 30V48H0Z" fill="#2F7FC9"/><path d="M10 30l4-6h28l4 6z" fill="#5A3A20"/><path d="M38 24V6l12 2" stroke-width="2" fill="none"/>
+    <path d="M50 8v20" stroke-width="1.2"/><path d="M47 28h6l-3 4z" fill="#8A8A9A"/>
+    <rect x="22" y="38" width="16" height="9" rx="1" fill="#9C6A36"/><path d="M22 41h16" stroke="#E8B12A" stroke-width="1.4"/><circle cx="30" cy="42" r="1.4" fill="#E8B12A"/>
+    <path d="M44 40q2-2 4 0M14 42q2-2 4 0" stroke="#9FD8FF" fill="none" stroke-width="1"/>`),
+  tidepools: DMS(`<path d="M0 30h64v18H0z" fill="#9AA0AA"/><ellipse cx="22" cy="36" rx="14" ry="6" fill="#5FB0E8"/><ellipse cx="48" cy="40" rx="10" ry="4" fill="#5FB0E8"/>
+    <path d="M16 36l3-3 3 3-3 3z" fill="#E2364F"/><circle cx="28" cy="35" r="2.4" fill="#FF8F3F"/><path d="M26 33l-2-2M30 33l2-2" stroke-width="1"/>
+    <path d="M44 40q4-4 8 0" stroke="#3E8A3A" stroke-width="2" fill="none"/><path d="M0 30Q16 22 32 30T64 30" fill="#3FA7D6"/><path d="M8 26q4-2 8 0M40 26q4-2 8 0" stroke="#E6FAFF" fill="none" stroke-width="1.2"/>`),
+  treasuremap: DMS(`<path d="M6 8l16 4 18-4 18 4v32l-18-4-18 4-16-4z" fill="#F3E9D2"/><path d="M22 12v32M40 8v32" stroke="#C8B898" stroke-width="1"/>
+    <path d="M12 34q6-4 10-12t14-6q8 0 10 8" stroke="#E2364F" stroke-width="1.6" stroke-dasharray="3 2" fill="none"/>
+    <path d="M44 22l6 6M50 22l-6 6" stroke="#E2364F" stroke-width="2.4"/><path d="M10 14q4-2 6 2" stroke="#3E8A3A" fill="none"/>`),
+  bazaar: DMS(`<path d="M2 18q10-10 20 0q10-10 20 0q10-10 20 0v4H2z" fill="#8B3CFF"/><path d="M12 18v-4M32 18v-4M52 18v-4" stroke="#FFE38A" stroke-width="2"/>
+    <path d="M4 22v22M60 22v22" stroke-width="2"/><rect x="8" y="32" width="48" height="12" fill="#B5763A"/>
+    <circle cx="16" cy="29" r="4" fill="#E2364F"/><circle cx="26" cy="29" r="4" fill="#FF8F3F"/><path d="M34 26h8v6h-8z" fill="#2DBE60"/><path d="M46 32q0-8 6-8q-2 4 0 8z" fill="#FFE38A"/>`),
+  corsair: DMS(`<path d="M0 38Q16 34 32 38T64 38V48H0Z" fill="#3FA7D6"/><path d="M6 36l6-8h40l6 8z" fill="#3A2A20"/><path d="M32 28V4" stroke-width="2"/>
+    <path d="M32 6l-16 18h16z" fill="#1B1838"/><path d="M32 6l14 18H32z" fill="#2A2A3A"/>
+    <circle cx="24" cy="18" r="3" fill="#F3F0E8"/><path d="M22 23l4-1M26 23l-4-1" stroke="#F3F0E8" stroke-width="1"/><path d="M32 4h8l-2 3 2 3h-8" fill="#E2364F"/>`),
+  merchantship: DMS(`<path d="M0 38Q16 34 32 38T64 38V48H0Z" fill="#3FA7D6"/><path d="M4 34l6-8h44l6 8z" fill="#9C6A36"/><path d="M20 26V6M40 26V8" stroke-width="2"/>
+    <path d="M20 8q10 6 0 16M40 10q10 6 0 14" fill="#F3F0E8"/><rect x="24" y="20" width="8" height="6" fill="#E8B12A"/><rect x="44" y="20" width="8" height="6" fill="#E2364F"/>
+    <circle cx="14" cy="30" r="1.6" fill="#E8B12A"/><circle cx="30" cy="30" r="1.6" fill="#E8B12A"/><circle cx="46" cy="30" r="1.6" fill="#E8B12A"/>`),
+  outpost: DMS(`<path d="M0 40Q32 34 64 40V48H0Z" fill="#7CC36A"/><path d="M8 42V14h4v28M52 42V14h4v28M8 14h48v6H8z" fill="#9C6A36"/>
+    <path d="M10 14V8l2-2 2 2v6M24 14V8l2-2 2 2v6M38 14V8l2-2 2 2v6M50 14V8l2-2 2 2v6" fill="#B5763A"/><path d="M12 22h40v20H12z" fill="#B5763A"/>
+    <path d="M26 42V30h12v12" fill="#4A3424"/><path d="M32 6V0" stroke-width="1.4"/><path d="M32 0l8 2-8 3z" fill="#E2364F"/>`),
+  pirate: DMS(`<path d="M14 48V34q0-8 18-8t18 8v14Z" fill="#C0392B"/><path d="M14 36h36" stroke="#1B1838" stroke-width="3"/>
+    <circle cx="32" cy="18" r="10" fill="#F2C9A0"/><path d="M20 14q12-14 24 0z" fill="#1B1838"/><path d="M20 14h24" stroke="#1B1838" stroke-width="3"/><circle cx="32" cy="9" r="1.6" fill="#fff" stroke="none"/>
+    <path d="M27 18h4v4h-4z" fill="#1B1838"/><path d="M27 18l-6-3M31 18l12-2" stroke-width="1"/><circle cx="36" cy="20" r="1.2" fill="#1B1838" stroke="none"/>
+    <path d="M26 25q6 3 12 0" stroke="#5A3416" stroke-width="2" fill="none"/><circle cx="52" cy="40" r="5" fill="#E8B12A"/>`),
+  seawitch: DMS(`<path d="M0 40Q16 36 32 40T64 40V48H0Z" fill="#2E7A8A"/><path d="M16 42q4-26 16-30q12 4 16 30z" fill="#2A5A5A"/>
+    <path d="M18 14L32 0L46 14z" fill="#1B3A3A"/><path d="M12 14h40" stroke-width="2.4"/><circle cx="32" cy="20" r="6" fill="#9ACDB0"/>
+    <circle cx="30" cy="19" r="1" fill="#1B1838" stroke="none"/><circle cx="34" cy="19" r="1" fill="#1B1838" stroke="none"/>
+    <path d="M48 26q8-2 10 6M50 22q6-6 12 0" stroke="#9FD8FF" fill="none" stroke-width="1.6"/><path d="M8 30q4 4 0 8" stroke="#9FD8FF" fill="none" stroke-width="1.6"/>`),
+  tactician: DMS(`<rect x="4" y="8" width="56" height="34" rx="3" fill="#E3D6B8"/><path d="M8 38q10-14 20-10t24-14" stroke="#2F6FB5" stroke-width="1.6" fill="none"/>
+    <path d="M14 18l4 4M18 18l-4 4M42 30l4 4M46 30l-4 4" stroke="#E2364F" stroke-width="2"/>
+    <path d="M28 26l-3 6h6z" fill="#2DBE60"/><path d="M50 12l-2 8 6-4z" fill="#2F6FB5"/><circle cx="34" cy="16" r="3" fill="#E8B12A"/>`),
+  treasury: DMS(`<rect x="10" y="18" width="44" height="26" rx="3" fill="#9C6A36"/><path d="M10 26q22-14 44 0" fill="#B5763A"/><path d="M10 26h44" stroke-width="2"/>
+    <path d="M10 18q22-16 44 0" fill="#B5763A"/><rect x="28" y="24" width="8" height="8" rx="1" fill="#E8B12A"/><circle cx="32" cy="28" r="1.4" fill="#5A3416"/>
+    <circle cx="18" cy="16" r="3" fill="#E8B12A"/><circle cx="46" cy="16" r="3" fill="#E8B12A"/><circle cx="32" cy="10" r="3" fill="#E8B12A"/>`),
+  wharf: DMS(`<path d="M0 36Q16 32 32 36T64 36V48H0Z" fill="#3FA7D6"/><path d="M2 30h40v4H2z" fill="#9C6A36"/><path d="M6 34v10M18 34v10M30 34v10M40 34v10" stroke="#7A4A2A" stroke-width="2.4"/>
+    <rect x="8" y="22" width="10" height="8" fill="#C98A48"/><rect x="20" y="24" width="8" height="6" fill="#D9A060"/>
+    <path d="M44 34l4-6h14v6z" fill="#5A3A20"/><path d="M54 28V12" stroke-width="1.6"/><path d="M54 13l8 12h-8z" fill="#F3F0E8"/>`),
+
+  courtyard: DMS(`<rect x="2" y="30" width="60" height="17" fill="#D9CBB0"/><path d="M2 36h60M2 42h60M12 30v17M24 30v17M36 30v17M48 30v17" stroke="#B8A888" stroke-width="1"/>
+    <path d="M4 30V12h6v18M54 30V12h6v18" fill="#CFC4B0"/><path d="M2 12h10M52 12h10" stroke-width="2"/>
+    <ellipse cx="32" cy="34" rx="16" ry="5" fill="#9FB4C8"/><ellipse cx="32" cy="32" rx="14" ry="4" fill="#5FB0E8"/>
+    <rect x="30" y="18" width="4" height="14" fill="#CFC4B0"/><ellipse cx="32" cy="18" rx="7" ry="2.5" fill="#CFC4B0"/>
+    <path d="M32 15q-6-8-12 2M32 15q6-8 12 2M32 15v-6" stroke="#5FB0E8" stroke-width="1.6" fill="none"/>
+    <circle cx="14" cy="26" r="4" fill="#5BAA4A"/><circle cx="50" cy="26" r="4" fill="#5BAA4A"/>`),
+  lurker: DMS(`<circle cx="50" cy="10" r="5" fill="#F3E9D2" stroke="none"/><path d="M0 48V30Q8 18 18 26Q24 14 34 22Q44 12 52 24Q60 20 64 28V48Z" fill="#3E7A3A"/>
+    <path d="M20 48V32Q32 18 44 32V48Z" fill="#2A2238"/><path d="M24 34q8-8 16 0" fill="#1A1424"/>
+    <ellipse cx="28" cy="36" rx="2.4" ry="1.5" fill="#FFE38A" stroke="none"/><ellipse cx="36" cy="36" rx="2.4" ry="1.5" fill="#FFE38A" stroke="none"/>
+    <path d="M6 36q4-4 8 0M48 34q4-4 8 0M10 44q4-4 8 0M46 44q4-4 8 0" stroke="#2A5A26" fill="none"/>`),
+  pawn: DMS(`<rect x="2" y="38" width="60" height="9" fill="#E8D9B8"/><path d="M2 38h60M14 38v9M26 38v9M38 38v9M50 38v9" stroke="#B8A888" stroke-width="1"/>
+    <circle cx="32" cy="10" r="7" fill="#F3F0E8"/><path d="M27 17h10l-2 4h-6z" fill="#F3F0E8"/><path d="M28.5 21h7l3 13h-13z" fill="#F3F0E8"/><path d="M21 34h22v5H21z" fill="#F3F0E8"/>
+    <circle cx="29.5" cy="8" r="2" fill="#fff" stroke="none"/>`),
+  masquerade: DMS(`<path d="M12 22q4-10 20-6q16-4 20 6q-2 12-12 11q-6-1-8-5q-2 4-8 5q-10 1-12-11z" fill="#8B3CFF"/>
+    <path d="M18 22q4-4 8 0q-4 4-8 0zM38 22q4-4 8 0q-4 4-8 0z" fill="#1B1838"/>
+    <path d="M12 22L4 30M52 22L60 30" stroke="#E8B12A" stroke-width="2"/><path d="M4 30q-2 6 2 10M60 30q2 6-2 10" stroke="#E2364F" stroke-width="2" fill="none"/>
+    <path d="M28 12q2-8 8-10q-2 6-4 10" fill="#E8B12A"/><path d="M32 12q4-6 10-6q-4 4-6 8" fill="#FFE38A"/>
+    <circle cx="32" cy="27" r="1.6" fill="#FFE38A"/><path d="M14 18q4-2 6 0M44 18q4-2 6 0" stroke="#FFE38A" stroke-width="1.2" fill="none"/>`),
+  shanty: DMS(`<path d="M0 44Q32 40 64 44V48H0Z" fill="#9C8A5A"/>
+    <path d="M4 44V26l10-6 10 6v18Z" fill="#B59A6A"/><path d="M2 27l12-8 12 8" fill="none" stroke-width="2"/><path d="M6 30h16M6 36h16" stroke="#8A7048" stroke-width="1"/><rect x="11" y="36" width="6" height="8" fill="#4A3424"/>
+    <path d="M28 44V22h16v22Z" fill="#A08A64"/><path d="M26 24l10-8 10 8Z" fill="#7A6A5A"/><rect x="32" y="34" width="6" height="10" fill="#4A3424"/><rect x="31" y="25" width="5" height="5" fill="#5FB0E8"/>
+    <path d="M48 44V30h12v14Z" fill="#C0A878"/><path d="M46 31l8-6 8 6" fill="#8A6A44"/><path d="M50 30v14M54 30v14M58 30v14" stroke="#8A7048" stroke-width="1"/>
+    <path d="M40 16v-6M39 10q2-4 4 0" stroke="#9A9A9A" fill="none"/>`),
+  steward: DMS(`<path d="M18 48V30q0-8 14-8t14 8v18Z" fill="#2A2A3A"/><path d="M28 22h8l-4 12z" fill="#fff"/><path d="M30 24l2 3 2-3" fill="#1B1838"/>
+    <circle cx="32" cy="14" r="8" fill="#F2C9A0"/><path d="M24 12q8-8 16 0" fill="#5A4030"/><path d="M28 18q4 2 8 0" stroke-width="1" fill="none"/>
+    <path d="M44 30l10-4" stroke-width="2"/><ellipse cx="56" cy="25" rx="8" ry="2" fill="#C9CED8"/><path d="M50 24q6-10 12 0" fill="#E0E4EC"/><circle cx="56" cy="16.5" r="1.4" fill="#C9CED8"/>`),
+  swindler: DMS(`<rect x="2" y="36" width="60" height="11" fill="#2E7A4A"/>
+    <path d="M8 36l5-14h10l5 14z" fill="#B5763A"/><path d="M26 36l5-14h10l5 14z" fill="#B5763A"/><path d="M44 36l5-14h10l5 14z" fill="#B5763A"/>
+    <path d="M13 22h10M31 22h10M49 22h10" stroke-width="2"/>
+    <circle cx="36" cy="40" r="3" fill="#E8B12A"/><path d="M20 8q6-6 12 0" stroke-width="1.5" fill="none"/><path d="M30 6l2 3-3 1" fill="none"/>
+    <path d="M46 6q4 4 0 8M50 4q6 6 0 12" stroke="#E2364F" stroke-width="1.3" fill="none"/>`),
+  wishingwell: DMS(`<path d="M12 18L32 6L52 18Z" fill="#A8432E"/><path d="M16 18v14M48 18v14" stroke-width="2.4"/><path d="M16 14h32" stroke-width="2"/>
+    <path d="M32 14v8" stroke-width="1"/><path d="M28 22h8l-1 6h-6z" fill="#9C6A36"/>
+    <path d="M10 32h44v14H10z" fill="#9AA0AA"/><path d="M10 37h44M10 42h44M20 32v5M32 32v5M44 32v5M15 37v5M27 37v5M39 37v5M50 37v5M20 42v4M32 42v4M44 42v4" stroke="#6A707A" stroke-width="1"/>
+    <path d="M56 8l1.2 2.8 2.8 1.2-2.8 1.2L56 16l-1.2-2.8L52 12l2.8-1.2z" fill="#FFE38A"/><path d="M6 6l.8 1.8 1.8.8-1.8.8L6 11.2l-.8-1.8L3.4 8.6l1.8-.8z" fill="#FFE38A"/>`),
+  baron: DMS(`<path d="M18 26h28l-2 4H20z" fill="#2A2A3A"/><rect x="22" y="6" width="20" height="20" rx="2" fill="#2A2A3A"/><rect x="22" y="20" width="20" height="3" fill="#A8432E" stroke="none"/>
+    <circle cx="32" cy="36" r="9" fill="#F2C9A0"/><path d="M22 40q5-6 10-2q5-4 10 2q-5 0-10-2q-5 2-10 2z" fill="#5A4030"/><circle cx="28.5" cy="34" r="1" fill="#1B1838"/><circle cx="35.5" cy="34" r="1" fill="#1B1838"/>
+    <circle cx="44" cy="34" r="3" fill="none" stroke-width="1.2"/><path d="M47 34l4 6" stroke-width="1"/>`),
+  bridge: DMS(`<path d="M0 36Q8 32 16 36T32 36T48 36T64 36V48H0Z" fill="#3FA7D6"/><path d="M8 42q4-2 8 0M40 44q4-2 8 0" stroke="#E6FAFF" stroke-width="1.3" fill="none"/>
+    <path d="M2 30Q32 6 62 30V36Q32 16 2 36Z" fill="#B59A6A"/><path d="M2 30Q32 6 62 30" fill="none" stroke-width="2"/>
+    <path d="M12 23v-6M22 17v-6M32 15v-6M42 17v-6M52 23v-6" stroke-width="1.6"/><path d="M12 17Q32 3 52 17" fill="none" stroke-width="1.6"/>
+    <path d="M18 26v6M28 22v8M36 22v8M46 26v6" stroke="#8A7048" stroke-width="1"/>`),
+  conspirator: DMS(`<path d="M6 48V28q0-14 12-14t12 14v20Z" fill="#3A2A5A"/><path d="M34 48V28q0-14 12-14t12 14v20Z" fill="#5A2A3A"/>
+    <path d="M12 26q6-6 12 0v4H12z" fill="#1A1424"/><path d="M40 26q6-6 12 0v4H40z" fill="#1A1424"/>
+    <circle cx="16" cy="28" r="1.2" fill="#FFE38A" stroke="none"/><circle cx="21" cy="28" r="1.2" fill="#FFE38A" stroke="none"/><circle cx="44" cy="28" r="1.2" fill="#FFE38A" stroke="none"/><circle cx="49" cy="28" r="1.2" fill="#FFE38A" stroke="none"/>
+    <path d="M29 20q3-4 6 0" stroke="#E8B12A" fill="none"/><path d="M27 14q5-6 10 0" stroke="#E8B12A" fill="none" stroke-width="1"/><path d="M32 40l-2 6h4z" fill="#C9CED8"/><path d="M30 38h4" stroke-width="1.6"/>`),
+  diplomat: DMS(`<rect x="10" y="8" width="38" height="32" rx="3" fill="#F3E9D2"/><path d="M10 8q-6 0-6 5h6M48 40q6 0 6-5h-6" fill="#E3D6B8"/>
+    <path d="M16 16h26M16 22h26M16 28h18" stroke="#B8A888" stroke-width="1.4"/>
+    <circle cx="40" cy="33" r="6" fill="#C0392B"/><path d="M37 33l2 2 4-4" stroke="#FFE38A" stroke-width="1.4" fill="none"/><path d="M38 38l-2 8 4-2 4 2-2-8" fill="#C0392B"/>
+    <path d="M52 10q4-6 8 0q-4 2-8 0zM52 10q-2 6 4 8" fill="#fff" stroke-width="1"/>`),
+  ironworks: DMS(`<path d="M14 30h36l-4 6H18z" fill="#4A4A5A"/><path d="M8 22h40q8 0 10 4H14q-6 0-6-4z" fill="#5A5A6A"/><rect x="26" y="36" width="12" height="6" fill="#4A4A5A"/><path d="M18 42h28v5H18z" fill="#3A3A4A"/>
+    <rect x="22" y="18" width="16" height="4" fill="#E8590C"/>
+    <path d="M42 4l10 10" stroke="#7A4A1A" stroke-width="2.4"/><rect x="34" y="2" width="12" height="7" rx="1" fill="#8A8A9A" transform="rotate(45 40 5.5)"/>
+    <path d="M30 14l-4-6M34 12l1-6M26 16l-7-3M38 16l6-3" stroke="#FFB33A" stroke-width="1.6"/>`),
+  mill: DMS(`<path d="M0 44Q32 38 64 44V48H0Z" fill="#7CC36A"/><path d="M24 44L27 20h10l3 24Z" fill="#E3D6B8"/><path d="M25 24l7-8 7 8Z" fill="#A8432E"/><rect x="29.5" y="36" width="5" height="8" fill="#7A4A1A"/>
+    <g transform="rotate(20 32 20)"><path d="M32 20L32 2l5 2-5 16" fill="#F3F0E8"/><path d="M32 20L50 20l-2 5-16-5" fill="#F3F0E8"/><path d="M32 20L32 38l-5-2 5-16" fill="#F3F0E8"/><path d="M32 20L14 20l2-5 16 5" fill="#F3F0E8"/></g>
+    <circle cx="32" cy="20" r="2.2" fill="#7A4A1A"/>`),
+  miningvillage: DMS(`<path d="M0 22L18 6L34 22Z" fill="#8A8A9A"/><path d="M26 22L44 8L64 22Z" fill="#9A9AAA"/><path d="M0 22h64v26H0z" fill="#7CC36A"/>
+    <rect x="6" y="28" width="16" height="14" fill="#F3E9D2"/><path d="M4 30l10-8 10 8Z" fill="#C0392B"/><rect x="12" y="35" width="5" height="7" fill="#7A4A1A"/>
+    <rect x="40" y="36" width="16" height="8" rx="1" fill="#5A5A6A"/><circle cx="44" cy="45" r="2" fill="#2A2A3A"/><circle cx="52" cy="45" r="2" fill="#2A2A3A"/><path d="M42 36l3-4 4 2 4-3 3 5" fill="#E8B12A"/>
+    <path d="M28 32l10 10M26 34q4-6 10-4" stroke-width="1.8" fill="none"/>`),
+  secretpassage: DMS(`<rect x="6" y="4" width="52" height="42" fill="#7A4A2A"/><path d="M6 16h52M6 28h52M6 40h52" stroke-width="1.6"/>
+    <path d="M10 6v10M14 6v10M18 7v9M40 6v10M45 6v10M50 7v9M10 18v10M15 18v10M44 18v10M50 18v10M54 19v9" stroke-width="3" stroke="#C0392B"/>
+    <path d="M24 46V18h16v28Z" fill="#1A1424"/><path d="M40 18l8 4v28l-8-4" fill="#9C6A36"/><path d="M26 46q6-8 12 0" fill="#FFE38A" opacity=".6" stroke="none"/>`),
+  courtier: DMS(`<path d="M12 18q20-14 40 0q-4 4-20 4t-20-4z" fill="#3A5AA8"/><path d="M40 12q10-12 20-6q-8 0-14 10" fill="#E2364F"/><circle cx="32" cy="15" r="2" fill="#FFE38A"/>
+    <path d="M14 48l4-20q14-6 28 0l4 20z" fill="#8B3CFF"/><path d="M26 26h12l-6 6z" fill="#fff"/>
+    <path d="M42 34q8-10 16-2q-8 8-16 2z" fill="#FFE38A"/><path d="M44 34l12-2M44 34l10-6M44 34l12 2" stroke="#C99A1A" stroke-width="1"/>`),
+  duke: DMS(`<path d="M18 10H46V28Q46 42 32 47Q18 42 18 28Z" fill="#2E7A4A"/><path d="M32 10V47M18 26H46" stroke="#FFE38A" stroke-width="3"/><path d="M18 10H46V28Q46 42 32 47Q18 42 18 28Z" fill="none"/>
+    <path d="M20 8l4-6 4 4 4-6 4 6 4-4 4 6z" fill="#E8B12A"/><circle cx="32" cy="2" r="1.6" fill="#E2364F"/>
+    <circle cx="32" cy="26" r="5" fill="#FFE38A"/><path d="M29.5 26h5M32 23.5v5" stroke-width="1.2"/>`),
+  minion: DMS(`<path d="M14 46V30q0-10 18-10t18 10v16Z" fill="#6A3A8A"/><circle cx="32" cy="16" r="10" fill="#9ACD6A"/>
+    <path d="M22 12l-8-6 6 10M42 12l8-6-6 10" fill="#9ACD6A"/><circle cx="28" cy="15" r="2.4" fill="#FFE38A"/><circle cx="36" cy="15" r="2.4" fill="#FFE38A"/><circle cx="28" cy="15" r=".9" fill="#1B1838" stroke="none"/><circle cx="36" cy="15" r=".9" fill="#1B1838" stroke="none"/>
+    <path d="M27 21q5 4 10 0" fill="none"/><path d="M29 21.5l1 2 1-2M33 21.5l1 2 1-2" fill="#fff" stroke-width=".8"/>
+    <path d="M50 30l10-10M56 18l6 0 0 6" stroke="#C9CED8" stroke-width="2" fill="none"/>`),
+  patrol: DMS(`<path d="M0 44h64v4H0z" fill="#6A6A7A"/><path d="M40 2v42" stroke="#7A4A1A" stroke-width="2"/><path d="M36 8L40 0L44 8Z" fill="#C9CED8"/>
+    <path d="M14 46V28q0-8 12-8t12 8v18Z" fill="#2F6FB5"/><circle cx="26" cy="14" r="7" fill="#F2C9A0"/><path d="M18 12q8-10 16 0z" fill="#8A8A9A"/>
+    <path d="M10 30v8" stroke-width="1.4"/><path d="M6 38h8l-1 7H7z" fill="#E8B12A"/><path d="M8 40h4" stroke="#FFF3B8" stroke-width="2"/>
+    <path d="M50 24q6 0 8-6M52 30q8 0 10-8" stroke="#FFE38A" stroke-width="1.4" fill="none"/>`),
+  replace: DMS(`<rect x="6" y="10" width="18" height="26" rx="3" fill="#F3E9D2" transform="rotate(-10 15 23)"/><rect x="40" y="10" width="18" height="26" rx="3" fill="#FFE38A" transform="rotate(10 49 23)"/>
+    <path d="M22 8q10-8 20 0" fill="none" stroke-width="2"/><path d="M42 8l-5-1 3 5z" fill="#2A1A0E"/>
+    <path d="M42 40q-10 8-20 0" fill="none" stroke-width="2"/><path d="M22 40l5 1-3-5z" fill="#2A1A0E"/>
+    <path d="M12 20l6 6M18 20l-6 6" stroke="#E2364F" stroke-width="2"/><path d="M47 18l2 4 4 .5-3 3 1 4-4-2-4 2 1-4-3-3 4-.5z" fill="#E8B12A" stroke-width="1"/>`),
+  torturer: DMS(`<path d="M6 2v14M58 2v14" stroke-width="2"/><path d="M6 16q0 4 4 4t4-4M50 16q0 4 4 4t4-4" fill="none" stroke-width="2"/>
+    <path d="M10 20l4 6 4 0 4 6 4 0 4 6 4 0 4-6 4 0 4-6 4 0 4-6" fill="none" stroke="#8A8A9A" stroke-width="3"/>
+    <ellipse cx="22" cy="38" rx="7" ry="4" fill="none" stroke="#5A5A6A" stroke-width="3"/><ellipse cx="42" cy="38" rx="7" ry="4" fill="none" stroke="#5A5A6A" stroke-width="3"/>
+    <path d="M29 38h6" stroke="#5A5A6A" stroke-width="3"/><circle cx="32" cy="44" r="2" fill="#E2364F"/>`),
+  tradingpost: DMS(`<path d="M0 44Q32 40 64 44V48H0Z" fill="#D9B26A"/><path d="M8 40L32 10L56 40Z" fill="#E2364F"/><path d="M20 40L32 10L44 40" fill="#F3E9D2"/><path d="M28 40l4-12 4 12z" fill="#7A4A1A"/>
+    <rect x="2" y="32" width="12" height="10" fill="#B5763A"/><path d="M2 37h12M8 32v10" stroke="#8A5228" stroke-width="1"/>
+    <rect x="50" y="34" width="12" height="8" fill="#B5763A"/><path d="M50 38h12" stroke="#8A5228" stroke-width="1"/>
+    <path d="M32 10V2" stroke-width="1.4"/><path d="M32 2l8 2-8 2z" fill="#E8B12A"/>`),
+  upgrade: DMS(`<rect x="8" y="16" width="18" height="26" rx="3" fill="#C9CED8"/><rect x="38" y="6" width="18" height="26" rx="3" fill="#FFE38A"/>
+    <path d="M24 38Q34 34 38 20" fill="none" stroke="#2DBE60" stroke-width="3"/><path d="M34 22l5-7 3 8z" fill="#2DBE60" stroke-width="1"/>
+    <path d="M47 13l2 4 4 .5-3 3 1 4-4-2-4 2 1-4-3-3 4-.5z" fill="#E8B12A" stroke-width="1"/><path d="M13 26h8M13 31h8" stroke="#8A8E98" stroke-width="1.4"/>`),
+  farm: DMS(`<path d="M0 40Q32 34 64 40V48H0Z" fill="#E8C35A"/><path d="M4 46l6-6M12 46l6-6M20 46l6-6M46 46l6-6M54 46l6-6" stroke="#B8902A" stroke-width="1"/>
+    <path d="M18 40V22L32 12L46 22V40Z" fill="#C0392B"/><path d="M14 24L32 9L50 24" fill="none" stroke-width="2.4"/>
+    <path d="M26 40V28h12v12Z" fill="#F3E9D2"/><path d="M26 28l12 12M38 28l-12 12" stroke-width="1.2"/>
+    <circle cx="54" cy="12" r="5" fill="#FFE38A" stroke="none"/>`),
+  nobles: DMS(`<path d="M10 40q22-10 44 0v6H10z" fill="#8B1F3A"/><path d="M10 40q22-10 44 0" fill="none" stroke="#E8B12A" stroke-width="1.6"/>
+    <path d="M16 36L14 14l9 8 9-14 9 14 9-8-2 22z" fill="#E8B12A"/><path d="M16 36h32" stroke-width="2"/>
+    <circle cx="14" cy="13" r="2.2" fill="#E2364F"/><circle cx="32" cy="7" r="2.4" fill="#5FB0E8"/><circle cx="50" cy="13" r="2.2" fill="#2DBE60"/>
+    <circle cx="24" cy="30" r="1.8" fill="#fff" stroke="none"/><circle cx="32" cy="29" r="1.8" fill="#E2364F" stroke="none"/><circle cx="40" cy="30" r="1.8" fill="#fff" stroke="none"/>`),
+
   cellar: DMS(`<path d="M6 47V20Q32-2 58 20V47Z" fill="#7D6A60"/><path d="M13 47V22Q32 6 51 22V47Z" fill="#3A2C26"/>
     <path d="M10 18l4 3M20 10l2 4M32 6v4M44 10l-2 4M54 18l-4 3" stroke="#5A4A44"/>
     <rect x="15" y="27" width="15" height="19" rx="5" fill="#B5763A"/><path d="M15 32h15M15 41h15" stroke-width="1.8"/><path d="M22.5 27v19" stroke="#8A5228"/>
@@ -8816,7 +9384,7 @@ function dmArt(c){
   if (c === "estate" || c === "duchy" || c === "province") return `<span class="dmart vp ${c}"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3L35 9V20Q35 32 20 38Q5 32 5 20V9Z" class="sh"/><path d="M20 7L31 11.5V20Q31 29 20 34Q9 29 9 20V11.5Z" class="in"/></svg><span class="dmn">${d.vp}</span></span>`;
   return `<span class="dmart ill">${DM_ART[c] || ""}</span>`;
 }
-const dmTyCls = c => { const t = DM[c].ty; return t.includes("c") ? "ty-c" : t.includes("t") ? "ty-t" : t.includes("v") ? "ty-v" : t.includes("re") ? "ty-re" : t.includes("atk") ? "ty-atk" : "ty-a"; };
+const dmTyCls = c => { const t = DM[c].ty; return t.includes("dur") && !t.includes("t") ? "ty-dur" : t.includes("c") ? "ty-c" : t.includes("t") ? "ty-t" : t.includes("a") && t.includes("v") ? (t.includes("atk") ? "ty-atk" : "ty-a") : t.includes("v") ? "ty-v" : t.includes("re") ? "ty-re" : t.includes("atk") ? "ty-atk" : "ty-a"; };
 function dmCardHtml(c, cls = "", extra = ""){
   return `<span class="dmc ${dmTyCls(c)} ${cls}" ${extra}><span class="dco">${DM[c].c}</span>${dmBn(c)}${dmArt(c)}<span class="dcn">${DM[c].n}</span></span>`;
 }
@@ -8860,13 +9428,13 @@ function drawDm(){
     return `<div class="np ${on ? "on" : ""}" style="--pc:${pcolor(p)}">${on ? `<em class="tg now">${(st.asks || []).some(a => a.pid === p) && T.pid !== p ? "待" : "今"}</em>` : ""}<b>${esc(pname(p))}</b><small class="kpt">手札${st.pl[p].hand.length}・山札${st.pl[p].deck.length}</small></div>`;
   }).join(`<span class="nar">›</span>`);
   // サプライ
-  const canBuy = c => myTurn && idle && T.buys > 0 && st.supply[c] > 0 && T.coins >= DM[c].c;
+  const canBuy = c => myTurn && idle && T.buys > 0 && st.supply[c] > 0 && T.coins >= dmCost(st, c);
   // 買えるカードは白く点滅、買えないカードは暗く（購入フェイズから。0コストのカードだけはアクションフェイズから）
-  const buyMode = c => myTurn && idle && T.buys > 0 && (T.phase === "buy" || DM[c].c === 0);
+  const buyMode = c => myTurn && idle && T.buys > 0 && (T.phase === "buy" || dmCost(st, c) === 0);
   const buyCls = c => !buyMode(c) ? "" : canBuy(c) ? "cb" : "na";
-  const gainOk = c => myAsk && myAsk.k === "supply" && st.supply[c] > 0 && DM[c].c <= myAsk.max && (!myAsk.filter || dmIs(c, myAsk.filter));
+  const gainOk = c => myAsk && myAsk.k === "supply" && st.supply[c] > 0 && (myAsk.exact ? dmCost(st, c) === myAsk.max : dmCost(st, c) <= myAsk.max) && (!myAsk.filter || dmIs(c, myAsk.filter));
   const tile = (c, big) => `<button class="dmp ${dmTyCls(c)} ${big ? "k" : "b"} ${st.supply[c] ? "" : "out"} ${myAsk ? "" : buyCls(c)} ${gainOk(c) ? "gk" : myAsk && myAsk.k === "supply" ? "na" : ""} ${dmGainSel === c ? "gsel" : ""}" data-dc="${c}">
-      <i class="dco">${DM[c].c}</i>${dmBn(c)}${dmArt(c)}<b>${DM[c].n}</b><em class="cnt">${st.supply[c]}</em></button>`;
+      <i class="dco ${dmCost(st, c) < DM[c].c ? "cut" : ""}">${dmCost(st, c)}</i>${dmBn(c)}${dmArt(c)}<b>${DM[c].n}</b><em class="cnt">${st.supply[c]}</em></button>`;
   const supply = `<div class="dmsup"><div class="dmk">${st.kingdom.map(c => tile(c, true)).join("")}</div><div class="dmb">${DM_BASE.map(c => tile(c, false)).join("")}</div></div>`;
   // 場
   const P = inGame ? st.pl[me] : null;
@@ -8890,7 +9458,7 @@ function drawDm(){
     bottom += `<div class="dmhand ${step < cw + 2 && hand.length > 1 ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map(({ c, i }, k) => {
       const okA = handAsk ? (!myAsk.filter || dmIs(c, myAsk.filter)) : canUse(c), sel = handAsk ? dmPick.sel.includes(i) : dmSel.some(x => x.i === i);
       return `<button class="dh ${sel ? "sel" : ""} ${okA ? "" : "ng"}" data-dh="${i}" data-c="${c}" data-ok="${okA ? 1 : 0}" style="--i:${k}">${dmCardHtml(c)}</button>`; }).join("")}</div>`;
-    if (!myAsk) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b>${P.deck.length}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b>${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button></div>`;
+    if (!myAsk) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b>${P.deck.length}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b>${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button>${(P.stay || []).length + (P.haven || []).length ? `<button class="dpk du" id="dmDur">⏳持続中 <b>${(P.stay || []).length + (P.haven || []).length}</b></button>` : ""}${(P.nv || []).length ? `<button class="dpk du" id="dmNv">🛖村マット <b>${P.nv.length}</b></button>` : ""}${(P.isl || []).length ? `<button class="dpk du" id="dmIsl">🏝️島 <b>${P.isl.length}</b></button>` : ""}</div>`;
     if (myAsk && (myAsk.k === "hand" || myAsk.k === "supply")) bottom += dmAskHtml(myAsk, st);
     else if (myTurn && idle){
       const hasT = !T.bought && P.hand.some(c => dmIs(c, "t"));
@@ -8905,14 +9473,14 @@ function drawDm(){
   if (dmView){
     const c = dmView.c, cb = !dmView.h && canBuy(c);
     pop = `<div class="kgpop dmpop" id="dmPopBg"><div class="dmpopin">${dmBigCard(c)}${dmView.h ? "" : `<p class="dmleft">残り <b>${st.supply[c] != null ? st.supply[c] : "-"}</b>枚</p>`}
-      <div class="dmpbtn">${cb ? `<button class="nb end go" id="dmBuy">💰${DM[c].c}で買う</button>` : !dmView.h && myTurn && idle && st.supply[c] > 0 ? `<button class="nb end" disabled>${T.buys < 1 ? "購入はもうできません" : `お金が足りません（💰${T.coins}）`}</button>` : ""}<button class="nb draw" id="dmPopX">閉じる</button></div></div></div>`;
+      <div class="dmpbtn">${cb ? `<button class="nb end go" id="dmBuy">💰${dmCost(st, c)}で買う</button>` : !dmView.h && myTurn && idle && st.supply[c] > 0 ? `<button class="nb end" disabled>${T.buys < 1 ? "購入はもうできません" : `お金が足りません（💰${T.coins}）`}</button>` : ""}<button class="nb draw" id="dmPopX">閉じる</button></div></div></div>`;
   }
   dmPatch(el, `<div class="nbg dmbg" aria-hidden="true">${["🏰", "🪙", "👑", "🌳", "🏰", "🪙", "⚔️", "📜"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.14">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt dmt">DOMINION</b><span class="ndk"></span><button class="dmgd ${dmGuide ? "on" : ""}" id="dmGuide" aria-pressed="${dmGuide}">ガイド<i>${dmGuide ? "ON" : "OFF"}</i></button><button class="nmini" id="dmMenu" aria-label="メニュー">…</button><button class="nmini" id="dmClose" aria-label="閉じる">×</button></div>
     <div class="nseats2 ${st.players.length >= 5 ? "tight" : ""}">${seats}</div>
     ${supply}${stat}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
-    <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn") && !dmView ? `<div class="kgpop dmmodal">${dmAskHtml(myAsk, st)}</div>` : ""}${over}${pop}`);
+    <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn" || myAsk.k === "opt") && !dmView ? `<div class="kgpop dmmodal">${dmAskHtml(myAsk, st)}</div>` : ""}${over}${pop}`);
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (dmBusy) return; dmBusy = true; try { await fn(); } finally { dmBusy = false; } };
   on("dmClose", closeDm); on("dmClose2", closeDm); on("dmMenu", () => dmMenu(g));
@@ -8926,6 +9494,9 @@ function drawDm(){
   on("dmDeck", () => toast(`山札は${P ? P.deck.length : 0}枚（中身は見られません）`));
   on("dmDisc", () => dmPileSheet(`自分の捨て札`, ((P && P.disc) || []).slice().reverse(), "上に積まれた順（左が一番上）・タップで効果を見る", "捨て札はまだありません"));
   on("dmTrash", () => dmPileSheet(`廃棄置き場`, st.trash || [], "タップで効果を見る", "まだ何も廃棄されていません"));
+  on("dmDur", () => dmPileSheet(`持続中のカード`, [...(P.stay || []), ...(P.haven || [])], "次のターンの最初に効果が出ます（停泊所・封鎖で脇に置いたカードも含む）", "なし"));
+  on("dmNv", () => dmPileSheet(`原住民の村マット`, P.nv || [], "原住民の村で全部まとめて手札に入れられます", "なし"));
+  on("dmIsl", () => dmPileSheet(`島マット`, P.isl || [], "ゲーム終了まで山札に戻りません（勝利点は数えます）", "なし"));
   el.querySelectorAll("[data-pv]").forEach(b => b.onclick = () => { dmView = { c: b.dataset.pv, h: 1 }; drawDm(); });
   on("dmPopX", () => { dmView = null; drawDm(); });
   { const bg = el.querySelector("#dmPopBg"); if (bg) bg.onclick = e => { if (e.target === bg){ dmView = null; drawDm(); } }; }
@@ -8979,7 +9550,7 @@ function drawDm(){
 }
 /* ---- 最後の結果発表 ---- */
 let dmEndFresh = {}, dmEndCounted = {};
-function dmDeckOf(st, pid){ const P = st.pl[pid]; return [...P.deck, ...P.hand, ...P.disc, ...P.play, ...P.aside]; }
+function dmDeckOf(st, pid){ const P = st.pl[pid]; return [...P.deck, ...P.hand, ...P.disc, ...P.play, ...P.aside, ...(P.stay || []), ...(P.haven || []), ...(P.nv || []), ...(P.isl || [])]; }
 /* 順位（同点・同ターンは同じ順位） */
 function dmRanks(st){
   const r = dmResult(st);
@@ -9269,6 +9840,10 @@ function dmAskHtml(a, st){
     const n = dmPick.sel.length, ok = n >= a.min && n <= a.max;
     h += `<div class="dmlist">${a.cards.map((c, i) => { const okc = !a.filterList || a.filterList.includes(c); return `<button class="dh ${dmPick.sel.includes(i) ? "sel" : ""} ${okc ? "" : "ng"}" data-dl="${i}" ${okc ? "" : "disabled"}>${dmCardHtml(c)}</button>`; }).join("")}</div>
       <div class="nbtns one"><button class="nb end ${ok ? "go" : ""}" id="dmAskGo" ${ok ? "" : "disabled"}>${esc(a.ok || "決定")}${n ? `（${n}枚）` : a.min === 0 ? "（なし）" : ""}</button></div>`;
+  } else if (a.k === "opt"){
+    const n = dmPick.sel.length, ok = n >= a.min && n <= a.max;
+    h += `<small class="dqn">${a.min === a.max ? `${a.min}つ選ぶ` : `${a.min}〜${a.max}つ`}</small><div class="dmopts">${a.opts.map((o, i) => `<button class="dmopt ${dmPick.sel.includes(i) ? "sel" : ""}" data-dl="${i}" ${a.dis && a.dis[i] ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>
+      <div class="nbtns one"><button class="nb end ${ok ? "go" : ""}" id="dmAskGo" ${ok ? "" : "disabled"}>${esc(a.ok || "決定")}</button></div>`;
   } else if (a.k === "yn"){
     h += `${a.card ? `<button class="dmyn" id="dmAskCard">${dmCardHtml(a.card)}</button>` : ""}<div class="nbtns two"><button class="nb draw" id="dmNo">${esc(a.no || "いいえ")}</button><button class="nb end go" id="dmYes">${esc(a.yes || "はい")}</button></div>`;
   } else if (a.k === "supply"){
@@ -9401,8 +9976,8 @@ function dmRulesHtml(){
   <h4 style="--hc:#E2364F">ゲームの終わり</h4>
   <div class="ex">${C("province")}<span class="op">0枚</span><span class="cap"><b>属州</b>がなくなる、または<b>サプライの山が3つ</b>（5人以上は4つ）なくなったら、その人の番の終わりで終了</span></div>
   <div class="tip">同点なら手番の少ない人の勝ち。それでも同じなら引き分け。</div>
-  <h4 style="--hc:#8B6CFF">王国カード（基本セット）</h4>
-  <div class="kv">${DM_KINGDOM.slice().sort((a, b) => DM[a].c - DM[b].c).map(c => `<div>${C(c)}<p><b>${DM[c].n}（💰${DM[c].c}）</b>${[...dmPlusText(c), DM[c].tx].filter(Boolean).join("　")}</p></div>`).join("")}</div>`;
+  ${DM_EXP.map(x => `<h4 style="--hc:#8B6CFF">王国カード（${x.id === "base" ? "基本セット" : "拡張：" + x.n}）</h4>
+  <div class="kv">${DM_KINGDOM.filter(c => dmX(c) === x.id).sort((a, b) => DM[a].c - DM[b].c).map(c => `<div>${C(c)}<p><b>${DM[c].n}（💰${DM[c].c}）</b>${[...dmPlusText(c), DM[c].tx].filter(Boolean).join("　")}</p></div>`).join("")}</div>`).join("")}`;
 }
 
 document.addEventListener("contextmenu", e => { if (e.target.closest && e.target.closest(".arena")) e.preventDefault(); });
