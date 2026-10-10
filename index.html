@@ -2764,6 +2764,61 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .plist.gst .gtl{margin-left:auto;font-size:11px;font-weight:800;color:#C9951A}
 .plist.gst.exp{opacity:.6}.plist.gst.exp .gtl{color:var(--mute)}
 
+
+/* 結果発表（順番に発表） */
+.dr{padding-top:34px}
+.dr .de-t{margin-bottom:8px}
+.dr-sub{min-height:22px;margin:6px 0 14px;font-size:14px;font-weight:900;color:#FFE9A8;animation:defade .5s calc(var(--d0) + .6s) both}
+.dr-sub.on{animation:drsub .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes drsub{0%{opacity:0;transform:translateY(10px) scale(.9)}100%{opacity:1;transform:none}}
+.dr-go{position:relative;display:block;width:100%;max-width:320px;margin:4px auto 18px;padding:16px 10px;border-radius:16px;border:3px solid #fff;font-family:var(--disp);font-size:22px;color:#3A2405;background:linear-gradient(180deg,#FFF1B8,#E8B12A 60%,#C98A0B);box-shadow:0 5px 0 #6A4A08,0 0 24px rgba(255,227,138,.7);animation:dehero .6s cubic-bezier(.2,1.4,.4,1) calc(var(--d0) + .9s) both}
+.dr-go::after{content:"";position:absolute;inset:-3px;border-radius:inherit;box-shadow:0 0 0 4px rgba(255,255,255,.6),0 0 36px 10px rgba(255,227,138,.95);opacity:0;pointer-events:none;will-change:opacity;animation:glowop 1.4s ease-in-out calc(var(--d0) + 1.5s) infinite}
+.dr-go:active{transform:translateY(4px);box-shadow:0 1px 0 #6A4A08}
+.dr-sus{margin:6px 0 14px;font-family:var(--disp);font-size:24px;color:#FFE38A;-webkit-text-stroke:1.5px #5A3A08;paint-order:stroke fill;animation:drsus 1.2s ease-in-out both}
+@keyframes drsus{0%{opacity:0;letter-spacing:.4em}100%{opacity:1;letter-spacing:.04em}}
+.dpls2{display:flex;flex-direction:column;gap:10px}
+.dpl{position:relative;display:flex;align-items:center;gap:10px;min-height:58px;padding:8px 14px;border-radius:14px;background:linear-gradient(180deg,#3A2A66,#24184A);border:2.5px solid rgba(255,255,255,.25);color:#fff;text-align:left;animation:dpin .5s cubic-bezier(.2,1.3,.4,1) calc(var(--d0) + 1.1s) both}
+@keyframes dpin{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:none}}
+.dpl.w{min-height:72px;border-color:rgba(255,227,138,.6)}
+.dpl-r{font-style:normal;font-family:var(--disp);font-size:16px;min-width:3.6em;color:#C9BEEA}
+.dpl.w .dpl-r{font-size:20px;color:#FFE38A}
+.dpl-q{flex:1;font-family:var(--disp);font-size:22px;letter-spacing:.2em;color:rgba(255,255,255,.35)}
+.dpl.rv{background:#FFFDF6;color:var(--ink);border-color:var(--pc);box-shadow:0 0 0 3px color-mix(in srgb,var(--pc) 40%,transparent),0 8px 22px rgba(0,0,0,.4);animation:dpflip .7s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes dpflip{0%{transform:rotateX(90deg) scale(.9);opacity:.3}60%{transform:rotateX(-12deg) scale(1.04);opacity:1}100%{transform:none}}
+.dpl.rv .dpl-r{color:var(--ink)}
+.dpl-n{flex:1;font-size:20px;font-weight:900;color:var(--pc);-webkit-text-stroke:.4px var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dpl-v{display:flex;align-items:baseline;gap:3px}
+.dpl-v b{font-family:var(--disp);font-size:30px;min-width:1.2em;text-align:right}
+.dpl-v small{font-size:10px;font-weight:900}
+.dpl.w.rv{background:linear-gradient(180deg,#FFF6D2,#FFFDF6);box-shadow:0 0 0 3px #FFE38A,0 0 30px rgba(255,227,138,.9)}
+.dpl.sus{animation:dpsus .14s linear infinite}
+.dpl.sus::after{content:"";position:absolute;inset:-3px;border-radius:inherit;box-shadow:0 0 0 3px #FFE38A,0 0 34px 8px rgba(255,227,138,.9);opacity:0;pointer-events:none;will-change:opacity;animation:glowop .5s ease-in-out infinite}
+@keyframes dpsus{0%,100%{transform:translate(0,0)}25%{transform:translate(-2px,1px)}75%{transform:translate(2px,-1px)}}
+.dmend.dsus .de-bg{animation:dsusbg 3.4s ease-in both}
+@keyframes dsusbg{to{opacity:.25}}
+.dmend.dsus .dpl:not(.w){opacity:.45;transition:opacity .6s}
+.dw{position:fixed;inset:0;z-index:5;display:grid;place-items:center;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--c) 45%,rgba(40,20,80,.9)),rgba(10,6,24,.94) 70%);animation:dwlife 5.2s ease forwards}
+@keyframes dwlife{0%{opacity:0}6%{opacity:1}88%{opacity:1}100%{opacity:0}}
+.dw-flash{position:absolute;inset:0;background:#FFFBE6;opacity:0;animation:pvflash .8s ease-out .05s forwards}
+.dw-rays{position:absolute;left:50%;top:40%;width:0;height:0;animation:pvspin 10s linear infinite}
+.dw-rays>i{position:absolute;left:-34px;bottom:0;width:68px;height:95vmax;transform-origin:50% 100%;transform:rotate(var(--a));background:linear-gradient(to top,rgba(255,236,160,.6),rgba(255,236,160,0) 65%);clip-path:polygon(44% 100%,56% 100%,100% 0,0 0)}
+.dw-ring{position:absolute;left:50%;top:40%;width:120px;height:120px;margin:-60px;border-radius:50%;border:6px solid #FFE38A;opacity:0;animation:pvring 1.1s cubic-bezier(.1,.7,.3,1) .1s forwards}
+.dw-ring.r2{border-color:#fff;border-width:3px;animation-delay:.3s}
+.dw .cf{position:absolute;top:-20px;width:var(--w);height:calc(var(--w) * 1.6);background:var(--c);border-radius:2px;opacity:0;animation:defall var(--dur) linear var(--dl) infinite}
+.dw-fw{position:absolute;width:0;height:0}
+.dw-fw::before{content:"";position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:#fff;opacity:0;animation:pvfwc .5s ease-out var(--t0) forwards}
+.dw-fw>span{position:absolute;left:-2px;top:-2px;width:4px;height:4px;border-radius:50%;background:var(--c);opacity:0;transform:rotate(var(--a));animation:pvfw 1.1s cubic-bezier(.15,.8,.35,1) var(--t0) forwards}
+.dw-in{position:relative;text-align:center;margin-top:-8vh}
+.dw-crown{font-size:64px;line-height:1;animation:decrown .8s cubic-bezier(.3,1.6,.5,1) .35s both,debob 2.2s ease-in-out 1.2s infinite}
+.dw-k{display:inline-block;margin-top:8px;padding:3px 18px;border-radius:999px;font-weight:900;font-size:15px;color:#3A2405;background:linear-gradient(180deg,#FFF1B8,#E8B12A);animation:pvstamp .45s cubic-bezier(.3,1.6,.5,1) .7s both}
+.dw-n{margin-top:8px;font-family:var(--disp);font-size:clamp(44px,14vw,72px);line-height:1.05;color:var(--c);-webkit-text-stroke:3px #fff;paint-order:stroke fill;text-shadow:0 0 26px rgba(255,255,255,.6);animation:slam .7s cubic-bezier(.2,1.6,.4,1) .55s both}
+.dw-v{display:flex;align-items:baseline;justify-content:center;gap:6px;margin-top:6px;animation:defade .4s 1s both}
+.dw-v b{font-family:var(--disp);font-size:56px;color:#FFE38A;text-shadow:0 4px 0 #5A3A08;min-width:1.3em}
+.dw-v small{font-weight:900;font-size:16px;color:#FFE9A8}
+.dmend .btns{display:flex;flex-direction:column;gap:8px}
+/* 結果画面だけ：勝利点になったカードを金色の枠で */
+.de-c.vpm .dmc{border-color:#3A1A66;box-shadow:0 0 0 2.5px #8B4FE0,0 0 12px 3px rgba(110,60,210,.85),0 3px 0 var(--ink)}
+.de-c.vpc .dmc{border-color:#B9821A;box-shadow:0 0 0 2.5px #FFD84A,0 0 12px 3px rgba(255,216,74,.9),0 3px 0 var(--ink)}
 /* ===== 発熱対策：見た目はそのまま、描き直しの多い動きを軽い方式に ===== */
 /* ゲーム画面を開いている間は、裏に隠れているホーム画面を描かない・動かさない */
 body:has(>.arena:not([hidden])) > #view,body:has(>.arena:not([hidden])) > .deco,body.ovl > #view,body.ovl > .deco{visibility:hidden}
@@ -8082,7 +8137,7 @@ let dmId = null, dmBusy = false, dmSel = [], dmPick = [], dmView = null, dmSeen 
 function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
 document.addEventListener("visibilitychange", () => document.body.classList.toggle("bgpause", document.hidden));
 (() => { const upd = () => document.body.classList.toggle("ovl", [...document.querySelectorAll("body>.arena")].some(a => !a.hidden)); new MutationObserver(upd).observe(document.body, { subtree: false, childList: false, attributes: true, attributeFilter: ["hidden"] }); document.querySelectorAll("body>.arena").forEach(a => new MutationObserver(upd).observe(a, { attributes: true, attributeFilter: ["hidden"] })); upd(); })();
-function closeDm(){ if (dmId) delete dmEndCounted[dmId]; dmId = null; $("#dmg").hidden = true; document.body.style.overflow = ""; render(); }
+function closeDm(){ clearTimeout(dmEndTm); if (dmId){ delete dmEndCounted[dmId]; if (dmEndSt[dmId] && dmEndSt[dmId].s === 1) dmEndSt[dmId] = { s: 2, k: 0 }; dmEndKeys = new Set(); } dmId = null; $("#dmg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ドミニオン：カードごとのオリジナルイラスト（SVG） */
 const DMS = b => `<svg viewBox="0 0 64 48" aria-hidden="true"><g stroke="#2A1A0E" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">${b}</g></svg>`;
@@ -8356,14 +8411,76 @@ function drawDm(){
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
   dmAnimHand(g, el, P);
   dmAnimGains(el, st);
-  if (g.status === "finished") dmEndCount(g, el);
+  if (g.status === "finished"){
+    dmEndCount(g, el);
+    on("dmEndGo", () => { delete dmEndFresh[g.id]; dmEndKeys = new Set(); dmEndSt[g.id] = { s: 1, k: 0 }; drawDm(); dmEndStep(g.id); });
+    on("dmEndAgain", () => { dmEndKeys = new Set(); delete dmEndCounted[g.id]; dmEndSt[g.id] = { s: 1, k: 0 }; drawDm(); dmEndStep(g.id); });
+  }
 }
 /* ---- 最後の結果発表 ---- */
 let dmEndFresh = {}, dmEndCounted = {};
 function dmDeckOf(st, pid){ const P = st.pl[pid]; return [...P.deck, ...P.hand, ...P.disc, ...P.play, ...P.aside]; }
+/* 順位（同点・同ターンは同じ順位） */
+function dmRanks(st){
+  const r = dmResult(st);
+  let prev = null, rk = 0;
+  r.rows.forEach((x, i) => { if (!prev || prev.vp !== x.vp || prev.t !== x.t) rk = i + 1; x.rk = rk; x.win = r.winners.includes(x.p); prev = x; });
+  return r;
+}
+let dmEndSt = {}, dmEndTm = null, dmEndKeys = new Set();
+/* 結果発表：ボタン → 最下位から1人ずつ → 1位の前で溜め → 1位をドーン → 全員のデッキ */
 function dmEndHtml(g){
+  const S = dmEndSt[g.id] || { s: 0, k: 0 };
+  if (S.s === 2) return dmEndFinalHtml(g);
+  const st = g.st, r = dmRanks(st), rows = r.rows, wc = pcolor(r.winners[0]);
+  const rest = rows.filter(x => !x.win), order = rest.slice().reverse(), nR = rest.length;
+  const shown = new Set(S.s === 1 ? order.slice(0, Math.min(S.k, nR)).map(x => x.p) : []);
+  const sus = S.s === 1 && S.k === nR + 1, winShown = S.s === 1 && S.k >= nR + 2;
+  const d0 = S.s === 0 ? ((dmEndFresh[g.id] || 0) / 1000).toFixed(2) : "0";
+  const seed = k => { const x = Math.sin(k * 99.13) * 10000; return x - Math.floor(x); };
+  const rays = Array.from({ length: 12 }, (_, k) => `<i style="--a:${k * 30}deg"></i>`).join("");
+  const plate = x => {
+    const rv = x.win ? winShown : shown.has(x.p);
+    return `<div class="dpl ${rv ? "rv" : ""} ${x.win ? "w" : ""} ${x.win && sus ? "sus" : ""}" style="--pc:${pcolor(x.p)}">
+      <i class="dpl-r">第${x.rk}位</i>${rv ? `<b class="dpl-n">${esc(pname(x.p))}</b><span class="dpl-v"><b data-ek="${g.id}:${x.p}" data-vp="${x.vp}">${x.vp}</b><small>勝利点</small></span>` : `<b class="dpl-q">？？？</b>`}</div>`;
+  };
+  let lead = "";
+  if (S.s === 0) lead = `<p class="dr-sub">全員の勝利点を集計しました</p><button class="dr-go" id="dmEndGo"><span>結果発表をはじめる</span></button>`;
+  else if (sus) lead = `<p class="dr-sus">そして、第1位は……</p>`;
+  else if (S.k < nR + 1) lead = `<p class="dr-sub on">${S.k === 0 ? "最下位から発表します" : `第${order[Math.min(S.k, nR) - 1].rk}位は ${esc(pname(order[Math.min(S.k, nR) - 1].p))}`}</p>`;
+  else lead = `<p class="dr-sub on">&nbsp;</p>`;
+  const conf = winShown ? Array.from({ length: 60 }, (_, k) => `<i class="cf" style="left:${(seed(k) * 100).toFixed(1)}%;--c:${["#FFE38A", "#E8B12A", "#fff", wc, "#2DBE60", "#FF6FB5"][k % 6]};--dur:${(2.6 + seed(k + 50) * 2.2).toFixed(2)}s;--dl:${(seed(k + 9) * 1.6).toFixed(2)}s;--r:${Math.round(seed(k + 3) * 720 - 360)}deg;--w:${(6 + seed(k + 7) * 7).toFixed(0)}px"></i>`).join("") : "";
+  const fw = winShown ? [[16, 20, .5], [84, 24, .9], [50, 8, 1.3], [24, 58, 1.7], [78, 62, 2.1], [50, 40, 2.5]].map(([x, y, t], i) => `<span class="dw-fw" style="left:${x}%;top:${y}%;--t0:${t}s;--c:${["#FFE38A", "#7CF0A0", "#FFB3E0", "#9FD8FF", wc, "#fff"][i]}">${Array.from({ length: 18 }, (_, k) => `<span style="--a:${k * 20}deg;--d:${(48 + seed(i * 20 + k) * 30).toFixed(0)}px"></span>`).join("")}</span>`).join("") : "";
+  const burst = winShown ? `<div class="dw" style="--c:${wc}"><span class="dw-flash"></span><span class="dw-rays">${rays}</span><span class="dw-ring"></span><span class="dw-ring r2"></span>${fw}${conf}
+      <div class="dw-in"><div class="dw-crown">👑</div><div class="dw-k">${r.winners.length > 1 ? "引き分け" : "優勝"}</div><div class="dw-n">${r.winners.map(p => esc(pname(p))).join("・")}</div><div class="dw-v"><b data-ek="${g.id}:hero" data-vp="${rows[0].vp}">${rows[0].vp}</b><small>勝利点</small></div></div></div>` : "";
+  return `<div class="dmend ${sus ? "dsus" : ""}" style="--c:${wc};--d0:${d0}s">
+    <div class="de-bg" aria-hidden="true"><span class="de-rays">${rays}</span><span class="de-glow"></span></div>
+    <div class="de-in dr">
+      <div class="de-t">${"RESULT".split("").map((ch, k) => `<span style="--k:${k}">${ch}</span>`).join("")}</div>
+      ${lead}
+      <div class="dpls2">${rows.map(plate).join("")}</div>
+    </div>${burst}
+  </div>`;
+}
+function dmEndStep(gid){
+  clearTimeout(dmEndTm);
+  const g = dmById(gid); if (!g || dmId !== gid) return;
+  const S = dmEndSt[gid]; if (!S || S.s !== 1) return;
+  const nR = dmRanks(g.st).rows.filter(x => !x.win).length;
+  // 次へ進むまでの時間：最初の一言 → 各順位 → 溜め → 1位 → 全員のデッキ
+  const wait = S.k === 0 ? 1500 : S.k < nR ? 2400 : S.k === nR ? 2000 : S.k === nR + 1 ? 3400 : 5200;
+  dmEndTm = setTimeout(() => {
+    if (dmId !== gid || !dmEndSt[gid] || dmEndSt[gid].s !== 1) return;
+    if (S.k >= nR + 2){ dmEndSt[gid] = { s: 2, k: 0 }; drawDm(); return; }
+    S.k++;
+    if (S.k === nR + 2){ try { navigator.vibrate && navigator.vibrate([120, 60, 120, 60, 300]); } catch (_) {} }
+    else if (S.k <= nR){ try { navigator.vibrate && navigator.vibrate(40); } catch (_) {} }
+    drawDm(); dmEndStep(gid);
+  }, wait);
+}
+function dmEndFinalHtml(g){
   const st = g.st, r = dmResult(st), w = r.winners, wc = pcolor(w[0]);
-  const d0 = ((dmEndFresh[g.id] || 0) / 1000).toFixed(2);
+  const d0 = "0";
   const ord = c => { const d = DM[c]; return d.ty.includes("v") || d.ty.includes("c") || c === "gardens" ? 0 : d.ty.includes("t") ? 1 : 2; };
   const rnd = (a, b) => a + Math.random() * (b - a);
   const seed = k => { const x = Math.sin(k * 99.13) * 10000; return x - Math.floor(x); };   // 描き直しても同じ見た目に（ちらつかない）
@@ -8379,7 +8496,7 @@ function dmEndHtml(g){
     return `<div class="de-row ${win ? "win" : ""}" style="--pc:${pcolor(x.p)};--i:${i}">
       <div class="de-h"><i class="de-m">${medal(i)}</i><b class="de-n">${esc(pname(x.p))}</b><span class="de-s"><b class="de-vp" data-vp="${x.vp}">${x.vp}</b><small>勝利点</small></span></div>
       <div class="de-sub">${deck.length}枚・${x.t}ターン${vpParts ? `<span class="de-vb">${vpParts}</span>` : ""}</div>
-      <div class="de-deck">${ks.map(c => `<button class="de-c" data-pv="${c}">${dmCardHtml(c, "sm")}<i>×${cnt[c]}</i></button>`).join("")}</div>
+      <div class="de-deck">${ks.map(c => `<button class="de-c ${(v => v > 0 ? "vpc" : v < 0 ? "vpm" : "")(c === "gardens" ? Math.floor(deck.length / 10) : DM[c].vp || 0)}" data-pv="${c}">${dmCardHtml(c, "sm")}<i>×${cnt[c]}</i></button>`).join("")}</div>
     </div>`;
   }).join("");
   return `<div class="dmend" style="--c:${wc};--d0:${d0}s">
@@ -8394,11 +8511,23 @@ function dmEndHtml(g){
       </div>
       <p class="de-cap">全員のデッキ（カードをタップで効果）</p>
       <div class="de-rank">${rows}</div>
-      <div class="btns"><button class="btn" id="dmClose2">閉じる</button></div>
+      <div class="btns"><button class="btn ghost" id="dmEndAgain">結果発表をもう一度見る</button><button class="btn" id="dmClose2">閉じる</button></div>
     </div>
   </div>`;
 }
 function dmEndCount(g, el){
+  // 新しく出た点数だけ、0から数え上げる
+  el.querySelectorAll(".dmend [data-ek]").forEach(b => {
+    const key = b.dataset.ek; if (dmEndKeys.has(key)) return; dmEndKeys.add(key);
+    const to = +b.dataset.vp, dur = key.endsWith(":hero") ? 1400 : 900, t0 = performance.now() + (key.endsWith(":hero") ? 1100 : 350);
+    b.textContent = "0";
+    const step = now => { if (!b.isConnected) return; const f = Math.min(1, Math.max(0, (now - t0) / dur)); b.textContent = Math.round(to * (1 - Math.pow(1 - f, 3))); if (f < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+  if ((dmEndSt[g.id] || {}).s !== 2) return;
+  dmEndCountFinal(g, el);
+}
+function dmEndCountFinal(g, el){
   if (dmEndCounted[g.id]) return;
   dmEndCounted[g.id] = true;
   const d0 = dmEndFresh[g.id] || 0; delete dmEndFresh[g.id];
