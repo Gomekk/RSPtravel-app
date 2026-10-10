@@ -2819,6 +2819,36 @@ body.dmnoguide .dbn:not(.lg){display:none}
 /* 結果画面だけ：勝利点になったカードを金色の枠で */
 .de-c.vpm .dmc{border-color:#3A1A66;box-shadow:0 0 0 2.5px #8B4FE0,0 0 12px 3px rgba(110,60,210,.85),0 3px 0 var(--ink)}
 .de-c.vpc .dmc{border-color:#B9821A;box-shadow:0 0 0 2.5px #FFD84A,0 0 12px 3px rgba(255,216,74,.9),0 3px 0 var(--ink)}
+
+/* 序列の箱 → 成績 */
+.rank.tapcard{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.rank.tapcard:active{transform:scale(.985)}
+.pcx{--c:#3A4585}
+.pcx-hero{position:relative;display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:16px;color:#fff;background:linear-gradient(120deg,var(--c),color-mix(in srgb,var(--c) 55%,#1B1838));box-shadow:0 6px 18px color-mix(in srgb,var(--c) 40%,transparent);overflow:hidden}
+.pcx-hero::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12)}
+.pcx-rk{display:flex;flex-direction:column;align-items:center;min-width:52px;line-height:1}
+.pcx-rk small{font-size:10px;font-weight:900;opacity:.85}
+.pcx-rk b{font-family:var(--disp);font-size:40px;font-weight:400}
+.pcx-who{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pcx-who b{font-size:20px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcx-who span{font-family:var(--disp);font-size:24px}
+.pcx-who small{font-size:11px;font-weight:800;opacity:.92}
+.pcx-who em{font-style:normal;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.22)}
+.pcx-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.pcx-tag{padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;color:#fff;background:var(--ink)}
+.pcx-tag.g{background:#C98A0B}.pcx-tag.r{background:var(--crimson)}.pcx-tag.v{background:#8B3CFF}.pcx-tag.b{background:#1FB3BF}
+.pcx-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 4px}
+.pcx-kpi>div{padding:8px 4px;border-radius:12px;background:#fff;border:2px solid var(--line);text-align:center}
+.pcx-kpi small{display:block;font-size:10px;font-weight:900;color:var(--mute)}
+.pcx-kpi b{font-family:var(--disp);font-weight:400;font-size:19px;color:var(--ink)}
+.pcx-kpi b i{font-style:normal;font-family:var(--body);font-size:10px;font-weight:900;color:var(--mute);margin-left:1px}
+.pcx-s{margin-top:12px;padding:10px 12px 6px;border-radius:14px;background:#fff;border:2px solid var(--line)}
+.pcx-s h4{display:flex;align-items:center;gap:6px;margin:0 0 4px;font-size:13.5px;font-weight:900;color:var(--ink)}
+.pcx-s h4 i{font-style:normal;display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:color-mix(in srgb,var(--c) 18%,#fff);font-size:13px}
+.pcx-r{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px dashed var(--line);font-size:12.5px}
+.pcx-r:first-of-type{border-top:0}
+.pcx-r span{color:var(--mute);font-weight:800;flex:none;max-width:52%}
+.pcx-r b{text-align:right;font-weight:900;color:var(--ink)}
 /* ===== 発熱対策：見た目はそのまま、描き直しの多い動きを軽い方式に ===== */
 /* ゲーム画面を開いている間は、裏に隠れているホーム画面を描かない・動かさない */
 body:has(>.arena:not([hidden])) > #view,body:has(>.arena:not([hidden])) > .deco,body.ovl > #view,body.ovl > .deco{visibility:hidden}
@@ -3100,7 +3130,7 @@ function viewHome(t){
   h += rows.map(r => {
     const diff = r.paid - r.std;
     const nn = tcount(t, r.id, "normal"), ss = tcount(t, r.id, "super");
-    return `<div class="rank ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}">${r.rank === 1 && r.paid > 0 ? `<span class="r1fx" aria-hidden="true"><span class="rays1"></span><span class="sweep"></span><span class="sweep s2"></span>${Array.from({ length: 34 }, (_, k) => `<i style="left:${(k * 29 + 7) % 98}%;--dl:-${(k * .17).toFixed(2)}s;--dur:${(1.3 + (k % 5) * .3).toFixed(1)}s;--sz:${8 + (k % 4) * 4}px;--sx:${((k % 7) - 3) * 9}px"></i>`).join("")}${Array.from({ length: 10 }, (_, k) => `<b style="left:${(k * 41 + 5) % 94}%;top:${(k * 23 + 10) % 80}%;--dl:-${(k * .23).toFixed(2)}s"></b>`).join("")}</span><span class="crown1" aria-hidden="true">👑</span>` : ""}${(r.rank === 2 || r.rank === 3) && r.paid > 0 ? `<span class="shine2" aria-hidden="true"></span>` : ""}${r.rank === 4 ? `<span class="rain" aria-hidden="true"><i style="left:37%;--dl:-1.07s;--dur:0.58s;--len:19px"></i><i style="left:39%;--dl:-0.51s;--dur:0.76s;--len:12px"></i><i style="left:92%;--dl:-0.23s;--dur:0.73s;--len:13px"></i><i style="left:79%;--dl:-0.55s;--dur:0.56s;--len:11px"></i><i style="left:90%;--dl:-0.60s;--dur:0.56s;--len:20px"></i><i style="left:93%;--dl:-0.52s;--dur:0.86s;--len:13px"></i><i style="left:4%;--dl:-0.71s;--dur:0.81s;--len:19px"></i><i style="left:27%;--dl:-1.16s;--dur:0.70s;--len:15px"></i><i style="left:73%;--dl:-0.34s;--dur:0.94s;--len:19px"></i><i style="left:10%;--dl:-0.98s;--dur:0.62s;--len:17px"></i><i style="left:75%;--dl:-0.95s;--dur:0.82s;--len:12px"></i><i style="left:23%;--dl:-0.96s;--dur:0.76s;--len:20px"></i><i style="left:66%;--dl:-0.23s;--dur:0.60s;--len:11px"></i><i style="left:54%;--dl:-0.05s;--dur:0.66s;--len:19px"></i><i style="left:35%;--dl:-0.98s;--dur:0.68s;--len:15px"></i><i style="left:36%;--dl:-0.65s;--dur:0.91s;--len:17px"></i><i style="left:70%;--dl:-0.26s;--dur:0.61s;--len:19px"></i><i style="left:15%;--dl:-0.85s;--dur:0.88s;--len:13px"></i><i style="left:42%;--dl:-0.65s;--dur:0.92s;--len:19px"></i><i style="left:12%;--dl:-1.13s;--dur:0.62s;--len:10px"></i><i style="left:7%;--dl:-0.76s;--dur:0.71s;--len:12px"></i><i style="left:28%;--dl:-0.82s;--dur:0.94s;--len:10px"></i><i style="left:68%;--dl:-1.13s;--dur:0.73s;--len:11px"></i><i style="left:44%;--dl:-0.02s;--dur:0.87s;--len:17px"></i><i style="left:24%;--dl:-0.04s;--dur:0.66s;--len:18px"></i><i style="left:25%;--dl:-0.91s;--dur:0.73s;--len:14px"></i></span><span class="cloud" aria-hidden="true">☁</span><span class="cloud c2" aria-hidden="true">☁</span>` : ""}
+    return `<div class="rank tapcard ${r.rank === 1 && r.paid > 0 ? "top" : ""} ${r.paid > 0 && typeof r.rank === "number" && r.rank <= 3 ? "r" + r.rank : ""} ${r.rank === 4 ? "gloom" : ""}" style="--c:${pcolor(r.id)}" data-pcard="${r.id}" role="button" tabindex="0">${r.rank === 1 && r.paid > 0 ? `<span class="r1fx" aria-hidden="true"><span class="rays1"></span><span class="sweep"></span><span class="sweep s2"></span>${Array.from({ length: 34 }, (_, k) => `<i style="left:${(k * 29 + 7) % 98}%;--dl:-${(k * .17).toFixed(2)}s;--dur:${(1.3 + (k % 5) * .3).toFixed(1)}s;--sz:${8 + (k % 4) * 4}px;--sx:${((k % 7) - 3) * 9}px"></i>`).join("")}${Array.from({ length: 10 }, (_, k) => `<b style="left:${(k * 41 + 5) % 94}%;top:${(k * 23 + 10) % 80}%;--dl:-${(k * .23).toFixed(2)}s"></b>`).join("")}</span><span class="crown1" aria-hidden="true">👑</span>` : ""}${(r.rank === 2 || r.rank === 3) && r.paid > 0 ? `<span class="shine2" aria-hidden="true"></span>` : ""}${r.rank === 4 ? `<span class="rain" aria-hidden="true"><i style="left:37%;--dl:-1.07s;--dur:0.58s;--len:19px"></i><i style="left:39%;--dl:-0.51s;--dur:0.76s;--len:12px"></i><i style="left:92%;--dl:-0.23s;--dur:0.73s;--len:13px"></i><i style="left:79%;--dl:-0.55s;--dur:0.56s;--len:11px"></i><i style="left:90%;--dl:-0.60s;--dur:0.56s;--len:20px"></i><i style="left:93%;--dl:-0.52s;--dur:0.86s;--len:13px"></i><i style="left:4%;--dl:-0.71s;--dur:0.81s;--len:19px"></i><i style="left:27%;--dl:-1.16s;--dur:0.70s;--len:15px"></i><i style="left:73%;--dl:-0.34s;--dur:0.94s;--len:19px"></i><i style="left:10%;--dl:-0.98s;--dur:0.62s;--len:17px"></i><i style="left:75%;--dl:-0.95s;--dur:0.82s;--len:12px"></i><i style="left:23%;--dl:-0.96s;--dur:0.76s;--len:20px"></i><i style="left:66%;--dl:-0.23s;--dur:0.60s;--len:11px"></i><i style="left:54%;--dl:-0.05s;--dur:0.66s;--len:19px"></i><i style="left:35%;--dl:-0.98s;--dur:0.68s;--len:15px"></i><i style="left:36%;--dl:-0.65s;--dur:0.91s;--len:17px"></i><i style="left:70%;--dl:-0.26s;--dur:0.61s;--len:19px"></i><i style="left:15%;--dl:-0.85s;--dur:0.88s;--len:13px"></i><i style="left:42%;--dl:-0.65s;--dur:0.92s;--len:19px"></i><i style="left:12%;--dl:-1.13s;--dur:0.62s;--len:10px"></i><i style="left:7%;--dl:-0.76s;--dur:0.71s;--len:12px"></i><i style="left:28%;--dl:-0.82s;--dur:0.94s;--len:10px"></i><i style="left:68%;--dl:-1.13s;--dur:0.73s;--len:11px"></i><i style="left:44%;--dl:-0.02s;--dur:0.87s;--len:17px"></i><i style="left:24%;--dl:-0.04s;--dur:0.66s;--len:18px"></i><i style="left:25%;--dl:-0.91s;--dur:0.73s;--len:14px"></i></span><span class="cloud" aria-hidden="true">☁</span><span class="cloud c2" aria-hidden="true">☁</span>` : ""}
       <div class="r">${r.rank}</div>
       <div class="n">${r.id === me ? `<span class="mine" style="background:${pcolor(me)}">自分</span>` : ""}<span class="nm">${esc(pname(r.id))}</span>${r.id === t.champion_out ? `<span class="tag">免除中</span>` : ""}</div>
       <div class="tk2"><span class="tic n ${nn ? "" : "zero"}">免×${nn}</span><span class="tic s ${ss ? "" : "zero"}">S×${ss}</span></div>
@@ -3150,8 +3180,87 @@ function viewList(cur){
 
 const fmtTime = iso => { const d = new Date(iso); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`; };
 
+/* ---------- 序列のプレイヤー箱 → その旅での成績と今の状況 ---------- */
+const GAME_TABLES = [["neu", "NEU"], ["cs", "キャントストップ"], ["sb", "セブンブリッジ"], ["sk", "スカル"], ["co", "コヨーテ"], ["kg", "スカルキング"], ["dm", "ドミニオン"]];
+function openPlayerCard(t, pid){
+  if (!t) return;
+  const rows = standings(t), me2 = rows.find(r => r.id === pid); if (!me2) return;
+  const st = computeStats([t]), S = st.S[pid] || {};
+  const c = pcolor(pid), rate = (w, j) => j ? w / j : NaN;
+  const ranked = rows.filter(r => typeof r.rank === "number");
+  const idx = ranked.findIndex(r => r.id === pid);
+  const above = idx > 0 ? ranked[idx - 1] : null, below = idx >= 0 && idx < ranked.length - 1 ? ranked[idx + 1] : null;
+  const total = tripPays(t).filter(p => p.payer_id).reduce((a, p) => a + p.amount, 0);
+  const share = total ? me2.paid / total : NaN;
+  const diff = me2.paid - me2.std;
+  const pays = tripPays(t).filter(p => p.payer_id === pid);
+  const day = dayOf(t);
+  const todayAmt = pays.filter(p => { const d = payDate(p); return d && d.toDateString() === new Date().toDateString(); }).reduce((a, p) => a + p.amount, 0);
+  const last = pays.slice(-1)[0];
+  const pend = tripPays(t).filter(p => !p.payer_id && (p.participants || []).includes(pid));
+  const nn = tcount(t, pid, "normal"), ss = tcount(t, pid, "super");
+  const privs = tripPrivs(t).filter(x => x.player_id === pid);
+  const pred = (db.predictions || []).find(x => x.trip_id === t.id && x.player_id === pid);
+  const catTop = Object.entries(S.cats || {}).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  // ゲーム成績（この旅で遊んだもの）
+  const games = GAME_TABLES.map(([k, n]) => {
+    const list = (db[k + "_games"] || []).filter(g => g.trip_id === t.id && g.status === "finished" && (g.players || []).includes(pid));
+    return { n, k, play: list.length, win: list.filter(g => g.winner === pid).length };
+  }).filter(x => x.play);
+  const gPlay = games.reduce((a, x) => a + x.play, 0), gWin = games.reduce((a, x) => a + x.win, 0);
+  const row = (l, v, cls = "") => `<div class="pcx-r ${cls}"><span>${l}</span><b>${v}</b></div>`;
+  const sec = (title, ic, body) => body ? `<section class="pcx-s"><h4><i>${ic}</i>${title}</h4>${body}</section>` : "";
+  const status = [];
+  if (t.champion_out === pid) status.push(`<span class="pcx-tag g">3連覇達成・免除中</span>`);
+  if (pend.length) status.push(`<span class="pcx-tag r">未決着 ${pend.length}件に参加予定</span>`);
+  if (privs.some(x => x.day === day)) status.push(`<span class="pcx-tag v">今日の特権者</span>`);
+  if (nn + ss) status.push(`<span class="pcx-tag b">免除券を持っている</span>`);
+  const html = `<div class="pcx" style="--c:${c}">
+    <div class="pcx-hero">
+      <div class="pcx-rk"><small>現在</small><b>${me2.rank}</b><small>${typeof me2.rank === "number" ? "位" : ""}</small></div>
+      <div class="pcx-who"><b>${esc(pname(pid))}</b><span>${yen(me2.paid)}</span><small>標準との差 <em class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</em></small></div>
+    </div>
+    ${status.length ? `<div class="pcx-tags">${status.join("")}</div>` : ""}
+    <div class="pcx-kpi">
+      <div><small>支払い</small><b>${S.wins || 0}<i>/${S.joins || 0}回</i></b></div>
+      <div><small>支払率</small><b>${pct(rate(S.wins, S.joins))}</b></div>
+      <div><small>運転</small><b>${me2.drives}<i>回</i></b></div>
+      <div><small>券</small><b>${nn + ss}<i>枚</i></b></div>
+    </div>
+    ${sec("今の状況", "📍", [
+      above ? row(`${above.rank}位 ${esc(pname(above.id))} まで`, yen(above.paid - me2.paid)) : idx === 0 ? row("首位", "トップを走っています") : "",
+      below ? row(`${below.rank}位 ${esc(pname(below.id))} との差`, yen(me2.paid - below.paid)) : "",
+      row("全体に占める割合", pct(share)),
+      day ? row("今日の支払額", yen(todayAmt)) : "",
+      last ? row("最後の支払い", `${esc(last.label)}（${yen(last.amount)}）`) : "",
+      S.curW ? row("いまの連続支払", `${S.curW}連続`) : S.curL ? row("いまの連続逃げ切り", `${S.curL}連続`) : "",
+      pred && pred.amount != null ? row("最終支払額の予想", `${yen(pred.amount)}（今の差 ${signed(me2.paid - pred.amount)}）`) : ""
+    ].join(""))}
+    ${sec("支払い", "💴", [
+      row("支払額", yen(me2.paid)), row("支払回数／参加回数", `${S.wins || 0}／${S.joins || 0}回`),
+      row("最高支払額", yen(S.max)), row("1回あたり平均", S.wins ? yen(S.paid / S.wins) : "—"),
+      row("最大連続支払", `${S.streakW || 0}連続`), row("最長逃げ切り", `${S.streakL || 0}連続`),
+      catTop.length ? row("よく払ったカテゴリー", catTop.map(([k, v]) => `${esc(k)} ${yen(v)}`).join("<br>")) : "",
+      row("高額（1万円以上）の支払率", pct(rate(S.bandW && S.bandW[2], S.bandJ && S.bandJ[2])))
+    ].join(""))}
+    ${sec("じゃんけん", "✊", [
+      row("一騎打ち", `${S.duelJ || 0}回（払った率 ${pct(rate(S.duelW, S.duelJ))}）`),
+      row("1人勝ち", `${S.soloW || 0}回`), row("1回目で抜けた率", pct(rate(S.oneOut, S.oneOutJ))),
+      row("一機追加をくらった", `${S.extra || 0}回`)
+    ].join(""))}
+    ${sec("運転", "🚗", row("運転回数", `${me2.drives}回`) + row("勝率（支払＋運転）", pct(rate((S.wins || 0) + me2.drives, S.joins))))}
+    ${sec("免除券・特権", "🎫", [
+      row("免除券（持っている）", `${nn}枚`), row("super免除券（持っている）", `${ss}枚`),
+      row("免除券を使った", `${S.tUse || 0}回`), row("superを使った", `${S.sUse || 0}回`),
+      privs.length ? row("宣言した特権", privs.map(x => `${x.day}日目・特権${KANJI[x.kind]}「${PRIVS[x.kind].name}」`).join("<br>")) : row("宣言した特権", "なし")
+    ].join(""))}
+    ${sec("ゲーム", "🎲", gPlay ? row("通算", `${gPlay}戦 ${gWin}勝`) + games.map(x => row(x.n, `${x.play}戦 ${x.win}勝`)).join("") : row("この旅のゲーム", "まだ遊んでいません"))}
+  </div>`;
+  openSheet(`${esc(pname(pid))}の成績`, html);
+}
 function bindView(){
   const v = $("#view");
+  v.querySelectorAll("[data-pcard]").forEach(b => b.onclick = e => { if (e.target.closest("button,input,a")) return; openPlayerCard(curTrip(), b.dataset.pcard); });
   v.querySelectorAll("[data-act]").forEach(b => b.onclick = () => ({
     players: openPlayers, trips: () => editTrip(null), editTrip: () => editTrip(curTrip().id), newJanken: openNewJanken, drive: openDrive, openLive: () => openArena(liveJanken(curTrip()).id),
     privToday: () => openPrivDeclare(curTrip(), dayOf(curTrip())), initTickets: () => giveInitial(curTrip()), settle: () => openSettlement(curTrip()),
