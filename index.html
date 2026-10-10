@@ -2488,6 +2488,9 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmbig .dar .dmart.em{font-size:62px}.dmbig .dar .dmart.cur{font-size:56px}
 .dmbig .dar .dmart.dcoin,.dmbig .dar .dmart.vp{width:70px;height:70px}.dmbig .dar .dmart.dcoin .dmn,.dmbig .dar .dmart.vp .dmn{font-size:30px}
 .dmbig .dtx{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.dmbig .dpls{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.dmbig .dpls>b{display:flex;align-items:center}
+body.dmnoguide .dmbig .dpls{align-items:center}
 .dmbig .dtx b{font-size:15px;font-weight:900}
 .dmbig .dtx b.dbg{font-family:var(--disp);font-weight:400;font-size:28px}
 .dmbig .dtx p{margin:4px 0 0;font-size:12.5px;line-height:1.5;font-weight:700;color:#3A1E0C}
@@ -2613,24 +2616,26 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 @keyframes pvwho{0%{opacity:0;transform:translateX(-120px) scale(.8)}100%{opacity:1;transform:none}}
 
 /* +カード・+アクション・+購入の小さな印 */
-.dbn{position:absolute;left:2px;top:19px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none;--s:12px}
-.dbn i{display:grid;place-items:center;width:var(--s);height:var(--s);font-style:normal;font-family:var(--disp);font-size:calc(var(--s) * .72);line-height:1;font-weight:900}
-.dbn .pc{width:calc(var(--s) * .8);height:calc(var(--s) * 1.08);border-radius:2px;background:#fff;color:var(--ink);border:1.2px solid var(--ink)}
-.dbn .pa{width:calc(var(--s) * 1.08);padding-right:calc(var(--s) * .12);background:#F07A2A;color:#fff;clip-path:polygon(0 0,68% 0,100% 50%,68% 100%,0 100%);text-shadow:0 0 1px #7A2E00}
-.dbn .pb{border-radius:3px;background:#2DBE60;color:#fff;box-shadow:inset 0 0 0 1.2px #135E2E;text-shadow:0 0 1px #0B4A22}
-.dbn .pmo{width:auto;min-width:var(--s);padding:0 calc(var(--s) * .14);border-radius:calc(var(--s) * .28);background:linear-gradient(180deg,#FFE9A0,#E8B12A);color:#3A2405;box-shadow:inset 0 0 0 1.2px #8A5A08;font-size:calc(var(--s) * .66);letter-spacing:-.04em}
-.dmp .dbn,.dmc.sm .dbn{top:15px;left:1.5px;--s:10px;gap:1.5px}
-.dmp.k .dbn{top:16px}
+/* ガイドの印（同じ形・同じ大きさのバッジを左端にそろえて縦に並べる） */
+.dbn{position:absolute;left:3px;top:18px;z-index:2;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;max-height:calc(var(--s) * 3.4 + 1px);align-items:flex-start;gap:calc(var(--s) * .2);pointer-events:none;--s:12px}
+.dbn i{display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;width:calc(var(--s) * 1.85);height:var(--s);padding:0 calc(var(--s) * .14) 0 calc(var(--s) * .1);border-radius:calc(var(--s) * .32);font-style:normal;line-height:1;color:#fff;box-shadow:0 0 0 calc(var(--s) * .09) #fff,0 calc(var(--s) * .1) calc(var(--s) * .22) rgba(27,24,56,.45)}
+.dbn i svg{display:block;flex:none;width:calc(var(--s) * .74);height:calc(var(--s) * .74)}
+.dbn i .bn{flex:1;text-align:center;font-family:var(--disp);font-weight:400;font-size:calc(var(--s) * .8);letter-spacing:0;text-shadow:0 1px 0 rgba(0,0,0,.28)}
+.dbn .pc{background:linear-gradient(180deg,#4B88EC,#2F6FD6)}
+.dbn .pa{background:linear-gradient(180deg,#F79446,#E86A1C)}
+.dbn .pb{background:linear-gradient(180deg,#34B86E,#1E9E5A)}
+.dbn .pmo{background:linear-gradient(180deg,#E9B53A,#C98A0B)}
+.dmp .dbn{top:16px;left:3px;--s:11px}
+.dmc.sm .dbn{top:14px;left:2.5px;--s:10px}
 .dmc.pl .dbn{display:none}
-.dmc.dfx .dbn{left:6px;top:36px;--s:20px;gap:4px}
-.dmbig .dbn{left:10px;top:44px;--s:22px;gap:5px}
+.dmc.dfx .dbn{left:7px;top:36px;--s:15px;max-height:none}
+.dbn.il{max-height:none;position:static;display:inline-flex;vertical-align:-3px;margin-right:6px;--s:17px}
 body.dmnoguide .dbn:not(.lg){display:none}
 .dmgd{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:3px;height:30px;margin-right:5px;padding:0 4px 0 6px;border-radius:10px;border:2px solid var(--ink);background:#fff;font-size:10.5px;font-weight:900;color:var(--ink);box-shadow:0 2px 0 var(--ink)}
 .dmgd i{font-style:normal;font-size:9.5px;padding:2px 5px;border-radius:6px;background:#D8D2C8;color:#6A5A4A}
 .dmgd.on i{background:#F07A2A;color:#fff}
 .dmgd:active{transform:translateY(2px);box-shadow:none}
 .dleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;font-weight:800;margin:4px 0 8px}.dleg>span{display:inline-flex;align-items:center}
-.dbn.il{position:static;display:inline-flex;vertical-align:-2px;margin-right:5px;--s:15px}
 /* 結果発表 */
 .arena.neu>.dmend,.dmend{position:fixed;inset:0;z-index:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:radial-gradient(ellipse at 50% 18%,color-mix(in srgb,var(--c) 55%,#2A1650) 0%,#1B1038 55%,#0E0820 100%);color:#fff;animation:defade .5s var(--d0) both;-webkit-user-select:none;user-select:none}
 @keyframes defade{from{opacity:0}}
@@ -8171,17 +8176,24 @@ function dmCardHtml(c, cls = "", extra = ""){
 let dmGuide = (() => { try { return localStorage.getItem("ojk:dmGuide") !== "0"; } catch (_) { return true; } })();
 function dmGuideApply(){ document.body.classList.toggle("dmnoguide", !dmGuide); }
 dmGuideApply();
-/* カードの左側に小さく：+カード（白い札）・+アクション（橙の矢印）・+購入（緑） */
+/* ガイドの印：どれも同じ形のバッジ（左にアイコン、右に数）。色で種類を分ける */
+const DM_BI = {
+  pc: `<path d="M3.2 1.3h5.6a1 1 0 0 1 1 1v7.4a1 1 0 0 1-1 1H3.2a1 1 0 0 1-1-1V2.3a1 1 0 0 1 1-1z" fill="#fff"/><path d="M4.3 3.4h3.4M4.3 5.2h3.4" stroke="#2F6FD6" stroke-width="1.1" stroke-linecap="round"/>`,
+  pa: `<path d="M6.9.8 2.4 6.9h3.1l-.9 4.3 4.9-6.6H6.3z" fill="#fff"/>`,
+  pb: `<path d="M4.1 4.2V3.4a1.9 1.9 0 0 1 3.8 0v.8" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M2.3 4.2h7.4l-.6 6.6H2.9z" fill="#fff"/>`,
+  pmo: `<circle cx="6" cy="6" r="4.9" fill="#FFF3C4"/><circle cx="6" cy="6" r="3.3" fill="none" stroke="#C98A0B" stroke-width="1"/>`
+};
+const dmBadge = (k, n) => `<i class="${k}"><svg viewBox="0 0 12 12" aria-hidden="true">${DM_BI[k]}</svg><span class="bn">${n}</span></i>`;
 function dmBn(c){
   const p = DM[c].p || {};
-  const a = [p.cards && `<i class="pc">${p.cards}</i>`, p.actions && `<i class="pa">${p.actions}</i>`, p.buys && `<i class="pb">${p.buys}</i>`, p.coins && `<i class="pmo">$${p.coins}</i>`].filter(Boolean);
+  const a = [p.cards && dmBadge("pc", p.cards), p.actions && dmBadge("pa", p.actions), p.buys && dmBadge("pb", p.buys), p.coins && dmBadge("pmo", p.coins)].filter(Boolean);
   return a.length ? `<span class="dbn" aria-hidden="true">${a.join("")}</span>` : "";
 }
 function dmBigCard(c){
   const d = DM[c], plus = dmPlusText(c);
   const main = d.ty.includes("t") ? `<b class="dbg">+$${d.v}</b>` : (["estate", "duchy", "province", "curse"].includes(c) ? `<b class="dbg">${d.vp}勝利点</b>` : "");
-  return `<div class="dmbig ${dmTyCls(c)}"><i class="dco">${d.c}</i>${dmBn(c)}<b class="dnm">${d.n}</b><div class="dar">${dmArt(c)}</div>
-    <div class="dtx">${plus.map(x => `<b>${/カード/.test(x) ? `<span class="dbn il"><i class="pc">${x.match(/\d+/)[0]}</i></span>` : /アクション/.test(x) ? `<span class="dbn il"><i class="pa">${x.match(/\d+/)[0]}</i></span>` : /購入/.test(x) ? `<span class="dbn il"><i class="pb">${x.match(/\d+/)[0]}</i></span>` : /\$/.test(x) ? `<span class="dbn il"><i class="pmo">$${x.match(/\d+/)[0]}</i></span>` : ""}${x}</b>`).join("")}${main}${d.tx && !main ? `<p>${esc(d.tx)}</p>` : ""}</div><small class="dty">${dmTyName(c)}</small></div>`;
+  return `<div class="dmbig ${dmTyCls(c)}"><i class="dco">${d.c}</i><b class="dnm">${d.n}</b><div class="dar">${dmArt(c)}</div>
+    <div class="dtx">${plus.length ? `<span class="dpls">` : ""}${plus.map(x => `<b>${(k => k ? `<span class="dbn il">${dmBadge(k, x.match(/\d+/)[0])}</span>` : "")(/カード/.test(x) ? "pc" : /アクション/.test(x) ? "pa" : /購入/.test(x) ? "pb" : /\$/.test(x) ? "pmo" : "")}${x}</b>`).join("")}${plus.length ? "</span>" : ""}${main}${d.tx && !main ? `<p>${esc(d.tx)}</p>` : ""}</div><small class="dty">${dmTyName(c)}</small></div>`;
 }
 function drawDm(){
   if (!dmId) return;
@@ -8248,7 +8260,7 @@ function drawDm(){
       <div class="dmpbtn">${cb ? `<button class="nb end go" id="dmBuy">💰${DM[c].c}で買う</button>` : !dmView.h && myTurn && idle && st.supply[c] > 0 ? `<button class="nb end" disabled>${T.buys < 1 ? "購入はもうできません" : `お金が足りません（💰${T.coins}）`}</button>` : ""}<button class="nb draw" id="dmPopX">閉じる</button></div></div></div>`;
   }
   dmPatch(el, `<div class="nbg dmbg" aria-hidden="true">${["🏰", "🪙", "👑", "🌳", "🏰", "🪙", "⚔️", "📜"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.14">${x}</i>`).join("")}</div>
-    <div class="ntop"><b class="nt dmt">DOMINION</b><span class="nrd sbr"><small>ROUND</small><b>${st.round}</b></span><span class="ndk"></span><button class="dmgd ${dmGuide ? "on" : ""}" id="dmGuide" aria-pressed="${dmGuide}">ガイド<i>${dmGuide ? "ON" : "OFF"}</i></button><button class="nmini" id="dmMenu" aria-label="メニュー">…</button><button class="nmini" id="dmClose" aria-label="閉じる">×</button></div>
+    <div class="ntop"><b class="nt dmt">DOMINION</b><span class="ndk"></span><button class="dmgd ${dmGuide ? "on" : ""}" id="dmGuide" aria-pressed="${dmGuide}">ガイド<i>${dmGuide ? "ON" : "OFF"}</i></button><button class="nmini" id="dmMenu" aria-label="メニュー">…</button><button class="nmini" id="dmClose" aria-label="閉じる">×</button></div>
     <div class="nseats2 ${st.players.length >= 5 ? "tight" : ""}">${seats}</div>
     ${supply}${stat}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
@@ -8652,7 +8664,7 @@ function dmRulesHtml(){
     <div class="st"><b class="t"><span class="r">C</span> クリンナップ：手札と使ったカードを全部捨てて、5枚引く</b><small>山札がなくなったら、捨て札を混ぜて新しい山札にする</small></div>
   </div>
   <h4 style="--hc:#F07A2A">カード左の小さな印（右上の「ガイド」で表示の切り替え）</h4>
-  <p class="dleg"><span><span class="dbn il lg"><i class="pc">1</i></span>+カード（引く枚数）</span><span><span class="dbn il lg"><i class="pa">1</i></span>+アクション</span><span><span class="dbn il lg"><i class="pb">1</i></span>+購入</span><span><span class="dbn il lg"><i class="pmo">$1</i></span>+$（お金）</span></p>
+  <p class="dleg"><span><span class="dbn il lg">${dmBadge("pc", 1)}</span>+カード（引く枚数）</span><span><span class="dbn il lg">${dmBadge("pa", 1)}</span>+アクション</span><span><span class="dbn il lg">${dmBadge("pb", 1)}</span>+購入</span><span><span class="dbn il lg">${dmBadge("pmo", 1)}</span>+$（お金）</span></p>
   <h4 style="--hc:#E8B12A">カードの種類</h4>
   <div class="kv">
     <div>${C("silver")}<p><b>財宝</b>お金。銅貨$1・銀貨$2・金貨$3</p></div>
