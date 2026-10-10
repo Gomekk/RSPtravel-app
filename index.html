@@ -2857,6 +2857,11 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .pcx-r:first-of-type{border-top:0}
 .pcx-r span{color:var(--mute);font-weight:800;flex:none;max-width:52%}
 .pcx-r b{text-align:right;font-weight:900;color:var(--ink)}
+.cpuskip{position:fixed;left:50%;bottom:calc(var(--safe-b, 0px) + 92px);z-index:48;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;width:min(92vw,340px);padding:12px 16px;border-radius:16px;border:3px solid #fff;background:linear-gradient(180deg,#3A2A66,#1B1038);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.45),0 0 0 3px rgba(255,227,138,.7);animation:fadein .3s both}
+.cpuskip b{font-size:16px;font-weight:900;color:#FFE38A}
+.cpuskip small{font-size:11px;font-weight:800;opacity:.85}
+.cpuskip:disabled{opacity:.9}
+.cpuskip .spin{display:inline-block;width:14px;height:14px;margin-right:6px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);border-top-color:#FFE38A;animation:pvspin .8s linear infinite;vertical-align:-2px}
 .cpuchips{margin-top:8px;padding:8px;border-radius:12px;background:#F3F5FA;border:1.5px dashed #C9CFDC}
 .cpuchips small{display:block;margin:0 0 6px;font-size:11px;font-weight:900;color:var(--mute)}
 /* ===== 発熱対策：見た目はそのまま、描き直しの多い動きを軽い方式に ===== */
@@ -3215,6 +3220,7 @@ function openPlayerCard(t, pid){
   const last = pays.slice(-1)[0];
   const pend = tripPays(t).filter(p => !p.payer_id && (p.participants || []).includes(pid));
   const nn = tcount(t, pid, "normal"), ss = tcount(t, pid, "super");
+  const usedTk = db.tickets.filter(x => x.trip_id === t.id && x.player_id === pid && x.status === "used").length;
   const privs = tripPrivs(t).filter(x => x.player_id === pid);
   const pred = (db.predictions || []).find(x => x.trip_id === t.id && x.player_id === pid);
   const catTop = Object.entries(S.cats || {}).sort((a, b) => b[1] - a[1]).slice(0, 3);
@@ -3243,7 +3249,7 @@ function openPlayerCard(t, pid){
       <div><small>支払い</small><b>${S.wins || 0}<i>/${S.joins || 0}回</i></b></div>
       <div><small>支払率</small><b>${pct(rate(S.wins, S.joins))}</b></div>
       <div><small>運転</small><b>${me2.drives}<i>回</i></b></div>
-      <div><small>券</small><b>${nn + ss}<i>枚</i></b></div>
+      <div><small>使用済み券</small><b>${usedTk}<i>枚</i></b></div>
     </div>
     ${sec("今の状況", "📍", [
       above ? row(`${above.rank}位 ${esc(pname(above.id))} まで`, yen(above.paid - me2.paid)) : idx === 0 ? row("首位", "トップを走っています") : "",
@@ -3469,7 +3475,8 @@ function openMe(){
 /* ---------- ゲスト（オーナーの許可で24時間だけ使える） ---------- */
 const guestReqs = () => { try { return setting("guest_reqs") || {}; } catch (e) { return {}; } };
 const guestPending = () => Object.entries(guestReqs()).filter(([, r]) => r && r.st === "wait");
-const guestAlert = () => !!me && me === hostId() && guestPending().length > 0;
+const guestHost = () => !!me && (me === hostId() || (!hostId() && !isGuest(me)));   // オーナーが決まっていなければ登録メンバーなら誰でも
+const guestAlert = () => guestHost() && guestPending().length > 0;
 function openGuestReq(){
   const r = guestReqs()[DEVICE];
   if (r && r.st === "wait"){
@@ -3569,11 +3576,15 @@ function openSettings(){
 function openPlayers(){
   const list = [...db.players].sort((a, b) => a.sort - b.sort || a.created_at.localeCompare(b.created_at));
   const gl = (db.allPlayers || db.players).filter(p => isGuest(p.id)), isHost = !!me && me === hostId();
-  const s = openSheet("プレイヤー", `${list.filter(p => !isGuest(p.id)).map(p => `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}</b><button class="mini" data-pe="${p.id}">編集</button></div>`).join("") || `<p class="note">まだ登録がありません。</p>`}
+  const pend = guestHost() ? guestPending() : [];
+  const s = openSheet("プレイヤー", `${pend.length ? `<div class="h2 red" style="margin-top:0">ゲストの利用申請<small>${pend.length}件</small></div>${pend.map(([dev, r]) => `<div class="card guestreq"><span class="gri">🙋</span><div><b>ゲストの利用申請</b><span><b class="gnm">${esc(r.name)}</b>さんが24時間だけ使いたいと申請しています</span><small>${fmtTime(r.at)}</small></div>
+    <div class="grb"><button class="mini" data-pgng="${dev}">見送る</button><button class="btn" data-pgok="${dev}">許可する</button></div></div>`).join("")}` : ""}${list.filter(p => !isGuest(p.id)).map(p => `<div class="plist"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}</b><button class="mini" data-pe="${p.id}">編集</button></div>`).join("") || `<p class="note">まだ登録がありません。</p>`}
     ${gl.length ? `<div class="h2" style="margin-top:14px">ゲスト<small>24時間だけ使える</small></div>${gl.map(p => { const a = guestAlive(p.id); return `<div class="plist gst ${a ? "" : "exp"}"><span class="dot" style="background:${p.color}"></span><b>${esc(p.name)}</b><small class="gtl">${a ? esc(guestLeft(p.id)) : "期限切れ"}</small>${isHost ? `<button class="mini" data-gext="${p.id}">+24時間</button>${a ? `<button class="mini" data-gend="${p.id}">終了</button>` : `<button class="mini" data-gdel="${p.id}">削除</button>`}` : ""}</div>`; }).join("")}` : ""}
     <div class="btns"><button class="btn ghost" data-back>戻る</button><button class="btn" id="addP">追加する</button></div>`);
   s.querySelector("[data-back]").onclick = openSettings;
   $("#addP").onclick = () => editPlayer(null);
+  s.querySelectorAll("[data-pgok]").forEach(b => b.onclick = async () => { await approveGuest(b.dataset.pgok); openPlayers(); });
+  s.querySelectorAll("[data-pgng]").forEach(b => b.onclick = async () => { const dev = b.dataset.pgng; await loadTable("app_settings"); const r = guestReqs()[dev]; if (!r) return; if (await putSetting("guest_reqs", { ...guestReqs(), [dev]: { ...r, st: "ng" } })){ await loadTable("app_settings"); toast(`${r.name}さんの申請を見送りました`); render(); openPlayers(); } });
   s.querySelectorAll("[data-gext]").forEach(b => b.onclick = async () => { const id = b.dataset.gext; await loadTable("app_settings"); const g = { ...guests() }; if (!g[id]) return; g[id] = { ...g[id], exp: new Date(Math.max(Date.now(), Date.parse(g[id].exp)) + 864e5).toISOString() }; if (await putSetting("guests", g)){ await loadTable("app_settings"); toast(`${pname(id)}を24時間延長しました`); render(); openPlayers(); } });
   s.querySelectorAll("[data-gend]").forEach(b => b.onclick = async () => { const id = b.dataset.gend; if (!confirm(`${pname(id)}のゲスト利用を終了しますか？`)) return; await loadTable("app_settings"); const g = { ...guests() }; if (!g[id]) return; g[id] = { ...g[id], exp: new Date(Date.now() - 1000).toISOString() }; const c = { ...claims() }; delete c[id]; if (await putSetting("guests", g) && await putSetting("claims", c)){ await loadTable("app_settings"); toast(`${pname(id)}のゲスト利用を終了しました`); render(); openPlayers(); } });
   s.querySelectorAll("[data-gdel]").forEach(b => b.onclick = async () => { const id = b.dataset.gdel; if (db.payments.some(x => x.payer_id === id || (x.participants || []).includes(id))){ toast("支払いの記録があるので削除できません", 3000); return; } if (!confirm(`${pname(id)}（期限切れのゲスト）を削除しますか？`)) return; if (await q(sb.from("players").delete().eq("id", id), "削除")){ const g = { ...guests() }; delete g[id]; await putSetting("guests", g); await loadTable("app_settings"); await loadTable("players"); render(); openPlayers(); } });
@@ -4921,7 +4932,8 @@ const NOTIFY_DEF = { morning: "08:00", night: "20:00", lastday: "15:00", prize: 
 const NOTIFY_LABEL = { morning: "朝：特権の宣言・ルーレット", night: "夜：宿泊費（1日目は行きの旅費も）", lastday: "最終日：帰りの旅費・車代", prize: "最終日：ピタリ賞・ニアピン賞の判定" };
 const notifyTimes = () => ({ ...NOTIFY_DEF, ...(setting("notify_times") || {}) });
 function pushCall(body){
-  if (body && isCpu(body.to)) return;   // コンピューターには通知しない
+  if (body && isCpu(body.to)) return;
+  if (typeof cpuSkipping !== "undefined" && cpuSkipping) return;   // スキップ中の途中経過は通知しない   // コンピューターには通知しない
   fetch(SUPABASE_URL + "/functions/v1/ojk-push", { method: "POST", headers: { "Content-Type": "application/json", apikey: SUPABASE_KEY }, body: JSON.stringify(body) }).catch(() => {});
 }
 const b64u = s => { const p = "=".repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from([...r].map(c => c.charCodeAt(0))); };
@@ -5501,10 +5513,11 @@ function openNeuNew(){
 /* ---------- 対戦画面 ---------- */
 let neuId = null, neuSel = null;
 function openNeu(id){ neuId = id; neuSel = null; neuPrevTotal = null; $("#neu").hidden = false; document.body.style.overflow = "hidden"; drawNeu(); }
-function closeNeu(){ neuId = null; $("#neu").hidden = true; document.body.style.overflow = ""; render(); }
+function closeNeu(){ setTimeout(cpuSkipUi, 0); neuId = null; $("#neu").hidden = true; document.body.style.overflow = ""; render(); }
 let neuPrevTotal = null, neuPrevDisc = null, neuPrevGame = null;
 function drawNeu(){
-  setTimeout(cpuKick, 0);
+  setTimeout(cpuKick, 0); setTimeout(cpuSkipUi, 0);
+  if (cpuSkipping) return;
   if (!neuId) return;
   const g = neuById(neuId); if (!g) return closeNeu();
   const el = $("#neu"), t = g.turn || {}, mine = g.players.includes(me) ? (g.hands[me] || []) : null;
@@ -5800,6 +5813,7 @@ function closeCs(){ csId = null; $("#cs").hidden = true; document.body.style.ove
 const dieFace = n => `<span class="die d${n}">${Array.from({ length: 9 }, (_, i) => `<i class="${[[4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]][n - 1].includes(i) ? "on" : ""}"></i>`).join("")}</span>`;
 function drawCs(){
   setTimeout(cpuKick, 0);
+  if (cpuSkipping) return;
   if (!csId) return;
   const g = csById(csId); if (!g) return closeCs();
   const el = $("#cs"), t = g.turn || {}, myTurn = g.status === "playing" && t.pid === me;
@@ -6035,6 +6049,7 @@ function openSb(id){ sbId = id; sbPrev = null; sbSel = []; sbAttachMode = false;
 function closeSb(){ sbId = null; clearInterval(sbTimer); $("#sbg").hidden = true; document.body.style.overflow = ""; render(); }
 function drawSb(){
   setTimeout(cpuKick, 0);
+  if (cpuSkipping) return;
   if (!sbId) return;
   const g = sbById(sbId); if (!g) return closeSb();
   const el = $("#sbg"), t = g.turn || {}, hand = g.players.includes(me) ? sbSort(g.hands[me] || []) : null;
@@ -6360,7 +6375,7 @@ function openSkNew(){
 }
 let skId = null, skBusy = false, skSel = null, skSelIdx = -1, skBidSel = null, skPrev = null;
 function openSk(id){ skId = id; skSel = null; skBidSel = null; skPrev = null; $("#skg").hidden = false; document.body.style.overflow = "hidden"; drawSk(); }
-function closeSk(){ skId = null; $("#skg").hidden = true; document.body.style.overflow = ""; render(); }
+function closeSk(){ setTimeout(cpuSkipUi, 0); skId = null; $("#skg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
 function skStartChallenge(g, pid, n, extra){
@@ -6430,8 +6445,8 @@ function skFlip(owner, who = me, gid = skId){
     return { patch: { ch: { ...ch, fc, flips }, wins, result: { type: "success", pid: who }, phase: "result", turn: { pid: who, start: who }, ...(fin ? { status: "finished", winner: who } : {}) }, log: lines };
   });
 }
-function skNextRound(){
-  return skCommit(skId, g => {
+function skNextRound(gid = skId){
+  return skCommit(gid, g => {
     if (g.status !== "playing" || g.phase !== "result") return null;
     const st = g.turn.pid, n = (g.round || 1) + 1;
     return { patch: { phase: "setup", round: n, stacks: {}, passed: [], bid: null, ch: null, result: null, turn: { pid: st, start: st } },
@@ -6531,7 +6546,8 @@ function skDiff(g){
 
 /* ---- 画面 ---- */
 function drawSk(){
-  setTimeout(cpuKick, 0);
+  setTimeout(cpuKick, 0); setTimeout(cpuSkipUi, 0);
+  if (cpuSkipping) return;
   if (!skId) return;
   const g = skById(skId); if (!g) return closeSk();
   skDiff(g);
@@ -6775,7 +6791,7 @@ function openCoNew(){
 }
 let coId = null, coBusy = false, coVal = null, coPrev = null;
 function openCo(id){ coId = id; coVal = null; coPrev = null; $("#cog").hidden = false; document.body.style.overflow = "hidden"; drawCo(); coAmbient(true); }
-function closeCo(){ coAmbient(false); coId = null; $("#cog").hidden = true; document.body.style.overflow = ""; render(); }
+function closeCo(){ setTimeout(cpuSkipUi, 0); coAmbient(false); coId = null; $("#cog").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
 function coBid(n, who = me, gid = coId){
@@ -6818,8 +6834,8 @@ function coCall(who = me, gid = coId){
     return { patch, log: lines };
   });
 }
-function coNextRound(){
-  return coCommit(coId, g => {
+function coNextRound(gid = coId){
+  return coCommit(gid, g => {
     if (g.status !== "playing" || g.phase !== "result") return null;
     let deck = (g.deck || []).slice(), discard = (g.discard || []).slice();
     if (g.result && g.result.night){ deck = shuffle(coDeck()); discard = []; }
@@ -7056,7 +7072,8 @@ function coSpawn(tb, force){
 
 /* ---- 画面 ---- */
 function drawCo(){
-  setTimeout(cpuKick, 0);
+  setTimeout(cpuKick, 0); setTimeout(cpuSkipUi, 0);
+  if (cpuSkipping) return;
   if (!coId) return;
   const g = coById(coId); if (!g) return closeCo();
   coDiff(g);
@@ -7428,8 +7445,8 @@ function kgAbil(val, who = me, gid = kgId){
     return { patch, log: line, push };
   });
 }
-function kgNextRound(){
-  return kgCommit(kgId, g => {
+function kgNextRound(gid = kgId){
+  return kgCommit(gid, g => {
     if (g.status !== "playing" || g.phase !== "roundend") return null;
     const r = (g.round || 1) + 1, st = kgNext(g, g.turn.start), dl = kgDeal(g, r);
     return { patch: { round: r, phase: "bid", hands: dl.hands, bids: {}, won: {}, bonus: {}, trick: { plays: [] }, last: null, turn: { pid: st, start: st }, ...(kgUsesEx(g) ? { ex: { deck: dl.deck } } : {}) },
@@ -7556,6 +7573,7 @@ function kgDiff(g){
 /* ---- 画面 ---- */
 function drawKg(){
   setTimeout(cpuKick, 0);
+  if (cpuSkipping) return;
   if (!kgId) return;
   const g = kgById(kgId); if (!g) return closeKg();
   kgAbilOn = !!kgOpts(g).abil;
@@ -8257,21 +8275,22 @@ function dmDoAnswer(id, val, who = me, gid = dmId){ return dmCommit(gid, st => d
 const CPU_AI = {};          // ゲームごとの「次の一手」：(g) => { wait, run } | null
 let cpuTimers = {};
 function cpuKick(){
-  if (!loaded || !me || isCpu(me)) return;
+  if (!loaded || !me || isCpu(me) || cpuSkipping) return;
   Object.keys(CPU_AI).forEach(tb => {
     (db[tb] || []).forEach(g => {
-      if (g.status !== "playing" || !((g.players || []).includes(me) || window.__cpuSpectate) || !(g.players || []).some(isCpu)) return;
+      if (!(g.status === "playing" || g.status === "round_over") || !((g.players || []).includes(me) || window.__cpuSpectate) || !(g.players || []).some(isCpu)) return;
       const key = tb + ":" + g.id, ver = g.version || 0;
       const cur = cpuTimers[key];
       if (cur && cur.ver === ver) return;            // この状態はもう予約済み
       if (cur) clearTimeout(cur.tm);
-      let mv = null; try { mv = CPU_AI[tb](g); } catch (e) { console.error(e); }
+      let mv = null;
+      try { const nx = CPU_NEXT[tb] && CPU_NEXT[tb](g); mv = nx ? { wait: CPU_NEXT_WAIT, run: nx } : g.status === "playing" ? CPU_AI[tb](g) : null; } catch (e) { console.error(e); }
       if (!mv){ delete cpuTimers[key]; return; }
       const humans = g.players.filter(x => !isCpu(x)), my = Math.max(0, humans.indexOf(me));
       const wait = (mv.wait || 1200) + my * 900 + Math.random() * 300;   // 端末ごとに少しずらす
       cpuTimers[key] = { ver, tm: setTimeout(async () => {
         const g2 = (db[tb] || []).find(x => x.id === g.id);
-        if (!g2 || (g2.version || 0) !== ver || g2.status !== "playing"){ delete cpuTimers[key]; cpuKick(); return; }
+        if (!g2 || (g2.version || 0) !== ver || !(g2.status === "playing" || g2.status === "round_over")){ delete cpuTimers[key]; cpuKick(); return; }
         try { await mv.run(); } catch (e) { console.error(e); }
         cpuTimers[key] = { ver, done: true };   // 同じ状態ではもう打たない（打てなかった時の空回り防止）
         setTimeout(cpuKick, 50);
@@ -8469,6 +8488,86 @@ CPU_AI.kg_games = g => {
   }
   return null;
 };
+/* ラウンドの切り替え：次に始める人がCPU（または人間が全員脱落）なら、結果を少し見せてから自動で次へ */
+const CPU_NEXT_WAIT = 6000;
+const cpuNextOk = (g, starter, alive) => isCpu(starter) || !(alive || g.players).some(x => !isCpu(x));
+const CPU_NEXT = {
+  neu_games: g => { if (g.status !== "round_over") return null; const d = g.loser || g.dealer, st = (g.chips[d] || 0) > 0 ? d : neuNext(g, d, 1); return cpuNextOk(g, st, neuAlive(g)) ? () => neuNextRound(neuById(g.id) || g) : null; },
+  sb_games: g => { if (g.status !== "round_over") return null; const st = g.players[g.round % g.players.length]; return cpuNextOk(g, st) ? () => sbNextRound(sbById(g.id) || g) : null; },
+  sk_games: g => { if (g.phase !== "result" || g.status !== "playing") return null; return cpuNextOk(g, g.turn && g.turn.pid, skAlive(g)) ? () => skNextRound(g.id) : null; },
+  co_games: g => { if (g.phase !== "result" || g.status !== "playing") return null; return cpuNextOk(g, g.turn && g.turn.pid, coAlive(g)) ? () => coNextRound(g.id) : null; },
+  kg_games: g => { if (g.phase !== "roundend" || g.status !== "playing") return null; return cpuNextOk(g, kgNext(g, g.turn.start)) ? () => kgNextRound(g.id) : null; }
+};
+/* ---- 人間が全員脱落したら：最終結果までスキップ ---- */
+let cpuSkipping = false;
+const CPU_SKIP = {
+  neu_games: { id: () => neuId, alive: g => neuAlive(g), draw: () => drawNeu() },
+  sk_games: { id: () => skId, alive: g => skAlive(g), draw: () => drawSk() },
+  co_games: { id: () => coId, alive: g => coAlive(g), draw: () => drawCo() }
+};
+function cpuSkipTarget(){
+  for (const tb of Object.keys(CPU_SKIP)){
+    const id = CPU_SKIP[tb].id(); if (!id) continue;
+    const g = (db[tb] || []).find(x => x.id === id);
+    if (!g || !(g.status === "playing" || g.status === "round_over")) continue;
+    const al = CPU_SKIP[tb].alive(g);
+    if (al.length >= 2 && al.every(isCpu) && g.players.some(x => !isCpu(x))) return { tb, g };
+  }
+  return null;
+}
+function cpuSkipUi(){
+  const tg = cpuSkipTarget();
+  let b = document.getElementById("cpuSkip");
+  if (!tg && !cpuSkipping){ if (b) b.remove(); return; }
+  if (!b){ b = document.createElement("button"); b.id = "cpuSkip"; b.className = "cpuskip"; document.body.appendChild(b); }
+  b.disabled = cpuSkipping;
+  b.innerHTML = cpuSkipping ? `<span class="spin"></span>結果を計算中…` : `<b>⏩ 最終結果までスキップ</b><small>人間は全員脱落。残りはCPUだけで決着をつけます</small>`;
+  b.onclick = () => tg && cpuSkipRun(tg.tb, tg.g.id);
+}
+// 通信をせずに手元で最後まで進め、最後の状態を1回だけ保存する
+async function cpuSkipRun(tb, id){
+  if (cpuSkipping) return;
+  const g0 = (db[tb] || []).find(x => x.id === id); if (!g0) return;
+  const snap = JSON.parse(JSON.stringify(g0)), v0 = g0.version || 1;
+  Object.values(cpuTimers).forEach(x => x && x.tm && clearTimeout(x.tm)); cpuTimers = {};
+  cpuSkipping = true; cpuSkipUi();
+  const realFrom = sb.from;
+  const fake = t => {
+    if (t !== tb) return realFrom.call(sb, t);
+    const rows = () => db[tb] || [];
+    return {
+      select: () => Promise.resolve({ data: rows(), error: null }),
+      update: body => { const f = {}; const q2 = { eq(k, v){ f[k] = v; return q2; }, select(){ const r = rows().find(x => x.id === f.id); if (!r || (f.version != null && (r.version || 1) !== f.version)) return Promise.resolve({ data: [], error: null }); const nr = { ...r, ...JSON.parse(JSON.stringify(body)) }; return Promise.resolve({ data: [nr], error: null }); } }; return q2; }
+    };
+  };
+  let steps = 0;
+  try {
+    sb.from = fake;
+    while (steps++ < 4000){
+      const g = (db[tb] || []).find(x => x.id === id);
+      if (!g || g.status === "finished" || g.status === "aborted") break;
+      let mv = CPU_NEXT[tb] && CPU_NEXT[tb](g);
+      if (mv) mv = { run: mv }; else mv = g.status === "playing" ? CPU_AI[tb](g) : null;
+      if (!mv) break;
+      const ver = g.version;
+      await mv.run();
+      const g2 = (db[tb] || []).find(x => x.id === id);
+      if (!g2 || g2.version === ver) break;   // 進まなくなったら終わり
+    }
+  } catch (e) { console.error(e); }
+  finally { sb.from = realFrom; }
+  // 最後の状態を本番に1回で保存
+  const fin = (db[tb] || []).find(x => x.id === id);
+  const body = {}; Object.keys(fin).forEach(k => { if (!["id", "created_at"].includes(k)) body[k] = fin[k]; });
+  body.version = v0 + 1; body.updated_at = new Date().toISOString();
+  body.log = [...(fin.log || []).slice(-40), { t: new Date().toISOString(), m: "⏩ 人間が全員脱落したので、最終結果までスキップしました" }].slice(-60);
+  const { data, error } = await sb.from(tb).update(body).eq("id", id).eq("version", v0).select();
+  cpuSkipping = false;
+  if (error || !data || !data.length){ Object.assign(fin, snap); await loadTable(tb); toast("ほかの端末で進んでいたので、スキップを取り消しました", 3000); }
+  else Object.assign(fin, data[0]);
+  cpuSkipUi();
+  CPU_SKIP[tb].draw();
+}
 /* ---- ドミニオン ---- */
 const DMAI_PRI = ["village", "festival", "market", "lab", "merchant", "harbinger", "sentry", "poacher", "cellar", "throne", "witch", "council", "smithy", "library", "militia", "bandit", "moneylender", "mine", "artisan", "remodel", "bureaucrat", "workshop", "vassal", "chapel", "moat"];
 const DMAI_BUY5 = ["lab", "witch", "market", "festival", "council", "library", "sentry", "mine"];
