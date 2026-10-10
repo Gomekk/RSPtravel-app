@@ -2833,10 +2833,18 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .pcx-who b{font-size:20px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pcx-who span{font-family:var(--disp);font-size:24px}
 .pcx-who small{font-size:11px;font-weight:800;opacity:.92}
-.pcx-who em{font-style:normal;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.22)}
+.pcx-who em{font-style:normal;color:#fff!important;padding:1px 6px;border-radius:6px;background:rgba(255,255,255,.22)}
 .pcx-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
 .pcx-tag{padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;color:#fff;background:var(--ink)}
 .pcx-tag.g{background:#C98A0B}.pcx-tag.r{background:var(--crimson)}.pcx-tag.v{background:#8B3CFF}.pcx-tag.b{background:#1FB3BF}
+.pcx-hold{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.pcx-h{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 4px;border-radius:999px;background:#fff;border:2px solid var(--line);font-size:12px}
+.pcx-h b{font-weight:900;color:var(--ink)}
+.pcx-h .tic{margin:0}
+.pcx-h .pico{width:22px;height:22px}
+.pcx-h.pv{border-color:color-mix(in srgb,#8B3CFF 45%,var(--line))}
+.pcx-h.today{background:#F3ECFF}
+.pcx-h.zero{opacity:.4}
 .pcx-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 4px}
 .pcx-kpi>div{padding:8px 4px;border-radius:12px;background:#fff;border:2px solid var(--line);text-align:center}
 .pcx-kpi small{display:block;font-size:10px;font-weight:900;color:var(--mute)}
@@ -2849,6 +2857,8 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .pcx-r:first-of-type{border-top:0}
 .pcx-r span{color:var(--mute);font-weight:800;flex:none;max-width:52%}
 .pcx-r b{text-align:right;font-weight:900;color:var(--ink)}
+.cpuchips{margin-top:8px;padding:8px;border-radius:12px;background:#F3F5FA;border:1.5px dashed #C9CFDC}
+.cpuchips small{display:block;margin:0 0 6px;font-size:11px;font-weight:900;color:var(--mute)}
 /* ===== 発熱対策：見た目はそのまま、描き直しの多い動きを軽い方式に ===== */
 /* ゲーム画面を開いている間は、裏に隠れているホーム画面を描かない・動かさない */
 body:has(>.arena:not([hidden])) > #view,body:has(>.arena:not([hidden])) > .deco,body.ovl > #view,body.ovl > .deco{visibility:hidden}
@@ -2955,7 +2965,12 @@ let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
 /* ---------- 便利関数 ---------- */
-const player = id => (db.allPlayers || db.players).find(p => p.id === id);
+/* コンピューター（CPU）：ID は cpu1〜cpu6。名前と色は固定 */
+const CPU_IDS = ["cpu1", "cpu2", "cpu3", "cpu4", "cpu5", "cpu6"];
+const CPU_COLORS = ["#6B7A8F", "#9A6B4F", "#4F8A6B", "#7A5C99", "#B0703A", "#3F6E9A"];
+const isCpu = id => typeof id === "string" && /^cpu\d$/.test(id);
+const cpuPlayer = id => isCpu(id) ? { id, name: `🤖CPU${id.slice(3)}`, color: CPU_COLORS[(+id.slice(3) - 1) % CPU_COLORS.length], cpu: true } : undefined;
+const player = id => (db.allPlayers || db.players).find(p => p.id === id) || cpuPlayer(id);
 const pname = id => (player(id) || {}).name || "（不明）";
 const pcolor = id => (player(id) || {}).color || "#3A4585";
 const setting = k => (db.app_settings.find(s => s.key === k) || {}).value;
@@ -3024,11 +3039,11 @@ function subscribe(){
       if (t === "dm_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
         const nw = payload.new, cur = (db.dm_games || []).find(x => x.id === nw.id);
         if (cur && (cur.version || 1) >= (nw.version || 1)) return;      // 自分の保存のこだま（もう反映済み）
-        if (cur){ Object.assign(cur, nw); if (dmId === nw.id){ clearTimeout(reloadTimer.dmDraw); reloadTimer.dmDraw = setTimeout(() => { drawDm(); turnBuzz(); }, 30); } else if (!dmId) render(); return; }
+        if (cur){ Object.assign(cur, nw); if (dmId === nw.id){ clearTimeout(reloadTimer.dmDraw); reloadTimer.dmDraw = setTimeout(() => { drawDm(); turnBuzz(); }, 30); } else if (!dmId) render(); setTimeout(cpuKick, 0); return; }
       }
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); turnBuzz(); } catch (e) { console.error(e); }
+        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); turnBuzz(); cpuKick(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -3083,6 +3098,7 @@ function render(){
     : viewHistory(t));
   bindView();
   bindGuestCards(v);
+  setTimeout(cpuKick, 0);
   guestCheck();
   checkClaim();
   neuTurnNotice();
@@ -3214,13 +3230,15 @@ function openPlayerCard(t, pid){
   if (t.champion_out === pid) status.push(`<span class="pcx-tag g">3連覇達成・免除中</span>`);
   if (pend.length) status.push(`<span class="pcx-tag r">未決着 ${pend.length}件に参加予定</span>`);
   if (privs.some(x => x.day === day)) status.push(`<span class="pcx-tag v">今日の特権者</span>`);
-  if (nn + ss) status.push(`<span class="pcx-tag b">免除券を持っている</span>`);
+  // 持っている券・特権をアイコンで一目で
+  const hold = `<div class="pcx-hold"><span class="pcx-h ${nn ? "" : "zero"}"><i class="tic n">免</i><b>×${nn}</b></span><span class="pcx-h ${ss ? "" : "zero"}"><i class="tic s">S</i><b>×${ss}</b></span>${privs.length ? privs.map(x => `<span class="pcx-h pv ${x.day === day ? "today" : ""}" title="${esc(PRIVS[x.kind].name)}"><span class="pico" style="--pi:var(--priv-${x.kind})"></span><b>特権${KANJI[x.kind]}</b></span>`).join("") : `<span class="pcx-h zero"><span class="pico" style="--pi:var(--priv-1)"></span><b>特権なし</b></span>`}</div>`;
   const html = `<div class="pcx" style="--c:${c}">
     <div class="pcx-hero">
       <div class="pcx-rk"><small>現在</small><b>${me2.rank}</b><small>${typeof me2.rank === "number" ? "位" : ""}</small></div>
       <div class="pcx-who"><b>${esc(pname(pid))}</b><span>${yen(me2.paid)}</span><small>標準との差 <em class="${diff > 0 ? "plus" : diff < 0 ? "minus" : ""}">${signed(diff)}</em></small></div>
     </div>
     ${status.length ? `<div class="pcx-tags">${status.join("")}</div>` : ""}
+    ${hold}
     <div class="pcx-kpi">
       <div><small>支払い</small><b>${S.wins || 0}<i>/${S.joins || 0}回</i></b></div>
       <div><small>支払率</small><b>${pct(rate(S.wins, S.joins))}</b></div>
@@ -3317,6 +3335,8 @@ function closeSheet(){ $("#sheet").classList.remove("on"); }
 $("#sheet").addEventListener("click", e => { if (e.target.id === "sheet") closeSheet(); });
 
 const chipPlayers = (ids, selected, attr = "data-p") => `<div class="chips">${ids.map(id => `<button type="button" class="pc" style="--pc:${pcolor(id)}" ${attr}="${id}" aria-pressed="${selected.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div>`;
+/* 対戦の参加者：コンピューターの札（同じ data-p なので、各ゲームの選択処理がそのまま使える） */
+const cpuChips = order => `<div class="cpuchips"><small>🤖 コンピューターを追加（タップで参加）</small><div class="chips">${CPU_IDS.map(id => `<button type="button" class="pc cpu" style="--pc:${pcolor(id)}" data-p="${id}" aria-pressed="${order.includes(id)}"><span class="dot" style="background:${pcolor(id)}"></span>${esc(pname(id))}</button>`).join("")}</div></div>`;
 function bindChips(root, attr, multi, onChange){
   root.querySelectorAll(`[${attr}]`).forEach(b => b.onclick = () => {
     if (!multi) root.querySelectorAll(`[${attr}]`).forEach(x => x.setAttribute("aria-pressed", "false"));
@@ -4901,6 +4921,7 @@ const NOTIFY_DEF = { morning: "08:00", night: "20:00", lastday: "15:00", prize: 
 const NOTIFY_LABEL = { morning: "朝：特権の宣言・ルーレット", night: "夜：宿泊費（1日目は行きの旅費も）", lastday: "最終日：帰りの旅費・車代", prize: "最終日：ピタリ賞・ニアピン賞の判定" };
 const notifyTimes = () => ({ ...NOTIFY_DEF, ...(setting("notify_times") || {}) });
 function pushCall(body){
+  if (body && isCpu(body.to)) return;   // コンピューターには通知しない
   fetch(SUPABASE_URL + "/functions/v1/ojk-push", { method: "POST", headers: { "Content-Type": "application/json", apikey: SUPABASE_KEY }, body: JSON.stringify(body) }).catch(() => {});
 }
 const b64u = s => { const p = "=".repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from([...r].map(c => c.charCodeAt(0))); };
@@ -5280,12 +5301,12 @@ function neuLegal(g, c){
   return true;
 }
 let neuBusy = false;
-async function neuSave(g, patch, logLine){
+async function neuSave(g, patch, logLine, quiet){
   const body = { ...patch, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
   if (logLine) body.log = [...(g.log || []), { t: new Date().toISOString(), m: logLine }].slice(-60);
   const { data, error } = await sb.from("neu_games").update(body).eq("id", g.id).eq("version", g.version || 1).select();
   if (error){ fail(error, "保存"); return false; }
-  if (!data || !data.length){ await loadTable("neu_games"); drawNeu(); toast("画面を最新にしました。もう一度タップしてください", 2000); return false; }
+  if (!data || !data.length){ await loadTable("neu_games"); drawNeu(); if (!quiet) toast("画面を最新にしました。もう一度タップしてください", 2000); return false; }
   Object.assign(g, data[0]); drawNeu(); return true;
 }
 
@@ -5414,7 +5435,7 @@ function openNeuNew(){
   const s = openSheet("NEU（ノイ）を始める", `
     <p class="note">101を超えないようにカードを出し合い、出せなくなった人がチップを失います。最後まで生き残った人の勝ち（2〜7人）。</p>
     <button type="button" class="grbtn" data-grule="neu">ルールを見る</button>
-    <div class="f"><span>参加者（タップで選ぶ）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>参加者（タップで選ぶ）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>席順（時計回り）・名前を指で動かして並べ替え</span><div id="nOrder" class="norder"></div><button class="shufbtn" id="nShuf">席順をシャッフル</button></div>
     <label class="f"><span>最初の親（じゃんけんで決めた人）</span><select id="nDealer"></select></label>
     <div class="btns"><button class="btn" id="nGo">対戦スタート</button></div>`);
@@ -5465,6 +5486,7 @@ function openNeuNew(){
   }
   draw();
   $("#nGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 2 || order.length > 7){ toast("参加者は2〜7人です"); return; }
     const dealer = $("#nDealer").value || order[0];
     const g0 = { players: order, chips: Object.fromEntries(order.map(id => [id, 3])) };
@@ -5482,6 +5504,7 @@ function openNeu(id){ neuId = id; neuSel = null; neuPrevTotal = null; $("#neu").
 function closeNeu(){ neuId = null; $("#neu").hidden = true; document.body.style.overflow = ""; render(); }
 let neuPrevTotal = null, neuPrevDisc = null, neuPrevGame = null;
 function drawNeu(){
+  setTimeout(cpuKick, 0);
   if (!neuId) return;
   const g = neuById(neuId); if (!g) return closeNeu();
   const el = $("#neu"), t = g.turn || {}, mine = g.players.includes(me) ? (g.hands[me] || []) : null;
@@ -5599,9 +5622,9 @@ async function neuPlay(g, i){
   }
   neuApply(g, i, c, null);
 }
-async function neuApply(g, i, c, shotTo){
+async function neuApply(g, i, c, shotTo, who = me){
   const t = { ...g.turn };
-  const hand = (g.hands[me] || []).slice(); hand.splice(i, 1);
+  const hand = (g.hands[who] || []).slice(); hand.splice(i, 1);
   let total = g.total, dir = g.dir;
   const a = neuAdd(c);
   if (a !== null) total += a; else if (c === "X101") total = NEU_LIMIT;
@@ -5614,34 +5637,34 @@ async function neuApply(g, i, c, shotTo){
   if (t.played >= t.need) t.done = true;
   if (["PASS", "TURN", "SHOT"].includes(c) && !transfer && t.need === 2 && t.played === 2){ /* 2枚目の指示カードは通常どおり */ }
   const label = a !== null ? (a > 0 ? `+${a}` : `${a}`) : c === "X101" ? "101" : c;
-  const ok = await neuSave(g, { hands: { ...g.hands, [me]: hand }, discard: [...(g.discard || []), c], total, dir, turn: t },
-    `${pname(me)}：${label}${c === "SHOT" ? `（${pname(shotTo)}を指名）` : ""} → 合計${total}${transfer ? "（2回出す義務が次の人へ）" : ""}`);
+  const ok = await neuSave(g, { hands: { ...g.hands, [who]: hand }, discard: [...(g.discard || []), c], total, dir, turn: t },
+    `${pname(who)}：${label}${c === "SHOT" ? `（${pname(shotTo)}を指名）` : ""} → 合計${total}${transfer ? "（2回出す義務が次の人へ）" : ""}`, who !== me);
   if (ok){
     const n = $("#ntot"); if (n){ n.classList.remove("pop"); void n.offsetWidth; n.classList.add("pop"); }
     if (navigator.vibrate) navigator.vibrate(20);
   }
 }
-async function neuDraw(g){
+async function neuDraw(g, who = me){
   const t = { ...g.turn }; if (!(t.drawn < t.played)) return;
   let deck = (g.deck || []).slice(), discard = (g.discard || []).slice();
-  if (!deck.length){ deck = shuffle(discard); discard = []; toast("山札を切り直しました"); }
+  if (!deck.length){ deck = shuffle(discard); discard = []; if (who === me) toast("山札を切り直しました"); }
   if (!deck.length) return;
   const c = deck.shift(); t.drawn++;
-  await neuSave(g, { deck, discard, hands: { ...g.hands, [me]: [...(g.hands[me] || []), c] }, turn: t });
+  await neuSave(g, { deck, discard, hands: { ...g.hands, [who]: [...(g.hands[who] || []), c] }, turn: t }, null, who !== me);
 }
-async function neuEnd(g){
+async function neuEnd(g, who = me){
   const t = g.turn; if (!t.done) return;
-  const next = t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, me, g.dir);
+  const next = t.shot && (g.chips[t.shot] || 0) > 0 ? t.shot : neuNext(g, who, g.dir);
   if (await neuSave(g, { turn: { pid: next, need: t.dbl ? 2 : 1, played: 0, drawn: 0, dbl: false, shot: null, done: false } },
-    `${pname(me)}のターン終了 → ${pname(next)}${t.dbl ? "（2回）" : ""}`)) pushCall({ type: "neu_turn", to: next, total: g.total, need: t.dbl ? 2 : 1 });
+    `${pname(who)}のターン終了 → ${pname(next)}${t.dbl ? "（2回）" : ""}`)) pushCall({ type: "neu_turn", to: next, total: g.total, need: t.dbl ? 2 : 1 });
 }
-async function neuLose(g){
-  if (!confirm("負けを宣言しますか？\nチップを1枚失い、次の回戦の親になります。")) return;
-  const chips = { ...g.chips, [me]: Math.max(0, (g.chips[me] || 0) - 1) };
+async function neuLose(g, who = me){
+  if (who === me && !confirm("負けを宣言しますか？\nチップを1枚失い、次の回戦の親になります。")) return;
+  const chips = { ...g.chips, [who]: Math.max(0, (g.chips[who] || 0) - 1) };
   const alive = g.players.filter(p => chips[p] > 0);
   const fin = alive.length <= 1;
-  await neuSave(g, { chips, loser: me, status: fin ? "finished" : "round_over", winner: fin ? alive[0] || null : null },
-    `${pname(me)}が負けを宣言（合計${g.total}）。チップ残り${chips[me]}${chips[me] <= 0 ? "・脱落" : ""}${fin ? `。優勝は${pname(alive[0])}！` : ""}`);
+  await neuSave(g, { chips, loser: who, status: fin ? "finished" : "round_over", winner: fin ? alive[0] || null : null },
+    `${pname(who)}が負けを宣言（合計${g.total}）。チップ残り${chips[who]}${chips[who] <= 0 ? "・脱落" : ""}${fin ? `。優勝は${pname(alive[0])}！` : ""}`);
   if (fin) flash("NEU 優勝！", pname(alive[0]));
 }
 async function neuNextRound(g){
@@ -5735,12 +5758,12 @@ function csOptions(g, pid, temp, dice){
   });
   return out;
 }
-async function csSave(g, patch, logLine){
+async function csSave(g, patch, logLine, quiet){
   const body = { ...patch, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
   if (logLine) body.log = [...(g.log || []), { t: new Date().toISOString(), m: logLine }].slice(-60);
   const { data, error } = await sb.from("cs_games").update(body).eq("id", g.id).eq("version", g.version || 1).select();
   if (error){ fail(error, "保存"); return false; }
-  if (!data || !data.length){ await loadTable("cs_games"); drawCs(); toast("画面を最新にしました。もう一度タップしてください", 2000); return false; }
+  if (!data || !data.length){ await loadTable("cs_games"); drawCs(); if (!quiet) toast("画面を最新にしました。もう一度タップしてください", 2000); return false; }
   Object.assign(g, data[0]); drawCs(); return true;
 }
 function openCsNew(){
@@ -5749,7 +5772,7 @@ function openCsNew(){
   const s = openSheet("キャントストップを始める", `
     <p class="note">ダイス4個を2組に分けてレーンを登る。欲張って振り続けるか、止めて確定するか。3本のレーンを制した人の勝ち（2〜6人）。</p>
     <button type="button" class="grbtn" data-grule="cs">ルールを見る</button>
-    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="cOrder" class="norder"></div><button class="shufbtn" id="cShuf">順番をシャッフル</button></div>
     <div class="btns"><button class="btn" id="cGo">対戦スタート</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
@@ -5762,6 +5785,7 @@ function openCsNew(){
   $("#cShuf").onclick = () => { order = shuffle(order); draw(); };
   draw();
   $("#cGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
     const row = { trip_id: t ? t.id : null, status: "playing", players: order, pos: Object.fromEntries(order.map(id => [id, {}])), claimed: {},
       turn: { pid: order[0], temp: {}, dice: null, phase: "roll", opts: [] }, created_by: me || null,
@@ -5775,6 +5799,7 @@ function openCs(id){ csId = id; csPrevRoll = null; $("#cs").hidden = false; docu
 function closeCs(){ csId = null; $("#cs").hidden = true; document.body.style.overflow = ""; render(); }
 const dieFace = n => `<span class="die d${n}">${Array.from({ length: 9 }, (_, i) => `<i class="${[[4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]][n - 1].includes(i) ? "on" : ""}"></i>`).join("")}</span>`;
 function drawCs(){
+  setTimeout(cpuKick, 0);
   if (!csId) return;
   const g = csById(csId); if (!g) return closeCs();
   const el = $("#cs"), t = g.turn || {}, myTurn = g.status === "playing" && t.pid === me;
@@ -5836,42 +5861,42 @@ function csMenu(g){
   s.querySelector('[data-x="rule"]').onclick = () => openGameRules("cs");
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await csSave(g, { status: "aborted" }, "対戦が中止されました"); closeCs(); };
 }
-async function csRoll(g){
-  const t = g.turn; if (t.pid !== me || t.phase === "choose" || t.phase === "bust") return;
+async function csRoll(g, who = me){
+  const t = g.turn; if (t.pid !== who || t.phase === "choose" || t.phase === "bust") return;
   const dice = Array.from({ length: 4 }, () => 1 + Math.floor(Math.random() * 6));
-  const opts = csOptions(g, me, t.temp || {}, dice);
-  if (navigator.vibrate) navigator.vibrate(30);
+  const opts = csOptions(g, who, t.temp || {}, dice);
+  if (who === me && navigator.vibrate) navigator.vibrate(30);
   if (!opts.length){
-    await csSave(g, { turn: { ...t, dice, opts: [], phase: "bust" } }, `${pname(me)}：${dice.join("・")} → 強制終了！`);
+    await csSave(g, { turn: { ...t, dice, opts: [], phase: "bust" } }, `${pname(who)}：${dice.join("・")} → 強制終了！`, who !== me);
     return;
   }
-  await csSave(g, { turn: { ...t, dice, opts, phase: "choose" } }, `${pname(me)}：${dice.join("・")}`);
+  await csSave(g, { turn: { ...t, dice, opts, phase: "choose" } }, `${pname(who)}：${dice.join("・")}`, who !== me);
 }
-async function csChoose(g, i){
-  const t = g.turn, o = (t.opts || [])[i]; if (!o || t.pid !== me) return;
-  const temp = csApply(g, me, t.temp || {}, o); if (!temp) return;
-  await csSave(g, { turn: { ...t, temp, opts: [], phase: "decide" } }, `${pname(me)}：${o.join("と")}を進めた`);
+async function csChoose(g, i, who = me){
+  const t = g.turn, o = (t.opts || [])[i]; if (!o || t.pid !== who) return;
+  const temp = csApply(g, who, t.temp || {}, o); if (!temp) return;
+  await csSave(g, { turn: { ...t, temp, opts: [], phase: "decide" } }, `${pname(who)}：${o.join("と")}を進めた`, who !== me);
 }
-async function csStop(g){
-  const t = g.turn; if (t.pid !== me) return;
-  const pos = { ...g.pos, [me]: { ...(g.pos[me] || {}), ...(t.temp || {}) } };
+async function csStop(g, who = me){
+  const t = g.turn; if (t.pid !== who) return;
+  const pos = { ...g.pos, [who]: { ...(g.pos[who] || {}), ...(t.temp || {}) } };
   const claimed = { ...g.claimed }; const got = [];
-  Object.keys(t.temp || {}).forEach(c => { if (!claimed[c] && pos[me][c] >= CS_H[c]){ claimed[c] = me; got.push(c); } });
-  const mine = Object.values(claimed).filter(x => x === me).length;
+  Object.keys(t.temp || {}).forEach(c => { if (!claimed[c] && pos[who][c] >= CS_H[c]){ claimed[c] = who; got.push(c); } });
+  const mine = Object.values(claimed).filter(x => x === who).length;
   if (mine >= 3){
-    await csSave(g, { pos, claimed, status: "finished", winner: me, turn: { ...t, phase: "done" } }, `${pname(me)}が確定。${got.length ? `${got.join("・")}レーンを獲得！` : ""}3本制覇で優勝！`);
-    csFx("claim", "キャントストップ 優勝！", pname(me)); return;
+    await csSave(g, { pos, claimed, status: "finished", winner: who, turn: { ...t, phase: "done" } }, `${pname(who)}が確定。${got.length ? `${got.join("・")}レーンを獲得！` : ""}3本制覇で優勝！`, who !== me);
+    csFx("claim", "キャントストップ 優勝！", pname(who)); return;
   }
-  const nx = csNext(g, me);
-  if (await csSave(g, { pos, claimed, turn: { pid: nx, temp: {}, dice: null, phase: "roll", opts: [] } }, `${pname(me)}が確定${got.length ? `。${got.join("・")}レーンを獲得！` : ""} → ${pname(nx)}の番`)){
-    if (got.length) csFx("claim", `${got.join("・")}レーン獲得！`, pname(me));
+  const nx = csNext(g, who);
+  if (await csSave(g, { pos, claimed, turn: { pid: nx, temp: {}, dice: null, phase: "roll", opts: [] } }, `${pname(who)}が確定${got.length ? `。${got.join("・")}レーンを獲得！` : ""} → ${pname(nx)}の番`, who !== me)){
+    if (got.length) csFx("claim", `${got.join("・")}レーン獲得！`, pname(who));
     pushCall({ type: "game_turn", game: "キャントストップ", to: nx });
   }
 }
-async function csPass(g){
-  const t = g.turn; if (t.pid !== me) return;
-  const nx = csNext(g, me);
-  if (await csSave(g, { turn: { pid: nx, temp: {}, dice: null, phase: "roll", opts: [] } }, `${pname(me)}の番は強制終了 → ${pname(nx)}の番`)) pushCall({ type: "game_turn", game: "キャントストップ", to: nx });
+async function csPass(g, who = me){
+  const t = g.turn; if (t.pid !== who) return;
+  const nx = csNext(g, who);
+  if (await csSave(g, { turn: { pid: nx, temp: {}, dice: null, phase: "roll", opts: [] } }, `${pname(who)}の番は強制終了 → ${pname(nx)}の番`, who !== me)) pushCall({ type: "game_turn", game: "キャントストップ", to: nx });
 }
 
 /* ===================== セブンブリッジ ===================== */
@@ -5980,7 +6005,7 @@ function openSbNew(){
   const s = openSheet("セブンブリッジを始める", `
     <p class="note">同じ数字や同じマークの連番をそろえて公開し、手札を早くなくした人がラウンドの勝ち。残った手札は失点。決めたラウンド数の合計点で競います（2〜6人）。</p>
     <button type="button" class="grbtn" data-grule="sb">ルールを見る</button>
-    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="bOrder" class="norder"></div><button class="shufbtn" id="bShuf">順番をシャッフル</button></div>
     <div class="f"><span>ラウンド数</span><div class="chips">${[1, 3, 5, 7].map(n => `<button type="button" data-rd="${n}" aria-pressed="${n === rounds}">${n}回</button>`).join("")}</div></div>
     <div class="btns"><button class="btn" id="bGo">対戦スタート</button></div>`);
@@ -5995,6 +6020,7 @@ function openSbNew(){
   $("#bShuf").onclick = () => { order = shuffle(order); draw(); };
   draw();
   $("#bGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
     const row = { trip_id: t ? t.id : null, status: "playing", players: order, scores: Object.fromEntries(order.map(id => [id, 0])), round: 1, rounds,
       ...sbDeal(order, order[0]), created_by: me || null, log: [{ t: new Date().toISOString(), m: `第1ラウンド開始。最初は${pname(order[0])}` }] };
@@ -6008,6 +6034,7 @@ let sbId = null, sbBusy = false, sbSel = [], sbTimer = null, sbAttachMode = fals
 function openSb(id){ sbId = id; sbPrev = null; sbSel = []; sbAttachMode = false; $("#sbg").hidden = false; document.body.style.overflow = "hidden"; drawSb(); }
 function closeSb(){ sbId = null; clearInterval(sbTimer); $("#sbg").hidden = true; document.body.style.overflow = ""; render(); }
 function drawSb(){
+  setTimeout(cpuKick, 0);
   if (!sbId) return;
   const g = sbById(sbId); if (!g) return closeSb();
   const el = $("#sbg"), t = g.turn || {}, hand = g.players.includes(me) ? sbSort(g.hands[me] || []) : null;
@@ -6091,17 +6118,17 @@ function sbMenu(g){
   s.querySelector('[data-x="rule"]').onclick = () => openGameRules("sb");
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await sbSave(g, { status: "aborted", claim: null }, "対戦が中止されました"); closeSb(); };
 }
-async function sbDraw(g){
-  const t = g.turn; if (t.pid !== me || t.phase !== "draw" || g.claim) return;
+async function sbDraw(g, who = me){
+  const t = g.turn; if (t.pid !== who || t.phase !== "draw" || g.claim) return;
   let deck = (g.deck || []).slice(), discard = (g.discard || []).slice();
-  if (!deck.length){ const keep = discard.pop(); deck = shuffle(discard); discard = keep ? [keep] : []; toast("山札を切り直しました"); }
+  if (!deck.length){ const keep = discard.pop(); deck = shuffle(discard); discard = keep ? [keep] : []; if (who === me) toast("山札を切り直しました"); }
   if (!deck.length){
     const fin = g.round >= g.rounds;
     await sbSave(g, { claim: null, status: fin ? "finished" : "round_over", round_result: { winner: null, pen: {} }, winner: fin ? g.players.slice().sort((a, b) => (g.scores[b] || 0) - (g.scores[a] || 0))[0] : null }, "山札がなくなったので流局（このラウンドは失点なし）");
     return;
   }
   const c = deck.shift();
-  await sbSave(g, { deck, discard, hands: { ...g.hands, [me]: [...g.hands[me], c] }, turn: { pid: me, phase: "play" } });
+  await sbSave(g, { deck, discard, hands: { ...g.hands, [who]: [...g.hands[who], c] }, turn: { pid: who, phase: "play" } });
 }
 const sbRemove = (hand, cards) => { const h = hand.slice(); cards.forEach(c => { const i = h.indexOf(c); if (i >= 0) h.splice(i, 1); }); return h; };
 /* ---- セブンブリッジの演出（ログの変化を見て全員の画面で再生） ---- */
@@ -6218,9 +6245,25 @@ async function sbDiscard(g){
   }
   await sbSave(g, { hands: { ...g.hands, [me]: hand }, discard, claim: { card: c, from: me, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, me), phase: "draw" } }, `${pname(me)}：${txt}を捨てた`);
 }
-async function sbClaim(g, type){
-  const cl = g.claim; if (!cl || (cl.claims || []).some(x => x.pid === me)) return;
-  await sbSave(g, { claim: { ...cl, claims: [...(cl.claims || []), { pid: me, type }] } }, `${pname(me)}：${type === "pon" ? "ポン" : "チー"}！`);
+async function sbDiscardAs(g, c0, who){
+  if (g.turn.pid !== who || g.turn.phase !== "play" || !(g.hands[who] || []).includes(c0)) return;
+  const c = c0, hand = sbRemove(g.hands[who] || [], [c]);
+  const discard = [...(g.discard || []), c];
+  const txt = c === "JK" ? "ジョーカー" : SB_MARK[sbSuit(c)] + sbRankTxt(sbRank(c));
+  if (!hand.length){
+    // 上がり：ほかの人の失点を計算
+    const pen = {}, scores = { ...g.scores };
+    g.players.forEach(p => { if (p === who) return; pen[p] = sbPenalty(g.hands[p] || []); scores[p] = (scores[p] || 0) - pen[p]; });
+    const fin = g.round >= g.rounds;
+    await sbSave(g, { hands: { ...g.hands, [who]: [] }, discard, claim: null, scores, status: fin ? "finished" : "round_over", round_result: { winner: who, pen }, winner: fin ? g.players.slice().sort((a, b) => (scores[b] || 0) - (scores[a] || 0))[0] : null },
+      `${pname(who)}が${txt}を捨てて上がり！`);
+    return;
+  }
+  await sbSave(g, { hands: { ...g.hands, [who]: hand }, discard, claim: { card: c, from: who, until: Date.now() + SB_CLAIM_MS, claims: [] }, turn: { pid: sbNext(g, who), phase: "draw" } }, `${pname(who)}：${txt}を捨てた`);
+}
+async function sbClaim(g, type, who = me){
+  const cl = g.claim; if (!cl || (cl.claims || []).some(x => x.pid === who)) return;
+  await sbSave(g, { claim: { ...cl, claims: [...(cl.claims || []), { pid: who, type }] } }, `${pname(who)}：${type === "pon" ? "ポン" : "チー"}！`);
 }
 async function sbResolve(g){
   const cl = g.claim; if (!cl) return;
@@ -6292,7 +6335,7 @@ function openSkNew(){
   const s = openSheet("スカルを始める", `
     <p class="note">花とドクロのディスクを伏せて、何枚めくれるかを宣言し合うはったりゲーム。チャレンジを2回成功させた人の勝ち（2〜6人）。</p>
     <button type="button" class="grbtn" data-grule="sk">ルールを見る</button>
-    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="kOrder" class="norder"></div><button class="shufbtn" id="kShuf">順番をシャッフル</button></div>
     <div class="btns"><button class="btn" id="kGo">対戦スタート</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
@@ -6305,6 +6348,7 @@ function openSkNew(){
   $("#kShuf").onclick = () => { order = shuffle(order); draw(); };
   draw();
   $("#kGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
     const row = { trip_id: t ? t.id : null, status: "playing", players: order, phase: "setup", round: 1,
       discs: Object.fromEntries(order.map(id => [id, ["F", "F", "F", "S"]])), wins: {}, stacks: {}, passed: [], bid: null, ch: null, result: null,
@@ -6322,68 +6366,68 @@ function closeSk(){ skId = null; $("#skg").hidden = true; document.body.style.ov
 function skStartChallenge(g, pid, n, extra){
   return { ...extra, phase: "challenge", bid: { n, pid }, ch: { pid, need: n, fc: {}, flips: [] } };
 }
-function skPlace(d){
-  return skCommit(skId, g => {
-    if (g.status !== "playing" || !skAliveP(g, me)) return null;
-    const hand = skHand(g, me); if (!hand.includes(d)) return null;
-    const stacks = { ...(g.stacks || {}), [me]: [...skStack(g, me), d] };
+function skPlace(d, who = me, gid = skId){
+  return skCommit(gid, g => {
+    if (g.status !== "playing" || !skAliveP(g, who)) return null;
+    const hand = skHand(g, who); if (!hand.includes(d)) return null;
+    const stacks = { ...(g.stacks || {}), [who]: [...skStack(g, who), d] };
     if (g.phase === "setup"){
-      if (skStack(g, me).length) return null;
-      const all = skAlive(g).every(p => (p === me ? 1 : skStack(g, p).length) > 0);
-      if (all) return { patch: { stacks, phase: "place" }, log: [`${pname(me)}が1枚伏せた`, `全員そろった！最初の番は${pname(g.turn.pid)}`], push: [g.turn.pid] };
-      return { patch: { stacks }, log: `${pname(me)}が1枚伏せた` };
+      if (skStack(g, who).length) return null;
+      const all = skAlive(g).every(p => (p === who ? 1 : skStack(g, p).length) > 0);
+      if (all) return { patch: { stacks, phase: "place" }, log: [`${pname(who)}が1枚伏せた`, `全員そろった！最初の番は${pname(g.turn.pid)}`], push: [g.turn.pid] };
+      return { patch: { stacks }, log: `${pname(who)}が1枚伏せた` };
     }
-    if (g.phase !== "place" || g.turn.pid !== me) return null;
-    const nx = skNext(g, me, false);
-    return { patch: { stacks, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}がもう1枚伏せた → ${pname(nx)}の番`, push: [nx] };
+    if (g.phase !== "place" || g.turn.pid !== who) return null;
+    const nx = skNext(g, who, false);
+    return { patch: { stacks, turn: { ...g.turn, pid: nx } }, log: `${pname(who)}がもう1枚伏せた → ${pname(nx)}の番`, push: [nx] };
   });
 }
-function skBid(n){
-  return skCommit(skId, g => {
-    if (g.status !== "playing" || !(g.phase === "place" || g.phase === "bid") || g.turn.pid !== me) return null;
+function skBid(n, who = me, gid = skId){
+  return skCommit(gid, g => {
+    if (g.status !== "playing" || !(g.phase === "place" || g.phase === "bid") || g.turn.pid !== who) return null;
     const total = skTotal(g), cur = g.bid ? g.bid.n : 0;
     if (n <= cur || n > total) return null;
     const passed = g.phase === "place" ? [] : (g.passed || []);
-    const lines = [`${pname(me)}が「${n}枚」を宣言！${n === total ? "（場の全部）" : ""}`];
-    if (n === total){ lines.push(`${pname(me)}のチャレンジ開始！${n}枚めくる`); return { patch: skStartChallenge(g, me, n, { passed }), log: lines }; }
-    const g2 = { ...g, passed }, nx = skNext(g2, me, true);
-    if (nx === me){ lines.push(`${pname(me)}のチャレンジ開始！${n}枚めくる`); return { patch: skStartChallenge(g, me, n, { passed }), log: lines }; }
-    return { patch: { phase: "bid", bid: { n, pid: me }, passed, turn: { ...g.turn, pid: nx } }, log: lines, push: [nx] };
+    const lines = [`${pname(who)}が「${n}枚」を宣言！${n === total ? "（場の全部）" : ""}`];
+    if (n === total){ lines.push(`${pname(who)}のチャレンジ開始！${n}枚めくる`); return { patch: skStartChallenge(g, who, n, { passed }), log: lines }; }
+    const g2 = { ...g, passed }, nx = skNext(g2, who, true);
+    if (nx === who){ lines.push(`${pname(who)}のチャレンジ開始！${n}枚めくる`); return { patch: skStartChallenge(g, who, n, { passed }), log: lines }; }
+    return { patch: { phase: "bid", bid: { n, pid: who }, passed, turn: { ...g.turn, pid: nx } }, log: lines, push: [nx] };
   });
 }
-function skPass(){
-  return skCommit(skId, g => {
-    if (g.status !== "playing" || g.phase !== "bid" || g.turn.pid !== me || !g.bid || g.bid.pid === me) return null;
-    const passed = [...(g.passed || []), me], g2 = { ...g, passed }, nx = skNext(g2, me, true);
-    if (nx === g.bid.pid) return { patch: skStartChallenge(g, g.bid.pid, g.bid.n, { passed }), log: [`${pname(me)}：パス`, `${pname(g.bid.pid)}のチャレンジ開始！${g.bid.n}枚めくる`], push: [g.bid.pid] };
-    return { patch: { passed, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}：パス → ${pname(nx)}の番`, push: [nx] };
+function skPass(who = me, gid = skId){
+  return skCommit(gid, g => {
+    if (g.status !== "playing" || g.phase !== "bid" || g.turn.pid !== who || !g.bid || g.bid.pid === who) return null;
+    const passed = [...(g.passed || []), who], g2 = { ...g, passed }, nx = skNext(g2, who, true);
+    if (nx === g.bid.pid) return { patch: skStartChallenge(g, g.bid.pid, g.bid.n, { passed }), log: [`${pname(who)}：パス`, `${pname(g.bid.pid)}のチャレンジ開始！${g.bid.n}枚めくる`], push: [g.bid.pid] };
+    return { patch: { passed, turn: { ...g.turn, pid: nx } }, log: `${pname(who)}：パス → ${pname(nx)}の番`, push: [nx] };
   });
 }
-function skFlip(owner){
-  return skCommit(skId, g => {
-    const ch = g.ch; if (g.status !== "playing" || g.phase !== "challenge" || !ch || ch.pid !== me) return null;
-    const fc = { ...(ch.fc || {}) }, own = skStack(g, me);
-    if ((fc[me] || 0) < own.length && owner !== me) return null;   // まず自分のディスクから
+function skFlip(owner, who = me, gid = skId){
+  return skCommit(gid, g => {
+    const ch = g.ch; if (g.status !== "playing" || g.phase !== "challenge" || !ch || ch.pid !== who) return null;
+    const fc = { ...(ch.fc || {}) }, own = skStack(g, who);
+    if ((fc[who] || 0) < own.length && owner !== who) return null;   // まず自分のディスクから
     const st = skStack(g, owner), k = fc[owner] || 0;
     if (k >= st.length) return null;
     const d = st[st.length - 1 - k];
     fc[owner] = k + 1;
-    const flips = [...(ch.flips || []), { o: owner, d }], whose = owner === me ? "自分" : pname(owner);
+    const flips = [...(ch.flips || []), { o: owner, d }], whose = owner === who ? "自分" : pname(owner);
     if (d === "S"){
-      const discs = { ...g.discs }, mine = skOwn(g, me).slice(), idx = Math.floor(Math.random() * mine.length), lost = mine[idx];
-      mine.splice(idx, 1); discs[me] = mine;
+      const discs = { ...g.discs }, mine = skOwn(g, who).slice(), idx = Math.floor(Math.random() * mine.length), lost = mine[idx];
+      mine.splice(idx, 1); discs[who] = mine;
       const g2 = { ...g, discs }, alive = skAlive(g2);
-      const lines = [`${pname(me)}：${whose}のドクロをめくった！チャレンジ失敗`, mine.length ? `${pname(me)}がディスクを1枚失った（残り${mine.length}枚）` : `${pname(me)}はディスクがなくなり脱落…`];
-      const result = { type: "fail", pid: me, by: owner, lost, out: !mine.length };
+      const lines = [`${pname(who)}：${whose}のドクロをめくった！チャレンジ失敗`, mine.length ? `${pname(who)}がディスクを1枚失った（残り${mine.length}枚）` : `${pname(who)}はディスクがなくなり脱落…`];
+      const result = { type: "fail", pid: who, by: owner, lost, out: !mine.length };
       if (alive.length <= 1){ lines.push(`${pname(alive[0])}が最後の1人！優勝！`); return { patch: { discs, ch: { ...ch, fc, flips }, result, phase: "result", status: "finished", winner: alive[0] || null }, log: lines }; }
-      const starter = owner !== me && skAliveP(g2, owner) ? owner : skAliveP(g2, me) ? me : skNext(g2, me, false);
+      const starter = owner !== who && skAliveP(g2, owner) ? owner : skAliveP(g2, who) ? who : skNext(g2, who, false);
       return { patch: { discs, ch: { ...ch, fc, flips }, result, phase: "result", turn: { pid: starter, start: starter } }, log: lines };
     }
     const done = flips.length >= ch.need;
-    if (!done) return { patch: { ch: { ...ch, fc, flips } }, log: `${pname(me)}：${whose}の🌸（${flips.length}/${ch.need}）` };
-    const wins = { ...(g.wins || {}), [me]: ((g.wins || {})[me] || 0) + 1 }, fin = wins[me] >= 2;
-    const lines = [`${pname(me)}：${whose}の🌸（${flips.length}/${ch.need}）`, `${pname(me)}のチャレンジ成功！${fin ? "2勝目で優勝！" : "1勝目"}`];
-    return { patch: { ch: { ...ch, fc, flips }, wins, result: { type: "success", pid: me }, phase: "result", turn: { pid: me, start: me }, ...(fin ? { status: "finished", winner: me } : {}) }, log: lines };
+    if (!done) return { patch: { ch: { ...ch, fc, flips } }, log: `${pname(who)}：${whose}の🌸（${flips.length}/${ch.need}）` };
+    const wins = { ...(g.wins || {}), [who]: ((g.wins || {})[who] || 0) + 1 }, fin = wins[who] >= 2;
+    const lines = [`${pname(who)}：${whose}の🌸（${flips.length}/${ch.need}）`, `${pname(who)}のチャレンジ成功！${fin ? "2勝目で優勝！" : "1勝目"}`];
+    return { patch: { ch: { ...ch, fc, flips }, wins, result: { type: "success", pid: who }, phase: "result", turn: { pid: who, start: who }, ...(fin ? { status: "finished", winner: who } : {}) }, log: lines };
   });
 }
 function skNextRound(){
@@ -6487,6 +6531,7 @@ function skDiff(g){
 
 /* ---- 画面 ---- */
 function drawSk(){
+  setTimeout(cpuKick, 0);
   if (!skId) return;
   const g = skById(skId); if (!g) return closeSk();
   skDiff(g);
@@ -6705,7 +6750,7 @@ function openCoNew(){
   const s = openSheet("コヨーテを始める", `
     <p class="note">自分のカードだけが見えない！みんなのカードの合計を推理して宣言を上げていき、ウソだと思ったら「コヨーテ！」。3回負けたら脱落（2〜8人）。</p>
     <button type="button" class="grbtn" data-grule="co">ルールを見る</button>
-    <div class="f"><span>参加者（タップで選ぶ・最大8人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>参加者（タップで選ぶ・最大8人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="yOrder" class="norder"></div><button class="shufbtn" id="yShuf">順番をシャッフル</button></div>
     <div class="btns"><button class="btn" id="yGo">対戦スタート</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
@@ -6718,6 +6763,7 @@ function openCoNew(){
   $("#yShuf").onclick = () => { order = shuffle(order); draw(); };
   draw();
   $("#yGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 2 || order.length > 8){ toast("参加者は2〜8人です"); return; }
     const dl = coDeal(order, shuffle(coDeck()), []);
     const row = { trip_id: t ? t.id : null, status: "playing", players: order, phase: "bid", round: 1, lives: {}, hands: dl.hands, deck: dl.deck, discard: [],
@@ -6732,18 +6778,18 @@ function openCo(id){ coId = id; coVal = null; coPrev = null; $("#cog").hidden = 
 function closeCo(){ coAmbient(false); coId = null; $("#cog").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
-function coBid(n){
-  return coCommit(coId, g => {
-    if (!coMyTurn(g)) return null;
+function coBid(n, who = me, gid = coId){
+  return coCommit(gid, g => {
+    if (!(g.status === "playing" && g.phase === "bid" && coAliveP(g, who) && g.turn && g.turn.pid === who)) return null;
     const cur = g.bid ? g.bid.n : 0;
     if (!(n > cur) || n < 1) return null;
-    const nx = coNext(g, me);
-    return { patch: { bid: { n, pid: me }, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}が「${n}」を宣言！ → ${pname(nx)}の番`, push: [nx] };
+    const nx = coNext(g, who);
+    return { patch: { bid: { n, pid: who }, turn: { ...g.turn, pid: nx } }, log: `${pname(who)}が「${n}」を宣言！ → ${pname(nx)}の番`, push: [nx] };
   });
 }
-function coCall(){
-  return coCommit(coId, g => {
-    if (!coMyTurn(g) || !g.bid) return null;
+function coCall(who = me, gid = coId){
+  return coCommit(gid, g => {
+    if (!(g.status === "playing" && g.phase === "bid" && coAliveP(g, who) && g.turn && g.turn.pid === who) || !g.bid) return null;
     const alive = coAlive(g);
     let deck = (g.deck || []).slice(), discard = (g.discard || []).slice();
     const cards = alive.map(p => g.hands[p]);
@@ -6755,14 +6801,14 @@ function coCall(){
     const eff = cards.map(c => c === "q" ? drawn : c);
     const { sum, steps } = coCompute(eff);
     const bidder = g.bid.pid, n = g.bid.n;
-    const loser = n > sum ? bidder : me;
+    const loser = n > sum ? bidder : who;
     const lives = { ...(g.lives || {}), [loser]: coLoss(g, loser) + 1 };
     const out = lives[loser] >= 3;
     const g2 = { ...g, lives }, alive2 = coAlive(g2);
     const night = eff.includes("night");
     const used = [...cards, ...(drawn ? [drawn] : [])];
-    const result = { caller: me, bidder, n, sum, steps, drawn, loser, out, night, dolls: Math.max(0, 2 - lives[loser]) };
-    const lines = [`${pname(me)}：コヨーテ！`, `合計は${sum}。宣言${n}は${n > sum ? "ウソ" : "セーフ"} → ${pname(loser)}の負け`];
+    const result = { caller: who, bidder, n, sum, steps, drawn, loser, out, night, dolls: Math.max(0, 2 - lives[loser]) };
+    const lines = [`${pname(who)}：コヨーテ！`, `合計は${sum}。宣言${n}は${n > sum ? "ウソ" : "セーフ"} → ${pname(loser)}の負け`];
     if (out) lines.push(`${pname(loser)}は3回負けて脱落…`);
     else lines.push(`${pname(loser)}の身代わり人形がやられた（残り${result.dolls}体）`);
     const patch = { phase: "result", result, lives, deck, discard: night ? discard : [...discard, ...used] };
@@ -7010,6 +7056,7 @@ function coSpawn(tb, force){
 
 /* ---- 画面 ---- */
 function drawCo(){
+  setTimeout(cpuKick, 0);
   if (!coId) return;
   const g = coById(coId); if (!g) return closeCo();
   coDiff(g);
@@ -7249,7 +7296,7 @@ function openKgNew(){
   const s = openSheet("スカルキングを始める", `
     <p class="note">何回勝てるかをぴったり当てるトリックテイキング。全10ラウンド、1ラウンドごとに配る枚数が増えていく。合計点で勝負（2〜8人）。</p>
     <button type="button" class="grbtn" data-grule="kg">ルールを見る</button>
-    <div class="f"><span>参加者（タップで選ぶ・最大8人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>参加者（タップで選ぶ・最大8人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="gOrder" class="norder"></div><button class="shufbtn" id="gShuf">順番をシャッフル</button></div>
     <div class="f"><span>上級ルール（使うものをタップ）</span><div class="kgopts">${KG_OPTS.map(o => `<button type="button" class="kgop" data-ko="${o.k}" aria-pressed="false"><em>${o.i}</em><b>${o.n}</b></button>`).join("")}</div><small class="kgoph">内容はルールとボードの裏の早見表にのっています</small></div>
     <div class="btns"><button class="btn" id="gGo">出航する</button></div>`);
@@ -7265,6 +7312,7 @@ function openKgNew(){
   $("#gShuf").onclick = () => { order = shuffle(order); draw(); };
   draw();
   $("#gGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 2 || order.length > 8){ toast("参加者は2〜8人です"); return; }
     const o = {}; Object.keys(opts).forEach(k => { if (opts[k]) o[k] = true; });
     const g0 = { players: order, opts: o }, dl = kgDeal(g0, 1), adv = Object.keys(o).length;
@@ -7283,30 +7331,30 @@ function openKg(id){ kgScoreOpen = false; kgFeltW = 0; kgId = id; kgSel = null; 
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
 /* ---- 操作 ---- */
-function kgBid(n){
-  return kgCommit(kgId, g => {
-    if (g.status !== "playing" || g.phase !== "bid" || !g.players.includes(me)) return null;
-    if ((g.bids || {})[me] != null) return null;
-    const bids = { ...(g.bids || {}), [me]: n };
+function kgBid(n, who = me, gid = kgId){
+  return kgCommit(gid, g => {
+    if (g.status !== "playing" || g.phase !== "bid" || !g.players.includes(who)) return null;
+    if ((g.bids || {})[who] != null) return null;
+    const bids = { ...(g.bids || {}), [who]: n };
     if (g.players.every(p => bids[p] != null)){
       const st = g.turn.start;
       return { patch: { bids, phase: "play", trick: { plays: [] }, turn: { pid: st, start: st } },
-        log: [`${pname(me)}が予想した`, `ヨーホーホー！ 予想：${g.players.map(p => `${pname(p)}${bids[p]}`).join("・")}`, `最初は${pname(st)}から`], push: [st] };
+        log: [`${pname(who)}が予想した`, `ヨーホーホー！ 予想：${g.players.map(p => `${pname(p)}${bids[p]}`).join("・")}`, `最初は${pname(st)}から`], push: [st] };
     }
-    return { patch: { bids }, log: `${pname(me)}が予想した` };
+    return { patch: { bids }, log: `${pname(who)}が予想した` };
   });
 }
-function kgPlay(c, tg){
-  return kgCommit(kgId, g => {
-    if (!kgMyTurn(g) || g.phase !== "play") return null;
-    const hand = (g.hands || {})[me] || [], plays = (g.trick || {}).plays || [];
+function kgPlay(c, tg, who = me, gid = kgId){
+  return kgCommit(gid, g => {
+    if (g.status !== "playing" || g.phase !== "play" || !g.turn || g.turn.pid !== who || (g.ex && g.ex.pend)) return null;
+    const hand = (g.hands || {})[who] || [], plays = (g.trick || {}).plays || [];
     if (!hand.includes(c) || !kgLegal(hand, plays, c)) return null;
-    const np = [...plays, { p: me, c, ...(c === "tig" ? { tg: tg || "escape" } : {}) }];
-    const hands = { ...g.hands, [me]: hand.filter(x => x !== c) };
+    const np = [...plays, { p: who, c, ...(c === "tig" ? { tg: tg || "escape" } : {}) }];
+    const hands = { ...g.hands, [who]: hand.filter(x => x !== c) };
     const lbl = kgLabel(c, tg);
     if (np.length < g.players.length){
-      const nx = kgNext(g, me);
-      return { patch: { hands, trick: { plays: np }, turn: { ...g.turn, pid: nx } }, log: `${pname(me)}：${lbl}`, push: [nx] };
+      const nx = kgNext(g, who);
+      return { patch: { hands, trick: { plays: np }, turn: { ...g.turn, pid: nx } }, log: `${pname(who)}：${lbl}`, push: [nx] };
     }
     // トリック決着
     const r = kgResolve(np), wp = r.w >= 0 ? np[r.w].p : null, adv = kgUsesEx(g);
@@ -7315,7 +7363,7 @@ function kgPlay(c, tg){
     const ex = { ...(g.ex || {}) };
     if (wp && r.loot && r.loot.length) ex.loot = [...(ex.loot || []), ...r.loot.map(a => ({ a, b: wp }))];
     const tag = { mermaid: "🧜‍♀️マーメイドがスカルキングを捕獲！", king: np.some(x => kgKind(x) === "pir") ? "👑スカルキングが海賊を一掃！" : "", pirmer: "⚔️海賊がマーメイドを捕獲！", whale: "🐋白鯨で特殊カードは無効、数字勝負！" }[r.why] || "";
-    const lines = [`${pname(me)}：${lbl}`];
+    const lines = [`${pname(who)}：${lbl}`];
     if (wp) lines.push(`${pname(wp)}がトリックを獲得${tag ? "　" + tag : ""}${r.bonus ? `（ボーナス+${r.bonus}）` : ""}`);
     else lines.push(r.why === "kraken" ? `🐙クラーケン！トリックは海の底へ。次は${pname(r.next)}から` : `🐋白鯨！数字がなくトリックは流された。次は${pname(r.next)}から`);
     if (wp && r.loot && r.loot.length) lines.push(`🪙略奪品の同盟：${r.loot.map(a => pname(a)).join("・")}と${pname(wp)}`);
@@ -7359,22 +7407,22 @@ function kgEndRound(g, st, lines){
   return { patch: base, log: lines };
 }
 // 海賊の能力を使う
-function kgAbil(val){
-  return kgCommit(kgId, g => {
+function kgAbil(val, who = me, gid = kgId){
+  return kgCommit(gid, g => {
     const ex = { ...(g.ex || {}) }, pd = ex.pend;
-    if (g.status !== "playing" || !pd || pd.p !== me) return null;
+    if (g.status !== "playing" || !pd || pd.p !== who) return null;
     delete ex.pend;
     const patch = { ex }, hands = { ...g.hands }; let line = "", push = [g.turn.pid];
     const nm = Object.values(KG_PIR).find(x => x.k === pd.k).n;
     if (pd.k === "rosie"){ if (!g.players.includes(val)) return null; patch.turn = { ...g.turn, pid: val }; push = [val]; line = `⚔️${nm}：次は${pname(val)}から`; }
     else if (pd.k === "bendt"){
-      const h = hands[me] || [], k = (pd.drew || []).length;
+      const h = hands[who] || [], k = (pd.drew || []).length;
       if (!Array.isArray(val) || val.length !== k || !val.every(c => h.includes(c))) return null;
-      hands[me] = h.filter(c => !val.includes(c)); patch.hands = hands; line = `⚔️${nm}：${k}枚引いて${k}枚捨てた`;
+      hands[who] = h.filter(c => !val.includes(c)); patch.hands = hands; line = `⚔️${nm}：${k}枚引いて${k}枚捨てた`;
     }
-    else if (pd.k === "rascal"){ if (![0, 10, 20].includes(val)) return null; ex.rascal = { ...(ex.rascal || {}), [me]: ((ex.rascal || {})[me] || 0) + val }; line = `⚔️${nm}：${pname(me)}が${val}点を賭けた`; }
-    else if (pd.k === "juanita") line = `⚔️${nm}：${pname(me)}が残りの山札をのぞいた`;
-    else if (pd.k === "harry"){ if (![-1, 0, 1].includes(val)) return null; const b = (g.bids || {})[me] || 0, nb = Math.max(0, b + val); patch.bids = { ...g.bids, [me]: nb }; line = nb === b ? `⚔️${nm}：${pname(me)}は予想${b}のまま` : `⚔️${nm}：${pname(me)}が予想を${b}→${nb}に変更`; }
+    else if (pd.k === "rascal"){ if (![0, 10, 20].includes(val)) return null; ex.rascal = { ...(ex.rascal || {}), [who]: ((ex.rascal || {})[who] || 0) + val }; line = `⚔️${nm}：${pname(who)}が${val}点を賭けた`; }
+    else if (pd.k === "juanita") line = `⚔️${nm}：${pname(who)}が残りの山札をのぞいた`;
+    else if (pd.k === "harry"){ if (![-1, 0, 1].includes(val)) return null; const b = (g.bids || {})[who] || 0, nb = Math.max(0, b + val); patch.bids = { ...g.bids, [who]: nb }; line = nb === b ? `⚔️${nm}：${pname(who)}は予想${b}のまま` : `⚔️${nm}：${pname(who)}が予想を${b}→${nb}に変更`; }
     if (Object.values(patch.hands || g.hands).every(h => !h.length))
       return kgEndRound(g, { hands: patch.hands || g.hands, won: g.won || {}, bonus: g.bonus || {}, last: g.last, ex, bids: patch.bids || g.bids }, [line]);
     return { patch, log: line, push };
@@ -7507,6 +7555,7 @@ function kgDiff(g){
 
 /* ---- 画面 ---- */
 function drawKg(){
+  setTimeout(cpuKick, 0);
   if (!kgId) return;
   const g = kgById(kgId); if (!g) return closeKg();
   kgAbilOn = !!kgOpts(g).abil;
@@ -8136,20 +8185,20 @@ async function dmCommit(id, fn){
 const dmOk = st => true;
 // 選んだカードを順番に使う（アクション→財宝の順。途中で選択が必要になったらそこで止める）
 let dmSkipped = 0;
-function dmDoPlay(list){
+function dmDoPlay(list, who = me, gid = dmId){
   list = [].concat(list);
   const ord = list.filter(c => dmIs(c, "a")).concat(list.filter(c => !dmIs(c, "a")));
-  return dmCommit(dmId, st => {
-    const T = st.turn, P = st.pl[me];
-    if (T.pid !== me || !dmIdle(st)) return null;
+  return dmCommit(gid, st => {
+    const T = st.turn, P = st.pl[who];
+    if (T.pid !== who || !dmIdle(st)) return null;
     let n = 0, treV = 0; const treCs = []; dmSkipped = 0;
     for (const c of ord){
       if (!dmIdle(st) || !P.hand.includes(c)){ dmSkipped++; continue; }
       if (dmIs(c, "a")){
         if (T.phase !== "action" || T.actions < 1){ dmSkipped++; continue; }
         T.actions--; dmTake(P.hand, [c]); P.play.push(c);
-        dmL(st, `${pname(me)}：${DM[c].n}`); dmFxAdd(st, { k: "play", p: me, c });
-        dmPlayCard(st, me, c); dmRun(st); n++;
+        dmL(st, `${pname(who)}：${DM[c].n}`); dmFxAdd(st, { k: "play", p: who, c });
+        dmPlayCard(st, who, c); dmRun(st); n++;
       } else if (dmIs(c, "t")){
         if (T.bought){ dmSkipped++; continue; }
         const c0 = T.coins;
@@ -8159,34 +8208,34 @@ function dmDoPlay(list){
         n++;
       } else dmSkipped++;
     }
-    if (treCs.length) dmFxAdd(st, { k: "tre", p: me, v: treV, cs: treCs });   // まとめて出した財宝は合計額で1回
+    if (treCs.length) dmFxAdd(st, { k: "tre", p: who, v: treV, cs: treCs });   // まとめて出した財宝は合計額で1回
     return n ? true : null;
   });
 }
-function dmDoTreasures(){
-  return dmCommit(dmId, st => {
-    const T = st.turn, P = st.pl[me];
-    if (T.pid !== me || !dmIdle(st) || T.bought) return null;
+function dmDoTreasures(who = me, gid = dmId){
+  return dmCommit(gid, st => {
+    const T = st.turn, P = st.pl[who];
+    if (T.pid !== who || !dmIdle(st) || T.bought) return null;
     const ts = P.hand.filter(c => dmIs(c, "t")); if (!ts.length) return null;
     ts.sort((a, b) => (b === "silver") - (a === "silver"));
     const c0 = T.coins;
     ts.forEach(c => { dmTake(P.hand, [c]); P.play.push(c); T.coins += DM[c].v; if (c === "silver" && !T.silver){ T.coins += T.merch; T.silver = true; } });
-    dmFxAdd(st, { k: "tre", p: me, v: T.coins - c0, cs: ts });
+    dmFxAdd(st, { k: "tre", p: who, v: T.coins - c0, cs: ts });
     T.phase = "buy"; return true;
   });
 }
-function dmDoBuy(c){
-  return dmCommit(dmId, st => {
+function dmDoBuy(c, who = me, gid = dmId){
+  return dmCommit(gid, st => {
     const T = st.turn;
-    if (T.pid !== me || !dmIdle(st) || T.buys < 1 || T.coins < DM[c].c || !(st.supply[c] > 0)) return null;
+    if (T.pid !== who || !dmIdle(st) || T.buys < 1 || T.coins < DM[c].c || !(st.supply[c] > 0)) return null;
     T.coins -= DM[c].c; T.buys--; T.bought = true; T.phase = "buy";
-    dmGain(st, me, c); dmL(st, `${pname(me)}が${DM[c].n}を購入`); dmFxAdd(st, { k: c === "province" ? "prov" : "buy", p: me, c });
+    dmGain(st, who, c); dmL(st, `${pname(who)}が${DM[c].n}を購入`); dmFxAdd(st, { k: c === "province" ? "prov" : "buy", p: who, c });
     return true;
   });
 }
-function dmDoEnd(){
-  return dmCommit(dmId, st => {
-    if (st.turn.pid !== me || !dmIdle(st)) return null;
+function dmDoEnd(who = me, gid = dmId){
+  return dmCommit(gid, st => {
+    if (st.turn.pid !== who || !dmIdle(st)) return null;
     const ended = dmEndTurn(st);
     if (ended){
       const r = dmResult(st);
@@ -8198,8 +8247,305 @@ function dmDoEnd(){
     return true;
   });
 }
-function dmDoAnswer(id, val){ return dmCommit(dmId, st => dmAnswer(st, me, id, val) || null); }
+function dmDoAnswer(id, val, who = me, gid = dmId){ return dmCommit(gid, st => dmAnswer(st, who, id, val) || null); }
 
+/* =========================================================
+   コンピューター（CPU）の思考と自動操作
+   ・CPUの番になったら、その対戦に参加している人の端末が代わりに考えて打つ
+   ・複数の端末が同時に打っても、保存のときの版番号チェックで1回分しか通らない
+   ========================================================= */
+const CPU_AI = {};          // ゲームごとの「次の一手」：(g) => { wait, run } | null
+let cpuTimers = {};
+function cpuKick(){
+  if (!loaded || !me || isCpu(me)) return;
+  Object.keys(CPU_AI).forEach(tb => {
+    (db[tb] || []).forEach(g => {
+      if (g.status !== "playing" || !((g.players || []).includes(me) || window.__cpuSpectate) || !(g.players || []).some(isCpu)) return;
+      const key = tb + ":" + g.id, ver = g.version || 0;
+      const cur = cpuTimers[key];
+      if (cur && cur.ver === ver) return;            // この状態はもう予約済み
+      if (cur) clearTimeout(cur.tm);
+      let mv = null; try { mv = CPU_AI[tb](g); } catch (e) { console.error(e); }
+      if (!mv){ delete cpuTimers[key]; return; }
+      const humans = g.players.filter(x => !isCpu(x)), my = Math.max(0, humans.indexOf(me));
+      const wait = (mv.wait || 1200) + my * 900 + Math.random() * 300;   // 端末ごとに少しずらす
+      cpuTimers[key] = { ver, tm: setTimeout(async () => {
+        const g2 = (db[tb] || []).find(x => x.id === g.id);
+        if (!g2 || (g2.version || 0) !== ver || g2.status !== "playing"){ delete cpuTimers[key]; cpuKick(); return; }
+        try { await mv.run(); } catch (e) { console.error(e); }
+        cpuTimers[key] = { ver, done: true };   // 同じ状態ではもう打たない（打てなかった時の空回り防止）
+        setTimeout(cpuKick, 50);
+      }, wait) };
+    });
+  });
+}
+
+/* ---- セブンブリッジ ---- */
+function sbAiMeld(hand){
+  const nat = hand.filter(c => c !== "JK"), by = {};
+  nat.forEach(c => { (by[sbRank(c)] = by[sbRank(c)] || []).push(c); });
+  // 同じ数字3枚以上（7は1枚でも役）
+  for (const r of Object.keys(by)){ const cs = by[r]; if (cs.length >= 3 || Number(r) === 7) return Number(r) === 7 && cs.length < 3 ? cs.slice() : cs.slice(); }
+  // 同じマークの連番
+  const suits = {}; nat.forEach(c => { (suits[sbSuit(c)] = suits[sbSuit(c)] || new Set()).add(sbRank(c)); });
+  for (const su of Object.keys(suits)){
+    const rs = [...suits[su]].sort((a, b) => a - b);
+    let run = [rs[0]], best = [];
+    for (let k = 1; k <= rs.length; k++){ if (k < rs.length && rs[k] === run[run.length - 1] + 1) run.push(rs[k]); else { if (run.length > best.length) best = run; run = [rs[k]]; } }
+    if (best.length >= 3) return best.map(r => su + r);
+    for (const pair of [[6, 7], [7, 8]]) if (pair.every(r => suits[su].has(r))) return pair.map(r => su + r);
+  }
+  return null;
+}
+function sbAiDiscard(hand){
+  const use = c => { if (c === "JK") return 99; const r = sbRank(c), s2 = sbSuit(c); let u = r === 7 ? 30 : 0;
+    hand.forEach(x => { if (x === c || x === "JK") return; if (sbRank(x) === r) u += 8; if (sbSuit(x) === s2 && Math.abs(sbRank(x) - r) <= 2) u += 6; });
+    return u - ((r === 1 || r >= 11) ? 10 : r) * .6; };
+  return hand.slice().sort((a, b) => use(a) - use(b))[0];
+}
+CPU_AI.sb_games = g => {
+  if (g.status !== "playing") return null;
+  const G = () => sbById(g.id) || g, cl = g.claim;
+  if (cl){
+    // ポン・チー：ほしい札なら宣言
+    const nx = sbNext(g, cl.from);
+    const p = g.players.find(x => isCpu(x) && x !== cl.from && !(cl.claims || []).some(y => y.pid === x) && (g.hands[x] || []).length >= 3 &&
+      ((sbPonCards(g.hands[x], cl.card) && Math.random() < .85) || (x === nx && sbChiCards(g.hands[x], cl.card) && Math.random() < .6)));
+    if (p && Date.now() < cl.until - 600) return { wait: 900, run: () => sbClaim(G(), sbPonCards(g.hands[p], cl.card) ? "pon" : "chi", p) };
+    // 時間切れの決着は、だれの端末でも進めてよい
+    return { wait: Math.max(300, cl.until - Date.now() + 1500), run: () => { const g2 = G(); if (g2.claim && Date.now() > g2.claim.until) return sbResolve(g2); } };
+  }
+  const t = g.turn; if (!t || !isCpu(t.pid)) return null;
+  const p = t.pid, hand = g.hands[p] || [];
+  if (t.phase === "draw") return { wait: 1300, run: () => sbDraw(G(), p) };
+  if (t.phase !== "play") return null;
+  // ① 役を出す（手札は1枚以上残す）
+  const m = sbAiMeld(hand);
+  if (m && hand.length - m.length >= 1){
+    const mm = sbMeld(m);
+    if (mm) return { wait: 1700, run: () => { const g2 = G(), h = g2.hands[p] || []; if (!m.every(c => h.includes(c))) return; return sbSave(g2, { hands: { ...g2.hands, [p]: sbRemove(h, m) }, melds: [...(g2.melds || []), { ...mm, owner: p }] }, `${pname(p)}が役を公開：${m.map(c => c === "JK" ? "JK" : SB_MARK[sbSuit(c)] + sbRankTxt(sbRank(c))).join(" ")}`); } };
+  }
+  // ② 付け札
+  if (hand.length >= 2){
+    for (const c of hand.filter(x => x !== "JK")){
+      const i = (g.melds || []).findIndex(mm => sbAttach(mm, c));
+      if (i >= 0) return { wait: 1500, run: () => { const g2 = G(), h = g2.hands[p] || [], ms = (g2.melds || []).slice(), nm = ms[i] && sbAttach(ms[i], c); if (!nm || !h.includes(c) || h.length < 2) return; ms[i] = nm; return sbSave(g2, { hands: { ...g2.hands, [p]: sbRemove(h, [c]) }, melds: ms }, `${pname(p)}が付け札：${SB_MARK[sbSuit(c)] + sbRankTxt(sbRank(c))}`); } };
+    }
+  }
+  // ③ 1枚捨てる（最後の1枚なら上がり）
+  const c = sbAiDiscard(hand);
+  return { wait: 1500, run: () => sbDiscardAs(G(), c, p) };
+};
+/* ---- キャントストップ ---- */
+CPU_AI.cs_games = g => {
+  const t = g.turn; if (!t || !isCpu(t.pid) || g.status !== "playing") return null;
+  const p = t.pid, temp = t.temp || {}, G = () => csById(g.id) || g;
+  if (t.phase === "bust") return { wait: 1800, run: () => csPass(G(), p) };
+  if (t.phase === "roll") return { wait: 1300, run: () => csRoll(G(), p) };
+  if (t.phase === "choose"){
+    const sc = o => o.reduce((a, s2) => { const cur = csCur(g, p, s2, temp), base = (g.pos[p] || {})[s2] || 0; return a + (1 + cur / CS_H[s2] * 2) / CS_H[s2] * 10 + (temp[s2] != null ? 2 : base ? 1 : 0); }, 0) + (o.length === 2 ? 1 : 0);
+    const best = (t.opts || []).map((o, i) => ({ i, v: sc(o) })).sort((a, b) => b.v - a.v)[0];
+    if (best) return { wait: 1600, run: () => csChoose(G(), best.i, p) };
+    return null;
+  }
+  if (t.phase === "decide"){
+    const keys = Object.keys(temp), steps = keys.reduce((a, k) => a + temp[k] - ((g.pos[p] || {})[k] || 0), 0);
+    const top = keys.some(k => temp[k] >= CS_H[k]);
+    const stop = top || (keys.length >= 3 && steps >= 3) || steps >= 6 + (keys.length < 3 ? 2 : 0);
+    return { wait: 1500, run: () => stop ? csStop(G(), p) : csRoll(G(), p) };
+  }
+  return null;
+};
+/* ---- NEU ---- */
+CPU_AI.neu_games = g => {
+  const t = g.turn; if (!t || !isCpu(t.pid) || g.status !== "playing") return null;
+  const p = t.pid, hand = g.hands[p] || [];
+  if (t.drawn < t.played && (t.done || !hand.length) && ((g.deck || []).length + (g.discard || []).length) > 0) return { wait: 900, run: () => neuDraw(neuById(g.id) || g, p) };
+  if (t.done) return { wait: 900, run: () => neuEnd(neuById(g.id) || g, p) };
+  const leg = hand.map((c, i) => ({ c, i })).filter(x => neuLegal(g, x.c));
+  if (!leg.length) return { wait: 1600, run: () => neuLose(neuById(g.id) || g, p) };
+  const pos = leg.filter(x => (neuAdd(x.c) || 0) > 0).sort((a, b) => neuAdd(a.c) - neuAdd(b.c));
+  const esc = hand.filter(c => neuAdd(c) === null || neuAdd(c) < 0).length;
+  let pick = null;
+  if (pos.length) pick = esc >= 1 || g.total + neuAdd(pos[pos.length - 1].c) <= 70 ? pos[pos.length - 1] : pos[0];
+  if (!pick) pick = leg.find(x => neuAdd(x.c) < 0) || leg.find(x => x.c === "DOUBLE") || leg.find(x => x.c === "PASS") || leg.find(x => x.c === "TURN") || leg.find(x => x.c === "SHOT") || leg[0];
+  const shot = pick.c === "SHOT" ? (() => { const a = neuAlive(g).filter(x => x !== p); return a[Math.floor(Math.random() * a.length)]; })() : null;
+  return { wait: 1500, run: () => neuApply(neuById(g.id) || g, pick.i, pick.c, shot, p) };
+};
+/* ---- コヨーテ ---- */
+CPU_AI.co_games = g => {
+  if (g.phase !== "bid" || !g.turn || !isCpu(g.turn.pid)) return null;
+  const p = g.turn.pid, others = coAlive(g).filter(x => x !== p).map(x => g.hands[x]).filter(c => c !== "q");
+  const known = coCompute(others).sum, est = known + (others.includes("x2") ? 4 : 2);
+  const cur = g.bid ? g.bid.n : 0;
+  if (g.bid && cur > est + (Math.random() < .5 ? 1 : 3)) return { wait: 2000, run: () => coCall(p, g.id) };
+  const n = Math.max(cur + 1, g.bid ? cur + 1 + (Math.random() < .25 ? 1 : 0) : Math.max(1, est - 4 - Math.floor(Math.random() * 3)));
+  if (g.bid && n > est + 4) return { wait: 2000, run: () => coCall(p, g.id) };
+  return { wait: 1700, run: () => coBid(n, p, g.id) };
+};
+/* ---- スカル ---- */
+CPU_AI.sk_games = g => {
+  const alive = p => skAliveP(g, p);
+  if (g.phase === "setup"){
+    const p = g.players.find(x => isCpu(x) && alive(x) && skStack(g, x).length === 0);
+    if (!p) return null;
+    const h = skHand(g, p), d = h.includes("S") && Math.random() < .3 ? "S" : (h.includes("F") ? "F" : h[0]);
+    return { wait: 1400, run: () => skPlace(d, p, g.id) };
+  }
+  if (g.phase === "place" || g.phase === "bid"){
+    const p = g.turn && g.turn.pid; if (!isCpu(p)) return null;
+    const total = skTotal(g), cur = g.bid ? g.bid.n : 0, own = skStack(g, p), h = skHand(g, p);
+    const ownSafe = own.includes("S") ? 0 : own.length;
+    const est = ownSafe + Math.floor((total - own.length) * (own.includes("S") ? .25 : .45));
+    if (g.phase === "place" && h.length && own.length < 3 && Math.random() < (own.length < 2 ? .7 : .35)){
+      const d = h.includes("S") && Math.random() < .3 ? "S" : (h.includes("F") ? "F" : h[0]);
+      return { wait: 1500, run: () => skPlace(d, p, g.id) };
+    }
+    if (g.phase === "place"){ const n = Math.min(total, Math.max(cur + 1, Math.max(1, est))); return { wait: 1700, run: () => skBid(n, p, g.id) }; }
+    if (cur + 1 <= total && (cur + 1 <= est || (own.includes("S") && cur + 1 <= est + 1 && Math.random() < .3))) return { wait: 1700, run: () => skBid(cur + 1, p, g.id) };
+    return { wait: 1500, run: () => skPass(p, g.id) };
+  }
+  if (g.phase === "challenge" && g.ch && isCpu(g.ch.pid)){
+    const p = g.ch.pid, fc = g.ch.fc || {};
+    if ((fc[p] || 0) < skStack(g, p).length) return { wait: 1600, run: () => skFlip(p, p, g.id) };
+    const cand = g.players.filter(o => o !== p && (fc[o] || 0) < skStack(g, o).length);
+    if (!cand.length) return null;
+    const o = cand.sort((a, b) => (skStack(g, b).length - (fc[b] || 0)) - (skStack(g, a).length - (fc[a] || 0)) || Math.random() - .5)[0];
+    return { wait: 1900, run: () => skFlip(o, p, g.id) };
+  }
+  return null;
+};
+/* ---- スカルキング ---- */
+function kgAiStrength(c, tg){
+  const i = kgInfo(c);
+  return { king: 100, pir: 90, mer: 82, tig: tg === "escape" ? 0 : 90, esc: 0, loot: 0, kra: 5, wha: 30 }[i.t] ?? (i.s === "b" ? 50 + i.r : i.r);
+}
+function kgAiBid(hand, n){
+  let e = 0;
+  hand.forEach(c => { const i = kgInfo(c);
+    e += i.t === "king" ? .95 : i.t === "pir" || i.t === "tig" ? .8 : i.t === "mer" ? .7 : i.t === "wha" ? .25 : i.t === "num" ? (i.s === "b" ? .25 + i.r / 22 : i.r >= 12 ? (i.r - 9) / (6 + n) : 0) : 0; });
+  return Math.max(0, Math.round(e));
+}
+function kgAiPlay(g, pid){
+  const hand = g.hands[pid] || [], plays = (g.trick || {}).plays || [], n = g.players.length;
+  const legal = hand.filter(c => kgLegal(hand, plays, c));
+  const need = ((g.bids || {})[pid] || 0) - ((g.won || {})[pid] || 0), last = plays.length === n - 1;
+  const opts = []; legal.forEach(c => { if (c === "tig"){ opts.push({ c, tg: "pirate" }, { c, tg: "escape" }); } else opts.push({ c }); });
+  const winsNow = o => { const np = [...plays, { p: pid, c: o.c, ...(o.tg ? { tg: o.tg } : {}) }]; const r = kgResolve(np); return r.w === np.length - 1; };
+  const sc = o => kgAiStrength(o.c, o.tg);
+  if (need > 0){
+    const winners = opts.filter(winsNow).sort((a, b) => sc(a) - sc(b));
+    if (winners.length){
+      // 最後なら勝てる一番弱いカード、途中なら少し余裕のある強さ
+      const pick = last ? winners[0] : (winners.find(o => sc(o) >= 12) || winners[winners.length - 1]);
+      return pick;
+    }
+    return opts.slice().sort((a, b) => sc(a) - sc(b))[0];   // 勝てないなら一番弱いのを捨てる
+  }
+  // もう勝ちたくない：負けるカードのうち一番強いもの（強いカードを処分）
+  const losers = opts.filter(o => !winsNow(o)).sort((a, b) => sc(b) - sc(a));
+  if (losers.length) return last ? losers[0] : (losers.find(o => sc(o) < 40) || losers[losers.length - 1]);
+  return opts.slice().sort((a, b) => sc(a) - sc(b))[0];
+}
+CPU_AI.kg_games = g => {
+  if (g.phase === "bid"){
+    const p = g.players.find(x => isCpu(x) && (g.bids || {})[x] == null);
+    if (p) return { wait: 1600, run: () => kgBid(kgAiBid(g.hands[p] || [], g.players.length), p, g.id) };
+    return null;
+  }
+  const pd = g.ex && g.ex.pend;
+  if (pd && isCpu(pd.p)){
+    const p = pd.p, need = ((g.bids || {})[p] || 0) - ((g.won || {})[p] || 0), h = g.hands[p] || [];
+    let v = null;
+    if (pd.k === "rosie") v = need > 0 ? p : kgNext(g, p);
+    else if (pd.k === "bendt"){ const k = (pd.drew || []).length; v = h.slice().sort((a, b) => need > 0 ? kgAiStrength(a) - kgAiStrength(b) : kgAiStrength(b) - kgAiStrength(a)).slice(0, k); }
+    else if (pd.k === "rascal") v = need === 0 && h.length <= 2 ? 10 : 0;
+    else if (pd.k === "harry") v = Math.max(-1, Math.min(1, -need));
+    return { wait: 1800, run: () => kgAbil(v, p, g.id) };
+  }
+  if (g.phase === "play" && g.turn && isCpu(g.turn.pid) && !pd){
+    const p = g.turn.pid, o = kgAiPlay(g, p);
+    if (o) return { wait: 1700, run: () => kgPlay(o.c, o.tg, p, g.id) };
+  }
+  return null;
+};
+/* ---- ドミニオン ---- */
+const DMAI_PRI = ["village", "festival", "market", "lab", "merchant", "harbinger", "sentry", "poacher", "cellar", "throne", "witch", "council", "smithy", "library", "militia", "bandit", "moneylender", "mine", "artisan", "remodel", "bureaucrat", "workshop", "vassal", "chapel", "moat"];
+const DMAI_BUY5 = ["lab", "witch", "market", "festival", "council", "library", "sentry", "mine"];
+const DMAI_BUY4 = ["smithy", "militia", "moneylender", "poacher", "gardens", "throne", "remodel", "bureaucrat"];
+const DMAI_BUY3 = ["village", "merchant", "harbinger", "vassal", "workshop"];
+const dmVal = c => c === "curse" ? -3 : dmIs(c, "v") ? -1 : dmIs(c, "t") ? DM[c].v * 2 : DM[c].c;
+function dmAiPick(st, pid, coins, opt = {}){
+  const P = st.pl[pid], all = dmDeckOf(st, pid), cnt = c => all.filter(x => x === c).length;
+  const pv = st.supply.province, ok = c => st.supply[c] > 0 && DM[c].c <= coins && (!opt.filter || dmIs(c, opt.filter)) && (st.kingdom.includes(c) || DM_BASE.includes(c));
+  const term = all.filter(c => dmIs(c, "a") && !(DM[c].p || {}).actions).length, vill = all.filter(c => (DM[c].p || {}).actions >= 2).length;
+  const actOk = c => st.kingdom.includes(c) && ok(c) && cnt(c) < (["lab", "market", "festival", "village"].includes(c) ? 4 : 2) && ((DM[c].p || {}).actions || term < 1 + vill + Math.floor(all.length / 12));
+  if (opt.filter === "t") return ["gold", "silver", "copper"].find(ok) || null;
+  const golds = cnt("gold");
+  if (ok("province") && (golds > 0 || all.length > 15)) return "province";
+  if (pv <= 4 && ok("duchy")) return "duchy";
+  if (ok("gold")) return "gold";
+  if (pv <= 2 && ok("estate")) return "estate";
+  if (coins >= 5){ const k = DMAI_BUY5.find(actOk); if (k) return k; }
+  if (st.kingdom.includes("gardens") && ok("gardens") && pv <= 5) return "gardens";
+  if (coins >= 4){ const k = DMAI_BUY4.find(c => c !== "gardens" && actOk(c)); if (k && Math.random() < .7) return k; }
+  if (coins >= 3 && Math.random() < .35){ const k = DMAI_BUY3.find(actOk); if (k) return k; }
+  if (ok("silver")) return "silver";
+  if (opt.gain && coins >= 2){ const k = ["cellar", "moat", "chapel"].find(actOk); if (k) return k; }
+  return opt.gain ? (["silver", "copper"].find(ok) || null) : null;
+}
+function dmAiAnswer(st, a){
+  const pid = a.pid, P = st.pl[pid], h = P.hand, t = a.then.t, T = st.turn;
+  const order = (arr, f) => arr.map((c, i) => ({ c, i })).sort((x, y) => f(x.c) - f(y.c));
+  if (a.k === "yn"){ if (t === "lib2") return T.actions < 1; return true; }
+  if (a.k === "supply") return dmAiPick(st, pid, a.max, { filter: a.filter, gain: true }) || Object.keys(st.supply).find(c => st.supply[c] > 0 && DM[c].c <= a.max && (!a.filter || dmIs(c, a.filter)));
+  if (a.k === "list"){
+    const cs = a.cards;
+    if (t === "harb"){ const b = order(cs, c => -dmVal(c))[0]; return b && dmVal(b.c) >= 4 ? [b.i] : []; }
+    if (t === "sen1") return cs.map((c, i) => ({ c, i })).filter(x => x.c === "curse" || x.c === "estate" || x.c === "copper").map(x => x.i);
+    if (t === "sen2") return cs.map((c, i) => ({ c, i })).filter(x => dmIs(x.c, "v") || x.c === "curse").map(x => x.i);
+    if (t === "sen3") return [order(cs, c => -dmVal(c))[0].i];
+    if (t === "bandit"){ const f = cs.map((c, i) => ({ c, i })).filter(x => (a.filterList || []).includes(x.c)).sort((x, y) => dmVal(x.c) - dmVal(y.c)); return [f[0].i]; }
+    return cs.map((_, i) => i).slice(0, a.min);
+  }
+  // 手札から選ぶ
+  const idx = (c => h.map((x, i) => ({ c: x, i })))();
+  const pickLow = n => order(h, dmVal).filter(x => !a.filter || dmIs(x.c, a.filter)).slice(0, n).map(x => x.i);
+  if (t === "cellar") return idx.filter(x => dmIs(x.c, "v") || x.c === "curse").map(x => x.i);
+  if (t === "trash"){
+    const money = dmDeckOf(st, pid).filter(c => dmIs(c, "t")).reduce((s2, c) => s2 + DM[c].v, 0);
+    let left = money;
+    return idx.filter(x => x.c === "curse" || (x.c === "estate" && st.supply.province > 4) || (x.c === "copper" && (left -= 1) >= 6)).slice(0, a.max).map(x => x.i);
+  }
+  if (t === "discard") return pickLow(a.min);
+  if (t === "remodel"){
+    const g = idx.find(x => x.c === "gold" && st.supply.province > 0 && st.supply.province <= 6) || idx.find(x => x.c === "curse") || idx.find(x => x.c === "estate") || idx.find(x => x.c === "copper");
+    return g ? [g.i] : pickLow(1);
+  }
+  if (t === "throne"){ const b = idx.filter(x => dmIs(x.c, "a") && x.c !== "throne").sort((x, y) => DMAI_PRI.indexOf(y.c) - DMAI_PRI.indexOf(x.c))[0]; return b ? [b.i] : []; }
+  if (t === "mine"){ const b = idx.find(x => x.c === "silver") || idx.find(x => x.c === "copper"); return b ? [b.i] : []; }
+  if (t === "todeck") return pickLow(1);
+  return pickLow(a.min);
+}
+CPU_AI.dm_games = g => {
+  const st = g.st; if (!st) return null;
+  const a = (st.asks || []).find(x => isCpu(x.pid));
+  if (a) return { wait: 1500, run: () => dmDoAnswer(a.id, dmAiAnswer(st, a), a.pid, g.id) };
+  if (!dmIdle(st) || !isCpu(st.turn.pid)) return null;
+  const pid = st.turn.pid, T = st.turn, P = st.pl[pid];
+  // ① アクション
+  if (T.phase === "action" && T.actions > 0 && !T.bought){
+    const acts = P.hand.filter(c => dmIs(c, "a")).sort((x, y) => DMAI_PRI.indexOf(x) - DMAI_PRI.indexOf(y));
+    const c = acts.find(c => !(c === "moneylender" && !P.hand.includes("copper")) && !(c === "chapel" && st.supply.province < 6) && !(c === "throne" && !P.hand.some(x => dmIs(x, "a") && x !== "throne")));
+    if (c) return { wait: 2400, run: () => dmDoPlay([c], pid, g.id) };
+  }
+  // ② 財宝を全部出す
+  if (!T.bought && P.hand.some(c => dmIs(c, "t"))) return { wait: 1300, run: () => dmDoTreasures(pid, g.id) };
+  // ③ 買う
+  if (T.buys > 0){ const c = dmAiPick(st, pid, T.coins); if (c) return { wait: 1500, run: () => dmDoBuy(c, pid, g.id) }; }
+  // ④ 終了
+  return { wait: 1400, run: () => dmDoEnd(pid, g.id) };
+};
 /* ---- 新しい対戦 ---- */
 function openDmNew(){
   const t = curTrip();
@@ -8208,7 +8554,7 @@ function openDmNew(){
   const s = openSheet("ドミニオンを始める", `
     <p class="note">自分だけの山札（デッキ）を育てて、ゲーム終了時に勝利点が一番多い人の勝ち（2〜6人）。</p>
     <button type="button" class="grbtn" data-grule="dm">ルールを見る</button>
-    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}</div>
+    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え</span><div id="gOrder" class="norder"></div><button class="shufbtn" id="gShuf">順番をシャッフル</button></div>
     <div class="f"><span>使う王国カード（10種類）</span><div class="dmsets">${DM_SETS.map((x, i) => `<button type="button" class="dmset" data-set="${i}">${x.n}</button>`).join("")}<button type="button" class="dmset rnd" data-set="r">ランダム</button></div>
       <div id="dmKd"></div><small class="kgoph">カードをタップすると入れ替えできます（10種類ちょうど）</small></div>
@@ -8229,6 +8575,7 @@ function openDmNew(){
   $("#gShuf").onclick = () => { order = shuffle(order); draw(); };
   draw(); drawK();
   $("#gGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
     if (kd.length !== 10){ toast("王国カードを10種類選んでください"); return; }
     const st = dmSetup(order, kd);
@@ -8520,6 +8867,7 @@ function drawDm(){
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
   dmAnimHand(g, el, P);
   dmAnimGains(el, st);
+  setTimeout(cpuKick, 0);
   if (g.status === "finished"){
     dmEndCount(g, el);
     on("dmEndGo", () => { delete dmEndFresh[g.id]; dmEndKeys = new Set(); dmEndSt[g.id] = { s: 1, k: 0 }; drawDm(); dmEndStep(g.id); });
