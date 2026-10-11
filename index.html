@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
 <title>男気じゃんけん旅</title>
 <style>
 :root{
@@ -3132,6 +3132,435 @@ body.bgpause *,body.bgpause *::before,body.bgpause *::after{animation-play-state
 .rank .shine2{animation-name:sweepT2}
 /* 流れる色の文字：なめらかさはそのままで描き直し回数を減らす */
 .ntop .nt{animation-timing-function:steps(96)!important}
+/* ===== ヘクスレイド ===== */
+.gic.hxi{background:radial-gradient(circle at 50% 40%,#1B2448,#05070F);border-color:#05070F;transform:none;box-shadow:0 0 14px rgba(56,182,255,.5),0 0 10px rgba(255,61,85,.35) inset;overflow:hidden}
+.gic.hxi svg{width:100%;height:100%;animation:gicfloat 3s ease-in-out infinite}
+.arena.hxg{height:100dvh;overflow:hidden;gap:5px;padding:calc(var(--safe-t) + 6px) 8px calc(var(--safe-b) + 8px);color:#E9EDF7;
+  background:#05060C;font-family:var(--body)}
+.arena.hxg>*{position:relative;z-index:1}
+.arena.hxg.shk{animation:hxshk .45s}
+.arena.hxg.shk2{animation:hxshk2 .6s}
+@keyframes hxshk{0%,100%{transform:none}20%{transform:translate(-4px,2px)}40%{transform:translate(4px,-2px)}60%{transform:translate(-3px,-1px)}80%{transform:translate(2px,1px)}}
+@keyframes hxshk2{0%,100%{transform:none}10%{transform:translate(-9px,4px) rotate(-.6deg)}25%{transform:translate(8px,-5px) rotate(.5deg)}40%{transform:translate(-6px,-3px)}60%{transform:translate(5px,3px)}80%{transform:translate(-2px,1px)}}
+.hxbg{position:absolute!important;inset:0;z-index:0!important;pointer-events:none;overflow:hidden}
+.hxglow{position:absolute;left:-20%;right:-20%;height:55%;filter:blur(30px);opacity:.55}
+.hxglow.b{top:-15%;background:radial-gradient(ellipse at 50% 30%,rgba(255,61,85,.55),transparent 65%)}
+.hxglow.a{bottom:-15%;background:radial-gradient(ellipse at 50% 70%,rgba(56,182,255,.5),transparent 65%)}
+.hxhex{position:absolute;inset:0;opacity:.09;background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 1.5px);background-size:18px 18px}
+.hxemb i{position:absolute;bottom:-10px;width:4px;height:4px;border-radius:50%;background:#FFB45A;box-shadow:0 0 8px 2px rgba(255,140,40,.8);transform:scale(var(--s));opacity:0;animation:hxemb var(--d) linear infinite;animation-delay:var(--dl)}
+.hxemb i:nth-child(3n){background:#7FD4FF;box-shadow:0 0 8px 2px rgba(56,182,255,.8)}
+@keyframes hxemb{0%{opacity:0;transform:translate(0,0) scale(var(--s))}10%{opacity:.9}90%{opacity:.6}100%{opacity:0;transform:translate(var(--x),-105vh) scale(var(--s))}}
+body.bgpause .hxemb i{animation-play-state:paused}
+/* ヘッダー */
+.hxtop{display:flex;align-items:center;gap:6px;flex:none}
+.hxlogo{display:flex;flex-direction:column;line-height:1;margin-right:auto}
+.hxlogo b{font-family:"Cinzel",var(--disp);font-weight:900;font-size:21px;letter-spacing:.06em;background:linear-gradient(180deg,#FFF6D6 0%,#E8B12A 55%,#8A5A10 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 6px rgba(232,177,42,.45))}
+.hxlogo small{font-size:9.5px;font-weight:900;letter-spacing:.3em;color:#8D97B5;margin-top:2px}
+.hxrnd{display:flex;gap:6px;align-items:center;font-family:"Cinzel",var(--disp);font-size:11px;font-weight:700;color:#C9D1E6}
+.hxrnd>span{padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+.hxrnd b{font-size:15px;color:#fff}.hxrnd i{font-style:normal;opacity:.6}
+.hxrnd .hxgim{color:#FFB45A;border-color:rgba(255,140,40,.5)}
+.hxbtn{width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;font-size:18px;font-weight:900;display:grid;place-items:center;padding:0}
+/* 陣営バー */
+.hxtb{flex:none;display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:12px;background:linear-gradient(90deg,color-mix(in srgb,var(--tc) 30%,transparent),rgba(10,12,22,.6) 60%);border:1px solid color-mix(in srgb,var(--tc) 55%,transparent);min-height:40px}
+.hxtn{display:flex;flex-direction:column;align-items:center;line-height:1;flex:none}
+.hxtn b{font-family:var(--disp);font-size:20px;color:var(--tc);text-shadow:0 0 10px var(--tc)}
+.hxtn small{font-size:9px;font-weight:900;color:#C9D1E6;margin-top:2px}
+.hxpls{flex:1;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.hxpl{flex:none;display:flex;flex-direction:column;line-height:1.15;padding:3px 7px;border-radius:8px;background:rgba(0,0,0,.3);border-left:3px solid var(--pc);position:relative}
+.hxpl b{font-size:11.5px;font-weight:900;white-space:nowrap}
+.hxpl small{font-size:9px;color:#9AA4C0;font-weight:700;white-space:nowrap}
+.hxpl.now{background:color-mix(in srgb,var(--tc) 35%,rgba(0,0,0,.4));box-shadow:0 0 10px color-mix(in srgb,var(--tc) 60%,transparent)}
+.hxpl em{position:absolute;left:-9px;top:50%;transform:translateY(-50%);font-style:normal;font-size:9px;color:#fff;animation:hxblink 1s infinite}
+@keyframes hxblink{50%{opacity:.2}}
+.hxtre{display:flex;gap:4px;flex:none}
+.hxtg{position:relative;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:conic-gradient(var(--tc) calc(var(--p)*360deg),rgba(255,255,255,.08) 0)}
+.hxtg::before{content:"";position:absolute;inset:3px;border-radius:50%;background:#0A0D1A}
+.hxtg i{position:absolute;width:12px;height:16px;top:5px;clip-path:polygon(50% 0,100% 40%,50% 100%,0 40%);background:linear-gradient(160deg,#fff,var(--tc) 60%,#000);opacity:.85}
+.hxtg b{position:relative;font-size:10px;font-weight:900;margin-top:16px;color:#fff}
+.hxtg.low{animation:hxlow 1s infinite}
+.hxtg.dead{background:rgba(255,255,255,.08);opacity:.45}.hxtg.dead i{background:#555}
+@keyframes hxlow{50%{box-shadow:0 0 12px #FF3D55}}
+/* 盤面 */
+.hxbw{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;position:relative}
+.hxbw svg.hxboard{width:100%;height:100%;max-height:100%;overflow:visible;filter:drop-shadow(0 6px 18px rgba(0,0,0,.7))}
+.hxboard .hc{fill:#141A2E;stroke:#2A3456;stroke-width:.55;transition:fill .2s}
+.hxboard .hc.zA{fill:#0F2340}.hxboard .hc.zB{fill:#33101C}
+.hxboard .hc.rk{fill:#0B0D16;stroke:#262A3A}
+.hxboard .hc.mv{fill:#16486E;stroke:#7FD4FF;stroke-width:.8;animation:hxmv 1.2s ease-in-out infinite}
+@keyframes hxmv{50%{fill:#1E5F90}}
+.hxboard .hc.spc{fill:#5A4A10;stroke:#FFD45A;stroke-width:1;animation:hxmv2 .9s infinite}
+@keyframes hxmv2{50%{fill:#8A6E14}}
+.hxmvdot{fill:#BFE9FF;pointer-events:none;opacity:.85}
+.hxbw.env-fog .hc{fill:#1E2433}
+.hxbw.env-fog::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 30% 40%,rgba(200,210,230,.18),transparent 60%),radial-gradient(ellipse at 70% 60%,rgba(200,210,230,.15),transparent 60%);animation:hxfog 6s ease-in-out infinite alternate}
+@keyframes hxfog{to{transform:translateX(20px)}}
+.hxbw.env-frenzy .hc{fill:#2A0A12}.hxbw.env-frenzy .hc.zA{fill:#1E1530}
+.hxbw.env-frenzy::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 40%,rgba(179,18,58,.35));animation:hxlow 2s infinite}
+.hxrock,.hxsp,.hxmvdot{pointer-events:none}
+.hxsp .o{fill:none;stroke:var(--tc);stroke-width:.6;stroke-dasharray:2 1.4;opacity:.8;transform-box:fill-box;transform-origin:center;animation:hxspin 8s linear infinite}
+.hxsp .i{fill:none;stroke:var(--tc);stroke-width:.4;opacity:.5}
+.hxsp .t{fill:var(--tc);opacity:.55}
+@keyframes hxspin{to{transform:rotate(360deg)}}
+.hxtr .glow{fill:var(--tc);opacity:.25;filter:blur(2px);animation:hxtrg 2s ease-in-out infinite}
+@keyframes hxtrg{50%{opacity:.5}}
+.hxtr .bg{fill:#070912;stroke:rgba(255,255,255,.12);stroke-width:1.6}
+.hxtr .hpr{fill:none;stroke:var(--tc);stroke-width:1.6;stroke-linecap:round;transition:stroke-dasharray .5s}
+.hxtr .gem{fill:var(--tc);stroke:#fff;stroke-width:.5}
+.hxtr .facet{fill:none;stroke:rgba(255,255,255,.7);stroke-width:.35}
+.hxtr .hpt{font-size:4.6px;font-weight:900;fill:#fff;text-anchor:middle;paint-order:stroke;stroke:#000;stroke-width:1px}
+.hxtr.hurt{animation:hxhurt .5s}
+@keyframes hxhurt{20%{filter:brightness(3)}}
+/* ユニット */
+.hxu{cursor:pointer}
+.hxu .tk{transition:transform .2s}
+.hxu .ring{fill:none;stroke:var(--tc);stroke-width:1.2}
+.hxu .tint{fill:var(--cc);opacity:.16}
+.hxu .ba{fill:#B8202F;stroke:#000;stroke-width:.3}.hxu .bd{fill:#1C5FB8;stroke:#000;stroke-width:.3}
+.hxu .bt{font-size:3.7px;font-weight:900;fill:#fff;text-anchor:middle;font-family:Arial Black,Arial,sans-serif}
+.hxu circle.on{fill:#5BF08A;stroke:#000;stroke-width:.3}.hxu circle.off{fill:#2A2E3E;stroke:#000;stroke-width:.3}
+.hxu .skd{fill:#E8B12A;stroke:#000;stroke-width:.3}.hxu .skt{font-size:2.6px;text-anchor:middle;fill:#000}
+.hxu .ice{fill:rgba(160,225,255,.35);stroke:#BFF0FF;stroke-width:.6}
+.hxu.me .ring{stroke-width:1.5}
+.hxu.sel .ring{stroke:#fff;stroke-width:1.8;stroke-dasharray:3 1.6;animation:hxsel 1s linear infinite}
+.hxu.sel .tk{transform:scale(1.12)}
+@keyframes hxsel{to{stroke-dashoffset:-9.2}}
+.hxu.done{opacity:.5}
+.hxu.drop .tk{animation:hxdrop .6s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes hxdrop{0%{transform:translateY(-20px) scale(1.6);opacity:0}100%{transform:none;opacity:1}}
+.hxu.hurt .tk{animation:hxuhurt .45s}
+@keyframes hxuhurt{0%,100%{transform:none}25%{transform:translateX(-1.5px)}50%{transform:translateX(1.5px)}35%{filter:brightness(2.6) sepia(1) hue-rotate(-50deg) saturate(5)}}
+.hxu.dying{transition:opacity .4s,transform .4s;opacity:0}
+.hxret{pointer-events:none}
+.hxret circle{fill:rgba(255,61,85,.15);stroke:#FF3D55;stroke-width:.8;stroke-dasharray:2.4 1.6;transform-box:fill-box;transform-origin:center;animation:hxspin 3s linear infinite}
+.hxret path{stroke:#FF3D55;stroke-width:.9}
+.hxret.pend circle{stroke-width:1.4;fill:rgba(255,61,85,.35);animation-duration:1s}
+/* 下のパネル */
+.hxpanel{flex:none;display:flex;flex-direction:column;gap:5px}
+.hxturn{display:flex;align-items:center;gap:8px;padding:0 4px}
+.hxturn b{font-family:var(--disp);font-size:15px;color:var(--tc,#fff);text-shadow:0 0 8px color-mix(in srgb,var(--tc,#fff) 70%,transparent)}
+.hxturn.mine b{animation:hxpulse 1.4s ease-in-out infinite}
+@keyframes hxpulse{50%{text-shadow:0 0 18px var(--tc)}}
+.hxturn small{font-size:11px;color:#9AA4C0;font-weight:700}
+.hxenv{margin-left:auto;display:flex;align-items:center;gap:4px;font-size:11px;font-weight:900;color:#FFB45A;padding:2px 8px;border-radius:99px;background:rgba(255,140,40,.12);border:1px solid rgba(255,140,40,.4)}
+.hxenv .hxsig{width:16px;height:16px}
+.hxinfo{position:relative;border-radius:12px;padding:8px 10px;background:rgba(14,18,34,.9);border:1px solid rgba(255,255,255,.12);min-height:52px}
+.hxinfo.guide{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.hxinfo.guide b{font-size:13px}.hxinfo.guide small{font-size:11px;color:#9AA4C0;flex-basis:100%}
+.hxinfo.unit{display:flex;gap:8px;border-color:color-mix(in srgb,var(--cc) 55%,transparent);background:linear-gradient(100deg,color-mix(in srgb,var(--cc) 20%,#0E1222),#0E1222 60%)}
+.hxmini{flex:none;width:46px;height:46px;border-radius:10px;background:radial-gradient(circle,color-mix(in srgb,var(--cc) 40%,#111),#05060C);display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--cc) 60%,transparent)}
+.hxmini .hxsig{width:40px;height:40px}
+.hxud{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.hxud>b{font-size:13.5px;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.hxud>b em{font-style:normal;font-size:9.5px;padding:1px 6px;border-radius:99px;background:rgba(255,255,255,.1);color:var(--ec,#C9D1E6);border:1px solid currentColor}
+.hxuds{font-size:11px;color:#C9D1E6;font-weight:700}.hxuds b{color:#fff;font-size:12.5px;margin:0 4px 0 1px}
+.hxud small{font-size:10.5px;line-height:1.4;color:#B8C0D8}
+.hxud small em,.hxtim{font-style:normal;font-size:9px;font-weight:900;padding:0 5px;border-radius:4px;margin-right:4px;background:#3A4566;color:#fff}
+.t-sum{background:#1E9E5A!important}.t-atk{background:#C02838!important}.t-def{background:#1C5FB8!important}.t-die{background:#5A2A7A!important}.t-aura{background:#8A6A10!important}.t-sk{background:#B8860B!important}
+.hxust{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
+.hxust span{font-size:10px;font-weight:900;padding:1px 7px;border-radius:99px;background:rgba(56,182,255,.2);color:#9BE0FF}
+.hxust span.no{background:rgba(255,255,255,.06);color:#7A84A0}.hxust span.hot{background:rgba(255,61,85,.25);color:#FF9AA8}
+.hxx{position:absolute;right:4px;top:4px;width:24px;height:24px;border-radius:50%;border:none;background:rgba(255,255,255,.08);color:#fff;font-weight:900;padding:0}
+.hxpv{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.hxpv>div{display:flex;flex-direction:column;align-items:center;line-height:1}
+.hxpv .pa,.hxpv .pd{flex:1}
+.hxpv .hxsig{width:34px;height:34px}
+.hxpv b{font-family:var(--disp);font-size:22px}.hxpv b i{font-style:normal;font-size:11px;opacity:.75;margin-left:2px}
+.hxpv small{font-size:9.5px;color:#9AA4C0;font-weight:700;margin-top:2px}
+.hxpv .pvs b{font-size:26px;color:#FFD45A;text-shadow:0 0 10px rgba(255,212,90,.6)}
+.hxpv .pd.tre .gm{width:22px;height:30px;clip-path:polygon(50% 0,100% 40%,50% 100%,0 40%);background:linear-gradient(160deg,#fff,var(--tc) 60%,#000);margin-bottom:4px}
+.hxpvw{font-size:10px;color:#9AA4C0;text-align:center;margin-top:3px}
+.hxbtns{display:flex;gap:6px;margin-top:6px}
+.hxbtns.main{margin-top:0}
+.hxb{flex:1;height:42px;border-radius:12px;border:none;font-family:var(--disp);font-size:15px;color:#fff;padding:0 10px;letter-spacing:.04em;position:relative;overflow:hidden}
+.hxb.sm{flex:none;height:30px;font-size:12px;font-family:var(--body);font-weight:900}
+.hxb.hxgo{background:linear-gradient(180deg,#FF5A6E,#B3123A);box-shadow:0 4px 0 #5A0718,0 0 16px rgba(255,61,85,.5)}
+.hxb.hxgo::after{content:"";position:absolute;top:0;bottom:0;width:30%;left:-40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:hxshine 2.4s infinite}
+@keyframes hxshine{60%,100%{left:130%}}
+.hxb.hxgo:disabled{filter:grayscale(1);opacity:.6}
+.hxb.hxbig{height:52px;font-size:19px;flex:none;width:100%}
+.hxb.hxsub{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.hxb.hxend{background:linear-gradient(180deg,#3B4A7A,#1E2748);box-shadow:0 4px 0 #0A0F22;border:1px solid #5A6CA8}
+.hxb.hxsm{background:linear-gradient(180deg,#F2C23A,#A8780E);box-shadow:0 4px 0 #5A3E06;color:#1B1200}
+.hxb.hxsm.on{outline:2px solid #fff}
+.hxb:active{transform:translateY(3px);box-shadow:none}
+/* 手札 */
+.hxhand{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:2px 1px 3px;align-items:stretch}
+.hxhand.pick .hxhc{animation:hxpk 1s ease-in-out infinite;border-color:#FFD45A}
+.hxhand.pick .hxhc.ng{animation:none;opacity:.4}
+@keyframes hxpk{50%{box-shadow:0 0 12px rgba(255,212,90,.8)}}
+.hxhc{flex:none;width:60px;padding:3px 2px 4px;border-radius:9px;border:1px solid color-mix(in srgb,var(--cc) 55%,#333);background:linear-gradient(180deg,color-mix(in srgb,var(--cc) 28%,#0E1222),#070912);color:#fff;display:flex;flex-direction:column;align-items:center;gap:1px}
+.hxhc .hxsig{width:34px;height:34px}
+.hxhc b{font-size:9px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.hxhc span{display:flex;gap:2px}.hxhc span i{font-style:normal;font-size:9px;font-weight:900;width:14px;height:13px;border-radius:3px;display:grid;place-items:center}
+.hxhc i.a{background:#B8202F}.hxhc i.d{background:#1C5FB8}.hxhc i.s{background:#2E7A4A}
+.hxsep{flex:none;width:1px;background:rgba(255,255,255,.2);margin:4px 2px}
+.hxhk{flex:none;width:54px;padding:3px 2px;border-radius:9px;border:1px solid #8A6A10;background:linear-gradient(180deg,#3A2A08,#0E0A02);color:#FFE38A;display:flex;flex-direction:column;align-items:center;gap:2px}
+.hxhk .hxsig{width:28px;height:28px}.hxhk b{font-size:8.5px;line-height:1.1}
+.hxempty{font-size:11px;color:#6A7490;padding:12px}
+.hxskrow{display:flex;gap:5px;flex-wrap:wrap;align-items:center;width:100%}
+.hxskrow .hxsk{width:auto;flex:1 1 30%;cursor:pointer}
+/* カード */
+.hxc{--w:120px;width:var(--w);border-radius:12px;padding:5px;position:relative;color:#fff;text-align:left;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--cc) 35%,#141A2E),#06070E 70%);border:2px solid transparent;
+  background-clip:padding-box;box-shadow:0 0 0 1.5px color-mix(in srgb,var(--cc) 70%,#B8902A),0 6px 16px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:4px}
+.hxc::before{content:"";position:absolute;inset:2px;border-radius:9px;border:1px solid rgba(255,255,255,.12);pointer-events:none}
+.hxc-h{display:flex;align-items:center;justify-content:center;min-height:16px}
+.hxc-n{font-family:var(--disp);font-weight:400;font-size:11px;line-height:1.1;text-align:center;text-shadow:0 1px 0 #000}
+.hxc-art{position:relative;aspect-ratio:1.25;border-radius:8px;display:grid;place-items:center;overflow:hidden;
+  background:radial-gradient(circle at 50% 55%,color-mix(in srgb,var(--cc) 60%,transparent),transparent 62%),repeating-conic-gradient(from 0deg at 50% 55%,rgba(255,255,255,.06) 0 6deg,transparent 6deg 12deg),#0A0C18;border:1px solid rgba(255,255,255,.1)}
+.hxc-art .hxsig{width:72%;height:auto;filter:drop-shadow(0 0 8px color-mix(in srgb,var(--cc) 80%,transparent)) drop-shadow(0 2px 2px #000)}
+.hxc-el{position:absolute;left:3px;top:3px;font-size:9px;font-weight:900;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:#05060C;color:var(--ec);border:1.5px solid var(--ec);box-shadow:0 0 6px var(--ec)}
+.hxc-k{position:absolute;right:3px;top:3px;font-size:8.5px;font-weight:900;padding:1px 5px;border-radius:5px;background:#B8202F}
+.hxc-k.far{background:#1C7A5A}
+.hxc-hp{position:absolute;left:0;right:0;bottom:3px;display:flex;justify-content:center;gap:2px}
+.hxc-hp i{width:9px;height:8px;background:#5BF08A;clip-path:path("M4.5 8L0.5 3.8Q-0.5 1.5 1.5 0.5Q3.4 -0.2 4.5 2Q5.6 -0.2 7.5 0.5Q9.5 1.5 8.5 3.8Z");filter:drop-shadow(0 0 2px #000)}
+.hxc-hp i.off{background:#333A4E}
+.hxc-sk{position:absolute;right:3px;bottom:3px;width:20px;height:20px;border-radius:50%;background:#2A1E04;border:1.5px solid #E8B12A;display:grid;place-items:center}
+.hxc-sk .hxsig{width:15px;height:15px;filter:none}
+.hxc-st{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.hxc-st span{display:flex;flex-direction:column;align-items:center;line-height:1;padding:2px 0;border-radius:5px;background:rgba(0,0,0,.45)}
+.hxc-st em{font-style:normal;font-size:7.5px;font-weight:900;opacity:.75}
+.hxc-st b{font-family:var(--disp);font-weight:400;font-size:13px}
+.hxc-st .hs-a b{color:#FF7A88}.hxc-st .hs-d b{color:#7FBFFF}.hxc-st .hs-s b{color:#7FF0A8}.hxc-st .hs-r b{color:#FFD45A}
+.hxc-st .up{box-shadow:0 0 0 1px #FFD45A inset}.hxc-st .dn{opacity:.6}
+.hxc-ab{font-size:8.5px;line-height:1.35;color:#C9D1E6;padding:3px 4px;border-radius:6px;background:rgba(0,0,0,.35);min-height:34px}
+.hxc-ab em{font-style:normal;font-size:7.5px;font-weight:900;padding:0 4px;border-radius:3px;margin-right:3px;color:#fff}
+.hxc-ab b{font-size:9px;color:#fff;margin-right:3px}
+.hxc-ab small{display:block;font-size:8.5px}
+.hxc-eq{font-size:8.5px;padding:2px 4px;border-radius:6px;background:rgba(232,177,42,.15);border:1px solid rgba(232,177,42,.5);color:#FFE38A}
+.hxc-eq b{margin-right:3px}.hxc-eq small{font-size:8px}
+.hxc.sm{--w:100%}
+.hxc.md{--w:132px}
+.hxc.lg{--w:min(72vw,250px);padding:8px;gap:6px}
+.hxc.lg .hxc-n{font-size:17px}.hxc.lg .hxc-el{width:26px;height:26px;font-size:13px}.hxc.lg .hxc-k{font-size:12px}
+.hxc.lg .hxc-st b{font-size:20px}.hxc.lg .hxc-st em{font-size:10px}
+.hxc.lg .hxc-ab{font-size:12px;min-height:0}.hxc.lg .hxc-ab b{font-size:13px}.hxc.lg .hxc-ab small{font-size:12px}.hxc.lg .hxc-ab em{font-size:10px}
+.hxc.lg .hxc-hp i{width:14px;height:12px;clip-path:path("M7 12L1 6Q-0.5 2.5 2.3 0.8Q5 -0.3 7 3Q9 -0.3 11.7 0.8Q14.5 2.5 13 6Z")}
+.hxc.lg .hxc-eq{font-size:11px}
+.hxsk{border-radius:10px;padding:6px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;background:linear-gradient(180deg,#3A2A08,#0E0A02);border:1px solid #B8902A;color:#FFE38A;box-shadow:0 0 10px rgba(232,177,42,.25)}
+.hxsk .hxsig{width:34px;height:34px}.hxsk b{font-size:11px;font-weight:900}.hxsk small{font-size:9.5px;color:#E8D8A8;line-height:1.3}
+.hxsk.lg{width:min(70vw,230px);padding:16px}.hxsk.lg .hxsig{width:90px;height:90px}.hxsk.lg b{font-size:18px}.hxsk.lg small{font-size:13px}
+/* モーダル */
+.hxmodal{position:absolute!important;inset:0;z-index:5!important;display:none;align-items:center;justify-content:center;padding:calc(var(--safe-t) + 14px) 12px calc(var(--safe-b) + 14px);background:rgba(3,4,10,.78);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.hxmodal.on{display:flex}
+.hxmw{width:100%;max-width:440px;max-height:100%;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:12px;animation:hxin .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes hxin{from{transform:scale(.85);opacity:0}}
+.hxmh{text-align:center;display:flex;flex-direction:column;line-height:1.2}
+.hxmh small{font-family:"Cinzel",var(--disp);font-weight:900;letter-spacing:.3em;color:#E8B12A;font-size:12px}
+.hxmh b{font-family:var(--disp);font-size:22px;text-shadow:0 0 14px rgba(56,182,255,.5)}
+.hxmh span{font-size:11.5px;color:#9AA4C0;font-weight:700;margin-top:3px}
+.hxpickg{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.hxpickg .hxc{--w:min(29vw,128px);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.hxpickg .hxc.on{transform:translateY(-6px) scale(1.04);box-shadow:0 0 0 2.5px #FFD45A,0 0 22px rgba(255,212,90,.7)}
+.hxpickg .hxc.on::after{content:"出撃";position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:900;padding:1px 8px;border-radius:99px;background:#FFD45A;color:#1B1200}
+.hxready{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.hxready span{display:flex;flex-direction:column;align-items:center;padding:8px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid color-mix(in srgb,var(--tc) 60%,transparent)}
+.hxready span em{font-style:normal;font-size:11px;color:#9AA4C0}
+.hxready span.ok em{color:#7FF0A8}
+.hxrwb{display:flex;gap:10px;width:100%}
+.hxrw{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 8px;border-radius:16px;color:#fff;border:1.5px solid}
+.hxrw .ico{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.4)}
+.hxrw .ico .hxsig{width:56px;height:56px}
+.hxrw b{font-family:var(--disp);font-size:17px}.hxrw small{font-size:11px;opacity:.8}
+.hxrw.ch{background:linear-gradient(180deg,#1E3A6E,#0A1430);border-color:#38B6FF;box-shadow:0 0 18px rgba(56,182,255,.35)}
+.hxrw.sk{background:linear-gradient(180deg,#5A3E08,#1A1002);border-color:#E8B12A;box-shadow:0 0 18px rgba(232,177,42,.35)}
+.hxrw:disabled{opacity:.4}
+.hxmw.pop{gap:10px}.hxmw.pop .hxb{flex:none;width:min(72vw,250px)}
+.hxmw.over{position:relative;padding:20px 8px}
+.hxrays{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--tc) 30%,transparent) 0 8deg,transparent 8deg 16deg);animation:hxspin 20s linear infinite;z-index:-1;-webkit-mask:radial-gradient(circle,#000 20%,transparent 60%);mask:radial-gradient(circle,#000 20%,transparent 60%)}
+.hxres{font-family:"Cinzel",var(--disp);font-weight:900;font-size:46px;letter-spacing:.08em;background:linear-gradient(180deg,#FFF6D6,#E8B12A 55%,#8A5A10);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px rgba(232,177,42,.6));animation:hxin .6s}
+.hxmw.over.defeat .hxres{background:linear-gradient(180deg,#E9EDF7,#7A84A0 60%,#3A4058);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 10px rgba(0,0,0,.6))}
+.hxwin{font-family:var(--disp);font-size:20px;color:var(--tc);text-shadow:0 0 12px var(--tc)}
+.hxwhy{font-size:12px;color:#9AA4C0;font-weight:700}
+.hxsum{display:flex;gap:8px;width:100%}
+.hxsum>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid color-mix(in srgb,var(--tc) 40%,transparent);text-align:center}
+.hxsum>div.w{box-shadow:0 0 16px color-mix(in srgb,var(--tc) 50%,transparent);border-color:var(--tc)}
+.hxsum b{font-family:var(--disp);font-size:18px;color:var(--tc)}.hxsum span{font-size:11.5px;font-weight:700}.hxsum small{font-size:10px;color:#9AA4C0}
+.hxmw .hxbtns{width:100%}
+/* 新しい対戦シートの陣営 */
+.hxtpick{display:flex;gap:8px}
+.hxtcol{flex:1;padding:8px;border-radius:12px;background:color-mix(in srgb,var(--tc) 10%,#fff);border:2px solid var(--tc);display:flex;flex-direction:column;gap:5px}
+.hxtcol h5{margin:0 0 2px;font-family:var(--disp);font-weight:400;font-size:15px;color:var(--tc);display:flex;align-items:baseline;gap:6px}
+.hxtcol h5 small{font-size:9px;letter-spacing:.2em;color:var(--mute)}
+.hxtcol em{font-size:11px;color:var(--mute);font-style:normal}
+.hxtp{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-radius:10px;border:1.5px solid var(--ink);background:#fff;font-weight:900;font-size:13px;border-left:5px solid var(--pc);color:var(--ink)}
+.hxtp i{font-style:normal;color:var(--mute);font-size:12px}
+/* ルール */
+.hxcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px;padding:4px}
+.hxskgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}
+.hxrg{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:10px;background:#1B1838}
+.hxrg .hxsig{width:36px;height:36px}
+.hxloglist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;font-size:12.5px}
+.hxloglist li{padding:6px 8px;border-radius:8px;background:#F3F5FA}
+/* ===== 演出レイヤー ===== */
+.hxfxl{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden}
+.hxfx{position:absolute;pointer-events:none}
+.hxfx.burst{width:0;height:0}
+.hxfx.burst .fl{position:absolute;left:-40px;top:-40px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,#fff,var(--c) 40%,transparent 70%);animation:hxfl .5s ease-out forwards}
+.hxfx.burst .rg{position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;border:3px solid var(--c);animation:hxrg .6s ease-out forwards}
+.hxfx.burst i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);animation:hxpt .8s cubic-bezier(.1,.8,.3,1) forwards;animation-delay:var(--d)}
+.hxfx.burst.gold i{background:#FFE38A;border-radius:1px;transform:rotate(45deg)}
+.hxfx.burst.up i{animation-name:hxptup}
+.hxfx.burst.ice i{background:#E8FAFF;border-radius:1px}
+@keyframes hxfl{0%{transform:scale(.2);opacity:1}100%{transform:scale(2.2);opacity:0}}
+@keyframes hxrg{0%{transform:scale(.5);opacity:1}100%{transform:scale(9);opacity:0}}
+@keyframes hxpt{0%{transform:translate(0,0) scale(var(--s));opacity:1}100%{transform:translate(var(--x),var(--y)) scale(0);opacity:0}}
+@keyframes hxptup{0%{transform:translate(0,0) scale(var(--s));opacity:1}100%{transform:translate(calc(var(--x)*.4),-80px) scale(0);opacity:0}}
+.hxfx.dnum{transform:translate(-50%,-50%);font-family:var(--disp);font-size:30px;color:#FF5A6E;-webkit-text-stroke:2px #1B0006;paint-order:stroke fill;animation:hxdn 1s ease-out forwards}
+.hxfx.dnum.tre{color:#FFD45A;font-size:34px}
+.hxfx.dnum.heal{color:#7FF0A8;-webkit-text-stroke-color:#002A10}
+@keyframes hxdn{0%{transform:translate(-50%,-20%) scale(.4)}20%{transform:translate(-50%,-80%) scale(1.3)}100%{transform:translate(-50%,-160%) scale(1);opacity:0}}
+.hxfx.ko{transform:translate(-50%,-50%);font-family:"Cinzel",var(--disp);font-weight:900;font-size:44px;color:#fff;-webkit-text-stroke:2.5px #B3123A;paint-order:stroke fill;text-shadow:0 0 20px #FF3D55;animation:hxko 1.1s cubic-bezier(.2,1.6,.4,1) forwards}
+.hxfx.ko.guts{color:#FFB45A;-webkit-text-stroke-color:#5A2006;font-family:var(--disp);font-size:34px}
+@keyframes hxko{0%{transform:translate(-50%,-50%) scale(3) rotate(-15deg);opacity:0}25%{transform:translate(-50%,-50%) scale(1) rotate(-6deg);opacity:1}80%{opacity:1}100%{transform:translate(-50%,-90%) scale(1.1) rotate(-6deg);opacity:0}}
+.hxfx.shatter{width:0;height:0}
+.hxfx.shatter i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;background:var(--c);clip-path:polygon(50% 0,100% 100%,0 70%);animation:hxsh .9s ease-out forwards}
+@keyframes hxsh{to{transform:rotate(var(--a)) translateY(calc(var(--d) * -1)) rotate(400deg);opacity:0}}
+.hxfx.slash{width:0;height:0}
+.hxfx.slash i{position:absolute;left:-45px;top:-2px;width:90px;height:4px;border-radius:4px;background:linear-gradient(90deg,transparent,#fff,#FFD45A,transparent);box-shadow:0 0 10px #FFD45A;transform:rotate(-35deg) scaleX(0);animation:hxsl .45s ease-out forwards}
+.hxfx.slash i:nth-child(2){transform:rotate(25deg) scaleX(0);animation-delay:.08s}
+.hxfx.slash i:nth-child(3){transform:rotate(-80deg) scaleX(0);animation-delay:.16s}
+@keyframes hxsl{40%{opacity:1}100%{transform:rotate(var(--r,-35deg)) scaleX(1.3);opacity:0}}
+.hxfx.slash i:nth-child(1){--r:-35deg}.hxfx.slash i:nth-child(2){--r:25deg}.hxfx.slash i:nth-child(3){--r:-80deg}
+.hxfx.beam{height:4px;width:var(--len);transform-origin:0 50%;transform:rotate(var(--ang));margin-top:-2px;background:linear-gradient(90deg,transparent,var(--c),#fff);border-radius:4px;box-shadow:0 0 12px var(--c),0 0 4px #fff;animation:hxbeam .5s ease-out forwards}
+@keyframes hxbeam{0%{clip-path:inset(0 100% 0 0)}40%{clip-path:inset(0 0 0 0);opacity:1}100%{clip-path:inset(0 0 0 100%);opacity:.6}}
+.hxfx.flash{inset:0;background:#fff;animation:hxflash .5s ease-out forwards}
+.hxfx.flash.gold{background:radial-gradient(circle,rgba(255,227,138,.8),transparent 70%)}
+@keyframes hxflash{from{opacity:.75}to{opacity:0}}
+.hxfx.meteor{width:0;height:0}
+.hxfx.meteor i{position:absolute;left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;background:radial-gradient(circle,#FFF6D6,#FF7A2A 50%,#8A2A06);box-shadow:0 0 24px 8px rgba(255,122,42,.8);animation:hxmet .4s ease-in forwards}
+.hxfx.meteor i::after{content:"";position:absolute;left:14px;top:14px;width:160px;height:16px;margin-top:-8px;transform-origin:0 50%;transform:rotate(-125deg);background:linear-gradient(90deg,rgba(255,122,42,.9),transparent);border-radius:8px;filter:blur(2px)}
+@keyframes hxmet{from{transform:translate(160px,-260px) scale(.5)}to{transform:none}}
+.hxfx.zap{width:0;height:0}
+.hxfx.zap i{position:absolute;left:-20px;bottom:0;width:40px;height:100vh;background:linear-gradient(180deg,transparent,#FFF6B0 30%,#fff);clip-path:polygon(40% 0,60% 0,48% 35%,70% 35%,35% 70%,52% 70%,30% 100%,58% 64%,42% 64%,64% 30%,46% 30%);filter:drop-shadow(0 0 14px #FFE04A);animation:hxzap .6s steps(2) forwards}
+@keyframes hxzap{0%,60%{opacity:1}30%,100%{opacity:.2}}
+.hxfx.rain{inset:0}
+.hxfx.rain i{position:absolute;top:-10%;width:2px;height:40px;background:linear-gradient(180deg,transparent,#9BE0FF);animation:hxrain .6s linear 2;animation-delay:var(--dl)}
+@keyframes hxrain{to{transform:translateY(120vh)}}
+.hxfx.circle{width:0;height:0}
+.hxfx.circle span{position:absolute;border-radius:50%;left:calc(var(--sz)/-2);top:calc(var(--sz)/-2);width:var(--sz);height:var(--sz)}
+.hxfx.circle .r1{border:2px solid var(--c);box-shadow:0 0 14px var(--c),inset 0 0 14px var(--c);animation:hxci 1.6s ease-out forwards}
+.hxfx.circle .r2{border:2px dashed #FFD45A;transform:scale(.7);animation:hxci2 1.6s linear forwards}
+.hxfx.circle .r3{background:radial-gradient(circle,color-mix(in srgb,var(--c) 70%,transparent),transparent 65%);animation:hxci3 1.6s ease-out forwards}
+.hxfx.circle .pillar{left:calc(var(--sz)/-4);width:calc(var(--sz)/2);top:-100vh;height:100vh;border-radius:40px 40px 4px 4px;background:linear-gradient(0deg,#fff,var(--c) 30%,transparent);filter:blur(3px);transform-origin:50% 100%;animation:hxpil 1.1s ease-out .35s both}
+@keyframes hxci{0%{transform:scale(0) rotate(0)}30%{transform:scale(1.4)}100%{transform:scale(1.1) rotate(90deg);opacity:0}}
+@keyframes hxci2{0%{transform:scale(0) rotate(0)}30%{transform:scale(1) rotate(60deg)}100%{transform:scale(1) rotate(240deg);opacity:0}}
+@keyframes hxci3{0%{transform:scale(0)}40%{transform:scale(1.6);opacity:1}100%{transform:scale(2);opacity:0}}
+@keyframes hxpil{0%{transform:scaleX(0);opacity:0}25%{transform:scaleX(1.4);opacity:1}100%{transform:scaleX(0);opacity:0}}
+/* バナー */
+.hxfx.banner{inset:0;display:flex;align-items:center;justify-content:center}
+.hxfx.banner .tt{display:flex;flex-direction:column;align-items:center;text-align:center;line-height:1.05;animation:hxbn 1.6s cubic-bezier(.2,1.4,.4,1) forwards}
+.hxfx.banner .tt small{font-family:"Cinzel",var(--disp);font-weight:900;letter-spacing:.35em;font-size:12px;color:#E8B12A}
+.hxfx.banner .tt b{font-family:"Cinzel",var(--disp);font-weight:900;font-size:56px;letter-spacing:.06em;background:linear-gradient(180deg,#FFF6D6,#E8B12A 55%,#8A5A10);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(232,177,42,.7)) drop-shadow(0 3px 0 #000)}
+.hxfx.banner .tt span{font-size:13px;font-weight:900;color:#fff;margin-top:6px}
+@keyframes hxbn{0%{transform:scale(2.4);opacity:0;filter:blur(8px)}18%{transform:scale(1);opacity:1;filter:none}82%{transform:scale(1.04);opacity:1}100%{transform:scale(1.1);opacity:0}}
+.hxfx.banner.start{background:radial-gradient(circle,rgba(0,0,0,.4),rgba(0,0,0,.85));animation:hxfade 2.6s forwards}
+.hxfx.banner.start .tt{animation-duration:2.5s}
+.hxfx.banner.start .vs{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:var(--disp);font-size:16px}
+.hxfx.banner.start .vs span{color:var(--tc);text-shadow:0 0 12px var(--tc)}
+.hxfx.banner.start .vs em{font-family:"Cinzel",serif;font-style:normal;font-weight:900;color:#fff;font-size:22px}
+.hxfx.banner .sl{position:absolute;left:-10%;width:120%;height:3px;background:linear-gradient(90deg,transparent,#fff,transparent);box-shadow:0 0 16px #fff}
+.hxfx.banner .sl.s1{top:40%;transform:rotate(-8deg);animation:hxsl2 .5s ease-out forwards}
+.hxfx.banner .sl.s2{top:60%;transform:rotate(-8deg);animation:hxsl2 .5s ease-out .15s both}
+@keyframes hxsl2{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0);opacity:.2}}
+@keyframes hxfade{0%{opacity:0}10%,85%{opacity:1}100%{opacity:0}}
+.hxfx.banner.deploy{background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.6) 45%,rgba(0,0,0,.6) 55%,transparent 65%);animation:hxfade 1.7s forwards}
+.hxfx.banner.deploy .tt b{font-family:var(--disp);font-size:44px}
+.hxfx.banner.break{background:radial-gradient(circle,rgba(0,0,0,.55),transparent 70%);animation:hxfade 1.9s forwards}
+.hxfx.banner.break .tt b{font-family:var(--disp);font-size:42px;background:linear-gradient(180deg,#fff,var(--tc) 60%,#000);-webkit-background-clip:text;background-clip:text}
+.hxfx.banner.turn .rb{width:100%;padding:12px 0;display:flex;flex-direction:column;align-items:center;line-height:1.05;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--tc) 70%,#000) 20%,color-mix(in srgb,var(--tc) 70%,#000) 80%,transparent);border-top:2px solid var(--tc);border-bottom:2px solid var(--tc);box-shadow:0 0 30px color-mix(in srgb,var(--tc) 60%,transparent);animation:hxrb 1.3s cubic-bezier(.2,1,.3,1) forwards}
+.hxfx.banner.turn .rb small{font-family:"Cinzel",serif;font-weight:900;font-size:11px;letter-spacing:.3em;opacity:.85}
+.hxfx.banner.turn .rb b{font-family:"Cinzel",var(--disp);font-weight:900;font-size:34px;letter-spacing:.08em;color:#fff;text-shadow:0 0 14px var(--tc)}
+.hxfx.banner.turn .rb span{font-size:13px;font-weight:900}
+.hxfx.banner.turn.mine .rb b{font-size:40px;color:#FFE38A}
+@keyframes hxrb{0%{transform:scaleY(0) skewX(-20deg);opacity:0}15%{transform:scaleY(1) skewX(-8deg);opacity:1}80%{transform:scaleY(1) skewX(-8deg);opacity:1}100%{transform:scaleY(0) skewX(-8deg);opacity:0}}
+.hxfx.banner.gim{background:rgba(20,4,0,.7);animation:hxfade 2.5s forwards}
+.hxfx.banner.gim .hz{position:absolute;left:0;right:0;height:26px;background:repeating-linear-gradient(-45deg,#FFB400 0 16px,#111 16px 32px);animation:hxhz 1s linear infinite}
+.hxfx.banner.gim .hz.t{top:18%}.hxfx.banner.gim .hz.b{bottom:18%;animation-direction:reverse}
+@keyframes hxhz{to{background-position:45px 0}}
+.hxfx.banner.gim .gw{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 24px;animation:hxbn 2.4s cubic-bezier(.2,1.4,.4,1) forwards}
+.hxfx.banner.gim .gw small{font-family:"Cinzel",var(--disp);font-weight:900;color:#FFB400;letter-spacing:.25em;font-size:14px;animation:hxblink .5s infinite}
+.hxfx.banner.gim .gi{width:110px;height:110px;margin:6px 0;filter:drop-shadow(0 0 20px #FF7A2A)}
+.hxfx.banner.gim .gi .hxsig{width:100%;height:100%}
+.hxfx.banner.gim .gw b{font-family:var(--disp);font-size:38px;color:#fff;text-shadow:0 0 18px #FF7A2A,0 3px 0 #000}
+.hxfx.banner.gim .gw span{font-size:14px;font-weight:900;color:#FFE3C8;margin-top:6px}
+.hxfx.banner.sum,.hxfx.banner.abil{align-items:flex-start;padding-top:calc(var(--safe-t) + 110px)}
+.hxfx.banner .sb,.hxfx.banner .ab{display:flex;align-items:center;gap:10px;padding:8px 22px 8px 10px;border-radius:0 60px 60px 0;margin-right:auto;background:linear-gradient(90deg,color-mix(in srgb,var(--tc) 80%,#000),rgba(5,6,12,.9));border:1.5px solid var(--tc);border-left:none;box-shadow:0 0 24px color-mix(in srgb,var(--tc) 50%,transparent);animation:hxsb 1.5s cubic-bezier(.2,1,.3,1) forwards;max-width:92vw}
+.hxfx.banner .ab{background:linear-gradient(90deg,color-mix(in srgb,var(--cc) 55%,#000),rgba(5,6,12,.92));border-color:var(--cc)}
+.hxfx.banner .si{width:56px;height:56px;flex:none;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,color-mix(in srgb,var(--cc,#FFD45A) 50%,#000),#000);border:2px solid #E8B12A}
+.hxfx.banner .si .hxsig{width:46px;height:46px}
+.hxfx.banner .sb small,.hxfx.banner .ab small{display:block;font-family:"Cinzel",var(--disp);font-weight:900;font-size:10px;letter-spacing:.2em;color:#FFD45A}
+.hxfx.banner .sb b,.hxfx.banner .ab b{display:block;font-family:var(--disp);font-size:21px;color:#fff;line-height:1.15}
+.hxfx.banner .sb span,.hxfx.banner .ab span{display:block;font-size:11.5px;font-weight:700;color:#E9EDF7}
+@keyframes hxsb{0%{transform:translateX(-110%)}18%{transform:translateX(0)}82%{transform:translateX(0);opacity:1}100%{transform:translateX(-30px);opacity:0}}
+.hxfx.banner.drawn{background:rgba(0,0,0,.55);animation:hxfade 1.7s forwards}
+.hxfx.banner .dc{display:flex;flex-direction:column;align-items:center;gap:10px;animation:hxflip 1.6s ease-out forwards}
+.hxfx.banner .dc>b{font-family:var(--disp);font-size:18px;color:#FFE38A}
+@keyframes hxflip{0%{transform:rotateY(90deg) scale(.6)}25%{transform:rotateY(0) scale(1.05)}85%{transform:none;opacity:1}100%{transform:translateY(40px) scale(.7);opacity:0}}
+.hxfx.banner.fin{background:rgba(0,0,0,.6);animation:hxfade 2.6s forwards}
+.hxfx.banner.fin .rays{position:absolute;inset:-50%;background:repeating-conic-gradient(rgba(255,212,90,.25) 0 7deg,transparent 7deg 14deg);animation:hxspin 12s linear infinite;-webkit-mask:radial-gradient(circle,#000 10%,transparent 55%);mask:radial-gradient(circle,#000 10%,transparent 55%)}
+.hxfx.banner.fin.defeat .rays{background:repeating-conic-gradient(rgba(120,130,160,.18) 0 7deg,transparent 7deg 14deg)}
+.hxfx.banner.fin b{position:relative;font-family:"Cinzel",var(--disp);font-weight:900;font-size:60px;letter-spacing:.06em;background:linear-gradient(180deg,#FFF6D6,#E8B12A 55%,#8A5A10);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(232,177,42,.8));animation:hxbn 2.5s cubic-bezier(.2,1.4,.4,1) forwards}
+.hxfx.banner.fin.defeat b{background:linear-gradient(180deg,#E9EDF7,#7A84A0 60%,#2A2E40);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 10px #000)}
+/* バトルのカットイン */
+.hxfx.hxbt{inset:0;pointer-events:auto;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:4px;padding:calc(var(--safe-t) + 20px) 10px calc(var(--safe-b) + 20px);background:rgba(2,3,8,.82);animation:hxbtin .25s ease-out}
+.hxfx.hxbt.out{animation:hxbtout .26s ease-in forwards}
+@keyframes hxbtin{from{opacity:0}}
+@keyframes hxbtout{to{opacity:0;transform:scale(1.05)}}
+.hxbt-bg{position:absolute;inset:0;overflow:hidden}
+.hxbt-bg i{position:absolute;left:-20%;width:140%;height:46%;transform:skewY(-10deg)}
+.hxbt-bg .s1{top:2%;background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 65%,#000),transparent 80%);animation:hxbs1 .4s ease-out}
+.hxbt-bg .s2{bottom:2%;background:linear-gradient(270deg,color-mix(in srgb,var(--dc) 65%,#000),transparent 80%);animation:hxbs2 .4s ease-out}
+@keyframes hxbs1{from{transform:skewY(-10deg) translateX(-100%)}}
+@keyframes hxbs2{from{transform:skewY(-10deg) translateX(100%)}}
+.hxbt-tag{position:relative;align-self:center;font-family:var(--disp);font-size:14px;padding:2px 14px;border-radius:99px;background:#FFB400;color:#1B1200}
+.hxbt-row{position:relative;display:flex;align-items:center;gap:12px}
+.hxbt-row.a{animation:hxra .45s cubic-bezier(.2,1.3,.4,1) both}
+.hxbt-row.d{flex-direction:row-reverse;animation:hxrd .45s cubic-bezier(.2,1.3,.4,1) .1s both}
+@keyframes hxra{from{transform:translateX(-120%)}}
+@keyframes hxrd{from{transform:translateX(120%)}}
+.hxbt-card .hxc{--w:min(36vw,150px)}
+.hxbt-card .hxc.gimc .hxc-art .hxsig{width:80%}
+.hxbt-calc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.hxbt-calc>small{font-family:"Cinzel",var(--disp);font-weight:900;letter-spacing:.3em;font-size:12px;color:var(--tc);text-shadow:0 0 8px var(--tc)}
+.hxbt-eq{display:flex;align-items:center;gap:5px}
+.hxbt-eq b{font-family:var(--disp);font-size:32px;color:#fff}
+.hxbt-eq i{font-style:normal;font-size:20px;font-weight:900;color:#9AA4C0}
+.hxbt-eq .tot{min-width:46px;text-align:center;font-size:40px;color:#6A7490;transition:all .3s}
+.hxbt-eq .tot.on{color:#FFE38A;text-shadow:0 0 16px rgba(255,212,90,.8);transform:scale(1.2)}
+.hxbt-why{font-size:10.5px;font-weight:900;color:#FFD45A;min-height:14px;text-align:center}
+.dz{display:flex;gap:4px}
+.hxdie{width:38px;height:38px;border-radius:9px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:5px;gap:1px;background:linear-gradient(145deg,#FFFFFF,#C9D1E0);box-shadow:0 3px 0 #6A7490,0 0 0 2px var(--tc) inset}
+.hxdie i{border-radius:50%}.hxdie i.on{background:#0A0C16;margin:1px}
+.hxbt-row .hxdie.roll{animation:hxroll .14s linear infinite}
+.hxdie.land{animation:hxland .4s cubic-bezier(.2,1.8,.4,1)}
+.hxdie.dim{opacity:.35;transform:scale(.8)}
+@keyframes hxroll{0%{transform:rotate(0) translateY(-2px)}50%{transform:rotate(18deg) translateY(2px)}100%{transform:rotate(0) translateY(-2px)}}
+@keyframes hxland{0%{transform:scale(1.7) rotate(25deg)}100%{transform:none}}
+.hxbt-vs{position:relative;align-self:center;margin:-6px 0}
+.hxbt-vs b{font-family:"Cinzel",serif;font-weight:900;font-size:40px;color:#fff;font-style:italic;text-shadow:0 0 18px #FFB400,0 0 4px #fff;animation:hxvs .5s cubic-bezier(.2,2,.4,1) .3s both}
+@keyframes hxvs{from{transform:scale(4);opacity:0}}
+.hxbt-res{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.hxbt-res b{font-family:var(--disp);font-size:64px;line-height:1;-webkit-text-stroke:3px #1B0006;paint-order:stroke fill}
+.hxbt-res span{font-size:16px;font-weight:900;padding:2px 14px;border-radius:99px;background:#FF3D55;color:#fff;margin-top:4px}
+.hxbt-res.hit b{color:#FF5A6E;text-shadow:0 0 30px #FF3D55;animation:hxres .5s cubic-bezier(.2,2,.4,1)}
+.hxbt-res.miss b{color:#9BE0FF;-webkit-text-stroke-color:#001A2A;text-shadow:0 0 30px #38B6FF;animation:hxres .5s cubic-bezier(.2,2,.4,1)}
+@keyframes hxres{from{transform:scale(3) rotate(-12deg);opacity:0}}
+.hxfx.hxbt.hit .hxbt-row.d .hxbt-card{animation:hxcardhit .5s}
+@keyframes hxcardhit{0%,100%{transform:none}20%{transform:translateX(10px) rotate(4deg);filter:brightness(2.5) saturate(0)}50%{transform:translateX(-6px) rotate(-2deg)}}
+.hxfx.hxbt.miss .hxbt-row.d .hxbt-card{animation:hxcardblk .6s}
+@keyframes hxcardblk{30%{box-shadow:0 0 0 4px #9BE0FF,0 0 40px #38B6FF;border-radius:14px}}
+.hxbt-skip{position:absolute;bottom:calc(var(--safe-b) + 8px);left:0;right:0;text-align:center;font-size:10px;color:#6A7490;font-weight:700}
+@media (max-height:700px){
+  .hxtb{min-height:34px;padding:3px 6px}.hxtg{width:28px;height:28px}.hxtg i{width:10px;height:13px;top:4px}.hxtg b{margin-top:12px;font-size:9px}
+  .hxhc{width:52px}.hxhc .hxsig{width:28px;height:28px}
+  .hxb{height:38px}
+  .hxinfo{padding:6px 8px;min-height:44px}
+  .hxbt-card .hxc{--w:min(32vw,120px)}
+}
+.hxfx.hxbt.hit .hxbt-vs,.hxfx.hxbt.miss .hxbt-vs{opacity:0;transition:opacity .15s}
+
 </style>
 </head>
 <body>
@@ -3160,6 +3589,7 @@ body.bgpause *,body.bgpause *::before,body.bgpause *::after{animation-play-state
 <div class="arena neu cog" id="cog" hidden></div>
 <div class="arena neu kgg" id="kgg" hidden></div>
 <div class="arena neu dmg" id="dmg" hidden></div>
+<div class="arena hxg" id="hxg" hidden></div>
 <div class="sheet" id="sheet"><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -3186,7 +3616,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
 const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#5A6378"];
-const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games", "kg_games", "dm_games"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games", "kg_games", "dm_games", "hx_games"];
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
@@ -3217,7 +3647,7 @@ const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
 const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
 
-const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [], kg_games: [], dm_games: [] };
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [], kg_games: [], dm_games: [], hx_games: [] };
 let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
@@ -3267,7 +3697,7 @@ const fail = (e, what) => { console.error(e); toast(`${what}できませんで�
 /* ---------- データ ---------- */
 async function loadTable(t){
   const { data, error } = await sb.from(t).select("*");
-  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games" || t === "dm_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
+  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games" || t === "dm_games" || t === "hx_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
   if (error) throw error;
   db[t] = data || [];
   if (t === "players"){ db.allPlayers = db[t]; applyGuestFilter(); }
@@ -3298,9 +3728,14 @@ function subscribe(){
         if (cur && (cur.version || 1) >= (nw.version || 1)) return;      // 自分の保存のこだま（もう反映済み）
         if (cur){ Object.assign(cur, nw); if (dmId === nw.id){ clearTimeout(reloadTimer.dmDraw); reloadTimer.dmDraw = setTimeout(() => { drawDm(); turnBuzz(); }, 30); } else if (!dmId) render(); setTimeout(cpuKick, 0); return; }
       }
+      if (t === "hx_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
+        const nw = JSON.parse(cpuUuidIn(JSON.stringify(payload.new))), cur = (db.hx_games || []).find(x => x.id === nw.id);
+        if (cur && (cur.version || 1) >= (nw.version || 1)) return;
+        if (cur){ Object.assign(cur, nw); if (hxId === nw.id) drawHx(); else if (!dmId && !hxId) render(); turnBuzz(); setTimeout(cpuKick, 0); return; }
+      }
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); turnBuzz(); cpuKick(); } catch (e) { console.error(e); }
+        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); if (t === "hx_games") drawHx(); turnBuzz(); cpuKick(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -3342,7 +3777,7 @@ function render(){
   $("#neuIco").hidden = !loaded || !db.players.length;
   $("#neuIco").disabled = !player(me);
   $("#neuIco").title = player(me) ? "ゲーム一覧" : "自分を選ぶと遊べます";
-  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive() && !kgActive() && !dmActive();
+  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive() && !kgActive() && !dmActive() && !hxActive();
   const mp = player(me);
   const nlen = mp ? [...mp.name].length : 0, nfs = nlen <= 4 ? 12 : nlen <= 5 ? 11 : nlen <= 6 ? 10 : nlen <= 8 ? 9 : 8;
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span style="font-size:${nfs}px">${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
@@ -3388,9 +3823,9 @@ function viewHome(t){
   if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><span>今日の特権・<b class="who">${esc(pname(tp.player_id))}</b></span><small class="pno">特権${KANJI[tp.kind]}</small><b class="pnm">${PRIVS[tp.kind].name}</b></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
-  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive();
+  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中</b><small>${ng.status === "playing" && ng.turn && ng.turn.pid === me ? `<em class="yt">あなたの番！</em>第${ng.round}回戦・合計${ng.total}` : `第${ng.round}回戦・合計${ng.total}・タップで入る`}</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>ヘクスレイド 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -3454,7 +3889,7 @@ function viewList(cur){
 const fmtTime = iso => { const d = new Date(iso); return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`; };
 
 /* ---------- 序列のプレイヤー箱 → その旅での成績と今の状況 ---------- */
-const GAME_TABLES = [["neu", "NEU"], ["cs", "キャントストップ"], ["sb", "セブンブリッジ"], ["sk", "スカル"], ["co", "コヨーテ"], ["kg", "スカルキング"], ["dm", "ドミニオン"]];
+const GAME_TABLES = [["neu", "NEU"], ["cs", "キャントストップ"], ["sb", "セブンブリッジ"], ["sk", "スカル"], ["co", "コヨーテ"], ["kg", "スカルキング"], ["dm", "ドミニオン"], ["hx", "ヘクスレイド"]];
 function openPlayerCard(t, pid){
   if (!t) return;
   const rows = standings(t), me2 = rows.find(r => r.id === pid); if (!me2) return;
@@ -3479,7 +3914,7 @@ function openPlayerCard(t, pid){
   // ゲーム成績（この旅で遊んだもの）
   const games = GAME_TABLES.map(([k, n]) => {
     const list = (db[k + "_games"] || []).filter(g => g.trip_id === t.id && g.status === "finished" && (g.players || []).includes(pid));
-    return { n, k, play: list.length, win: list.filter(g => g.winner === pid).length };
+    return { n, k, play: list.length, win: list.filter(g => g.st && g.st.hx ? (g.st.wins || []).includes(pid) : g.winner === pid).length };
   }).filter(x => x.play);
   const gPlay = games.reduce((a, x) => a + x.play, 0), gWin = games.reduce((a, x) => a + x.win, 0);
   const row = (l, v, cls = "") => `<div class="pcx-r ${cls}"><span>${l}</span><b>${v}</b></div>`;
@@ -3547,6 +3982,7 @@ function bindView(){
     openCo: () => { const g = coActive(); if (g) openCo(g.id); },
     openKg: () => { const g = kgActive(); if (g) openKg(g.id); },
     openDm: () => { const g = dmActive(); if (g) openDm(g.id); },
+    openHx: () => { const g = hxActive(); if (g) openHx(g.id); },
     completeTrip: () => openCompleteTrip(curTrip()), reopenTrip: () => reopenTrip(curTrip()), listBack: () => { listTripId = null; render(); },
     togglePend: () => { localStorage.setItem("ojk:pendOpen", localStorage.getItem("ojk:pendOpen") === "0" ? "1" : "0"); render(); },
     travelTotal: () => openTravelTotal(curTrip()), resetTickets: () => resetTickets(curTrip()), rouletteReset: () => resetRoulette(curTrip(), rouletteDay),
@@ -5391,8 +5827,8 @@ document.addEventListener("click", e => { const b = e.target.closest && e.target
 
 /* ===================== ゲームのルール（図解） ===================== */
 function openGameRules(k){
-  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール", kg: "スカルキングのルール", dm: "ドミニオンのルール" }[k];
-  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml, kg: kgRulesHtml, dm: dmRulesHtml }[k]();
+  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール", kg: "スカルキングのルール", dm: "ドミニオンのルール", hx: "ヘクスレイドのルール" }[k];
+  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml, kg: kgRulesHtml, dm: dmRulesHtml, hx: hxRulesHtml }[k]();
   let el = $("#artpop");
   if (!el){ el = document.createElement("div"); el.id = "artpop"; el.className = "artpop"; document.body.appendChild(el); el.addEventListener("click", e => { if (e.target === el || e.target.closest("[data-artclose]")) el.classList.remove("on"); }); }
   el.innerHTML = `<div class="artin wide" role="dialog" aria-modal="true"><div class="arth"><b>${title}</b><button class="artx" data-artclose aria-label="閉じる">×</button></div><div class="gr">${html}</div></div>`;
@@ -5581,8 +6017,8 @@ function pickMine(list){ return list.find(g => me && (g.players || []).includes(
 const turnSeen = {};
 function turnBuzz(){
   if (!me) return;
-  [...neuLive(), ...csLive(), ...sbLive(), ...skLive(), ...coLive(), ...kgLive(), ...dmLive()].filter(g => (g.players || []).includes(me)).forEach(g => {
-    const now = g.st ? dmMyTurn(g) : g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
+  [...neuLive(), ...csLive(), ...sbLive(), ...skLive(), ...coLive(), ...kgLive(), ...dmLive(), ...hxLive()].filter(g => (g.players || []).includes(me)).forEach(g => {
+    const now = g.st && g.st.hx ? hxMyTurn(g) : g.st ? dmMyTurn(g) : g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
     const prev = turnSeen[g.id];
     turnSeen[g.id] = now;
     if (prev === false && now){ try { if (navigator.vibrate) navigator.vibrate([120, 70, 120, 70, 200]); } catch (e) {} }
@@ -5656,7 +6092,11 @@ const GAMES = [
       <path d="M50 52l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#FFE38A" stroke="#1B1838" stroke-width="1.2" transform="translate(0 -8)"/>
     </svg></span>`,
     count: () => dmGames().filter(x => x.status === "finished").length,
-    live: () => dmLive(), active: () => dmActive(), start: () => openDmNew(), open: g => openDm(g.id) }
+    live: () => dmLive(), active: () => dmActive(), start: () => openDmNew(), open: g => openDm(g.id) },
+  { id: "hx", name: "ヘクスレイド", desc: "【オリジナル】六角マスの盤上でキャラを戦わせ、相手の財宝2つを壊す陣営バトル。32キャラ・スキル・ギミック", players: "2〜6人", time: "20〜40分",
+    get icon(){ return HX_ICON; },
+    count: () => hxGames().filter(x => x.status === "finished").length,
+    live: () => hxLive(), active: () => hxActive(), start: () => openHxNew(), open: g => openHx(g.id) }
 ];
 function openGames(){
   const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
@@ -10885,6 +11325,1225 @@ function dmRulesHtml(){
   <div class="kv">${DM_KINGDOM.filter(c => dmX(c) === x.id).sort((a, b) => DM[a].c - DM[b].c).map(row).join("")}</div>`).join("")}`;
 }
 
+/* ===================== ヘクスレイド（オリジナル：六角マスの財宝争奪バトル） ===================== */
+/* 2陣営（蒼・紅）に分かれ、相手の財宝2つを先に壊した陣営の勝ち。
+   盤面は縦10×横7の六角マス。キャラは 攻撃・防御・速さ・射程・HP・属性・飛行・固有能力 を持つ。
+   5手番ごとに、だれのものでもない「ギミック」が発動する。倒されたら キャラ山札かスキル山札から1枚引いて、強くなって復活 */
+const HX_R = 10, HX_C = 7, HX_TRE_HP = 15, HX_HAND = 5, HX_SKMAX = 3, HX_GIM_EVERY = 5;
+const HX_TM = { A: { n: "蒼", en: "AZURE", c: "#38B6FF", d: "#0A3E73" }, B: { n: "紅", en: "CRIMSON", c: "#FF3D55", d: "#6E0B1C" } };
+const HX_TIM = { sum: "出撃", atk: "攻撃", def: "防御", die: "退場", aura: "常時" };
+/* 属性：炎・水・風は三すくみ（じゃんけん）、光と闇はおたがいに有利。有利なら攻撃+1 */
+const HX_EL = { fire: { n: "炎", c: "#FF6A2A", beat: ["wind"] }, water: { n: "水", c: "#3FA9FF", beat: ["fire"] }, wind: { n: "風", c: "#52E08A", beat: ["water"] }, light: { n: "光", c: "#FFE27A", beat: ["dark"] }, dark: { n: "闇", c: "#B06BFF", beat: ["light"] } };
+/* k:近/遠  a:攻撃 d:防御 s:速さ r:射程 h:HP e:属性 fl:飛行 t:能力の発動タイミング ab:能力名 tx:能力 col:イメージ色 */
+const HX = {
+  kensei:   { n: "剣聖ガルド",     k: "近", a: 4, d: 3, s: 2, r: 1, h: 2, e: "wind",  t: "atk",  ab: "見切り",     tx: "攻撃のサイコロを2つ振り、高い方を使う", col: "#E8B12A" },
+  bram:     { n: "重装騎士ブラム", k: "近", a: 2, d: 5, s: 1, r: 1, h: 3, e: "light", t: "aura", ab: "鉄壁の陣",   tx: "隣にいる味方の防御+1", col: "#8FA3BF" },
+  volg:     { n: "狂戦士ヴォルグ", k: "近", a: 4, d: 1, s: 3, r: 1, h: 2, e: "fire",  t: "atk",  ab: "狂乱",       tx: "攻撃+2。ただし攻撃に失敗すると自分が1ダメージ", col: "#E2364F" },
+  nero:     { n: "影盗ネロ",       k: "近", a: 2, d: 2, s: 4, r: 1, h: 1, e: "dark",  t: "atk",  ab: "掠奪",       tx: "攻撃が当たると、相手の手札をランダムに1枚奪う", col: "#7A5CFF" },
+  seraph:   { n: "殉教騎士セラフ", k: "近", a: 3, d: 3, s: 2, r: 1, h: 2, e: "light", fl: 1, t: "die", ab: "道連れ", tx: "倒されたとき、隣にいる一番強い敵に2ダメージ", col: "#F3E9D2" },
+  shizuka:  { n: "双刃のシズカ",   k: "近", a: 3, d: 2, s: 4, r: 1, h: 2, e: "wind",  t: "atk",  ab: "鎧通し",     tx: "攻撃した相手の防御−2", col: "#FF6FB5" },
+  dragoon:  { n: "竜騎兵ドラン",   k: "近", a: 4, d: 2, s: 3, r: 1, h: 2, e: "fire",  fl: 1, t: "sum", ab: "急襲", tx: "出撃した手番は速さ+2", col: "#3FC1C9" },
+  golm:     { n: "巨人ゴルム",     k: "近", a: 5, d: 4, s: 1, r: 1, h: 3, e: "water", t: "aura", ab: "城砕き",     tx: "財宝へのダメージ+2", col: "#9A6B4F" },
+  iris:     { n: "盾の乙女イリス", k: "近", a: 1, d: 5, s: 2, r: 1, h: 3, e: "light", t: "def",  ab: "聖盾",       tx: "防御のサイコロを2つ振り、高い方を使う", col: "#9BD7FF" },
+  gai:      { n: "鉄拳僧ガイ",     k: "近", a: 3, d: 3, s: 3, r: 1, h: 2, e: "fire",  t: "atk",  ab: "連撃",       tx: "敵を倒したら、もう一度攻撃できる（1回まで）", col: "#FF8A3D" },
+  wolf:     { n: "蛮族ウルフガー", k: "近", a: 3, d: 2, s: 3, r: 1, h: 2, e: "wind",  t: "atk",  ab: "血の匂い",   tx: "隣にいる敵1体につき攻撃+1", col: "#B0703A" },
+  artorius: { n: "聖騎士アルトリウス", k: "近", a: 3, d: 4, s: 2, r: 1, h: 3, e: "light", t: "aura", ab: "守護の誓い", tx: "味方の財宝の隣にいると防御+2", col: "#FFE38A" },
+  carmilla: { n: "吸血姫カーミラ", k: "近", a: 3, d: 3, s: 3, r: 1, h: 2, e: "dark",  fl: 1, t: "atk", ab: "吸血", tx: "攻撃が当たると、自分のHPが1回復", col: "#B3123A" },
+  lance:    { n: "槍騎士ランス",   k: "近", a: 3, d: 3, s: 2, r: 2, h: 2, e: "water", t: "aura", ab: "長槍",       tx: "近距離だが2マス先まで攻撃できる", col: "#C9CED8" },
+  centaur:  { n: "突撃騎兵ケイロン", k: "近", a: 3, d: 2, s: 5, r: 1, h: 2, e: "wind", t: "atk", ab: "突撃",       tx: "この手番に3マス以上動いていたら攻撃+2", col: "#5BD67A" },
+  golem:    { n: "鋼鉄ゴーレム",   k: "近", a: 3, d: 5, s: 1, r: 1, h: 3, e: "water", t: "def",  ab: "鋼の体",     tx: "2マス以上離れた所からの攻撃には防御+3", col: "#6B7A8F" },
+  kagero:   { n: "忍びカゲロウ",   k: "近", a: 3, d: 2, s: 4, r: 1, h: 2, e: "dark",  t: "aura", ab: "隠密",       tx: "2マス以上離れた所からは狙われない", col: "#4F5A7A" },
+  bomb:     { n: "爆弾魔ボンバ",   k: "近", a: 2, d: 1, s: 3, r: 1, h: 1, e: "fire",  t: "die",  ab: "大爆発",     tx: "倒されたとき、隣の敵すべてに攻撃力4で攻撃", col: "#FF5A1F" },
+  mordo:    { n: "暗黒騎士モルド", k: "近", a: 5, d: 3, s: 2, r: 1, h: 3, e: "dark",  t: "die",  ab: "呪われた鎧", tx: "強いが、倒されると味方の財宝が2減る", col: "#7A3AAA" },
+  bahamut:  { n: "竜王バハムート", k: "近", a: 5, d: 4, s: 3, r: 1, h: 3, e: "fire",  fl: 1, t: "sum", ab: "王の代償", tx: "召喚するとき、手札をもう1枚捨てる", col: "#FF7A00" },
+  robin:    { n: "魔弾の射手ロビン", k: "遠", a: 3, d: 1, s: 2, r: 3, h: 1, e: "wind", t: "atk", ab: "狙撃",       tx: "移動せずに攻撃すると攻撃+1", col: "#2DBE60" },
+  ignis:    { n: "火炎術師イグニス", k: "遠", a: 3, d: 1, s: 2, r: 2, h: 1, e: "fire", t: "atk", ab: "爆炎",       tx: "狙った敵の隣にいる敵にも同じように攻撃", col: "#FF4A2A" },
+  freesia:  { n: "氷結の魔女フリージア", k: "遠", a: 2, d: 2, s: 2, r: 2, h: 2, e: "water", t: "atk", ab: "凍てつく息", tx: "攻撃に失敗しても、相手は次の手番に動けない", col: "#8FE3FF" },
+  mira:     { n: "鏡の魔女ミラ",   k: "遠", a: 2, d: 2, s: 3, r: 2, h: 2, e: "water", t: "sum",  ab: "鏡写し",     tx: "相手陣営のだれか1人と、手札を1枚ずつ交換", col: "#C9A0FF" },
+  zenos:    { n: "雷帝ゼノス",     k: "遠", a: 4, d: 2, s: 1, r: 3, h: 1, e: "wind",  t: "atk",  ab: "裁きの雷",   tx: "攻撃のサイコロが6なら、防御に関係なく2ダメージ", col: "#FFE04A" },
+  necro:    { n: "死霊術師ネクロ", k: "遠", a: 2, d: 2, s: 2, r: 2, h: 2, e: "dark",  t: "sum",  ab: "冥府の呼び声", tx: "捨て札からランダムに1枚を手札に加える", col: "#6BE07A" },
+  hayate:   { n: "弓将ハヤテ",     k: "遠", a: 2, d: 2, s: 3, r: 3, h: 2, e: "wind",  t: "aura", ab: "号令",       tx: "隣にいる味方の攻撃+1", col: "#1FB3BF" },
+  lumina:   { n: "聖女ルミナ",     k: "遠", a: 1, d: 2, s: 2, r: 2, h: 1, e: "light", t: "sum",  ab: "祈り",       tx: "味方の財宝（低い方）を3回復し、味方全員のHPを1回復", col: "#FFF3B0" },
+  zagan:    { n: "呪術師ザガン",   k: "遠", a: 2, d: 2, s: 2, r: 2, h: 2, e: "dark",  t: "sum",  ab: "呪詛",       tx: "相手陣営の全員は、手札をランダムに1枚捨てる", col: "#8B3CFF" },
+  canon:    { n: "砲撃手カノン",   k: "遠", a: 4, d: 1, s: 1, r: 4, h: 1, e: "fire",  t: "aura", ab: "長距離砲",   tx: "射程4。ただし隣のマスには攻撃できない", col: "#A0A8B8" },
+  loki:     { n: "奇術師ロキ",     k: "遠", a: 2, d: 2, s: 3, r: 2, h: 2, e: "dark",  t: "die",  ab: "すり替え",   tx: "倒されたとき、倒した相手と手札をすべて交換", col: "#E83CFF" },
+  leon:     { n: "騎士団長レオン", k: "近", a: 3, d: 3, s: 2, r: 1, h: 2, e: "light", t: "sum",  ab: "鬨の声",     tx: "味方全員の復活待ちを解除する", col: "#3A7BFF" }
+};
+const HX_IDS = Object.keys(HX);
+/* スキルカード：召喚するときに1枚まで装備できる */
+const HXS = {
+  power:   { n: "力の護符",   tx: "攻撃+2", ic: "⚔" },
+  iron:    { n: "鋼の盾",     tx: "防御+2", ic: "🛡" },
+  gale:    { n: "疾風の靴",   tx: "速さ+2", ic: "💨" },
+  hawk:    { n: "鷹の目",     tx: "射程+1", ic: "🎯" },
+  hero:    { n: "勇者の血",   tx: "攻撃・防御・速さ +1", ic: "✦" },
+  heart:   { n: "生命の宝珠", tx: "HP+1", ic: "❤" },
+  guts:    { n: "不屈",       tx: "1度だけ、倒されるダメージに耐えてHP1で残る", ic: "🔥" },
+  twin:    { n: "双撃の刻印", tx: "攻撃のサイコロを2つ振り、高い方を使う", ic: "🎲" },
+  ward:    { n: "守護の刻印", tx: "防御のサイコロを2つ振り、高い方を使う", ic: "🔰" },
+  ram:     { n: "破城槌",     tx: "財宝へのダメージ+3", ic: "🔨" },
+  counter: { n: "反撃の構え", tx: "攻撃を防いだら、攻撃してきた相手に反撃する", ic: "↩" },
+  cloak:   { n: "透明マント", tx: "2マス以上離れた所からは狙われない", ic: "👻" },
+  storm:   { n: "雷の加護",   tx: "攻撃のサイコロが6なら2ダメージ", ic: "⚡" },
+  curse:   { n: "復讐の呪印", tx: "倒されたとき、倒した相手に1ダメージ", ic: "☠" },
+  wing:    { n: "翼の加護",   tx: "飛行（ユニットや岩を飛び越えて移動）", ic: "🪽" },
+  banner:  { n: "王の威光",   tx: "隣にいる味方の攻撃+1", ic: "🚩" }
+};
+const HXS_IDS = Object.keys(HXS);
+/* ギミック：5手番ごとに自動で発動（だれの手番でもない） */
+const HXG = {
+  meteor:  { n: "隕石群",     tx: "ランダムな3体に隕石が落ちる（攻撃力4で攻撃）", ic: "☄" },
+  thunder: { n: "天雷",       tx: "攻撃力が一番高いキャラに雷が落ちる（1ダメージ）", ic: "⚡" },
+  rain:    { n: "恵みの雨",   tx: "盤上のキャラ全員のHPが1回復", ic: "🌧" },
+  supply:  { n: "天からの補給", tx: "全員がスキル山札から1枚引く", ic: "🎁" },
+  bless:   { n: "女神の加護", tx: "財宝の残りが少ない陣営の財宝が、それぞれ2回復", ic: "👼" },
+  frenzy:  { n: "血の月",     tx: "次のギミックまで、全員の攻撃+1", ic: "🌕" },
+  fog:     { n: "濃霧",       tx: "次のギミックまで、射程はすべて1になる", ic: "🌫" },
+  gate:    { n: "魂の門",     tx: "全員の復活待ちが解除される", ic: "🌀" },
+  tornado: { n: "大竜巻",     tx: "盤上のキャラ全員が、ランダムな方向に1マス飛ばされる", ic: "🌪" }
+};
+const HXG_IDS = Object.keys(HXG);
+
+/* ---- 盤面 ---- */
+const hxOpp = t => t === "A" ? "B" : "A";
+const hxMir = ([r, c]) => [HX_R - 1 - r, HX_C - 1 - c];
+const HX_TRE0 = [[9, 1], [9, 4]], HX_SPAWN0 = [[8, 2], [8, 4]];
+const HX_DEP0 = [[8, 2], [8, 4], [8, 3], [9, 2], [9, 3], [8, 1], [8, 5], [9, 0], [9, 5], [8, 0], [8, 6], [9, 6]];
+const HX_POS = { A: { tre: HX_TRE0, sp: HX_SPAWN0, dep: HX_DEP0 }, B: { tre: HX_TRE0.map(hxMir), sp: HX_SPAWN0.map(hxMir), dep: HX_DEP0.map(hxMir) } };
+const HX_ROCKS = [[4, 1], [5, 5], [4, 5], [5, 1], [3, 3], [6, 3]];
+const hxIn = (r, c) => r >= 0 && r < HX_R && c >= 0 && c < HX_C;
+const hxCube = (r, c) => { const x = c - (r - (r & 1)) / 2; return [x, r, -x - r]; };
+const hxDist = (a, b) => { const p = hxCube(a[0], a[1]), q = hxCube(b[0], b[1]); return Math.max(Math.abs(p[0] - q[0]), Math.abs(p[1] - q[1]), Math.abs(p[2] - q[2])); };
+const HX_NB = [[[0, -1], [0, 1], [-1, -1], [-1, 0], [1, -1], [1, 0]], [[0, -1], [0, 1], [-1, 0], [-1, 1], [1, 0], [1, 1]]];
+const hxNb = (r, c) => HX_NB[r & 1].map(([dr, dc]) => [r + dr, c + dc]).filter(([a, b]) => hxIn(a, b));
+const hxEq = (a, b) => a[0] === b[0] && a[1] === b[1];
+const hxUnits = st => Object.values(st.units || {});
+const hxAt = (st, r, q) => hxUnits(st).find(u => u.r === r && u.q === q) || null;
+const hxRock = (r, q) => HX_ROCKS.some(x => x[0] === r && x[1] === q);
+const hxTreAt = (st, r, q) => { for (const t of ["A", "B"]){ const i = st.tre[t].findIndex(x => x.r === r && x.q === q); if (i >= 0) return { t, i, o: st.tre[t][i] }; } return null; };
+const hxBlocked = (st, r, q) => hxRock(r, q) || !!hxTreAt(st, r, q);
+const hxTeamOf = (st, pid) => st.teams.A.includes(pid) ? "A" : "B";
+const hxD6 = () => 1 + Math.floor(Math.random() * 6);
+const hxPickR = a => a[Math.floor(Math.random() * a.length)];
+/* ---- 能力値（スキル込み） ---- */
+const hxSk = (u, k) => u && u.sk === k;
+function hxStat(st, u, k){
+  const b = HX[u.c][k]; let v = b;
+  if (k === "a"){ if (hxSk(u, "power")) v += 2; if (hxSk(u, "hero")) v += 1; }
+  if (k === "d"){ if (hxSk(u, "iron")) v += 2; if (hxSk(u, "hero")) v += 1; }
+  if (k === "s"){ if (hxSk(u, "gale")) v += 2; if (hxSk(u, "hero")) v += 1; if (u.c === "dragoon" && st && u.born === st.ti) v += 2; }
+  if (k === "r"){ if (hxSk(u, "hawk")) v += 1; if (st && st.env === "fog") v = 1; }
+  return v;
+}
+const hxFly = u => !!HX[u.c].fl || hxSk(u, "wing");
+const hxRng = (st, u) => { const mx = hxStat(st, u, "r"), mn = u.c === "canon" ? 2 : 1; return [mn, mx]; };
+const hxElAdv = (a, d) => !!(a && d && HX_EL[HX[a.c].e].beat.includes(HX[d.c].e));
+function hxReach(st, u){
+  const out = {}; if (u.moved || u.acted || u.nomv) return out;
+  const S = hxStat(st, u, "s"), fly = hxFly(u);
+  const seen = { [u.r + "," + u.q]: [] };
+  let fr = [[u.r, u.q]];
+  for (let d = 1; d <= S; d++){
+    const nx = [];
+    fr.forEach(([r, q]) => hxNb(r, q).forEach(([a, b]) => {
+      const k = a + "," + b; if (seen[k]) return;
+      const occ = hxAt(st, a, b), tre = !!hxTreAt(st, a, b), rock = hxRock(a, b);
+      if (tre) return;
+      if ((rock || occ) && !fly) return;
+      seen[k] = [...seen[r + "," + q], [a, b]];
+      nx.push([a, b]);
+      if (!occ && !rock) out[k] = seen[k];
+    }));
+    fr = nx;
+  }
+  return out;
+}
+const hxHidden = (d, dist) => dist >= 2 && (d.c === "kagero" || hxSk(d, "cloak"));
+function hxTargets(st, u, at){
+  const p = at || [u.r, u.q], [mn, mx] = hxRng(st, u), out = [];
+  if (u.acted || mn > mx) return out;
+  hxUnits(st).forEach(e => { if (e.tm === u.tm) return; const d = hxDist(p, [e.r, e.q]); if (d >= mn && d <= mx && !hxHidden(e, d)) out.push({ u: e.id }); });
+  if (mn <= 1) st.tre[hxOpp(u.tm)].forEach((t, i) => { if (t.hp > 0 && hxDist(p, [t.r, t.q]) === 1) out.push({ t: hxOpp(u.tm), i }); });
+  return out;
+}
+/* 攻撃力・防御力（理由つき） */
+function hxAtk(st, a, d, ctx = {}){
+  const p = ctx.at || [a.r, a.q], moved = ctx.at ? (a.moved || !hxEq(ctx.at, [a.r, a.q])) : a.moved, mv = ctx.mv != null ? ctx.mv : (a.mv || 0);
+  let v = hxStat(st, a, "a"); const why = [];
+  const add = (n, t) => { if (!n) return; v += n; why.push(`${t}${n > 0 ? "+" : ""}${n}`); };
+  if (a.c === "volg") add(2, "狂乱");
+  if (a.c === "wolf") add(hxUnits(st).filter(e => e.tm !== a.tm && hxDist(p, [e.r, e.q]) === 1).length, "血の匂い");
+  if (a.c === "centaur" && mv >= 3) add(2, "突撃");
+  if (a.c === "robin" && !moved) add(1, "狙撃");
+  add(hxUnits(st).filter(x => x.id !== a.id && x.tm === a.tm && (x.c === "hayate" || hxSk(x, "banner")) && hxDist(p, [x.r, x.q]) === 1).length, "号令");
+  if (d && hxElAdv(a, d)) add(1, "属性有利");
+  if (st.env === "frenzy") add(1, "血の月");
+  if (!d){ if (a.c === "golm") add(2, "城砕き"); if (hxSk(a, "ram")) add(3, "破城槌"); }
+  return { v, why };
+}
+function hxDef(st, d, a, dist){
+  let v = hxStat(st, d, "d"); const why = [];
+  const add = (n, t) => { if (!n) return; v += n; why.push(`${t}${n > 0 ? "+" : ""}${n}`); };
+  add(hxUnits(st).filter(x => x.id !== d.id && x.tm === d.tm && x.c === "bram" && hxDist([d.r, d.q], [x.r, x.q]) === 1).length, "鉄壁の陣");
+  if (d.c === "artorius" && st.tre[d.tm].some(t => t.hp > 0 && hxDist([d.r, d.q], [t.r, t.q]) === 1)) add(2, "守護の誓い");
+  if (d.c === "golem" && dist >= 2) add(3, "鋼の体");
+  if (a && a.c === "shizuka") add(-2, "鎧通し");
+  return { v: Math.max(0, v), why };
+}
+const hxADice = a => (a && (a.c === "kensei" || hxSk(a, "twin"))) ? 2 : 1;
+const hxDDice = d => (d.c === "iris" || hxSk(d, "ward")) ? 2 : 1;
+const hxBig6 = a => !!a && (a.c === "zenos" || hxSk(a, "storm"));
+const hxDieDist = k => { const o = [0]; for (let i = 1; i <= 6; i++) o.push(k === 1 ? 1 / 6 : (2 * i - 1) / 36); return o; };
+function hxProb(av, dv, an, dn, big6){
+  const da = hxDieDist(an), dd = hxDieDist(dn); let w = 0;
+  for (let x = 1; x <= 6; x++) for (let y = 1; y <= 6; y++) if ((big6 && x === 6) || av + x > dv + y) w += da[x] * dd[y];
+  return w;
+}
+/* ---- 記録・演出キュー ---- */
+const hxL = (st, m) => { (st._log || (st._log = [])).push(m); };
+const hxFxAdd = (st, e) => { st.fxn = (st.fxn || 0) + 1; st.fx = [...(st.fx || []), { ...e, n: st.fxn }].slice(-30); };
+const hxAbil = (st, u, txt) => { hxFxAdd(st, { k: "ab", c: u.c, tm: u.tm, txt }); hxL(st, `【${HX[u.c].ab}】${txt}`); };
+const hxDraw = st => { if (!st.deck.length){ if (!st.disc.length) return null; st.deck = shuffle(st.disc); st.disc = []; } return st.deck.pop(); };
+const hxDrawSk = st => { if (!st.sdeck.length){ if (!st.sdisc.length) return null; st.sdeck = shuffle(st.sdisc); st.sdisc = []; } return st.sdeck.pop(); };
+const hxUnitInfo = u => ({ id: u.id, c: u.c, tm: u.tm, own: u.own, sk: u.sk || null, hp: u.hp, mhp: u.mhp });
+function hxNewUnit(st, c, pid, at, sk){
+  st.un = (st.un || 0) + 1;
+  const mhp = HX[c].h + (sk === "heart" ? 1 : 0);
+  const u = { id: "u" + st.un, c, own: pid, tm: hxTeamOf(st, pid), r: at[0], q: at[1], hp: mhp, mhp, sk: sk || null, guts: sk === "guts", mv: 0, moved: false, acted: false, nomv: false, fz: false, born: st.ti, ex: false };
+  st.units[u.id] = u; return u;
+}
+/* ---- バトル ---- */
+function hxBattle(st, a, d, opt = {}){
+  const dist = hxDist([a.r, a.q], [d.r, d.q]);
+  const A = opt.av != null ? { v: opt.av + (st.env === "frenzy" ? 1 : 0), why: st.env === "frenzy" ? ["血の月+1"] : [] } : hxAtk(st, a, d), D = hxDef(st, d, opt.av != null ? null : a, dist);
+  const an = opt.av != null ? 1 : hxADice(a), dn = hxDDice(d);
+  const ad = Array.from({ length: an }, hxD6), dd = Array.from({ length: dn }, hxD6);
+  const ax = Math.max(...ad), dx = Math.max(...dd);
+  const big = opt.av == null && hxBig6(a) && ax === 6;
+  const hit = big || A.v + ax > D.v + dx, dmg = hit ? (big ? 2 : 1) : 0;
+  hxFxAdd(st, { k: "bt", a: opt.src ? { c: opt.src.c || null, tm: opt.src.tm || null, gim: opt.src.gim || null, id: null } : hxUnitInfo(a), d: hxUnitInfo(d), av: A.v, dv: D.v, aw: A.why, dw: D.why, ad, dd, hit, big, dmg, tag: opt.tag || "", rng: dist >= 2 });
+  const an2 = opt.src && opt.src.gim ? HXG[opt.src.gim].n : `${pname(a.own)}の${HX[a.c].n}`;
+  hxL(st, `${an2}→${pname(d.own)}の${HX[d.c].n}：${A.v}+${ax} 対 ${D.v}+${dx}${hit ? ` 命中！${dmg}ダメージ` : " 防いだ"}`);
+  return dmg;
+}
+/* ダメージ（0になったら撃破） */
+function hxHurt(st, u, n, by, depth = 0){
+  if (!st.units[u.id] || n <= 0) return false;
+  if (u.hp - n <= 0 && u.guts){ u.guts = false; u.hp = 1; hxFxAdd(st, { k: "guts", id: u.id, c: u.c, tm: u.tm }); hxL(st, `【不屈】${HX[u.c].n}は踏みとどまった！`); return false; }
+  u.hp = Math.max(0, u.hp - n);
+  hxFxAdd(st, { k: "dmg", id: u.id, n, hp: u.hp });
+  if (u.hp <= 0){ hxKill(st, u, by, depth); return true; }
+  return false;
+}
+function hxKill(st, u, killer, depth = 0){
+  if (!st.units[u.id]) return;
+  delete st.units[u.id];
+  const sl = (st.slots[u.own] || []).find(s => s.u === u.id); if (sl){ sl.u = null; sl.cd = 2; }
+  st.disc.push(u.c); if (u.sk) st.sdisc.push(u.sk);
+  if (killer && killer.tm && killer.tm !== u.tm) st.kills[killer.tm] = (st.kills[killer.tm] || 0) + 1;
+  st.rw[u.own] = (st.rw[u.own] || 0) + 1;   // 倒されたら：キャラかスキルを1枚引ける
+  hxFxAdd(st, { k: "kill", id: u.id, c: u.c, tm: u.tm, r: u.r, q: u.q });
+  hxL(st, `${pname(u.own)}の${HX[u.c].n}が倒れた`);
+  if (depth > 5) return;
+  const adjEn = () => hxUnits(st).filter(e => e.tm !== u.tm && hxDist([u.r, u.q], [e.r, e.q]) === 1);
+  if (u.c === "seraph"){ const e = adjEn().sort((x, y) => hxStat(st, y, "a") - hxStat(st, x, "a"))[0]; if (e){ hxAbil(st, u, `${HX[e.c].n}を道連れに2ダメージ`); hxHurt(st, e, 2, u, depth + 1); } }
+  if (u.c === "bomb"){ const es = adjEn(); if (es.length){ hxAbil(st, u, "周りの敵を巻き込んだ！"); es.forEach(e => { if (st.units[e.id]){ const n = hxBattle(st, u, e, { av: 4, tag: "大爆発", src: { c: "bomb", tm: u.tm } }); hxHurt(st, e, n, u, depth + 1); } }); } }
+  if (hxSk(u, "curse") && killer && killer.id && st.units[killer.id] && killer.tm !== u.tm){ hxFxAdd(st, { k: "ab", c: u.c, tm: u.tm, txt: `復讐の呪印：${HX[killer.c].n}に1ダメージ`, sk: "curse" }); hxHurt(st, st.units[killer.id], 1, u, depth + 1); }
+  if (u.c === "loki" && killer && killer.own && killer.own !== u.own){ const h1 = st.hands[u.own] || [], h2 = st.hands[killer.own] || []; st.hands[u.own] = h2; st.hands[killer.own] = h1; hxAbil(st, u, `${pname(u.own)}と${pname(killer.own)}の手札がすべて入れ替わった`); }
+  if (u.c === "mordo"){ const i = st.tre[u.tm].map((t, i) => ({ t, i })).filter(x => x.t.hp > 0).sort((x, y) => y.t.hp - x.t.hp)[0]; if (i){ hxAbil(st, u, "呪いが味方の財宝をむしばむ…"); hxTreDmg(st, u.tm, i.i, 2, null); } }
+}
+function hxTreDmg(st, tm, i, n, by){
+  const t = st.tre[tm][i]; if (!t || t.hp <= 0 || n <= 0) return;
+  t.hp = Math.max(0, t.hp - n);
+  hxFxAdd(st, { k: "tre", tm, i, n, hp: t.hp, r: t.r, q: t.q });
+  hxL(st, `${by ? `${pname(by.own)}の${HX[by.c].n}→` : ""}${HX_TM[tm].n}の財宝に${n}ダメージ（残り${t.hp}）${t.hp === 0 ? "　財宝が1つ壊れた！" : ""}`);
+}
+function hxTreHeal(st, tm, n, all){
+  const list = st.tre[tm].map((t, i) => ({ t, i })).filter(x => x.t.hp > 0 && x.t.hp < HX_TRE_HP).sort((x, y) => x.t.hp - y.t.hp);
+  (all ? list : list.slice(0, 1)).forEach(({ t, i }) => { const v = Math.min(n, HX_TRE_HP - t.hp); t.hp += v; hxFxAdd(st, { k: "heal", tm, i, n: v, hp: t.hp, r: t.r, q: t.q }); });
+}
+function hxUnitHeal(st, u, n){ const v = Math.min(n, u.mhp - u.hp); if (v > 0){ u.hp += v; hxFxAdd(st, { k: "uheal", id: u.id, n: v }); } }
+/* ---- 勝ち負け ---- */
+function hxFinish(st, w, why){
+  st.phase = "over"; st.win = w; st.wins = w === "draw" ? [] : st.teams[w].slice(); st.why = why;
+  hxFxAdd(st, { k: "over", w, why });
+  hxL(st, w === "draw" ? `引き分け（${why}）` : `${HX_TM[w].n}の陣営の勝利！（${why}）`);
+  return { status: { status: "finished", winner: st.wins[0] || null } };
+}
+function hxCheckWin(st){
+  if (st.phase !== "play") return null;
+  const dead = t => st.tre[t].every(x => x.hp <= 0);
+  const dA = dead("A"), dB = dead("B");
+  if (!dA && !dB) return null;
+  const w = dA && dB ? hxTeamOf(st, st.turn.pid) : dA ? "B" : "A";
+  return hxFinish(st, w, "財宝を2つとも破壊！");
+}
+function hxTimeUp(st){
+  const sum = t => st.tre[t].reduce((a, x) => a + x.hp, 0), a = sum("A"), b = sum("B");
+  if (a !== b) return hxFinish(st, a > b ? "A" : "B", `時間切れ・財宝の残り ${a} 対 ${b}`);
+  const ka = st.kills.A || 0, kb = st.kills.B || 0;
+  if (ka !== kb) return hxFinish(st, ka > kb ? "A" : "B", `時間切れ・撃破数 ${ka} 対 ${kb}`);
+  return hxFinish(st, "draw", "時間切れ・財宝も撃破数も同じ");
+}
+/* ---- 手番 ---- */
+function hxStartTurn(st){
+  if (st.ti > 0 && st.ti % HX_GIM_EVERY === 0) hxGimmick(st);
+  if (st.phase !== "play") return;
+  const pid = st.order[st.ti % st.order.length], tm = hxTeamOf(st, pid);
+  st.turn = { pid };
+  hxUnits(st).forEach(u => { if (u.own !== pid) return; u.moved = false; u.acted = false; u.mv = 0; u.ex = false; u.nomv = !!u.fz; u.fz = false; });
+  (st.slots[pid] || []).forEach(s => { if (!s.u && s.cd > 0) s.cd--; });
+  const h = st.hands[pid] || (st.hands[pid] = []);
+  if (h.length < HX_HAND){ const c = hxDraw(st); if (c) h.push(c); }
+  hxFxAdd(st, { k: "turn", pid, tm, round: Math.floor(st.ti / st.order.length) + 1 });
+}
+/* ---- ギミック ---- */
+function hxGimmick(st){
+  const pool = HXG_IDS.filter(k => k !== st.lastGim);
+  const k = hxPickR(pool); st.lastGim = k; st.gimN = (st.gimN || 0) + 1;
+  if (st.env) st.env = null;
+  const hit = [];
+  if (k === "meteor") hit.push(...shuffle(hxUnits(st)).slice(0, 3).map(u => u.id));
+  if (k === "thunder"){ const us = hxUnits(st); const mx = Math.max(-1, ...us.map(u => hxStat(st, u, "a"))); const c = us.filter(u => hxStat(st, u, "a") === mx); if (c.length) hit.push(hxPickR(c).id); }
+  hxFxAdd(st, { k: "gim", g: k, hit, cells: hit.map(id => [st.units[id].r, st.units[id].q]) });
+  hxL(st, `⚠ ギミック発動【${HXG[k].n}】${HXG[k].tx}`);
+  if (k === "meteor") hit.forEach(id => { const u = st.units[id]; if (!u) return; const n = hxBattle(st, { r: u.r, q: u.q }, u, { av: 4, tag: "隕石", src: { gim: "meteor" } }); hxHurt(st, u, n, null); });
+  if (k === "thunder") hit.forEach(id => { const u = st.units[id]; if (u) hxHurt(st, u, 1, null); });
+  if (k === "rain") hxUnits(st).forEach(u => hxUnitHeal(st, u, 1));
+  if (k === "supply") st.players.forEach(p => { const sk = st.skills[p] || (st.skills[p] = []); if (sk.length < HX_SKMAX){ const c = hxDrawSk(st); if (c) sk.push(c); } });
+  if (k === "bless"){ const sum = t => st.tre[t].reduce((a, x) => a + x.hp, 0); const a = sum("A"), b = sum("B"); if (a !== b) hxTreHeal(st, a < b ? "A" : "B", 2, true); }
+  if (k === "frenzy" || k === "fog") st.env = k;
+  if (k === "gate") st.players.forEach(p => (st.slots[p] || []).forEach(s => { if (!s.u) s.cd = 0; }));
+  if (k === "tornado"){
+    const moves = [];
+    shuffle(hxUnits(st)).forEach(u => {
+      const free = hxNb(u.r, u.q).filter(([a, b]) => !hxBlocked(st, a, b) && !hxAt(st, a, b));
+      if (!free.length) return;
+      const to = hxPickR(free); moves.push({ id: u.id, path: [[u.r, u.q], to] }); u.r = to[0]; u.q = to[1];
+    });
+    hxFxAdd(st, { k: "mvs", moves });
+  }
+  const w = hxCheckWin(st); if (w) st._fin = w;
+}
+/* ---- 準備 ---- */
+function hxSetup(teams, rounds){
+  const A = teams.A.slice(), B = teams.B.slice(), first = Math.random() < .5 ? "A" : "B";
+  const n = Math.max(A.length, B.length), order = [];
+  for (let i = 0; i < n; i++){ const x = { A: A[i % A.length], B: B[i % B.length] }; order.push(x[first], x[hxOpp(first)]); }
+  const players = [...A, ...B];
+  let deck = shuffle(players.length >= 5 ? [...HX_IDS, ...HX_IDS] : HX_IDS.slice());
+  const hands = {}, skills = {};
+  players.forEach(p => { hands[p] = deck.slice(0, 5); deck = deck.slice(5); skills[p] = []; });
+  const tre = {}; ["A", "B"].forEach(t => { tre[t] = HX_POS[t].tre.map(([r, q]) => ({ r, q, hp: HX_TRE_HP })); });
+  return { hx: true, teams: { A, B }, players, order, ti: 0, maxT: rounds ? rounds * order.length : 0, rounds, phase: "pick", deck, disc: [],
+    sdeck: shuffle([...HXS_IDS, ...HXS_IDS]), sdisc: [], hands, skills, picks: {}, units: {}, slots: {}, rw: {}, tre, kills: { A: 0, B: 0 }, turn: null, un: 0, env: null,
+    fx: [{ k: "start", n: 1 }], fxn: 1, win: null, wins: [] };
+}
+function hxDeploy(st){
+  ["A", "B"].forEach(tm => {
+    let k = 0;
+    st.teams[tm].forEach(pid => {
+      st.slots[pid] = [];
+      (st.picks[pid] || []).forEach(c => {
+        const h = st.hands[pid], i = h.indexOf(c); if (i >= 0) h.splice(i, 1);
+        const at = HX_POS[tm].dep[k++]; const u = hxNewUnit(st, c, pid, at); u.born = -1;
+        st.slots[pid].push({ u: u.id, cd: 0 });
+      });
+      while (st.slots[pid].length < 2) st.slots[pid].push({ u: null, cd: 0 });
+    });
+  });
+  hxFxAdd(st, { k: "deploy" });
+  hxL(st, "全軍出撃！");
+  st.phase = "play"; st.ti = 0;
+  hxStartTurn(st);
+}
+/* ---- 召喚できるか ---- */
+function hxCanSummon(st, pid){
+  if (st.phase !== "play" || !st.turn || st.turn.pid !== pid) return null;
+  const tm = hxTeamOf(st, pid);
+  const slots = (st.slots[pid] || []).filter(s => !s.u && s.cd === 0);
+  const sps = HX_POS[tm].sp.filter(([r, q]) => !hxAt(st, r, q));
+  const hand = st.hands[pid] || [];
+  if (!slots.length || !sps.length || !hand.length) return null;
+  return { slots, sps };
+}
+const hxCardOk = (st, pid, c) => c !== "bahamut" || (st.hands[pid] || []).length >= 2;
+function hxOnSummon(st, u){
+  const pid = u.own, en = st.teams[hxOpp(u.tm)];
+  if (u.c === "dragoon") hxAbil(st, u, "この手番は速さ+2");
+  if (u.c === "mira"){ const c = shuffle(en.filter(p => (st.hands[p] || []).length)); const my = st.hands[pid] || []; if (c.length && my.length){ const o = c[0], hi = Math.floor(Math.random() * my.length), oi = Math.floor(Math.random() * st.hands[o].length); const x = my[hi]; my[hi] = st.hands[o][oi]; st.hands[o][oi] = x; hxAbil(st, u, `${pname(o)}と手札を1枚交換した`); } }
+  if (u.c === "necro" && st.disc.length){ const i = Math.floor(Math.random() * st.disc.length), c = st.disc.splice(i, 1)[0]; (st.hands[pid] = st.hands[pid] || []).push(c); hxAbil(st, u, `捨て札から${HX[c].n}を呼び戻した`); }
+  if (u.c === "lumina"){ hxTreHeal(st, u.tm, 3); hxUnits(st).filter(x => x.tm === u.tm).forEach(x => hxUnitHeal(st, x, 1)); hxAbil(st, u, "財宝と味方が癒やされた"); }
+  if (u.c === "zagan"){ const n = []; en.forEach(p => { const h = st.hands[p] || []; if (h.length){ const c = h.splice(Math.floor(Math.random() * h.length), 1)[0]; st.disc.push(c); n.push(pname(p)); } }); if (n.length) hxAbil(st, u, `${n.join("・")}の手札を1枚ずつ捨てさせた`); }
+  if (u.c === "leon"){ st.teams[u.tm].forEach(p => (st.slots[p] || []).forEach(s => { if (!s.u) s.cd = 0; })); hxAbil(st, u, "味方の復活待ちを解除した"); }
+}
+
+/* ---- データ ---- */
+const hxGames = () => db.hx_games || [];
+const hxLive = () => hxGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const hxActive = () => pickMine(hxLive());
+const hxById = id => hxGames().find(g => g.id === id);
+function hxMyTurn(g){
+  const st = g && g.st; if (!st || !me || g.status !== "playing") return false;
+  if (st.phase === "pick") return st.players.includes(me) && !st.picks[me];
+  return st.phase === "play" && ((st.turn && st.turn.pid === me) || (st.rw[me] || 0) > 0);
+}
+async function hxCommit(id, fn){
+  for (let tries = 0; tries < 6; tries++){
+    const g = hxById(id); if (!g || g.status !== "playing") return false;
+    const st = JSON.parse(JSON.stringify(g.st)); st._log = [];
+    const r = fn(st, g); if (!r) return false;
+    const lines = st._log; delete st._log;
+    let status = r.status; if (st._fin){ status = st._fin.status; delete st._fin; }
+    const body = { st, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
+    if (status) Object.assign(body, status);
+    if (lines.length){ const lg = (g.log || []).slice(), now = Date.now(); lines.forEach((m, i) => lg.push({ t: new Date(now + i).toISOString(), m })); body.log = lg.slice(-80); }
+    const { data, error } = await sb.from("hx_games").update(body).eq("id", id).eq("version", g.version || 1).select();
+    if (error){ fail(error, "保存"); return false; }
+    if (data && data.length){
+      const before = g.st;
+      Object.assign(g, data[0]); drawHx();
+      const to = new Set();
+      if (st.phase === "play" && st.turn && (!before.turn || st.turn.pid !== before.turn.pid)) to.add(st.turn.pid);
+      to.delete(me); to.forEach(p => pushCall({ type: "game_turn", game: "ヘクスレイド", to: p }));
+      return true;
+    }
+    await loadTable("hx_games");
+  }
+  drawHx(); toast("混み合っています。もう一度タップしてください", 2000); return false;
+}
+/* ---- 行動 ---- */
+const hxDoPick = (id, pid, cards) => hxCommit(id, st => {
+  if (st.phase !== "pick" || st.picks[pid] || !st.players.includes(pid)) return false;
+  const h = st.hands[pid].slice(); if (cards.length !== 2) return false;
+  for (const c of cards){ const i = h.indexOf(c); if (i < 0) return false; h.splice(i, 1); }
+  st.picks[pid] = cards.slice();
+  hxL(st, `${pname(pid)}の出撃準備ができた`);
+  if (st.players.every(p => st.picks[p])) hxDeploy(st);
+  return {};
+});
+const hxDoReward = (id, pid, kind) => hxCommit(id, st => {
+  if (!(st.rw[pid] > 0) || st.phase === "over") return false;
+  st.rw[pid]--;
+  if (kind === "sk"){ const sk = st.skills[pid] || (st.skills[pid] = []); const c = sk.length < HX_SKMAX ? hxDrawSk(st) : null; if (c){ sk.push(c); hxFxAdd(st, { k: "draw", pid, sk: c }); hxL(st, `${pname(pid)}はスキル山札から1枚引いた`); } }
+  else { const h = st.hands[pid] || (st.hands[pid] = []); const c = h.length < HX_HAND + 1 ? hxDraw(st) : null; if (c){ h.push(c); hxFxAdd(st, { k: "draw", pid, c }); hxL(st, `${pname(pid)}はキャラ山札から1枚引いた`); } }
+  return {};
+});
+const hxDoSummon = (id, pid, card, sk, sp) => hxCommit(id, st => {
+  const cs = hxCanSummon(st, pid); if (!cs) return false;
+  const hand = st.hands[pid], hi = hand.indexOf(card); if (hi < 0 || !hxCardOk(st, pid, card)) return false;
+  const sks = st.skills[pid] || [];
+  if (sk && !sks.includes(sk)) return false;
+  const at = (sp && cs.sps.find(x => hxEq(x, sp))) || cs.sps[0];
+  hand.splice(hi, 1);
+  if (sk) sks.splice(sks.indexOf(sk), 1);
+  let cost = null;
+  if (card === "bahamut" && hand.length){ cost = hand.splice(Math.floor(Math.random() * hand.length), 1)[0]; st.disc.push(cost); }
+  const u = hxNewUnit(st, card, pid, at, sk);
+  cs.slots[0].u = u.id;
+  hxFxAdd(st, { k: "sum", u: { ...hxUnitInfo(u), r: at[0], q: at[1] } });
+  hxL(st, `${pname(pid)}が${HX[card].n}を召喚${sk ? `（${HXS[sk].n}を装備）` : ""}`);
+  if (cost) hxAbil(st, u, `手札の${HX[cost].n}を捧げた`);
+  hxOnSummon(st, u);
+  return hxCheckWin(st) || {};
+});
+const hxDoMove = (id, pid, uid, to) => hxCommit(id, st => {
+  if (st.phase !== "play" || st.turn.pid !== pid) return false;
+  const u = st.units[uid]; if (!u || u.own !== pid) return false;
+  const path = hxReach(st, u)[to[0] + "," + to[1]]; if (!path) return false;
+  const from = [u.r, u.q]; u.r = to[0]; u.q = to[1]; u.moved = true; u.mv = path.length;
+  hxFxAdd(st, { k: "mv", id: uid, path: [from, ...path], fly: hxFly(u) });
+  return {};
+});
+const hxDoAttack = (id, pid, uid, tg) => hxCommit(id, st => {
+  if (st.phase !== "play" || st.turn.pid !== pid) return false;
+  const u = st.units[uid]; if (!u || u.own !== pid || u.acted) return false;
+  if (!hxTargets(st, u).some(x => (tg.u && x.u === tg.u) || (tg.t && x.t === tg.t && x.i === tg.i))) return false;
+  u.acted = true;
+  if (tg.t){
+    const A = hxAtk(st, u, null);
+    hxFxAdd(st, { k: "hit", id: u.id, tt: tg.t, i: tg.i, n: A.v, why: A.why });
+    hxTreDmg(st, tg.t, tg.i, A.v, u);
+    return hxCheckWin(st) || {};
+  }
+  const d = st.units[tg.u], dr = d.r, dq = d.q;
+  const dmg = hxBattle(st, u, d);
+  if (dmg){
+    const killed = hxHurt(st, d, dmg, u);
+    if (u.c === "nero" && st.units[u.id] && (st.hands[d.own] || []).length){ const h = st.hands[d.own], c = h.splice(Math.floor(Math.random() * h.length), 1)[0]; (st.hands[pid] = st.hands[pid] || []).push(c); hxAbil(st, u, `${pname(d.own)}の手札から${HX[c].n}を奪った`); }
+    if (u.c === "carmilla" && st.units[u.id] && u.hp < u.mhp){ hxUnitHeal(st, u, 1); hxAbil(st, u, "血をすすってHPが1回復"); }
+    if (killed && u.c === "gai" && !u.ex && st.units[u.id]){ u.acted = false; u.moved = true; u.ex = true; hxAbil(st, u, "もう一度攻撃できる！"); }
+  } else {
+    if (u.c === "volg" && st.units[u.id]){ hxAbil(st, u, "攻撃に失敗し、反動で1ダメージ"); hxHurt(st, u, 1, null); }
+    if (u.c === "freesia" && st.units[d.id]){ d.fz = true; hxFxAdd(st, { k: "frz", id: d.id }); hxAbil(st, u, `${HX[d.c].n}を凍らせた（次の手番は動けない）`); }
+    if (hxSk(d, "counter") && st.units[d.id] && st.units[u.id]){ hxFxAdd(st, { k: "ab", c: d.c, tm: d.tm, txt: "反撃の構え！", sk: "counter" }); const n = hxBattle(st, d, u, { tag: "反撃" }); hxHurt(st, u, n, d); }
+  }
+  if (u.c === "ignis"){
+    const others = hxUnits(st).filter(e => e.tm !== u.tm && e.id !== tg.u && hxDist([dr, dq], [e.r, e.q]) === 1);
+    if (others.length && st.units[u.id]){ hxAbil(st, u, "炎が燃え広がる！"); others.forEach(e => { if (!st.units[e.id] || !st.units[u.id]) return; const n = hxBattle(st, u, e, { tag: "爆炎" }); hxHurt(st, e, n, u); }); }
+  }
+  return hxCheckWin(st) || {};
+});
+const hxDoEnd = (id, pid) => hxCommit(id, st => {
+  if (st.phase !== "play" || st.turn.pid !== pid) return false;
+  st.ti++;
+  if (st.maxT && st.ti >= st.maxT) return hxTimeUp(st);
+  hxStartTurn(st);
+  return {};
+});
+
+/* ---- コンピューター ---- */
+const hxVal = (st, u) => hxStat(st, u, "a") + hxStat(st, u, "d") + hxStat(st, u, "s") * .6 + u.hp * 1.5 + (HX[u.c].k === "遠" ? 1 : 0);
+const hxCardVal = c => HX[c].a + HX[c].d + HX[c].s * .6 + HX[c].h * 1.5 + (HX[c].r - 1) * .8;
+function hxAiPlan(st, u){
+  const enTm = hxOpp(u.tm), myTre = st.tre[u.tm].filter(t => t.hp > 0), enTre = st.tre[enTm].filter(t => t.hp > 0);
+  const enemies = hxUnits(st).filter(e => e.tm !== u.tm);
+  const cands = [{ at: [u.r, u.q], path: [] }];
+  if (!u.moved && !u.acted && !u.nomv) Object.values(hxReach(st, u)).forEach(path => cands.push({ at: path[path.length - 1], path }));
+  const threat = enemies.filter(e => myTre.some(t => hxDist([e.r, e.q], [t.r, t.q]) <= 3));
+  let best = null;
+  cands.forEach(cd => {
+    const at = cd.at, mv = cd.path.length || (u.mv || 0);
+    let tgS = 0, tg = null;
+    if (!u.acted){
+      hxTargets(st, u, at).forEach(x => {
+        let s = 0;
+        if (x.t){ const t = st.tre[x.t][x.i], dm = hxAtk(st, u, null, { at, mv }).v; s = 40 + dm * 7 + (dm >= t.hp ? 150 : 0); }
+        else {
+          const e = st.units[x.u], dist = hxDist(at, [e.r, e.q]);
+          const A = hxAtk(st, u, e, { at, mv }).v, D = hxDef(st, e, u, dist).v;
+          const p = hxProb(A, D, hxADice(u), hxDDice(e), hxBig6(u));
+          const kill = e.hp <= 1 ? 1 : .45;
+          s = p * (18 + hxVal(st, e) * 2.2 * kill + (threat.includes(e) ? 12 : 0));
+          if (u.c === "volg" && p < .5) s -= 15;
+        }
+        if (s > tgS){ tgS = s; tg = x; }
+      });
+    }
+    let pos = 0;
+    const dEn = enTre.length ? Math.min(...enTre.map(t => hxDist(at, [t.r, t.q]))) : 0;
+    const guard = threat.length && (HX[u.c].d >= 4 || u.c === "artorius");
+    pos -= dEn * (guard ? 1.2 : 3.2);
+    if (threat.length) pos -= Math.min(...threat.map(e => hxDist(at, [e.r, e.q]))) * (guard ? 3 : 1);
+    if (HX[u.c].k === "遠"){ const near = enemies.filter(e => hxDist(at, [e.r, e.q]) === 1).length; pos -= near * 6; }
+    let risk = 0;
+    enemies.forEach(e => {
+      const d = hxDist(at, [e.r, e.q]); if (d > hxStat(st, e, "s") + hxStat(st, e, "r")) return;
+      const p = hxProb(hxAtk(st, e, u).v, hxDef(st, u, e, Math.min(d, hxStat(st, e, "r"))).v, hxADice(e), hxDDice(u), hxBig6(e));
+      risk += p * (u.hp <= 1 ? 1 : .5) * hxVal(st, u) * .9;
+    });
+    const sc = tgS + pos - risk + (cd.path.length ? 0 : .5);
+    if (!best || sc > best.sc) best = { sc, at, path: cd.path, tg, tgS };
+  });
+  return best;
+}
+CPU_AI.hx_games = g => {
+  const st = g.st; if (!st) return null;
+  const r = hxAiStep(g); if (!r) return null;
+  const run = r.run; r.run = async () => { for (let i = 0; i < 160 && hxPlaying && hxId === g.id; i++) await new Promise(ok => setTimeout(ok, 250)); await run(); };
+  return r;
+};
+function hxAiStep(g){
+  const st = g.st;
+  if (st.phase === "pick"){
+    const c = st.players.find(p => isCpu(p) && !st.picks[p]);
+    if (c){ const pk = st.hands[c].slice().sort((a, b) => hxCardVal(b) - hxCardVal(a)).slice(0, 2); return { wait: 1400, run: () => hxDoPick(g.id, c, pk) }; }
+    return null;
+  }
+  if (st.phase !== "play") return null;
+  const rc = st.players.find(p => isCpu(p) && st.rw[p] > 0);
+  if (rc) return { wait: 900, run: () => hxDoReward(g.id, rc, (st.skills[rc] || []).length < 2 ? "sk" : "ch") };
+  const pid = st.turn && st.turn.pid; if (!isCpu(pid)) return null;
+  const cs = hxCanSummon(st, pid);
+  if (cs){
+    const hand = (st.hands[pid] || []).filter(c => hxCardOk(st, pid, c)).sort((a, b) => hxCardVal(b) - hxCardVal(a));
+    if (hand.length){
+      const pri = ["hero", "power", "guts", "heart", "twin", "iron", "storm", "ward", "gale", "hawk", "ram", "counter", "cloak", "wing", "banner", "curse"];
+      const sk = (st.skills[pid] || []).slice().sort((a, b) => pri.indexOf(a) - pri.indexOf(b))[0] || null;
+      const enTre = st.tre[hxOpp(hxTeamOf(st, pid))];
+      const sp = cs.sps.slice().sort((a, b) => Math.min(...enTre.map(t => hxDist(a, [t.r, t.q]))) - Math.min(...enTre.map(t => hxDist(b, [t.r, t.q]))))[0];
+      return { wait: 1500, run: () => hxDoSummon(g.id, pid, hand[0], sk, sp) };
+    }
+  }
+  const mine = hxUnits(st).filter(u => u.own === pid && !u.acted).sort((a, b) => HX[a.c].k === "遠" ? 1 : -1);
+  for (const u of mine){
+    const p = hxAiPlan(st, u); if (!p) continue;
+    if (p.path.length && !u.moved){ const to = p.path[p.path.length - 1]; return { wait: 1100, run: () => hxDoMove(g.id, pid, u.id, to) }; }
+    if (p.tg && !p.path.length) return { wait: 1200, run: () => hxDoAttack(g.id, pid, u.id, p.tg) };
+  }
+  return { wait: 1000, run: () => hxDoEnd(g.id, pid) };
+}
+
+/* ---- ヘクスレイド：紋章アート（SVGシンボル） ---- */
+const HXA = (() => {
+  const M = "url(#hxMet)", G = "url(#hxGold)", C = "currentColor", K = "#0A0C16";
+  const T = (x, y, a = 0, s = 1) => `translate(${x} ${y}) rotate(${a}) scale(${s})`;
+  const swd = (x, y, a = 0, L = 46, W = 7) => `<g transform="${T(x, y, a)}"><path d="M0 ${-L / 2}L${W / 2} ${-L / 2 + W}V${L / 2 - 13}H${-W / 2}V${-L / 2 + W}Z" fill="${M}"/><path d="M0 ${-L / 2 + W}V${L / 2 - 14}" stroke="${K}" stroke-width="1" opacity=".4"/><path d="M${-W * 1.7} ${L / 2 - 13}H${W * 1.7}l-1.6 3.6H${-W * 1.7 + 1.6}Z" fill="${G}"/><rect x="-1.9" y="${L / 2 - 9.4}" width="3.8" height="6.4" fill="#3A2A20"/><circle cx="0" cy="${L / 2 - 1.8}" r="2.7" fill="${C}"/></g>`;
+  const shield = (x, y, s = 1, f = M) => `<g transform="${T(x, y, 0, s)}"><path d="M0 -16L14 -10V2Q14 13 0 19Q-14 13 -14 2V-10Z" fill="${f}"/><path d="M0 -11L9 -7V2Q9 9.5 0 14Q-9 9.5 -9 2V-7Z" fill="none" stroke="${f === C ? G : C}" stroke-width="2"/></g>`;
+  const axe = (x, y, a = 0, s = 1, dbl = 0) => `<g transform="${T(x, y, a, s)}"><rect x="-1.8" y="-20" width="3.6" height="42" rx="1.5" fill="#5A3A22"/><path d="M1.5 -18Q19 -17 19 -4Q19 8 1.5 5Z" fill="${M}"/>${dbl ? `<path d="M-1.5 -18Q-19 -17 -19 -4Q-19 8 -1.5 5Z" fill="${M}"/>` : ""}<circle cx="0" cy="-7" r="2" fill="${C}"/></g>`;
+  const bow = (x, y, a = 0, s = 1) => `<g transform="${T(x, y, a, s)}"><path d="M-6 -22Q16 0 -6 22" fill="none" stroke="#5A3A22" stroke-width="4.5"/><path d="M-6 -22Q16 0 -6 22" fill="none" stroke="${G}" stroke-width="1.4"/><path d="M-6 -22V22" stroke="#E8E8F0" stroke-width="1"/><path d="M-18 0H16" stroke="${M}" stroke-width="2.6"/><path d="M21 0l-7 -4v8z" fill="${M}"/><path d="M-18 0l-4 -4M-18 0l-4 4M-14 0l-4 -4M-14 0l-4 4" stroke="${C}" stroke-width="1.8"/></g>`;
+  const flame = (x, y, s = 1, f = C) => `<g transform="${T(x, y, 0, s)}"><path d="M0 -24C8 -14 16 -8 14 4C13 14 6 20 0 20C-6 20 -13 14 -14 4C-15 -6 -6 -10 -4 -18C-2 -12 2 -10 0 -24Z" fill="${f}"/><path d="M0 -6C5 0 8 4 7 10C6 15 3 17 0 17C-3 17 -6 15 -7 10C-7 4 -2 2 0 -6Z" fill="#FFE38A" stroke="none"/></g>`;
+  const snow = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}">${[0, 60, 120, 180, 240, 300].map(a => `<g transform="rotate(${a})"><path d="M0 0V-22M0 -12l-6 -5M0 -12l6 -5M0 -18l-4 -4M0 -18l4 -4" stroke="${C}" stroke-width="3.6" fill="none"/><path d="M0 0V-22M0 -12l-6 -5M0 -12l6 -5" stroke="#fff" stroke-width="1.2" fill="none"/></g>`).join("")}<circle r="4" fill="#fff"/></g>`;
+  const bolt = (x, y, s = 1, f = "#FFE04A") => `<path transform="${T(x, y, 0, s)}" d="M6 -26L-12 4H-1L-6 26L13 -6H2Z" fill="${f}"/>`;
+  const skull = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><path d="M-14 -2C-14 -16 -7 -22 0 -22C7 -22 14 -16 14 -2C14 4 10 6 9 8V14H-9V8C-10 6 -14 4 -14 -2Z" fill="#E9E4D8"/><ellipse cx="-6" cy="-3" rx="4" ry="4.6" fill="${K}"/><ellipse cx="6" cy="-3" rx="4" ry="4.6" fill="${K}"/><circle cx="-6" cy="-3" r="1.6" fill="${C}" stroke="none"/><circle cx="6" cy="-3" r="1.6" fill="${C}" stroke="none"/><path d="M0 3L-2.5 8H2.5Z" fill="${K}"/><path d="M-5 14V10M0 14V10M5 14V10" stroke="${K}" stroke-width="1.4"/></g>`;
+  const wing1 = `<path d="M-3 -2C-12 -18 -28 -22 -31 -15C-25 -15 -21 -11 -24 -9C-30 -9 -32 -2 -29 2C-23 0 -19 0 -20 3C-26 5 -25 11 -21 13C-14 9 -8 5 -3 -2Z" fill="${M}"/><path d="M-6 -3L-24 -12M-7 0L-25 -2M-7 3L-20 8" stroke="${K}" stroke-width=".8" opacity=".45"/>`;
+  const wings = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}">${wing1}<g transform="scale(-1 1)">${wing1}</g></g>`;
+  const crescent = (x, y, s = 1, f = C) => `<path transform="${T(x, y, 0, s)}" d="M6 -20A20 20 0 1 0 6 20A15 15 0 1 1 6 -20Z" fill="${f}"/>`;
+  const spear = (x, y, a = 0, L = 56, pen = 0) => `<g transform="${T(x, y, a)}"><rect x="-1.7" y="${-L / 2 + 12}" width="3.4" height="${L - 12}" rx="1" fill="#5A3A22"/><path d="M0 ${-L / 2}L5.5 ${-L / 2 + 10}L0 ${-L / 2 + 15}L-5.5 ${-L / 2 + 10}Z" fill="${M}"/><path d="M-5 ${-L / 2 + 15}H5" stroke="${G}" stroke-width="2.6"/>${pen ? `<path d="M1.7 ${-L / 2 + 17}L17 ${-L / 2 + 21}L9 ${-L / 2 + 24}L17 ${-L / 2 + 27}L1.7 ${-L / 2 + 30}Z" fill="${C}"/>` : ""}</g>`;
+  const fist = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><path d="M-14 -6Q-14 -14 -7 -14H9Q15 -14 15 -7V7Q15 17 4 17H-6Q-14 17 -14 9Z" fill="#E8C9A8"/><path d="M-6 -14V-4M1 -14V-4M8 -14V-4" stroke="${K}" stroke-width="1.4"/><path d="M-14 -2Q-4 -4 2 2" stroke="${K}" stroke-width="1.4" fill="none"/><rect x="-15" y="9" width="31" height="6" rx="2" fill="${C}"/></g>`;
+  const gear = (x, y, s = 1) => { let p = ""; for (let i = 0; i < 20; i++){ const a = i * Math.PI / 10, r = i % 2 ? 16 : 21; p += `${(Math.cos(a) * r).toFixed(1)},${(Math.sin(a) * r).toFixed(1)} `; } return `<g transform="${T(x, y, 0, s)}"><polygon points="${p}" fill="${M}"/><circle r="9" fill="#2A2E3E"/><circle r="5" fill="${C}"/></g>`; };
+  const shuriken = (x, y, s = 1) => `<g transform="${T(x, y, 18, s)}"><path d="M0 -24L5 -5L24 0L5 5L0 24L-5 5L-24 0L-5 -5Z" fill="${M}"/><circle r="4" fill="${K}"/></g>`;
+  const eye = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><path d="M-24 0Q0 -20 24 0Q0 20 -24 0Z" fill="#F3EEF8"/><circle r="9" fill="${C}"/><ellipse rx="2.6" ry="7" fill="${K}"/></g>`;
+  const cannon = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><g transform="rotate(-28)"><rect x="-20" y="-7" width="38" height="14" rx="4" fill="${M}"/><rect x="14" y="-9" width="6" height="18" rx="2" fill="${G}"/><rect x="-12" y="-7" width="3" height="14" fill="${C}"/></g><circle cx="-4" cy="12" r="10" fill="#5A3A22"/><circle cx="-4" cy="12" r="3" fill="${G}"/><path d="M-4 2V22M-14 12H6" stroke="${K}" stroke-width="1"/></g>`;
+  const crown = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><path d="M-16 6L-18 -10L-8 -2L0 -14L8 -2L18 -10L16 6Z" fill="${G}"/><rect x="-16" y="6" width="32" height="5" fill="${G}"/><circle cx="0" cy="0" r="2.4" fill="${C}"/><circle cx="-9" cy="3" r="1.8" fill="${C}"/><circle cx="9" cy="3" r="1.8" fill="${C}"/></g>`;
+  const dragon = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><path d="M-20 14L-12 -2L-16 -20L-4 -9L4 -20L5 -6L20 -4L11 3L18 13L3 9L-5 20Z" fill="${C}"/><path d="M-4 -9L-1 2L5 -6" fill="none" stroke="${K}" stroke-width="1.2"/><circle cx="4" cy="0" r="2.2" fill="#FFE38A"/></g>`;
+  const mirror = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><rect x="-3" y="10" width="6" height="16" rx="2" fill="${G}"/><ellipse cy="-6" rx="15" ry="19" fill="${G}"/><ellipse cy="-6" rx="11" ry="15" fill="${C}"/><path d="M-6 -14Q-2 -18 4 -16" stroke="#fff" stroke-width="2" fill="none"/><path d="M6 -6l1.4 3 3 1.4-3 1.4-1.4 3-1.4-3-3-1.4 3-1.4z" fill="#fff" stroke="none"/></g>`;
+  const helm = (x, y, s = 1, horns = 0) => `<g transform="${T(x, y, 0, s)}">${horns ? `<path d="M-12 -10Q-26 -14 -24 -30Q-18 -18 -8 -16Z" fill="#E9E4D8"/><path d="M12 -10Q26 -14 24 -30Q18 -18 8 -16Z" fill="#E9E4D8"/>` : ""}<path d="M-14 4V-6Q-14 -20 0 -20Q14 -20 14 -6V4Q14 14 0 18Q-14 14 -14 4Z" fill="${horns ? "#3A3550" : M}"/><rect x="-11" y="-5" width="22" height="3.6" fill="${horns ? C : K}"/><path d="M0 -1V13" stroke="${K}" stroke-width="2"/></g>`;
+  const flag = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><rect x="-14" y="-24" width="3.2" height="50" fill="#5A3A22"/><circle cx="-12.4" cy="-25" r="2.6" fill="${G}"/><path d="M-11 -22H18L11 -13L18 -4H-11Z" fill="${C}"/><path d="M3 -18l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="${G}" stroke="none"/></g>`;
+  const card = (x, y, a) => `<g transform="${T(x, y, a)}"><rect x="-9" y="-13" width="18" height="26" rx="2.5" fill="${M}"/><rect x="-6" y="-10" width="12" height="20" rx="1.5" fill="none" stroke="${C}" stroke-width="1.6"/><path d="M0 -5L4 0L0 5L-4 0Z" fill="${C}" stroke="none"/></g>`;
+  const coin = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><circle r="10" fill="${G}"/><circle r="6.5" fill="none" stroke="#8A5A10" stroke-width="1.4"/><path d="M-2 -3h4M-2 3h4M0 -5V5" stroke="#8A5A10" stroke-width="1.4"/></g>`;
+  const claws = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}" fill="none" stroke="${C}" stroke-width="3.4" stroke-linecap="round"><path d="M-10 -12Q-4 0 -10 12"/><path d="M0 -14Q6 0 0 14"/><path d="M10 -12Q16 0 10 12"/></g>`;
+  const ring = (r, dash, w = 2, op = .7) => `<circle cx="32" cy="32" r="${r}" fill="none" stroke="${C}" stroke-width="${w}" opacity="${op}" ${dash ? `stroke-dasharray="${dash}"` : ""}/>`;
+  const halo = (x, y, s = 1) => `<ellipse transform="${T(x, y, 0, s)}" rx="14" ry="4.5" fill="none" stroke="${G}" stroke-width="3"/>`;
+  const drop = (x, y, s = 1, f = C) => `<path transform="${T(x, y, 0, s)}" d="M0 -8Q6 0 6 3A6 6 0 0 1 -6 3Q-6 0 0 -8Z" fill="${f}"/>`;
+  const star = (x, y, s = 1, f = G) => `<path transform="${T(x, y, 0, s)}" d="M0 -10l2.9 6.1 6.6.9-4.8 4.6 1.2 6.5L0 15l-5.9 3.1 1.2-6.5L-9.5 7l6.6-.9z" fill="${f}"/>`;
+  const rays = (n = 12, r1 = 22, r2 = 30) => `<g stroke="${C}" stroke-width="2" opacity=".55">${Array.from({ length: n }, (_, i) => { const a = i * Math.PI * 2 / n; return `<path d="M${(32 + Math.cos(a) * r1).toFixed(1)} ${(32 + Math.sin(a) * r1).toFixed(1)}L${(32 + Math.cos(a) * r2).toFixed(1)} ${(32 + Math.sin(a) * r2).toFixed(1)}"/>`; }).join("")}</g>`;
+  const pent = () => { const p = Array.from({ length: 5 }, (_, i) => { const a = -Math.PI / 2 + i * 4 * Math.PI / 5; return `${(32 + Math.cos(a) * 25).toFixed(1)},${(32 + Math.sin(a) * 25).toFixed(1)}`; }).join(" "); return `<circle cx="32" cy="32" r="27" fill="none" stroke="${C}" stroke-width="2"/><polygon points="${p}" fill="none" stroke="${C}" stroke-width="1.8" opacity=".85"/>`; };
+  const chev = (x, y) => `<g transform="${T(x, y)}" fill="none" stroke="${C}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M-14 -8L-6 0L-14 8"/><path d="M-4 -8L4 0L-4 8"/><path d="M6 -8L14 0L6 8"/></g>`;
+  const motion = (x, y) => `<g transform="${T(x, y)}" stroke="${C}" stroke-width="2.6" stroke-linecap="round"><path d="M-14 -8H-4M-18 0H-6M-14 8H-4"/></g>`;
+  const bombi = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><circle cy="4" r="16" fill="#2A2E3E"/><path d="M-8 -4Q-6 -9 -1 -10" stroke="#8A93AD" stroke-width="2.4" fill="none"/><rect x="-5" y="-15" width="10" height="6" rx="1.5" fill="${M}"/><path d="M0 -15Q4 -24 12 -22" stroke="#C9A06A" stroke-width="2" fill="none"/><path d="M14 -30l2 5 5 1-4 3 1 5-4-3-4 3 1-5-4-3 5-1z" fill="${C}"/></g>`;
+  const staff = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><rect x="-1.8" y="-14" width="3.6" height="40" rx="1.4" fill="#5A3A22"/><circle cy="-18" r="7" fill="${C}"/><circle cx="-2" cy="-20" r="2" fill="#fff" stroke="none"/><path d="M-8 -12Q0 -6 8 -12" stroke="${G}" stroke-width="2" fill="none"/></g>`;
+  const chest = (x, y, s = 1) => `<g transform="${T(x, y, 0, s)}"><path d="M-16 -4Q-16 -16 0 -16Q16 -16 16 -4Z" fill="${C}"/><rect x="-16" y="-4" width="32" height="18" fill="#7A4A1A"/><rect x="-16" y="-4" width="32" height="4" fill="${G}"/><rect x="-3" y="-6" width="6" height="8" rx="1" fill="${G}"/></g>`;
+  const S = b => `<g stroke="${K}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">${b}</g>`;
+  const CH = {
+    kensei: ring(27, "3 4") + rays(16, 24, 29) + swd(32, 32, 0, 56, 8.5),
+    bram: shield(32, 33, 1.55) + `<path d="M28.5 22h7v8h7v7h-7v12h-7V37h-7v-7h7z" fill="${G}"/>`,
+    volg: axe(32, 32, -32, 1.05) + `<g transform="scale(-1 1) translate(-64 0)">${axe(32, 32, -32, 1.05)}</g>` + drop(14, 52, 1) + drop(52, 54, .8),
+    nero: swd(26, 30, -30, 38, 6) + coin(44, 44, 1),
+    seraph: wings(32, 26, 1) + swd(32, 34, 180, 42, 6.5) + halo(32, 7, .9),
+    shizuka: swd(32, 32, -38, 42, 6) + swd(32, 32, 38, 42, 6) + `<circle cx="32" cy="32" r="3.4" fill="${C}"/>`,
+    dragoon: `<g transform="${T(46, 26, 0, .55)}">${wing1.replace(/-/g, "~").replace(/~/g, "-")}</g>` + spear(32, 32, -38, 60, 1),
+    golm: `<path d="M8 50L18 42M56 50L46 42M10 20L20 26M54 20L44 26" stroke="${C}" stroke-width="3" />` + fist(32, 32, 1.35),
+    iris: `<circle cx="32" cy="34" r="21" fill="${M}"/><circle cx="32" cy="34" r="15" fill="none" stroke="${C}" stroke-width="3"/>` + star(32, 32, 1) + halo(32, 8, 1.1),
+    gai: motion(10, 34) + fist(36, 32, 1.2),
+    wolf: claws(32, 32, 1.4) + axe(32, 34, 0, .95, 1),
+    artorius: swd(32, 26, 0, 54, 7.5) + shield(32, 38, 1.05, C),
+    carmilla: crescent(30, 30, 1.15) + `<path d="M22 40l3 9 3-9zM36 40l3 9 3-9z" fill="#fff"/>` + drop(46, 50, .9, "#E2364F"),
+    lance: spear(32, 32, 0, 60, 1) + ring(26, "2 5", 1.6, .5),
+    centaur: chev(22, 44) + spear(36, 30, 45, 58, 1),
+    golem: gear(32, 32, 1.25) + `<path d="M32 5V12M32 52V59M5 32H12M52 32H59" stroke="${C}" stroke-width="2.6"/>`,
+    kagero: crescent(26, 32, 1.3, "#3A4565") + shuriken(36, 32, 1),
+    bomb: bombi(30, 34, 1.15),
+    mordo: helm(32, 36, 1.25, 1),
+    bahamut: dragon(32, 38, 1.1) + crown(32, 12, .85),
+    robin: bow(32, 32, -20, 1.15),
+    ignis: flame(32, 34, 1.15) + `<circle cx="12" cy="20" r="2.4" fill="${C}"/><circle cx="52" cy="16" r="2" fill="${C}"/><circle cx="50" cy="48" r="1.6" fill="${C}"/>`,
+    freesia: snow(32, 32, 1.2),
+    mira: mirror(32, 32, 1.05),
+    zenos: crown(32, 14, .75) + bolt(32, 38, 1),
+    necro: flame(14, 38, .45) + flame(50, 38, .45) + skull(32, 34, 1.1),
+    hayate: `<path d="M8 14Q32 4 56 14M6 52Q32 62 58 52" stroke="${C}" stroke-width="2.2" fill="none"/>` + bow(32, 32, 20, 1),
+    lumina: rays(14, 18, 28) + staff(32, 36, 1) + halo(32, 11, 1),
+    zagan: pent() + eye(32, 32, .8),
+    canon: cannon(34, 32, 1.15),
+    loki: card(24, 34, -22) + card(40, 34, 22) + card(32, 30, 0) + star(48, 12, .7, C),
+    leon: flag(34, 30, 1) + swd(20, 36, -20, 34, 5.5)
+  };
+  const SK = {
+    power: swd(32, 32, 0, 48, 8) + `<path d="M14 20l6 4M50 20l-6 4" stroke="${C}" stroke-width="3"/>`,
+    iron: shield(32, 32, 1.4),
+    gale: chev(32, 32) + motion(14, 32),
+    hawk: eye(32, 32, 1) + ring(26, "4 4"),
+    hero: star(32, 30, 2, C) + `<circle cx="32" cy="32" r="6" fill="${G}"/>`,
+    heart: `<path d="M32 52L12 32Q4 22 12 14Q22 6 32 18Q42 6 52 14Q60 22 52 32Z" fill="${C}"/><path d="M20 20Q24 16 28 20" stroke="#fff" stroke-width="2" fill="none"/>`,
+    guts: flame(32, 34, 1.15),
+    twin: `<rect x="12" y="16" width="20" height="20" rx="4" fill="${M}" transform="rotate(-12 22 26)"/><rect x="32" y="28" width="20" height="20" rx="4" fill="${C}" transform="rotate(10 42 38)"/><circle cx="22" cy="26" r="2.4" fill="${K}"/><circle cx="38" cy="34" r="2" fill="#fff"/><circle cx="46" cy="42" r="2" fill="#fff"/>`,
+    ward: shield(32, 32, 1.3, C) + star(32, 32, .7),
+    ram: `<rect x="8" y="26" width="40" height="12" rx="3" fill="#5A3A22"/><path d="M46 22h10v20H46z" fill="${M}"/><path d="M14 26v-6M24 26v-6M34 26v-6" stroke="${G}" stroke-width="2.4"/>`,
+    counter: `<path d="M44 18A18 18 0 1 0 50 34" fill="none" stroke="${C}" stroke-width="5"/><path d="M40 8l10 10-12 6z" fill="${C}"/>` + swd(32, 34, 45, 30, 5),
+    cloak: `<path d="M32 8Q14 12 12 30L8 56Q20 50 22 56Q28 48 32 56Q36 48 42 56Q44 50 56 56L52 30Q50 12 32 8Z" fill="${C}" opacity=".85"/><circle cx="26" cy="26" r="2.6" fill="#fff"/><circle cx="38" cy="26" r="2.6" fill="#fff"/>`,
+    storm: bolt(26, 32, .9) + bolt(40, 30, .7, C),
+    curse: skull(32, 32, 1.1),
+    wing: wings(32, 32, 1),
+    banner: flag(36, 32, 1)
+  };
+  const GM = {
+    meteor: `<g transform="rotate(-35 32 32)">${flame(32, 32, 1.3)}</g><circle cx="44" cy="44" r="9" fill="#5A3A22"/>`,
+    thunder: bolt(32, 32, 1.3),
+    rain: drop(20, 22, 1.4) + drop(40, 18, 1.2) + drop(30, 40, 1.6) + drop(48, 42, 1.1),
+    supply: chest(32, 36, 1.2) + star(32, 12, .7, C),
+    bless: wings(32, 34, .9) + halo(32, 12, 1.2),
+    frenzy: `<circle cx="32" cy="32" r="22" fill="#B3123A"/><circle cx="24" cy="26" r="4" fill="#7A0B20"/><circle cx="38" cy="40" r="6" fill="#7A0B20"/><circle cx="40" cy="22" r="2.6" fill="#7A0B20"/>`,
+    fog: `<path d="M8 22Q20 14 32 22T56 22M8 34Q20 26 32 34T56 34M8 46Q20 38 32 46T56 46" stroke="${C}" stroke-width="4" fill="none"/>`,
+    gate: ring(26, "", 4, 1) + ring(18, "6 4", 3, .9) + ring(10, "", 3, .8) + `<circle cx="32" cy="32" r="4" fill="${C}"/>`,
+    tornado: `<path d="M10 12H54M14 22H48M18 32H42M22 42H36M26 52H32" stroke="${C}" stroke-width="5" stroke-linecap="round"/>`
+  };
+  const sym = (id, body) => `<symbol id="${id}" viewBox="0 0 64 64">${S(body)}</symbol>`;
+  const defs = `<svg id="hxDefs" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+    <linearGradient id="hxMet" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="#C9D1E0"/><stop offset=".55" stop-color="#8E99B0"/><stop offset="1" stop-color="#EEF2FA"/></linearGradient>
+    <linearGradient id="hxGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1B8"/><stop offset=".45" stop-color="#E8B12A"/><stop offset=".6" stop-color="#FFE38A"/><stop offset="1" stop-color="#9A6A12"/></linearGradient>
+    <radialGradient id="hxTok" cx=".5" cy=".38" r=".7"><stop offset="0" stop-color="#2A3050"/><stop offset="1" stop-color="#090B16"/></radialGradient>
+    <linearGradient id="hxRock" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A4E5E"/><stop offset="1" stop-color="#1B1D27"/></linearGradient>
+    ${Object.entries(CH).map(([k, b]) => sym("hxs-" + k, b)).join("")}
+    ${Object.entries(SK).map(([k, b]) => sym("hxk-" + k, b)).join("")}
+    ${Object.entries(GM).map(([k, b]) => sym("hxg-" + k, b)).join("")}
+  </defs></svg>`;
+  return { defs };
+})();
+function hxEnsureDefs(){ if (!document.getElementById("hxDefs")) document.body.insertAdjacentHTML("beforeend", HXA.defs); }
+const hxSig = (c, cls = "") => `<svg class="hxsig ${cls}" viewBox="0 0 64 64" style="color:${HX[c].col}"><use href="#hxs-${c}"/></svg>`;
+const hxSkSig = (k, col = "#FFD45A") => `<svg class="hxsig" viewBox="0 0 64 64" style="color:${col}"><use href="#hxk-${k}"/></svg>`;
+const hxGimSig = k => `<svg class="hxsig" viewBox="0 0 64 64" style="color:#FFD45A"><use href="#hxg-${k}"/></svg>`;
+
+/* ---- ヘクスレイド：画面 ---- */
+const HXW = 10 * Math.sqrt(3), HX_BW = HXW * 7.5, HX_BH = 155;
+let hxId = null, hxSel = null, hxPend = null, hxMode = null, hxSumCard = null, hxSumSk = null, hxPickSel = [], hxFlip = false, hxDrop = false, hxPop = null;
+let hxSeen = {}, hxQ = [], hxPlaying = false, hxSkip = null, hxOverShown = {};
+function hxXY(r, q){ let x = HXW * (q + .5 * (r & 1)) + HXW / 2, y = 10 + r * 15; if (hxFlip){ x = HX_BW - x; y = HX_BH - y; } return [x, y]; }
+const hxHexPts = (x, y, s = 9.3) => [-90, -30, 30, 90, 150, 210].map(a => `${(x + s * Math.cos(a * Math.PI / 180)).toFixed(2)},${(y + s * Math.sin(a * Math.PI / 180)).toFixed(2)}`).join(" ");
+const hxTmC = t => HX_TM[t].c;
+/* カード */
+function hxStatsHtml(c, u, st){
+  const v = k => u ? hxStat(st, u, k) : HX[c][k], b = k => HX[c][k];
+  const cell = (k, l) => `<span class="hs-${k} ${v(k) > b(k) ? "up" : v(k) < b(k) ? "dn" : ""}"><em>${l}</em><b>${v(k)}</b></span>`;
+  return `<div class="hxc-st">${cell("a", "攻")}${cell("d", "防")}${cell("s", "速")}${cell("r", "射")}</div>`;
+}
+function hxCardHtml(c, opt = {}){
+  const X = HX[c], el = HX_EL[X.e], u = opt.u, st = opt.st;
+  const hp = u ? u.hp : X.h, mhp = u ? u.mhp : X.h;
+  return `<div class="hxc ${opt.size || ""} ${opt.cls || ""}" style="--cc:${X.col};--ec:${el.c}" ${opt.attr || ""}>
+    <div class="hxc-h"><b class="hxc-n">${esc(X.n)}</b></div>
+    <div class="hxc-art">${hxSig(c)}<span class="hxc-el">${el.n}</span><span class="hxc-k ${X.k === "遠" ? "far" : ""}">${X.k}${X.fl || hxSk(u, "wing") ? "・飛" : ""}</span><span class="hxc-hp">${Array.from({ length: mhp }, (_, i) => `<i class="${i < hp ? "" : "off"}"></i>`).join("")}</span>${u && u.sk ? `<span class="hxc-sk" title="${esc(HXS[u.sk].n)}">${hxSkSig(u.sk)}</span>` : ""}</div>
+    ${hxStatsHtml(c, u, st)}
+    <div class="hxc-ab"><em class="t-${X.t}">${HX_TIM[X.t]}</em><b>${esc(X.ab)}</b><small>${esc(X.tx)}</small></div>
+    ${u && u.sk ? `<div class="hxc-eq"><b>${esc(HXS[u.sk].n)}</b><small>${esc(HXS[u.sk].tx)}</small></div>` : ""}
+  </div>`;
+}
+const hxSkCardHtml = (k, opt = {}) => `<div class="hxsk ${opt.cls || ""}" ${opt.attr || ""}>${hxSkSig(k)}<b>${esc(HXS[k].n)}</b><small>${esc(HXS[k].tx)}</small></div>`;
+/* ---- 新しい対戦 ---- */
+function openHxNew(prev){
+  hxEnsureDefs();
+  const t = curTrip();
+  let order = prev ? [...prev.A, ...prev.B] : (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 4);
+  let team = {}; if (prev){ prev.A.forEach(p => team[p] = "A"); prev.B.forEach(p => team[p] = "B"); } else order.forEach((p, i) => team[p] = i % 2 ? "B" : "A");
+  let rounds = prev ? prev.rounds : 12;
+  const s = openSheet("ヘクスレイドを始める", `
+    <p class="note">蒼と紅の2陣営に分かれ、六角マスの盤面でキャラを戦わせる。相手の財宝2つを先に壊した陣営の勝ち（2〜6人）。</p>
+    <button type="button" class="grbtn" data-grule="hx">ルールを見る</button>
+    <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
+    <div class="f"><span>陣営（名前をタップで入れ替え）</span><div id="hxTeams" class="hxtpick"></div><button class="shufbtn" id="hxShuf">陣営をシャッフル</button></div>
+    <div class="f"><span>決着までのラウンド</span><div class="chips" id="hxRd">${[8, 12, 16, 0].map(n => `<button type="button" class="pc" data-rd="${n}" aria-pressed="${n === rounds}">${n ? n + "ラウンド" : "無制限"}</button>`).join("")}</div><small class="kgoph">ラウンドが終わったら、財宝の残りが多い陣営の勝ち</small></div>
+    <div class="btns"><button class="btn" id="hxGo">出陣！</button></div>`);
+  s.querySelector("[data-close]").onclick = openGames;
+  const cnt = tm => order.filter(p => team[p] === tm).length;
+  const draw = () => {
+    $("#hxTeams").innerHTML = ["A", "B"].map(tm => `<div class="hxtcol" style="--tc:${hxTmC(tm)}"><h5>${HX_TM[tm].n}の陣営<small>${HX_TM[tm].en}</small></h5>${order.filter(p => team[p] === tm).map(p => `<button type="button" class="hxtp" data-tp="${p}" style="--pc:${pcolor(p)}">${esc(pname(p))}<i>⇄</i></button>`).join("") || `<em>だれもいません</em>`}</div>`).join("");
+    $("#hxTeams").querySelectorAll("[data-tp]").forEach(b => b.onclick = () => { const p = b.dataset.tp; team[p] = hxOpp(team[p]); draw(); });
+  };
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
+    if (on && order.length >= 6){ toast("最大6人です"); return; }
+    b.setAttribute("aria-pressed", String(on));
+    if (on){ order = [...order, id]; team[id] = cnt("A") <= cnt("B") ? "A" : "B"; } else order = order.filter(x => x !== id);
+    draw();
+  });
+  s.querySelectorAll("[data-rd]").forEach(b => b.onclick = () => { rounds = Number(b.dataset.rd); s.querySelectorAll("[data-rd]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+  $("#hxShuf").onclick = () => { shuffle(order).forEach((p, i) => team[p] = i % 2 ? "B" : "A"); draw(); };
+  draw();
+  $("#hxGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
+    if (order.length < 2 || order.length > 6){ toast("参加者は2〜6人です"); return; }
+    const A = order.filter(p => team[p] === "A"), B = order.filter(p => team[p] === "B");
+    if (!A.length || !B.length){ toast("両方の陣営に1人以上必要です"); return; }
+    const st = hxSetup({ A, B }, rounds);
+    const row = { trip_id: t ? t.id : null, status: "playing", players: st.players, st, created_by: me || null,
+      log: [{ t: new Date().toISOString(), m: `出陣！ 蒼：${A.map(pname).join("・")}　紅：${B.map(pname).join("・")}` }] };
+    const { data: res, error } = await sb.from("hx_games").insert(row).select().single();
+    if (error){ if (/hx_games|relation|exist|schema/i.test(error.message || "")) toast("ヘクスレイドを使うには schema15.sql を実行してください", 3500); else fail(error, "作成"); return; }
+    await loadTable("hx_games"); closeSheet(); openHx(res.id); st.players.forEach(p => pushCall({ type: "game_turn", game: "ヘクスレイド", to: p }));
+  };
+}
+/* ---- 開く・閉じる ---- */
+function openHx(id){
+  hxEnsureDefs();
+  hxId = id; hxSel = null; hxPend = null; hxMode = null; hxPickSel = []; hxPop = null; hxQ = []; hxPlaying = false;
+  const el = $("#hxg"); el.innerHTML = ""; el.hidden = false; document.body.style.overflow = "hidden";
+  const g = hxById(id); if (g && g.st && hxSeen[id] == null){ hxSeen[id] = (g.st.fxn || 0) - (g.st.fxn === 1 ? 1 : 0); }
+  drawHx();
+}
+function closeHx(){ hxId = null; hxQ = []; hxPlaying = false; if (hxSkip) hxSkip(); document.querySelectorAll(".hxfxl").forEach(x => x.remove()); $("#hxg").hidden = true; document.body.style.overflow = ""; render(); }
+function hxSkeleton(el){
+  const emb = Array.from({ length: 22 }, (_, i) => `<i style="left:${(i * 47 + 11) % 100}%;--d:${(5 + (i * 7) % 9)}s;--dl:-${(i * 1.3).toFixed(1)}s;--x:${((i * 37) % 60) - 30}px;--s:${(.5 + (i % 5) * .25).toFixed(2)}"></i>`).join("");
+  el.innerHTML = `<div class="hxbg" aria-hidden="true"><span class="hxglow b"></span><span class="hxglow a"></span><span class="hxhex"></span><div class="hxemb">${emb}</div></div>
+    <div class="hxtop"><div class="hxlogo"><b>HEX RAID</b><small>財宝争奪戦</small></div><span class="hxrnd" id="hxRnd"></span><button class="hxbtn" id="hxMenu" aria-label="メニュー">…</button><button class="hxbtn" id="hxX" aria-label="閉じる">×</button></div>
+    <div class="hxtb" id="hxTbE"></div>
+    <div class="hxbw" id="hxBw"></div>
+    <div class="hxtb my" id="hxTbM"></div>
+    <div class="hxpanel" id="hxPanel"></div>
+    <div class="hxmodal" id="hxModal"></div>`;
+  $("#hxX").onclick = closeHx;
+  $("#hxMenu").onclick = () => hxMenu(hxById(hxId));
+  $("#hxBw").onclick = e => hxTap(e);
+}
+function hxMenu(g){
+  if (!g) return;
+  const s = openSheet("ヘクスレイドのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="log">これまでの流れ<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openGameRules("hx");
+  s.querySelector('[data-x="log"]').onclick = () => openSheet("これまでの流れ", `<ul class="hxloglist">${(g.log || []).slice().reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("")}</ul>`);
+  s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); const { error } = await sb.from("hx_games").update({ status: "aborted", version: (g.version || 1) + 1 }).eq("id", g.id); if (!error){ g.status = "aborted"; } closeHx(); };
+}
+function drawHx(){
+  setTimeout(cpuKick, 0);
+  if (!hxId) return;
+  const g = hxById(hxId); if (!g || !g.st || g.status === "aborted") return closeHx();
+  const el = $("#hxg");
+  if (!el.querySelector(".hxbg")) hxSkeleton(el);
+  hxPump(g);
+  if (hxPlaying) return;
+  hxRender(g);
+}
+/* ---- 描画 ---- */
+function hxRender(g){
+  const st = g.st;
+  const inG = st.players.includes(me), myTm = inG ? hxTeamOf(st, me) : "A", enTm = hxOpp(myTm);
+  hxFlip = myTm === "B";
+  const myTurn = st.phase === "play" && st.turn && st.turn.pid === me;
+  if (hxSel && !st.units[hxSel]) hxSel = null;
+  if (!myTurn){ hxPend = null; if (hxMode) hxMode = null; }
+  const round = Math.floor((st.ti || 0) / st.order.length) + 1;
+  const gimLeft = HX_GIM_EVERY - ((st.ti || 0) % HX_GIM_EVERY);
+  $("#hxRnd").innerHTML = st.phase === "pick" ? `<span>出撃準備</span>` : `<span>ROUND <b>${Math.min(round, st.rounds || round)}</b>${st.rounds ? `<i>/${st.rounds}</i>` : ""}</span><span class="hxgim" title="次のギミックまで">⚠<b>${gimLeft}</b></span>`;
+  $("#hxTbE").innerHTML = hxTeamBar(st, enTm); $("#hxTbM").innerHTML = hxTeamBar(st, myTm);
+  $("#hxTbE").style.setProperty("--tc", hxTmC(enTm)); $("#hxTbM").style.setProperty("--tc", hxTmC(myTm));
+  // 選択中ユニットの移動先・攻撃先
+  const su = hxSel && st.units[hxSel], mine = su && su.own === me && myTurn;
+  const reach = mine ? hxReach(st, su) : {}, tgts = mine ? hxTargets(st, su) : [];
+  const cs = myTurn ? hxCanSummon(st, me) : null;
+  const sps = hxMode === "sumpos" && cs ? cs.sps : [];
+  const bw = $("#hxBw");
+  bw.className = `hxbw ${st.env ? "env-" + st.env : ""}`;
+  bw.innerHTML = hxBoardSvg(st, { myTurn, reach, tgts, sps, su });
+  $("#hxPanel").innerHTML = hxPanelHtml(g, { myTurn, su, mine, reach, tgts, cs, inG });
+  hxBindPanel(g);
+  hxModalDraw(g);
+  hxDrop = false;
+}
+function hxTeamBar(st, tm){
+  const tre = st.tre[tm].map(t => `<span class="hxtg ${t.hp <= 0 ? "dead" : t.hp <= 3 ? "low" : ""}"><i style="--p:${t.hp / HX_TRE_HP}"></i><b>${t.hp}</b></span>`).join("");
+  const pl = st.teams[tm].map(p => { const now = st.phase === "play" && st.turn && st.turn.pid === p; const n = hxUnits(st).filter(u => u.own === p).length;
+    return `<span class="hxpl ${now ? "now" : ""}" style="--pc:${pcolor(p)}">${now ? `<em>▶</em>` : ""}<b>${esc(pname(p))}</b><small>${n}体・手札${(st.hands[p] || []).length}${(st.skills[p] || []).length ? `・技${st.skills[p].length}` : ""}</small></span>`; }).join("");
+  return `<span class="hxtn"><b>${HX_TM[tm].n}</b><small>撃破${st.kills[tm] || 0}</small></span><div class="hxpls">${pl}</div><div class="hxtre">${tre}</div>`;
+}
+function hxBoardSvg(st, ui){
+  let cells = "", over = "";
+  for (let r = 0; r < HX_R; r++) for (let q = 0; q < HX_C; q++){
+    const [x, y] = hxXY(r, q), k = r + "," + q;
+    const zone = r >= 8 ? "zA" : r <= 1 ? "zB" : "";
+    const rock = hxRock(r, q), spT = ["A", "B"].find(t => HX_POS[t].sp.some(p => p[0] === r && p[1] === q));
+    const mv = ui.reach[k], spc = ui.sps.some(p => p[0] === r && p[1] === q);
+    cells += `<polygon class="hc ${zone} ${rock ? "rk" : ""} ${mv ? "mv" : ""} ${spc ? "spc" : ""}" points="${hxHexPts(x, y)}" data-k="${k}"/>`;
+    if (rock) cells += `<g class="hxrock" transform="translate(${x} ${y})"><path d="M-6 4L-4 -3L-1 -6L3 -4L6 2L3 6H-3Z" fill="url(#hxRock)" stroke="#0A0C16" stroke-width=".6"/><path d="M-1 -6L0 0L3 6M0 0L-4 -3" stroke="#6A6E80" stroke-width=".4" fill="none"/></g>`;
+    if (spT) cells += `<g class="hxsp" transform="translate(${x} ${y})" style="--tc:${hxTmC(spT)}"><circle r="7" class="o"/><circle r="5" class="i"/><path d="M0 -3.4L2.9 1.7H-2.9Z" class="t"/></g>`;
+    if (mv) cells += `<circle class="hxmvdot" cx="${x}" cy="${y}" r="1.6"/>`;
+  }
+  let tres = "";
+  ["A", "B"].forEach(tm => st.tre[tm].forEach((t, i) => {
+    const [x, y] = hxXY(t.r, t.q), k = t.r + "," + t.q, c = hxTmC(tm), circ = 2 * Math.PI * 8.2;
+    tres += t.hp > 0 ? `<g class="hxtr" data-k="${k}" data-tre="${tm}${i}" transform="translate(${x} ${y})" style="--tc:${c}"><circle r="9" class="glow"/><circle r="8.2" class="bg"/><circle r="8.2" class="hpr" stroke-dasharray="${(circ * t.hp / HX_TRE_HP).toFixed(1)} ${circ.toFixed(1)}" transform="rotate(-90)"/><path d="M0 -6.5L4.6 -1.6L0 6.5L-4.6 -1.6Z" class="gem"/><path d="M0 -6.5L1.6 -1.6L0 6.5M-4.6 -1.6H4.6" class="facet"/><text y="12.6" class="hpt">${t.hp}</text></g>`
+      : `<g class="hxtr dead" data-k="${k}" transform="translate(${x} ${y})"><path d="M-5 3L-2 -2L1 2L4 -3L6 4L-1 6Z" fill="#3A3E4E" stroke="#0A0C16" stroke-width=".5"/><path d="M-3 -6l6 6M3 -6l-6 6" stroke="${c}" stroke-width="1" opacity=".6"/></g>`;
+  }));
+  const units = hxUnits(st).map(u => hxTokHtml(st, u, ui)).join("");
+  ui.tgts.forEach(x => {
+    let p; if (x.u){ const e = st.units[x.u]; p = [e.r, e.q]; } else { const t = st.tre[x.t][x.i]; p = [t.r, t.q]; }
+    const [tx, ty] = hxXY(p[0], p[1]);
+    const pend = hxPend && ((x.u && hxPend.u === x.u) || (x.t && hxPend.t === x.t && hxPend.i === x.i));
+    over += `<g class="hxret ${pend ? "pend" : ""}" transform="translate(${tx} ${ty})"><circle r="9.4"/><path d="M0 -11.5V-7.5M0 11.5V7.5M-11.5 0H-7.5M11.5 0H7.5"/></g>`;
+  });
+  return `<svg class="hxboard" viewBox="-3 -3 ${(HX_BW + 6).toFixed(1)} ${HX_BH + 6}" preserveAspectRatio="xMidYMid meet"><g class="cells">${cells}</g><g class="tres">${tres}</g><g class="units">${units}</g><g class="over">${over}</g></svg>`;
+}
+function hxTokHtml(st, u, ui = {}){
+  const X = HX[u.c], [x, y] = hxXY(u.r, u.q), c = hxTmC(u.tm), multi = st.teams[u.tm].length > 1;
+  const myTurn = ui.myTurn, done = myTurn && u.own === me && u.acted && (u.moved || u.nomv || !Object.keys(hxReach(st, u)).length);
+  const pip = Array.from({ length: u.mhp }, (_, i) => `<circle cx="${(-(u.mhp - 1) * 1.45 + i * 2.9).toFixed(2)}" cy="-9.1" r="1.15" class="${i < u.hp ? "on" : "off"}"/>`).join("");
+  return `<g class="hxu ${u.own === me ? "me" : ""} ${done ? "done" : ""} ${ui.su && ui.su.id === u.id ? "sel" : ""} ${hxDrop ? "drop" : ""} ${u.fz || u.nomv ? "frz" : ""}" data-u="${u.id}" data-k="${u.r},${u.q}" style="transform:translate(${x.toFixed(2)}px,${y.toFixed(2)}px);--tc:${c};--cc:${X.col}">
+    <g class="tk"><circle r="8" class="ring"/><circle r="7.1" fill="url(#hxTok)"/><circle r="7.1" class="tint"/><use href="#hxs-${u.c}" x="-5.8" y="-6.6" width="11.6" height="11.6" style="color:${X.col}"/>
+    <rect x="-7.4" y="3.6" width="6" height="4.4" rx="1.2" class="ba"/><text x="-4.4" y="7" class="bt">${hxStat(st, u, "a")}</text><rect x="1.4" y="3.6" width="6" height="4.4" rx="1.2" class="bd"/><text x="4.4" y="7" class="bt">${hxStat(st, u, "d")}</text>
+    ${pip}${u.sk ? `<circle cx="-6.6" cy="-5.6" r="1.9" class="skd"/><text x="-6.6" y="-4.5" class="skt">✦</text>` : ""}${multi ? `<circle cx="6.6" cy="-5.6" r="1.7" fill="${pcolor(u.own)}" stroke="#0A0C16" stroke-width=".5"/>` : ""}
+    ${u.fz || u.nomv ? `<circle r="7.6" class="ice"/>` : ""}</g></g>`;
+}
+function hxPanelHtml(g, ui){
+  const st = g.st;
+  if (st.phase === "pick") return `<div class="hxturn"><b>出撃準備中</b><small>${st.players.filter(p => st.picks[p]).length}/${st.players.length}人が準備完了</small></div>`;
+  let top = "";
+  if (st.phase === "play"){
+    const tp = st.turn.pid, tm = hxTeamOf(st, tp);
+    top = `<div class="hxturn ${ui.myTurn ? "mine" : ""}" style="--tc:${hxTmC(tm)}">${ui.myTurn ? `<b>あなたの番</b>` : `<b>${esc(pname(tp))}の番</b>`}${st.env ? `<span class="hxenv">${hxGimSig(st.env)}${HXG[st.env].n}</span>` : ""}</div>`;
+  } else top = `<div class="hxturn"><b>対戦終了</b></div>`;
+  // 情報エリア
+  let info = "";
+  const su = ui.su;
+  if (hxPend && su){
+    let body;
+    if (hxPend.t){ const A = hxAtk(st, su, null); body = `<div class="hxpv"><div class="pa">${hxSig(su.c)}<b>${A.v}</b><small>ダメージ</small></div><div class="pvs">→</div><div class="pd tre" style="--tc:${hxTmC(hxPend.t)}"><span class="gm"></span><b>${st.tre[hxPend.t][hxPend.i].hp}</b><small>財宝HP</small></div></div><div class="hxpvw">${A.why.join("・") || "攻撃力ぶんのダメージ（サイコロなし）"}</div>`; }
+    else {
+      const d = st.units[hxPend.u], dist = hxDist([su.r, su.q], [d.r, d.q]), A = hxAtk(st, su, d), D = hxDef(st, d, su, dist);
+      const p = hxProb(A.v, D.v, hxADice(su), hxDDice(d), hxBig6(su));
+      body = `<div class="hxpv"><div class="pa">${hxSig(su.c)}<b>${A.v}<i>+🎲${hxADice(su) > 1 ? "×2" : ""}</i></b><small>攻撃</small></div><div class="pvs"><b>${Math.round(p * 100)}%</b><small>命中率</small></div><div class="pd">${hxSig(d.c)}<b>${D.v}<i>+🎲${hxDDice(d) > 1 ? "×2" : ""}</i></b><small>防御 HP${d.hp}</small></div></div><div class="hxpvw">${[...A.why, ...D.why.map(x => "相手" + x)].join("・") || "攻撃+🎲 が 防御+🎲 を上回れば1ダメージ"}</div>`;
+    }
+    info = `<div class="hxinfo pend">${body}<div class="hxbtns"><button class="hxb hxsub" data-x="cancel">やめる</button><button class="hxb hxgo" data-x="fire">攻撃する！</button></div></div>`;
+  } else if (hxMode === "sum"){
+    info = `<div class="hxinfo guide"><b>召喚するキャラを手札から選んでください</b><button class="hxb hxsub sm" data-x="cancel">やめる</button></div>`;
+  } else if (hxMode === "sumsk"){
+    const sks = st.skills[me] || [];
+    info = `<div class="hxinfo guide"><b>${esc(HX[hxSumCard].n)}に装備するスキルは？</b><div class="hxskrow">${sks.map((k, i) => hxSkCardHtml(k, { attr: `data-eq="${k}"` })).join("")}<button class="hxb hxsub sm" data-eq="">装備しない</button></div></div>`;
+  } else if (hxMode === "sumpos"){
+    info = `<div class="hxinfo guide"><b>光っている召喚スポットをタップ</b><button class="hxb hxsub sm" data-x="cancel">やめる</button></div>`;
+  } else if (su){
+    const st2 = su.own === me && ui.myTurn ? `<div class="hxust">${su.nomv ? `<span class="no">凍結中：動けない</span>` : !su.moved && !su.acted ? `<span>移動できる</span>` : `<span class="no">移動ずみ</span>`}${!su.acted ? (ui.tgts.length ? `<span class="hot">攻撃できる相手 ${ui.tgts.length}</span>` : `<span class="no">攻撃できる相手なし</span>`) : `<span class="no">攻撃ずみ</span>`}</div>` : `<div class="hxust"><span>${esc(pname(su.own))}のキャラ</span></div>`;
+    info = `<div class="hxinfo unit" style="--cc:${HX[su.c].col}"><div class="hxmini">${hxSig(su.c)}</div><div class="hxud"><b>${esc(HX[su.c].n)}<em style="--ec:${HX_EL[HX[su.c].e].c}">${HX_EL[HX[su.c].e].n}</em><em>${HX[su.c].k}${hxFly(su) ? "・飛" : ""}</em></b>
+      <span class="hxuds">攻<b>${hxStat(st, su, "a")}</b> 防<b>${hxStat(st, su, "d")}</b> 速<b>${hxStat(st, su, "s")}</b> 射<b>${hxStat(st, su, "r")}</b> HP<b>${su.hp}/${su.mhp}</b></span>
+      <small><em class="t-${HX[su.c].t}">${HX_TIM[HX[su.c].t]}</em>${esc(HX[su.c].ab)}：${esc(HX[su.c].tx)}${su.sk ? `<br><em class="t-sk">スキル</em>${esc(HXS[su.sk].n)}：${esc(HXS[su.sk].tx)}` : ""}</small>${st2}</div><button class="hxx" data-x="desel" aria-label="閉じる">×</button></div>`;
+  } else if (ui.myTurn){
+    info = `<div class="hxinfo guide"><b>動かすキャラをタップ</b><small>${ui.cs ? "召喚スポットが空いています。手札から召喚できます" : "移動 → 攻撃の順に行動。終わったら「ターン終了」"}</small></div>`;
+  } else if (st.phase === "play"){
+    info = `<div class="hxinfo guide"><small>キャラをタップすると性能が見られます</small></div>`;
+  }
+  // 手札
+  let hand = "";
+  if (ui.inG){
+    const h = st.hands[me] || [], sk = st.skills[me] || [];
+    const pickable = hxMode === "sum";
+    hand = `<div class="hxhand ${pickable ? "pick" : ""}">${h.map((c, i) => `<button class="hxhc ${pickable && !hxCardOk(st, me, c) ? "ng" : ""}" data-hc="${i}" style="--cc:${HX[c].col}">${hxSig(c)}<b>${esc(HX[c].n.replace(/^.*?([ァ-ヶー]+)$/, "$1"))}</b><span><i class="a">${HX[c].a}</i><i class="d">${HX[c].d}</i><i class="s">${HX[c].s}</i></span></button>`).join("") || `<span class="hxempty">手札なし</span>`}${sk.length ? `<span class="hxsep"></span>${sk.map((k, i) => `<button class="hxhk" data-hk="${i}">${hxSkSig(k)}<b>${esc(HXS[k].n)}</b></button>`).join("")}` : ""}</div>`;
+  }
+  const btns = ui.myTurn ? `<div class="hxbtns main">${ui.cs ? `<button class="hxb hxsm ${hxMode && hxMode.startsWith("sum") ? "on" : ""}" data-x="sum">召喚</button>` : ""}<button class="hxb hxend" data-x="end">ターン終了</button></div>` : "";
+  return `${top}${info}${hand}${btns}`;
+}
+function hxBindPanel(g){
+  const p = $("#hxPanel"), act = fn => async () => { if (hxPlaying) return; await fn(); };
+  p.querySelectorAll("[data-x]").forEach(b => b.onclick = act(async () => {
+    const x = b.dataset.x, st = hxById(hxId).st;
+    if (x === "cancel"){ hxPend = null; hxMode = null; drawHx(); }
+    if (x === "desel"){ hxSel = null; hxPend = null; drawHx(); }
+    if (x === "sum"){ hxMode = hxMode ? null : "sum"; hxSel = null; hxPend = null; drawHx(); }
+    if (x === "end"){
+      const left = hxUnits(st).filter(u => u.own === me && !u.acted && hxTargets(st, u).length).length;
+      if (left && !confirm(`まだ攻撃できるキャラが${left}体います。ターンを終えますか？`)) return;
+      hxSel = null; hxPend = null; hxMode = null; await hxDoEnd(hxId, me);
+    }
+    if (x === "fire"){ const tg = hxPend, uid = hxSel; hxPend = null; await hxDoAttack(hxId, me, uid, tg); }
+  }));
+  p.querySelectorAll("[data-hc]").forEach(b => b.onclick = () => {
+    const st = hxById(hxId).st, c = (st.hands[me] || [])[Number(b.dataset.hc)]; if (!c) return;
+    if (hxMode === "sum"){ if (!hxCardOk(st, me, c)){ toast("竜王バハムートは手札がもう1枚ないと召喚できません"); return; } hxSumCard = c; hxSumSk = null; hxMode = (st.skills[me] || []).length ? "sumsk" : "sumpos"; hxSumGo(); return; }
+    hxPop = { c }; hxModalDraw(hxById(hxId));
+  });
+  p.querySelectorAll("[data-hk]").forEach(b => b.onclick = () => { const st = hxById(hxId).st, k = (st.skills[me] || [])[Number(b.dataset.hk)]; if (k){ hxPop = { sk: k }; hxModalDraw(hxById(hxId)); } });
+  p.querySelectorAll("[data-eq]").forEach(b => b.onclick = () => { hxSumSk = b.dataset.eq || null; hxMode = "sumpos"; hxSumGo(); });
+}
+function hxSumGo(){
+  const g = hxById(hxId), cs = hxCanSummon(g.st, me);
+  if (!cs){ hxMode = null; drawHx(); return; }
+  if (hxMode === "sumpos" && cs.sps.length === 1){ const c = hxSumCard, k = hxSumSk; hxMode = null; hxDoSummon(hxId, me, c, k, cs.sps[0]); return; }
+  drawHx();
+}
+async function hxTap(e){
+  if (hxPlaying || !hxId) return;
+  const t = e.target.closest && e.target.closest("[data-k]"); if (!t) return;
+  const [r, q] = t.dataset.k.split(",").map(Number), g = hxById(hxId), st = g.st;
+  const myTurn = st.phase === "play" && st.turn.pid === me;
+  const u = hxAt(st, r, q), tr = hxTreAt(st, r, q);
+  if (hxMode === "sumpos"){
+    const cs = hxCanSummon(st, me);
+    if (cs && cs.sps.some(p => p[0] === r && p[1] === q)){ const c = hxSumCard, k = hxSumSk; hxMode = null; await hxDoSummon(hxId, me, c, k, [r, q]); }
+    return;
+  }
+  if (hxMode) return;
+  const su = hxSel && st.units[hxSel];
+  if (myTurn && su && su.own === me){
+    const path = hxReach(st, su)[r + "," + q];
+    if (path){ hxPend = null; await hxDoMove(hxId, me, su.id, [r, q]); return; }
+    const tg = hxTargets(st, su).find(x => (u && x.u === u.id) || (tr && x.t === tr.t && x.i === tr.i));
+    if (tg){ if (hxPend && JSON.stringify(hxPend) === JSON.stringify(tg)){ hxPend = null; await hxDoAttack(hxId, me, su.id, tg); } else { hxPend = tg; drawHx(); } return; }
+  }
+  hxPend = null;
+  if (u){ hxSel = hxSel === u.id && !(myTurn && u.own === me) ? null : u.id; if (navigator.vibrate) navigator.vibrate(10); }
+  else hxSel = null;
+  drawHx();
+}
+/* ---- モーダル（出撃準備・復活の報酬・カード詳細・結果） ---- */
+function hxModalDraw(g){
+  const m = $("#hxModal"); if (!m) return;
+  const st = g.st;
+  let h = "";
+  if (st.phase === "pick" && st.players.includes(me) && !st.picks[me]){
+    const hand = st.hands[me] || [];
+    h = `<div class="hxmw pick"><div class="hxmh"><small>DEPLOY</small><b>出撃する2体を選べ</b><span>残りの3枚は手札に残り、あとで召喚できる</span></div>
+      <div class="hxpickg">${hand.map((c, i) => hxCardHtml(c, { size: "md", cls: hxPickSel.includes(i) ? "on" : "", attr: `data-pk="${i}"` })).join("")}</div>
+      <button class="hxb hxgo hxbig" id="hxPickGo" ${hxPickSel.length === 2 ? "" : "disabled"}>${hxPickSel.length === 2 ? "この2体で出撃！" : `あと${2 - hxPickSel.length}体えらぶ`}</button></div>`;
+  } else if (st.phase === "pick"){
+    h = `<div class="hxmw wait"><div class="hxmh"><small>STANDBY</small><b>全員の出撃準備を待っています</b></div><div class="hxready">${st.players.map(p => `<span class="${st.picks[p] ? "ok" : ""}" style="--pc:${pcolor(p)};--tc:${hxTmC(hxTeamOf(st, p))}"><b>${esc(pname(p))}</b><em>${st.picks[p] ? "準備完了" : "選択中…"}</em></span>`).join("")}</div></div>`;
+  } else if (st.phase === "play" && (st.rw[me] || 0) > 0 && !hxPlaying){
+    h = `<div class="hxmw rw"><div class="hxmh"><small>REVIVE BONUS</small><b>倒された…だが、強くなって戻れ！</b><span>どちらかの山札から1枚引く${st.rw[me] > 1 ? `（あと${st.rw[me]}回）` : ""}</span></div>
+      <div class="hxrwb"><button class="hxrw ch" data-rw="ch"><span class="ico">${hxSig("kensei")}</span><b>キャラ山札</b><small>新しいキャラを1枚。残り${st.deck.length + st.disc.length}枚</small></button><button class="hxrw sk" data-rw="sk" ${(st.skills[me] || []).length >= HX_SKMAX ? "disabled" : ""}><span class="ico">${hxSkSig("hero")}</span><b>スキル山札</b><small>${(st.skills[me] || []).length >= HX_SKMAX ? "スキルは3枚まで" : "召喚時に装備して強化"}</small></button></div></div>`;
+  } else if (hxPop){
+    h = `<div class="hxmw pop">${hxPop.c ? hxCardHtml(hxPop.c, { size: "lg" }) : hxSkCardHtml(hxPop.sk, { cls: "lg" })}
+      ${hxPop.c && st.phase === "play" && st.turn.pid === me && hxCanSummon(st, me) ? `<button class="hxb hxgo" id="hxPopSum">このキャラを召喚</button>` : ""}<button class="hxb hxsub" id="hxPopX">閉じる</button></div>`;
+  } else if (st.phase === "over"){
+    const myTm = st.players.includes(me) ? hxTeamOf(st, me) : null, w = st.win;
+    const res = w === "draw" ? "DRAW" : !myTm ? "VICTORY" : w === myTm ? "VICTORY" : "DEFEAT";
+    h = `<div class="hxmw over ${res.toLowerCase()}" style="--tc:${w === "draw" ? "#C9CED8" : hxTmC(w)}"><span class="hxrays"></span><div class="hxres">${res}</div><div class="hxwin">${w === "draw" ? "引き分け" : `${HX_TM[w].n}の陣営の勝利`}</div><div class="hxwhy">${esc(st.why || "")}</div>
+      <div class="hxsum">${["A", "B"].map(tm => `<div style="--tc:${hxTmC(tm)}" class="${w === tm ? "w" : ""}"><b>${HX_TM[tm].n}</b><span>${st.teams[tm].map(p => esc(pname(p))).join("・")}</span><small>撃破 ${st.kills[tm] || 0}・財宝 ${st.tre[tm].map(t => t.hp).join(" / ")}</small></div>`).join("")}</div>
+      <div class="hxbtns"><button class="hxb hxsub" id="hxOverX">閉じる</button><button class="hxb hxgo" id="hxAgain">同じ陣営で再戦</button></div></div>`;
+  }
+  m.innerHTML = h; m.classList.toggle("on", !!h);
+  m.querySelectorAll("[data-pk]").forEach(b => b.onclick = () => { const i = Number(b.dataset.pk); hxPickSel = hxPickSel.includes(i) ? hxPickSel.filter(x => x !== i) : hxPickSel.length < 2 ? [...hxPickSel, i] : [hxPickSel[1], i]; hxModalDraw(g); });
+  const go = m.querySelector("#hxPickGo"); if (go) go.onclick = async () => { const hand = st.hands[me]; const cs = hxPickSel.map(i => hand[i]); hxPickSel = []; go.disabled = true; await hxDoPick(hxId, me, cs); };
+  m.querySelectorAll("[data-rw]").forEach(b => b.onclick = async () => { b.disabled = true; await hxDoReward(hxId, me, b.dataset.rw); });
+  const px = m.querySelector("#hxPopX"); if (px) px.onclick = () => { hxPop = null; hxModalDraw(g); };
+  const ps = m.querySelector("#hxPopSum"); if (ps) ps.onclick = () => { const c = hxPop.c; hxPop = null; if (!hxCardOk(st, me, c)){ toast("竜王バハムートは手札がもう1枚ないと召喚できません"); hxModalDraw(g); return; } hxSumCard = c; hxSumSk = null; hxMode = (st.skills[me] || []).length ? "sumsk" : "sumpos"; hxSel = null; hxSumGo(); };
+  const ox = m.querySelector("#hxOverX"); if (ox) ox.onclick = closeHx;
+  const ag = m.querySelector("#hxAgain"); if (ag) ag.onclick = () => { closeHx(); openHxNew({ A: st.teams.A, B: st.teams.B, rounds: st.rounds }); };
+  if (hxPop && m.classList.contains("on")) m.onclick = e => { if (e.target === m){ hxPop = null; hxModalDraw(g); } }; else m.onclick = null;
+}
+
+/* ====================== 演出 ====================== */
+let hxSpeed = 1;
+const hxWait = ms => new Promise(r => { const t = setTimeout(r, ms * hxSpeed); hxWait.last = () => { clearTimeout(t); r(); }; });
+function hxPump(g){
+  const st = g.st, seen = hxSeen[g.id];
+  if (seen == null){ hxSeen[g.id] = st.fxn || 0; return; }
+  const evs = (st.fx || []).filter(e => e.n > seen);
+  if (!evs.length) return;
+  hxSeen[g.id] = st.fxn;
+  const snap = JSON.parse(JSON.stringify(st));
+  hxQ.push(...evs.map(e => ({ e, gid: g.id, snap })));
+  if (!hxPlaying) hxRun();
+}
+async function hxRun(){
+  hxPlaying = true;
+  while (hxQ.length && hxId){
+    const { e, gid, snap } = hxQ.shift();
+    if (gid !== hxId) continue;
+    hxSpeed = document.hidden ? 0 : hxQ.length > 8 ? .45 : hxQ.length > 4 ? .75 : 1;
+    try { await hxFx(e, snap); } catch (err) { console.error(err); }
+  }
+  hxPlaying = false;
+  if (hxId){ const g = hxById(hxId); if (g){ hxPump(g); if (!hxPlaying) hxRender(g); } }
+}
+function hxLayer(){ let l = document.querySelector(".hxfxl"); if (!l){ l = document.createElement("div"); l.className = "hxfxl"; document.body.appendChild(l); } return l; }
+function hxAdd(cls, html, x, y, ms){
+  const d = document.createElement("div"); d.className = "hxfx " + cls; d.innerHTML = html || "";
+  if (x != null){ d.style.left = x + "px"; d.style.top = y + "px"; }
+  hxLayer().appendChild(d); if (ms) setTimeout(() => d.remove(), ms * Math.max(hxSpeed, .3) + 50); return d;
+}
+function hxScr(r, q){ const svg = document.querySelector("#hxBw svg"); if (!svg) return { x: innerWidth / 2, y: innerHeight / 2, s: 2 }; const [x, y] = hxXY(r, q), m = svg.getScreenCTM(); return { x: m.a * x + m.e, y: m.d * y + m.f, s: m.a }; }
+const hxTok = id => document.querySelector(`#hxBw [data-u="${id}"]`);
+function hxTokScr(id){ const el = hxTok(id); if (!el) return null; const b = el.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2, s: b.width / 16 }; }
+function hxShake(big){ const a = $("#hxg"); if (!a) return; a.classList.remove("shk", "shk2"); void a.offsetWidth; a.classList.add(big ? "shk2" : "shk"); setTimeout(() => a.classList.remove("shk", "shk2"), 700); if (navigator.vibrate) navigator.vibrate(big ? [60, 30, 120] : 40); }
+function hxBurst(x, y, col, n = 26, spread = 120, cls = ""){
+  const parts = Array.from({ length: n }, () => { const a = Math.random() * Math.PI * 2, d = spread * (.4 + Math.random() * .8); return `<i style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--s:${(.5 + Math.random()).toFixed(2)};--d:${(Math.random() * .15).toFixed(2)}s"></i>`; }).join("");
+  hxAdd("burst " + cls, `<span class="fl"></span><span class="rg"></span>${parts}`, x, y, 1100).style.setProperty("--c", col);
+}
+function hxBanner(cls, html, ms){ return hxAdd("banner " + cls, html, null, null, ms); }
+const hxDieHtml = n => `<span class="hxdie" data-n="${n}">${Array.from({ length: 9 }, (_, i) => `<i class="${[[4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]][n - 1].includes(i) ? "on" : ""}"></i>`).join("")}</span>`;
+async function hxFx(e, snap){
+  const g0 = hxById(hxId); if (!g0 || !snap) return;
+  const g = { ...g0, st: snap }, st = snap;
+  if (hxSpeed === 0) return;
+  const me2 = me;
+  switch (e.k){
+    case "start": {
+      hxBanner("start", `<span class="sl s1"></span><span class="sl s2"></span><div class="tt"><small>BATTLE OF TREASURES</small><b>HEX RAID</b><div class="vs"><span style="--tc:${hxTmC("A")}">蒼 AZURE</span><em>VS</em><span style="--tc:${hxTmC("B")}">紅 CRIMSON</span></div></div>`, 2600);
+      hxShake(true); await hxWait(2500); break;
+    }
+    case "deploy": {
+      hxDrop = true; hxRender(g); hxDrop = false;
+      hxBanner("deploy", `<div class="tt"><small>ALL UNITS</small><b>全軍出撃</b></div>`, 1700);
+      hxShake(); await hxWait(1600); break;
+    }
+    case "turn": {
+      const mine = e.pid === me2, ally = st.players.includes(me2) && hxTeamOf(st, me2) === e.tm;
+      hxRender(g);
+      hxBanner("turn " + (mine ? "mine" : ""), `<div class="rb" style="--tc:${hxTmC(e.tm)}"><small>ROUND ${e.round}</small><b>${mine ? "YOUR TURN" : ally ? "ALLY TURN" : "ENEMY TURN"}</b><span>${esc(pname(e.pid))}</span></div>`, 1300);
+      if (mine && navigator.vibrate) navigator.vibrate([80, 50, 80]);
+      await hxWait(mine ? 1200 : 900); break;
+    }
+    case "gim": {
+      hxBanner("gim", `<span class="hz t"></span><span class="hz b"></span><div class="gw"><small>⚠ GIMMICK ⚠</small><div class="gi">${hxGimSig(e.g)}</div><b>${HXG[e.g].n}</b><span>${esc(HXG[e.g].tx)}</span></div>`, 2500);
+      if (navigator.vibrate) navigator.vibrate([100, 60, 100, 60, 200]);
+      await hxWait(2300);
+      if (e.g === "meteor"){ for (const c of e.cells){ const p = hxScr(c[0], c[1]); hxAdd("meteor", `<i></i>`, p.x, p.y, 900); await hxWait(380); hxBurst(p.x, p.y, "#FF7A2A", 30, 110); hxShake(true); await hxWait(300); } }
+      if (e.g === "thunder"){ for (const c of e.cells){ const p = hxScr(c[0], c[1]); hxAdd("zap", `<i></i>`, p.x, p.y, 800); hxAdd("flash", "", null, null, 500); hxShake(true); await hxWait(700); } }
+      if (e.g === "rain"){ hxAdd("rain", Array.from({ length: 40 }, (_, i) => `<i style="left:${(i * 37) % 100}%;--dl:${((i * 13) % 10) / 10}s"></i>`).join(""), null, null, 1600); await hxWait(1200); }
+      if (e.g === "gate" || e.g === "bless" || e.g === "supply"){ hxAdd("flash gold", "", null, null, 700); await hxWait(500); }
+      break;
+    }
+    case "sum": {
+      const u = e.u, p = hxScr(u.r, u.q), c = hxTmC(u.tm);
+      const ci = hxAdd("circle", `<span class="r1"></span><span class="r2"></span><span class="r3"></span><span class="pillar"></span>`, p.x, p.y, 1700); ci.style.setProperty("--c", c); ci.style.setProperty("--sz", (p.s * 26) + "px");
+      await hxWait(500);
+      const layer = document.querySelector("#hxBw .units");
+      if (layer && !hxTok(u.id)) layer.insertAdjacentHTML("beforeend", hxTokHtml(st, { ...u, mv: 0, moved: false, acted: false, fz: false, nomv: false }, {}).replace('class="hxu', 'class="hxu drop'));
+      hxBurst(p.x, p.y, HX[u.c].col, 22, 90);
+      hxBanner("sum", `<div class="sb" style="--tc:${c};--cc:${HX[u.c].col}"><div class="si">${hxSig(u.c)}</div><div><small>SUMMON</small><b>${esc(HX[u.c].n)}</b>${u.sk ? `<span>✦ ${esc(HXS[u.sk].n)}を装備</span>` : `<span>${esc(pname(u.own))}</span>`}</div></div>`, 1500);
+      await hxWait(1300); break;
+    }
+    case "mv": {
+      const el = hxTok(e.id); if (!el) break;
+      const kf = e.path.map(([r, q]) => { const [x, y] = hxXY(r, q); return { transform: `translate(${x.toFixed(2)}px,${y.toFixed(2)}px)` }; });
+      const dur = Math.max(260, 170 * (e.path.length - 1)) * hxSpeed;
+      el.classList.add("moving");
+      if (e.fly){ const mid = kf.length > 2 ? kf : [kf[0], kf[kf.length - 1]]; await el.animate(mid, { duration: dur, easing: "ease-in-out", fill: "forwards" }).finished.catch(() => {}); }
+      else await el.animate(kf, { duration: dur, easing: "linear", fill: "forwards" }).finished.catch(() => {});
+      el.classList.remove("moving");
+      const [x, y] = hxXY(...e.path[e.path.length - 1]); el.style.transform = `translate(${x}px,${y}px)`;
+      break;
+    }
+    case "mvs": {
+      await Promise.all(e.moves.map(m => { const el = hxTok(m.id); if (!el) return null; const kf = m.path.map(([r, q]) => { const [x, y] = hxXY(r, q); return { transform: `translate(${x}px,${y}px) rotate(0deg)` }; }); kf[1].transform = kf[1].transform.replace("rotate(0deg)", "rotate(360deg)"); return el.animate(kf, { duration: 700 * hxSpeed, easing: "ease-in-out", fill: "forwards" }).finished.catch(() => {}); }));
+      break;
+    }
+    case "bt": await hxBattleFx(e, st); break;
+    case "hit": {
+      const el = hxTok(e.id), t = st.tre[e.tt][e.i], p = hxScr(t.r, t.q);
+      if (el){ const a = hxTokScr(e.id); const dx = (p.x - a.x) / a.s * .45, dy = (p.y - a.y) / a.s * .45; const base = el.style.transform; el.animate([{ transform: base }, { transform: base + ` translate(${dx}px,${dy}px) scale(1.15)` }, { transform: base }], { duration: 380 * hxSpeed, easing: "ease-in" }); }
+      await hxWait(200);
+      hxAdd("slash", `<i></i><i></i><i></i>`, p.x, p.y, 700);
+      await hxWait(200); break;
+    }
+    case "tre": {
+      const p = hxScr(e.r, e.q), c = hxTmC(e.tm);
+      const tg = document.querySelector(`#hxBw [data-tre="${e.tm}${e.i}"]`);
+      if (tg){ const t = tg.querySelector(".hpt"); if (t) t.textContent = e.hp; const circ = 2 * Math.PI * 8.2; const r = tg.querySelector(".hpr"); if (r) r.setAttribute("stroke-dasharray", `${(circ * e.hp / HX_TRE_HP).toFixed(1)} ${circ.toFixed(1)}`); tg.classList.remove("hurt"); void tg.getBBox(); tg.classList.add("hurt"); }
+      hxAdd("dnum tre", `−${e.n}`, p.x, p.y - 10, 1100).style.setProperty("--c", "#FFD45A");
+      hxBurst(p.x, p.y, "#FFD45A", 18, 70, "gold"); hxShake(e.hp === 0);
+      if (e.hp === 0){
+        await hxWait(350); hxBurst(p.x, p.y, c, 50, 200); hxAdd("flash", "", null, null, 600);
+        hxBanner("break", `<div class="tt" style="--tc:${c}"><small>TREASURE DESTROYED</small><b>財宝破壊！</b><span>${HX_TM[e.tm].n}の陣営 残り${st.tre[e.tm].filter(t => t.hp > 0).length}つ</span></div>`, 1900);
+        await hxWait(1800);
+      } else await hxWait(700);
+      break;
+    }
+    case "heal": { const p = hxScr(e.r, e.q); hxAdd("dnum heal", `+${e.n}`, p.x, p.y - 10, 1100); hxBurst(p.x, p.y, "#5BF08A", 14, 50, "up"); await hxWait(600); break; }
+    case "uheal": { const p = hxTokScr(e.id); if (p){ hxAdd("dnum heal", `+${e.n}`, p.x, p.y - 12, 1000); hxBurst(p.x, p.y, "#5BF08A", 10, 40, "up"); } await hxWait(400); break; }
+    case "dmg": {
+      const p = hxTokScr(e.id), el = hxTok(e.id);
+      if (p){ hxAdd("dnum", `−${e.n}`, p.x, p.y - 12, 1000); }
+      if (el){ el.classList.remove("hurt"); void el.getBBox(); el.classList.add("hurt"); const pips = el.querySelectorAll("circle.on"); for (let i = 0; i < e.n && pips.length - 1 - i >= 0; i++) pips[pips.length - 1 - i].setAttribute("class", "off"); }
+      await hxWait(e.hp > 0 ? 550 : 150); break;
+    }
+    case "kill": {
+      const p = hxTokScr(e.id) || hxScr(e.r, e.q), el = hxTok(e.id);
+      hxBurst(p.x, p.y, HX[e.c].col, 34, 140); hxAdd("shatter", Array.from({ length: 12 }, (_, i) => `<i style="--a:${i * 30}deg;--d:${(60 + (i * 17) % 50)}px"></i>`).join(""), p.x, p.y, 1000).style.setProperty("--c", hxTmC(e.tm));
+      hxAdd("ko", `<b>KO</b>`, p.x, p.y, 1100);
+      if (el){ el.classList.add("dying"); setTimeout(() => el.remove(), 500); }
+      hxShake(true); await hxWait(900); break;
+    }
+    case "guts": { const p = hxTokScr(e.id); if (p){ hxBurst(p.x, p.y, "#FF8A3D", 24, 90); hxAdd("ko guts", `<b>不屈！</b>`, p.x, p.y, 1200); } await hxWait(1000); break; }
+    case "frz": { const p = hxTokScr(e.id); if (p){ hxBurst(p.x, p.y, "#9BE7FF", 22, 70, "ice"); } const el = hxTok(e.id); if (el) el.classList.add("frz"); await hxWait(500); break; }
+    case "ab": {
+      hxBanner("abil", `<div class="ab" style="--cc:${HX[e.c].col};--tc:${hxTmC(e.tm)}"><div class="si">${e.sk ? hxSkSig(e.sk) : hxSig(e.c)}</div><div><small>${e.sk ? "SKILL" : "ABILITY"}・${esc(e.sk ? HXS[e.sk].n : HX[e.c].n)}</small><b>${esc(e.sk ? HXS[e.sk].n : HX[e.c].ab)}</b><span>${esc(e.txt)}</span></div></div>`, 1700);
+      await hxWait(1500); break;
+    }
+    case "draw": {
+      if (e.pid !== me2) break;
+      hxBanner("drawn", `<div class="dc">${e.c ? hxCardHtml(e.c, { size: "md" }) : hxSkCardHtml(e.sk, { cls: "lg" })}<b>${e.c ? "キャラを獲得" : "スキルを獲得"}</b></div>`, 1700);
+      await hxWait(1500); break;
+    }
+    case "over": {
+      const myTm = st.players.includes(me2) ? hxTeamOf(st, me2) : null, w = e.w;
+      const res = w === "draw" ? "DRAW" : !myTm || w === myTm ? "VICTORY" : "DEFEAT";
+      hxAdd("flash", "", null, null, 800); hxShake(true);
+      hxBanner("fin " + res.toLowerCase(), `<span class="rays"></span><b>${res}</b>`, 2600);
+      await hxWait(2400); break;
+    }
+  }
+}
+/* バトルのカットイン */
+async function hxBattleFx(e, st){
+  const A = e.a, D = e.d;
+  // 盤上：攻撃の軌跡
+  const aP = A.id ? hxTokScr(A.id) : null, dP = hxTokScr(D.id);
+  if (aP && dP){
+    if (e.rng){ const b = hxAdd("beam", "", aP.x, aP.y, 600); const dx = dP.x - aP.x, dy = dP.y - aP.y; b.style.setProperty("--len", Math.hypot(dx, dy) + "px"); b.style.setProperty("--ang", Math.atan2(dy, dx) + "rad"); b.style.setProperty("--c", HX[A.c].col); }
+    else { const el = hxTok(A.id); if (el){ const base = el.style.transform; el.animate([{ transform: base }, { transform: base + ` translate(${(dP.x - aP.x) / aP.s * .4}px,${(dP.y - aP.y) / aP.s * .4}px) scale(1.2)` }, { transform: base }], { duration: 380 * hxSpeed }); } }
+    await hxWait(360);
+  }
+  const ac = A.gim ? "#FF7A2A" : hxTmC(A.tm), dc = hxTmC(D.tm);
+  const side = (who, u, v, why, dice, lbl) => `<div class="hxbt-row ${who}" style="--tc:${who === "a" ? ac : dc}">
+    <div class="hxbt-card">${u.gim ? `<div class="hxc md gimc"><div class="hxc-art">${hxGimSig(u.gim)}</div><div class="hxc-h"><b class="hxc-n">${HXG[u.gim].n}</b></div></div>` : hxCardHtml(u.c, { size: "md", u: u.id && u.hp != null ? { ...u, hp: Math.max(u.hp, 0) } : null, st })}</div>
+    <div class="hxbt-calc"><small>${lbl}</small><div class="hxbt-eq"><b class="bv">${v}</b><i>+</i><span class="dz">${dice.map(() => hxDieHtml(1)).join("")}</span><i>=</i><b class="tot">?</b></div><div class="hxbt-why">${(why || []).map(esc).join("　")}</div></div></div>`;
+  const ov = hxAdd("hxbt", `<div class="hxbt-bg" style="--ac:${ac};--dc:${dc}"><i class="s1"></i><i class="s2"></i></div>${e.tag ? `<div class="hxbt-tag">${esc(e.tag)}</div>` : ""}
+    ${side("a", A, e.av, e.aw, e.ad, "ATTACK")}<div class="hxbt-vs"><b>VS</b></div>${side("d", D, e.dv, e.dw, e.dd, "DEFENSE")}<div class="hxbt-res"></div><div class="hxbt-skip">タップでスキップ</div>`);
+  let skipped = false;
+  ov.onclick = () => { skipped = true; hxSpeed = .15; if (hxWait.last) hxWait.last(); };
+  await hxWait(650);
+  // サイコロ
+  const dz = [...ov.querySelectorAll(".hxbt-row.a .hxdie")], dzd = [...ov.querySelectorAll(".hxbt-row.d .hxdie")];
+  const all = [...dz, ...dzd]; all.forEach(d => d.classList.add("roll"));
+  const t0 = Date.now(), dur = 950 * hxSpeed;
+  await new Promise(res => { const tick = () => { all.forEach(d => { d.outerHTML; d.innerHTML = hxDieHtml(1 + Math.floor(Math.random() * 6)).replace(/^<span[^>]*>|<\/span>$/g, ""); }); if (Date.now() - t0 < dur && !skipped) setTimeout(tick, 70); else res(); }; tick(); });
+  const setD = (els, vals) => { const mx = Math.max(...vals); let used = false; els.forEach((d, i) => { d.innerHTML = hxDieHtml(vals[i]).replace(/^<span[^>]*>|<\/span>$/g, ""); d.classList.remove("roll"); d.classList.add("land"); if (vals[i] === mx && !used){ used = true; } else d.classList.add("dim"); }); };
+  setD(dz, e.ad); setD(dzd, e.dd);
+  if (navigator.vibrate) navigator.vibrate(30);
+  await hxWait(350);
+  const at = e.av + Math.max(...e.ad), dt = e.dv + Math.max(...e.dd);
+  ov.querySelector(".hxbt-row.a .tot").textContent = at; ov.querySelector(".hxbt-row.d .tot").textContent = dt;
+  ov.querySelectorAll(".tot").forEach(x => x.classList.add("on"));
+  await hxWait(420);
+  const res = ov.querySelector(".hxbt-res");
+  if (e.hit){
+    res.innerHTML = `<b>${e.big ? "会心！" : "命中！"}</b><span>${e.dmg}ダメージ</span>`; res.className = "hxbt-res hit"; ov.classList.add("hit");
+    hxShake(true); const r = ov.querySelector(".hxbt-row.d .hxbt-card").getBoundingClientRect(); hxBurst(r.left + r.width / 2, r.top + r.height / 2, "#FF3D55", 30, 150);
+  } else { res.innerHTML = `<b>防いだ！</b>`; res.className = "hxbt-res miss"; ov.classList.add("miss"); if (navigator.vibrate) navigator.vibrate(20); }
+  await hxWait(1150);
+  ov.classList.add("out"); await hxWait(260); ov.remove();
+}
+
+/* ---- ルール ---- */
+function hxRulesHtml(){
+  hxEnsureDefs();
+  const C = c => hxCardHtml(c, { size: "sm" });
+  return `<div class="goal"><b>相手の<span class="r">財宝2つ</span>を先に壊した陣営の勝ち！</b><small>蒼と紅の2陣営に分かれて戦う（2〜6人・CPU可）。盤面は縦10×横7の六角マス。</small></div>
+  <h4>はじめに</h4>
+  <div class="steps">
+    <div class="st"><b class="t">キャラ山札から5枚引き、出撃する2体を選ぶ</b><small>全員が選んだら一斉に出撃。残りは手札（あとで召喚できる）</small></div>
+    <div class="st"><b class="t">手番は蒼・紅が交互</b><small>自分の番のはじめにキャラを1枚引く（手札5枚まで）</small></div>
+  </div>
+  <h4 style="--hc:#38B6FF">自分の番にできること</h4>
+  <div class="steps">
+    <div class="st"><b class="t">召喚：空いている召喚スポットに手札のキャラを出す</b><small>盤上に出せるのは1人2体まで。スキルカードを1枚装備させられる</small></div>
+    <div class="st"><b class="t">各キャラが「移動 → 攻撃」を1回ずつ</b><small>移動は速さのマス数まで（ほかのキャラや岩は通れない。飛行キャラは飛び越えられる）。攻撃したあとは動けない</small></div>
+    <div class="st"><b class="t">「ターン終了」で次の人へ</b></div>
+  </div>
+  <h4 style="--hc:#E2364F">バトル</h4>
+  <div class="tip"><b>攻撃力＋🎲 が 防御力＋🎲 より大きければ命中</b>（同じなら防いだ）。命中すると相手のHPが1減り、0で撃破。<br>射程のマス数まで攻撃できる（遠距離キャラは離れて撃てる）。属性が有利なら攻撃+1。</div>
+  <div class="tip">属性：<b style="color:#FF6A2A">炎</b>は<b style="color:#52E08A">風</b>に、<b style="color:#52E08A">風</b>は<b style="color:#3FA9FF">水</b>に、<b style="color:#3FA9FF">水</b>は<b style="color:#FF6A2A">炎</b>に強い（じゃんけん）。<b style="color:#C9A000">光</b>と<b style="color:#B06BFF">闇</b>はおたがいに強い。</div>
+  <h4 style="--hc:#E8B12A">財宝</h4>
+  <div class="tip">財宝はHP${HX_TRE_HP}。<b>隣のマス</b>から攻撃すると、攻撃力ぶんのダメージ（サイコロなし）。財宝のマスには入れない。</div>
+  <h4 style="--hc:#5BD67A">倒されたら → 強くなって復活</h4>
+  <div class="steps">
+    <div class="st"><b class="t">キャラ山札かスキル山札から1枚引く</b><small>スキルは召喚するときに装備して、能力を強化できる（3枚まで持てる）</small></div>
+    <div class="st"><b class="t">次の自分の番は休み → その次の番から召喚できる</b></div>
+  </div>
+  <h4 style="--hc:#FF7A2A">ギミック（5手番ごと）</h4>
+  <div class="kv">${HXG_IDS.map(k => `<div><span class="hxrg">${hxGimSig(k)}</span><p><b>${HXG[k].n}</b>${esc(HXG[k].tx)}</p></div>`).join("")}</div>
+  <h4 style="--hc:#8B6CFF">決着</h4>
+  <div class="tip">財宝を2つとも壊されたら負け。決めたラウンドが終わったら、財宝の残りHPの合計が多い陣営の勝ち（同じなら撃破数）。</div>
+  <h4 style="--hc:#8B6CFF">能力の発動タイミング</h4>
+  <p class="dleg">${Object.entries(HX_TIM).map(([k, n]) => `<span><em class="hxtim t-${k}">${n}</em>${{ sum: "召喚したとき", atk: "攻撃するとき", def: "攻撃されたとき", die: "倒されたとき", aura: "いつでも" }[k]}</span>`).join("")}</p>
+  <h4 style="--hc:#FFD45A">スキルカード（${HXS_IDS.length}種類）</h4>
+  <div class="hxskgrid">${HXS_IDS.map(k => hxSkCardHtml(k)).join("")}</div>
+  <h4 style="--hc:#E2364F">キャラクター（${HX_IDS.length}種類）</h4>
+  <div class="hxcgrid">${HX_IDS.map(C).join("")}</div>`;
+}
+const HX_ICON = `<span class="gic hxi"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="gHxM" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#9AA6BE"/><stop offset="1" stop-color="#EEF2FA"/></linearGradient></defs>
+  <path d="M32 3L57 17.5V46.5L32 61L7 46.5V17.5Z" fill="#0D1226" stroke="#38B6FF" stroke-width="2"/><path d="M32 3L57 17.5V32H7V17.5Z" fill="#2A0A14" opacity=".75"/><path d="M7 32H57" stroke="#FF3D55" stroke-width="1.4" opacity=".8"/>
+  <g transform="translate(32 33) rotate(-40)"><path d="M0 -24L3.4 -19V8H-3.4V-19Z" fill="url(#gHxM)" stroke="#0A0C16" stroke-width="1.2"/><rect x="-8" y="8" width="16" height="3.4" fill="#E8B12A" stroke="#0A0C16" stroke-width="1"/><rect x="-1.8" y="11.4" width="3.6" height="7" fill="#3A2A20"/></g>
+  <g transform="translate(32 33) rotate(40)"><path d="M0 -24L3.4 -19V8H-3.4V-19Z" fill="url(#gHxM)" stroke="#0A0C16" stroke-width="1.2"/><rect x="-8" y="8" width="16" height="3.4" fill="#E8B12A" stroke="#0A0C16" stroke-width="1"/><rect x="-1.8" y="11.4" width="3.6" height="7" fill="#3A2A20"/></g>
+  <path d="M32 40L38 46L32 54L26 46Z" fill="#38B6FF" stroke="#0A0C16" stroke-width="1.2"/><path d="M32 10L36 14L32 19L28 14Z" fill="#FF3D55" stroke="#0A0C16" stroke-width="1.2"/></svg></span>`;
+
+
 document.addEventListener("contextmenu", e => { if (e.target.closest && e.target.closest(".arena")) e.preventDefault(); });
 /* ---------- 起動 ---------- */
 document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
@@ -10916,7 +12575,7 @@ clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
   clearBadge();
-  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); } catch (e) { console.error(e); }
+  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); drawHx(); } catch (e) { console.error(e); }
 });
 (async () => {
   try { await loadAll(); }
