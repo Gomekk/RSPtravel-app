@@ -2479,6 +2479,13 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmask .dqn{color:#1F8C8C}
 .dmask .nbtns{width:100%}
 .dmmodal{z-index:44}
+.dmmodal .dmmw{position:relative;width:min(100%,380px);display:flex;flex-direction:column;align-items:stretch}
+.dmmodal .dmmw .dmask{width:100%}
+.dmmodal .dqmin{align-self:flex-end;margin:0 4px 6px;padding:5px 12px;border-radius:99px;border:2px solid var(--ink);background:#fff;color:var(--ink);font-weight:900;font-size:12.5px;box-shadow:0 2px 0 var(--ink)}
+.dmaskbar{position:fixed;left:50%;bottom:calc(8px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:44;width:min(calc(100% - 24px),380px);display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-radius:14px;border:2.5px solid var(--ink);background:#FFF3C4;box-shadow:0 3px 0 var(--ink),0 0 0 4px rgba(232,177,42,.35);font-weight:900;color:var(--ink);animation:dmabar 1.6s ease-in-out infinite}
+.dmaskbar span{flex:1;min-width:0;text-align:left;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dmaskbar b{flex:none;padding:4px 12px;border-radius:99px;background:#E2364F;color:#fff;font-size:13px;border:2px solid var(--ink)}
+@keyframes dmabar{50%{box-shadow:0 3px 0 var(--ink),0 0 0 7px rgba(232,177,42,.15)}}
 .dmmodal .dmask{width:min(100%,380px);padding:14px 12px}
 .dmlist{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:6px 0 4px}
 .dmlist .dh{padding:0;border:0;background:none;line-height:0;transition:transform .15s}
@@ -2565,6 +2572,45 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 @keyframes emsh{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .sbfx .emcard .emx{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:92px;font-weight:900;color:#ff4d5e;text-shadow:0 3px 0 #2a0b10,0 0 14px rgba(255,60,80,.7);filter:none}
 .sbfx .emcard .em0{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);background:#2b2b33;color:#fff;font-size:13px;padding:2px 10px;border-radius:99px;border:2px solid #fff;white-space:nowrap}
+.dmstup{position:fixed;z-index:48;pointer-events:none;font-weight:900;font-size:15px;color:#fff;padding:1px 8px;border-radius:99px;border:2px solid var(--ink);white-space:nowrap;box-shadow:0 2px 0 var(--ink)}
+.dmstup.s-a{background:#F07A2A}.dmstup.s-b{background:#1E9E5A}.dmstup.s-c{background:#E8B12A;color:#4A2A0C}
+.sbfx .chwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,227,138,.55),rgba(40,30,60,.82) 70%);animation:emw var(--ms) forwards}
+.sbfx .chbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;animation:emb var(--ms) forwards}
+.sbfx .chbox .dmlsrc{font-size:14px;font-weight:900;color:#fff;background:#3A2A18;border:2px solid #E8B12A;border-radius:99px;padding:3px 14px}
+.sbfx .chbox>small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;color:#fff;border:2.5px solid var(--ink,#222);white-space:nowrap}
+.sbfx .chrow{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:94vw}
+.sbfx .chip{font-size:26px;font-weight:900;color:#4A2A0C;background:linear-gradient(180deg,#FFF3C4,#E8B12A);border:3px solid #5A3416;border-radius:16px;padding:6px 18px;box-shadow:0 4px 0 #5A3416;white-space:nowrap;animation:rcsh .45s calc(.15s + var(--i) * .15s) both}
+.sbfx .rvwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,240,190,.6),rgba(70,50,10,.85) 70%);animation:emw var(--ms) forwards}
+.sbfx .rvbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;animation:emb var(--ms) forwards}
+.sbfx .rvbox>small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;color:#fff;border:2.5px solid var(--ink,#222);white-space:nowrap}
+.sbfx .rvbox .dmlsrc{font-size:13px;font-weight:900;color:#fff;background:#3A2A18;border:2px solid #E8B12A;border-radius:99px;padding:2px 12px}
+.sbfx .rvbox .dmlres{font-size:16px;font-weight:900;color:#fff;background:#2F7FC9;border:2.5px solid var(--ink,#222);border-radius:99px;padding:2px 14px;max-width:92vw;text-align:center;animation:dmlres var(--ms) .35s both}
+.sbfx .rvt{font-size:26px;font-weight:900;letter-spacing:.08em;color:#FFE38A;text-shadow:0 3px 0 #5A3416}
+.sbfx .rvrow{display:flex;justify-content:center;max-width:96vw}
+.sbfx .rvc{margin:0 -7px;animation:rvc .5s calc(var(--i) * .12s) both}
+.sbfx .rvc{margin:0 4px}.sbfx .rvrow.many .rvc{margin:0 -7px}.sbfx .rvrow.many .rvc .dmc.dfx{width:70px;height:100px}
+.sbfx .rvc.hl{position:relative;z-index:2}.sbfx .rvc.hl .dmc{box-shadow:0 0 0 3px #FFE38A,0 0 18px 4px rgba(255,227,138,.95)}
+.sbfx .rvc.lo .dmc{animation:rvlo .3s 1s both}
+@keyframes rvlo{to{filter:grayscale(.7) brightness(.65)}}
+.sbfx .rvc.hl .dmc{animation:rvhl .5s 1s both}
+@keyframes rvhl{50%{transform:translateY(-14px) scale(1.08)}100%{transform:translateY(-10px) scale(1.05)}}
+@keyframes rvc{0%{transform:rotateY(90deg) translateY(-20px);opacity:0}100%{transform:none;opacity:1}}
+.sbfx .mqwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(190,140,255,.7),rgba(45,15,90,.9) 70%);animation:emw var(--ms) forwards}
+.sbfx .mqbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;animation:emb var(--ms) forwards}
+.sbfx .mqt{font-size:24px;font-weight:900;color:#fff;text-shadow:0 3px 0 #3A1470,0 0 14px #B48CFF}
+.sbfx .mqrow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;max-width:94vw}
+.sbfx .mqside{display:flex;flex-direction:column;align-items:center;gap:6px}
+.sbfx .mqside small{color:#fff;font-weight:900;font-size:13px;padding:2px 10px;border-radius:99px;border:2px solid var(--ink,#222);white-space:nowrap}
+.sbfx .mqside.out .mqc{animation:mqout 2.6s both}
+@keyframes mqout{0%,15%{transform:none;opacity:1}55%,100%{transform:translateX(-14px) scale(.85);opacity:.55;filter:grayscale(.6)}}
+.sbfx .mqside.in .mqc{position:relative;animation:mqin .7s .55s both;filter:drop-shadow(0 0 14px #FFE38A)}
+@keyframes mqin{0%{transform:translateX(60px) rotateY(180deg) scale(.6);opacity:0}100%{transform:none;opacity:1}}
+.sbfx .mqnew{position:absolute;right:-10px;top:-12px;background:#E2364F;color:#fff;font-weight:900;font-size:14px;padding:2px 8px;border-radius:99px;border:2px solid #fff;transform:rotate(12deg);animation:rcsh .45s 1.15s both}
+.sbfx .mqarr{font-size:34px;color:#FFE38A;font-weight:900;text-shadow:0 2px 0 #3A1470}
+.sbfx .mqside.spin .mqc{animation:mqspin 2.4s calc(var(--i) * .12s) both}
+@keyframes mqspin{0%{transform:translateX(-30px);opacity:0}25%{transform:none;opacity:1}75%{transform:translateX(30px);opacity:1}100%{transform:translateX(60px);opacity:0}}
+.sbfx .mqc .tpback{position:relative;width:74px;height:106px}
+.sbfx .mqsub{font-size:15px;font-weight:900;color:#fff;text-shadow:0 2px 0 #000}
 .sbfx .emwash.pow{background:radial-gradient(circle at 50% 45%,rgba(255,200,120,.55),rgba(60,25,10,.85) 70%)}
 .sbfx .pocard>:not(b){filter:grayscale(.85) brightness(.8)}
 .sbfx .postamp{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-16deg);white-space:nowrap;font-size:26px;font-weight:900;color:#E2364F;background:rgba(255,255,255,.88);border:4px double #E2364F;border-radius:10px;padding:2px 10px;animation:postamp .45s .3s both}
@@ -9217,6 +9263,8 @@ function dmOnGain(st, pid, c, dest){
 const dmMillFx = (st, pid, cs, src) => { if (cs && cs.length) dmFxAdd(st, { k: "mill", p: pid, cs: cs.slice(0, 12), cnt: cs.length, c: src }); };
 /* 手札以外から使ったアクション（家臣・ゴーレム・玉座の間など）も、手札から使った時と同じ演出を全員に（via = 元のカード） */
 const dmPlayFx = (st, pid, c, via, i) => { if (dmIs(c, "a")) dmFxAdd(st, { k: "play", p: pid, c, via, i }); };
+/* カードを公開した：全員に見せる（src = 効果の元のカード、tx = 結果） */
+const dmRevFx = (st, pid, cs, src, tx, hl) => { if (cs && cs.length) dmFxAdd(st, { k: "reveal", p: pid, cs: cs.slice(0, 10), c: src, tx, hl: hl ? hl.slice(0, 10) : undefined }); };   // hl：目立たせるカード（手札に入る分など）
 const dmVpt = (st, pid, n, why) => { if (!n) return; st.pl[pid].vpt = (st.pl[pid].vpt || 0) + n; dmL(st, `🟢${pname(pid)}が勝利点トークン+${n}${why ? `（${why}）` : ""}`); };
 const dmVal0 = c => c === "curse" ? -3 : dmIs(c, "t") ? (DM[c].v || 1) * 2 : DM[c].c;
 const dmDur = (st, pid, c, e = {}) => { const P = st.pl[pid]; P.next = [...(P.next || []), { c, ...e }]; };
@@ -9356,6 +9404,7 @@ const DMF = {
     const P = st.pl[pid], rev = []; for (let i = 0; i < 4; i++){ const c = dmTop(st, pid); if (c != null) rev.push(c); }
     if (!rev.length) return;
     const take = rev.filter(c => dmIs(c, "v") || c === "curse"), back = rev.filter(c => !(dmIs(c, "v") || c === "curse"));
+    dmRevFx(st, pid, rev, "patrol", take.length ? `勝利点・呪い（${dmCntNames(take)}）を手札に` : "勝利点・呪いはなかった", rev.map(c => dmIs(c, "v") || c === "curse"));
     P.hand.push(...take); P.deck.push(...back.reverse()); if (back.length) dmFxAdd(st, { k: "top", p: pid, cnt: back.length, cs: back.slice() });
     dmL(st, `巡回：${dmNames(rev)}を公開${take.length ? `、${dmNames(take)}を手札に` : ""}`);
   },
@@ -9370,7 +9419,7 @@ const DMF = {
   fishingvillage(st, pid){ dmDur(st, pid, "fishingvillage", { actions: 1, coins: 1 }); },
   lookout(st, pid){ const look = []; for (let i = 0; i < 3; i++){ const c = dmTop(st, pid); if (c != null) look.push(c); } if (look.length) dmAsk(st, { pid, k: "list", cards: look, min: 1, max: 1, title: "見張り：廃棄するカード", ok: "廃棄する", then: { t: "look1", look } }); },
   monkey(st, pid){ dmDur(st, pid, "monkey", { cards: 1, k: "monkey" }); },
-  seachart(st, pid){ const P = st.pl[pid], c = dmTop(st, pid); if (c == null) return; if (P.play.includes(c)){ P.hand.push(c); dmL(st, `海図：${DM[c].n}を手札に`); } else { P.deck.push(c); dmL(st, `海図：${DM[c].n}を公開（場にないので戻す）`); } },
+  seachart(st, pid){ const P = st.pl[pid], c = dmTop(st, pid); if (c == null) return; if (P.play.includes(c)){ P.hand.push(c); dmL(st, `海図：${DM[c].n}を手札に`); dmRevFx(st, pid, [c], "seachart", "場にあるので手札に"); } else { P.deck.push(c); dmRevFx(st, pid, [c], "seachart", "場にないので山札に戻す"); dmL(st, `海図：${DM[c].n}を公開（場にないので戻す）`); } },
   smugglers(st, pid){
     const r = dmRight(st, pid), cs = [...new Set(((st.lastGains || {})[r] || []).filter(c => st.supply[c] > 0 && dmCost(st, c) <= 6))];
     if (!cs.length){ dmL(st, `密輸人：${pname(r)}の獲得したカードで手に入るものがない`); return; }
@@ -9428,7 +9477,7 @@ const DMF = {
   /* --- 錬金術 --- */
   transmute(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "変成：廃棄するカード", desc: "アクション→公領／財宝→変成／勝利点→金貨", ok: "廃棄する", then: { t: "trm" } }); },
   herbalist(st, pid){ st.turn.herb = (st.turn.herb || 0) + 1; },
-  apothecary(st, pid){ const P = st.pl[pid], rev = []; for (let i = 0; i < 4; i++){ const c = dmTop(st, pid); if (c != null) rev.push(c); } const take = rev.filter(c => c === "copper" || c === "potion"), back = rev.filter(c => !(c === "copper" || c === "potion")); P.hand.push(...take); P.deck.push(...back.reverse()); if (back.length) dmFxAdd(st, { k: "top", p: pid, cnt: back.length, cs: back.slice() }); if (rev.length) dmL(st, `薬剤師：${dmNames(rev)}を公開${take.length ? `、${dmNames(take)}を手札に` : ""}`); },
+  apothecary(st, pid){ const P = st.pl[pid], rev = []; for (let i = 0; i < 4; i++){ const c = dmTop(st, pid); if (c != null) rev.push(c); } const take = rev.filter(c => c === "copper" || c === "potion"), back = rev.filter(c => !(c === "copper" || c === "potion")); dmRevFx(st, pid, rev, "apothecary", take.length ? `銅貨・ポーション（${dmCntNames(take)}）を手札に` : "銅貨・ポーションはなかった", rev.map(c => c === "copper" || c === "potion")); P.hand.push(...take); P.deck.push(...back.reverse()); if (back.length) dmFxAdd(st, { k: "top", p: pid, cnt: back.length, cs: back.slice() }); if (rev.length){ dmL(st, `薬剤師：${dmNames(rev)}を公開${take.length ? `、${dmNames(take)}を手札に` : ""}`); } },
   scryingpool(st, pid){
     st.q.unshift({ t: "spool2", pid });   // 全員の一番上を決めた後で
     const c = dmTop(st, pid); if (c == null) return; st.pl[pid].deck.push(c);
@@ -9455,14 +9504,14 @@ const DMA = {
   militia(st, tg){ const h = st.pl[tg].hand.length; if (h > 3) dmAsk(st, { pid: tg, k: "hand", min: h - 3, max: h - 3, title: `民兵：${h - 3}枚捨てる`, desc: "手札が3枚になるまで", ok: "捨てる", then: { t: "discard" } }); },
   bureaucrat(st, tg){
     const vs = st.pl[tg].hand.filter(c => dmIs(c, "v"));
-    if (!vs.length){ dmL(st, `${pname(tg)}は手札を公開（勝利点カードなし）`); return; }
+    if (!vs.length){ dmL(st, `${pname(tg)}は手札を公開（勝利点カードなし）`); dmRevFx(st, tg, st.pl[tg].hand, "bureaucrat", "勝利点カードなし"); return; }
     if (new Set(vs).size === 1){ dmPush(st, { t: "todeck", pid: tg, sel: [vs[0]], pub: true }); return; }
     dmAsk(st, { pid: tg, k: "hand", filter: "v", min: 1, max: 1, title: "役人：山札の上に置く勝利点カード", ok: "置く", then: { t: "todeck", pub: true } });
   },
   bandit(st, tg){
     const rev = []; for (let i = 0; i < 2; i++){ const c = dmTop(st, tg); if (c != null) rev.push(c); }
     if (!rev.length) return;
-    dmL(st, `${pname(tg)}は${dmNames(rev)}を公開`);
+    dmL(st, `${pname(tg)}は${dmNames(rev)}を公開`); dmRevFx(st, tg, rev, "bandit", "山札の上2枚");
     const tr = rev.filter(c => dmIs(c, "t") && c !== "copper");
     if (new Set(tr).size > 1) dmAsk(st, { pid: tg, k: "list", cards: rev, filterList: tr, min: 1, max: 1, title: "山賊：廃棄する財宝", ok: "廃棄する", then: { t: "bandit", rev } });
     else dmPush(st, { t: "bandit", pid: tg, rev, sel: tr.length ? [rev.indexOf(tr[0])] : [] });
@@ -9480,7 +9529,7 @@ const DMA = {
   torturer(st, tg){ dmAsk(st, { pid: tg, k: "opt", opts: ["手札を2枚捨てる", "呪いを手札に獲得する"], min: 1, max: 1, title: "拷問人：どちらにする？", then: { t: "tort" } }); },
   /* --- 海辺 --- */
   blockade(){}, corsair(){},
-  cutpurse(st, tg){ const P = st.pl[tg]; if (P.hand.includes("copper")){ dmTake(P.hand, ["copper"]); P.disc.push("copper"); dmL(st, `${pname(tg)}は銅貨を捨てた`); dmFxAdd(st, { k: "dis", p: tg, cs: ["copper"], c: "cutpurse" }); } else dmL(st, `${pname(tg)}は手札を公開（銅貨なし）`); },
+  cutpurse(st, tg){ const P = st.pl[tg]; if (P.hand.includes("copper")){ dmTake(P.hand, ["copper"]); P.disc.push("copper"); dmL(st, `${pname(tg)}は銅貨を捨てた`); dmFxAdd(st, { k: "dis", p: tg, cs: ["copper"], c: "cutpurse" }); } else dmL(st, `${pname(tg)}は手札を公開（銅貨なし）`), dmRevFx(st, tg, P.hand, "cutpurse", "銅貨なし"); },
   seawitch(st, tg){ if (dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
 /* --- 収穫祭・錬金術 --- */
   fortuneteller(st, tg){ const P = st.pl[tg], rev = []; for (let g = 0; g < 300; g++){ const c = dmTop(st, tg); if (c == null) break; if (dmIs(c, "v") || c === "curse"){ P.deck.push(c); dmL(st, `${pname(tg)}は${DM[c].n}を山札の上に`); break; } rev.push(c); } if (rev.length){ P.disc.push(...rev); dmMillFx(st, tg, rev, "fortuneteller"); } },
@@ -9501,6 +9550,7 @@ const DMA = {
     const P = st.pl[tg], rev = []; for (let i = 0; i < 3; i++){ const c = dmTop(st, tg); if (c != null) rev.push(c); }
     if (!rev.length) return;
     const ds = rev.filter(c => dmIs(c, "a") || dmIs(c, "t")), back = rev.filter(c => !(dmIs(c, "a") || dmIs(c, "t")));
+    dmRevFx(st, tg, rev, "rabble", ds.length ? `アクション・財宝（${dmCntNames(ds)}）を捨てる` : "アクション・財宝はなかった", rev.map(c => dmIs(c, "a") || dmIs(c, "t")));
     P.disc.push(...ds); dmMillFx(st, tg, ds, "rabble"); P.deck.push(...back.reverse()); if (back.length) dmFxAdd(st, { k: "top", p: tg, cnt: back.length, cs: back.slice() });
     dmL(st, `${pname(tg)}は${dmNames(rev)}を公開${ds.length ? `、${dmNames(ds)}を捨てた` : ""}`);
   },
@@ -9578,8 +9628,10 @@ const DMT = {
     const mq = st.mq || {}; delete st.mq;
     const ps = t.ps.filter(p => mq[p] != null);
     ps.forEach(p => dmTake(st.pl[p].hand, [mq[p]]));
-    ps.forEach(p => { const to = dmOthers(st, p).find(o => ps.includes(o)) || p; st.pl[to].hand.push(mq[p]); });
+    const mv = ps.map(p => ({ f: p, to: dmOthers(st, p).find(o => ps.includes(o)) || p, c: mq[p] }));
+    mv.forEach(x => st.pl[x.to].hand.push(x.c));
     dmL(st, "仮面舞踏会：全員が1枚ずつ次の人に渡した");
+    if (mv.length) dmFxAdd(st, { k: "mq", p: t.pid, mv });   // 何を渡して何をもらったかは、本人の画面だけに見せる
     if (st.pl[t.pid].hand.length) dmAsk(st, { pid: t.pid, k: "hand", min: 0, max: 1, title: "仮面舞踏会：廃棄するカード", desc: "廃棄しなくてもよい", ok: "廃棄する", then: { t: "trash" } });
   },
   steward(st, t){
@@ -9590,8 +9642,8 @@ const DMT = {
   gainTo(st, t){ if (dmGain(st, t.tg, t.card)){ dmL(st, `${pname(t.tg)}が${DM[t.card].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.tg, c: t.card, dest: "disc" }); } },
   wish(st, t){
     const name = t.cards[t.sel[0]], c = dmTop(st, t.pid); if (c == null) return;
-    if (c === name){ st.pl[t.pid].hand.push(c); dmL(st, `願いの井戸：${DM[c].n}！ 願いがかなった`); }
-    else { st.pl[t.pid].deck.push(c); dmL(st, `願いの井戸：${DM[name].n}を願ったが${DM[c].n}だった`); }
+    if (c === name){ st.pl[t.pid].hand.push(c); dmL(st, `願いの井戸：${DM[c].n}！ 願いがかなった`); dmRevFx(st, t.pid, [c], "wishingwell", `${DM[name].n}を願って…的中！手札に`); }
+    else { st.pl[t.pid].deck.push(c); dmL(st, `願いの井戸：${DM[name].n}を願ったが${DM[c].n}だった`); dmRevFx(st, t.pid, [c], "wishingwell", `${DM[name].n}を願ったが…はずれ`); }
   },
   baron(st, t){
     if (t.yes && st.pl[t.pid].hand.includes("estate")){ const P = st.pl[t.pid]; dmTake(P.hand, ["estate"]); P.disc.push("estate"); st.turn.coins += 4; dmL(st, "男爵：屋敷を捨てて +$4"); dmFxAdd(st, { k: "dis", p: t.pid, cs: ["estate"], c: "baron", tx: "+$4" }); }
@@ -9610,7 +9662,7 @@ const DMT = {
   sp2(st, t){ const P = st.pl[t.pid]; if (!P.hand.includes(t.c)) return; dmTake(P.hand, [t.c]); if (t.sel[0] === 1) P.deck.unshift(t.c); else { P.deck.push(t.c); dmFxAdd(st, { k: "top", p: t.pid, cnt: 1, cs: null, hc: [t.c] }); } dmL(st, `秘密の抜け道：1枚を山札の${t.sel[0] === 1 ? "一番下" : "一番上"}に置いた`); },
   court1(st, t){
     const c = t.sel[0], n = Math.min(4, DM[c].ty.length);
-    dmL(st, `廷臣：${DM[c].n}を公開（${n}種類）`);
+    dmL(st, `廷臣：${DM[c].n}を公開（${n}種類）`); dmRevFx(st, t.pid, [c], "courtier", `${dmTyName(c)}：${n}種類 → ${n}つ選ぶ`);
     dmAsk(st, { pid: t.pid, k: "opt", opts: ["+1アクション", "+1購入", "+$3", "金貨を獲得"], min: n, max: n, title: `廷臣：${n}つ選ぶ`, then: { t: "court2" } });
   },
   court2(st, t){ const T = st.turn; t.sel.forEach(i => { if (i === 0) T.actions++; if (i === 1) T.buys++; if (i === 2) T.coins += 3; if (i === 3 && dmGain(st, t.pid, "gold")){ dmL(st, `${pname(t.pid)}が金貨を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: "gold", dest: "disc" }); } }); },
@@ -9661,7 +9713,7 @@ const DMT = {
   isl(st, t){ const P = st.pl[t.pid], cs = []; if (P.play.includes("island")){ dmTake(P.play, ["island"]); cs.push("island"); } if (t.sel.length){ dmTake(P.hand, t.sel); cs.push(...t.sel); } (P.isl = P.isl || []).push(...cs); dmL(st, `島：${dmNames(cs)}を島マットに置いた`); },
 /* --- 収穫祭・錬金術 --- */
   ham(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel.slice(), c: "hamlet", tx: t.what === "a" ? "+1アクション" : "+1購入" }); if (t.what === "a") st.turn.actions++; else st.turn.buys++; dmL(st, `村落：${pname(t.pid)}が${dmCntNames(t.sel)}を捨てて ${t.what === "a" ? "+1アクション" : "+1購入"}`); },
-  tour1(st, t){ st.tour = { ...(st.tour || {}), [t.pid]: !!t.yes }; if (t.yes) dmL(st, `${pname(t.pid)}は属州を公開した`); },
+  tour1(st, t){ st.tour = { ...(st.tour || {}), [t.pid]: !!t.yes }; if (t.yes){ dmL(st, `${pname(t.pid)}は属州を公開した`); dmRevFx(st, t.pid, ["province"], "tournament", "属州を公開"); } },
   tour2(st, t){
     const tr = st.tour || {}; delete st.tour; const P = st.pl[t.pid];
     if (tr[t.pid] && P.hand.includes("province")){
@@ -9761,6 +9813,8 @@ function dmAnswer(st, pid, id, val){
     const idx = [...new Set(val || [])].filter(x => x >= 0 && x < a.opts.length && !(a.dis && a.dis[x]));
     if (idx.length < a.min || idx.length > a.max) return false;
     then.sel = idx.sort((x, y) => x - y);
+    // 何を選んだか（+$3・+1購入など）を、ほかの人にも演出で見せる（水晶玉・望楼・道化師は別の演出があるので除く）
+    if (!["cball", "wt", "jest"].includes(a.then.t) && idx.length){ const sn = (a.title || "").split("：")[0], src = a.card || Object.keys(DM).find(k => DM[k].n === sn); dmFxAdd(st, { k: "choice", p: pid, c: src, opts: idx.map(x => a.opts[x]) }); dmL(st, `${sn ? sn + "：" : ""}${pname(pid)}は「${idx.map(x => a.opts[x]).join("」「")}」を選んだ`); }
   } else if (a.k === "yn") then.yes = !!val;
   else if (a.k === "supply"){
     if (val == null && a.skip) then.card = null;
@@ -10453,7 +10507,7 @@ function openDmNew(){
 }
 
 /* ---- 画面 ---- */
-let dmFxBusy = 0, dmHeld = [], dmGains = [], dmDealDelay = 0, dmReveal = null, dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
+let dmAskMin = null, dmFxBusy = 0, dmHeld = [], dmGains = [], dmDealDelay = 0, dmReveal = null, dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
 let dmId = null, dmBusy = false, dmSel = [], dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
 function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
 document.addEventListener("visibilitychange", () => document.body.classList.toggle("bgpause", document.hidden));
@@ -10996,7 +11050,7 @@ function drawDm(){
   // 場
   const P = inGame ? st.pl[me] : null;
   const AP = st.pl[T.pid];
-  const stat = `<div class="dmstat" style="--pc:${pcolor(T.pid)}"><span class="who">${esc(pname(T.pid))}</span><span class="ch ${T.phase === "action" ? "on" : ""}">${dmSti("pa")}アクション <b>${T.actions}</b></span><span class="ch">${dmSti("pb")}購入 <b>${T.buys}</b></span><span class="ch cn">${dmSti("pmo")}<b>${T.coins}</b></span>${T.pots ? `<span class="ch cn">🧪 <b>${T.pots}</b></span>` : ""}<span class="ph">${T.phase === "action" ? "アクション<br>フェイズ" : "購入<br>フェイズ"}</span></div>
+  const stat = `<div class="dmstat" style="--pc:${pcolor(T.pid)}"><span class="who">${esc(pname(T.pid))}</span><span class="ch ${T.phase === "action" ? "on" : ""}" data-st="a">${dmSti("pa")}アクション <b>${T.actions}</b></span><span class="ch" data-st="b">${dmSti("pb")}購入 <b>${T.buys}</b></span><span class="ch cn" data-st="c">${dmSti("pmo")}<b>${T.coins}</b></span>${T.pots ? `<span class="ch cn">🧪 <b>${T.pots}</b></span>` : ""}<span class="ph">${T.phase === "action" ? "アクション<br>フェイズ" : "購入<br>フェイズ"}</span></div>
     <div class="dmplay">${AP.play.length ? AP.play.map(c => `<button class="dpv" data-pv="${c}">${dmCardHtml(c, "pl")}</button>`).join("") : `<small>ここに使ったカードが並びます</small>`}</div>`;
   // 下部
   let bottom = "";
@@ -11039,7 +11093,9 @@ function drawDm(){
     <div class="nseats2 ${st.players.length >= 5 ? "tight" : ""}">${seats}</div>
     <div class="dmsupw">${supply}<span class="dmsetb">-&nbsp;&nbsp;${esc(dmSetNameOf(g))}&nbsp;&nbsp;-</span></div>${stat}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
-    <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn" || myAsk.k === "opt") && !dmView ? `<div class="kgpop dmmodal">${dmAskHtml(myAsk, st)}</div>` : ""}${over}${pop}`);
+    <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn" || myAsk.k === "opt") && !dmView ? (dmAskMin === myAsk.id
+      ? `<button class="dmaskbar" id="dmAskMax"><span>📝 ${esc(myAsk.title)}</span><b>選ぶ ▲</b></button>`
+      : `<div class="kgpop dmmodal"><div class="dmmw"><button class="dqmin" id="dmAskMin">▼ 盤面を見る</button>${dmAskHtml(myAsk, st)}</div></div>`) : ""}${over}${pop}`);
   // 場のカードがあふれたら、新しく出したカード（右端）が見えるよう自動で横スクロール
   { const pl = el.querySelector(".dmplay"), key = `${g.id}:${T.pid}:${(AP.play || []).length}`;
     if (pl && key !== dmPlayKey){ dmPlayKey = key; if (pl.scrollWidth > pl.clientWidth + 2) requestAnimationFrame(() => pl.scrollTo({ left: pl.scrollWidth, behavior: "smooth" })); } }
@@ -11104,12 +11160,16 @@ function drawDm(){
     if (myAsk.k === "supply"){ const c = dmGainSel; dmGainSel = null; if (c) await dmDoAnswer(myAsk.id, c); return; }
     const v = dmPick.sel.slice(); dmPick = []; await dmDoAnswer(myAsk.id, v);
   }));
+  // 選択のポップアップを小さくたたんで、裏のボードや手札を見る
+  on("dmAskMin", () => { if (myAsk){ dmAskMin = myAsk.id; drawDm(); } });
+  on("dmAskMax", () => { dmAskMin = null; drawDm(); });
   on("dmYes", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, true); }));
   on("dmAskSkip", act(async () => { if (myAsk){ dmGainSel = null; await dmDoAnswer(myAsk.id, null); } }));
   on("dmNo", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, false); }));
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
   dmAnimHand(g, el, P);
   dmAnimGains(el, st);
+  dmStatPop(g, el);
   setTimeout(cpuKick, 0);
   if (g.status === "finished"){
     dmEndCount(g, el);
@@ -11282,6 +11342,24 @@ function dmMorph(x, y){
   dmMorphKids(x, y);
 }
 /* 演出：①捨て札へ「ふわっ→シャッ」 ②シャッフル ③山札から1枚ずつ配る */
+/* アクション・購入・お金が増えたら、数字をポンと弾ませて「+1」を浮かべる（控えめ）。演出中なら終わってから */
+const dmStatPrev = {};
+function dmStatPop(g, el){
+  const st = g.st, T = st.turn; if (!T) return;
+  const key = dmTurnKey(st), cur = { a: T.actions, b: T.buys, c: T.coins }, prev = dmStatPrev[g.id];
+  dmStatPrev[g.id] = { key, ...cur };
+  if (!prev || prev.key !== key) return;
+  const ups = Object.keys(cur).filter(k => cur[k] > prev[k]).map(k => ({ k, d: cur[k] - prev[k] }));
+  if (!ups.length) return;
+  const wait = Math.max(0, dmFxBusy - Date.now());
+  setTimeout(() => ups.forEach(({ k, d }, i) => setTimeout(() => {
+    const b = document.querySelector(`#dmg .dmstat [data-st="${k}"]`); if (!b) return;
+    b.animate([{ transform: "scale(1)" }, { transform: "scale(1.28)", boxShadow: "0 0 0 4px rgba(255,227,138,.9)" }, { transform: "scale(1)" }], { duration: 420, easing: "cubic-bezier(.2,1.6,.4,1)" });
+    const r = b.getBoundingClientRect(), f = document.createElement("b"); f.className = "dmstup s-" + k; f.textContent = `+${k === "c" ? "$" : ""}${d}`;
+    f.style.left = (r.left + r.width / 2) + "px"; f.style.top = (r.top - 2) + "px"; document.body.appendChild(f);
+    f.animate([{ transform: "translate(-50%,0) scale(.5)", opacity: 0 }, { transform: "translate(-50%,-14px) scale(1.15)", opacity: 1, offset: .3 }, { transform: "translate(-50%,-20px)", opacity: 1, offset: .75 }, { transform: "translate(-50%,-28px)", opacity: 0 }], { duration: 950, easing: "ease-out" }).onfinish = () => f.remove();
+  }, i * 120)), wait);
+}
 function dmAnimHand(g, el, P){
   if (!P){ dmOut = []; return; }
   const key = g.id, cur = {};
@@ -11488,6 +11566,7 @@ function dmFxCheck(g){
     const e = (e0.k === "gain" || e0.k === "buy") && DM_BIGFX.includes(e0.c) ? { ...e0, k: "prov", how: e0.k === "gain" ? "gain" : undefined } : e0;
     if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
     if (e.k === "clean"){ if (e.p === me){ dmCleanNow = true; dmSnap("clean"); } return; }
+    if (e.k === "choice" && e.p === me) return;   // 自分で選んだものは自分には出さない
     if (e.k === "dis" && e.p === me){ dmSnap("dis", e.cs); return; }   // 自分の手札は手札から捨て札へ飛ぶ演出。ほかの人には下の「dis」演出で見せる
     // 手札から山札の上へ：描き直す前に、自分の手札のどこにあったかを覚えておく（演出で、そこから山札へ飛ばす）
     if (e.k === "top" && e.p === me && e.hc && e.hc.length){ const used = new Set(), r = []; e.hc.forEach(c => { const b = [...document.querySelectorAll(`#dmg .dmhand .dh:not(.dhold)[data-c="${c}"]`)].find(x => !used.has(x)); if (b){ used.add(b); r.push({ c, rc: b.getBoundingClientRect() }); } }); if (r.length){ evs[evs.indexOf(e0)] = e0; e0._from = r; } e.hc.forEach(c => dmHeld.push({ gid: g.id, c, n: e.n, at: Date.now() + t + 60 })); e0._hold = true; }
@@ -11495,7 +11574,7 @@ function dmFxCheck(g){
     if (e.k === "hoard"){ const st0 = Math.max(t, gq); setTimeout(() => dmFx(e, g), st0); t = st0 + 2300; hEnd = t; return; }
     if (e.k === "play" && e.p === me) dmDealDelay += 2600;
     if (e.k === "end"){ dmEndFresh[g.id] = t + 300; }
-    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, pileout: 2000, mill: 1500, dis: 1500, react: 2000, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, choice: 1700, reveal: 2300, mq: 2600, pileout: 2000, mill: 1500, dis: 1500, react: 2000, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
     if (e0._hold) setTimeout(() => {
       // 山札へ飛ぶ瞬間まで手札に残しておいたカード：今の位置から飛ばして、手札から外す
       const hs = [...document.querySelectorAll(`#dmg .dmhand .dhold[data-hn="${e.n}"]`)];
@@ -11503,7 +11582,7 @@ function dmFxCheck(g){
       dmHeld = dmHeld.filter(x => x.n !== e.n); hs.forEach(b => b.remove());
       dmFx(e, g); if (dmId === g.id) drawDm();
     }, t);
-    else setTimeout(() => dmFx(e, g), t); t += e.k === "play" || e.k === "prov" ? d : Math.min(d, 1600);
+    else setTimeout(() => dmFx(e, g), t); t += ["play", "prov", "reveal", "mq", "react", "pileout", "choice"].includes(e.k) ? d : Math.min(d, 1600);   // 見せたい演出は最後まで
     if (e.k !== "tre" && e.k !== "end") busy = Math.max(busy, t);
   });
   busy = Math.max(busy, ...dmGains.map(x => (x.wait || 0) + 1300));
@@ -11598,6 +11677,27 @@ function dmFx(e, g){
     // 山札などから公開して捨て札に：表向きのカードが並んで、捨て札の方へすべり落ちる
     ms = 1600; const cs = e.cs || [], more = (e.cnt || cs.length) - Math.min(6, cs.length);
     html = `<div class="dtr dml">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="dtrr">${cs.slice(0, 6).map((c, i) => `<span style="--i:${i}">${dmCardHtml(c, "dfx")}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が${cs.length > 1 ? `${e.cnt || cs.length}枚を` : ""}捨て札に${more > 0 ? `（ほか${more}枚）` : ""}</small></div>`;
+  } else if (e.k === "choice"){
+    // ほかの人が選んだ効果（+$3・+1購入など）をチップで見せる
+    ms = 1800; const os = e.opts || [];
+    html = `<span class="chwash"></span><div class="chbox">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="chrow">${os.map((o, i) => `<b class="chip" style="--i:${i}">${esc(o)}</b>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が選んだ</small></div>`;
+  } else if (e.k === "reveal"){
+    // カードを公開：表向きのカードを並べて、元のカード名と結果を見せる
+    ms = e.hl ? 2500 : 2000; const cs = e.cs || [];
+    html = `<span class="rvwash"></span><div class="rvbox">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="rvt">REVEAL</div><div class="rvrow ${cs.length > 3 ? "many" : ""}">${cs.slice(0, 7).map((c, i) => `<span class="rvc ${e.hl ? (e.hl[i] ? "hl" : "lo") : ""}" style="--i:${i}">${dmCardHtml(c, "dfx")}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が公開</small>${e.tx ? `<b class="dmlres">${esc(e.tx)}</b>` : ""}</div>`;
+  } else if (e.k === "mq"){
+    // 仮面舞踏会：自分が渡したカードと、もらったカード（ほかの人には裏向きで回る様子だけ）
+    ms = 2700; const mv = e.mv || [], give = mv.find(x => x.f === me), got = mv.find(x => x.to === me);
+    const back = `<span class="tpback"><i></i></span>`;
+    if (give || got){
+      html = `<span class="mqwash"></span><div class="mqbox"><div class="mqt">🎭 仮面舞踏会</div><div class="mqrow">
+        ${give ? `<div class="mqside out"><div class="mqc">${dmCardHtml(give.c, "dfx")}</div><small style="background:${pcolor(give.to)}">${esc(pname(give.to))}に渡した</small></div>` : ""}
+        <div class="mqarr">⇄</div>
+        ${got ? `<div class="mqside in"><div class="mqc">${dmCardHtml(got.c, "dfx")}<span class="mqnew">GET!</span></div><small style="background:${pcolor(got.f)}">${esc(pname(got.f))}からもらった</small></div>` : ""}
+      </div></div>`;
+    } else {
+      html = `<span class="mqwash"></span><div class="mqbox"><div class="mqt">🎭 仮面舞踏会</div><div class="mqrow">${mv.slice(0, 5).map((x, i) => `<div class="mqside spin" style="--i:${i}"><div class="mqc">${back}</div><small style="background:${pcolor(x.f)}">${esc(pname(x.f))}→${esc(pname(x.to))}</small></div>`).join("")}</div><div class="mqsub">全員が1枚ずつ次の人に渡した</div></div>`;
+    }
   } else if (e.k === "pileout"){
     // サプライの山がなくなった：カードに「売り切れ」のハンコ、空の山の数
     ms = 2100; const near = e.lim - e.e;
