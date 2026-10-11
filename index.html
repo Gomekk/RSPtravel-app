@@ -3560,6 +3560,29 @@ body.bgpause .hxemb i{animation-play-state:paused}
   .hxbt-card .hxc{--w:min(32vw,120px)}
 }
 .hxfx.hxbt.hit .hxbt-vs,.hxfx.hxbt.miss .hxbt-vs{opacity:0;transition:opacity .15s}
+/* ===== パーティクル・ステージ ===== */
+.hxfxl .hxcv{position:absolute;inset:0;z-index:50;pointer-events:none}
+.hxemb{display:none}
+.hxscape{position:absolute;inset:0}
+.hxscape svg{position:absolute;left:0;bottom:0;width:100%;height:62%;opacity:.95}
+.arena.hxg[data-stage="volcano"]{background:radial-gradient(ellipse at 50% 105%,rgba(255,90,20,.55),transparent 50%),radial-gradient(ellipse at 50% 25%,rgba(120,24,8,.45),transparent 60%),linear-gradient(180deg,#0E0404,#1C0805 55%,#2A0B03)}
+.arena.hxg[data-stage="snow"]{background:radial-gradient(circle at 80% 8%,rgba(170,210,255,.28),transparent 35%),linear-gradient(180deg,#040B18,#0A1C36 60%,#14305A)}
+.arena.hxg[data-stage="jungle"]{background:radial-gradient(ellipse at 30% 0%,rgba(140,255,200,.18),transparent 50%),linear-gradient(180deg,#020F0A,#06231A 60%,#0A3324)}
+.arena.hxg[data-stage="jungle"] .hxbg::after,.arena.hxg[data-stage="snow"] .hxbg::after{content:"";position:absolute;inset:-20% -10%;background:repeating-linear-gradient(105deg,transparent 0 60px,rgba(200,255,230,.05) 60px 90px,transparent 90px 170px);filter:blur(6px);animation:hxrays 9s ease-in-out infinite alternate}
+.arena.hxg[data-stage="snow"] .hxbg::after{background:repeating-linear-gradient(105deg,transparent 0 70px,rgba(200,225,255,.05) 70px 100px,transparent 100px 190px)}
+@keyframes hxrays{to{transform:translateX(30px);opacity:.6}}
+.arena.hxg[data-stage="volcano"] .hxglow{opacity:.35}
+.arena.hxg .hxbw svg.hxboard{filter:drop-shadow(0 10px 24px rgba(0,0,0,.85))}
+.arena.hxg[data-stage="volcano"] .hxboard .hc{fill:#1C1416;stroke:#3A2622}
+.arena.hxg[data-stage="snow"] .hxboard .hc{fill:#16223A;stroke:#2E4468}
+.arena.hxg[data-stage="jungle"] .hxboard .hc{fill:#10241E;stroke:#24463A}
+.arena.hxg[data-stage] .hxboard .hc.zA{fill:#0F2848}
+.arena.hxg[data-stage] .hxboard .hc.zB{fill:#3A1018}
+.arena.hxg[data-stage] .hxboard .hc.rk{fill:#08090F}
+.arena.hxg[data-stage] .hxboard .hc.mv{fill:#16486E}
+.arena.hxg[data-stage] .hxboard .hc.spc{fill:#5A4A10}
+.hxfx.hxbt{background:radial-gradient(ellipse at 50% 50%,color-mix(in srgb,var(--ae,#FF5A1F) 22%,rgba(2,3,8,.6)),rgba(2,3,8,.9) 70%)}
+.hxfx.banner.start .stg{font-size:12px!important;letter-spacing:.2em;color:#FFD9A8!important;margin-top:10px!important}
 
 </style>
 </head>
@@ -11637,7 +11660,7 @@ function hxSetup(teams, rounds){
   const tre = {}; ["A", "B"].forEach(t => { tre[t] = HX_POS[t].tre.map(([r, q]) => ({ r, q, hp: HX_TRE_HP })); });
   return { hx: true, teams: { A, B }, players, order, ti: 0, maxT: rounds ? rounds * order.length : 0, rounds, phase: "pick", deck, disc: [],
     sdeck: shuffle([...HXS_IDS, ...HXS_IDS]), sdisc: [], hands, skills, picks: {}, units: {}, slots: {}, rw: {}, tre, kills: { A: 0, B: 0 }, turn: null, un: 0, env: null,
-    fx: [{ k: "start", n: 1 }], fxn: 1, win: null, wins: [] };
+    fx: [{ k: "start", n: 1 }], fxn: 1, win: null, wins: [], stage: hxPickR(["volcano", "snow", "jungle"]) };
 }
 function hxDeploy(st){
   ["A", "B"].forEach(tm => {
@@ -12071,10 +12094,10 @@ function openHx(id){
   const g = hxById(id); if (g && g.st && hxSeen[id] == null){ hxSeen[id] = (g.st.fxn || 0) - (g.st.fxn === 1 ? 1 : 0); }
   drawHx();
 }
-function closeHx(){ hxId = null; hxQ = []; hxPlaying = false; if (hxSkip) hxSkip(); document.querySelectorAll(".hxfxl").forEach(x => x.remove()); $("#hxg").hidden = true; document.body.style.overflow = ""; render(); }
+function closeHx(){ hxAmbient(null); hxP.clear(); hxCurStage = null; hxId = null; hxQ = []; hxPlaying = false; if (hxSkip) hxSkip(); document.querySelectorAll(".hxfxl").forEach(x => x.remove()); $("#hxg").hidden = true; document.body.style.overflow = ""; render(); }
 function hxSkeleton(el){
   const emb = Array.from({ length: 22 }, (_, i) => `<i style="left:${(i * 47 + 11) % 100}%;--d:${(5 + (i * 7) % 9)}s;--dl:-${(i * 1.3).toFixed(1)}s;--x:${((i * 37) % 60) - 30}px;--s:${(.5 + (i % 5) * .25).toFixed(2)}"></i>`).join("");
-  el.innerHTML = `<div class="hxbg" aria-hidden="true"><span class="hxglow b"></span><span class="hxglow a"></span><span class="hxhex"></span><div class="hxemb">${emb}</div></div>
+  el.innerHTML = `<div class="hxbg" aria-hidden="true"><div class="hxscape" id="hxScape"></div><span class="hxglow b"></span><span class="hxglow a"></span><span class="hxhex"></span></div>
     <div class="hxtop"><div class="hxlogo"><b>HEX RAID</b><small>財宝争奪戦</small></div><span class="hxrnd" id="hxRnd"></span><button class="hxbtn" id="hxMenu" aria-label="メニュー">…</button><button class="hxbtn" id="hxX" aria-label="閉じる">×</button></div>
     <div class="hxtb" id="hxTbE"></div>
     <div class="hxbw" id="hxBw"></div>
@@ -12105,6 +12128,7 @@ function drawHx(){
 /* ---- 描画 ---- */
 function hxRender(g){
   const st = g.st;
+  hxSetStage(hxStageOf(g));
   const inG = st.players.includes(me), myTm = inG ? hxTeamOf(st, me) : "A", enTm = hxOpp(myTm);
   hxFlip = myTm === "B";
   const myTurn = st.phase === "play" && st.turn && st.turn.pid === me;
@@ -12341,8 +12365,8 @@ const hxTok = id => document.querySelector(`#hxBw [data-u="${id}"]`);
 function hxTokScr(id){ const el = hxTok(id); if (!el) return null; const b = el.getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2, s: b.width / 16 }; }
 function hxShake(big){ const a = $("#hxg"); if (!a) return; a.classList.remove("shk", "shk2"); void a.offsetWidth; a.classList.add(big ? "shk2" : "shk"); setTimeout(() => a.classList.remove("shk", "shk2"), 700); if (navigator.vibrate) navigator.vibrate(big ? [60, 30, 120] : 40); }
 function hxBurst(x, y, col, n = 26, spread = 120, cls = ""){
-  const parts = Array.from({ length: n }, () => { const a = Math.random() * Math.PI * 2, d = spread * (.4 + Math.random() * .8); return `<i style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--s:${(.5 + Math.random()).toFixed(2)};--d:${(Math.random() * .15).toFixed(2)}s"></i>`; }).join("");
-  hxAdd("burst " + cls, `<span class="fl"></span><span class="rg"></span>${parts}`, x, y, 1100).style.setProperty("--c", col);
+  const el = cls === "gold" ? "gold" : cls === "up" ? "wind" : cls === "ice" ? "water" : col === "#FF3D55" ? "blood" : (Object.keys(HX_EL).find(k => HX_EL[k].c === col) || "fire");
+  hxP.sparks(x, y, el, n, Math.max(.5, spread / 110)); hxP.flash(x, y, el, spread * .9);
 }
 function hxBanner(cls, html, ms){ return hxAdd("banner " + cls, html, null, null, ms); }
 const hxDieHtml = n => `<span class="hxdie" data-n="${n}">${Array.from({ length: 9 }, (_, i) => `<i class="${[[4], [0, 8], [0, 4, 8], [0, 2, 6, 8], [0, 2, 4, 6, 8], [0, 2, 3, 5, 6, 8]][n - 1].includes(i) ? "on" : ""}"></i>`).join("")}</span>`;
@@ -12353,8 +12377,8 @@ async function hxFx(e, snap){
   const me2 = me;
   switch (e.k){
     case "start": {
-      hxBanner("start", `<span class="sl s1"></span><span class="sl s2"></span><div class="tt"><small>BATTLE OF TREASURES</small><b>HEX RAID</b><div class="vs"><span style="--tc:${hxTmC("A")}">蒼 AZURE</span><em>VS</em><span style="--tc:${hxTmC("B")}">紅 CRIMSON</span></div></div>`, 2600);
-      hxShake(true); await hxWait(2500); break;
+      hxBanner("start", `<span class="sl s1"></span><span class="sl s2"></span><div class="tt"><small>BATTLE OF TREASURES</small><b>HEX RAID</b><div class="vs"><span style="--tc:${hxTmC("A")}">蒼 AZURE</span><em>VS</em><span style="--tc:${hxTmC("B")}">紅 CRIMSON</span></div><span class="stg">戦場：${esc((HX_STAGES[st.stage] || HX_STAGES[hxStageOf(g)]).n)}</span></div>`, 2600);
+      hxShake(true); const c0 = { x: innerWidth / 2, y: innerHeight / 2 }; hxP.slash(c0.x, c0.y - 40, "light", innerWidth * 1.3, -.14, 7); setTimeout(() => { hxP.slash(c0.x, c0.y + 40, "fire", innerWidth * 1.3, -.14, 6); hxP.sparks(c0.x, c0.y, "fire", 80, 1.6); hxP.embers(c0.x, c0.y, "fire", 40, 160); }, 160); await hxWait(2500); break;
     }
     case "deploy": {
       hxDrop = true; hxRender(g); hxDrop = false;
@@ -12372,8 +12396,8 @@ async function hxFx(e, snap){
       hxBanner("gim", `<span class="hz t"></span><span class="hz b"></span><div class="gw"><small>⚠ GIMMICK ⚠</small><div class="gi">${hxGimSig(e.g)}</div><b>${HXG[e.g].n}</b><span>${esc(HXG[e.g].tx)}</span></div>`, 2500);
       if (navigator.vibrate) navigator.vibrate([100, 60, 100, 60, 200]);
       await hxWait(2300);
-      if (e.g === "meteor"){ for (const c of e.cells){ const p = hxScr(c[0], c[1]); hxAdd("meteor", `<i></i>`, p.x, p.y, 900); await hxWait(380); hxBurst(p.x, p.y, "#FF7A2A", 30, 110); hxShake(true); await hxWait(300); } }
-      if (e.g === "thunder"){ for (const c of e.cells){ const p = hxScr(c[0], c[1]); hxAdd("zap", `<i></i>`, p.x, p.y, 800); hxAdd("flash", "", null, null, 500); hxShake(true); await hxWait(700); } }
+      if (e.g === "meteor"){ for (const c of e.cells){ const p = hxScr(c[0], c[1]); hxAdd("meteor", `<i></i>`, p.x, p.y, 900); await hxWait(380); hxBoom(p.x, p.y, "fire", false); hxShake(true); await hxWait(300); } }
+      if (e.g === "thunder"){ for (const c of e.cells){ const p = hxScr(c[0], c[1]); hxAdd("zap", `<i></i>`, p.x, p.y, 800); hxAdd("flash", "", null, null, 500); hxP.sparks(p.x, p.y, "light", 70, 1.4); hxP.ring(p.x, p.y, "light", 140); hxShake(true); await hxWait(700); } }
       if (e.g === "rain"){ hxAdd("rain", Array.from({ length: 40 }, (_, i) => `<i style="left:${(i * 37) % 100}%;--dl:${((i * 13) % 10) / 10}s"></i>`).join(""), null, null, 1600); await hxWait(1200); }
       if (e.g === "gate" || e.g === "bless" || e.g === "supply"){ hxAdd("flash gold", "", null, null, 700); await hxWait(500); }
       break;
@@ -12384,7 +12408,7 @@ async function hxFx(e, snap){
       await hxWait(500);
       const layer = document.querySelector("#hxBw .units");
       if (layer && !hxTok(u.id)) layer.insertAdjacentHTML("beforeend", hxTokHtml(st, { ...u, mv: 0, moved: false, acted: false, fz: false, nomv: false }, {}).replace('class="hxu', 'class="hxu drop'));
-      hxBurst(p.x, p.y, HX[u.c].col, 22, 90);
+      hxP.ring(p.x, p.y, HX[u.c].e, 120, 5); hxP.sparks(p.x, p.y, HX[u.c].e, 50, 1.1, -Math.PI / 2); hxP.embers(p.x, p.y, HX[u.c].e, 24, 30); hxP.flash(p.x, p.y, HX[u.c].e, 140);
       hxBanner("sum", `<div class="sb" style="--tc:${c};--cc:${HX[u.c].col}"><div class="si">${hxSig(u.c)}</div><div><small>SUMMON</small><b>${esc(HX[u.c].n)}</b>${u.sk ? `<span>✦ ${esc(HXS[u.sk].n)}を装備</span>` : `<span>${esc(pname(u.own))}</span>`}</div></div>`, 1500);
       await hxWait(1300); break;
     }
@@ -12408,7 +12432,7 @@ async function hxFx(e, snap){
       const el = hxTok(e.id), t = st.tre[e.tt][e.i], p = hxScr(t.r, t.q);
       if (el){ const a = hxTokScr(e.id); const dx = (p.x - a.x) / a.s * .45, dy = (p.y - a.y) / a.s * .45; const base = el.style.transform; el.animate([{ transform: base }, { transform: base + ` translate(${dx}px,${dy}px) scale(1.15)` }, { transform: base }], { duration: 380 * hxSpeed, easing: "ease-in" }); }
       await hxWait(200);
-      hxAdd("slash", `<i></i><i></i><i></i>`, p.x, p.y, 700);
+      hxAdd("slash", `<i></i><i></i><i></i>`, p.x, p.y, 700); { const u0 = st.units[e.id]; const el0 = u0 ? HX[u0.c].e : "gold"; hxP.slash(p.x, p.y, el0, 120, -.6, 4); hxP.sparks(p.x, p.y, "gold", 40, 1); }
       await hxWait(200); break;
     }
     case "tre": {
@@ -12418,7 +12442,7 @@ async function hxFx(e, snap){
       hxAdd("dnum tre", `−${e.n}`, p.x, p.y - 10, 1100).style.setProperty("--c", "#FFD45A");
       hxBurst(p.x, p.y, "#FFD45A", 18, 70, "gold"); hxShake(e.hp === 0);
       if (e.hp === 0){
-        await hxWait(350); hxBurst(p.x, p.y, c, 50, 200); hxAdd("flash", "", null, null, 600);
+        await hxWait(350); hxBoom(p.x, p.y, "gold", true); hxBoom(p.x, p.y, e.tm === "A" ? "water" : "fire", false); hxAdd("flash", "", null, null, 600);
         hxBanner("break", `<div class="tt" style="--tc:${c}"><small>TREASURE DESTROYED</small><b>財宝破壊！</b><span>${HX_TM[e.tm].n}の陣営 残り${st.tre[e.tm].filter(t => t.hp > 0).length}つ</span></div>`, 1900);
         await hxWait(1800);
       } else await hxWait(700);
@@ -12434,7 +12458,7 @@ async function hxFx(e, snap){
     }
     case "kill": {
       const p = hxTokScr(e.id) || hxScr(e.r, e.q), el = hxTok(e.id);
-      hxBurst(p.x, p.y, HX[e.c].col, 34, 140); hxAdd("shatter", Array.from({ length: 12 }, (_, i) => `<i style="--a:${i * 30}deg;--d:${(60 + (i * 17) % 50)}px"></i>`).join(""), p.x, p.y, 1000).style.setProperty("--c", hxTmC(e.tm));
+      hxBoom(p.x, p.y, HX[e.c].e, false); hxAdd("shatter", Array.from({ length: 12 }, (_, i) => `<i style="--a:${i * 30}deg;--d:${(60 + (i * 17) % 50)}px"></i>`).join(""), p.x, p.y, 1000).style.setProperty("--c", hxTmC(e.tm));
       hxAdd("ko", `<b>KO</b>`, p.x, p.y, 1100);
       if (el){ el.classList.add("dying"); setTimeout(() => el.remove(), 500); }
       hxShake(true); await hxWait(900); break;
@@ -12454,6 +12478,7 @@ async function hxFx(e, snap){
       const myTm = st.players.includes(me2) ? hxTeamOf(st, me2) : null, w = e.w;
       const res = w === "draw" ? "DRAW" : !myTm || w === myTm ? "VICTORY" : "DEFEAT";
       hxAdd("flash", "", null, null, 800); hxShake(true);
+      if (res !== "DEFEAT"){ for (let i = 0; i < 6; i++) setTimeout(() => { const x = innerWidth * (.15 + Math.random() * .7), y = innerHeight * (.25 + Math.random() * .4); hxP.sparks(x, y, i % 2 ? "gold" : "light", 60, 1.4); hxP.ring(x, y, "gold", 120, 4); }, i * 260); }
       hxBanner("fin " + res.toLowerCase(), `<span class="rays"></span><b>${res}</b>`, 2600);
       await hxWait(2400); break;
     }
@@ -12465,8 +12490,8 @@ async function hxBattleFx(e, st){
   // 盤上：攻撃の軌跡
   const aP = A.id ? hxTokScr(A.id) : null, dP = hxTokScr(D.id);
   if (aP && dP){
-    if (e.rng){ const b = hxAdd("beam", "", aP.x, aP.y, 600); const dx = dP.x - aP.x, dy = dP.y - aP.y; b.style.setProperty("--len", Math.hypot(dx, dy) + "px"); b.style.setProperty("--ang", Math.atan2(dy, dx) + "rad"); b.style.setProperty("--c", HX[A.c].col); }
-    else { const el = hxTok(A.id); if (el){ const base = el.style.transform; el.animate([{ transform: base }, { transform: base + ` translate(${(dP.x - aP.x) / aP.s * .4}px,${(dP.y - aP.y) / aP.s * .4}px) scale(1.2)` }, { transform: base }], { duration: 380 * hxSpeed }); } }
+    if (e.rng){ setTimeout(() => hxP.sparks(dP.x, dP.y, HX[A.c].e, 24, .7), 260 * hxSpeed); const b = hxAdd("beam", "", aP.x, aP.y, 600); const dx = dP.x - aP.x, dy = dP.y - aP.y; b.style.setProperty("--len", Math.hypot(dx, dy) + "px"); b.style.setProperty("--ang", Math.atan2(dy, dx) + "rad"); b.style.setProperty("--c", HX[A.c].col); }
+    else { setTimeout(() => hxP.slash(dP.x, dP.y, HX[A.c].e, 70, -.7, 3), 200 * hxSpeed); const el = hxTok(A.id); if (el){ const base = el.style.transform; el.animate([{ transform: base }, { transform: base + ` translate(${(dP.x - aP.x) / aP.s * .4}px,${(dP.y - aP.y) / aP.s * .4}px) scale(1.2)` }, { transform: base }], { duration: 380 * hxSpeed }); } }
     await hxWait(360);
   }
   const ac = A.gim ? "#FF7A2A" : hxTmC(A.tm), dc = hxTmC(D.tm);
@@ -12475,6 +12500,8 @@ async function hxBattleFx(e, st){
     <div class="hxbt-calc"><small>${lbl}</small><div class="hxbt-eq"><b class="bv">${v}</b><i>+</i><span class="dz">${dice.map(() => hxDieHtml(1)).join("")}</span><i>=</i><b class="tot">?</b></div><div class="hxbt-why">${(why || []).map(esc).join("　")}</div></div></div>`;
   const ov = hxAdd("hxbt", `<div class="hxbt-bg" style="--ac:${ac};--dc:${dc}"><i class="s1"></i><i class="s2"></i></div>${e.tag ? `<div class="hxbt-tag">${esc(e.tag)}</div>` : ""}
     ${side("a", A, e.av, e.aw, e.ad, "ATTACK")}<div class="hxbt-vs"><b>VS</b></div>${side("d", D, e.dv, e.dw, e.dd, "DEFENSE")}<div class="hxbt-res"></div><div class="hxbt-skip">タップでスキップ</div>`);
+  ov.style.setProperty("--ae", (HX_ELC[A.gim ? "fire" : HX[A.c].e] || HX_ELC.fire)[2]);
+  setTimeout(() => { const ra = ov.querySelector(".hxbt-row.a .hxbt-card"); if (ra){ const r = ra.getBoundingClientRect(); hxP.embers(r.left + r.width / 2, r.bottom, A.gim ? "fire" : HX[A.c].e, 18, r.width / 2); } }, 300);
   let skipped = false;
   ov.onclick = () => { skipped = true; hxSpeed = .15; if (hxWait.last) hxWait.last(); };
   await hxWait(650);
@@ -12494,8 +12521,13 @@ async function hxBattleFx(e, st){
   const res = ov.querySelector(".hxbt-res");
   if (e.hit){
     res.innerHTML = `<b>${e.big ? "会心！" : "命中！"}</b><span>${e.dmg}ダメージ</span>`; res.className = "hxbt-res hit"; ov.classList.add("hit");
-    hxShake(true); const r = ov.querySelector(".hxbt-row.d .hxbt-card").getBoundingClientRect(); hxBurst(r.left + r.width / 2, r.top + r.height / 2, "#FF3D55", 30, 150);
-  } else { res.innerHTML = `<b>防いだ！</b>`; res.className = "hxbt-res miss"; ov.classList.add("miss"); if (navigator.vibrate) navigator.vibrate(20); }
+    hxShake(true); const r = ov.querySelector(".hxbt-row.d .hxbt-card").getBoundingClientRect(), x0 = r.left + r.width / 2, y0 = r.top + r.height / 2, ael = A.gim ? "fire" : HX[A.c].e;
+    hxP.slash(x0, y0, ael, Math.max(innerWidth * 1.1, 360), -.42, 8); setTimeout(() => hxP.slash(x0, y0, "light", innerWidth * .8, .5, 4), 90);
+    hxP.sparks(x0, y0, ael, 110, 1.6); hxP.sparks(x0, y0, "blood", 30, 1); hxP.flash(x0, y0, ael, 260); hxP.ring(x0, y0, ael, 220, 8);
+    if (ael === "fire" || e.big) hxP.fire(x0, y0, ael, 1.1); else hxP.embers(x0, y0, ael, 30, 60);
+  } else { res.innerHTML = `<b>防いだ！</b>`; res.className = "hxbt-res miss"; ov.classList.add("miss"); if (navigator.vibrate) navigator.vibrate(20);
+    const r = ov.querySelector(".hxbt-row.d .hxbt-card").getBoundingClientRect(), x0 = r.left + r.width / 2, y0 = r.top + r.height / 2;
+    hxP.sparks(x0, r.top + 10, "water", 50, 1.1, -Math.PI / 2); hxP.ring(x0, y0, "water", 140, 6); hxP.flash(x0, y0, "water", 160); }
   await hxWait(1150);
   ov.classList.add("out"); await hxWait(260); ov.remove();
 }
@@ -12542,6 +12574,157 @@ const HX_ICON = `<span class="gic hxi"><svg viewBox="0 0 64 64" aria-hidden="tru
   <g transform="translate(32 33) rotate(-40)"><path d="M0 -24L3.4 -19V8H-3.4V-19Z" fill="url(#gHxM)" stroke="#0A0C16" stroke-width="1.2"/><rect x="-8" y="8" width="16" height="3.4" fill="#E8B12A" stroke="#0A0C16" stroke-width="1"/><rect x="-1.8" y="11.4" width="3.6" height="7" fill="#3A2A20"/></g>
   <g transform="translate(32 33) rotate(40)"><path d="M0 -24L3.4 -19V8H-3.4V-19Z" fill="url(#gHxM)" stroke="#0A0C16" stroke-width="1.2"/><rect x="-8" y="8" width="16" height="3.4" fill="#E8B12A" stroke="#0A0C16" stroke-width="1"/><rect x="-1.8" y="11.4" width="3.6" height="7" fill="#3A2A20"/></g>
   <path d="M32 40L38 46L32 54L26 46Z" fill="#38B6FF" stroke="#0A0C16" stroke-width="1.2"/><path d="M32 10L36 14L32 19L28 14Z" fill="#FF3D55" stroke="#0A0C16" stroke-width="1.2"/></svg></span>`;
+
+let hxCurStage = null;
+function hxSetStage(stage){
+  if (hxCurStage === stage) return; hxCurStage = stage;
+  const a = $("#hxg"); a.dataset.stage = stage;
+  const sc = $("#hxScape"); if (sc) sc.innerHTML = HX_SCAPE[stage] || "";
+  hxAmbient(stage);
+}
+/* 背景の山並み（ステージごと） */
+const HX_SCAPE = {
+  volcano: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><defs><linearGradient id="hxLv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A2A"/><stop offset="1" stop-color="#7A1406"/></linearGradient></defs>
+    <path d="M0 210L40 170L70 190L120 120L150 140L175 95L200 60L222 92L240 80L270 130L300 115L340 165L370 150L400 180V300H0Z" fill="#160606"/>
+    <path d="M196 64L200 60L206 70L203 90L210 120L204 160" stroke="url(#hxLv)" stroke-width="3" fill="none" opacity=".9"/><path d="M200 60Q186 40 198 20Q205 6 196 -6" stroke="rgba(80,40,30,.6)" stroke-width="16" fill="none" stroke-linecap="round"/>
+    <path d="M0 250L60 220L110 240L170 205L230 235L290 210L350 238L400 220V300H0Z" fill="#0A0303"/><path d="M60 300L90 262L130 280L150 300M250 300L280 270L320 286" stroke="#FF5A1F" stroke-width="1.6" fill="none" opacity=".55"/></svg>`,
+  snow: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><circle cx="318" cy="56" r="26" fill="#EAF4FF" opacity=".9"/><circle cx="318" cy="56" r="60" fill="#9CC8FF" opacity=".12"/>
+    <path d="M0 200L50 140L80 165L130 90L165 130L200 100L250 160L290 120L340 170L400 130V300H0Z" fill="#0E2140"/><path d="M130 90L118 108L128 104L136 112L142 102L150 108ZM290 120L282 132L292 128L300 134ZM50 140L42 152L52 148L58 154Z" fill="#CFE3FF" opacity=".8"/>
+    <path d="M0 245L70 215L120 232L190 200L250 228L320 205L400 230V300H0Z" fill="#081428"/></svg>`,
+  jungle: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><path d="M0 210Q40 160 80 190T160 170T240 180T320 160T400 185V300H0Z" fill="#05261A"/>
+    <g fill="#031A11"><path d="M30 300V170Q20 150 34 140Q48 150 38 170V300Z"/><path d="M340 300V150Q328 128 344 116Q360 128 348 150V300Z"/><path d="M370 300V190Q362 176 374 168Q386 176 378 190V300Z"/><ellipse cx="34" cy="140" rx="30" ry="12"/><ellipse cx="344" cy="116" rx="34" ry="13"/></g>
+    <path d="M0 250Q60 225 120 240T240 235T400 245V300H0Z" fill="#021009"/></svg>`
+};
+
+/* ---- ヘクスレイド：パーティクル演出（canvas・加算合成で火花・炎・残光） ---- */
+const HX_ELC = {
+  fire:  ["#FFF6D0", "#FFB040", "#FF5A1F", "#B3200A"],
+  water: ["#E8FAFF", "#7FD8FF", "#2A8BFF", "#0A3A8A"],
+  wind:  ["#F2FFEA", "#9AF5B0", "#2ACF7A", "#0A6A3A"],
+  light: ["#FFFFFF", "#FFEFA8", "#FFC02A", "#A86A00"],
+  dark:  ["#F6E8FF", "#C890FF", "#8A3CFF", "#3A0A6A"],
+  gold:  ["#FFFFFF", "#FFE38A", "#FFB400", "#8A5A00"],
+  blood: ["#FFE8E8", "#FF7A88", "#FF2A44", "#7A0A1A"]
+};
+const hxP = (() => {
+  let cv = null, cx = null, ps = [], raf = 0, W = 0, H = 0, dpr = 1;
+  function ensure(){
+    if (cv && cv.isConnected) return;
+    const l = hxLayer();
+    cv = document.createElement("canvas"); cv.className = "hxcv"; l.appendChild(cv); cx = cv.getContext("2d");
+    size();
+  }
+  function size(){ if (!cv) return; dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; }
+  window.addEventListener("resize", size);
+  const R = (a, b) => a + Math.random() * (b - a);
+  function add(p){ ensure(); ps.push(p); if (ps.length > 900) ps.splice(0, ps.length - 900); if (!raf) raf = requestAnimationFrame(loop); }
+  let last = 0;
+  function loop(t){
+    const dt = Math.min(40, last ? t - last : 16) / 16.67; last = t;
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, W, H);
+    ps = ps.filter(p => (p.age += dt) < p.life);
+    // 煙（通常合成）→ 光もの（加算合成）
+    cx.globalCompositeOperation = "source-over";
+    ps.forEach(p => { if (p.k === "smoke") draw(p, dt); });
+    cx.globalCompositeOperation = "lighter";
+    ps.forEach(p => { if (p.k !== "smoke") draw(p, dt); });
+    if (ps.length) raf = requestAnimationFrame(loop); else { raf = 0; last = 0; cx.clearRect(0, 0, W, H); }
+  }
+  function draw(p, dt){
+    const f = p.age / p.life;
+    if (p.k === "spark"){
+      p.vx *= Math.pow(p.drag, dt); p.vy = p.vy * Math.pow(p.drag, dt) + p.g * dt;
+      const ox = p.x, oy = p.y; p.x += p.vx * dt; p.y += p.vy * dt;
+      const a = 1 - f;
+      cx.strokeStyle = p.c; cx.globalAlpha = a; cx.lineWidth = p.w * (1 - f * .6); cx.lineCap = "round";
+      cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(ox - p.vx * p.tail, oy - p.vy * p.tail); cx.stroke();
+      cx.globalAlpha = a * .9; cx.fillStyle = "#FFF8E0"; cx.beginPath(); cx.arc(p.x, p.y, p.w * .55, 0, 7); cx.fill();
+    } else if (p.k === "ember"){
+      p.x += (p.vx + Math.sin((p.age + p.ph) * .08) * .4) * dt; p.y += p.vy * dt;
+      const a = (1 - f) * (.6 + .4 * Math.sin(p.age * .5 + p.ph));
+      glow(p.x, p.y, p.r * 3, p.c, a * .5); cx.globalAlpha = a; cx.fillStyle = "#FFF4D0"; cx.beginPath(); cx.arc(p.x, p.y, p.r * .6, 0, 7); cx.fill();
+    } else if (p.k === "flame"){
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy -= .05 * dt; p.vx *= .97;
+      const r = p.r * (.5 + f * 1.4), pal = p.pal, col = f < .25 ? pal[1] : f < .55 ? pal[2] : pal[3];
+      glow(p.x, p.y, r, col, (1 - f) * .55);
+    } else if (p.k === "smoke"){
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy -= .02 * dt;
+      const r = p.r * (.6 + f * 1.6), g = cx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+      g.addColorStop(0, `rgba(20,16,18,${(.55 * (1 - f)).toFixed(3)})`); g.addColorStop(1, "rgba(20,16,18,0)");
+      cx.globalAlpha = 1; cx.fillStyle = g; cx.beginPath(); cx.arc(p.x, p.y, r, 0, 7); cx.fill();
+    } else if (p.k === "ring"){
+      const r = p.r0 + (p.r1 - p.r0) * (1 - Math.pow(1 - f, 3));
+      cx.globalAlpha = (1 - f) * .9; cx.strokeStyle = p.c; cx.lineWidth = p.w * (1 - f) + .5; cx.beginPath(); cx.arc(p.x, p.y, r, 0, 7); cx.stroke();
+    } else if (p.k === "flash"){
+      glow(p.x, p.y, p.r * (.6 + f * .8), p.c, (1 - f) * p.a);
+    } else if (p.k === "slash"){
+      // 光の斬撃：白い芯＋色の残光。前半で伸び、後半で細くなって消える
+      const grow = Math.min(1, f * 4), a = f < .25 ? 1 : 1 - (f - .25) / .75;
+      const { x, y, len, ang, bend } = p, c = Math.cos(ang), s = Math.sin(ang);
+      const sx = x - c * len / 2, sy = y - s * len / 2, ex = sx + c * len * grow, ey = sy + s * len * grow;
+      const mx = (sx + ex) / 2 - s * bend * grow, my = (sy + ey) / 2 + c * bend * grow;
+      [[p.w * 3.2, p.pal[2], .35], [p.w * 1.6, p.pal[1], .8], [p.w * .55, "#FFFFFF", 1]].forEach(([w, col, al]) => {
+        cx.globalAlpha = a * al; cx.strokeStyle = col; cx.lineWidth = w * (1 - f * .7); cx.lineCap = "round";
+        cx.beginPath(); cx.moveTo(sx, sy); cx.quadraticCurveTo(mx, my, ex, ey); cx.stroke();
+      });
+    } else if (p.k === "snow"){
+      p.x += (p.vx + Math.sin((p.age + p.ph) * .03) * .5) * dt; p.y += p.vy * dt;
+      cx.globalAlpha = Math.min(1, (1 - f) * 2) * .8; cx.fillStyle = "#EAF6FF"; cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 7); cx.fill();
+    }
+  }
+  function glow(x, y, r, col, a){
+    if (a <= 0 || r <= 0) return;
+    const g = cx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, col); g.addColorStop(.35, col + "AA"); g.addColorStop(1, col + "00");
+    cx.globalAlpha = Math.min(1, a); cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, r, 0, 7); cx.fill();
+  }
+  const pal = el => HX_ELC[el] || HX_ELC.fire;
+  return {
+    sparks(x, y, el = "fire", n = 40, pow = 1, dir = null){
+      const P = pal(el);
+      for (let i = 0; i < n; i++){
+        const a = dir == null ? R(0, Math.PI * 2) : dir + R(-.7, .7), v = R(3, 11) * pow;
+        add({ k: "spark", x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - R(0, 3), g: .22, drag: .93, tail: R(1.2, 2.6), w: R(1.2, 2.8), c: P[R(0, 1) < .5 ? 1 : 2], age: 0, life: R(22, 50) });
+      }
+    },
+    embers(x, y, el = "fire", n = 20, spread = 60){
+      const P = pal(el);
+      for (let i = 0; i < n; i++) add({ k: "ember", x: x + R(-spread, spread), y: y + R(-spread / 2, spread / 2), vx: R(-.6, .6), vy: R(-2.4, -.6), r: R(1.2, 2.8), c: P[2], ph: R(0, 50), age: 0, life: R(50, 110) });
+    },
+    fire(x, y, el = "fire", scale = 1){
+      const P = pal(el);
+      add({ k: "flash", x, y, r: 160 * scale, c: P[1], a: .9, age: 0, life: 18 });
+      for (let i = 0; i < 26 * scale; i++){ const a = R(0, Math.PI * 2), v = R(.5, 4) * scale; add({ k: "flame", x: x + R(-10, 10), y: y + R(-10, 10), vx: Math.cos(a) * v, vy: Math.sin(a) * v - R(.5, 2.5), r: R(22, 46) * scale, pal: P, age: 0, life: R(28, 55) }); }
+      for (let i = 0; i < 10 * scale; i++) add({ k: "smoke", x: x + R(-20, 20), y: y + R(-10, 10), vx: R(-.8, .8), vy: R(-1.6, -.4), r: R(28, 50) * scale, age: 0, life: R(60, 100) });
+    },
+    ring(x, y, el = "fire", r1 = 160, w = 6){ add({ k: "ring", x, y, r0: 6, r1, w, c: pal(el)[1], age: 0, life: 32 }); },
+    flash(x, y, el = "fire", r = 200){ add({ k: "flash", x, y, r, c: pal(el)[1], a: 1, age: 0, life: 16 }); },
+    slash(x, y, el = "light", len = 320, ang = -.45, w = 5){ add({ k: "slash", x, y, len, ang, bend: len * R(.12, .22) * (Math.random() < .5 ? -1 : 1), w, pal: pal(el), age: 0, life: 30 }); },
+    snow(n = 1){ for (let i = 0; i < n; i++) add({ k: "snow", x: R(-20, innerWidth + 20), y: -10, vx: R(-.6, .2), vy: R(.8, 2), r: R(.8, 2.4), ph: R(0, 99), age: 0, life: (innerHeight + 20) / 1.2 }); },
+    ambEmber(el){ const P = pal(el); add({ k: "ember", x: R(0, innerWidth), y: innerHeight + 10, vx: R(-.4, .4), vy: R(-1.8, -.6), r: R(1, 2.4), c: P[2], ph: R(0, 50), age: 0, life: R(200, 360) }); },
+    clear(){ ps = []; }
+  };
+})();
+/* 大技：撃破・財宝破壊・召喚などの組み合わせ */
+const hxBoom = (x, y, el, big) => { hxP.fire(x, y, el, big ? 1.6 : 1); hxP.sparks(x, y, el, big ? 90 : 50, big ? 1.5 : 1.1); hxP.ring(x, y, el, big ? 260 : 150, big ? 9 : 6); hxP.embers(x, y, el, big ? 40 : 18, big ? 90 : 50); };
+/* ステージ（背景の世界） */
+const HX_STAGES = {
+  volcano: { n: "灼熱の火山", el: "fire" },
+  snow:    { n: "凍てつく雪原", el: "water" },
+  jungle:  { n: "古の密林", el: "wind" }
+};
+const hxStageOf = (g) => (g.st && g.st.stage) || ["volcano", "snow", "jungle"][parseInt(String(g.id || "0").replace(/[^0-9a-f]/g, "").slice(0, 6) || "0", 16) % 3];
+let hxAmbT = null;
+function hxAmbient(stage){
+  clearInterval(hxAmbT); hxAmbT = null;
+  if (!stage) return;
+  hxAmbT = setInterval(() => {
+    if (document.hidden || !hxId) return;
+    if (stage === "snow") hxP.snow(2);
+    else if (stage === "volcano") hxP.ambEmber("fire");
+    else if (Math.random() < .6) hxP.ambEmber("wind");
+  }, stage === "snow" ? 90 : 160);
+}
 
 
 document.addEventListener("contextmenu", e => { if (e.target.closest && e.target.closest(".arena")) e.preventDefault(); });
