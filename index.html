@@ -2566,6 +2566,11 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .sbfx .dtr{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
 .sbfx .dtrr{display:flex;justify-content:center}
 .sbfx .dtrr>span{display:inline-block;margin:0 -8px;animation:dtrash var(--ms) ease-in both;animation-delay:calc(var(--i) * .08s)}
+.sbfx .dml .dtrr>span{animation-name:dmill;animation-timing-function:ease-in-out}
+@keyframes dmill{0%{transform:translateY(-14vh) rotateY(90deg) scale(.7);opacity:0}22%{transform:none;opacity:1}70%{transform:none;opacity:1}100%{transform:translate(-22vw,18vh) rotate(-18deg) scale(.55);opacity:0}}
+.sbfx .dml .dmlsrc{font-size:13px;font-weight:900;color:#fff;background:#3A2A18;border:2px solid #E8B12A;border-radius:99px;padding:2px 12px;animation:fxfade var(--ms) forwards}
+.sbfx .avia{position:absolute;left:50%;top:calc(50% - 150px);transform:translateX(-50%);z-index:3;white-space:nowrap;font-size:14px;font-weight:900;color:#4A2A0C;background:linear-gradient(180deg,#FFF3C4,#E8B12A);border:2px solid #5A3416;border-radius:99px;padding:3px 14px;box-shadow:0 3px 0 #5A3416;animation:avia var(--ms) forwards}
+@keyframes avia{0%{opacity:0;transform:translate(-50%,-10px) scale(.7)}12%{opacity:1;transform:translate(-50%,0) scale(1.08)}20%,85%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0}}
 @keyframes dtrash{0%{transform:translateY(-20vh) scale(.6);opacity:0}25%{transform:none;opacity:1}65%{transform:none;opacity:1;filter:none}100%{transform:translateY(16vh) rotate(25deg) scale(.6);opacity:0;filter:grayscale(1) brightness(.4)}}
 
 .dmpop .nb[disabled]{background:#F1F2F6;opacity:1;color:var(--mute)}
@@ -9166,6 +9171,10 @@ function dmOnGain(st, pid, c, dest){
   if (T && pid === T.pid && c !== "curse") st.players.forEach(o => { if (o === pid) return; if ((st.pl[o].next || []).some(e => e.blk && e.card === c) && (st.supply.curse || 0) > 0){ st.supply.curse--; st.pl[pid].disc.push("curse"); dmL(st, `🚧封鎖：${pname(pid)}は呪いも獲得`); dmFxAdd(st, { k: "curse", p: pid }); } else if ((st.pl[o].next || []).some(e => e.blk && e.card === c)) dmMiss(st, pid, "curse"); });
 }
 /* 持続：次のターンの最初に効果。カードはそれまで場に残る */
+/* 山札などから公開して捨て札にしたカード：全員に見える演出（src = 効果の元のカード） */
+const dmMillFx = (st, pid, cs, src) => { if (cs && cs.length) dmFxAdd(st, { k: "mill", p: pid, cs: cs.slice(0, 12), cnt: cs.length, c: src }); };
+/* 手札以外から使ったアクション（家臣・ゴーレム・玉座の間など）も、手札から使った時と同じ演出を全員に（via = 元のカード） */
+const dmPlayFx = (st, pid, c, via, i) => { if (dmIs(c, "a")) dmFxAdd(st, { k: "play", p: pid, c, via, i }); };
 const dmVpt = (st, pid, n, why) => { if (!n) return; st.pl[pid].vpt = (st.pl[pid].vpt || 0) + n; dmL(st, `🟢${pname(pid)}が勝利点トークン+${n}${why ? `（${why}）` : ""}`); };
 const dmVal0 = c => c === "curse" ? -3 : dmIs(c, "t") ? (DM[c].v || 1) * 2 : DM[c].c;
 const dmDur = (st, pid, c, e = {}) => { const P = st.pl[pid]; P.next = [...(P.next || []), { c, ...e }]; };
@@ -9249,7 +9258,7 @@ const DMF = {
   harbinger(st, pid){ const P = st.pl[pid]; if (P.disc.length) dmAsk(st, { pid, k: "list", cards: P.disc.slice(), min: 0, max: 1, title: "前駆者：捨て札から山札の上に置くカード", desc: "置かなくてもよい", ok: "山札の上に置く", then: { t: "harb" } }); },
   vassal(st, pid){
     const c = dmTop(st, pid); if (c == null) return;
-    st.pl[pid].disc.push(c); dmL(st, `家臣：${pname(pid)}が${DM[c].n}を捨てた`);
+    st.pl[pid].disc.push(c); dmL(st, `家臣：${pname(pid)}が${DM[c].n}を捨てた`); dmMillFx(st, pid, [c], "vassal");
     if (dmIs(c, "a")) dmAsk(st, { pid, k: "yn", card: c, title: `家臣：${DM[c].n}を使う？`, desc: "アクションは消費しない", then: { t: "vassal", c } });
   },
   workshop(st, pid){ dmAskGain(st, pid, 4, null, "disc", "工房：獲得するカード（コスト4以下）"); },
@@ -9359,7 +9368,7 @@ const DMF = {
 /* --- 収穫祭 --- */
   hamlet(st, pid){ dmPush(st, { t: "ask", a: { pid, k: "hand", min: 0, max: 1, title: "村落：1枚捨てて +1アクション？", desc: "捨てなくてもよい", ok: "捨てる", then: { t: "ham", what: "a" } } }, { t: "ask", a: { pid, k: "hand", min: 0, max: 1, title: "村落：1枚捨てて +1購入？", desc: "捨てなくてもよい", ok: "捨てる", then: { t: "ham", what: "b" } } }); },
   menagerie(st, pid){ const h = st.pl[pid].hand, uniq = new Set(h).size === h.length; dmDraw(st, pid, uniq ? 3 : 1); dmL(st, `動物園：${uniq ? "手札に同じカードがないので+3カード" : "+1カード"}`); },
-  farmingvillage(st, pid){ const P = st.pl[pid], rev = []; for (let g = 0; g < 200; g++){ const c = dmTop(st, pid); if (c == null) break; if (dmIs(c, "a") || dmIs(c, "t")){ P.hand.push(c); dmL(st, `農村：${DM[c].n}を手札に`); break; } rev.push(c); } if (rev.length) P.disc.push(...rev); },
+  farmingvillage(st, pid){ const P = st.pl[pid], rev = []; for (let g = 0; g < 200; g++){ const c = dmTop(st, pid); if (c == null) break; if (dmIs(c, "a") || dmIs(c, "t")){ P.hand.push(c); dmL(st, `農村：${DM[c].n}を手札に`); break; } rev.push(c); } if (rev.length){ P.disc.push(...rev); dmMillFx(st, pid, rev, "farmingvillage"); } },
   horsetraders(st, pid){ const h = st.pl[pid].hand; if (h.length) dmAsk(st, { pid, k: "hand", min: Math.min(2, h.length), max: 2, title: "馬商人：捨てる2枚", ok: "捨てる", then: { t: "discard" } }); },
   remake(st, pid){ [1, 2].forEach(k => dmPush(st, { t: "ask", a: { pid, k: "hand", min: 1, max: 1, title: `再建（${k}回目）：廃棄するカード`, desc: "コストがちょうど1多いカードを獲得", ok: "廃棄する", then: { t: "upg", nm: "再建" } } })); },
   tournament(st, pid){
@@ -9368,8 +9377,8 @@ const DMF = {
     st.players.forEach(p => { if (st.pl[p].hand.includes("province")) dmAsk(st, { pid: p, k: "yn", card: "province", title: p === pid ? "馬上槍試合：属州を公開して捨てる？" : `馬上槍試合：属州を公開する？`, desc: p === pid ? "捨てると褒賞か公領を山札の上に獲得" : `${pname(pid)}の+1カード+$1を防げる`, then: { t: "tour1" } }); });
   },
   youngwitch(st, pid){ const h = st.pl[pid].hand; if (h.length) dmAsk(st, { pid, k: "hand", min: Math.min(2, h.length), max: 2, title: "魔女娘：捨てる2枚", ok: "捨てる", then: { t: "discard" } }); },
-  harvest(st, pid){ const P = st.pl[pid], rev = []; for (let i = 0; i < 4; i++){ const c = dmTop(st, pid); if (c != null) rev.push(c); } P.disc.push(...rev); const n = new Set(rev).size; st.turn.coins += n; if (rev.length) dmL(st, `収穫：${dmNames(rev)}を公開して捨て、+$${n}`); },
-  huntingparty(st, pid){ const P = st.pl[pid], rev = []; for (let g = 0; g < 200; g++){ const c = dmTop(st, pid); if (c == null) break; if (!P.hand.includes(c)){ P.hand.push(c); dmL(st, `狩猟団：${DM[c].n}を手札に`); break; } rev.push(c); } if (rev.length) P.disc.push(...rev); },
+  harvest(st, pid){ const P = st.pl[pid], rev = []; for (let i = 0; i < 4; i++){ const c = dmTop(st, pid); if (c != null) rev.push(c); } P.disc.push(...rev); dmMillFx(st, pid, rev, "harvest"); const n = new Set(rev).size; st.turn.coins += n; if (rev.length) dmL(st, `収穫：${dmNames(rev)}を公開して捨て、+$${n}`); },
+  huntingparty(st, pid){ const P = st.pl[pid], rev = []; for (let g = 0; g < 200; g++){ const c = dmTop(st, pid); if (c == null) break; if (!P.hand.includes(c)){ P.hand.push(c); dmL(st, `狩猟団：${DM[c].n}を手札に`); break; } rev.push(c); } if (rev.length){ P.disc.push(...rev); dmMillFx(st, pid, rev, "huntingparty"); } },
   bagofgold(st, pid){ if (dmGain(st, pid, "gold", "deck")){ dmL(st, "金貨袋：金貨を山札の上に獲得"); dmFxAdd(st, { k: "gain", p: pid, c: "gold", dest: "deck" }); } },
   followers(st, pid){ if (dmGain(st, pid, "estate")){ dmL(st, `${pname(pid)}が屋敷を獲得`); dmFxAdd(st, { k: "gain", p: pid, c: "estate", dest: "disc" }); } },
   princess(st, pid){ st.turn.red = (st.turn.red || 0) + 2; dmL(st, "王女：このターン、コストが$2少なくなる"); },
@@ -9387,7 +9396,7 @@ const DMF = {
   golem(st, pid){
     const P = st.pl[pid], found = [], rev = [];
     for (let g = 0; g < 300 && found.length < 2; g++){ const c = dmTop(st, pid); if (c == null) break; if (dmIs(c, "a") && c !== "golem") found.push(c); else rev.push(c); }
-    if (rev.length) P.disc.push(...rev);
+    if (rev.length){ P.disc.push(...rev); dmMillFx(st, pid, rev, "golem"); }
     if (found.length){ dmL(st, `ゴーレム：${dmNames(found)}を使う`); dmPush(st, ...found.map(c => ({ t: "gplay", pid, c }))); }
   },
   apprentice(st, pid){ if (st.pl[pid].hand.length) dmAsk(st, { pid, k: "hand", min: 1, max: 1, title: "弟子：廃棄するカード", desc: "コスト1につき+1カード（ポーションは+2）", ok: "廃棄する", then: { t: "appr" } }); },
@@ -9432,10 +9441,10 @@ const DMA = {
   cutpurse(st, tg){ const P = st.pl[tg]; if (P.hand.includes("copper")){ dmTake(P.hand, ["copper"]); P.disc.push("copper"); dmL(st, `${pname(tg)}は銅貨を捨てた`); dmFxAdd(st, { k: "dis", p: tg, cs: ["copper"] }); } else dmL(st, `${pname(tg)}は手札を公開（銅貨なし）`); },
   seawitch(st, tg){ if (dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
 /* --- 収穫祭・錬金術 --- */
-  fortuneteller(st, tg){ const P = st.pl[tg], rev = []; for (let g = 0; g < 300; g++){ const c = dmTop(st, tg); if (c == null) break; if (dmIs(c, "v") || c === "curse"){ P.deck.push(c); dmL(st, `${pname(tg)}は${DM[c].n}を山札の上に`); break; } rev.push(c); } if (rev.length) P.disc.push(...rev); },
+  fortuneteller(st, tg){ const P = st.pl[tg], rev = []; for (let g = 0; g < 300; g++){ const c = dmTop(st, tg); if (c == null) break; if (dmIs(c, "v") || c === "curse"){ P.deck.push(c); dmL(st, `${pname(tg)}は${DM[c].n}を山札の上に`); break; } rev.push(c); } if (rev.length){ P.disc.push(...rev); dmMillFx(st, tg, rev, "fortuneteller"); } },
   youngwitch(st, tg){ if (st.bane && st.pl[tg].hand.includes(st.bane)){ dmL(st, `🛡️${pname(tg)}は災いカード（${DM[st.bane].n}）を公開して防いだ`); return; } if (dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
   jester(st, tg, pid){
-    const c = dmTop(st, tg); if (c == null) return; st.pl[tg].disc.push(c);
+    const c = dmTop(st, tg); if (c == null) return; st.pl[tg].disc.push(c); dmMillFx(st, tg, [c], "jester");
     if (dmIs(c, "v")){ if (dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}は${DM[c].n}を捨てて呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } return; }
     dmL(st, `${pname(tg)}は${DM[c].n}を捨てた`);
     if (st.supply[c] > 0) dmAsk(st, { pid, k: "opt", card: c, opts: [`${pname(tg)}が${DM[c].n}を獲得`, `自分が${DM[c].n}を獲得`], min: 1, max: 1, title: `道化師：${DM[c].n}を獲得するのは？`, then: { t: "jest", c, tg } });
@@ -9450,7 +9459,7 @@ const DMA = {
     const P = st.pl[tg], rev = []; for (let i = 0; i < 3; i++){ const c = dmTop(st, tg); if (c != null) rev.push(c); }
     if (!rev.length) return;
     const ds = rev.filter(c => dmIs(c, "a") || dmIs(c, "t")), back = rev.filter(c => !(dmIs(c, "a") || dmIs(c, "t")));
-    P.disc.push(...ds); P.deck.push(...back.reverse()); if (back.length) dmFxAdd(st, { k: "top", p: tg, cnt: back.length, cs: back.slice() });
+    P.disc.push(...ds); dmMillFx(st, tg, ds, "rabble"); P.deck.push(...back.reverse()); if (back.length) dmFxAdd(st, { k: "top", p: tg, cnt: back.length, cs: back.slice() });
     dmL(st, `${pname(tg)}は${dmNames(rev)}を公開${ds.length ? `、${dmNames(ds)}を捨てた` : ""}`);
   },
 };
@@ -9465,13 +9474,13 @@ const DMT = {
     tg.forEach(o => { const P = st.pl[o]; if (P.hand.includes("diplomat") && P.hand.length >= 5){ dmDraw(st, o, 2); dmL(st, `🤝${pname(o)}は外交官で2枚引いて3枚捨てる`); dmAsk(st, { pid: o, k: "hand", min: Math.min(3, P.hand.length), max: 3, title: "外交官：捨てる3枚", ok: "捨てる", then: { t: "discard" } }); } });
   },
   atk2(st, t){ t.hit.forEach(o => DMA[t.c](st, o, t.pid)); },
-  replay(st, t){ dmPlayCard(st, t.pid, t.c); },
+  replay(st, t){ if (t.via) dmPlayFx(st, t.pid, t.c, t.via, t.i); dmPlayCard(st, t.pid, t.c); },
   cellar(st, t){ const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); if (t.sel.length) dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); const n = dmDraw(st, t.pid, t.sel.length); dmL(st, `地下貯蔵庫：${t.sel.length}枚捨てて${n}枚引いた`); },
   trash(st, t){ if (!t.sel.length) return; dmTake(st.pl[t.pid].hand, t.sel); st.trash.push(...t.sel); dmL(st, `${pname(t.pid)}が${dmNames(t.sel)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: t.sel, h: 1 }); },
   discard(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel }); dmL(st, `${pname(t.pid)}が${t.sel.length}枚捨てた`); },
   todeck(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.deck.push(...t.sel); dmL(st, t.pub ? `${pname(t.pid)}が${dmNames(t.sel)}を山札の上に置いた` : `${pname(t.pid)}が手札${t.sel.length}枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, cnt: t.sel.length, cs: t.pub ? t.sel.slice() : null, hc: t.sel.slice() }); },   // 手札から伏せて置くカードは名前を出さない（役人は公開するので出す）
   harb(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid], c = t.sel[0]; dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `${pname(t.pid)}が捨て札から1枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, cnt: 1 }); },
-  vassal(st, t){ if (!t.yes) return; const P = st.pl[t.pid]; dmTake(P.disc, [t.c]); P.play.push(t.c); dmL(st, `家臣で${DM[t.c].n}を使った`); dmPlayCard(st, t.pid, t.c); },
+  vassal(st, t){ if (!t.yes) return; const P = st.pl[t.pid]; dmTake(P.disc, [t.c]); P.play.push(t.c); dmL(st, `家臣で${DM[t.c].n}を使った`); dmPlayFx(st, t.pid, t.c, "vassal"); dmPlayCard(st, t.pid, t.c); },
   ml(st, t){ if (!t.yes) return; dmTake(st.pl[t.pid].hand, ["copper"]); st.trash.push("copper"); st.turn.coins += 3; dmL(st, "金貸し：銅貨を廃棄して +$3"); dmFxAdd(st, { k: "trash", p: t.pid, cs: ["copper"] }); },
   remodel(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 2, dest: "disc", title: `改築：獲得するカード（コスト${DM[c].c + 2}以下）` }); },
   askgain(st, t){ dmAskGain(st, t.pid, t.max, t.filter, t.dest, t.title, t.after, t.exact); },
@@ -9479,12 +9488,12 @@ const DMT = {
     if (t.card && dmGain(st, t.pid, t.card, t.dest)){ dmL(st, `${pname(t.pid)}が${DM[t.card].n}を${t.dest === "hand" ? "手札に" : t.dest === "deck" ? "山札の上に" : ""}獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: t.card, dest: t.dest || "disc" }); }
     if (t.after) dmPush(st, { ...t.after, pid: t.pid, card: t.card });
   },
-  throne(st, t){ if (!t.sel.length) return; const c = t.sel[0], P = st.pl[t.pid]; dmTake(P.hand, [c]); P.play.push(c); dmL(st, `玉座の間：${DM[c].n}を2回使う`); dmPush(st, { t: "replay", pid: t.pid, c }, { t: "replay", pid: t.pid, c }); },
+  throne(st, t){ if (!t.sel.length) return; const c = t.sel[0], P = st.pl[t.pid]; dmTake(P.hand, [c]); P.play.push(c); dmL(st, `玉座の間：${DM[c].n}を2回使う`); dmPush(st, { t: "replay", pid: t.pid, c, via: "throne", i: 1 }, { t: "replay", pid: t.pid, c, via: "throne", i: 2 }); },
   lib(st, t){
     const P = st.pl[t.pid];
-    if (P.hand.length >= 7){ if (P.aside.length){ P.disc.push(...P.aside); P.aside = []; } return; }
+    if (P.hand.length >= 7){ if (P.aside.length){ P.disc.push(...P.aside); dmMillFx(st, t.pid, P.aside, "library"); P.aside = []; } return; }
     const c = dmTop(st, t.pid);
-    if (c == null){ if (P.aside.length){ P.disc.push(...P.aside); P.aside = []; } return; }
+    if (c == null){ if (P.aside.length){ P.disc.push(...P.aside); dmMillFx(st, t.pid, P.aside, "library"); P.aside = []; } return; }
     if (dmIs(c, "a")) dmAsk(st, { pid: t.pid, k: "yn", card: c, title: `書庫：${DM[c].n}を脇に置く？`, desc: "置くと手札に入らず、最後に捨てる", yes: "脇に置く", no: "手札に入れる", then: { t: "lib2", c } });
     else { P.hand.push(c); dmPush(st, { t: "lib", pid: t.pid }); }
   },
@@ -9497,7 +9506,7 @@ const DMT = {
   },
   sen2(st, t){
     const P = st.pl[t.pid], ds = t.sel.map(i => t.rest[i]), keep = t.rest.filter((_, i) => !t.sel.includes(i));
-    if (ds.length){ P.disc.push(...ds); dmL(st, `衛兵：${dmNames(ds)}を捨て札に`); }
+    if (ds.length){ P.disc.push(...ds); dmL(st, `衛兵：${dmNames(ds)}を捨て札に`); dmMillFx(st, t.pid, ds, "sentry"); }
     if (keep.length === 2 && keep[0] !== keep[1]) dmAsk(st, { pid: t.pid, k: "list", cards: keep, min: 1, max: 1, title: "衛兵：山札の一番上に置くカード", ok: "これを一番上に", then: { t: "sen3", keep } });
     else { P.deck.push(...keep); if (keep.length) dmFxAdd(st, { k: "top", p: t.pid, cnt: keep.length, cs: null }); }
   },
@@ -9506,7 +9515,7 @@ const DMT = {
   bandit(st, t){
     const P = st.pl[t.pid], tr = t.sel.map(i => t.rev[i]), rest = t.rev.filter((_, i) => !t.sel.includes(i));
     if (tr.length){ st.trash.push(...tr); dmL(st, `山賊：${pname(t.pid)}の${dmNames(tr)}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: tr }); }
-    P.disc.push(...rest);
+    P.disc.push(...rest); dmMillFx(st, t.pid, rest, "bandit");
   },
   /* --- 陰謀 --- */
   lurk(st, t){
@@ -9597,7 +9606,7 @@ const DMT = {
     st.trash.push(c); dmL(st, `見張り：${DM[c].n}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: [c] });
     if (rest.length) dmAsk(st, { pid: t.pid, k: "list", cards: rest, min: 1, max: 1, title: "見張り：捨て札にするカード", ok: "捨てる", then: { t: "look2", rest } });
   },
-  look2(st, t){ const P = st.pl[t.pid], c = t.rest[t.sel[0]], keep = t.rest.filter((_, i) => i !== t.sel[0]); P.disc.push(c); P.deck.push(...keep); if (keep.length) dmFxAdd(st, { k: "top", p: t.pid, cnt: keep.length, cs: null }); },
+  look2(st, t){ const P = st.pl[t.pid], c = t.rest[t.sel[0]], keep = t.rest.filter((_, i) => i !== t.sel[0]); P.disc.push(c); dmMillFx(st, t.pid, [c], "lookout"); P.deck.push(...keep); if (keep.length) dmFxAdd(st, { k: "top", p: t.pid, cnt: keep.length, cs: null }); },
   smug(st, t){ const c = t.cards[t.sel[0]]; if (c && dmGain(st, t.pid, c)){ dmL(st, `密輸人：${pname(t.pid)}が${DM[c].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c, dest: "disc" }); } },
   blk(st, t){ if (t.card) dmDur(st, t.pid, "blockade", { k: "haven", card: t.card, blk: true }); },
   isl(st, t){ const P = st.pl[t.pid], cs = []; if (P.play.includes("island")){ dmTake(P.play, ["island"]); cs.push("island"); } if (t.sel.length){ dmTake(P.hand, t.sel); cs.push(...t.sel); } (P.isl = P.isl || []).push(...cs); dmL(st, `島：${dmNames(cs)}を島マットに置いた`); },
@@ -9634,9 +9643,9 @@ const DMT = {
     const g = []; if (dmIs(c, "a")) g.push("duchy"); if (dmIs(c, "t")) g.push("transmute"); if (dmIs(c, "v")) g.push("gold");
     g.forEach(x => { if (dmGain(st, t.pid, x)){ dmL(st, `変成：${DM[x].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: x, dest: "disc" }); } });
   },
-  spo(st, t){ const P = st.pl[t.tg]; if (!t.yes || P.deck[P.deck.length - 1] !== t.c) return; P.deck.pop(); P.disc.push(t.c); },
+  spo(st, t){ const P = st.pl[t.tg]; if (!t.yes || P.deck[P.deck.length - 1] !== t.c) return; P.deck.pop(); P.disc.push(t.c); dmL(st, `念視の泉：${pname(t.tg)}の${DM[t.c].n}を捨て札に`); dmMillFx(st, t.tg, [t.c], "scryingpool"); },
   spool2(st, t){ const P = st.pl[t.pid], got = []; for (let g = 0; g < 300; g++){ const c = dmTop(st, t.pid); if (c == null) break; got.push(c); if (!dmIs(c, "a")) break; } P.hand.push(...got); if (got.length) dmL(st, `念視の泉：${got.length}枚を手札に`); },
-  gplay(st, t){ st.pl[t.pid].play.push(t.c); dmPlayCard(st, t.pid, t.c); },
+  gplay(st, t){ st.pl[t.pid].play.push(t.c); dmPlayFx(st, t.pid, t.c, "golem"); dmPlayCard(st, t.pid, t.c); },
   appr(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }); const n = dmCost(st, c) + (DM[c].pot ? 2 : 0); if (n) dmDraw(st, t.pid, n); dmL(st, `弟子：${DM[c].n}を廃棄して +${n}カード`); },
   /* --- 繁栄 --- */
   topgain(st, t){ if (!t.yes) return; const P = st.pl[t.pid], from = t.dest === "hand" ? P.hand : t.dest === "deck" ? null : P.disc; if (from && from.includes(t.c)){ dmTake(from, [t.c]); P.deck.push(t.c); dmL(st, `${pname(t.pid)}が獲得したカードを山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, cnt: 1, hc: t.dest === "hand" ? [t.c] : undefined }); } },
@@ -9663,9 +9672,9 @@ const DMT = {
     const P = st.pl[t.pid], i = t.sel[0], c = t.c; if (!i || P.deck[P.deck.length - 1] !== c) return;
     P.deck.pop();
     if (i === 1){ st.trash.push(c); dmL(st, `水晶玉：${DM[c].n}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: [c] }); }
-    else if (i === 2){ P.disc.push(c); dmL(st, `水晶玉：${DM[c].n}を捨て札に`); }
+    else if (i === 2){ P.disc.push(c); dmL(st, `水晶玉：${DM[c].n}を捨て札に`); dmMillFx(st, t.pid, [c], "crystalball"); }
     else if (dmIs(c, "t")){ P.hand.push(c); dmPlayTre(st, t.pid, c); dmL(st, `水晶玉：${DM[c].n}を使った`); }
-    else { P.play.push(c); dmL(st, `水晶玉：${DM[c].n}を使った`); dmPlayCard(st, t.pid, c); }
+    else { P.play.push(c); dmL(st, `水晶玉：${DM[c].n}を使った`); dmPlayFx(st, t.pid, c, "crystalball"); dmPlayCard(st, t.pid, c); }
   },
   war1(st, t){
     const named = t.cards[t.sel[0]], T = st.turn; T.warNamed = [...(T.warNamed || []), named];
@@ -9680,7 +9689,7 @@ const DMT = {
   vault3(st, t){ if (!t.sel.length) return; const P = st.pl[t.pid]; dmTake(P.hand, t.sel); P.disc.push(...t.sel); dmFxAdd(st, { k: "dis", p: t.pid, cs: t.sel.slice() }); if (t.sel.length === 2) dmDraw(st, t.pid, 1); },
   expand(st, t){ const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 3, dest: "disc", title: `拡張：獲得するカード（コスト${dmCost(st, c) + 3}以下）` }); },
   forge(st, t){ const sum = t.sel.reduce((a, c) => a + dmCost(st, c), 0); if (t.sel.length) dmPush(st, { t: "trash", pid: t.pid, sel: t.sel }); dmPush(st, { t: "askgain", pid: t.pid, max: sum, exact: true, dest: "disc", title: `鍛造：獲得するカード（コストちょうど${sum}）` }); },
-  kc(st, t){ if (!t.sel.length) return; const c = t.sel[0], P = st.pl[t.pid]; dmTake(P.hand, [c]); P.play.push(c); dmL(st, `王宮：${DM[c].n}を3回使う`); dmPush(st, { t: "replay", pid: t.pid, c }, { t: "replay", pid: t.pid, c }, { t: "replay", pid: t.pid, c }); },
+  kc(st, t){ if (!t.sel.length) return; const c = t.sel[0], P = st.pl[t.pid]; dmTake(P.hand, [c]); P.play.push(c); dmL(st, `王宮：${DM[c].n}を3回使う`); dmPush(st, { t: "replay", pid: t.pid, c, via: "kingscourt", i: 1 }, { t: "replay", pid: t.pid, c, via: "kingscourt", i: 2 }, { t: "replay", pid: t.pid, c, via: "kingscourt", i: 3 }); },
   salv(st, t){ const c = t.sel[0], v = dmCost(st, c); dmPush(st, { t: "trash", pid: t.pid, sel: [c] }); st.turn.coins += v; dmL(st, `サルベージ船：+$${v}`); },
 };
 /* 選択への回答 */
@@ -11423,7 +11432,7 @@ function dmFxCheck(g){
     if (e.k === "hoard"){ const st0 = Math.max(t, gq); setTimeout(() => dmFx(e, g), st0); t = st0 + 2300; hEnd = t; return; }
     if (e.k === "play" && e.p === me) dmDealDelay += 2600;
     if (e.k === "end"){ dmEndFresh[g.id] = t + 300; }
-    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, mill: 1500, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
     if (e0._hold) setTimeout(() => {
       // 山札へ飛ぶ瞬間まで手札に残しておいたカード：今の位置から飛ばして、手札から外す
       const hs = [...document.querySelectorAll(`#dmg .dmhand .dhold[data-hn="${e.n}"]`)];
@@ -11461,7 +11470,7 @@ function dmFx(e, g){
     const plus = dmPlusText(e.c), sp = Array.from({ length: 22 }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(110, 220); return `<i class="asp" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--c:${["#FFE38A", "#fff", tc][i % 3]};--d:${rnd(.32, .45).toFixed(2)}s"></i>`; }).join("");
     html = `<span class="aglow" style="--tc:${tc}"></span><span class="aring" style="--tc:${tc}"></span><span class="aring r2" style="--tc:${tc}"></span>${sp}
       <div class="acard">${dmCardHtml(e.c, "dfx")}<span class="aflash"></span></div>
-      <div class="aplus">${plus.map((x, i) => `<b style="--d:${(.42 + i * .12).toFixed(2)}s">${x}</b>`).join("")}${DM[e.c].tx ? `<p class="atx" style="--d:${(.5 + plus.length * .12).toFixed(2)}s">${esc(DM[e.c].tx)}</p>` : ""}${e.p !== me ? `<small style="background:${pc}">${esc(pname(e.p))}</small>` : ""}</div>`;
+      <div class="aplus">${plus.map((x, i) => `<b style="--d:${(.42 + i * .12).toFixed(2)}s">${x}</b>`).join("")}${DM[e.c].tx ? `<p class="atx" style="--d:${(.5 + plus.length * .12).toFixed(2)}s">${esc(DM[e.c].tx)}</p>` : ""}${e.p !== me ? `<small style="background:${pc}">${esc(pname(e.p))}</small>` : ""}</div>${e.via && DM[e.via] ? `<b class="avia">${esc(DM[e.via].n)}${e.i ? `（${e.i}回目）` : ""}で使用</b>` : ""}`;
   } else if (e.k === "hoard"){
     ms = 2300;
     const coins = Array.from({ length: 26 }, () => `<i class="hco" style="left:${rnd(5, 95).toFixed(1)}%;--d:${rnd(0, .9).toFixed(2)}s;--t:${rnd(1, 1.6).toFixed(2)}s;--r:${rnd(-540, 540).toFixed(0)}deg;--s:${rnd(.7, 1.3).toFixed(2)}"></i>`).join("");
@@ -11505,6 +11514,10 @@ function dmFx(e, g){
       <div class="dtg">${(e.hit || []).map(p => `<span style="--pc:${pcolor(p)}">${esc(pname(p))}</span>`).join("")}${(e.safe || []).map(p => `<span class="sf" style="--pc:${pcolor(p)}">🛡️${esc(pname(p))}</span>`).join("")}</div></div>`;
   } else if (e.k === "curse"){
     ms = 1600; html = `<span class="cwash"></span><div class="tx"><div class="dfly cu">${dmCardHtml("curse", "dfx")}</div><small style="background:${pc}">${esc(pname(e.p))}に呪い！</small></div>`;
+  } else if (e.k === "mill"){
+    // 山札などから公開して捨て札に：表向きのカードが並んで、捨て札の方へすべり落ちる
+    ms = 1600; const cs = e.cs || [], more = (e.cnt || cs.length) - Math.min(6, cs.length);
+    html = `<div class="dtr dml">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="dtrr">${cs.slice(0, 6).map((c, i) => `<span style="--i:${i}">${dmCardHtml(c, "dfx")}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が${cs.length > 1 ? `${e.cnt || cs.length}枚を` : ""}捨て札に${more > 0 ? `（ほか${more}枚）` : ""}</small></div>`;
   } else if (e.k === "empty"){
     // 山が空で獲得できなかった
     ms = 1900; const ps = e.ps && e.ps.length ? e.ps : [e.p];
