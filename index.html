@@ -2513,8 +2513,9 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .dmbig .dtx b.dbg{font-family:var(--disp);font-weight:400;font-size:28px}
 .dmbig .dtx p{margin:4px 0 0;font-size:12.5px;line-height:1.5;font-weight:700;color:#3A1E0C}
 .dmbig.lt .dar{height:76px}.dmbig.lt .dtx p{font-size:11.5px;line-height:1.42}
+.dmbig.xxlt{gap:4px}.dmbig.xxlt .dar{height:46px}.dmbig.xxlt .dar .dmart.ill svg{width:62px;height:44px}.dmbig.xxlt .dar .dmart.em{font-size:36px}.dmbig.xxlt .dtx p{font-size:10px;line-height:1.32}.dmbig.xxlt .dtx b{font-size:13px}
 .dmbig.xlt{gap:5px}.dmbig.xlt .dar{height:60px}.dmbig.xlt .dtx p{font-size:10.8px;line-height:1.36}
-.dmbig .rtx{font-size:inherit;font-weight:800}
+.dmbig .dmrtx{font-size:inherit;font-weight:800}
 .ptx{white-space:pre-line}
 .dmbig .dty{position:relative;align-self:stretch;margin:auto -14px 0;padding:5px;border-radius:0 0 12px 12px;white-space:nowrap;text-align:center;font-size:11px;font-weight:900;background:var(--nb);color:var(--nc,#3A1E0C)}
 .dmleft{margin:0;font-size:12px;font-weight:800;color:#fff}
@@ -2582,6 +2583,9 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 @keyframes emsh{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .sbfx .emcard .emx{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:92px;font-weight:900;color:#ff4d5e;text-shadow:0 3px 0 #2a0b10,0 0 14px rgba(255,60,80,.7);filter:none}
 .sbfx .emcard .em0{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);background:#2b2b33;color:#fff;font-size:13px;padding:2px 10px;border-radius:99px;border:2px solid #fff;white-space:nowrap}
+.dmpeek{position:fixed;inset:0;z-index:70;display:grid;place-items:center;background:rgba(20,10,30,.5);animation:fadein .15s both}
+.dmpeekin{display:flex;flex-direction:column;align-items:center;gap:10px;animation:chslam .25s cubic-bezier(.2,1.5,.4,1) both}
+.dmpeekin>small{color:#fff;font-weight:900;font-size:13px;text-shadow:0 1px 0 #000}
 .dmtrbin{position:fixed;z-index:60;pointer-events:none;white-space:nowrap;font-weight:900;font-size:13px;color:#fff;background:#5A3416;border:2px solid #E8B12A;border-radius:99px;padding:3px 12px;box-shadow:0 3px 0 rgba(0,0,0,.35)}
 .dmstup{position:fixed;z-index:48;pointer-events:none;font-weight:900;font-size:15px;color:#fff;padding:1px 8px;border-radius:99px;border:2px solid var(--ink);white-space:nowrap;box-shadow:0 2px 0 var(--ink)}
 .dmstup.s-a{background:#F07A2A}.dmstup.s-b{background:#1E9E5A}.dmstup.s-c{background:#E8B12A;color:#4A2A0C}
@@ -2592,6 +2596,41 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .sbfx .chrow{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:94vw}
 .sbfx .chip{font-size:26px;font-weight:900;color:#4A2A0C;background:linear-gradient(180deg,#FFF3C4,#E8B12A);border:3px solid #5A3416;border-radius:16px;padding:6px 18px;box-shadow:0 4px 0 #5A3416;white-space:nowrap;max-width:90vw;animation:rcsh .45s calc(.15s + var(--i) * .15s) both}
 .sbfx .chip.lg{white-space:normal;font-size:17px;line-height:1.4;text-align:center;padding:8px 14px}
+.sbfx .wswash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(120,180,255,.55),rgba(14,28,70,.92) 72%);animation:emw var(--ms) forwards}
+.sbfx .wsbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;animation:emb var(--ms) forwards}
+.sbfx .wsbox .dmlsrc{font-size:15px;font-weight:900;color:#fff;background:#3A2A18;border:2px solid #E8B12A;border-radius:99px;padding:3px 16px}
+.sbfx .wsrow{position:relative;display:flex;align-items:center;gap:14px}
+.sbfx .wsw,.sbfx .wsc{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px}
+.sbfx .wsw small,.sbfx .wsc small{font-size:13px;font-weight:900;color:#fff;text-shadow:0 1px 0 #000;white-space:nowrap}
+.sbfx .wsw{animation:wsinl .45s .3s both,wsml .45s 2.9s forwards}
+.sbfx .wsc{animation:wsinr .45s 1.2s both,wsmr .45s 2.9s forwards}
+@keyframes wsinl{from{transform:translateX(-60px);opacity:0}to{transform:none;opacity:1}}
+@keyframes wsinr{from{transform:translateX(60px);opacity:0}to{transform:none;opacity:1}}
+@keyframes wsml{to{transform:translateX(30px) rotate(-4deg)}}
+@keyframes wsmr{to{transform:translateX(-30px) rotate(4deg)}}
+.sbfx .wsw small,.sbfx .wsc small{animation:wsfade .3s 2.8s forwards}
+.sbfx .wsw>i{position:absolute;right:-14px;top:10px;font-style:normal;font-size:28px;animation:rcsh .4s .7s both}
+.sbfx .wsarr{font-size:30px;color:#FFE38A;text-shadow:0 2px 0 #000;animation:fadein .3s 1s both,wsfade .3s 2.8s forwards}
+@keyframes wsfade{to{opacity:0}}
+.sbfx .wsflip{position:relative;width:84px;height:120px;perspective:600px}
+.sbfx .wsflip>span{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.sbfx .wsbk{width:84px;height:120px;animation:wsbk .55s 2s both}
+.sbfx .wsfr{transform:rotateY(180deg);animation:wsfr .55s 2s both}
+.sbfx .wsfr .dmc.dfx,.sbfx .wsw .dmc.dfx{width:84px;height:120px}
+@keyframes wsbk{from{transform:rotateY(0)}to{transform:rotateY(-180deg)}}
+@keyframes wsfr{from{transform:rotateY(180deg)}to{transform:rotateY(0)}}
+.sbfx .wsmark{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:5;font-size:150px;line-height:1;font-weight:900;pointer-events:none;animation:wsmark .45s 3.35s both}
+.sbfx .wswash.hit~.wsbox .wsmark{color:#FF4D5E;text-shadow:0 0 18px rgba(255,255,255,.9)}
+.sbfx .wswash.miss~.wsbox .wsmark{color:#4DA3FF;text-shadow:0 0 18px rgba(255,255,255,.9)}
+@keyframes wsmark{0%{transform:translate(-50%,-50%) scale(2.6);opacity:0}70%{transform:translate(-50%,-50%) scale(.9);opacity:.95}100%{transform:translate(-50%,-50%) scale(1);opacity:.9}}
+.sbfx .wsres{font-size:22px;font-weight:900;padding:5px 18px;border-radius:99px;border:3px solid var(--ink,#222);white-space:nowrap;animation:rcsh .5s 3.6s both}
+.sbfx .wswash.hit~.wsbox .wsres{background:linear-gradient(180deg,#FFE38A,#E8B12A);color:#4A2A0C}
+.sbfx .wswash.miss~.wsbox .wsres{background:#5A5A68;color:#fff}
+.sbfx .wswash.hit~.wsbox .wsfr .dmc{animation:wsglow .6s 3.3s both}
+@keyframes wsglow{to{box-shadow:0 0 0 3px #FFE38A,0 0 24px 8px rgba(255,227,138,.95)}}
+.sbfx .wswash.miss~.wsbox .wsrow{animation:wsshake .4s 3.35s}
+@keyframes wsshake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.sbfx .wswho{font-weight:900;font-size:14px;color:#fff;padding:2px 12px;border-radius:99px;border:2px solid var(--ink,#222)}
 .sbfx .rvwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,240,190,.6),rgba(70,50,10,.85) 70%);animation:emw var(--ms) forwards}
 .sbfx .rvbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;animation:emb var(--ms) forwards}
 .sbfx .rvbox>small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;color:#fff;border:2.5px solid var(--ink,#222);white-space:nowrap}
@@ -2602,6 +2641,12 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .sbfx .rvc{margin:0 -7px;animation:rvc .5s calc(var(--i) * .12s) both}
 .sbfx .rvc{margin:0 4px}.sbfx .rvrow.many .rvc{margin:0 -7px}.sbfx .rvrow.many .rvc .dmc.dfx{width:70px;height:100px}
 .sbfx .rvc.hl{position:relative;z-index:2}.sbfx .rvc.hl .dmc{box-shadow:0 0 0 3px #FFE38A,0 0 18px 4px rgba(255,227,138,.95)}
+.sbfx .rvc.hl.dg .dmc{animation:rvdg .5s 1s both,rvshk .35s 1.5s 3}
+@keyframes rvdg{0%{transform:none}50%{transform:translateY(-16px) scale(1.12)}100%{transform:translateY(-12px) scale(1.08);box-shadow:0 0 0 3px #FF4D5E,0 0 24px 8px rgba(255,60,80,.9)}}
+@keyframes rvshk{0%,100%{transform:translateY(-12px) scale(1.08) rotate(0)}30%{transform:translateY(-12px) scale(1.08) rotate(-5deg)}70%{transform:translateY(-12px) scale(1.08) rotate(5deg)}}
+.sbfx .rvc.dg{position:relative}
+.sbfx .rvbox .dmlres.dg{background:#C8102E}
+.sbfx .rvdg{position:absolute;right:-10px;top:-18px;z-index:3;font-style:normal;font-size:30px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.4));animation:rcsh .45s 1.25s both}
 .sbfx .rvc.lo .dmc{animation:rvlo .3s 1s both}
 @keyframes rvlo{to{filter:grayscale(.7) brightness(.65)}}
 .sbfx .rvc.hl .dmc{animation:rvhl .5s 1s both}
@@ -2645,8 +2690,8 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 @keyframes avia{0%{opacity:0;transform:translate(-50%,-10px) scale(.7)}12%{opacity:1;transform:translate(-50%,0) scale(1.08)}20%,85%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0}}
 .sbfx .dml .dmlres{font-size:18px;font-weight:900;color:#fff;background:#2F7FC9;border:2.5px solid var(--ink,#222);border-radius:99px;padding:2px 16px;box-shadow:0 3px 0 var(--ink,#222);animation:dmlres var(--ms) .2s both}
 @keyframes dmlres{0%{opacity:0;transform:scale(.6)}15%{opacity:1;transform:scale(1.15)}22%,80%{opacity:1;transform:none}100%{opacity:0}}
-.rtx,.dtx .rtx{display:block;margin-top:5px;padding:4px 0 0;border:0;border-radius:0;background:none;border-top:1.5px dashed #9CC3EE;color:#1E6FD0;font-weight:800}
-.rtx em{font-style:normal;display:inline-block;margin-right:5px;padding:0 7px;border-radius:99px;background:#2F7FC9;color:#fff;font-size:.85em;line-height:1.5}
+.dmrtx{display:block;margin-top:5px;padding:4px 0 0;border:0;border-radius:0;background:none;border-top:1.5px dashed #9CC3EE;color:#1E6FD0;font-weight:800}
+.dmrtx em{font-style:normal;display:inline-block;margin-right:5px;padding:0 7px;border-radius:99px;background:#2F7FC9;color:#fff;font-size:.85em;line-height:1.5}
 .sbfx .rcwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(140,200,255,.75),rgba(20,60,120,.88) 70%);animation:emw var(--ms) forwards}
 .sbfx .rcbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;animation:emb var(--ms) forwards}
 .sbfx .rct{font-size:30px;font-weight:900;letter-spacing:.06em;color:#fff;text-shadow:0 3px 0 #1B4F8A,0 0 16px #6FC3FF}
@@ -3853,7 +3898,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v242";
+const APP_VER = "v246";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -4280,6 +4325,7 @@ function openSheet(title, html, noLinks){
   openSheet.t = tk;
   $("#sheet").classList.add("on");
   $("#sheetIn").querySelectorAll("[data-close]").forEach(b => b.onclick = closeSheet);
+  if (typeof dmFitBig === "function") requestAnimationFrame(() => dmFitBig($("#sheetIn")));
   return $("#sheetIn");
 }
 function closeSheet(){ $("#sheet").classList.remove("on"); }
@@ -9070,8 +9116,8 @@ const DM = {
   duke: { x: "int", n: "公爵", c: 5, ty: ["v"], tx: "持っている公領1枚につき1勝利点" },
   minion: { x: "int", n: "寵臣", c: 5, ty: ["a", "atk"], p: { actions: 1 }, tx: "次のうち1つを選ぶ：\n①+$2\n②手札を全て捨て札にし、4枚引く。そのあと、手札が5枚以上の他の人は全員、手札を全て捨て札にし、4枚引く" },
   patrol: { x: "int", n: "巡回", c: 5, ty: ["a"], p: { cards: 3 }, tx: "山札の上4枚を公開し、勝利点と呪いを手札に。残りは山札に戻す" },
-  replace: { x: "int", n: "交換", c: 5, ty: ["a", "atk"], tx: "手札1枚を廃棄し、コストが最大2多いカードを獲得。アクションか財宝なら山札の上に、勝利点なら他の人は呪いを獲得" },
-  torturer: { x: "int", n: "拷問人", c: 5, ty: ["a", "atk"], p: { cards: 3 }, tx: "他の人は、手札2枚を捨てるか、呪いを手札に獲得するかを選ぶ" },
+  replace: { x: "int", n: "交換", c: 5, ty: ["a", "atk"], tx: "手札1枚を廃棄し、コストが最大2多いカードを獲得。アクションか財宝なら山札の上に、勝利点なら他の人は呪い1枚を獲得" },
+  torturer: { x: "int", n: "拷問人", c: 5, ty: ["a", "atk"], p: { cards: 3 }, tx: "他の人は、手札2枚を捨てるか、呪い1枚を手札に獲得するかを選ぶ" },
   tradingpost: { x: "int", n: "交易場", c: 5, ty: ["a"], tx: "手札2枚を廃棄する。2枚廃棄したら銀貨を手札に獲得" },
   upgrade: { x: "int", n: "改良", c: 5, ty: ["a"], p: { cards: 1, actions: 1 }, tx: "手札1枚を廃棄し、コストがちょうど1多いカードを獲得する" },
   farm: { x: "int", n: "農場", c: 6, ty: ["t", "v"], v: 2, vp: 2, tx: "+$2。2勝利点" },
@@ -9100,7 +9146,7 @@ const DM = {
   merchantship: { x: "sea", n: "商船", c: 5, ty: ["a", "dur"], p: { coins: 2 }, tx: "次のターンの最初に+$2" },
   outpost: { x: "sea", n: "前哨地", c: 5, ty: ["a", "dur"], tx: "このターンの終わりは3枚だけ引き、もう1ターン続けて行う（連続はしない）" },
   pirate: { x: "sea", n: "海賊", c: 5, ty: ["a", "dur"], tx: "次のターンの最初に、コスト6以下の財宝を手札に獲得する" },
-  seawitch: { x: "sea", n: "海の魔女", c: 5, ty: ["a", "dur", "atk"], p: { cards: 2 }, tx: "他の人は呪いを獲得。次のターンの最初に+2カードして手札2枚を捨てる" },
+  seawitch: { x: "sea", n: "海の魔女", c: 5, ty: ["a", "dur", "atk"], p: { cards: 2 }, tx: "他の人は呪い1枚を獲得。次のターンの最初に+2カードして手札2枚を捨てる" },
   tactician: { x: "sea", n: "策士", c: 5, ty: ["a", "dur"], tx: "手札を全部捨てる。捨てたら次のターンの最初に+5カード +1アクション +1購入" },
   treasury: { x: "sea", n: "宝物庫", c: 5, ty: ["a"], p: { cards: 1, actions: 1, coins: 1 }, tx: "このターン勝利点カードを獲得しなかったら、ターンの終わりにこのカードを山札の上に置く" },
   wharf: { x: "sea", n: "波止場", c: 5, ty: ["a", "dur"], p: { cards: 2, buys: 1 }, tx: "次のターンの最初に+2カード +1購入" },
@@ -9114,7 +9160,7 @@ const DM = {
   quarry: { x: "pro", n: "石切場", c: 4, ty: ["t"], v: 1, tx: "+$1。このターン、アクションカードのコストが$2少なくなる" },
   tiara: { x: "pro", n: "ティアラ", c: 4, ty: ["t"], tx: "+1購入。このターン獲得したカードを山札の上に置いてもよい。手札の財宝1枚を2回使ってもよい" },
   workersvillage: { x: "pro", n: "労働者の村", c: 4, ty: ["a"], p: { cards: 1, actions: 2, buys: 1 }, tx: "" },
-  charlatan: { x: "pro", n: "ペテン師", c: 5, ty: ["a", "atk"], p: { coins: 3 }, tx: "他の人は呪いを獲得する" },
+  charlatan: { x: "pro", n: "ペテン師", c: 5, ty: ["a", "atk"], p: { coins: 3 }, tx: "他の人は呪い1枚を獲得する" },
   city: { x: "pro", n: "都市", c: 5, ty: ["a"], p: { cards: 1, actions: 2 }, tx: "空のサプライが1山以上なら+1カード、2山以上ならさらに+$1 +1購入" },
   collection: { x: "pro", n: "収集品", c: 5, ty: ["t"], v: 2, tx: "+$2 +1購入。このターン、アクションカードを獲得するたびに+1勝利点トークン" },
   crystalball: { x: "pro", n: "水晶玉", c: 5, ty: ["t"], v: 1, tx: "+$1。山札の一番上を見て、廃棄・捨て札・（アクションか財宝なら）使う、のどれかをしてもよい" },
@@ -9140,15 +9186,15 @@ const DM = {
   horsetraders: { x: "cor", n: "馬商人", c: 4, ty: ["a", "re"], p: { buys: 1, coins: 3 }, tx: "手札2枚を捨てる", rx: "他の人がアタックカードを使ったとき、手札からこれを脇に置く。次のターンの最初に手札に戻し、+1カード" },
   remake: { x: "cor", n: "再建", c: 4, ty: ["a"], tx: "2回行う：手札1枚を廃棄し、コストがちょうど1多いカードを獲得" },
   tournament: { x: "cor", n: "馬上槍試合", c: 4, ty: ["a"], p: { actions: 1 }, tx: "全員が属州を公開できる。あなたが公開して捨てたら褒賞か公領を山札の上に獲得。他の誰も公開しなければ+1カード +$1" },
-  youngwitch: { x: "cor", n: "魔女娘", c: 4, ty: ["a", "atk"], p: { cards: 2 }, tx: "手札2枚を捨てる。他の人は災いカードを公開しなければ呪いを獲得" },
+  youngwitch: { x: "cor", n: "魔女娘", c: 4, ty: ["a", "atk"], p: { cards: 2 }, tx: "手札2枚を捨てる。他の人は災いカードを公開しなければ呪い1枚を獲得" },
   harvest: { x: "cor", n: "収穫", c: 5, ty: ["a"], tx: "山札の上4枚を公開して捨て、異なる名前1種につき+$1" },
   hornofplenty: { x: "cor", n: "豊穣の角", c: 5, ty: ["t"], tx: "場のカード（このカードを含む）の異なる名前の数以下のコストのカードを獲得。勝利点カードならこのカードを廃棄" },
   huntingparty: { x: "cor", n: "狩猟団", c: 5, ty: ["a"], p: { cards: 1, actions: 1 }, tx: "手札にない名前のカードが出るまで山札をめくり、それを手札に。残りは捨てる" },
-  jester: { x: "cor", n: "道化師", c: 5, ty: ["a", "atk"], p: { coins: 2 }, tx: "他の人は山札の一番上を捨て、勝利点なら呪いを獲得、それ以外ならその人かあなたが同じカードを獲得（あなたが選ぶ）" },
+  jester: { x: "cor", n: "道化師", c: 5, ty: ["a", "atk"], p: { coins: 2 }, tx: "他の人は山札の一番上を捨て、勝利点なら呪い1枚を獲得、それ以外ならその人かあなたが同じカードを獲得（あなたが選ぶ）" },
   fairgrounds: { x: "cor", n: "品評会", c: 6, ty: ["v"], tx: "持っているカードの異なる名前（このカードを含む）5種類ごとに2勝利点" },
   bagofgold: { x: "prize", n: "金貨袋", c: 0, ty: ["a"], p: { actions: 1 }, tx: "【褒賞】金貨を山札の上に獲得" },
   diadem: { x: "prize", n: "王冠", c: 0, ty: ["t"], v: 2, tx: "【褒賞】+$2。使っていないアクション1つにつき+$1" },
-  followers: { x: "prize", n: "従者", c: 0, ty: ["a", "atk"], p: { cards: 2 }, tx: "【褒賞】屋敷を獲得。他の人は呪いを獲得し、手札が3枚になるまで捨てる" },
+  followers: { x: "prize", n: "従者", c: 0, ty: ["a", "atk"], p: { cards: 2 }, tx: "【褒賞】屋敷を獲得。他の人は呪い1枚を獲得し、手札が3枚になるまで捨てる" },
   princess: { x: "prize", n: "王女", c: 0, ty: ["a"], p: { buys: 1 }, tx: "【褒賞】このターン、カードのコストが$2少なくなる" },
   trustysteed: { x: "prize", n: "名馬", c: 0, ty: ["a"], tx: "【褒賞】異なる2つを選ぶ：+2カード／+2アクション／+$2／銀貨4枚を獲得し山札を捨て札に" },
   /* ===== 拡張：錬金術 ===== */
@@ -9159,7 +9205,7 @@ const DM = {
   scryingpool: { x: "alc", n: "念視の泉", c: 2, pot: 1, ty: ["a", "atk"], p: { actions: 1 }, tx: "全員の山札の一番上を見て捨てるか戻すかあなたが決める。そのあとアクション以外が出るまでめくり、全部手札に" },
   university: { x: "alc", n: "大学", c: 2, pot: 1, ty: ["a"], p: { actions: 2 }, tx: "コスト5以下のアクションカードを獲得してもよい" },
   alchemist: { x: "alc", n: "錬金術師", c: 3, pot: 1, ty: ["a"], p: { cards: 2, actions: 1 }, tx: "ターンの終わりに場にポーションがあれば、このカードを山札の上に置く" },
-  familiar: { x: "alc", n: "使い魔", c: 3, pot: 1, ty: ["a", "atk"], p: { cards: 1, actions: 1 }, tx: "他の人は呪いを獲得する" },
+  familiar: { x: "alc", n: "使い魔", c: 3, pot: 1, ty: ["a", "atk"], p: { cards: 1, actions: 1 }, tx: "他の人は呪い1枚を獲得する" },
   philosophersstone: { x: "alc", n: "賢者の石", c: 3, pot: 1, ty: ["t"], tx: "山札と捨て札の合計5枚につき+$1" },
   golem: { x: "alc", n: "ゴーレム", c: 4, pot: 1, ty: ["a"], tx: "ゴーレム以外のアクションが2枚出るまで山札をめくり、その2枚を使う。残りは捨てる" },
   apprentice: { x: "alc", n: "弟子", c: 5, ty: ["a"], p: { actions: 1 }, tx: "手札1枚を廃棄し、そのコスト1につき+1カード（ポーションのコストなら+2カード）" },
@@ -9200,7 +9246,7 @@ const DM_SETS = [
 ];
 const dmIs = (c, t) => !!(DM[c] && DM[c].ty.includes(t));
 /* 効果の文章：使ったときの効果（黒）と、リアクションの効果（青）を分けて書く */
-const dmTxHtml = (c, noRx) => { const d = DM[c]; return `${d.tx ? `<span class="ptx">${esc(d.tx)}</span>` : ""}${d.rx && !noRx ? `<span class="rtx"><em>リアクション</em>${esc(d.rx)}</span>` : ""}`; };
+const dmTxHtml = (c, noRx) => { const d = DM[c]; return `${d.tx ? `<span class="ptx">${esc(d.tx)}</span>` : ""}${d.rx && !noRx ? `<span class="dmrtx"><em>リアクション</em>${esc(d.rx)}</span>` : ""}`; };
 const dmTyName = c => DM[c].ty.map(t => ({ a: "アクション", t: "財宝", v: "勝利点", c: "呪い", atk: "アタック", re: "リアクション", dur: "持続" }[t])).join("・");
 const dmPlusText = c => { const p = DM[c].p || {}; return [p.cards && `+${p.cards} カード`, p.actions && `+${p.actions} アクション`, p.buys && `+${p.buys} 購入`, p.coins && `+$${p.coins}`].filter(Boolean); };
 
@@ -9280,11 +9326,16 @@ function dmOnGain(st, pid, c, dest){
 }
 /* 持続：次のターンの最初に効果。カードはそれまで場に残る */
 /* 山札などから公開して捨て札にしたカード：全員に見える演出（src = 効果の元のカード） */
+/* 拷問人：それぞれの選択を記録して、全員そろったら発表 */
+function dmTortSet(st, pid, r){
+  st.tortR = { ...(st.tortR || {}), [pid]: r };
+  if ((st.tortT || []).every(o => st.tortR[o])) dmPush(st, { t: "tortEnd" });
+}
 const dmMillFx = (st, pid, cs, src) => { if (cs && cs.length) dmFxAdd(st, { k: "mill", p: pid, cs: cs.slice(0, 12), cnt: cs.length, c: src }); };
 /* 手札以外から使ったアクション（家臣・ゴーレム・玉座の間など）も、手札から使った時と同じ演出を全員に（via = 元のカード） */
 const dmPlayFx = (st, pid, c, via, i) => { if (dmIs(c, "a")) dmFxAdd(st, { k: "play", p: pid, c, via, i }); };
 /* カードを公開した：全員に見せる（src = 効果の元のカード、tx = 結果） */
-const dmRevFx = (st, pid, cs, src, tx, hl) => { if (cs && cs.length) dmFxAdd(st, { k: "reveal", p: pid, cs: cs.slice(0, 10), c: src, tx, hl: hl ? hl.slice(0, 10) : undefined }); };   // hl：目立たせるカード（手札に入る分など）
+const dmRevFx = (st, pid, cs, src, tx, hl, hs) => { if (cs && cs.length) dmFxAdd(st, { k: "reveal", p: pid, cs: cs.slice(0, 10), c: src, tx, hl: hl ? hl.slice(0, 10) : undefined, hs }); };   // hs="dg"：狙われたカード（赤く光る）   // hl：目立たせるカード（手札に入る分など）
 const dmVpt = (st, pid, n, why) => { if (!n) return; st.pl[pid].vpt = (st.pl[pid].vpt || 0) + n; dmL(st, `🟢${pname(pid)}が勝利点トークン+${n}${why ? `（${why}）` : ""}`); };
 const dmVal0 = c => c === "curse" ? -3 : dmIs(c, "t") ? (DM[c].v || 1) * 2 : DM[c].c;
 const dmDur = (st, pid, c, e = {}) => { const P = st.pl[pid]; P.next = [...(P.next || []), { c, ...e }]; };
@@ -9531,7 +9582,7 @@ const DMA = {
   bandit(st, tg){
     const rev = []; for (let i = 0; i < 2; i++){ const c = dmTop(st, tg); if (c != null) rev.push(c); }
     if (!rev.length) return;
-    dmL(st, `${pname(tg)}は${dmNames(rev)}を公開`); dmRevFx(st, tg, rev, "bandit", "山札の上2枚");
+    dmL(st, `${pname(tg)}は${dmNames(rev)}を公開`); const tr0 = rev.filter(c => dmIs(c, "t") && c !== "copper"); dmRevFx(st, tg, rev, "bandit", tr0.length ? "銅貨以外の財宝は廃棄される！" : "銅貨以外の財宝はなかった", tr0.length ? rev.map(c => dmIs(c, "t") && c !== "copper") : null, "dg");
     const tr = rev.filter(c => dmIs(c, "t") && c !== "copper");
     if (new Set(tr).size > 1) dmAsk(st, { pid: tg, k: "list", cards: rev, filterList: tr, min: 1, max: 1, title: "山賊：廃棄する財宝", ok: "廃棄する", then: { t: "bandit", rev } });
     else dmPush(st, { t: "bandit", pid: tg, rev, sel: tr.length ? [rev.indexOf(tr[0])] : [] });
@@ -9546,7 +9597,7 @@ const DMA = {
   },
   minion(st, tg){ if (!st.turn.minion) return; const P = st.pl[tg]; if (P.hand.length < 5) return; P.disc.push(...P.hand); dmFxAdd(st, { k: "dis", p: tg, cs: P.hand.slice(), c: "minion", drew: 4 }); P.hand = []; dmDraw(st, tg, 4); dmL(st, `寵臣：${pname(tg)}は手札（${dmCntNames(st.fx.filter(f => f.k === "dis" && f.p === tg).pop().cs)}）を捨てて4枚引いた`); },
   replace(st, tg){ if (st.turn.repCurse && dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
-  torturer(st, tg){ dmAsk(st, { pid: tg, k: "opt", opts: ["手札を2枚捨てる", "呪いを手札に獲得する"], min: 1, max: 1, title: "拷問人：どちらにする？", then: { t: "tort" } }); },
+  torturer(st, tg){ st.tortT = [...(st.tortT || []), tg]; dmAsk(st, { pid: tg, k: "opt", opts: ["手札を2枚捨てる", "呪い1枚を手札に獲得する"], min: 1, max: 1, title: "拷問人：どちらにする？", then: { t: "tort" } }); },
   /* --- 海辺 --- */
   blockade(){}, corsair(){},
   cutpurse(st, tg){ const P = st.pl[tg]; if (P.hand.includes("copper")){ dmTake(P.hand, ["copper"]); P.disc.push("copper"); dmL(st, `${pname(tg)}は銅貨を捨てた`); dmFxAdd(st, { k: "dis", p: tg, cs: ["copper"], c: "cutpurse" }); } else dmL(st, `${pname(tg)}は手札を公開（銅貨なし）`), dmRevFx(st, tg, P.hand, "cutpurse", "銅貨なし"); },
@@ -9576,6 +9627,7 @@ const DMA = {
   },
 };
 /* アタックの効果が「呪いを渡す」だけのカード */
+const DM_NOW = ["tort", "tortD"];
 const DM_CURSE_ONLY = ["witch", "seawitch", "youngwitch", "familiar", "charlatan", "replace"];
 /* 続きの処理 */
 const DMT = {
@@ -9665,8 +9717,8 @@ const DMT = {
   gainTo(st, t){ if (dmGain(st, t.tg, t.card)){ dmL(st, `${pname(t.tg)}が${DM[t.card].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.tg, c: t.card, dest: "disc" }); } },
   wish(st, t){
     const name = t.cards[t.sel[0]], c = dmTop(st, t.pid); if (c == null) return;
-    if (c === name){ st.pl[t.pid].hand.push(c); dmL(st, `願いの井戸：${DM[c].n}！ 願いがかなった`); dmRevFx(st, t.pid, [c], "wishingwell", `${DM[name].n}を願って…的中！手札に`); }
-    else { st.pl[t.pid].deck.push(c); dmL(st, `願いの井戸：${DM[name].n}を願ったが${DM[c].n}だった`); dmRevFx(st, t.pid, [c], "wishingwell", `${DM[name].n}を願ったが…はずれ`); }
+    if (c === name){ st.pl[t.pid].hand.push(c); dmL(st, `願いの井戸：${DM[c].n}！ 願いがかなった`); dmFxAdd(st, { k: "wish", p: t.pid, w: name, c, hit: 1 }); }
+    else { st.pl[t.pid].deck.push(c); dmL(st, `願いの井戸：${DM[name].n}を願ったが${DM[c].n}だった`); dmFxAdd(st, { k: "wish", p: t.pid, w: name, c, hit: 0 }); }
   },
   baron(st, t){
     if (t.yes && st.pl[t.pid].hand.includes("estate")){ const P = st.pl[t.pid]; dmTake(P.hand, ["estate"]); P.disc.push("estate"); st.turn.coins += 4; dmL(st, "男爵：屋敷を捨てて +$4"); dmFxAdd(st, { k: "dis", p: t.pid, cs: ["estate"], c: "baron", tx: "+$4" }); }
@@ -9702,11 +9754,21 @@ const DMT = {
     if ((dmIs(c, "a") || dmIs(c, "t")) && P.disc.includes(c)){ dmTake(P.disc, [c]); P.deck.push(c); dmL(st, `${pname(t.pid)}が獲得したカードを山札の上に置いた`); dmFxAdd(st, { k: "top", p: t.pid, cnt: 1 }); }
     if (dmIs(c, "v")) st.turn.repCurse = true;
   },
+  // 拷問人：みんなそれぞれ選ぶ（他の人を待たずに、捨てる2枚もすぐ選べる）。全員決まったら、順番に発表
   tort(st, t){
     const P = st.pl[t.pid];
-    if (t.sel[0] === 1){ if (dmGain(st, t.pid, "curse", "hand")){ dmL(st, `${pname(t.pid)}は呪いを手札に獲得`); dmFxAdd(st, { k: "curse", p: t.pid }); } return; }
-    if (P.hand.length <= 2){ if (P.hand.length) dmPush(st, { t: "discard", pid: t.pid, sel: P.hand.slice() }); return; }
-    dmAsk(st, { pid: t.pid, k: "hand", min: 2, max: 2, title: "拷問人：捨てる2枚", ok: "捨てる", then: { t: "discard" } });
+    if (t.sel[0] === 1) return dmTortSet(st, t.pid, { curse: 1 });
+    if (P.hand.length <= 2) return dmTortSet(st, t.pid, { d: P.hand.slice() });
+    dmAsk(st, { pid: t.pid, k: "hand", min: 2, max: 2, title: "拷問人：捨てる2枚", ok: "この2枚を捨てる", then: { t: "tortD" } });
+  },
+  tortD(st, t){ dmTortSet(st, t.pid, { d: t.sel.slice() }); },
+  tortEnd(st, t){
+    const T = st.tortT || [], R = st.tortR || {}; delete st.tortT; delete st.tortR;
+    T.forEach(o => {
+      const r = R[o]; if (!r) return;
+      if (r.curse){ dmL(st, `拷問人：${pname(o)}は呪いを選んだ`); if (dmGain(st, o, "curse", "hand")){ dmL(st, `${pname(o)}は呪いを手札に獲得`); dmFxAdd(st, { k: "curse", p: o }); } }
+      else { const P = st.pl[o], cs = r.d.filter(c => P.hand.includes(c)); if (!cs.length){ dmL(st, `拷問人：${pname(o)}は捨てる手札がなかった`); return; } dmTake(P.hand, cs); P.disc.push(...cs); dmFxAdd(st, { k: "dis", p: o, cs, c: "torturer" }); dmL(st, `拷問人：${pname(o)}は${dmCntNames(cs)}を捨てた`); }
+    });
   },
   tp(st, t){ dmPush(st, { t: "trash", pid: t.pid, sel: t.sel }); if (t.sel.length === 2) dmPush(st, { t: "tp2", pid: t.pid }); },
   tp2(st, t){ if (dmGain(st, t.pid, "silver", "hand")){ dmL(st, `交易場：銀貨を手札に獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c: "silver", dest: "hand" }); } },
@@ -9848,14 +9910,14 @@ function dmAnswer(st, pid, id, val){
     if (idx.length < a.min || idx.length > a.max) return false;
     then.sel = idx.sort((x, y) => x - y);
     // 何を選んだか（+$3・+1購入など）を、ほかの人にも演出で見せる（水晶玉・望楼・道化師は別の演出があるので除く）
-    if (!["cball", "wt", "jest"].includes(a.then.t) && idx.length){ const sn = (a.title || "").split("：")[0], src = a.card || Object.keys(DM).find(k => DM[k].n === sn); dmFxAdd(st, { k: "choice", p: pid, c: src, opts: idx.map(x => a.opts[x]) }); dmL(st, `${sn ? sn + "：" : ""}${pname(pid)}は「${idx.map(x => a.opts[x]).join("」「")}」を選んだ`); }
+    if (!["cball", "wt", "jest", "tort"].includes(a.then.t) && idx.length){ const sn = (a.title || "").split("：")[0], src = a.card || Object.keys(DM).find(k => DM[k].n === sn); dmFxAdd(st, { k: "choice", p: pid, c: src, opts: idx.map(x => a.opts[x]) }); dmL(st, `${sn ? sn + "：" : ""}${pname(pid)}は「${idx.map(x => a.opts[x]).join("」「")}」を選んだ`); }
   } else if (a.k === "yn") then.yes = !!val;
   else if (a.k === "supply"){
     if (val == null && a.skip) then.card = null;
     else { if (!DM[val] || !dmFits(st, val, a)) return false; then.card = val; }
   }
   st.asks.splice(i, 1);
-  st.q.push(then);
+  if (DM_NOW.includes(then.t)) DMT[then.t](st, then); else st.q.push(then);   // 他の人の選択を待たずに、その場で進める処理
   dmRun(st);
   // 次の選択が同じ人に続いて、山札から何も見えていなければ「選び直す」を出せる
   const nx = st.asks.find(x => x.pid === pid);
@@ -10431,7 +10493,7 @@ function dmAiAnswer(st, a){
     const tr = idx.filter(x => x.c === "curse" || (x.c === "estate" && st.supply.province > 4) || (x.c === "copper" && (left -= 1) >= 6)).slice(0, a.max).map(x => x.i);
     return tr.length >= a.min ? tr : pickLow(a.min);
   }
-  if (t === "discard" || t === "tort") return pickLow(a.min);
+  if (t === "discard" || t === "tort" || t === "tortD") return pickLow(a.min);
   if (t === "mill"){ const v = idx.filter(x => (dmIs(x.c, "v") && !dmIs(x.c, "t")) || x.c === "curse").map(x => x.i); return v.length >= 2 ? v.slice(0, 2) : []; }
   if (t === "mq1") return pickLow(1);
   if (t === "remodel" || t === "rep1"){
@@ -10522,7 +10584,8 @@ function openDmNew(){
     if (!colManual) $("#dmCol").checked = kd.filter(k => dmX(k) === "pro").length >= 3;
     const others = kd.filter(k => !xPool().includes(k));
     $("#dmKd").innerHTML = `<div class="dmkpick"><b class="dmkn">${esc(setName)}<em>${kd.length}/10</em></b>${others.length ? `<small class="dmkoth">ほかの拡張から：${others.map(k => esc(DM[k].n)).join("・")}</small>` : ""}${xPool().slice().sort((a, b) => DM[a].c - DM[b].c).map(k => `<button type="button" class="dmkc ${kd.includes(k) ? "on" : ""}" data-k="${k}"><i>${DM[k].c}</i><span class="dmart ill">${DM_ART[k]}</span><b>${DM[k].n}</b></button>`).join("")}</div>`;
-    $("#dmKd").querySelectorAll("[data-k]").forEach(b => b.onclick = () => { const k = b.dataset.k; if (kd.includes(k)) kd = kd.filter(x => x !== k); else if (kd.length < 10) kd = [...kd, k]; else { toast("10種類までです。先に外してください"); return; } setName = "自分で選ぶ"; drawK(); });
+    $("#dmKd").querySelectorAll("[data-k]").forEach(b => dmLongPress(b, () => dmCardPeek(b.dataset.k)));   // 長押しで効果を見る
+    $("#dmKd").querySelectorAll("[data-k]").forEach(b => b.onclick = () => { if (Date.now() - dmLpAt < 700) return; const k = b.dataset.k; if (kd.includes(k)) kd = kd.filter(x => x !== k); else if (kd.length < 10) kd = [...kd, k]; else { toast("10種類までです。先に外してください"); return; } setName = "自分で選ぶ"; drawK(); });
   };
   s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
     const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
@@ -11038,6 +11101,18 @@ function dmBn(c){
   const a = [p.cards && dmBadge("pc", p.cards), p.actions && dmBadge("pa", p.actions), p.buys && dmBadge("pb", p.buys), p.coins && dmBadge("pmo", p.coins)].filter(Boolean);
   return a.length ? `<span class="dbn" aria-hidden="true">${a.join("")}</span>` : "";
 }
+/* 大きいカード：端末の文字の大きさで説明があふれたら、絵と文字を一段ずつ小さくして枠に収める */
+function dmFitBig(root){
+  (root || document).querySelectorAll(".dmbig").forEach(b => {
+    const steps = ["lt", "xlt", "xxlt"];
+    for (let k = 0; k < 4; k++){
+      const ty = b.querySelector(".dty"), tx = b.querySelector(".dtx"); if (!ty || !tx) return;
+      if (ty.getBoundingClientRect().top - tx.getBoundingClientRect().bottom >= 1 && b.scrollHeight <= b.clientHeight + 1) return;
+      const cur = steps.findIndex(x => b.classList.contains(x)); if (cur >= steps.length - 1) return;
+      if (cur >= 0) b.classList.remove(steps[cur]); b.classList.add(steps[cur + 1]);
+    }
+  });
+}
 function dmBigCard(c){
   const d = DM[c], plus = dmPlusText(c);
   // 大きな「+$n」は、説明が「+$n」だけの基本の財宝のときだけ（それ以外は説明文を出す）
@@ -11209,6 +11284,7 @@ function drawDm(){
   on("dmAskSkip", act(async () => { if (myAsk){ dmGainSel = null; await dmDoAnswer(myAsk.id, null); } }));
   on("dmNo", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, false); }));
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
+  requestAnimationFrame(() => dmFitBig(el));
   el.classList.toggle("askb", !!(myAsk && (myAsk.k === "hand" || myAsk.k === "supply")));   // 下に選択が出ている間は、ログを短くして画面に収める
   dmAnimHand(g, el, P);
   dmAnimGains(el, st);
@@ -11361,6 +11437,13 @@ function dmEndCountFinal(g, el){
 /* 長押しでカードの効果（描き直しても二重に登録しない） */
 let dmLpTm = null, dmLpAt = 0;
 const dmJustLp = () => Date.now() - dmLpAt < 700;
+/* カードの効果をその場でポップアップ（ゲームの準備画面など、シートの上に重ねて出す） */
+function dmCardPeek(c){
+  document.querySelectorAll(".dmpeek").forEach(x => x.remove());
+  const w = document.createElement("div"); w.className = "dmpeek";
+  w.innerHTML = `<div class="dmpeekin">${dmBigCard(c)}<small>タップで閉じる</small></div>`;
+  w.onclick = () => w.remove(); document.body.appendChild(w); dmFitBig(w);
+}
 function dmLongPress(b, fn){
   b.onpointerdown = () => { clearTimeout(dmLpTm); dmLpTm = setTimeout(() => { dmLpTm = null; dmLpAt = Date.now(); try { navigator.vibrate && navigator.vibrate(15); } catch (_) {} fn(); }, 450); };
   b.onpointerup = b.onpointerleave = b.onpointercancel = () => { clearTimeout(dmLpTm); dmLpTm = null; };
@@ -11644,7 +11727,7 @@ function dmFxCheck(g){
     if (e.k === "hoard"){ const st0 = Math.max(t, gq); setTimeout(() => dmFx(e, g), st0); t = st0 + 2300; hEnd = t; return; }
     if (e.k === "play" && e.p === me) dmDealDelay += 2600;
     if (e.k === "end"){ dmEndFresh[g.id] = t + 300; }
-    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, choice: 1700, reveal: 2300, mq: 2600, pileout: 2000, mill: 1500, dis: 1500, react: 2000, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, wish: 6000, choice: 1700, reveal: 2300, mq: 2600, pileout: 2000, mill: 1500, dis: 1500, react: 2000, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
     if (e0._hold) setTimeout(() => {
       // 山札へ飛ぶ瞬間まで手札に残しておいたカード：今の位置から飛ばして、手札から外す
       const hs = [...document.querySelectorAll(`#dmg .dmhand .dhold[data-hn="${e.n}"]`)];
@@ -11652,7 +11735,7 @@ function dmFxCheck(g){
       dmHeld = dmHeld.filter(x => x.n !== e.n); hs.forEach(b => b.remove());
       dmFx(e, g); if (dmId === g.id) drawDm();
     }, t);
-    else setTimeout(() => dmFx(e, g), t); t += ["play", "prov", "reveal", "mq", "react", "pileout", "choice"].includes(e.k) ? d : Math.min(d, 1600);   // 見せたい演出は最後まで
+    else setTimeout(() => dmFx(e, g), t); t += ["play", "prov", "reveal", "wish", "mq", "react", "pileout", "choice"].includes(e.k) ? d : Math.min(d, 1600);   // 見せたい演出は最後まで
     if (e.k !== "tre" && e.k !== "end") busy = Math.max(busy, t);
   });
   busy = Math.max(busy, ...dmGains.map(x => (x.wait || 0) + 1300));
@@ -11679,7 +11762,7 @@ function dmFx(e, g){
   if (e.k === "buy" || e.k === "gain"){
     ms = 1400; html = `<div class="dfly">${dmCardHtml(e.c, "dfx")}<small style="background:${pc}">${esc(pname(e.p))}が${e.k === "buy" ? "購入" : "獲得"}</small></div>`;
   } else if (e.k === "play"){
-    ms = 2700; kind = (DM[e.c].tx || "").length > 40 ? "act dm-alg" : "act";   // 説明が長いカードは、カードを少し小さくして文章が画面に収まるように
+    ms = 2700; kind = (DM[e.c].tx || "").length + dmPlusText(e.c).length * 12 > 40 ? "act dm-alg" : "act";   // 説明が長いカードは、カードを少し小さくして文章が画面に収まるように
     const tc = { "ty-atk": "#E2364F", "ty-re": "#2F7FC9", "ty-a": "#E8B12A" }[dmTyCls(e.c)] || "#E8B12A";
     const plus = dmPlusText(e.c), sp = Array.from({ length: 22 }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(110, 220); return `<i class="asp" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--c:${["#FFE38A", "#fff", tc][i % 3]};--d:${rnd(.32, .45).toFixed(2)}s"></i>`; }).join("");
     html = `<span class="aglow" style="--tc:${tc}"></span><span class="aring" style="--tc:${tc}"></span><span class="aring r2" style="--tc:${tc}"></span>${sp}
@@ -11751,10 +11834,17 @@ function dmFx(e, g){
     // ほかの人が選んだ効果（+$3・+1購入など）をチップで見せる
     ms = 1800; const os = e.opts || [];
     html = `<span class="chwash"></span><div class="chbox">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="chrow">${os.map((o, i) => `<b class="chip ${o.length > 9 ? "lg" : ""}" style="--i:${i}">${esc(o)}</b>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が選んだ</small></div>`;
+  } else if (e.k === "wish"){
+    // 願いの井戸：願ったカード → 山札の一番上をめくる → 的中！／はずれ
+    ms = 6000;
+    html = `<span class="wswash ${e.hit ? "hit" : "miss"}"></span><div class="wsbox"><b class="dmlsrc">願いの井戸</b>
+      <div class="wsrow"><div class="wsw"><small>願ったカード</small>${dmCardHtml(e.w, "dfx")}<i>💭</i></div><b class="wsarr">→</b>
+      <div class="wsc"><small>山札の一番上</small><div class="wsflip"><span class="wsbk tpback"><i></i></span><span class="wsfr">${dmCardHtml(e.c, "dfx")}</span></div></div></div>
+      <b class="wsmark">${e.hit ? "〇" : "✕"}</b><b class="wsres">${e.hit ? "🎉 的中！ 手札に入れた" : "はずれ… 山札に戻した"}</b><small class="wswho" style="background:${pc}">${esc(pname(e.p))}の願い</small></div>`;
   } else if (e.k === "reveal"){
     // カードを公開：表向きのカードを並べて、元のカード名と結果を見せる
     ms = e.hl ? 2500 : 2000; const cs = e.cs || [];
-    html = `<span class="rvwash"></span><div class="rvbox">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="rvt">REVEAL</div><div class="rvrow ${cs.length > 3 ? "many" : ""}">${cs.slice(0, 7).map((c, i) => `<span class="rvc ${e.hl ? (e.hl[i] ? "hl" : "lo") : ""}" style="--i:${i}">${dmCardHtml(c, "dfx")}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が公開</small>${e.tx ? `<b class="dmlres">${esc(e.tx)}</b>` : ""}</div>`;
+    html = `<span class="rvwash"></span><div class="rvbox">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="rvt">REVEAL</div><div class="rvrow ${cs.length > 3 ? "many" : ""}">${cs.slice(0, 7).map((c, i) => `<span class="rvc ${e.hl ? (e.hl[i] ? "hl" : "lo") : ""} ${e.hs || ""}" style="--i:${i}">${dmCardHtml(c, "dfx")}${e.hs === "dg" && e.hl && e.hl[i] ? `<i class="rvdg">🗡️</i>` : ""}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が公開</small>${e.tx ? `<b class="dmlres ${e.hs === "dg" && e.hl ? "dg" : ""}">${esc(e.tx)}</b>` : ""}</div>`;
   } else if (e.k === "mq"){
     // 仮面舞踏会：自分が渡したカードと、もらったカード（ほかの人には裏向きで回る様子だけ）
     ms = 2700; const mv = e.mv || [], give = mv.find(x => x.f === me), got = mv.find(x => x.to === me);
@@ -11807,7 +11897,7 @@ function dmFx(e, g){
 }
 function dmRulesHtml(){
   const C = c => dmCardHtml(c, "sm");
-  const row = c => `<div>${C(c)}<p><b>${DM[c].n}（💰${DM[c].c}${DM[c].pot ? "🧪" : ""}）</b>${[...dmPlusText(c), DM[c].tx].filter(Boolean).join("　")}${DM[c].rx ? `<span class="rtx"><em>リアクション</em>${esc(DM[c].rx)}</span>` : ""}</p></div>`;
+  const row = c => `<div>${C(c)}<p><b>${DM[c].n}（💰${DM[c].c}${DM[c].pot ? "🧪" : ""}）</b>${[...dmPlusText(c), DM[c].tx].filter(Boolean).join("　")}${DM[c].rx ? `<span class="dmrtx"><em>リアクション</em>${esc(DM[c].rx)}</span>` : ""}</p></div>`;
   // 対戦中に開いたときは、このゲームで使っているカードを一番上にまとめる
   const cur = dmId && dmById(dmId), st0 = cur && cur.st;
   const used = st0 ? [...st0.kingdom.slice().sort((a, b) => DM[a].c - DM[b].c), ...["platinum", "colony", "potion"].filter(c => st0.supply && st0.supply[c] != null)] : [];
