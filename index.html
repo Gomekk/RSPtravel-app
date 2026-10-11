@@ -2585,7 +2585,8 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .sbfx .chbox .dmlsrc{font-size:14px;font-weight:900;color:#fff;background:#3A2A18;border:2px solid #E8B12A;border-radius:99px;padding:3px 14px}
 .sbfx .chbox>small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;color:#fff;border:2.5px solid var(--ink,#222);white-space:nowrap}
 .sbfx .chrow{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:94vw}
-.sbfx .chip{font-size:26px;font-weight:900;color:#4A2A0C;background:linear-gradient(180deg,#FFF3C4,#E8B12A);border:3px solid #5A3416;border-radius:16px;padding:6px 18px;box-shadow:0 4px 0 #5A3416;white-space:nowrap;animation:rcsh .45s calc(.15s + var(--i) * .15s) both}
+.sbfx .chip{font-size:26px;font-weight:900;color:#4A2A0C;background:linear-gradient(180deg,#FFF3C4,#E8B12A);border:3px solid #5A3416;border-radius:16px;padding:6px 18px;box-shadow:0 4px 0 #5A3416;white-space:nowrap;max-width:90vw;animation:rcsh .45s calc(.15s + var(--i) * .15s) both}
+.sbfx .chip.lg{white-space:normal;font-size:17px;line-height:1.4;text-align:center;padding:8px 14px}
 .sbfx .rvwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,240,190,.6),rgba(70,50,10,.85) 70%);animation:emw var(--ms) forwards}
 .sbfx .rvbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:9px;animation:emb var(--ms) forwards}
 .sbfx .rvbox>small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;color:#fff;border:2.5px solid var(--ink,#222);white-space:nowrap}
@@ -2839,7 +2840,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 @keyframes aring{0%{transform:scale(.4);opacity:1}100%{transform:scale(3.4);opacity:0}}
 .sbfx .acard{position:absolute;left:50%;top:46%;z-index:3;animation:acard var(--ms) cubic-bezier(.2,1.1,.3,1) forwards}
 .sbfx.dm-alg .acard .dmc.dfx{transform:translate(-50%,-50%) scale(1.08) !important}
-.sbfx.dm-alg .aplus{top:calc(46% + 98px)}.sbfx.dm-alg .aplus .atx{font-size:12px;line-height:1.42;padding:5px 10px}
+.sbfx.dm-alg .acard{top:40%}.sbfx.dm-alg .aplus{top:calc(40% + 98px)}.sbfx.dm-alg .aplus .atx{font-size:12px;line-height:1.42;padding:5px 10px}
 .sbfx .acard .dmc.dfx{transform:translate(-50%,-50%) scale(1.35);box-shadow:0 0 0 3px #FFE38A,0 0 40px #FFE38A,0 6px 0 var(--ink)}
 @keyframes acard{0%{transform:translate(0,40vh) rotate(-40deg) scale(.3);opacity:0}13%{transform:translate(0,0) rotate(6deg) scale(1.08);opacity:1}18%{transform:rotate(-3deg) scale(1)}86%{transform:none;opacity:1}100%{transform:translate(0,-34vh) scale(.25);opacity:0}}
 .sbfx .aflash{position:absolute;left:50%;top:50%;width:150px;height:210px;transform:translate(-50%,-50%);border-radius:14px;background:#fff;opacity:0;animation:aflash .5s ease-out .3s forwards;pointer-events:none}
@@ -11559,6 +11560,9 @@ function dmMenu(g){
   s.querySelector('[data-x="cards"]').onclick = () => openSheet("このゲームのカード", `<div class="dmcl">${[...g.st.kingdom, ...DM_BASE.filter(c => !g.st.supply || g.st.supply[c] != null)].map(c => dmBigCard(c)).join("")}</div>`);
   s.querySelector('[data-x="trash"]').onclick = () => { const tr = g.st.trash || []; openSheet("廃棄置き場", tr.length ? `<div class="kgpeek">${tr.map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだ何も廃棄されていません</p>`); };
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await dmCommit(g.id, () => ({ status: { status: "aborted" } })); closeDm(); };
+  // アプリのバージョン（更新できているかの確認用）
+  const vp = document.createElement("p"); vp.className = "note"; vp.style.cssText = "text-align:center;margin-top:12px;opacity:.7"; vp.textContent = "アプリのバージョン：確認中…"; s.appendChild(vp);
+  (window.caches ? caches.keys() : Promise.resolve([])).then(ks => { const v = ks.filter(k => /^ojk-v\d+$/.test(k)).sort((x, y) => +x.slice(5) - +y.slice(5)).pop(); vp.textContent = `アプリのバージョン：${v ? v.replace("ojk-", "") : "不明"}`; }).catch(() => { vp.textContent = "アプリのバージョン：不明"; });
 }
 
 /* ---- 演出 ---- */
@@ -11709,7 +11713,7 @@ function dmFx(e, g){
   } else if (e.k === "choice"){
     // ほかの人が選んだ効果（+$3・+1購入など）をチップで見せる
     ms = 1800; const os = e.opts || [];
-    html = `<span class="chwash"></span><div class="chbox">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="chrow">${os.map((o, i) => `<b class="chip" style="--i:${i}">${esc(o)}</b>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が選んだ</small></div>`;
+    html = `<span class="chwash"></span><div class="chbox">${e.c && DM[e.c] ? `<b class="dmlsrc">${esc(DM[e.c].n)}</b>` : ""}<div class="chrow">${os.map((o, i) => `<b class="chip ${o.length > 9 ? "lg" : ""}" style="--i:${i}">${esc(o)}</b>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が選んだ</small></div>`;
   } else if (e.k === "reveal"){
     // カードを公開：表向きのカードを並べて、元のカード名と結果を見せる
     ms = e.hl ? 2500 : 2000; const cs = e.cs || [];
