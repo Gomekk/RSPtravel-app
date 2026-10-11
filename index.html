@@ -2582,6 +2582,7 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 @keyframes emsh{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
 .sbfx .emcard .emx{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:92px;font-weight:900;color:#ff4d5e;text-shadow:0 3px 0 #2a0b10,0 0 14px rgba(255,60,80,.7);filter:none}
 .sbfx .emcard .em0{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);background:#2b2b33;color:#fff;font-size:13px;padding:2px 10px;border-radius:99px;border:2px solid #fff;white-space:nowrap}
+.dmtrbin{position:fixed;z-index:60;pointer-events:none;white-space:nowrap;font-weight:900;font-size:13px;color:#fff;background:#5A3416;border:2px solid #E8B12A;border-radius:99px;padding:3px 12px;box-shadow:0 3px 0 rgba(0,0,0,.35)}
 .dmstup{position:fixed;z-index:48;pointer-events:none;font-weight:900;font-size:15px;color:#fff;padding:1px 8px;border-radius:99px;border:2px solid var(--ink);white-space:nowrap;box-shadow:0 2px 0 var(--ink)}
 .dmstup.s-a{background:#F07A2A}.dmstup.s-b{background:#1E9E5A}.dmstup.s-c{background:#E8B12A;color:#4A2A0C}
 .sbfx .chwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,227,138,.55),rgba(40,30,60,.82) 70%);animation:emw var(--ms) forwards}
@@ -3852,7 +3853,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v240";
+const APP_VER = "v242";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -9230,7 +9231,7 @@ const dmCost = (st, c) => {
   return Math.max(0, v);
 };
 const dmL = (st, m) => { const L = st._log || (st._log = []); L.push(m); if (st._polog && m !== st._polog){ L.push(st._polog); delete st._polog; } };   // 「山がなくなった」は次の1行（獲得のログ）のあとに
-const dmFxAdd = (st, e) => { st.fxn = (st.fxn || 0) + 1; st.fx = [...(st.fx || []), { ...e, n: st.fxn }].slice(-12); };
+const dmFxAdd = (st, e) => { st.fxn = (st.fxn || 0) + 1; st.fx = [...(st.fx || []), { ...e, n: st.fxn, at: Date.now() }].slice(-12); };
 function dmTop(st, pid){
   const P = st.pl[pid];
   if (!P.deck.length){ if (!P.disc.length) return null; P.deck = shuffle(P.disc); P.disc = []; dmFxAdd(st, { k: "shuf", p: pid }); }
@@ -10547,7 +10548,7 @@ function openDmNew(){
 /* ---- 画面 ---- */
 let dmAskMin = null, dmFxBusy = 0, dmHeld = [], dmGains = [], dmDealDelay = 0, dmReveal = null, dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
 let dmId = null, dmBusy = false, dmSel = [], dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
-function openDm(id){ delete dmPrevHand[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
+function openDm(id){ delete dmPrevHand[id]; delete dmSeen[id]; delete dmStatPrev[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
 document.addEventListener("visibilitychange", () => document.body.classList.toggle("bgpause", document.hidden));
 (() => { const upd = () => document.body.classList.toggle("ovl", [...document.querySelectorAll("body>.arena")].some(a => !a.hidden)); new MutationObserver(upd).observe(document.body, { subtree: false, childList: false, attributes: true, attributeFilter: ["hidden"] }); document.querySelectorAll("body>.arena").forEach(a => new MutationObserver(upd).observe(a, { attributes: true, attributeFilter: ["hidden"] })); upd(); })();
 function closeDm(){ clearTimeout(dmEndTm); if (dmId){ delete dmEndCounted[dmId]; if (dmEndSt[dmId] && dmEndSt[dmId].s === 1) dmEndSt[dmId] = { s: 2, k: 0 }; dmEndKeys = new Set(); } dmId = null; $("#dmg").hidden = true; document.body.style.overflow = ""; render(); }
@@ -11523,7 +11524,13 @@ function dmAnimGains(el, st){
       const dest = ev.p === me ? (ev.dest === "hand" ? root.querySelector(".dmhand") : ev.dest === "deck" ? root.querySelector("#dmDeck .bk") : root.querySelector("#dmDisc .dmc,#dmDisc .emp")) : root.querySelector(`.np[data-pp="${ev.p}"]`);
       const dr = dest && dest.getBoundingClientRect();
       const W = innerWidth, H = innerHeight, cx = W / 2, cy = H * .44;
-      const sx = tr ? tr.left + tr.width / 2 : cx, sy = tr ? tr.top + tr.height / 2 : 0, s0 = tr ? tr.width / 56 : .5;
+      let sx = tr ? tr.left + tr.width / 2 : cx, sy = tr ? tr.top + tr.height / 2 : 0, s0 = tr ? tr.width / 56 : .5;
+      if (ev.from === "trash"){
+        // 廃棄置き場から：ボタンが見えていなくても画面右下から。ゴミ箱の札を出して、そこからカードが出てくる
+        if (!tr){ sx = W - 70; sy = H - 90; s0 = .5; }
+        const bin = document.createElement("b"); bin.className = "dmtrbin"; bin.textContent = "🗑️ 廃棄置き場"; bin.style.left = Math.min(W - 60, sx) + "px"; bin.style.top = (sy + 22) + "px"; document.body.appendChild(bin);
+        bin.animate([{ transform: "translate(-50%,-50%) scale(.6)", opacity: 0 }, { transform: "translate(-50%,-50%) scale(1.15)", opacity: 1, offset: .2 }, { transform: "translate(-50%,-50%) scale(1)", opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1500 }).onfinish = () => bin.remove();
+      }
       const dx = dr ? dr.left + dr.width / 2 : cx, dy = dr ? dr.top + dr.height / 2 : H;
       const w = document.createElement("div"); w.className = "dmgain"; w.innerHTML = `${dmCardHtml(ev.c)}<small style="background:${pcolor(ev.p)}">${esc(pname(ev.p))}が${ev.from === "trash" ? "廃棄置き場から獲得" : ev.k === "gain" || ev.how === "gain" ? "獲得" : "購入"}</small>`;
       w.style.left = (cx - 28) + "px"; w.style.top = (cy - 40) + "px"; document.body.appendChild(w);
@@ -11594,11 +11601,15 @@ function dmSnap(kind, cs){
   } else if (kind === "tile") (cs || []).forEach(c => add(c, root.querySelector(`[data-dc="${c}"]`)));
 }
 const DM_BIGFX = ["province", "colony", "platinum"];   // 大演出のカード（属州はゲーム終了に向かう演出、植民地・白金貨は最も派手な演出）
+let dmQuiet = 0;   // アプリに戻ってきた直後は、たまっていた演出を流さない
 function dmFxCheck(g){
   const st = g.st, n = st.fxn || 0, seen = dmSeen[g.id];
   dmSeen[g.id] = n;
   if (seen == null) return;
-  const evs0 = (st.fx || []).filter(e => e.n > seen);
+  if (Date.now() < dmQuiet || n - seen > 12){ dmFxBusy = 0; return; }
+  // いちばん新しい演出より15秒以上前のものは、つながり直したときのたまり分なので流さない（端末ごとの時計のずれに左右されないよう、演出どうしで比べる）
+  const nw = (st.fx || []).filter(e => e.n > seen), last = Math.max(0, ...nw.map(e => e.at || 0));
+  const evs0 = nw.filter(e => !(e.at && last - e.at > 15000));
   // 埋蔵金の演出は、勝利点カードの獲得演出のあとに回す
   const isH = e => e.k === "hoard" || e.hg;
   const evs = [...evs0.filter(e => !isH(e)), ...evs0.filter(isH)];
@@ -13492,6 +13503,7 @@ clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
   clearBadge();
+  dmQuiet = Date.now() + 2500; if (dmId){ delete dmPrevHand[dmId]; delete dmStatPrev[dmId]; }   // ドミニオン：戻ってきたら、たまった演出は飛ばして今の状態から
   try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); drawHx(); } catch (e) { console.error(e); }
 });
 (async () => {
