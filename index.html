@@ -2479,11 +2479,15 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmask .dqn{color:#1F8C8C}
 .dmask .nbtns{width:100%}
 .dmmodal{z-index:44}
+.nbottom .dmask .dqback{margin:0 0 3px;padding:2px 10px;font-size:11px;border-width:1.5px}
+.arena.dmg{overflow-y:auto;overscroll-behavior:contain}
+.dqback.dqtr{border-color:#7A5A3A;background:#F6EEE3;color:#5A3416}
 .dqback{align-self:flex-start;margin:0 0 8px;padding:4px 12px;border-radius:99px;border:2px solid #2F7FC9;background:#EAF4FF;color:#1E5FA8;font-weight:900;font-size:12.5px}
 .dmmodal .dmmw{position:relative;width:min(100%,380px);display:flex;flex-direction:column;align-items:stretch}
 .dmmodal .dmmw .dmask{width:100%}
 .dmmodal .dqmin{align-self:flex-end;margin:0 4px 6px;padding:5px 12px;border-radius:99px;border:2px solid var(--ink);background:#fff;color:var(--ink);font-weight:900;font-size:12.5px;box-shadow:0 2px 0 var(--ink)}
-.dmaskbar{position:fixed;left:50%;bottom:calc(8px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:44;width:min(calc(100% - 24px),380px);display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-radius:14px;border:2.5px solid var(--ink);background:#FFF3C4;box-shadow:0 3px 0 var(--ink),0 0 0 4px rgba(232,177,42,.35);font-weight:900;color:var(--ink);animation:dmabar 1.6s ease-in-out infinite}
+.dmaskpad{height:44px}
+.dmaskbar{position:fixed;left:50%;bottom:max(4px, calc(env(safe-area-inset-bottom) - 14px));transform:translateX(-50%);z-index:44;width:min(calc(100% - 24px),380px);display:flex;align-items:center;gap:8px;padding:5px 6px 5px 12px;border-radius:12px;border:2.5px solid var(--ink);background:#FFF3C4;box-shadow:0 3px 0 var(--ink),0 0 0 4px rgba(232,177,42,.35);font-weight:900;color:var(--ink);animation:dmabar 1.6s ease-in-out infinite}
 .dmaskbar span{flex:1;min-width:0;text-align:left;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dmaskbar b{flex:none;padding:4px 12px;border-radius:99px;background:#E2364F;color:#fff;font-size:13px;border:2px solid var(--ink)}
 @keyframes dmabar{50%{box-shadow:0 3px 0 var(--ink),0 0 0 7px rgba(232,177,42,.15)}}
@@ -3198,6 +3202,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 @keyframes tpdrop{0%{transform:translateY(-60vh) rotate(-25deg) scale(1.3);opacity:0}60%{opacity:1}100%{transform:translate(calc((var(--i) - (var(--n, 1) - 1) / 2) * 30px),calc(var(--i) * -6px)) rotate(calc((var(--i) - (var(--n, 1) - 1) / 2) * 6deg))}}
 .tpbox small{font-size:14px;font-weight:900;color:#fff;padding:4px 14px;border-radius:99px;border:2px solid var(--ink);animation:hpop .4s ease-out .5s both}
 .dmg .nlog{height:calc(5 * 1.4em);overflow:hidden}
+.dmg.askb .nlog{height:calc(3 * 1.4em)}
 .dmsupw{position:relative;flex:none;margin-top:9px}
 .dmsupw>.dmsup{padding-top:12px}
 .nbtns.dmlock .nb{pointer-events:none;filter:grayscale(.6);opacity:.45;transition:none}
@@ -3846,6 +3851,8 @@ const SUPABASE_URL = "https://mspzgfkommmuucjvdvbm.supabase.co";
 const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
+/* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
+const APP_VER = "v240";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -9534,7 +9541,7 @@ const DMA = {
     const c = dmTop(st, tg); if (c == null) return;
     st.trash.push(c); dmL(st, `詐欺師：${pname(tg)}の${DM[c].n}を廃棄`); dmFxAdd(st, { k: "trash", p: tg, cs: [c] });
     const cost = dmCost(st, c);
-    if (Object.keys(st.supply).some(x => dmFits(st, x, { max: cost, exact: true, potOnly: !!DM[c].pot }))) dmAsk(st, { pid, k: "supply", max: cost, exact: true, potOnly: !!DM[c].pot, title: `詐欺師：${pname(tg)}に獲得させるカード（コスト${cost}）`, then: { t: "gainTo", tg } });
+    if (Object.keys(st.supply).some(x => dmFits(st, x, { max: cost, exact: true, potOnly: !!DM[c].pot }))) dmAsk(st, { pid, k: "supply", max: cost, exact: true, potOnly: !!DM[c].pot, verb: `${pname(tg)}に獲得させる`, title: `詐欺師：${pname(tg)}に獲得させるカード（コスト${cost}）`, then: { t: "gainTo", tg } });
   },
   minion(st, tg){ if (!st.turn.minion) return; const P = st.pl[tg]; if (P.hand.length < 5) return; P.disc.push(...P.hand); dmFxAdd(st, { k: "dis", p: tg, cs: P.hand.slice(), c: "minion", drew: 4 }); P.hand = []; dmDraw(st, tg, 4); dmL(st, `寵臣：${pname(tg)}は手札（${dmCntNames(st.fx.filter(f => f.k === "dis" && f.p === tg).pop().cs)}）を捨てて4枚引いた`); },
   replace(st, tg){ if (st.turn.repCurse && dmGain(st, tg, "curse")){ dmL(st, `${pname(tg)}が呪いを獲得`); dmFxAdd(st, { k: "curse", p: tg }); } },
@@ -9568,10 +9575,13 @@ const DMA = {
   },
 };
 /* アタックの効果が「呪いを渡す」だけのカード */
-const DM_CURSE_ONLY = ["witch", "seawitch", "youngwitch", "familiar", "charlatan"];
+const DM_CURSE_ONLY = ["witch", "seawitch", "youngwitch", "familiar", "charlatan", "replace"];
 /* 続きの処理 */
 const DMT = {
   atk(st, t){
+    // 条件つきのアタック：条件を満たさなかったときは、アタックの演出も出さない
+    if (t.c === "minion" && !st.turn.minion) return;        // 寵臣で +$2 を選んだ
+    if (t.c === "replace" && !st.turn.repCurse) return;     // 交換で勝利点カードを獲得しなかった
     // 呪いを渡すだけのアタックで、呪いの山が空なら、アタック自体を中止（演出に❌）
     if (DM_CURSE_ONLY.includes(t.c) && !(st.supply.curse > 0)){ dmL(st, `❌${DM[t.c].n}のアタックは中止（呪いの山が空）`); dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, cancel: 1 }); return; }
     const tg = dmOthers(st, t.pid), hit = [], safe = [], rs = [];   // rs：公開したリアクション（全員に演出で見せる）
@@ -9629,11 +9639,11 @@ const DMT = {
   },
   /* --- 陰謀 --- */
   lurk(st, t){
-    if (t.sel[0] === 0) dmAsk(st, { pid: t.pid, k: "supply", max: 99, filter: "a", anyPot: true, title: "待ち伏せ：サプライから廃棄するアクション", then: { t: "lurkTrash" } });
+    if (t.sel[0] === 0) dmAsk(st, { pid: t.pid, k: "supply", max: 99, filter: "a", anyPot: true, title: "待ち伏せ：サプライから廃棄するアクション", verb: "廃棄する", then: { t: "lurkTrash" } });
     else { const cs = [...new Set(st.trash.filter(c => dmIs(c, "a")))]; dmAsk(st, { pid: t.pid, k: "list", cards: cs, min: 1, max: 1, title: "待ち伏せ：廃棄置き場から獲得するアクション", ok: "獲得する", then: { t: "lurkGain", cards: cs } }); }
   },
   lurkTrash(st, t){ if (!(st.supply[t.card] > 0)) return; st.supply[t.card]--; dmPileOut(st, t.card); st.trash.push(t.card); dmL(st, `待ち伏せ：サプライの${DM[t.card].n}を廃棄`); dmFxAdd(st, { k: "trash", p: t.pid, cs: [t.card] }); },
-  lurkGain(st, t){ const c = t.cards[t.sel[0]]; if (!c) return; dmTake(st.trash, [c]); st.pl[t.pid].disc.push(c); dmL(st, `待ち伏せ：廃棄置き場の${DM[c].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c, dest: "disc" }); },
+  lurkGain(st, t){ const c = t.cards[t.sel[0]]; if (!c) return; dmTake(st.trash, [c]); st.pl[t.pid].disc.push(c); dmL(st, `待ち伏せ：廃棄置き場の${DM[c].n}を獲得`); dmFxAdd(st, { k: "gain", p: t.pid, c, dest: "disc", from: "trash" }); },
   pawn(st, t){ const T = st.turn; t.sel.forEach(i => { if (i === 0) dmDraw(st, t.pid, 1); if (i === 1) T.actions++; if (i === 2) T.buys++; if (i === 3) T.coins++; }); },
   mq1(st, t){ st.mq = { ...(st.mq || {}), [t.pid]: t.sel[0] }; },
   mqpass(st, t){
@@ -9849,7 +9859,8 @@ function dmAnswer(st, pid, id, val){
   // 次の選択が同じ人に続いて、山札から何も見えていなければ「選び直す」を出せる
   const nx = st.asks.find(x => x.pid === pid);
   const decksOk = st.players.every((p, k) => { const d0 = decks0[k], d1 = st.pl[p].deck.join(","); return d1 === d0 || (d0 !== "" && d1.startsWith(d0 + ",")); });
-  if (nx && decksOk && JSON.stringify(st.asks.filter(x => x.pid !== pid)) === others0 && (st.turn && st.turn.pid) === T0) st._undo = { id: nx.id, pid, snap };
+  // 同じ種類の選択の繰り返し（詐欺師で相手ごとに選ぶ、など）は、それぞれ決定ボタンで確定するので戻さない
+  if (nx && decksOk && (nx.then || {}).t !== (a.then || {}).t && JSON.stringify(st.asks.filter(x => x.pid !== pid)) === others0 && (st.turn && st.turn.pid) === T0) st._undo = { id: nx.id, pid, snap };
   return true;
 }
 /* ---- 手番の操作 ---- */
@@ -11099,7 +11110,7 @@ function drawDm(){
       if (hn) return `<button class="dh dhold" data-hn="${hn}" data-c="${c}" style="--i:${k}" disabled>${dmCardHtml(c)}</button>`;   // 山札の上に置く演出の前（まだ手札に見せておく）
       const okA = handAsk ? (!myAsk.filter || dmIs(c, myAsk.filter)) : canUse(c), sel = handAsk ? dmPick.sel.includes(i) : dmSel.some(x => x.i === i);
       return `<button class="dh ${sel ? "sel" : ""} ${okA ? "" : "ng"}" data-dh="${i}" data-c="${c}" data-ok="${okA ? 1 : 0}" style="--i:${k}">${dmCardHtml(c)}</button>`; }).join("")}</div>`;
-    if (!myAsk) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b>${P.deck.length}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b>${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button>${(P.stay || []).length + (P.haven || []).length ? `<button class="dpk du" id="dmDur">⏳持続中 <b>${(P.stay || []).length + (P.haven || []).length}</b></button>` : ""}${(P.nv || []).length ? `<button class="dpk du" id="dmNv">🛖村マット <b>${P.nv.length}</b></button>` : ""}${(P.isl || []).length ? `<button class="dpk du" id="dmIsl">🏝️島 <b>${P.isl.length}</b></button>` : ""}${P.vpt ? `<span class="dpk vt">🟢勝利点トークン <b>${P.vpt}</b></span>` : ""}${(st.prizes || []).length ? `<button class="dpk du" id="dmPrize">🏆褒賞 <b>${st.prizes.length}</b></button>` : ""}</div>`;
+    if (!myAsk || !(myAsk.k === "hand" || myAsk.k === "supply")) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b>${P.deck.length}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b>${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button>${(P.stay || []).length + (P.haven || []).length ? `<button class="dpk du" id="dmDur">⏳持続中 <b>${(P.stay || []).length + (P.haven || []).length}</b></button>` : ""}${(P.nv || []).length ? `<button class="dpk du" id="dmNv">🛖村マット <b>${P.nv.length}</b></button>` : ""}${(P.isl || []).length ? `<button class="dpk du" id="dmIsl">🏝️島 <b>${P.isl.length}</b></button>` : ""}${P.vpt ? `<span class="dpk vt">🟢勝利点トークン <b>${P.vpt}</b></span>` : ""}${(st.prizes || []).length ? `<button class="dpk du" id="dmPrize">🏆褒賞 <b>${st.prizes.length}</b></button>` : ""}</div>`;
     if (myAsk && (myAsk.k === "hand" || myAsk.k === "supply")) bottom += dmAskHtml(myAsk, st);
     else if (myTurn && idle){
       const hasT = !T.bought && P.hand.some(c => dmIs(c, "t") && !DM_TRE_ASK.includes(c));
@@ -11122,7 +11133,7 @@ function drawDm(){
     <div class="dmsupw">${supply}<span class="dmsetb">-&nbsp;&nbsp;${esc(dmSetNameOf(g))}&nbsp;&nbsp;-</span></div>${stat}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn" || myAsk.k === "opt") && !dmView ? (dmAskMin === myAsk.id
-      ? `<button class="dmaskbar" id="dmAskMax"><span>📝 ${esc(myAsk.title)}</span><b>選ぶ ▲</b></button>`
+      ? `<div class="dmaskpad"></div><button class="dmaskbar" id="dmAskMax"><span>${esc(myAsk.title)}</span><b>選ぶ ▲</b></button>`
       : `<div class="kgpop dmmodal"><div class="dmmw"><button class="dqmin" id="dmAskMin">▼ 盤面を見る</button>${dmAskHtml(myAsk, st)}</div></div>`) : ""}${over}${pop}`);
   // 場のカードがあふれたら、新しく出したカード（右端）が見えるよう自動で横スクロール
   { const pl = el.querySelector(".dmplay"), key = `${g.id}:${T.pid}:${(AP.play || []).length}`;
@@ -11189,6 +11200,7 @@ function drawDm(){
     const v = dmPick.sel.slice(); dmPick = []; await dmDoAnswer(myAsk.id, v);
   }));
   // 選択のポップアップを小さくたたんで、裏のボードや手札を見る
+  on("dmAskTrash", () => dmPileSheet(`廃棄置き場`, st.trash || [], "タップで効果を見る", "まだ何も廃棄されていません"));
   on("dmAskBack", act(async () => { if (myAsk){ dmPick = []; dmGainSel = null; await dmDoAnswer(myAsk.id, "__back"); } }));
   on("dmAskMin", () => { if (myAsk){ dmAskMin = myAsk.id; drawDm(); } });
   on("dmAskMax", () => { dmAskMin = null; drawDm(); });
@@ -11196,6 +11208,7 @@ function drawDm(){
   on("dmAskSkip", act(async () => { if (myAsk){ dmGainSel = null; await dmDoAnswer(myAsk.id, null); } }));
   on("dmNo", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, false); }));
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
+  el.classList.toggle("askb", !!(myAsk && (myAsk.k === "hand" || myAsk.k === "supply")));   // 下に選択が出ている間は、ログを短くして画面に収める
   dmAnimHand(g, el, P);
   dmAnimGains(el, st);
   dmStatPop(g, el);
@@ -11506,13 +11519,13 @@ function dmAnimGains(el, st){
     const start = Math.max(t, ev.wait || 0); t = start + 1250;
     setTimeout(() => {
       const root = $("#dmg"); if (!root || root.hidden) return;
-      const tile = root.querySelector(`[data-dc="${ev.c}"]`), tr = tile && tile.getBoundingClientRect();
+      const tile = ev.from === "trash" ? root.querySelector("#dmTrash") : root.querySelector(`[data-dc="${ev.c}"]`), tr = tile && tile.getBoundingClientRect();   // 廃棄置き場から取ったカードは、廃棄置き場のボタンから出てくる
       const dest = ev.p === me ? (ev.dest === "hand" ? root.querySelector(".dmhand") : ev.dest === "deck" ? root.querySelector("#dmDeck .bk") : root.querySelector("#dmDisc .dmc,#dmDisc .emp")) : root.querySelector(`.np[data-pp="${ev.p}"]`);
       const dr = dest && dest.getBoundingClientRect();
       const W = innerWidth, H = innerHeight, cx = W / 2, cy = H * .44;
       const sx = tr ? tr.left + tr.width / 2 : cx, sy = tr ? tr.top + tr.height / 2 : 0, s0 = tr ? tr.width / 56 : .5;
       const dx = dr ? dr.left + dr.width / 2 : cx, dy = dr ? dr.top + dr.height / 2 : H;
-      const w = document.createElement("div"); w.className = "dmgain"; w.innerHTML = `${dmCardHtml(ev.c)}<small style="background:${pcolor(ev.p)}">${esc(pname(ev.p))}が${ev.k === "gain" || ev.how === "gain" ? "獲得" : "購入"}</small>`;
+      const w = document.createElement("div"); w.className = "dmgain"; w.innerHTML = `${dmCardHtml(ev.c)}<small style="background:${pcolor(ev.p)}">${esc(pname(ev.p))}が${ev.from === "trash" ? "廃棄置き場から獲得" : ev.k === "gain" || ev.how === "gain" ? "獲得" : "購入"}</small>`;
       w.style.left = (cx - 28) + "px"; w.style.top = (cy - 40) + "px"; document.body.appendChild(w);
       const lab = w.querySelector("small");
       w.animate([
@@ -11535,7 +11548,8 @@ function dmAnimGains(el, st){
 }
 function dmAskHtml(a, st){
   const canBack = a.pid === me && st._undo && st._undo.id === a.id && st._undo.pid === me;
-  let h = `<div class="dmask">${canBack ? `<button class="dqback" id="dmAskBack">↩ ひとつ前に戻って選び直す</button>` : ""}<b class="dqt">${esc(a.title)}</b>${a.desc ? `<small>${esc(a.desc)}</small>` : ""}`;
+  const seeTr = /廃棄置き場/.test(a.title + (a.opts || []).join("")) && (st.trash || []).length;   // 待ち伏せなど：廃棄置き場の中身を確かめられるように
+  let h = `<div class="dmask">${canBack ? `<button class="dqback" id="dmAskBack">ひとつ前に戻って選び直す</button>` : ""}${seeTr ? `<button class="dqback dqtr" id="dmAskTrash">廃棄置き場を見る（${st.trash.length}枚）</button>` : ""}<b class="dqt">${esc(a.title)}</b>${a.desc ? `<small>${esc(a.desc)}</small>` : ""}`;
   if (a.k === "hand"){
     const n = dmPick.sel.length, ok = n >= a.min && n <= a.max;
     h += `<small class="dqn">${a.min === a.max ? `${a.min}枚選ぶ` : `${a.min}〜${a.max}枚`}（${n}枚選択中）・上の手札をタップ</small><div class="nbtns one"><button class="nb end ${ok ? "go" : ""}" id="dmAskGo" ${ok ? "" : "disabled"}>${esc(a.ok || "決定")}${n ? `（${n}枚）` : a.min === 0 ? "（なし）" : ""}</button></div>`;
@@ -11550,7 +11564,7 @@ function dmAskHtml(a, st){
   } else if (a.k === "yn"){
     h += `${a.card ? `<button class="dmyn" id="dmAskCard">${dmCardHtml(a.card)}</button>` : ""}<div class="nbtns two"><button class="nb draw" id="dmNo">${esc(a.no || "いいえ")}</button><button class="nb end go" id="dmYes">${esc(a.yes || "はい")}</button></div>`;
   } else if (a.k === "supply"){
-    h += `<small class="dqn">光っているサプライのカードをタップ</small><div class="nbtns ${a.skip ? "two" : "one"}">${a.skip ? `<button class="nb draw" id="dmAskSkip">獲得しない</button>` : ""}<button class="nb end ${dmGainSel ? "go" : ""}" id="dmAskGo" ${dmGainSel ? "" : "disabled"}>${dmGainSel ? `${esc(DM[dmGainSel].n)}を獲得する` : "獲得するカードを選んでね"}</button></div>`;
+    h += `<small class="dqn">光っているサプライのカードをタップ</small><div class="nbtns ${a.skip ? "two" : "one"}">${a.skip ? `<button class="nb draw" id="dmAskSkip">獲得しない</button>` : ""}<button class="nb end ${dmGainSel ? "go" : ""}" id="dmAskGo" ${dmGainSel ? "" : "disabled"}>${dmGainSel ? `${esc(DM[dmGainSel].n)}を${esc(a.verb || "獲得する")}` : (a.verb ? "カードを選んでね" : "獲得するカードを選んでね")}</button></div>`;
   }
   return h + `</div>`;
 }
@@ -11561,8 +11575,8 @@ function dmMenu(g){
   s.querySelector('[data-x="trash"]').onclick = () => { const tr = g.st.trash || []; openSheet("廃棄置き場", tr.length ? `<div class="kgpeek">${tr.map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだ何も廃棄されていません</p>`); };
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await dmCommit(g.id, () => ({ status: { status: "aborted" } })); closeDm(); };
   // アプリのバージョン（更新できているかの確認用）
-  const vp = document.createElement("p"); vp.className = "note"; vp.style.cssText = "text-align:center;margin-top:12px;opacity:.7"; vp.textContent = "アプリのバージョン：確認中…"; s.appendChild(vp);
-  (window.caches ? caches.keys() : Promise.resolve([])).then(ks => { const v = ks.filter(k => /^ojk-v\d+$/.test(k)).sort((x, y) => +x.slice(5) - +y.slice(5)).pop(); vp.textContent = `アプリのバージョン：${v ? v.replace("ojk-", "") : "不明"}`; }).catch(() => { vp.textContent = "アプリのバージョン：不明"; });
+  const vp = document.createElement("p"); vp.className = "note"; vp.style.cssText = "text-align:center;margin-top:12px;opacity:.7"; vp.textContent = `アプリのバージョン：${APP_VER}`; s.appendChild(vp);
+  (window.caches ? caches.keys() : Promise.resolve([])).then(ks => { const v = ks.filter(k => /^ojk-v\d+$/.test(k)).sort((x, y) => +x.slice(5) - +y.slice(5)).pop(); if (v && v.replace("ojk-", "") !== APP_VER) vp.textContent = `アプリのバージョン：${APP_VER}（更新途中：${v.replace("ojk-", "")}。アプリを閉じて開き直してください）`; }).catch(() => {});
 }
 
 /* ---- 演出 ---- */
@@ -11600,7 +11614,19 @@ function dmFxCheck(g){
     if (e.k === "shuf"){ if (e.p === me) dmShufNow = true; return; }
     if (e.k === "clean"){ if (e.p === me){ dmCleanNow = true; dmSnap("clean"); } return; }
     if (e.k === "choice" && e.p === me) return;   // 自分で選んだものは自分には出さない
-    if (e.k === "dis" && e.p === me){ dmSnap("dis", e.cs); return; }   // 自分の手札は手札から捨て札へ飛ぶ演出。ほかの人には下の「dis」演出で見せる
+    if (e.k === "dis" && e.p === me){
+      if (t <= 0){ dmSnap("dis", e.cs); return; }
+      // 前に演出がある（寵臣のアタックなど）ときは、その順番が来るまで手札に残しておき、来たら捨て札へ飛ばす
+      (e.cs || []).forEach(c => dmHeld.push({ gid: g.id, c, n: e.n, at: Date.now() + t + 60 }));
+      busy = Math.max(busy, t + 1000);   // 新しく引いたカードは、捨て札へ飛んだあとに配る
+      setTimeout(() => {
+        const hs = [...document.querySelectorAll(`#dmg .dmhand .dhold[data-hn="${e.n}"]`)];
+        hs.forEach(b => { const r = b.getBoundingClientRect(); if (r.width) dmOut.push({ c: b.dataset.c, x: r.left + r.width / 2, y: r.top + r.height / 2, s: r.width / 56 }); });
+        dmHeld = dmHeld.filter(x => x.n !== e.n); hs.forEach(b => b.remove());
+        if (dmId === g.id) drawDm();
+      }, t);
+      return;
+    }   // 自分の手札は手札から捨て札へ飛ぶ演出。ほかの人には下の「dis」演出で見せる
     // 手札から山札の上へ：描き直す前に、自分の手札のどこにあったかを覚えておく（演出で、そこから山札へ飛ばす）
     if (e.k === "top" && e.p === me && e.hc && e.hc.length){ const used = new Set(), r = []; e.hc.forEach(c => { const b = [...document.querySelectorAll(`#dmg .dmhand .dh:not(.dhold)[data-c="${c}"]`)].find(x => !used.has(x)); if (b){ used.add(b); r.push({ c, rc: b.getBoundingClientRect() }); } }); if (r.length){ evs[evs.indexOf(e0)] = e0; e0._from = r; } e.hc.forEach(c => dmHeld.push({ gid: g.id, c, n: e.n, at: Date.now() + t + 60 })); e0._hold = true; }
     if (e.k === "buy" || e.k === "gain" || e.k === "prov"){ const w = e.hg ? hEnd : e.k === "prov" ? t + 4600 : t; dmGains.push({ ...e, wait: w }); gq = Math.max(gq, w) + 1250; if (e.k !== "prov"){ if (!e.hg) t = Math.max(t, w) + 1100; return; } }   // 獲得は順番に（アタックなどの演出に隠れないよう、前後の演出とずらす）
