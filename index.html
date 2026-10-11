@@ -3660,6 +3660,29 @@ body.bgpause .hxemb i{animation-play-state:paused}
 .hxinfo.rockg{flex-direction:column;align-items:stretch}
 .hxinfo.rockg .hxbtns{width:100%}
 .hxinfo.rockg small{flex-basis:auto}.hxinfo.rockg{flex-wrap:nowrap}
+.hxu.fB .sq{transform:none}
+.hxprev{pointer-events:none;opacity:.9}.hxprev .ring{fill:none;stroke:var(--tc);stroke-width:1.2;stroke-dasharray:2 1}
+.hxprev .pn{font-size:4px;font-weight:900;fill:#FFD45A;text-anchor:middle;paint-order:stroke;stroke:#000;stroke-width:.8px}
+.hxb.hxend.blink{background:linear-gradient(180deg,#FFD45A,#E8901A);color:#1B1200;border-color:#FFF1B8;animation:hxendb .9s ease-in-out infinite}
+@keyframes hxendb{0%,100%{box-shadow:0 4px 0 #6A4006,0 0 0 0 rgba(255,212,90,.7)}50%{box-shadow:0 4px 0 #6A4006,0 0 0 10px rgba(255,212,90,0);filter:brightness(1.25)}}
+.hxobjinfo{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--tc)}
+.hxobjinfo b{color:var(--tc);font-size:13px}.hxobjinfo span{font-size:12px;color:#C9D1E6}
+.hxusk span{cursor:pointer}
+.hxlogbtn{position:absolute!important;left:-16px;top:46%;z-index:4!important;width:46px;height:46px;border-radius:50%;border:2px solid #fff;background:radial-gradient(circle at 60% 40%,#FFFFFF,#DDE6F5 70%,#AEB9CF);box-shadow:0 0 14px rgba(255,255,255,.55),0 3px 8px rgba(0,0,0,.5);padding:0 0 0 14px;display:grid;place-items:center;color:#1B1838}
+.hxlogbtn span{font-family:"Cinzel",var(--disp);font-weight:900;font-size:10px;letter-spacing:.04em}
+.hxlogbtn:active{transform:scale(.92)}
+.hxmw.logw{max-height:100%;align-items:stretch}
+.hxlog2{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;overflow-y:auto;flex:1;min-height:0}
+.hxlog2 li{font-size:12.5px;line-height:1.6;padding:7px 10px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+.hxlog2 li.new{border-color:rgba(255,212,90,.5);background:rgba(255,212,90,.08)}
+.hxlog2 .lgn{color:var(--pc);filter:brightness(1.4)}
+.hxlk{display:inline;padding:0 5px;margin:0 1px;border-radius:5px;border:1px solid;font:inherit;font-weight:900;line-height:1.4;cursor:pointer}
+.hxlk.sk{color:#FFE38A;border-color:rgba(232,177,42,.6);background:rgba(232,177,42,.15)}
+.hxlk.ch{color:#9BE0FF;border-color:rgba(56,182,255,.5);background:rgba(56,182,255,.12)}
+.hxsk.wide{flex-direction:row;align-items:center;text-align:left;padding:6px 10px;gap:8px}
+.hxsk.wide>em{flex:none}.hxsk.wide .hxsig{width:30px;height:30px;flex:none}
+.hxsk.wide b{white-space:nowrap;flex:none}.hxsk.wide small{flex:1;min-width:0}
+.hxboard .hc.spc{filter:drop-shadow(0 0 3px #FFD45A)}
 
 </style>
 </head>
@@ -3925,7 +3948,7 @@ function viewHome(t){
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
   const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中</b><small>${ng.status === "playing" && ng.turn && ng.turn.pid === me ? `<em class="yt">あなたの番！</em>第${ng.round}回戦・合計${ng.total}` : `第${ng.round}回戦・合計${ng.total}・タップで入る`}</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 3 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -11429,7 +11452,7 @@ function dmRulesHtml(){
 /* 2陣営（蒼・紅）に分かれ、相手の貯蔵庫2つを先に壊した陣営の勝ち。
    リスは4タイプだけ（攻撃・防御・速さ）。強さの幅はスキルカードで作る（装備・即効・設置）。
    各リスは自分の番に「移動→攻撃」か「スキルカードを1枚使う」のどちらか。倒されたら復活時にスキルを2枚まで装備できる */
-const HX_R = 12, HX_C = 8, HX_TRE_HP = 10, HX_HAND = 4, HX_SKMAX = 6;
+const HX_R = 13, HX_C = 8, HX_TRE_HP = 10, HX_HAND = 4, HX_SKMAX = 10;
 const HX_TM = { A: { n: "蒼", full: "蒼森リス団", en: "AZURE CLAN", c: "#38B6FF", d: "#0A3E73" }, B: { n: "紅", full: "紅葉リス団", en: "CRIMSON CLAN", c: "#FF3D55", d: "#6E0B1C" } };
 /* 属性（スキルで付く）：炎・水・風は三すくみ（じゃんけん）、光と闇はおたがいに有利。有利なら攻撃+2 */
 const HX_EL = { fire: { n: "炎", c: "#FF6A2A", beat: ["wind"] }, water: { n: "水", c: "#3FA9FF", beat: ["fire"] }, wind: { n: "風", c: "#52E08A", beat: ["water"] }, light: { n: "光", c: "#FFE27A", beat: ["dark"] }, dark: { n: "闇", c: "#B06BFF", beat: ["light"] } };
@@ -11504,25 +11527,27 @@ const HX_OBJ = { trap: { n: "トゲの実の罠", dur: 0 }, barricade: { n: "枝
 
 /* ---- 盤面 ---- */
 const hxOpp = t => t === "A" ? "B" : "A";
-const hxMir = ([r, c]) => [HX_R - 1 - r, HX_C - 1 - c];
+const hxMir = ([r, c]) => [HX_R - 1 - r, c];   // 左右対称の盤なので上下反転だけ
 /* 行0と行11は貯蔵庫だけの段。リスが動けるのは行1〜10（縦10×横8）。
    蒼の貯蔵庫：一番下の段の左から2マス目の右下・右から2マス目の左下。巣穴（召喚スポット）は自陣の一番下の段ぜんぶ */
-const HX_TRE0 = [[11, 1], [11, 5]], HX_SPAWN0 = Array.from({ length: 8 }, (_, c) => [10, c]);
-const HX_DEP0 = [[10, 1], [10, 2], [10, 5], [10, 6], [10, 3], [10, 4], [10, 0], [10, 7], [9, 2], [9, 5], [9, 3], [9, 4]];
+/* 盤は8マス・7マスの段が交互（奇数段=8マス、偶数段=7マスで半マス右にずれる）→ 左右対称。行0と行12は貯蔵庫だけの段、リスが動けるのは行1〜11（真ん中は行6） */
+const HX_TRE0 = [[12, 1], [12, 5]], HX_SPAWN0 = Array.from({ length: 8 }, (_, c) => [11, c]);
+const HX_DEP0 = [[11, 1], [11, 2], [11, 5], [11, 6], [11, 3], [11, 4], [11, 0], [11, 7], [10, 2], [10, 4], [10, 3], [10, 1]];
 const HX_ROCKN = 3;   // 開始時に各陣営が置ける岩の数
 /* 岩を置ける場所：中央から自陣側に3段以内（蒼は行6〜8、紅は行3〜5） */
-const hxRockZone = (tm, r) => tm === "A" ? r >= 6 && r <= 8 : r >= 3 && r <= 5;
+const hxRockZone = (tm, r) => tm === "A" ? r >= 7 && r <= 9 : r >= 3 && r <= 5;   // 真ん中の段（行6）から自陣側へ3段
 const HX_POS = { A: { tre: HX_TRE0, sp: HX_SPAWN0, dep: HX_DEP0 }, B: { tre: HX_TRE0.map(hxMir), sp: HX_SPAWN0.map(hxMir), dep: HX_DEP0.map(hxMir) } };
 /* マップ：標準（岩が点在）／十字路（中央の縦の道と横の道だけが通れる） */
 const HX_MAPS = {
   std:   { n: "標準", tx: "広い森。切り株は各陣営が開始時に3つずつ置く", rocks: [] },
-  cross: { n: "十字路", tx: "縦の大通りと横の道だけが通れる。開始時に切り株も3つずつ置く", rocks: (() => { const o = []; [2, 3, 8, 9].forEach(r => [0, 1, 6, 7].forEach(c => o.push([r, c]))); return o; })() }
+  cross: { n: "十字路", tx: "縦の大通りと横の道だけが通れる。開始時に切り株も3つずつ置く", rocks: (() => { const o = []; [2, 3, 9, 10].forEach(r => { const w = r & 1 ? 8 : 7; [0, 1, w - 2, w - 1].forEach(c => o.push([r, c])); }); return o; })() }
 };
-const hxIn = (r, c) => r >= 1 && r <= HX_R - 2 && c >= 0 && c < HX_C;
-const hxCube = (r, c) => { const x = c - (r - (r & 1)) / 2; return [x, r, -x - r]; };
+const hxRowW = r => r & 1 ? HX_C : HX_C - 1;
+const hxIn = (r, c) => r >= 1 && r <= HX_R - 2 && c >= 0 && c < hxRowW(r);
+const hxCube = (r, c) => { const x = c - (r + (r & 1)) / 2; return [x, r, -x - r]; };
 const hxDist = (a, b) => { const p = hxCube(a[0], a[1]), q = hxCube(b[0], b[1]); return Math.max(Math.abs(p[0] - q[0]), Math.abs(p[1] - q[1]), Math.abs(p[2] - q[2])); };
 const HX_NB = [[[0, -1], [0, 1], [-1, -1], [-1, 0], [1, -1], [1, 0]], [[0, -1], [0, 1], [-1, 0], [-1, 1], [1, 0], [1, 1]]];
-const hxNb = (r, c) => HX_NB[r & 1].map(([dr, dc]) => [r + dr, c + dc]).filter(([a, b]) => hxIn(a, b));
+const hxNb = (r, c) => HX_NB[(r + 1) & 1].map(([dr, dc]) => [r + dr, c + dc]).filter(([a, b]) => hxIn(a, b));
 const hxEq = (a, b) => a[0] === b[0] && a[1] === b[1];
 const hxUnits = st => Object.values(st.units || {});
 const hxAt = (st, r, q) => hxUnits(st).find(u => u.r === r && u.q === q) || null;
@@ -11554,9 +11579,9 @@ const hxFly = u => hxSk(u, "wing");
 const hxRng = (st, u, at) => { const mx = hxStat(st, u, "r", at), mn = hxSk(u, "cannon") ? 2 : 1; return [mn, mx]; };
 const hxElAdv = (a, d) => !!(a && d && a.el && d.el && HX_EL[a.el].beat.includes(d.el));
 /* 行動できるか：「移動→攻撃」か「スキル1枚」 */
-const hxCanMove = u => !u.moved && !u.skl && !u.nomv && (!u.atk || hxSk(u, "hitrun"));
+const hxCanMove = u => !u.moved && !u.nomv && (!u.atk || hxSk(u, "hitrun"));
 const hxCanAtk = u => !u.atk && !u.skl;
-const hxCanSkill = u => !u.moved && !u.atk && !u.skl;
+const hxCanSkill = u => !u.atk && !u.skl;   // スキルを使っても移動はできる（攻撃はできない）
 const hxDone = (st, u) => !hxCanAtk(u) && !hxCanMove(u) || (!hxCanSkill(u) && !hxCanMove(u) && !hxTargets(st, u).length);
 /* 防衛ライン：相手のラインより「相手の陣地側」には入れない */
 const hxLineBlock = (st, u, r) => (st.lines || []).some(l => l.tm !== u.tm && hxBehind(l.tm, r, l.row));
@@ -11727,8 +11752,25 @@ function hxStartTurn(st){
   if (sk.length < HX_SKMAX){ const c = hxDrawSk(st); if (c) sk.push(c); }
   const h = st.hands[pid] || (st.hands[pid] = []);
   if (!h.length){ const c = hxDraw(st); if (c) h.push(c); }
-  hxFxAdd(st, { k: "turn", pid, tm, round: Math.floor(st.ti / st.order.length) + 1 });
+  hxFxAdd(st, { k: "turn", pid, tm, round: hxRound(st) });
 }
+/* 1手番＝好きなリス1匹を操作。1ラウンド＝全員が2手番ずつ */
+const hxRound = st => Math.floor((st.ti || 0) / (st.order.length * 2)) + 1;
+function hxUnitDone(st, u){
+  if (hxCanMove(u) && Object.keys(hxReach(st, u)).length) return false;
+  if (hxTargets(st, u).length) return false;
+  if (hxCanSkill(u) && (st.skills[u.own] || []).some(k => hxSkUsable(st, u, k))) return false;
+  return true;
+}
+function hxEndTurn(st){ st.ti++; if (st.maxT && st.ti >= st.maxT) return hxTimeUp(st); hxStartTurn(st); return null; }
+/* 操作中のリスがもう何もできないか */
+function hxAfter(st){
+  return null;   // 自動では進めない（できることがなくなったら「ターン終了」ボタンが点滅する）
+  if (st.phase !== "play" || !st.turn || !st.turn.act) return null;
+  const u = st.units[st.turn.act]; if (u && !hxUnitDone(st, u)) return null;
+  return hxEndTurn(st) || {};
+}
+const hxLock = (st, uid) => { if (st.turn.act && st.turn.act !== uid) return false; st.turn.act = uid; return true; };
 /* ---- 準備 ---- */
 function hxSetup(teams, rounds, map){
   const A = teams.A.slice(), B = teams.B.slice(), first = Math.random() < .5 ? "A" : "B";
@@ -11741,8 +11783,8 @@ function hxSetup(teams, rounds, map){
   const hands = {}, skills = {};
   players.forEach(p => { hands[p] = deck.slice(0, 4); deck = deck.slice(4); skills[p] = sdeck.slice(0, 3); sdeck = sdeck.slice(3); });
   const tre = {}; ["A", "B"].forEach(t => { tre[t] = HX_POS[t].tre.map(([r, q]) => ({ r, q, hp: HX_TRE_HP })); });
-  return { hx: true, v: 3, teams: { A, B }, players, order, ti: 0, maxT: rounds ? rounds * order.length : 0, rounds, map: map || "std", phase: "pick", deck, disc: [],
-    sdeck, sdisc: [], hands, skills, picks: {}, rockSel: {}, rocks: [], units: {}, slots: {}, rw: {}, offers: {}, objs: [], lines: [], tre, kills: { A: 0, B: 0 }, turn: null, un: 0,
+  return { hx: true, v: 5, teams: { A, B }, players, order, ti: 0, maxT: rounds ? rounds * order.length * 2 : 0, rounds, map: map || "std", phase: "pick", deck, disc: [],
+    sdeck, sdisc: [], hands, skills, picks: {}, place: {}, rockSel: {}, rocks: [], units: {}, slots: {}, rw: {}, offers: {}, objs: [], lines: [], tre, kills: { A: 0, B: 0 }, turn: null, un: 0,
     fx: [{ k: "start", n: 1 }], fxn: 1, win: null, wins: [], stage: hxPickR(["volcano", "snow", "jungle"]) };
 }
 function hxDeploy(st){
@@ -11752,7 +11794,10 @@ function hxDeploy(st){
       st.slots[pid] = [];
       (st.picks[pid] || []).forEach(c => {
         const h = st.hands[pid], i = h.indexOf(c); if (i >= 0) h.splice(i, 1);
-        let at = HX_POS[tm].dep[k++]; while (at && hxRock(st, at[0], at[1])) at = HX_POS[tm].dep[k++];
+        const want = (st.place[pid] || [])[st.slots[pid].length];
+        let at = want && !hxAt(st, want[0], want[1]) && !hxRock(st, want[0], want[1]) ? want : null;
+        while (!at){ const d = HX_POS[tm].dep[k++]; if (!d) break; if (!hxRock(st, d[0], d[1]) && !hxAt(st, d[0], d[1]) && !st.teams[tm].some(p => (st.place[p] || []).some(x => hxEq(x, d)))) at = d; }
+        if (!at) at = HX_POS[tm].dep.find(d => !hxRock(st, d[0], d[1]) && !hxAt(st, d[0], d[1]));
         const u = hxNewUnit(st, c, pid, at); u.born = -1;
         st.slots[pid].push({ u: u.id, cd: 0 });
       });
@@ -11781,6 +11826,7 @@ function hxSkTargets(st, u, k){
   if (S.tg === "cell"){
     const out = [];
     for (let r = 1; r < HX_R - 1; r++) for (let q = 0; q < HX_C; q++){
+      if (!hxIn(r, q)) continue;
       const d = hxDist(p, [r, q]); if (d < 1 || d > S.rng) continue;
       if (hxBlocked(st, r, q) || hxAt(st, r, q) || hxObjAt(st, r, q)) continue;
       if (S.cat === "set" && hxIsSpawn(r, q)) continue;
@@ -11810,7 +11856,7 @@ const hxLive = () => hxGames().filter(g => g.status === "playing").sort((a, b) =
 const hxActive = () => pickMine(hxLive());
 const hxById = id => hxGames().find(g => g.id === id);
 function hxMyTurn(g){
-  const st = g && g.st; if (!st || !me || g.status !== "playing" || st.v !== 3) return false;
+  const st = g && g.st; if (!st || !me || g.status !== "playing" || st.v !== 5) return false;
   if (st.phase === "pick") return st.players.includes(me) && !st.picks[me];
   return st.phase === "play" && ((st.turn && st.turn.pid === me) || (st.rw[me] || 0) > 0);
 }
@@ -11840,7 +11886,7 @@ const hxMyAct = (st, pid) => st.phase === "play" && st.turn && st.turn.pid === p
 /* 岩を置けるマスか（その陣営の側・空き・十字路の岩と重ならない） */
 const hxRockOk = (st, tm, r, q) => hxIn(r, q) && hxRockZone(tm, r) && !hxRock(st, r, q);
 const hxLeader = (st, tm) => st.teams[tm][0];
-const hxDoPick = (id, pid, cards, rocks) => hxCommit(id, st => {
+const hxDoPick = (id, pid, cards, rocks, pos) => hxCommit(id, st => {
   if (st.phase !== "pick" || st.picks[pid] || !st.players.includes(pid)) return false;
   const h = st.hands[pid].slice(); if (cards.length !== 2) return false;
   for (const c of cards){ const i = h.indexOf(c); if (i < 0) return false; h.splice(i, 1); }
@@ -11850,6 +11896,7 @@ const hxDoPick = (id, pid, cards, rocks) => hxCommit(id, st => {
     if (rs.length !== HX_ROCKN) return false;
     st.rockSel = st.rockSel || {}; st.rockSel[tm] = rs;
   }
+  if (pos && pos.length === 2 && !hxEq(pos[0], pos[1]) && pos.every(p => HX_POS[tm].sp.some(x => hxEq(x, p)))){ st.place = st.place || {}; st.place[pid] = pos.map(p => p.slice()); }
   st.picks[pid] = cards.slice();
   hxL(st, `${pname(pid)}の出撃準備ができた`);
   if (st.players.every(p => st.picks[p])){ st.rocks = [...(st.rockSel.A || []), ...(st.rockSel.B || [])]; hxDeploy(st); }
@@ -11886,7 +11933,7 @@ const hxDoSummon = (id, pid, card, sks, sp) => hxCommit(id, st => {
 const hxDoMove = (id, pid, uid, to) => hxCommit(id, st => {
   if (!hxMyAct(st, pid)) return false;
   const u = st.units[uid]; if (!u || u.own !== pid) return false;
-  let path = hxReach(st, u)[to[0] + "," + to[1]]; if (!path) return false;
+  let path = hxReach(st, u)[to[0] + "," + to[1]]; if (!path || !hxLock(st, uid)) return false;
   // 隠された罠：踏んだらそこで止まる
   let trap = null;
   for (let i = 0; i < path.length; i++){ const o = hxObjAt(st, path[i][0], path[i][1], "trap"); if (o && o.tm !== u.tm && !hxAt(st, path[i][0], path[i][1])){ path = path.slice(0, i + 1); trap = o; break; } }
@@ -11896,18 +11943,18 @@ const hxDoMove = (id, pid, uid, to) => hxCommit(id, st => {
   if (trap){ st.objs = st.objs.filter(o => o !== trap); hxSkFx(st, null, "trap", `${HX[u.c].n}が罠を踏んだ！`); u.moved = true; if (hxBattle(st, { r: trap.r, q: trap.q, tm: trap.tm }, u, { av: 3, tag: "トゲの実の罠", src: "trap" })) hxHit(st, u, { tm: trap.tm }); }
   const ff = st.units[uid] && hxObjAt(st, u.r, u.q, "firefloor");
   if (ff && ff.tm !== u.tm){ hxSkFx(st, null, "firefloor", `${HX[u.c].n}が火炎陣に焼かれる！`); if (hxBattle(st, { r: ff.r, q: ff.q, tm: ff.tm }, u, { av: 3, el: "fire", tag: "燃える落ち葉", src: "firefloor" })) hxHit(st, u, { tm: ff.tm }); }
-  return hxCheckWin(st) || {};
+  return hxCheckWin(st) || hxAfter(st) || {};
 });
 const hxDoAttack = (id, pid, uid, tg) => hxCommit(id, st => {
   if (!hxMyAct(st, pid)) return false;
   const u = st.units[uid]; if (!u || u.own !== pid || !hxCanAtk(u)) return false;
-  if (!hxTargets(st, u).some(x => (tg.u && x.u === tg.u) || (tg.t && x.t === tg.t && x.i === tg.i))) return false;
+  if (!hxTargets(st, u).some(x => (tg.u && x.u === tg.u) || (tg.t && x.t === tg.t && x.i === tg.i)) || !hxLock(st, uid)) return false;
   u.atk = true;
   if (tg.t){
     const A = hxAtk(st, u, null);
     hxFxAdd(st, { k: "hit", id: u.id, tt: tg.t, i: tg.i, n: A.v, why: A.why });
     hxTreDmg(st, tg.t, tg.i, A.v, u);
-    return hxCheckWin(st) || {};
+    return hxCheckWin(st) || hxAfter(st) || {};
   }
   const d = st.units[tg.u], dr = d.r, dq = d.q;
   if (hxBattle(st, u, d)){
@@ -11925,7 +11972,7 @@ const hxDoAttack = (id, pid, uid, tg) => hxCommit(id, st => {
     const others = hxUnits(st).filter(e => e.tm !== u.tm && e.id !== tg.u && hxDist([dr, dq], [e.r, e.q]) === 1);
     if (others.length){ hxSkFx(st, u, "blast", "炎が燃え広がる！"); others.forEach(e => { if (st.units[e.id] && st.units[u.id] && hxBattle(st, u, e, { tag: "爆炎" })) hxHit(st, e, u); }); }
   }
-  return hxCheckWin(st) || {};
+  return hxCheckWin(st) || hxAfter(st) || {};
 });
 /* スキルカードを使う（そのリスの行動を1回分つかう） */
 const hxDoSkill = (id, pid, uid, k, tg) => hxCommit(id, st => {
@@ -11935,39 +11982,37 @@ const hxDoSkill = (id, pid, uid, k, tg) => hxCommit(id, st => {
   if (!hxSkUsable(st, u, k)) return false;
   const S = HXS[k], tl = hxSkTargets(st, u, k);
   if (tl && !(tg && tl.some(p => p[0] === tg[0] && p[1] === tg[1]))) return false;
+  if (!hxLock(st, uid)) return false;
   pool.splice(pi, 1);
-  u.skl = true; u.moved = true;
+  u.skl = true;
   const tu = tg ? hxAt(st, tg[0], tg[1]) : null;
-  if (S.cat === "eq"){ hxEquip(st, u, k); hxFxAdd(st, { k: "equip", id: u.id, sk: k }); hxL(st, `${pname(pid)}の${HX[u.c].n}が「${S.n}」を装備`); return {}; }
+  if (S.cat === "eq"){ hxEquip(st, u, k); hxFxAdd(st, { k: "equip", id: u.id, sk: k }); hxL(st, `${pname(pid)}の${HX[u.c].n}が「${S.n}」を装備`); return hxAfter(st) || {}; }
   if (S.cat === "set" && k !== "line"){
     const o = { k, tm: u.tm, own: pid, r: tg[0], q: tg[1], until: HX_OBJ[k].dur ? st.ti + HX_OBJ[k].dur : 0 };
     st.objs = [...(st.objs || []), o];
     hxFxAdd(st, { k: "place", ok: k, tm: u.tm, r: tg[0], q: tg[1], hide: k === "trap" });
     hxL(st, k === "trap" ? `${pname(pid)}がどこかに罠を仕掛けた…` : `${pname(pid)}が${S.n}を設置`);
-    st.sdisc.push(k); return {};
+    st.sdisc.push(k); return hxAfter(st) || {};
   }
   st.sdisc.push(k);
-  if (k === "line"){ st.lines = [...(st.lines || []).filter(l => l.tm !== u.tm), { tm: u.tm, row: u.r, until: st.ti + 2 * st.order.length }]; hxFxAdd(st, { k: "line", tm: u.tm, row: u.r }); hxL(st, `${HX_TM[u.tm].n}の防衛ライン！ 敵はこの線より奥に入れない`); return {}; }
+  if (k === "line"){ st.lines = [...(st.lines || []).filter(l => l.tm !== u.tm), { tm: u.tm, row: u.r, until: st.ti + 2 * st.order.length }]; hxFxAdd(st, { k: "line", tm: u.tm, row: u.r }); hxL(st, `${HX_TM[u.tm].n}のなわばりライン！ 敵はこの線より奥に入れない`); return hxAfter(st) || {}; }
   hxFxAdd(st, { k: "ab", c: u.c, tm: u.tm, sk: k, txt: S.tx });
   hxL(st, `${pname(pid)}の${HX[u.c].n}が「${S.n}」を使った`);
   if (k === "fireball"){ if (hxBattle(st, u, tu, { av: 4, el: "fire", tag: "燃える松ぼっくり", src: "fireball" })) hxHit(st, tu, u); }
   if (k === "thunder"){ const r = hxD6(); hxFxAdd(st, { k: "zap", r: tu.r, q: tu.q, die: r }); hxL(st, `雷撃のサイコロ：${r}`); if (r >= 5) hxKill(st, tu, u); else hxL(st, "雷は外れた"); }
   if (k === "heal") hxTreHeal(st, u.tm, 3);
-  if (k === "warp"){ const from = [u.r, u.q]; u.r = tg[0]; u.q = tg[1]; hxFxAdd(st, { k: "warp", id: u.id, from, to: tg }); }
+  if (k === "warp"){ u.moved = true; const from = [u.r, u.q]; u.r = tg[0]; u.q = tg[1]; hxFxAdd(st, { k: "warp", id: u.id, from, to: tg }); }
   if (k === "gust"){ const path = hxPush(st, tu, 2); if (path.length > 1) hxFxAdd(st, { k: "mv", id: tu.id, path, fly: false }); }
   if (k === "quake") hxUnits(st).filter(e => e.tm !== u.tm && hxDist([u.r, u.q], [e.r, e.q]) === 1).forEach(e => { e.fz = true; hxFxAdd(st, { k: "frz", id: e.id }); });
   if (k === "dispel"){ if (tu.sk.length){ const x = hxPickR(tu.sk); hxUnequip(st, tu, x); hxL(st, `${HX[tu.c].n}の「${HXS[x].n}」が外れた`); } else hxL(st, "外せるスキルがなかった"); }
   if (k === "steal"){ const c = shuffle(st.teams[hxOpp(u.tm)].filter(p => (st.skills[p] || []).length)); if (c.length){ const s2 = st.skills[c[0]], x = s2.splice(Math.floor(Math.random() * s2.length), 1)[0]; pool.push(x); hxL(st, `${pname(c[0])}から1枚奪った`); } }
   if (k === "supply"){ for (let i = 0; i < 2; i++){ const c = hxDrawSk(st); if (c) pool.push(c); } }
   if (k === "rite") st.teams[u.tm].forEach(p => (st.slots[p] || []).forEach(s => { if (!s.u) s.cd = 0; }));
-  return hxCheckWin(st) || {};
+  return hxCheckWin(st) || hxAfter(st) || {};
 });
 const hxDoEnd = (id, pid) => hxCommit(id, st => {
   if (!hxMyAct(st, pid)) return false;
-  st.ti++;
-  if (st.maxT && st.ti >= st.maxT) return hxTimeUp(st);
-  hxStartTurn(st);
-  return {};
+  return hxEndTurn(st) || {};
 });
 
 /* ---- コンピューター ---- */
@@ -12017,7 +12062,7 @@ function hxAiSkill(st, u){
   return null;
 }
 CPU_AI.hx_games = g => {
-  const st = g.st; if (!st || st.v !== 3) return null;
+  const st = g.st; if (!st || st.v !== 5) return null;
   const r = hxAiStep(g); if (!r) return null;
   const run = r.run; r.run = async () => { for (let i = 0; i < 160 && hxPlaying && hxId === g.id; i++) await new Promise(ok => setTimeout(ok, 250)); await run(); };
   return r;
@@ -12049,11 +12094,13 @@ function hxAiStep(g){
       return { wait: 1500, run: () => hxDoSummon(g.id, pid, card, sks, sp) };
     }
   }
-  const mine = hxUnits(st).filter(u => u.own === pid);
+  // 1手番に動かすのは1匹だけ。まだ決めていなければ、一番よい手がある1匹をえらぶ
+  let mine = st.turn.act ? [st.units[st.turn.act]].filter(Boolean) : hxUnits(st).filter(u => u.own === pid);
+  if (!st.turn.act && mine.length > 1){ const sc = new Map(mine.map(u => { const p = hxAiPlan(st, u); return [u.id, (p ? p.sc : -999) + (p && p.tg ? 30 : 0)]; })); mine.sort((a, b) => sc.get(b.id) - sc.get(a.id)); }
   for (const u of mine){
     const p = hxAiPlan(st, u);
     if (p && p.tg && !p.path.length) return { wait: 1200, run: () => hxDoAttack(g.id, pid, u.id, p.tg) };
-    if (!u.moved && !u.atk && !u.skl && !(p && p.tg)){ const s = hxAiSkill(st, u); if (s) return { wait: 1300, run: () => hxDoSkill(g.id, pid, u.id, s.k, s.tg || null) }; }
+    if (hxCanSkill(u) && !(p && p.tg)){ const s = hxAiSkill(st, u); if (s) return { wait: 1300, run: () => hxDoSkill(g.id, pid, u.id, s.k, s.tg || null) }; }
     if (p && p.path.length && hxCanMove(u)){ const to = p.path[p.path.length - 1]; return { wait: 1100, run: () => hxDoMove(g.id, pid, u.id, to) }; }
   }
   return { wait: 1000, run: () => hxDoEnd(g.id, pid) };
@@ -12199,11 +12246,12 @@ const hxSkSig = (k, col) => hxSkIc(k, col);
 const hxGimSig = k => `<svg class="hxsig" viewBox="0 0 64 64" style="color:#FFD45A"><use href="#hxg-${k}"/></svg>`;
 
 /* ---- どんぐり戦争：画面 ---- */
-const HXW = 10 * Math.sqrt(3), HX_BW = HXW * (HX_C + .5), HX_BH = 20 + (HX_R - 1) * 15;
-let hxRwSel = [], hxRockSel = [], hxPickCards = null;
+const HXW = 10 * Math.sqrt(3), HX_BW = HXW * HX_C, HX_BH = 20 + (HX_R - 1) * 15;
+let hxRwSel = [], hxRockSel = [], hxPickCards = null, hxPlaceSel = [];
+const hxPrep = m => m === "rock" || m === "place";
 let hxId = null, hxSel = null, hxPend = null, hxMode = null, hxSumCard = null, hxSumSks = [], hxSkK = null, hxPickSel = [], hxFlip = false, hxDrop = false, hxPop = null;
 let hxSeen = {}, hxQ = [], hxPlaying = false, hxSkip = null;
-function hxXY(r, q){ let x = HXW * (q + .5 * (r & 1)) + HXW / 2, y = 10 + r * 15; if (hxFlip){ x = HX_BW - x; y = HX_BH - y; } return [x, y]; }
+function hxXY(r, q){ let x = HXW * (q + .5 * ((r + 1) & 1)) + HXW / 2, y = 10 + r * 15; if (hxFlip){ x = HX_BW - x; y = HX_BH - y; } return [x, y]; }
 const hxHexPts = (x, y, s = 9.3) => [-90, -30, 30, 90, 150, 210].map(a => `${(x + s * Math.cos(a * Math.PI / 180)).toFixed(2)},${(y + s * Math.sin(a * Math.PI / 180)).toFixed(2)}`).join(" ");
 const hxTmC = t => HX_TM[t].c;
 const HX_TITLE = "どんぐり戦争";
@@ -12234,7 +12282,7 @@ function openHxNew(prev){
     <div class="f"><span>参加者（タップで選ぶ・最大6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>リス団（名前をタップで入れ替え）</span><div id="hxTeams" class="hxtpick"></div><button class="shufbtn" id="hxShuf">団をシャッフル</button></div>
     <div class="f"><span>マップ</span><div class="chips" id="hxMap">${Object.entries(HX_MAPS).map(([k, m]) => `<button type="button" class="pc" data-map="${k}" aria-pressed="${k === map}">${m.n}</button>`).join("")}</div><small class="kgoph" id="hxMapTx">${HX_MAPS[map].tx}</small></div>
-    <div class="f"><span>決着までのラウンド</span><div class="chips" id="hxRd">${[8, 12, 16, 0].map(n => `<button type="button" class="pc" data-rd="${n}" aria-pressed="${n === rounds}">${n ? n + "ラウンド" : "無制限"}</button>`).join("")}</div><small class="kgoph">ラウンドが終わったら、貯蔵庫の残りが多い団の勝ち</small></div>
+    <div class="f"><span>決着までのラウンド</span><div class="chips" id="hxRd">${[8, 12, 16, 0].map(n => `<button type="button" class="pc" data-rd="${n}" aria-pressed="${n === rounds}">${n ? n + "ラウンド" : "無制限"}</button>`).join("")}</div><small class="kgoph">1ラウンド＝全員が2手番ずつ。終わったら、貯蔵庫の残りが多い団の勝ち</small></div>
     <div class="btns"><button class="btn" id="hxGo">開戦！</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
   const cnt = tm => order.filter(p => team[p] === tm).length;
@@ -12269,7 +12317,7 @@ function openHxNew(prev){
 /* ---- 開く・閉じる ---- */
 function openHx(id){
   hxEnsureDefs();
-  const g0 = hxById(id); if (g0 && g0.st && g0.st.v !== 3){ toast("古いバージョンの対戦です。新しく始めてください", 2500); return; }
+  const g0 = hxById(id); if (g0 && g0.st && g0.st.v !== 5){ toast("古いバージョンの対戦です。新しく始めてください", 2500); return; }
   hxId = id; hxSel = null; hxPend = null; hxMode = null; hxPickSel = []; hxPop = null; hxQ = []; hxPlaying = false;
   const el = $("#hxg"); el.innerHTML = ""; el.hidden = false; document.body.style.overflow = "hidden";
   const g = hxById(id); if (g && g.st && hxSeen[id] == null){ hxSeen[id] = (g.st.fxn || 0) - (g.st.fxn === 1 ? 1 : 0); }
@@ -12283,8 +12331,9 @@ function hxSkeleton(el){
     <div class="hxbw" id="hxBw"></div>
     <div class="hxtb my" id="hxTbM"></div>
     <div class="hxpanel" id="hxPanel"></div>
-    <div class="hxmodal" id="hxModal"></div>`;
+    <div class="hxmodal" id="hxModal"></div><button class="hxlogbtn" id="hxLogBtn" aria-label="ログを見る"><span>LOG</span></button>`;
   $("#hxX").onclick = closeHx;
+  $("#hxLogBtn").onclick = () => { if (!hxId) return; hxPop = { log: 1 }; hxModalDraw(hxById(hxId)); };
   $("#hxMenu").onclick = () => hxMenu(hxById(hxId));
   $("#hxBw").onclick = e => hxTap(e);
 }
@@ -12292,7 +12341,7 @@ function hxMenu(g){
   if (!g) return;
   const s = openSheet("どんぐり戦争のメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="log">これまでの流れ<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
   s.querySelector('[data-x="rule"]').onclick = () => openGameRules("hx");
-  s.querySelector('[data-x="log"]').onclick = () => openSheet("これまでの流れ", `<ul class="hxloglist">${(g.log || []).slice().reverse().map(x => `<li>${colorizeLog(g.players, x.m)}</li>`).join("")}</ul>`);
+  s.querySelector('[data-x="log"]').onclick = () => { closeSheet(); hxPop = { log: 1 }; hxModalDraw(hxById(hxId)); };
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); const { error } = await sb.from("hx_games").update({ status: "aborted", version: (g.version || 1) + 1 }).eq("id", g.id); if (!error){ g.status = "aborted"; } closeHx(); };
 }
 function drawHx(){
@@ -12313,17 +12362,18 @@ function hxRender(g){
   hxFlip = myTm === "B";
   const myTurn = st.phase === "play" && st.turn && st.turn.pid === me;
   if (hxSel && !st.units[hxSel]) hxSel = null;
-  if (!myTurn){ hxPend = null; if (hxMode !== "rock") hxMode = null; }
-  if (hxMode === "rock" && (st.phase !== "pick" || st.picks[me])) hxMode = null;
-  const round = Math.floor((st.ti || 0) / st.order.length) + 1;
+  if (!myTurn){ hxPend = null; if (!hxPrep(hxMode)) hxMode = null; }
+  if (hxPrep(hxMode) && (st.phase !== "pick" || st.picks[me])) hxMode = null;
+  const round = hxRound(st);
   $("#hxRnd").innerHTML = st.phase === "pick" ? `<span>出撃準備</span>` : `<span>ROUND <b>${Math.min(round, st.rounds || round)}</b>${st.rounds ? `<i>/${st.rounds}</i>` : ""}</span><span class="hxmapn">${HX_MAPS[st.map || "std"].n}</span>`;
   $("#hxTbE").innerHTML = hxTeamBar(st, enTm); $("#hxTbM").innerHTML = hxTeamBar(st, myTm);
   $("#hxTbE").style.setProperty("--tc", hxTmC(enTm)); $("#hxTbM").style.setProperty("--tc", hxTmC(myTm));
-  const su = hxSel && st.units[hxSel], mine = su && su.own === me && myTurn;
+  const su = hxSel && st.units[hxSel], mine = su && su.own === me && myTurn && (!st.turn.act || st.turn.act === su.id);
   const reach = mine && !hxMode ? hxReach(st, su) : {}, tgts = mine && !hxMode ? hxTargets(st, su) : [];
   const cs = myTurn ? hxCanSummon(st, me) : null;
   const rockOk = []; if (hxMode === "rock") for (let r = 1; r < HX_R - 1; r++) for (let q = 0; q < HX_C; q++) if (hxRockOk(st, myTm, r, q) && !hxRockSel.some(p => p[0] === r && p[1] === q)) rockOk.push([r, q]);
-  const marks = hxMode === "rock" ? rockOk : hxMode === "sumpos" && cs ? cs.sps : hxMode === "sktg" && su ? (hxSkTargets(st, su, hxSkK) || []) : [];
+  const placeOk = hxMode === "place" ? HX_POS[myTm].sp.filter(p => !hxPlaceSel.some(x => hxEq(x, p))) : [];
+  const marks = hxMode === "skwho" ? hxSkWho(st, hxSkK).map(u => [u.r, u.q]) : hxMode === "place" ? placeOk : hxMode === "rock" ? rockOk : hxMode === "sumpos" && cs ? cs.sps : hxMode === "sktg" && su ? (hxSkTargets(st, su, hxSkK) || []) : [];
   const bw = $("#hxBw");
   bw.innerHTML = hxBoardSvg(st, { myTurn, reach, tgts, marks, su, myTm, markCls: hxMode === "sktg" && HXS[hxSkK] && HXS[hxSkK].tg === "en" ? "en" : "" });
   $("#hxPanel").innerHTML = hxPanelHtml(g, { myTurn, su, mine, reach, tgts, cs, inG });
@@ -12342,8 +12392,10 @@ function hxBoardSvg(st, ui){
   let cells = "", objs = "", over = "";
   const mk = new Set(ui.marks.map(p => p[0] + "," + p[1]));
   ["A", "B"].forEach(t => st.tre[t].forEach(o => { const [x, y] = hxXY(o.r, o.q); cells += `<polygon class="hc tz z${t}" points="${hxHexPts(x, y)}"/>`; }));
-  const pend = hxMode === "rock" ? hxRockSel : [];
+  const pend = hxPrep(hxMode) ? hxRockSel : [];
+  if (hxPrep(hxMode) && hxPickCards) hxPlaceSel.forEach((p, i) => { const [x, y] = hxXY(p[0], p[1]), c = hxPickCards[i]; if (c) over += `<g class="hxprev" transform="translate(${x} ${y})" style="--tc:${hxTmC(ui.myTm)}"><circle r="8" class="ring"/><circle r="7.1" fill="url(#hxTok)"/><use href="#hxq-${c}" x="-6.4" y="-7" width="12.8" height="12.8" style="color:${HX[c].col}"/><text y="10.6" class="pn">${i + 1}</text></g>`; });
   for (let r = 1; r < HX_R - 1; r++) for (let q = 0; q < HX_C; q++){
+    if (!hxIn(r, q)) continue;
     const [x, y] = hxXY(r, q), k = r + "," + q;
     const zone = r >= HX_R - 3 ? "zA" : r <= 2 ? "zB" : "";
     if (pend.some(p => p[0] === r && p[1] === q)){ cells += `<polygon class="hc rk pendrock" points="${hxHexPts(x, y)}" data-k="${k}"/><use class="hxrock pend" href="#hxstump" x="${x - 8.5}" y="${y - 9}" width="17" height="17"/>`; continue; }
@@ -12380,16 +12432,18 @@ function hxBoardSvg(st, ui){
 }
 function hxTokHtml(st, u, ui = {}){
   const X = HX[u.c], [x, y] = hxXY(u.r, u.q), c = hxTmC(u.tm), multi = st.teams[u.tm].length > 1;
-  const done = ui.myTurn && u.own === me && hxDone(st, u);
+  const done = ui.myTurn && u.own === me && ((st.turn.act && st.turn.act !== u.id) || hxUnitDone(st, u));
   const el = u.el ? HX_EL[u.el] : null, n = u.sk.length;
   return `<g class="hxu ${u.own === me ? "me" : ""} ${done ? "done" : ""} ${ui.su && ui.su.id === u.id ? "sel" : ""} ${hxDrop ? "drop" : ""} ${u.fz || u.nomv ? "frz" : ""} ${u.tm === "B" ? "fB" : ""}" data-u="${u.id}" data-k="${u.r},${u.q}" style="transform:translate(${x.toFixed(2)}px,${y.toFixed(2)}px);--tc:${c};--cc:${X.col}">
-    <g class="tk"><circle r="8" class="ring"/><circle r="7.1" fill="url(#hxTok)"/><circle r="7.1" class="tint"/><use href="#hxq-${u.c}" class="sq" x="-6.4" y="-7" width="12.8" height="12.8" style="color:${X.col}"/>
+    <g class="tk"><circle r="8" class="ring"/><circle r="7.1" fill="url(#hxTok)"/><circle r="7.1" class="tint"/><use href="#hxq-${u.c}" class="sq" x="-6.4" y="-7" width="12.8" height="12.8" style="color:${X.col}" ${(u.tm === "B") !== hxFlip ? `transform="scale(-1 1)"` : ""}/>
     <rect x="-7.4" y="3.8" width="6" height="4.2" rx="1.2" class="ba"/><text x="-4.4" y="7.1" class="bt">${hxStat(st, u, "a")}</text><rect x="1.4" y="3.8" width="6" height="4.2" rx="1.2" class="bd"/><text x="4.4" y="7.1" class="bt">${hxStat(st, u, "d")}</text>
-    ${(u.mhp || 1) > 1 ? `<g class="hp">${Array.from({ length: u.mhp }, (_, i) => `<path transform="translate(${(i - (u.mhp - 1) / 2) * 3.6} -9.6) scale(.16)" d="M0 8L-8 0Q-11 -5 -6 -8Q-2 -9 0 -5Q2 -9 6 -8Q11 -5 8 0Z" class="${i < u.hp ? "on" : "off"}"/>`).join("")}</g>` : ""}${n ? `<circle cx="-6.4" cy="-5.8" r="2.3" class="skd"/><text x="-6.4" y="-4.6" class="skt">${n}</text>` : ""}${el ? `<circle cx="0" cy="-8.6" r="1.8" fill="${el.c}" stroke="#000" stroke-width=".4"/>` : ""}${multi ? `<circle cx="6.6" cy="-5.6" r="1.7" fill="${pcolor(u.own)}" stroke="#0A0C16" stroke-width=".5"/>` : ""}
+    <g class="hp">${Array.from({ length: u.mhp || 1 }, (_, i) => `<path transform="translate(${(i - ((u.mhp || 1) - 1) / 2) * 3.6} -9.6) scale(.16)" d="M0 8L-8 0Q-11 -5 -6 -8Q-2 -9 0 -5Q2 -9 6 -8Q11 -5 8 0Z" class="${i < (u.hp || 1) ? "on" : "off"}"/>`).join("")}</g>${n ? `<circle cx="-6.4" cy="-5.8" r="2.3" class="skd"/><text x="-6.4" y="-4.6" class="skt">${n}</text>` : ""}${el ? `<circle cx="0" cy="-8.6" r="1.8" fill="${el.c}" stroke="#000" stroke-width=".4"/>` : ""}${multi ? `<circle cx="6.6" cy="-5.6" r="1.7" fill="${pcolor(u.own)}" stroke="#0A0C16" stroke-width=".5"/>` : ""}
     ${u.fz || u.nomv ? `<circle r="7.6" class="ice"/>` : ""}</g></g>`;
 }
 function hxPanelHtml(g, ui){
   const st = g.st;
+  if (st.phase === "pick" && hxMode === "place"){ const lead = hxLeader(st, hxTeamOf(st, me)) === me, n = hxPlaceSel.length, c = hxPickCards && hxPickCards[Math.min(n, 1)];
+    return `<div class="hxinfo guide rockg"><b>${n < 2 ? `${n + 1}匹目（${esc(HX[c].n)}）を置くマスをタップ` : "出撃位置が決まりました"}（${n}/2）</b><small>自陣の一番下の段（巣穴）から好きなマスを選べる。もう一度タップで取り消し</small><div class="hxbtns"><button class="hxb hxsub" data-x="placeback">戻る</button><button class="hxb hxgo" data-x="placego" ${n === 2 ? "" : "disabled"}>${lead ? "次へ：切り株を置く" : "この配置で出撃！"}</button></div></div>`; }
   if (st.phase === "pick" && hxMode === "rock") return `<div class="hxinfo guide rockg"><b>切り株を置く場所を${HX_ROCKN}つ選んでください（${hxRockSel.length}/${HX_ROCKN}）</b><small>中央から自陣側3段以内。相手には出撃まで見えない。もう一度タップで取り消し</small><div class="hxbtns"><button class="hxb hxsub" data-x="rockback">戻る</button><button class="hxb hxgo" data-x="rockgo" ${hxRockSel.length === HX_ROCKN ? "" : "disabled"}>この配置で出撃！</button></div></div>`;
   if (st.phase === "pick") return `<div class="hxturn"><b>出撃準備中</b><small>${st.players.filter(p => st.picks[p]).length}/${st.players.length}人が準備完了</small></div>`;
   let top = "";
@@ -12415,26 +12469,58 @@ function hxPanelHtml(g, ui){
     info = `<div class="hxinfo guide"><b>光っている巣穴（召喚スポット）をタップ</b><button class="hxb hxsub sm" data-x="cancel">やめる</button></div>`;
   } else if (hxMode === "skpick" && su){
     const sks = (st.skills[me] || []).map((k, i) => ({ k, i }));
-    info = `<div class="hxinfo guide"><b>${esc(HX[su.c].n)}が使うスキルを選んでください</b><small>スキルを使うと、このリスはこの手番もう動けません</small><div class="hxskrow">${sks.map(x => hxSkCardHtml(x.k, { cls: hxSkUsable(st, su, x.k) ? "" : "ng", attr: `data-use="${x.i}"` })).join("")}</div><button class="hxb hxsub sm" data-x="cancel">やめる</button></div>`;
+    info = `<div class="hxinfo guide"><b>${esc(HX[su.c].n)}が使うスキルを選んでください</b><small>スキルを使ったリスは、この手番は攻撃できません（移動はできる）</small><div class="hxskrow">${sks.map(x => hxSkCardHtml(x.k, { cls: hxSkUsable(st, su, x.k) ? "" : "ng", attr: `data-use="${x.i}"` })).join("")}</div><button class="hxb hxsub sm" data-x="cancel">やめる</button></div>`;
+  } else if (hxMode === "skwho"){
+    const S = HXS[hxSkK];
+    info = `<div class="hxinfo guide">${hxSkCardHtml(hxSkK, { cls: "wide" })}<b>${S.cat === "eq" ? "装備するリス" : S.cat === "set" ? "置くリス（そのリスの近くに置く）" : "使うリス"}をタップ</b><button class="hxb hxsub sm" data-x="cancel">やめる</button></div>`;
   } else if (hxMode === "sktg" && su){
     info = `<div class="hxinfo guide">${hxSkCardHtml(hxSkK, { cls: "wide" })}<b>光っているマスを選んでください</b><button class="hxb hxsub sm" data-x="cancel">やめる</button></div>`;
   } else if (su){
-    const can = su.own === me && ui.myTurn;
+    const can = su.own === me && ui.myTurn && (!st.turn.act || st.turn.act === su.id);
     const st2 = can ? `<div class="hxust">${su.nomv ? `<span class="no">冬眠中：動けない</span>` : hxCanMove(su) ? `<span>移動できる</span>` : `<span class="no">移動ずみ</span>`}${hxCanAtk(su) ? (ui.tgts.length ? `<span class="hot">攻撃できる相手 ${ui.tgts.length}</span>` : `<span class="no">攻撃できる相手なし</span>`) : `<span class="no">行動ずみ</span>`}</div>` : `<div class="hxust"><span>${esc(pname(su.own))}のリス</span></div>`;
     const skBtn = can && hxCanSkill(su) && (st.skills[me] || []).length ? `<button class="hxb hxskb" data-x="skill">スキルを使う</button>` : "";
     info = `<div class="hxinfo unit" style="--cc:${HX[su.c].col}"><div class="hxmini">${hxSig(su.c)}</div><div class="hxud"><b>${esc(HX[su.c].n)}<em>${HX[su.c].ty}</em>${su.el ? `<em style="--ec:${HX_EL[su.el].c}">${HX_EL[su.el].n}</em>` : ""}${hxFly(su) ? "<em>飛行</em>" : ""}</b>
       <span class="hxuds">体<b>${su.hp || 1}/${su.mhp || 1}</b> 攻<b>${hxStat(st, su, "a")}</b> 防<b>${hxStat(st, su, "d")}</b> 速<b>${hxStat(st, su, "s")}</b> 射<b>${hxStat(st, su, "r")}</b></span>
       ${su.sk.length ? `<div class="hxusk">${su.sk.map(k => `<span data-skv="${k}">${hxSkIc(k)}${esc(HXS[k].n)}</span>`).join("")}</div>` : `<small>スキルなし</small>`}${st2}</div>${skBtn}<button class="hxx" data-x="desel" aria-label="閉じる">×</button></div>`;
   } else if (ui.myTurn){
-    info = `<div class="hxinfo guide"><b>動かすリスをタップ</b><small>${ui.cs ? "巣穴が空いています。手札から召喚できます。" : ""}各リスは「移動→攻撃」か「スキルを1枚使う」。終わったら「ターン終了」</small></div>`;
+    const au = st.turn.act && st.units[st.turn.act];
+    info = au ? `<div class="hxinfo guide"><b>${esc(HX[au.c].n)}を操作中</b><small>${hxNothingLeft(st) ? "もうできることはありません。「ターン終了」を押してください" : "この手番に動かせるのはこの1匹だけ。終わったら「ターン終了」"}</small></div>`
+      : `<div class="hxinfo guide"><b>この手番に動かすリスを1匹タップ</b><small>${ui.cs ? "巣穴が空いています。召喚は手番中いつでもできる。" : ""}スキルは手札のカードをタップ。1匹ぶん動かしたら「ターン終了」</small></div>`;
   } else if (st.phase === "play") info = `<div class="hxinfo guide"><small>リスをタップすると性能が見られます</small></div>`;
   let hand = "";
   if (ui.inG){
     const h = st.hands[me] || [], sk = st.skills[me] || [], pickable = hxMode === "sum";
     hand = `<div class="hxhand ${pickable ? "pick" : ""}">${h.map((c, i) => `<button class="hxhc" data-hc="${i}" style="--cc:${HX[c].col}">${hxSig(c)}<b>${esc(HX[c].n)}</b><span><i class="a">${HX[c].a}</i><i class="d">${HX[c].d}</i><i class="s">${HX[c].s}</i></span></button>`).join("") || `<span class="hxempty">リスなし</span>`}${sk.length ? `<span class="hxsep"></span>${sk.map((k, i) => `<button class="hxhk c-${HXS[k].cat}" data-hk="${i}">${hxSkIc(k)}<b>${esc(HXS[k].n)}</b></button>`).join("")}` : ""}</div>`;
   }
-  const btns = ui.myTurn ? `<div class="hxbtns main">${ui.cs ? `<button class="hxb hxsm ${hxMode && hxMode.startsWith("sum") ? "on" : ""}" data-x="sum">召喚</button>` : ""}<button class="hxb hxend" data-x="end">ターン終了</button></div>` : "";
+  const btns = ui.myTurn ? `<div class="hxbtns main">${ui.cs ? `<button class="hxb hxsm ${hxMode && hxMode.startsWith("sum") ? "on" : ""}" data-x="sum">召喚</button>` : ""}<button class="hxb hxend ${hxNothingLeft(st) ? "blink" : ""}" data-x="end">ターン終了</button></div>` : "";
   return `${top}${info}${hand}${btns}`;
+}
+/* ログ：リスやスキルの名前はタップでカードを表示 */
+const HX_LK = (() => { const a = []; Object.keys(HXS).forEach(k => a.push([HXS[k].n, "sk:" + k])); Object.keys(HX).forEach(c => a.push([HX[c].n, "c:" + c])); return a.sort((x, y) => y[0].length - x[0].length); })();
+function hxLogLine(g, m){
+  let h = colorizeLog(g.players, m); const keys = [];
+  HX_LK.forEach(([n, k], i) => { if (h.includes(n)){ h = h.split(n).join(`\u0003${i}\u0004`); keys[i] = [n, k]; } });
+  return h.replace(/\u0003(\d+)\u0004/g, (_, i) => `<button class="hxlk ${keys[i][1].startsWith("sk") ? "sk" : "ch"}" data-lk="${keys[i][1]}">${esc(keys[i][0])}</button>`);
+}
+/* スキル主導：このスキルを使える（装備できる）自分のリス */
+const hxSkWho = (st, k) => st.phase === "play" && st.turn && st.turn.pid === me ? hxUnits(st).filter(u => u.own === me && (!st.turn.act || st.turn.act === u.id) && hxSkUsable(st, u, k)) : [];
+function hxSkStart(k){
+  const g = hxById(hxId), st = g.st, who = hxSkWho(st, k);
+  if (!who.length){ toast("今このスキルを使えるリスがいません"); return; }
+  hxSkK = k; hxPop = null; hxPend = null;
+  if (who.length === 1){ hxSel = who[0].id; hxSkGo(who[0]); return; }
+  hxMode = "skwho"; hxSel = null; drawHx();
+}
+async function hxSkGo(u){
+  const st = hxById(hxId).st;
+  if (hxSkTargets(st, u, hxSkK)){ hxSel = u.id; hxMode = "sktg"; drawHx(); return; }
+  const k = hxSkK; hxMode = null; hxSel = u.id; await hxDoSkill(hxId, me, u.id, k, null);
+}
+/* もうできることがない：操作中のリスが何もできない／動かせるリスが1匹もいない（召喚もできない） */
+function hxNothingLeft(st){
+  if (!(st.phase === "play" && st.turn && st.turn.pid === me)) return false;
+  if (st.turn.act){ const u = st.units[st.turn.act]; return !u || hxUnitDone(st, u); }
+  return !hxCanSummon(st, me) && hxUnits(st).filter(u => u.own === me).every(u => hxUnitDone(st, u));
 }
 function hxBindPanel(g){
   const p = $("#hxPanel"), act = fn => async () => { if (hxPlaying) return; await fn(); };
@@ -12445,11 +12531,13 @@ function hxBindPanel(g){
     if (x === "sum"){ hxMode = hxMode ? null : "sum"; hxSel = null; hxPend = null; drawHx(); }
     if (x === "skill"){ hxMode = "skpick"; hxPend = null; drawHx(); }
     if (x === "sumok"){ hxMode = "sumpos"; hxSumGo(); }
-    if (x === "rockback"){ hxMode = null; drawHx(); }
-    if (x === "rockgo"){ const cs = hxPickCards, rs = hxRockSel.slice(); if (!cs || rs.length !== HX_ROCKN) return; hxMode = null; hxPickCards = null; hxRockSel = []; hxPickSel = []; await hxDoPick(hxId, me, cs, rs); }
+    if (x === "placeback"){ hxMode = null; hxPlaceSel = []; drawHx(); }
+    if (x === "placego"){ if (hxPlaceSel.length !== 2) return; if (hxLeader(st, hxTeamOf(st, me)) === me){ hxRockSel = []; hxMode = "rock"; drawHx(); return; } const cs = hxPickCards, pos = hxPlaceSel.slice(); hxMode = null; hxPickCards = null; hxPlaceSel = []; hxPickSel = []; await hxDoPick(hxId, me, cs, null, pos); }
+    if (x === "rockback"){ hxMode = "place"; drawHx(); }
+    if (x === "rockgo"){ const cs = hxPickCards, rs = hxRockSel.slice(), pos = hxPlaceSel.slice(); if (!cs || rs.length !== HX_ROCKN) return; hxMode = null; hxPickCards = null; hxRockSel = []; hxPlaceSel = []; hxPickSel = []; await hxDoPick(hxId, me, cs, rs, pos); }
     if (x === "end"){
-      const left = hxUnits(st).filter(u => u.own === me && hxTargets(st, u).length).length;
-      if (left && !confirm(`まだ攻撃できるリスが${left}匹います。ターンを終えますか？`)) return;
+      const au = st.turn.act && st.units[st.turn.act];
+      if (au && hxTargets(st, au).length && !confirm("まだ攻撃できます。ターンを終えますか？")) return;
       hxSel = null; hxPend = null; hxMode = null; await hxDoEnd(hxId, me);
     }
     if (x === "fire"){ const tg = hxPend, uid = hxSel; hxPend = null; await hxDoAttack(hxId, me, uid, tg); }
@@ -12459,7 +12547,7 @@ function hxBindPanel(g){
     if (hxMode === "sum"){ hxStartSummon(st, c); return; }
     hxPop = { c }; hxModalDraw(hxById(hxId));
   });
-  p.querySelectorAll("[data-hk]").forEach(b => b.onclick = () => { const st = hxById(hxId).st, k = (st.skills[me] || [])[Number(b.dataset.hk)]; if (k){ hxPop = { sk: k }; hxModalDraw(hxById(hxId)); } });
+  p.querySelectorAll("[data-hk]").forEach(b => b.onclick = () => { const st = hxById(hxId).st, k = (st.skills[me] || [])[Number(b.dataset.hk)]; if (k){ hxPop = { sk: k, hand: 1 }; hxModalDraw(hxById(hxId)); } });
   p.querySelectorAll("[data-skv]").forEach(b => b.onclick = () => { hxPop = { sk: b.dataset.skv, view: 1 }; hxModalDraw(hxById(hxId)); });
   p.querySelectorAll("[data-eq]").forEach(b => b.onclick = () => { const i = Number(b.dataset.eq); hxSumSks = hxSumSks.includes(i) ? hxSumSks.filter(x => x !== i) : hxSumSks.length < 2 ? [...hxSumSks, i] : [hxSumSks[1], i]; drawHx(); });
   p.querySelectorAll("[data-use]").forEach(b => b.onclick = act(async () => {
@@ -12484,6 +12572,12 @@ async function hxTap(e){
   const [r, q] = t.dataset.k.split(",").map(Number), g = hxById(hxId), st = g.st;
   const myTurn = st.phase === "play" && st.turn.pid === me;
   const u = hxAt(st, r, q), tr = hxTreAt(st, r, q);
+  if (hxMode === "place"){
+    const i = hxPlaceSel.findIndex(p => p[0] === r && p[1] === q);
+    if (i >= 0) hxPlaceSel.splice(i, 1);
+    else if (hxPlaceSel.length < 2 && HX_POS[hxTeamOf(st, me)].sp.some(p => p[0] === r && p[1] === q)) hxPlaceSel.push([r, q]);
+    if (navigator.vibrate) navigator.vibrate(10); drawHx(); return;
+  }
   if (hxMode === "rock"){
     const i = hxRockSel.findIndex(p => p[0] === r && p[1] === q);
     if (i >= 0) hxRockSel.splice(i, 1);
@@ -12493,6 +12587,10 @@ async function hxTap(e){
   if (hxMode === "sumpos"){
     const cs = hxCanSummon(st, me);
     if (cs && cs.sps.some(p => p[0] === r && p[1] === q)){ const c = hxSumCard, sks = hxSumSks.map(i => (st.skills[me] || [])[i]).filter(Boolean); hxMode = null; hxSumSks = []; await hxDoSummon(hxId, me, c, sks, [r, q]); }
+    return;
+  }
+  if (hxMode === "skwho"){
+    if (u && hxSkWho(st, hxSkK).some(x => x.id === u.id)) await hxSkGo(u);
     return;
   }
   if (hxMode === "sktg"){
@@ -12510,7 +12608,13 @@ async function hxTap(e){
   }
   hxPend = null;
   if (u){ hxSel = hxSel === u.id && !(myTurn && u.own === me) ? null : u.id; if (navigator.vibrate) navigator.vibrate(10); }
-  else hxSel = null;
+  else {
+    hxSel = null;
+    // 盤面に置かれたスキル（罠は自分の団のものだけ見える）
+    const myTm = st.players.includes(me) ? hxTeamOf(st, me) : "A";
+    const o = (st.objs || []).find(o => o.r === r && o.q === q && (o.k !== "trap" || o.tm === myTm));
+    if (o){ hxPop = { obj: o }; hxModalDraw(g); return; }
+  }
   drawHx();
 }
 /* ---- モーダル ---- */
@@ -12518,14 +12622,14 @@ function hxModalDraw(g){
   const m = $("#hxModal"); if (!m) return;
   const st = g.st;
   let h = "";
-  if (st.phase === "pick" && hxMode === "rock"){ h = ""; }
+  if (st.phase === "pick" && hxPrep(hxMode)){ h = ""; }
   else if (st.phase === "pick" && st.players.includes(me) && !st.picks[me]){
     const lead = hxLeader(st, hxTeamOf(st, me)) === me;
     const hand = st.hands[me] || [];
     h = `<div class="hxmw pick"><div class="hxmh"><small>DEPLOY</small><b>出撃する2匹を選べ</b><span>残りは手札（あとで召喚できる）。スキル${(st.skills[me] || []).length}枚も持っている</span></div>
       <div class="hxpickg">${hand.map((c, i) => hxCardHtml(c, { size: "md", cls: hxPickSel.includes(i) ? "on" : "", attr: `data-pk="${i}"` })).join("")}</div>
       <div class="hxpksk">${(st.skills[me] || []).map(k => hxSkCardHtml(k)).join("")}</div>
-      <button class="hxb hxgo hxbig" id="hxPickGo" ${hxPickSel.length === 2 ? "" : "disabled"}>${hxPickSel.length === 2 ? (lead ? "次へ：切り株を置く" : "この2匹で出撃！") : `あと${2 - hxPickSel.length}匹えらぶ`}</button>${lead ? `<small class="hxlead">あなたは団長。出撃の前に、切り株を${HX_ROCKN}つ置く場所を決めます</small>` : ""}</div>`;
+      <button class="hxb hxgo hxbig" id="hxPickGo" ${hxPickSel.length === 2 ? "" : "disabled"}>${hxPickSel.length === 2 ? "次へ：出撃位置を決める" : `あと${2 - hxPickSel.length}匹えらぶ`}</button>${lead ? `<small class="hxlead">あなたは団長。出撃の前に、切り株を${HX_ROCKN}つ置く場所を決めます</small>` : ""}</div>`;
   } else if (st.phase === "pick"){
     h = `<div class="hxmw wait"><div class="hxmh"><small>STANDBY</small><b>全員の出撃準備を待っています</b></div><div class="hxready">${st.players.map(p => `<span class="${st.picks[p] ? "ok" : ""}" style="--pc:${pcolor(p)};--tc:${hxTmC(hxTeamOf(st, p))}"><b>${esc(pname(p))}</b><em>${st.picks[p] ? "準備完了" : "選択中…"}</em></span>`).join("")}</div></div>`;
   } else if (st.phase === "play" && (st.rw[me] || 0) > 0 && !hxPlaying){
@@ -12534,9 +12638,16 @@ function hxModalDraw(g){
     h = `<div class="hxmw rw"><div class="hxmh"><small>SKILL SELECT</small><b>やられた…だが、強くなって戻れ！</b><span>スキル選択ターン：${of.length}枚から${n}枚えらぶ。復活の召喚で2枚までタダで装備できる${st.rw[me] > 1 ? `（あと${st.rw[me]}回）` : ""}</span></div>
       <div class="hxofg">${of.map((k, i) => hxSkCardHtml(k, { cls: hxRwSel.includes(i) ? "on" : "", attr: `data-of="${i}"` })).join("")}</div>
       <button class="hxb hxgo hxbig" id="hxRwGo" ${hxRwSel.length === n ? "" : "disabled"}>${hxRwSel.length === n ? "この2枚をもらう" : `あと${n - hxRwSel.length}枚えらぶ`}</button></div>`;
+  } else if (hxPop && hxPop.log){
+    const lines = (g.log || []).slice(-80).reverse();
+    h = `<div class="hxmw logw"><div class="hxmh"><small>BATTLE LOG</small><b>これまでの流れ</b><span>名前をタップするとカードが見られる</span></div><ul class="hxlog2">${lines.map((x, i) => `<li class="${i === 0 ? "new" : ""}">${hxLogLine(g, x.m)}</li>`).join("") || "<li>まだ記録がありません</li>"}</ul><button class="hxb hxsub" id="hxPopX">閉じる</button></div>`;
   } else if (hxPop){
-    h = `<div class="hxmw pop">${hxPop.c ? hxCardHtml(hxPop.c, { size: "lg" }) : hxSkCardHtml(hxPop.sk, { cls: "lg" })}
-      ${hxPop.c && st.phase === "play" && st.turn.pid === me && hxCanSummon(st, me) ? `<button class="hxb hxgo" id="hxPopSum">このリスを召喚</button>` : ""}<button class="hxb hxsub" id="hxPopX">閉じる</button></div>`;
+    const o = hxPop.obj, sk = o ? o.k : hxPop.sk, who = hxPop.hand ? hxSkWho(st, sk) : [];
+    const oInfo = o ? `<div class="hxobjinfo" style="--tc:${hxTmC(o.tm)}"><b>${HX_TM[o.tm].full}が設置</b>${o.until ? `<span>あと${Math.max(0, o.until - st.ti)}手番で消える</span>` : `<span>踏まれるまで残る</span>`}</div>` : "";
+    const useTx = sk && HXS[sk].cat === "eq" ? "リスに装備する" : sk && HXS[sk].cat === "set" ? "盤面に設置する" : "使う";
+    h = `<div class="hxmw pop">${hxPop.c ? hxCardHtml(hxPop.c, { size: "lg" }) : hxSkCardHtml(sk, { cls: "lg" })}${oInfo}
+      ${hxPop.c && st.phase === "play" && st.turn.pid === me && hxCanSummon(st, me) ? `<button class="hxb hxgo" id="hxPopSum">このリスを召喚</button>` : ""}
+      ${hxPop.hand && st.phase === "play" && st.turn.pid === me ? (who.length ? `<button class="hxb hxgo" id="hxPopUse">${useTx}</button>` : `<small class="hxlead">今このスキルを使えるリスがいません</small>`) : ""}<button class="hxb hxsub" id="hxPopX">${hxPop.back ? "ログに戻る" : "閉じる"}</button></div>`;
   } else if (st.phase === "over"){
     const myTm = st.players.includes(me) ? hxTeamOf(st, me) : null, w = st.win;
     const res = w === "draw" ? "DRAW" : !myTm || w === myTm ? "VICTORY" : "DEFEAT";
@@ -12547,11 +12658,12 @@ function hxModalDraw(g){
   m.innerHTML = h; m.classList.toggle("on", !!h);
   m.querySelectorAll("[data-pk]").forEach(b => b.onclick = () => { const i = Number(b.dataset.pk); hxPickSel = hxPickSel.includes(i) ? hxPickSel.filter(x => x !== i) : hxPickSel.length < 2 ? [...hxPickSel, i] : [hxPickSel[1], i]; hxModalDraw(g); });
   const go = m.querySelector("#hxPickGo"); if (go) go.onclick = async () => { const hand = st.hands[me]; const cs = hxPickSel.map(i => hand[i]);
-    if (hxLeader(st, hxTeamOf(st, me)) === me){ hxPickCards = cs; hxRockSel = []; hxMode = "rock"; drawHx(); return; }
-    hxPickSel = []; go.disabled = true; await hxDoPick(hxId, me, cs); };
+    hxPickCards = cs; hxPlaceSel = []; hxRockSel = []; hxMode = "place"; drawHx(); };
   m.querySelectorAll("[data-of]").forEach(b => b.onclick = () => { const i = Number(b.dataset.of); hxRwSel = hxRwSel.includes(i) ? hxRwSel.filter(x => x !== i) : hxRwSel.length < 2 ? [...hxRwSel, i] : [hxRwSel[1], i]; hxModalDraw(g); });
   const rg = m.querySelector("#hxRwGo"); if (rg) rg.onclick = async () => { const pk = hxRwSel.slice(); hxRwSel = []; rg.disabled = true; await hxDoReward(hxId, me, pk); };
-  const px = m.querySelector("#hxPopX"); if (px) px.onclick = () => { hxPop = null; hxModalDraw(g); };
+  const px = m.querySelector("#hxPopX"); if (px) px.onclick = () => { hxPop = hxPop && hxPop.back ? { log: 1 } : null; hxModalDraw(g); };
+  m.querySelectorAll("[data-lk]").forEach(b => b.onclick = () => { const [t, k] = b.dataset.lk.split(":"); hxPop = t === "sk" ? { sk: k, back: 1 } : { c: k, back: 1 }; hxModalDraw(g); });
+  const pu = m.querySelector("#hxPopUse"); if (pu) pu.onclick = () => { const k = hxPop.sk; hxPop = null; hxModalDraw(g); hxSkStart(k); };
   const ps = m.querySelector("#hxPopSum"); if (ps) ps.onclick = () => { const c = hxPop.c; hxPop = null; hxStartSummon(st, c); };
   const ox = m.querySelector("#hxOverX"); if (ox) ox.onclick = closeHx;
   const ag = m.querySelector("#hxAgain"); if (ag) ag.onclick = () => { closeHx(); openHxNew({ A: st.teams.A, B: st.teams.B, rounds: st.rounds, map: st.map }); };
@@ -12764,21 +12876,22 @@ async function hxBattleFx(e, st){
 function hxRulesHtml(){
   hxEnsureDefs();
   const sk = cat => `<div class="hxskgrid">${HXS_IDS.filter(k => HXS[k].cat === cat).map(k => hxSkCardHtml(k)).join("")}</div>`;
-  return `<div class="goal"><b>相手の<span class="r">どんぐり貯蔵庫2つ</span>を先に壊した団の勝ち！</b><small>${HX_TM.A.full}と${HX_TM.B.full}に分かれたリスの縄張り戦争（2〜6人・CPU可）。盤面は縦10×横8の六角マス（標準／十字路）。</small></div>
+  return `<div class="goal"><b>相手の<span class="r">どんぐり貯蔵庫2つ</span>を先に壊した団の勝ち！</b><small>${HX_TM.A.full}と${HX_TM.B.full}に分かれたリスの縄張り戦争（2〜6人・CPU可）。盤面は縦11段・8マスと7マスの段が交互の六角マス（標準／十字路）。</small></div>
   <h4>リスは4タイプだけ</h4>
   <div class="hxcgrid">${HX_IDS.map(c => hxCardHtml(c, { size: "sm" })).join("")}</div>
   <div class="tip">攻＝攻撃・防＝防御・速＝動けるマス数。射程は1（隣だけ）。<b>体力は1</b>（スキル「厚い毛皮」で+1、最大2）。強さの違いはスキルカードで作る。</div>
   <h4>はじめに</h4>
   <div class="steps">
-    <div class="st"><b class="t">リス4枚とスキル3枚を持って始める</b><small>リスの中から出撃する2匹を全員同時に選ぶ</small></div>
+    <div class="st"><b class="t">リス4枚とスキル3枚を持って始める</b><small>リスの中から出撃する2匹を全員同時に選び、自陣の一番下の段の好きなマスに置く</small></div>
     <div class="st"><b class="t">各団の団長は切り株を${HX_ROCKN}つ置く</b><small>中央から自陣側3段以内の好きなマスに。相手の配置は出撃まで見えない。切り株は通れない（飛行なら越えられる）</small></div>
-    <div class="st"><b class="t">手番は2つの団が交互</b><small>自分の番のはじめにスキルを1枚引く（6枚まで）。リスの手札がなければリスも1枚引く</small></div>
+    <div class="st"><b class="t">手番は2つの団が交互</b><small>自分の番のはじめにスキルを1枚引く。リスの手札がなければリスも1枚引く</small></div>
   </div>
   <h4 style="--hc:#38B6FF">自分の番にできること</h4>
   <div class="steps">
     <div class="st"><b class="t">召喚：自陣の一番下の段（巣穴）の空いているマスに、手札のリスを出す</b><small>盤上に出せるのは1人2匹まで。召喚するとき<b>装備スキルを2枚までタダで付けられる</b></small></div>
-    <div class="st"><b class="t">各リスは「移動 → 攻撃」か「スキルを1枚使う」のどちらか</b><small>スキルを使ったリスは、その手番はもう動けない・攻撃できない</small></div>
-    <div class="st"><b class="t">「ターン終了」で次の人へ</b></div>
+    <div class="st"><b class="t">1手番で動かせるのは好きなリス1匹だけ</b><small>そのリスが「移動 → 攻撃」をする。スキルも1枚使える（スキルを使ったら攻撃はできないが、移動はできる）</small></div>
+    <div class="st"><b class="t">スキルは手札のスキルカードをタップして使う</b><small>「リスに装備する」「盤面に設置する」「使う」を選び、使うリス→対象の順にタップ。盤面に置かれたスキルや、リスの装備スキルもタップで中身を見られる</small></div>
+    <div class="st"><b class="t">「ターン終了」で相手の番（できることがなくなるとボタンが点滅）</b><small>両方の団が交互に1匹ずつ動かしていく。手番のはじめに毎回スキルを1枚引く</small></div>
   </div>
   <h4 style="--hc:#E2364F">バトル</h4>
   <div class="tip"><b>攻撃＋🎲 が 防御＋🎲 より大きければ命中</b>（同じなら防いだ）。命中すると体力−1、0で撃破。射程のマス数まで攻撃できる。属性が有利なら攻撃+2。</div>
@@ -12963,8 +13076,8 @@ function hxSetStage(stage){
 /* 背景の森（ステージごと） */
 const HX_SCAPE = {
   volcano: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><g fill="#5A200C">${[[20,150,46],[90,130,52],[170,145,44],[240,120,56],[320,140,50],[390,125,48]].map(([x,y,r]) => `<rect x="${x-6}" y="${y}" width="12" height="${300-y}" fill="#3A1A0C"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g><path d="M0 230Q60 205 130 222T260 215T400 228V300H0Z" fill="#1E0C06"/><g fill="#8A3410">${[[50,190,34],[140,200,30],[300,192,36],[370,205,28]].map(([x,y,r]) => `<rect x="${x-5}" y="${y}" width="10" height="${300-y}" fill="#3A1A0C"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g></svg>`,
-  snow: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><g fill="#22385A">${[[20,150,46],[90,130,52],[170,145,44],[240,120,56],[320,140,50],[390,125,48]].map(([x,y,r]) => `<rect x="${x-6}" y="${y}" width="12" height="${300-y}" fill="#1A2438"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g><path d="M0 230Q60 205 130 222T260 215T400 228V300H0Z" fill="#0A1428"/><g fill="#3A5A7A">${[[50,190,34],[140,200,30],[300,192,36],[370,205,28]].map(([x,y,r]) => `<rect x="${x-5}" y="${y}" width="10" height="${300-y}" fill="#1A2438"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g></svg>`.replace("</svg>", '<circle cx="318" cy="56" r="22" fill="#EAF4FF" opacity=".85"/></svg>'),
-  jungle: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><g fill="#08281A">${[[20,150,46],[90,130,52],[170,145,44],[240,120,56],[320,140,50],[390,125,48]].map(([x,y,r]) => `<rect x="${x-6}" y="${y}" width="12" height="${300-y}" fill="#0A1A12"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g><path d="M0 230Q60 205 130 222T260 215T400 228V300H0Z" fill="#03140C"/><g fill="#0E3A24">${[[50,190,34],[140,200,30],[300,192,36],[370,205,28]].map(([x,y,r]) => `<rect x="${x-5}" y="${y}" width="10" height="${300-y}" fill="#0A1A12"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g></svg>`.replace("</svg>", '<circle cx="80" cy="50" r="16" fill="#F3F0D0" opacity=".7"/></svg>')
+  snow: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><g fill="#22385A">${[[20,150,46],[90,130,52],[170,145,44],[240,120,56],[320,140,50],[390,125,48]].map(([x,y,r]) => `<rect x="${x-6}" y="${y}" width="12" height="${300-y}" fill="#1A2438"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g><path d="M0 230Q60 205 130 222T260 215T400 228V300H0Z" fill="#0A1428"/><g fill="#3A5A7A">${[[50,190,34],[140,200,30],[300,192,36],[370,205,28]].map(([x,y,r]) => `<rect x="${x-5}" y="${y}" width="10" height="${300-y}" fill="#1A2438"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g></svg>`,
+  jungle: `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><g fill="#08281A">${[[20,150,46],[90,130,52],[170,145,44],[240,120,56],[320,140,50],[390,125,48]].map(([x,y,r]) => `<rect x="${x-6}" y="${y}" width="12" height="${300-y}" fill="#0A1A12"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g><path d="M0 230Q60 205 130 222T260 215T400 228V300H0Z" fill="#03140C"/><g fill="#0E3A24">${[[50,190,34],[140,200,30],[300,192,36],[370,205,28]].map(([x,y,r]) => `<rect x="${x-5}" y="${y}" width="10" height="${300-y}" fill="#0A1A12"/><circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g></svg>`
 };
 
 
