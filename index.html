@@ -2538,6 +2538,12 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .sbfx .dfly small,.sbfx.dm-curse small,.sbfx .dtr small{font-weight:900;font-size:15px;padding:3px 14px;border-radius:99px;color:#fff;border:2.5px solid var(--ink);box-shadow:0 3px 0 var(--ink);white-space:nowrap}
 .sbfx .pwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,227,138,.95),rgba(45,138,74,.9) 55%,rgba(14,58,30,.95));animation:seaw var(--ms) forwards}
 .sbfx.dm-prov .tx,.sbfx.dm-atk .tx{position:relative;z-index:3}
+.sbfx .axwash{filter:grayscale(.75)}
+.sbfx .datk.axc{position:relative}.sbfx .datk.axc>:not(i){filter:grayscale(.8) brightness(.8)}
+.sbfx .axx{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-style:normal;font-size:110px;line-height:1;animation:axx .4s .55s both;filter:drop-shadow(0 4px 0 rgba(0,0,0,.4))}
+@keyframes axx{0%{transform:translate(-50%,-50%) scale(3);opacity:0}70%{transform:translate(-50%,-50%) scale(.9);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.sbfx.dm-atkx .bigt s{text-decoration-thickness:6px;text-decoration-color:#E2364F}
+.sbfx .axmsg{font-size:17px;font-weight:900;color:#fff;background:#3A3A46;border:2.5px solid #fff;border-radius:99px;padding:3px 16px;white-space:nowrap;animation:dmlres var(--ms) .5s both}
 .sbfx .dprov,.sbfx .datk{animation:sklam .7s cubic-bezier(.2,1.8,.4,1) both;margin-bottom:58px}
 .sbfx.dm-prov .bigt span{font-size:min(14vw,62px);color:#FFE38A;-webkit-text-stroke-color:#3A0A24}
 .sbfx.dm-prov .bigt span:first-child{margin-right:.1em}
@@ -9499,9 +9505,13 @@ const DMA = {
     dmL(st, `${pname(tg)}は${dmNames(rev)}を公開${ds.length ? `、${dmNames(ds)}を捨てた` : ""}`);
   },
 };
+/* アタックの効果が「呪いを渡す」だけのカード */
+const DM_CURSE_ONLY = ["witch", "seawitch", "youngwitch", "familiar", "charlatan"];
 /* 続きの処理 */
 const DMT = {
   atk(st, t){
+    // 呪いを渡すだけのアタックで、呪いの山が空なら、アタック自体を中止（演出に❌）
+    if (DM_CURSE_ONLY.includes(t.c) && !(st.supply.curse > 0)){ dmL(st, `❌${DM[t.c].n}のアタックは中止（呪いの山が空）`); dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, cancel: 1 }); return; }
     const tg = dmOthers(st, t.pid), hit = [], safe = [], rs = [];   // rs：公開したリアクション（全員に演出で見せる）
     tg.forEach(o => { if (st.pl[o].hand.includes("moat")){ safe.push(o); rs.push({ p: o, c: "moat", tx: "アタックを防いだ！" }); dmL(st, `🛡️${pname(o)}は堀を公開して防いだ`); } else if (dmNextHas(st, o, "lh")){ safe.push(o); rs.push({ p: o, c: "lighthouse", tx: "灯台で守られている" }); dmL(st, `🗼${pname(o)}は灯台で守られている`); } else hit.push(o); });
     tg.forEach(o => { const P = st.pl[o]; if (P.hand.includes("horsetraders")) rs.push({ p: o, c: "horsetraders", tx: "脇に置いた（次のターン +1カード）" }); if (P.hand.includes("diplomat") && P.hand.length >= 5) rs.push({ p: o, c: "diplomat", tx: "2枚引いて3枚捨てる" }); });
@@ -11562,6 +11572,12 @@ function dmFx(e, g){
         ${c === "province" ? `<div class="pv-left">🏰 属州 残り<b>${left}</b>枚${left <= 3 ? "！ゲーム終了が迫る！" : ""}</div>` : ""}
       </div>`;
     kind = c === "province" ? "pv pvk-end" : "pv pvk-max";
+  } else if (e.k === "atk" && e.cancel){
+    // 呪いがないのでアタック中止：カードに大きな❌
+    ms = 2400; kind = "atk dm-atkx";
+    html = `<span class="awash axwash"></span><div class="tx" style="animation:none"><div class="datk axc">${dmCardHtml(e.c, "dfx dfxb")}<i class="axx">❌</i></div><div class="bigt"><span style="--d:.25s"><s>ATTACK</s></span></div>
+      <div class="who"><i style="color:${pc}">●</i> ${esc(pname(e.p))}の${esc(DM[e.c].n)}</div>
+      <div class="axmsg">呪いの山が空なので中止</div></div>`;
   } else if (e.k === "atk"){
     ms = 2400;
     html = `<span class="awash"></span><div class="tx" style="animation:none"><div class="datk">${dmCardHtml(e.c, "dfx dfxb")}</div><div class="bigt"><span style="--d:.25s">ATTACK</span><span class="ex" style="--d:.5s">!</span></div>
