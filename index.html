@@ -2549,6 +2549,20 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .sbfx .dtg span.sf{background:#2F7FC9}
 .sbfx .cwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(200,170,240,.85),rgba(70,20,110,.9) 65%);animation:seaw var(--ms) forwards}
 .sbfx.dm-curse .dfly{animation-name:dfly2}
+.sbfx.dm-empty{display:flex;align-items:center;justify-content:center;pointer-events:none}
+.sbfx .emwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(120,120,135,.55),rgba(25,25,35,.82) 70%);animation:emw var(--ms) forwards}
+@keyframes emw{0%{opacity:0}12%,80%{opacity:1}100%{opacity:0}}
+.sbfx .embox{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;animation:emb var(--ms) forwards}
+@keyframes emb{0%{transform:scale(.6);opacity:0}12%{transform:scale(1.06);opacity:1}18%,82%{transform:scale(1);opacity:1}100%{transform:scale(.92);opacity:0}}
+.sbfx .emcard{position:relative;animation:emsh .45s .25s 2}
+.sbfx .emcard>:not(i):not(b){filter:grayscale(1) brightness(.7)}
+@keyframes emsh{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.sbfx .emcard .emx{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:92px;font-weight:900;color:#ff4d5e;text-shadow:0 3px 0 #2a0b10,0 0 14px rgba(255,60,80,.7);filter:none}
+.sbfx .emcard .em0{position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);background:#2b2b33;color:#fff;font-size:13px;padding:2px 10px;border-radius:99px;border:2px solid #fff;white-space:nowrap}
+.sbfx .emt{font-weight:900;font-size:21px;color:#fff;text-shadow:0 2px 0 #000,0 0 10px rgba(0,0,0,.6);white-space:nowrap}
+.sbfx .emp{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px;max-width:90vw}
+.sbfx .emp span{background:var(--pc);color:#fff;font-weight:900;font-size:14px;padding:2px 11px;border-radius:99px;border:2px solid var(--ink,#222)}
+.sbfx .emp em{font-style:normal;font-weight:900;color:#fff;font-size:15px;text-shadow:0 2px 0 #000}
 .sbfx .dtr{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
 .sbfx .dtrr{display:flex;justify-content:center}
 .sbfx .dtrr>span{display:inline-block;margin:0 -8px;animation:dtrash var(--ms) ease-in both;animation-delay:calc(var(--i) * .08s)}
@@ -9114,8 +9128,19 @@ function dmTop(st, pid){
   return P.deck.pop();
 }
 function dmDraw(st, pid, n){ const P = st.pl[pid]; let k = 0; for (let i = 0; i < n; i++){ const c = dmTop(st, pid); if (c == null) break; P.hand.push(c); k++; } return k; }
+/* 山が空で獲得できなかった：ログと演出で全員に知らせる（同じ山・同じ流れの連続はまとめて1つに） */
+function dmMiss(st, pid, c){
+  const m = st._miss, L = (st.fx || [])[(st.fx || []).length - 1];
+  if (m && m.c === c && L && L.k === "empty" && L.n === m.n && st._log && st._log[m.li] != null){
+    if (!L.ps.includes(pid)){ L.ps.push(pid); st._log[m.li] = `🈳${DM[c].n}の山が空：${L.ps.map(pname).join("・")}は獲得できなかった`; }
+    return;
+  }
+  dmL(st, `🈳${DM[c].n}の山が空：${pname(pid)}は獲得できなかった`);
+  dmFxAdd(st, { k: "empty", c, p: pid, ps: [pid] });
+  st._miss = { c, n: st.fxn, li: st._log.length - 1 };
+}
 function dmGain(st, pid, c, dest = "disc"){
-  if (!(st.supply[c] > 0)) return false;
+  if (!(st.supply[c] > 0)){ dmMiss(st, pid, c); return false; }
   st.supply[c]--; const P = st.pl[pid];
   if (dest === "hand") P.hand.push(c); else if (dest === "deck") P.deck.push(c); else if (dest === "haven") (P.haven = P.haven || []).push(c); else P.disc.push(c);
   dmOnGain(st, pid, c, dest);
@@ -9128,13 +9153,13 @@ function dmOnGain(st, pid, c, dest){
   if (T && pid === T.pid){
     (T.gained = T.gained || []).push(c); if (dmIs(c, "v")) T.gainedV = true;
     if (c === "mint" && T.phase === "buy"){ const tr = P.play.filter(x => dmIs(x, "t") && !dmIs(x, "dur")); if (tr.length){ tr.forEach(x => dmTake(P.play, [x])); st.trash.push(...tr); dmL(st, `造幣所：場の財宝${tr.length}枚を廃棄`); dmFxAdd(st, { k: "trash", p: pid, cs: tr }); } }
-    if (dmIs(c, "v") && T.hoard) for (let i = 0; i < T.hoard; i++) if ((st.supply.gold || 0) > 0){ st.supply.gold--; P.disc.push("gold"); dmL(st, "埋蔵金：金貨を獲得"); dmFxAdd(st, { k: "hoard", p: pid, c: "gold" }); dmFxAdd(st, { k: "gain", p: pid, c: "gold", dest: "disc", hg: 1 }); }
+    if (dmIs(c, "v") && T.hoard) for (let i = 0; i < T.hoard; i++) if ((st.supply.gold || 0) > 0){ st.supply.gold--; P.disc.push("gold"); dmL(st, "埋蔵金：金貨を獲得"); dmFxAdd(st, { k: "hoard", p: pid, c: "gold" }); dmFxAdd(st, { k: "gain", p: pid, c: "gold", dest: "disc", hg: 1 }); } else dmMiss(st, pid, "gold");
     if (dmIs(c, "a") && T.coll) dmVpt(st, pid, T.coll, "収集品");
     if (T.tiara && c !== "curse") dmAsk(st, { pid, k: "yn", card: c, title: `ティアラ：${DM[c].n}を山札の上に置く？`, then: { t: "topgain", c, dest: dest || "disc" } });
   }
   if (P.hand.includes("watchtower") && !(T && T.tiara && pid === T.pid)) dmAsk(st, { pid, k: "opt", opts: ["そのまま", "廃棄する", "山札の上に置く"], min: 1, max: 1, card: c, title: `望楼：獲得した${DM[c].n}をどうする？`, then: { t: "wt", c, dest: dest || "disc" } });
   st.players.forEach(o => { if (o === pid) return; const n = dmNextHas(st, o, "monkey"); if (n && dmRight(st, o) === pid){ dmDraw(st, o, n); dmL(st, `🐒${pname(o)}は猿で${n}枚引いた`); } });
-  if (T && pid === T.pid && c !== "curse") st.players.forEach(o => { if (o === pid) return; if ((st.pl[o].next || []).some(e => e.blk && e.card === c) && (st.supply.curse || 0) > 0){ st.supply.curse--; st.pl[pid].disc.push("curse"); dmL(st, `🚧封鎖：${pname(pid)}は呪いも獲得`); dmFxAdd(st, { k: "curse", p: pid }); } });
+  if (T && pid === T.pid && c !== "curse") st.players.forEach(o => { if (o === pid) return; if ((st.pl[o].next || []).some(e => e.blk && e.card === c) && (st.supply.curse || 0) > 0){ st.supply.curse--; st.pl[pid].disc.push("curse"); dmL(st, `🚧封鎖：${pname(pid)}は呪いも獲得`); dmFxAdd(st, { k: "curse", p: pid }); } else if ((st.pl[o].next || []).some(e => e.blk && e.card === c)) dmMiss(st, pid, "curse"); });
 }
 /* 持続：次のターンの最初に効果。カードはそれまで場に残る */
 const dmVpt = (st, pid, n, why) => { if (!n) return; st.pl[pid].vpt = (st.pl[pid].vpt || 0) + n; dmL(st, `🟢${pname(pid)}が勝利点トークン+${n}${why ? `（${why}）` : ""}`); };
@@ -9737,7 +9762,7 @@ async function dmCommit(id, fn){
     const g = dmById(id); if (!g) return false;
     const st = JSON.parse(JSON.stringify(g.st)); st._log = [];
     const r = fn(st, g); if (!r) return false;
-    const lines = st._log; delete st._log;
+    const lines = st._log; delete st._log; delete st._miss;
     const body = { st, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
     if (r.status) Object.assign(body, r.status);
     if (lines.length){ const lg = (g.log || []).slice(), now = Date.now(); lines.forEach((m, i) => lg.push({ t: new Date(now + i).toISOString(), m })); body.log = lg.slice(-60); }
@@ -11386,7 +11411,7 @@ function dmFxCheck(g){
     if (e.k === "hoard"){ const st0 = Math.max(t, gq); setTimeout(() => dmFx(e, g), st0); t = st0 + 2300; hEnd = t; return; }
     if (e.k === "play" && e.p === me) dmDealDelay += 2600;
     if (e.k === "end"){ dmEndFresh[g.id] = t + 300; }
-    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
     setTimeout(() => dmFx(e, g), t); t += e.k === "play" || e.k === "prov" ? d : Math.min(d, 1600);
   });
 }
@@ -11446,6 +11471,12 @@ function dmFx(e, g){
       <div class="dtg">${(e.hit || []).map(p => `<span style="--pc:${pcolor(p)}">${esc(pname(p))}</span>`).join("")}${(e.safe || []).map(p => `<span class="sf" style="--pc:${pcolor(p)}">🛡️${esc(pname(p))}</span>`).join("")}</div></div>`;
   } else if (e.k === "curse"){
     ms = 1600; html = `<span class="cwash"></span><div class="tx"><div class="dfly cu">${dmCardHtml("curse", "dfx")}</div><small style="background:${pc}">${esc(pname(e.p))}に呪い！</small></div>`;
+  } else if (e.k === "empty"){
+    // 山が空で獲得できなかった
+    ms = 1900; const ps = e.ps && e.ps.length ? e.ps : [e.p];
+    html = `<span class="emwash"></span><div class="embox"><div class="emcard">${dmCardHtml(e.c, "dfx")}<i class="emx">✕</i><b class="em0">残り0枚</b></div>
+      <div class="emt">${esc(DM[e.c].n)}がもうありません</div>
+      <div class="emp">${ps.map(p => `<span style="--pc:${pcolor(p)}">${esc(pname(p))}</span>`).join("")}<em>は獲得なし</em></div></div>`;
   } else if (e.k === "trash"){
     ms = 1300; html = `<div class="dtr"><div class="dtrr">${(e.cs || []).slice(0, 5).map((c, i) => `<span style="--i:${i}">${dmCardHtml(c, "dfx")}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が廃棄</small></div>`;
   } else if (e.k === "end"){
