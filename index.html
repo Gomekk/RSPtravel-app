@@ -3097,6 +3097,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .dmdurl ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
 .dmdurl li{display:flex;gap:8px;align-items:baseline;font-size:12.5px;font-weight:700;line-height:1.45}
 .dmdurl li b{flex:none;padding:1px 8px;border-radius:7px;background:#E07A1F;color:#fff;font-size:11.5px}
+.dmset .dmsc{margin-left:4px;font-size:9px;font-weight:700;opacity:.5}
 .dpk.vt{background:#E6F6EA;border-color:#8FD0A8;color:#1E7E46}
 .dpk.du{background:#FFF3E6;border-color:#F0B070}
 .dmopts{display:flex;flex-direction:column;gap:6px;margin:8px 0;width:100%;align-self:stretch}
@@ -10295,6 +10296,9 @@ function openDmNew(){
   const t = curTrip();
   let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 6);
   let kd = DM_SETS[0].k.slice(), setName = DM_SETS[0].n;
+  // そのセット（王国カード10種がまったく同じ）で遊んだ回数（中止した対戦は数えない）
+  const setKey = k => k.slice().sort().join(","), playedKeys = dmGames().filter(g => g.status !== "aborted" && g.st && g.st.kingdom).map(g => setKey(g.st.kingdom));
+  const setPlays = k => { const key = setKey(k); return playedKeys.filter(x => x === key).length; };
   const s = openSheet("ドミニオンを始める", `
     <p class="note">自分だけの山札（デッキ）を育てて、ゲーム終了時に勝利点が一番多い人の勝ち（2〜6人）。</p>
     <button type="button" class="grbtn" data-grule="dm">ルールを見る</button>
@@ -10310,7 +10314,7 @@ function openDmNew(){
   const xPool = () => DM_KINGDOM.filter(k => xt === "all" || dmX(k) === xt);
   const drawK = () => {
     $("#dmXt").innerHTML = [{ id: "all", n: "すべて" }, ...DM_EXP].map(x => `<button type="button" class="dmxt" data-xt="${x.id}" aria-pressed="${xt === x.id}">${x.n}<small>${x.id === "all" ? DM_KINGDOM.length : DM_KINGDOM.filter(k => dmX(k) === x.id).length}</small></button>`).join("");
-    $("#dmSets").innerHTML = DM_SETS.map((x, i) => ({ x, i })).filter(({ x }) => xt === "all" || (x.x || "base") === xt || (x.x === "mix" && x.xs.includes(xt))).map(({ x, i }) => `<button type="button" class="dmset" data-set="${i}" aria-pressed="${x.n === setName}">${x.n}</button>`).join("") + `<button type="button" class="dmset rnd" data-set="r" aria-pressed="${setName === "ランダム"}">ランダム${xt === "all" ? "" : `（${DM_EXP.find(e => e.id === xt).n}）`}</button>`;
+    $("#dmSets").innerHTML = DM_SETS.map((x, i) => ({ x, i })).filter(({ x }) => xt === "all" || (x.x || "base") === xt || (x.x === "mix" && x.xs.includes(xt))).map(({ x, i }) => `<button type="button" class="dmset" data-set="${i}" aria-pressed="${x.n === setName}">${x.n}<small class="dmsc">${setPlays(x.k)}回</small></button>`).join("") + `<button type="button" class="dmset rnd" data-set="r" aria-pressed="${setName === "ランダム"}">ランダム${xt === "all" ? "" : `（${DM_EXP.find(e => e.id === xt).n}）`}</button>`;
     $("#dmXt").querySelectorAll("[data-xt]").forEach(b => b.onclick = () => { xt = b.dataset.xt; drawK(); });
     $("#dmSets").querySelectorAll("[data-set]").forEach(b => b.onclick = () => { if (b.dataset.set === "r"){ kd = shuffle(xPool()).slice(0, 10); setName = "ランダム"; } else { const x = DM_SETS[Number(b.dataset.set)]; kd = x.k.slice(); setName = x.n; } drawK(); });
     if (!colManual) $("#dmCol").checked = kd.filter(k => dmX(k) === "pro").length >= 3;
