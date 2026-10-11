@@ -2479,6 +2479,7 @@ button.h2.fold{width:100%;background:none;border:0;text-align:left;cursor:pointe
 .dmask .dqn{color:#1F8C8C}
 .dmask .nbtns{width:100%}
 .dmmodal{z-index:44}
+.dqback{align-self:flex-start;margin:0 0 8px;padding:4px 12px;border-radius:99px;border:2px solid #2F7FC9;background:#EAF4FF;color:#1E5FA8;font-weight:900;font-size:12.5px}
 .dmmodal .dmmw{position:relative;width:min(100%,380px);display:flex;flex-direction:column;align-items:stretch}
 .dmmodal .dmmw .dmask{width:100%}
 .dmmodal .dqmin{align-self:flex-end;margin:0 4px 6px;padding:5px 12px;border-radius:99px;border:2px solid var(--ink);background:#fff;color:var(--ink);font-weight:900;font-size:12.5px;box-shadow:0 2px 0 var(--ink)}
@@ -2837,6 +2838,8 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .sbfx .aring.r2{border-color:#FFE38A;animation-delay:.44s}
 @keyframes aring{0%{transform:scale(.4);opacity:1}100%{transform:scale(3.4);opacity:0}}
 .sbfx .acard{position:absolute;left:50%;top:46%;z-index:3;animation:acard var(--ms) cubic-bezier(.2,1.1,.3,1) forwards}
+.sbfx.dm-alg .acard .dmc.dfx{transform:translate(-50%,-50%) scale(1.08) !important}
+.sbfx.dm-alg .aplus{top:calc(46% + 98px)}.sbfx.dm-alg .aplus .atx{font-size:12px;line-height:1.42;padding:5px 10px}
 .sbfx .acard .dmc.dfx{transform:translate(-50%,-50%) scale(1.35);box-shadow:0 0 0 3px #FFE38A,0 0 40px #FFE38A,0 6px 0 var(--ink)}
 @keyframes acard{0%{transform:translate(0,40vh) rotate(-40deg) scale(.3);opacity:0}13%{transform:translate(0,0) rotate(6deg) scale(1.08);opacity:1}18%{transform:rotate(-3deg) scale(1)}86%{transform:none;opacity:1}100%{transform:translate(0,-34vh) scale(.25);opacity:0}}
 .sbfx .aflash{position:absolute;left:50%;top:50%;width:150px;height:210px;transform:translate(-50%,-50%);border-radius:14px;background:#fff;opacity:0;animation:aflash .5s ease-out .3s forwards;pointer-events:none}
@@ -9044,7 +9047,7 @@ const DM = {
   masquerade: { x: "int", n: "仮面舞踏会", c: 3, ty: ["a"], p: { cards: 2 }, tx: "手札のある人は全員1枚を次の人に渡す。そのあと手札1枚を廃棄してもよい" },
   shanty: { x: "int", n: "貧民街", c: 3, ty: ["a"], p: { actions: 2 }, tx: "手札を公開し、アクションカードがなければ+2カード" },
   steward: { x: "int", n: "執事", c: 3, ty: ["a"], tx: "+2カード／+$2／手札2枚を廃棄、から1つを選ぶ" },
-  swindler: { x: "int", n: "詐欺師", c: 3, ty: ["a", "atk"], p: { coins: 2 }, tx: "他の人は山札の一番上を廃棄し、あなたが選んだ同じコストのカードを獲得する" },
+  swindler: { x: "int", n: "詐欺師", c: 3, ty: ["a", "atk"], p: { coins: 2 }, tx: "他の人は山札の一番上を廃棄し、あなたが選んだ、廃棄したカードと同じコストのカードを獲得する" },
   wishingwell: { x: "int", n: "願いの井戸", c: 3, ty: ["a"], p: { cards: 1, actions: 1 }, tx: "カード名を1つ言い、山札の一番上を公開。当たれば手札に入れる" },
   baron: { x: "int", n: "男爵", c: 4, ty: ["a"], p: { buys: 1 }, tx: "屋敷1枚を捨てて+$4してもよい。捨てなければ屋敷を獲得する" },
   bridge: { x: "int", n: "橋", c: 4, ty: ["a"], p: { buys: 1, coins: 1 }, tx: "このターン、すべてのカードのコストが$1少なくなる" },
@@ -9392,7 +9395,7 @@ const DMF = {
     dmPush(st, { t: "mqpass", pid, ps });
     ps.forEach(p => dmAsk(st, { pid: p, k: "hand", min: 1, max: 1, title: "仮面舞踏会：次の人に渡すカード", desc: `${pname(dmOthers(st, p).find(o => ps.includes(o)) || p)}に渡す`, ok: "渡す", then: { t: "mq1" } }));
   },
-  shanty(st, pid){ const h = st.pl[pid].hand; if (!h.some(c => dmIs(c, "a"))){ dmDraw(st, pid, 2); dmL(st, "貧民街：手札にアクションがないので+2カード"); } else dmL(st, "貧民街：手札にアクションがある"); },
+  shanty(st, pid){ const h = st.pl[pid].hand, na = !h.some(c => dmIs(c, "a")); if (h.length) dmRevFx(st, pid, h, "shanty", na ? "アクションカードなし → +2カード" : "アクションカードがある（効果なし）", h.map(c => dmIs(c, "a"))); else dmL(st, "貧民街：手札がない"); if (na){ dmDraw(st, pid, 2); dmL(st, "貧民街：手札にアクションがないので+2カード"); } else dmL(st, "貧民街：手札にアクションがある"); },
   steward(st, pid){ dmAsk(st, { pid, k: "opt", opts: ["+2カード", "+$2", "手札2枚を廃棄"], min: 1, max: 1, title: "執事：1つ選ぶ", then: { t: "steward" } }); },
   wishingwell(st, pid){ const cs = Object.keys(st.supply).filter(c => DM[c]); dmAsk(st, { pid, k: "list", cards: cs, min: 1, max: 1, title: "願いの井戸：山札の一番上にありそうなカード", ok: "これを願う", then: { t: "wish", cards: cs } }); },
   baron(st, pid){
@@ -9466,7 +9469,7 @@ const DMF = {
   forge(st, pid){ const h = st.pl[pid].hand; dmAsk(st, { pid, k: "hand", min: 0, max: h.length, title: "鍛造：廃棄するカード", desc: "コストの合計とちょうど同じカードを獲得", ok: "廃棄する", then: { t: "forge" } }); },
 /* --- 収穫祭 --- */
   hamlet(st, pid){ dmPush(st, { t: "ask", a: { pid, k: "hand", min: 0, max: 1, title: "村落：1枚捨てて +1アクション？", desc: "捨てなくてもよい", ok: "捨てる", then: { t: "ham", what: "a" } } }, { t: "ask", a: { pid, k: "hand", min: 0, max: 1, title: "村落：1枚捨てて +1購入？", desc: "捨てなくてもよい", ok: "捨てる", then: { t: "ham", what: "b" } } }); },
-  menagerie(st, pid){ const h = st.pl[pid].hand, uniq = new Set(h).size === h.length; dmDraw(st, pid, uniq ? 3 : 1); dmL(st, `動物園：${uniq ? "手札に同じカードがないので+3カード" : "+1カード"}`); },
+  menagerie(st, pid){ const h = st.pl[pid].hand, uniq = new Set(h).size === h.length; if (h.length) dmRevFx(st, pid, h, "menagerie", uniq ? "同じ名前のカードなし → +3カード" : "同じ名前のカードがある → +1カード", h.map(c => h.indexOf(c) !== h.lastIndexOf(c))); dmDraw(st, pid, uniq ? 3 : 1); dmL(st, `動物園：${uniq ? "手札に同じカードがないので+3カード" : "+1カード"}`); },
   farmingvillage(st, pid){ const P = st.pl[pid], rev = []; for (let g = 0; g < 200; g++){ const c = dmTop(st, pid); if (c == null) break; if (dmIs(c, "a") || dmIs(c, "t")){ P.hand.push(c); dmL(st, `農村：${DM[c].n}を手札に`); break; } rev.push(c); } if (rev.length){ P.disc.push(...rev); dmMillFx(st, pid, rev, "farmingvillage"); } },
   horsetraders(st, pid){ const h = st.pl[pid].hand; if (h.length) dmAsk(st, { pid, k: "hand", min: Math.min(2, h.length), max: 2, title: "馬商人：捨てる2枚", ok: "捨てる", then: { t: "discard" } }); },
   remake(st, pid){ [1, 2].forEach(k => dmPush(st, { t: "ask", a: { pid, k: "hand", min: 1, max: 1, title: `再建（${k}回目）：廃棄するカード`, desc: "コストがちょうど1多いカードを獲得", ok: "廃棄する", then: { t: "upg", nm: "再建" } } })); },
@@ -9803,9 +9806,20 @@ const DMT = {
   salv(st, t){ const c = t.sel[0], v = dmCost(st, c); dmPush(st, { t: "trash", pid: t.pid, sel: [c] }); st.turn.coins += v; dmL(st, `サルベージ船：+$${v}`); },
 };
 /* 選択への回答 */
+/* 「選び直す」：ひとつ前の選択に戻せるように、答える前の状態を覚えておく（山札から引く・めくるなど、新しい情報が見えた場合は戻せない） */
+const dmSnapOf = st => { const o = { ...st }; delete o.fx; delete o.fxn; delete o._undo; delete o._log; delete o._miss; delete o._polog; return JSON.stringify(o); };
 function dmAnswer(st, pid, id, val){
   const i = st.asks.findIndex(a => a.id === id); if (i < 0) return false;
   const a = st.asks[i]; if (a.pid !== pid) return false;
+  if (val === "__back"){
+    const u = st._undo; if (!u || u.id !== id || u.pid !== pid) return false;
+    const fx = st.fx, fxn = st.fxn, log = st._log, back = JSON.parse(u.snap);
+    Object.keys(st).forEach(k => delete st[k]); Object.assign(st, back, { fx, fxn }); if (log) st._log = log;
+    dmL(st, `↩${pname(pid)}が選び直した`);
+    return true;
+  }
+  const snap = dmSnapOf(st), decks0 = st.players.map(p => st.pl[p].deck.join(",")), others0 = JSON.stringify(st.asks.filter(x => x.pid !== pid)), T0 = st.turn && st.turn.pid;
+  delete st._undo;
   let then = { ...a.then, pid }; if (a.title) then._tt = a.title;   // 捨てる理由（カード名）をログに出すため
   if (a.k === "hand"){
     const h = st.pl[pid].hand, idx = [...new Set(val || [])].filter(x => x >= 0 && x < h.length);
@@ -9831,6 +9845,10 @@ function dmAnswer(st, pid, id, val){
   st.asks.splice(i, 1);
   st.q.push(then);
   dmRun(st);
+  // 次の選択が同じ人に続いて、山札から何も見えていなければ「選び直す」を出せる
+  const nx = st.asks.find(x => x.pid === pid);
+  const decksOk = st.players.every((p, k) => { const d0 = decks0[k], d1 = st.pl[p].deck.join(","); return d1 === d0 || (d0 !== "" && d1.startsWith(d0 + ",")); });
+  if (nx && decksOk && JSON.stringify(st.asks.filter(x => x.pid !== pid)) === others0 && (st.turn && st.turn.pid) === T0) st._undo = { id: nx.id, pid, snap };
   return true;
 }
 /* ---- 手番の操作 ---- */
@@ -11170,6 +11188,7 @@ function drawDm(){
     const v = dmPick.sel.slice(); dmPick = []; await dmDoAnswer(myAsk.id, v);
   }));
   // 選択のポップアップを小さくたたんで、裏のボードや手札を見る
+  on("dmAskBack", act(async () => { if (myAsk){ dmPick = []; dmGainSel = null; await dmDoAnswer(myAsk.id, "__back"); } }));
   on("dmAskMin", () => { if (myAsk){ dmAskMin = myAsk.id; drawDm(); } });
   on("dmAskMax", () => { dmAskMin = null; drawDm(); });
   on("dmYes", act(async () => { if (myAsk) await dmDoAnswer(myAsk.id, true); }));
@@ -11514,7 +11533,8 @@ function dmAnimGains(el, st){
   });
 }
 function dmAskHtml(a, st){
-  let h = `<div class="dmask"><b class="dqt">${esc(a.title)}</b>${a.desc ? `<small>${esc(a.desc)}</small>` : ""}`;
+  const canBack = a.pid === me && st._undo && st._undo.id === a.id && st._undo.pid === me;
+  let h = `<div class="dmask">${canBack ? `<button class="dqback" id="dmAskBack">↩ ひとつ前に戻って選び直す</button>` : ""}<b class="dqt">${esc(a.title)}</b>${a.desc ? `<small>${esc(a.desc)}</small>` : ""}`;
   if (a.k === "hand"){
     const n = dmPick.sel.length, ok = n >= a.min && n <= a.max;
     h += `<small class="dqn">${a.min === a.max ? `${a.min}枚選ぶ` : `${a.min}〜${a.max}枚`}（${n}枚選択中）・上の手札をタップ</small><div class="nbtns one"><button class="nb end ${ok ? "go" : ""}" id="dmAskGo" ${ok ? "" : "disabled"}>${esc(a.ok || "決定")}${n ? `（${n}枚）` : a.min === 0 ? "（なし）" : ""}</button></div>`;
@@ -11618,7 +11638,7 @@ function dmFx(e, g){
   if (e.k === "buy" || e.k === "gain"){
     ms = 1400; html = `<div class="dfly">${dmCardHtml(e.c, "dfx")}<small style="background:${pc}">${esc(pname(e.p))}が${e.k === "buy" ? "購入" : "獲得"}</small></div>`;
   } else if (e.k === "play"){
-    ms = 2700; kind = "act";
+    ms = 2700; kind = (DM[e.c].tx || "").length > 40 ? "act dm-alg" : "act";   // 説明が長いカードは、カードを少し小さくして文章が画面に収まるように
     const tc = { "ty-atk": "#E2364F", "ty-re": "#2F7FC9", "ty-a": "#E8B12A" }[dmTyCls(e.c)] || "#E8B12A";
     const plus = dmPlusText(e.c), sp = Array.from({ length: 22 }, (_, i) => { const a = rnd(0, Math.PI * 2), d = rnd(110, 220); return `<i class="asp" style="--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d).toFixed(0)}px;--c:${["#FFE38A", "#fff", tc][i % 3]};--d:${rnd(.32, .45).toFixed(2)}s"></i>`; }).join("");
     html = `<span class="aglow" style="--tc:${tc}"></span><span class="aring" style="--tc:${tc}"></span><span class="aring r2" style="--tc:${tc}"></span>${sp}
