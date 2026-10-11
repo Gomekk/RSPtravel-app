@@ -9195,6 +9195,9 @@ const dmOthers = (st, pid) => { const i = st.players.indexOf(pid); return st.pla
 const dmEmpty = st => Object.keys(st.supply).filter(k => st.supply[k] === 0).length;
 
 /* カードを使う（場にはもう置いてある） */
+// ログ用：+カードなどの効果と、同じ名前のカードをまとめた表記
+const dmPlusLog = c => { const p = DM[c].p || {}; const a = [p.cards && `+${p.cards}カード`, p.actions && `+${p.actions}アクション`, p.buys && `+${p.buys}購入`, p.coins && `+$${p.coins}`].filter(Boolean); return a.length ? `（${a.join(" ")}）` : ""; };
+const dmCntNames = cs => { const m = {}; cs.forEach(c => m[c] = (m[c] || 0) + 1); return Object.keys(m).map(c => `${DM[c].n}${m[c] > 1 ? `×${m[c]}` : ""}`).join("・"); };
 function dmPlayCard(st, pid, c){
   const d = DM[c], T = st.turn, p = d.p || {};
   if (pid === T.pid && d.ty.includes("a")) T.nact = (T.nact || 0) + 1;
@@ -9764,7 +9767,7 @@ function dmDoPlay(list, who = me, gid = dmId){
       if (dmIs(c, "a")){
         if (T.phase !== "action" || T.actions < 1){ dmSkipped++; continue; }
         T.actions--; dmTake(P.hand, [c]); P.play.push(c);
-        dmL(st, `${pname(who)}：${DM[c].n}`); dmFxAdd(st, { k: "play", p: who, c });
+        dmL(st, `${pname(who)}：${DM[c].n}${dmPlusLog(c)}`); dmFxAdd(st, { k: "play", p: who, c });
         dmPlayCard(st, who, c); dmRun(st); n++;
       } else if (dmIs(c, "t")){
         if (T.bought){ dmSkipped++; continue; }
@@ -9772,7 +9775,7 @@ function dmDoPlay(list, who = me, gid = dmId){
         n++;
       } else dmSkipped++;
     }
-    if (treCs.length) dmFxAdd(st, { k: "tre", p: who, v: treV, cs: treCs });   // まとめて出した財宝は合計額で1回
+    if (treCs.length){ dmFxAdd(st, { k: "tre", p: who, v: treV, cs: treCs }); dmL(st, `${pname(who)}が財宝を出した：${dmCntNames(treCs)}（+$${treV}・合計$${T.coins}）`); }   // まとめて出した財宝は合計額で1回
     return n ? true : null;
   });
 }
@@ -9785,6 +9788,7 @@ function dmDoTreasures(who = me, gid = dmId){
     const c0 = T.coins;
     ts.forEach(c => dmPlayTre(st, who, c));
     dmFxAdd(st, { k: "tre", p: who, v: T.coins - c0, cs: ts });
+    dmL(st, `${pname(who)}が財宝を出した：${dmCntNames(ts)}（+$${T.coins - c0}・合計$${T.coins}${T.pots ? `・🧪${T.pots}` : ""}）`);
     T.phase = "buy"; return true;
   });
 }
@@ -9793,7 +9797,7 @@ function dmDoBuy(c, who = me, gid = dmId){
     const T = st.turn;
     if (T.pid !== who || !dmIdle(st) || T.buys < 1 || T.coins < dmCost(st, c) || (T.pots || 0) < (DM[c].pot || 0) || !(st.supply[c] > 0) || (c === "grandmarket" && st.pl[who].play.includes("copper"))) return null;
     T.coins -= dmCost(st, c); T.pots = (T.pots || 0) - (DM[c].pot || 0); T.buys--; T.bought = true; T.phase = "buy";
-    dmGain(st, who, c); dmL(st, `${pname(who)}が${DM[c].n}を購入`); dmFxAdd(st, { k: DM_BIGFX.includes(c) ? "prov" : "buy", p: who, c });
+    dmGain(st, who, c); dmL(st, `${pname(who)}が${DM[c].n}を購入（$${dmCost(st, c)}・残り$${T.coins}${T.buys ? `・あと${T.buys}回買える` : ""}）`); dmFxAdd(st, { k: DM_BIGFX.includes(c) ? "prov" : "buy", p: who, c });
     return true;
   });
 }
@@ -9802,6 +9806,7 @@ function dmDoEnd(who = me, gid = dmId, key = null){
   return dmCommit(gid, st => {
     if (st.turn.pid !== who || !dmIdle(st)) return null;
     if (key && dmTurnKey(st) !== key) return null;   // 押した時と違うターンなら何もしない（前のターンの押し間違い・二度押し対策）
+    if (!st.turn.bought && !(st.turn.gained || []).length) dmL(st, `${pname(who)}は何も買わずにターン終了（$${st.turn.coins}）`);
     const ended = dmEndTurn(st);
     if (ended){
       const r = dmResult(st);
