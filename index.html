@@ -3912,7 +3912,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v250";
+const APP_VER = "v252";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -9663,9 +9663,16 @@ const DMT = {
     const tg = dmOthers(st, t.pid), hit = [], safe = [], rs = [];   // rs：公開したリアクション（全員に演出で見せる）
     tg.forEach(o => { if (st.pl[o].hand.includes("moat")){ safe.push(o); rs.push({ p: o, c: "moat", tx: "アタックを防いだ！" }); dmL(st, `🛡️${pname(o)}は堀を公開して防いだ`); } else if (dmNextHas(st, o, "lh")){ safe.push(o); rs.push({ p: o, c: "lighthouse", tx: "灯台で守られている" }); dmL(st, `🗼${pname(o)}は灯台で守られている`); } else hit.push(o); });
     tg.forEach(o => { const P = st.pl[o]; if (P.hand.includes("horsetraders")) rs.push({ p: o, c: "horsetraders", tx: "脇に置いた（次のターン +1カード）" }); if (P.hand.includes("diplomat") && P.hand.length >= 5) rs.push({ p: o, c: "diplomat", tx: "2枚引いて3枚捨てる" }); });
-    dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, hit, safe });
+    // だれにも効かないアタックは、魔女の「呪いの山が空：失敗」と同じ書き方で ❌ にする
+    const H = o => st.pl[o].hand.length, noCurse = !(st.supply.curse > 0);
+    const why = !tg.length ? "" : !hit.length ? "全員が防いだ：失敗"
+      : t.c === "militia" && hit.every(o => H(o) <= 3) ? "手札4枚以上の人がいない：失敗"
+      : t.c === "minion" && hit.every(o => H(o) < 5) ? "手札5枚以上の人がいない：失敗"
+      : t.c === "followers" && noCurse && hit.every(o => H(o) <= 3) ? "呪いの山が空・手札4枚以上の人がいない：失敗" : "";
+    if (why){ dmL(st, `❌${DM[t.c].n}のアタック　${why}`); dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, cancel: 1, why }); }
+    else dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, hit, safe });
     if (rs.length) dmFxAdd(st, { k: "react", rs });
-    dmPush(st, { t: "atk2", c: t.c, pid: t.pid, hit });
+    if (!why) dmPush(st, { t: "atk2", c: t.c, pid: t.pid, hit });
     tg.forEach(o => { const P = st.pl[o]; if (P.hand.includes("horsetraders")){ dmTake(P.hand, ["horsetraders"]); (P.haven = P.haven || []).push("horsetraders"); dmDur(st, o, "horsetraders", { k: "haven", card: "horsetraders", cards: 1 }); dmL(st, `🐎${pname(o)}は馬商人を脇に置いた（次のターンに手札へ +1カード）`); } });
     tg.forEach(o => { const P = st.pl[o]; if (P.hand.includes("diplomat") && P.hand.length >= 5){ dmDraw(st, o, 2); dmL(st, `🤝${pname(o)}は外交官で2枚引いて3枚捨てる`); dmAsk(st, { pid: o, k: "hand", min: Math.min(3, P.hand.length), max: 3, title: "外交官：捨てる3枚", ok: "捨てる", then: { t: "discard" } }); } });
   },
@@ -11376,7 +11383,7 @@ function dmEndHtml(g){
     <div class="de-in dr">
       <div class="de-t">${"RESULT".split("").map((ch, k) => `<span style="--k:${k}">${ch}</span>`).join("")}</div>
       ${lead}
-      <div class="dpls2">${rows.map(plate).join("")}</div>
+      <div class="dpls2">${rows.filter((x, i) => winShown || !x.win || i === rows.findIndex(y => y.win)).map(plate).join("")}</div>
     </div>${burst}
   </div>`;
 }
@@ -11833,7 +11840,7 @@ function dmFx(e, g){
     ms = 2400; kind = "atk dm-atkx";
     html = `<span class="awash axwash"></span><div class="tx" style="animation:none"><div class="datk axc">${dmCardHtml(e.c, "dfx dfxb")}<i class="axx">❌</i></div><div class="bigt"><span style="--d:.25s"><s>ATTACK</s></span></div>
       <div class="who"><i style="color:${pc}">●</i> ${esc(pname(e.p))}の${esc(DM[e.c].n)}</div>
-      <div class="axmsg">呪いの山が空：失敗</div></div>`;
+      <div class="axmsg">${esc(e.why || "呪いの山が空：失敗")}</div></div>`;
   } else if (e.k === "atk"){
     ms = 2400;
     html = `<span class="awash"></span><div class="tx" style="animation:none"><div class="datk">${dmCardHtml(e.c, "dfx dfxb")}</div><div class="bigt"><span style="--d:.25s">ATTACK</span><span class="ex" style="--d:.5s">!</span></div>
