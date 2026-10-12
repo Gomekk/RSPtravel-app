@@ -2986,7 +2986,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .dpl.w.rv{background:linear-gradient(180deg,#FFF6D2,#FFFDF6);box-shadow:0 0 0 3px #FFE38A,0 0 30px rgba(255,227,138,.9)}
 .dpl .dpl-sc{animation:dpsc .5s cubic-bezier(.2,1.6,.4,1) var(--sd) both}
 @keyframes dpsc{0%{transform:scale(2.4);opacity:0}100%{transform:none;opacity:1}}
-.dpl.bang .dpl-n{animation:dpbang .55s cubic-bezier(.2,1.6,.4,1) both}
+.dpl.dbang .dpl-n{animation:dpbang .55s cubic-bezier(.2,1.6,.4,1) both}
 @keyframes dpbang{0%{transform:scale(2.6);opacity:0;filter:blur(4px)}100%{transform:none;opacity:1;filter:none}}
 .dpl.sus{animation:dpsus .14s linear infinite}
 .dpl.sus::after{content:"";position:absolute;inset:-3px;border-radius:inherit;box-shadow:0 0 0 3px #FFE38A,0 0 34px 8px rgba(255,227,138,.9);opacity:0;pointer-events:none;will-change:opacity;animation:glowop .5s ease-in-out infinite}
@@ -2994,6 +2994,27 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .dmend.dsus .de-bg{animation:dsusbg 3.4s ease-in both}
 @keyframes dsusbg{to{opacity:.25}}
 .dmend.dsus .dpl:not(.w):not(.sc){opacity:.45;transition:opacity .6s}
+.dr-sub,.dr-sus{min-height:34px;display:flex;align-items:center;justify-content:center}
+.dr-win{animation:dpbang .55s cubic-bezier(.2,1.6,.4,1) both}
+.dpl.rv.dbang{animation:none}
+.dpl.rv.dbang:not(.w)::before{content:"";position:absolute;inset:0;border-radius:inherit;background:#fff;opacity:0;pointer-events:none;animation:dpfl .5s ease-out}
+@keyframes dpfl{0%{opacity:.9}100%{opacity:0}}
+.dpl-cw{position:relative;margin:14px 0 6px}
+.dpl-cw .dpl-rays{position:absolute;left:50%;top:50%;width:0;height:0;animation:pvspin 9s linear infinite,defade .6s both}
+.dpl-cw .dpl-rays>i{position:absolute;left:-26px;bottom:0;width:52px;height:230px;transform-origin:50% 100%;transform:rotate(var(--a));background:linear-gradient(to top,rgba(255,236,160,.75),rgba(255,236,160,0) 80%);clip-path:polygon(42% 100%,58% 100%,100% 0,0 0)}
+.dpl-cw .dpl{z-index:1}
+.dpl.champ{min-height:84px;background:linear-gradient(180deg,#FFF1B8,#FFFDF6 55%,#FFE9A0);border:3px solid #E8B12A;overflow:hidden;animation:dpchamp .7s cubic-bezier(.2,1.6,.4,1) both,dpglow 1.4s ease-in-out .7s infinite}
+.dpl.champ .dpl-r{color:#8A5A00;font-size:22px}
+.dpl.champ .dpl-n{font-size:26px;animation:dpbang .6s cubic-bezier(.2,1.6,.4,1) both}
+.dpl.champ .dpl-v b{font-size:36px;color:#8A5A00}
+.dpl-shine{position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.95),transparent);transform:skewX(-20deg);pointer-events:none;animation:dpshine 1.8s ease-in-out .5s infinite}
+.dpl-crown{position:absolute;z-index:2;left:-6px;top:-30px;font-size:42px;line-height:1;filter:drop-shadow(0 3px 0 rgba(0,0,0,.35));animation:dpcrown .8s cubic-bezier(.3,1.6,.5,1) .3s both}
+@keyframes dpchamp{0%{transform:scale(.9)}40%{transform:scale(1.12)}100%{transform:scale(1.04)}}
+@keyframes dpglow{0%,100%{box-shadow:0 0 0 3px #FFE38A,0 0 24px 4px rgba(255,227,138,.7)}50%{box-shadow:0 0 0 5px #FFF6C8,0 0 46px 14px rgba(255,227,138,1)}}
+@keyframes dpcrown{0%{transform:translateY(-120px) rotate(-40deg) scale(1.6);opacity:0}100%{transform:rotate(-18deg);opacity:1}}
+@keyframes dpshine{0%{left:-40%}60%,100%{left:130%}}
+.dw.lite{background:none;z-index:5}
+.dw.lite .dw-flash{animation:pvflash .6s ease-out forwards}
 .dw{position:fixed;inset:0;z-index:5;display:grid;place-items:center;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--c) 45%,rgba(40,20,80,.9)),rgba(10,6,24,.94) 70%);animation:dwlife 5.2s ease forwards}
 @keyframes dwlife{0%{opacity:0}6%{opacity:1}88%{opacity:1}100%{opacity:0}}
 .dw-flash{position:absolute;inset:0;background:#FFFBE6;opacity:0;animation:pvflash .8s ease-out .05s forwards}
@@ -3933,7 +3954,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v266";
+const APP_VER = "v268";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -9327,7 +9348,7 @@ function dmTop(st, pid){
   if (!P.deck.length){ if (!P.disc.length) return null; P.deck = shuffle(P.disc); P.disc = []; dmFxAdd(st, { k: "shuf", p: pid }); }
   return P.deck.pop();
 }
-function dmDraw(st, pid, n){ const P = st.pl[pid]; let k = 0; for (let i = 0; i < n; i++){ const c = dmTop(st, pid); if (c == null) break; P.hand.push(c); k++; } return k; }
+function dmDraw(st, pid, n){ const P = st.pl[pid]; let k = 0; for (let i = 0; i < n; i++){ const c = dmTop(st, pid); if (c == null) break; P.hand.push(c); k++; } P.dn = (P.dn || 0) + k; return k; }
 /* サプライの山がちょうど空になった：全員に演出（属州・植民地はゲーム終了の演出があるので出さない） */
 function dmPileOut(st, c){
   if (st.supply[c] !== 0 || c === "province" || c === "colony") return;
@@ -9719,9 +9740,9 @@ const DMT = {
     const c = dmTop(st, t.pid);
     if (c == null){ if (P.aside.length){ P.disc.push(...P.aside); dmMillFx(st, t.pid, P.aside, "library"); P.aside = []; } return; }
     if (dmIs(c, "a")) dmAsk(st, { pid: t.pid, k: "yn", card: c, title: `書庫：${DM[c].n}を脇に置く？`, desc: "置くと手札に入らず、最後に捨てる", yes: "脇に置く", no: "手札に入れる", then: { t: "lib2", c } });
-    else { P.hand.push(c); dmPush(st, { t: "lib", pid: t.pid }); }
+    else { P.hand.push(c); P.dn = (P.dn || 0) + 1; dmPush(st, { t: "lib", pid: t.pid }); }
   },
-  lib2(st, t){ const P = st.pl[t.pid]; if (t.yes) P.aside.push(t.c); else P.hand.push(t.c); dmPush(st, { t: "lib", pid: t.pid }); },
+  lib2(st, t){ const P = st.pl[t.pid]; if (t.yes) P.aside.push(t.c); else { P.hand.push(t.c); P.dn = (P.dn || 0) + 1; } dmPush(st, { t: "lib", pid: t.pid }); },
   mine(st, t){ if (!t.sel.length) return; const c = t.sel[0]; dmPush(st, { t: "trash", pid: t.pid, sel: [c] }, { t: "askgain", pid: t.pid, max: dmCost(st, c) + 3, filter: "t", dest: "hand", title: `鉱山：手札に獲得する財宝（コスト${DM[c].c + 3}以下）` }); },
   sen1(st, t){
     const tr = t.sel.map(i => t.look[i]), rest = t.look.filter((_, i) => !t.sel.includes(i));
@@ -11397,18 +11418,19 @@ function dmEndHtml(g){
   const rays = Array.from({ length: 12 }, (_, k) => `<i style="--a:${k * 30}deg"></i>`).join("");
   const plate = x => {
     const inTop = top.has(x.p), rv = inTop ? winShown : shown.has(x.p), sc = inTop && sus;   // sc：点数だけ先に見せる
-    return `<div class="dpl ${rv ? "rv" : ""} ${x.win ? "w" : ""} ${sc ? "sus sc" : ""} ${rv && inTop ? "bang" : ""}" style="--pc:${pcolor(x.p)};--sd:${x.win ? 1.7 : .4}s">
-      <i class="dpl-r">第${x.rk}位</i>${rv ? `<b class="dpl-n">${esc(pname(x.p))}</b><span class="dpl-v">${inTop ? `<b>${x.vp}</b>` : `<b data-ek="${g.id}:${x.p}" data-vp="${x.vp}">${x.vp}</b>`}<small>勝利点</small></span>` : sc ? `<b class="dpl-q">？？？</b><span class="dpl-v dpl-sc"><b>${x.vp}</b><small>勝利点</small></span>` : `<b class="dpl-q">？？？</b>`}</div>`;
+    const champ = x.win && winShown;
+    return `${champ ? `<div class="dpl-cw"><span class="dpl-rays" aria-hidden="true">${rays}</span><span class="dpl-crown">👑</span>` : ""}<div class="dpl ${rv ? "rv" : ""} ${x.win ? "w" : ""} ${sc ? "sus sc" : ""} ${rv && inTop ? "dbang" : ""} ${champ ? "champ" : ""}" style="--pc:${pcolor(x.p)};--sd:${x.win ? 1.7 : .4}s">${champ ? `<span class="dpl-shine"></span>` : ""}
+      <i class="dpl-r">第${x.rk}位</i>${rv ? `<b class="dpl-n">${esc(pname(x.p))}</b><span class="dpl-v">${inTop ? `<b>${x.vp}</b>` : `<b data-ek="${g.id}:${x.p}" data-vp="${x.vp}">${x.vp}</b>`}<small>勝利点</small></span>` : sc ? `<b class="dpl-q">？？？</b><span class="dpl-v dpl-sc"><b>${x.vp}</b><small>勝利点</small></span>` : `<b class="dpl-q">？？？</b>`}</div>${champ ? `</div>` : ""}`;
   };
   let lead = "";
   if (S.s === 0) lead = `<p class="dr-sub">全員の勝利点を集計しました</p><button class="dr-go" id="dmEndGo"><span>結果発表をはじめる</span></button>`;
   else if (sus) lead = `<p class="dr-sus">${second ? "そして、第2位と第1位は……" : "そして、第1位は……"}</p>`;
   else if (S.k < nR + 1) lead = `<p class="dr-sub on">${S.k === 0 ? "最下位から発表します" : `第${order[Math.min(S.k, nR) - 1].rk}位は ${esc(pname(order[Math.min(S.k, nR) - 1].p))}`}</p>`;
-  else lead = `<p class="dr-sub on">&nbsp;</p>`;
+  else lead = `<p class="dr-sus dr-win">🎉 ${r.winners.length > 1 ? "引き分け！" : "優勝おめでとう！"} 🎉</p>`;
   const conf = winShown ? Array.from({ length: 60 }, (_, k) => `<i class="cf" style="left:${(seed(k) * 100).toFixed(1)}%;--c:${["#FFE38A", "#E8B12A", "#fff", wc, "#2DBE60", "#FF6FB5"][k % 6]};--dur:${(2.6 + seed(k + 50) * 2.2).toFixed(2)}s;--dl:${(seed(k + 9) * 1.6).toFixed(2)}s;--r:${Math.round(seed(k + 3) * 720 - 360)}deg;--w:${(6 + seed(k + 7) * 7).toFixed(0)}px"></i>`).join("") : "";
   const fw = winShown ? [[16, 20, .5], [84, 24, .9], [50, 8, 1.3], [24, 58, 1.7], [78, 62, 2.1], [50, 40, 2.5]].map(([x, y, t], i) => `<span class="dw-fw" style="left:${x}%;top:${y}%;--t0:${t}s;--c:${["#FFE38A", "#7CF0A0", "#FFB3E0", "#9FD8FF", wc, "#fff"][i]}">${Array.from({ length: 18 }, (_, k) => `<span style="--a:${k * 20}deg;--d:${(48 + seed(i * 20 + k) * 30).toFixed(0)}px"></span>`).join("")}</span>`).join("") : "";
-  const burst = winShown ? `<div class="dw" style="--c:${wc}"><span class="dw-flash"></span><span class="dw-rays">${rays}</span><span class="dw-ring"></span><span class="dw-ring r2"></span>${fw}${conf}
-      <div class="dw-in"><div class="dw-crown">👑</div><div class="dw-k">${r.winners.length > 1 ? "引き分け" : "優勝"}</div><div class="dw-n">${r.winners.map(p => esc(pname(p))).join("・")}</div><div class="dw-v"><b data-ek="${g.id}:hero" data-vp="${rows[0].vp}">${rows[0].vp}</b><small>勝利点</small></div></div></div>` : "";
+  // 第1位の名前が出たら：枠はそのまま、名前だけバン＋第1位の枠に盛大なエフェクト（紙吹雪・花火は画面全体）
+  const burst = winShown ? `<div class="dw lite" style="--c:${wc}"><span class="dw-flash"></span>${fw}${conf}</div>` : "";
   return `<div class="dmend ${sus ? "dsus" : ""}" style="--c:${wc};--d0:${d0}s">
     <div class="de-bg" aria-hidden="true"><span class="de-rays">${rays}</span><span class="de-glow"></span></div>
     <div class="de-in dr">
@@ -11543,17 +11565,16 @@ function dmPillTx(g, p){
 function dmOtherDraws(g, el){
   const st = g.st, T = st.turn; if (!T) return;
   const key = dmTurnKey(st), prev = dmOthPrev[g.id], cur = { key };
-  st.players.forEach(p => { const P = st.pl[p]; cur[p] = { h: P.hand.length, d: P.deck.length, x: P.disc.length }; });
+  st.players.forEach(p => { const P = st.pl[p]; cur[p] = { h: P.hand.length, d: P.deck.length, n: P.dn || 0 }; });
   dmOthPrev[g.id] = cur;
   if (!prev || prev.key !== key || g.status !== "playing" || Date.now() < dmQuiet) return;   // ターンの終わりに5枚引き直すのは出さない
   const H = dmOthHold[g.id] = dmOthHold[g.id] || {};
   st.players.forEach((p, pi) => {
     if (p === me) return;   // 自分の手札は手元の演出で見える
     const a = prev[p], b = cur[p]; if (!a) return;
-    const dh = b.h - a.h, used = (a.d - b.d) + Math.max(0, a.x - b.x);   // 山札が減った分（シャッフルしたなら捨て札が減った分も）
-    const n = Math.min(dh, used); if (n <= 0) return;
+    const n = b.n - a.n; if (n <= 0) return;   // 山札から引いた枚数（鍛冶屋は手札から1枚出して3枚引くので、手札の増減ではなく引いた数そのものを数える）
     const wait = Math.max(0, dmFxBusy - Date.now()) + pi * 60, dur = 520 + Math.min(n, 8) * 110 + 500;
-    const old = H[p] && Date.now() < H[p].until ? H[p] : { h: a.h, d: a.d };
+    const old = { h: Math.max(0, b.h - n), d: b.d + n };   // 引く前の見た目（1枚届くごとに手札+1・山札-1）
     H[p] = { h: old.h, d: old.d, until: Date.now() + wait + dur };
     const pill = el.querySelector(`.np[data-pp="${p}"] .kpt`); if (pill) pill.textContent = `手札${old.h}・山札${old.d}`;
     setTimeout(() => dmOtherDrawAnim(g.id, p, n, b), wait);
