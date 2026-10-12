@@ -1449,7 +1449,7 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .ladder2 .lbar i{flex:1;height:4px;border-radius:2px;background:linear-gradient(90deg,#1B1838,rgba(27,24,56,.15));clip-path:polygon(0 0,100% 40%,100% 60%,0 100%)}
 /* スカルキング v3：卓の大きさは固定、下部は固定の高さ */
 .kgg .kgtable{flex:1 1 auto;min-height:0}
-.kgg .nbottom{flex:none;height:178px;justify-content:flex-end}
+.kgg .nbottom{flex:none;min-height:178px;justify-content:flex-end}
 .kgg .nlogw{flex:none;height:46px;overflow:hidden;box-sizing:border-box}
 .kgg .nlog li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kgg .nlog li:nth-child(n+3){display:none}
@@ -1484,6 +1484,12 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .tstack{position:relative;display:block;width:calc(14px + (var(--n) - 1) * 3px);height:12px}
 .tstack i{position:absolute;left:calc(var(--i) * 3px);top:calc(var(--i) * -1px);width:10px;height:13px;border-radius:2px;background:repeating-linear-gradient(45deg,#2A1020 0 2px,#5A2A3A 2px 4px);border:1px solid #E8B12A}
 .kgres2{position:absolute;inset:6% 4%;z-index:6;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:10px;border-radius:16px;background:rgba(255,248,231,.97);border:3px solid #5A3416;box-shadow:0 0 0 4px #D9B04A,0 10px 30px rgba(0,0,0,.45);animation:fadein .4s both}
+.kgres2 .kgrw{position:relative;display:flex;align-items:center;gap:5px;animation:kgmv .7s cubic-bezier(.3,1.3,.5,1) calc(var(--rd,0s) + 1.3s) both}
+.kgres2 .kgrw>span{flex:1;min-width:0}
+@keyframes kgmv{from{transform:translateY(calc(var(--mv) * -1 * (100% + 4px)))}to{transform:none}}
+.kgres2 .rkn{flex:none;width:20px;text-align:center;font-family:var(--disp);font-weight:400;font-size:15px;color:#3A1E0C}
+.kgres2 .rkm{position:absolute;right:-6px;top:-7px;z-index:2;font-style:normal;font-size:10px;font-weight:900;color:#fff;padding:1px 6px;border-radius:99px;border:2px solid #fff;box-shadow:0 2px 0 rgba(0,0,0,.25);animation:rcsh .45s calc(var(--rd,0s) + 2s) both}
+.kgres2 .rkm.up{background:#1E9E5A}.kgres2 .rkm.dn{background:#E2364F}
 .kgres2 .rt{text-align:center;font-family:var(--disp);font-weight:400;font-size:18px;color:#3A1E0C;margin-bottom:4px}
 .kgres2 span{display:grid;grid-template-columns:1fr auto auto 40px;align-items:center;gap:6px;padding:4px 8px;border-radius:9px;background:#fff;border-left:6px solid var(--pc);box-shadow:0 1px 0 rgba(0,0,0,.15);animation:rowin .4s cubic-bezier(.2,1.5,.4,1) var(--d) both}
 .kgres2 span i{font-style:normal;font-weight:900;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1650,14 +1656,14 @@ svg.doll .tn{fill:var(--dc,transparent);opacity:.42;mix-blend-mode:color}
 .kgres2.late{animation-delay:var(--rd)}
 
 .sbfx .rtab span{grid-template-columns:minmax(0,1fr) auto auto 54px}
-.kgres2>span{grid-template-columns:minmax(0,1fr) auto auto 40px}
-.kgres2>span.rm{grid-template-columns:minmax(0,1fr) auto 40px}
+.kgres2 .kgrw>span{grid-template-columns:minmax(0,1fr) auto auto 40px}
+.kgres2 .kgrw>span.rm{grid-template-columns:minmax(0,1fr) auto 40px}
 .kgres2 .nm2{display:flex;flex-direction:column;align-items:flex-start;text-align:left;justify-self:stretch;min-width:0;padding:0;border:0;background:none;box-shadow:none;animation:none;gap:0}
 .kgres2 .nm2 small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kgscb{position:absolute;left:10px;bottom:10px;z-index:20;padding:4px 12px;border-radius:99px;font-size:11.5px;font-weight:900;color:#3A1E0C;background:rgba(255,248,231,.96);border:2px solid #5A3416;box-shadow:0 2px 0 #5A3416}
 .kgscb:active{transform:translateY(2px);box-shadow:none}
 .kgflip.on .kgscb{display:none}
-.kgpop{position:fixed !important;inset:0;z-index:46;margin:0 !important;display:grid;place-items:center;padding:16px;background:rgba(20,10,30,.45);animation:fadein .2s both}
+.kgpop{position:fixed !important;inset:0;z-index:46 !important;margin:0 !important;display:grid;place-items:center;padding:16px;background:rgba(20,10,30,.45);animation:fadein .2s both}
 .kgpopin{width:min(100%,420px);max-height:78vh;overflow:auto;padding:12px 12px 8px;border-radius:16px;background:#FFFDF7;border:3px solid var(--ink);box-shadow:0 6px 0 var(--ink);animation:chslam .3s cubic-bezier(.2,1.5,.4,1) both}
 .kgpoph{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .kgpoph b{font-size:16px;font-weight:900}
@@ -2690,8 +2696,9 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 @keyframes avia{0%{opacity:0;transform:translate(-50%,-10px) scale(.7)}12%{opacity:1;transform:translate(-50%,0) scale(1.08)}20%,85%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0}}
 .sbfx .dml .dmlres{font-size:18px;font-weight:900;color:#fff;background:#2F7FC9;border:2.5px solid var(--ink,#222);border-radius:99px;padding:2px 16px;box-shadow:0 3px 0 var(--ink,#222);animation:dmlres var(--ms) .2s both}
 @keyframes dmlres{0%{opacity:0;transform:scale(.6)}15%{opacity:1;transform:scale(1.15)}22%,80%{opacity:1;transform:none}100%{opacity:0}}
-.dmrtx{display:block;margin-top:5px;padding:4px 0 0;border:0;border-radius:0;background:none;border-top:1.5px dashed #9CC3EE;color:#1E6FD0;font-weight:800}
-.dmrtx em{font-style:normal;display:inline-block;margin-right:5px;padding:0 7px;border-radius:99px;background:#2F7FC9;color:#fff;font-size:.85em;line-height:1.5}
+.dmrtx{display:block;width:auto;min-height:0;margin-top:5px;padding:4px 0 0;border:0;border-radius:0;background:none;border-top:1.5px dashed #9CC3EE;color:#1E6FD0;font-weight:700;font-size:inherit;line-height:inherit}
+.kv .dmrtx{font-weight:500}
+.dmrtx em{font-style:normal;display:inline-block;vertical-align:1px;margin-right:4px;padding:0 6px;border-radius:99px;background:#2F7FC9;color:#fff;font-size:.78em;line-height:1.45;font-weight:800}
 .sbfx .rcwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(140,200,255,.75),rgba(20,60,120,.88) 70%);animation:emw var(--ms) forwards}
 .sbfx .rcbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;animation:emb var(--ms) forwards}
 .sbfx .rct{font-size:30px;font-weight:900;letter-spacing:.06em;color:#fff;text-shadow:0 3px 0 #1B4F8A,0 0 16px #6FC3FF}
@@ -3128,14 +3135,21 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .kbeam::after{content:"";position:absolute;left:0;top:-2px;width:100%;height:4px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0));border-radius:2px;animation:kbeam 1.2s ease-in-out infinite reverse}
 @keyframes kbeam{0%,100%{opacity:.65}50%{opacity:1}}
 .compass.lc svg circle:first-child{transition:fill .4s}
+.compass .cldl{position:absolute;left:50%;top:calc(100% + 4px);transform:translateX(-50%);white-space:nowrap;font-size:11px;font-weight:900;color:#fff;background:var(--lc,#5A5A68);border:2px solid #fff;border-radius:99px;padding:1px 9px;box-shadow:0 2px 0 rgba(0,0,0,.35);z-index:3;pointer-events:none}
+.compass .cldl.none{background:#4A4A58}
 .fart{position:absolute;inset:14% 18%;z-index:1;pointer-events:none;display:grid;place-items:center}
 .fart i{position:absolute;font-style:normal;line-height:1}
-.fart .a1{font-size:min(30vw,130px);opacity:.3;filter:drop-shadow(0 0 18px rgba(255,255,255,.5));animation:fart1 3s ease-in-out infinite}
-.fart .a2,.fart .a3{font-size:min(10vw,40px);opacity:.35;animation:fart2 2.4s ease-in-out infinite}
+.fart .a1{font-size:min(36vw,150px);opacity:.62;filter:drop-shadow(0 0 22px var(--ac,#fff)) drop-shadow(0 0 6px rgba(255,255,255,.8));animation:fart1 3s ease-in-out infinite}
+.fart .ag{position:absolute;left:50%;top:50%;width:min(70vw,300px);height:min(70vw,300px);margin:calc(min(70vw,300px) / -2) 0 0 calc(min(70vw,300px) / -2);border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--ac,#fff) 55%,transparent) 0,transparent 65%);animation:fartg 2.2s ease-in-out infinite}
+.fart .ag.g2{background:repeating-conic-gradient(color-mix(in srgb,var(--ac,#fff) 30%,transparent) 0 8deg,transparent 8deg 22deg);-webkit-mask:radial-gradient(circle,#000 30%,transparent 68%);mask:radial-gradient(circle,#000 30%,transparent 68%);animation:spin 14s linear infinite;opacity:.8}
+@keyframes fartg{0%,100%{transform:scale(.9);opacity:.6}50%{transform:scale(1.12);opacity:1}}
+.fart .ap{left:50%;top:50%;font-size:min(7vw,28px);opacity:0;animation:fartap 3.2s ease-in-out infinite;animation-delay:calc(var(--k) * -.4s);filter:drop-shadow(0 0 6px var(--ac,#fff))}
+@keyframes fartap{0%{transform:translate(-50%,-50%) rotate(calc(var(--k) * 45deg)) translateY(-30px) scale(.4);opacity:0}25%{opacity:.85}70%{opacity:.7}100%{transform:translate(-50%,-50%) rotate(calc(var(--k) * 45deg + 70deg)) translateY(-130px) scale(1.1);opacity:0}}
+.fart .a2,.fart .a3{font-size:min(12vw,48px);opacity:.6;filter:drop-shadow(0 0 8px var(--ac,#fff));animation:fart2 2.4s ease-in-out infinite}
 .fart .a2{left:4%;top:8%}.fart .a3{right:4%;bottom:8%;animation-delay:-1.2s}
 @keyframes fart1{0%,100%{transform:translateY(0) scale(1) rotate(-4deg)}50%{transform:translateY(-8px) scale(1.06) rotate(4deg)}}
 @keyframes fart2{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(12deg)}}
-.fart.a-king .a1{animation:fartk 1.6s ease-in-out infinite;opacity:.38}
+.fart.a-king .a1{animation:fartk 1.6s ease-in-out infinite;opacity:.7}
 @keyframes fartk{0%,100%{transform:scale(1);filter:drop-shadow(0 0 10px #FFD23F)}50%{transform:scale(1.12);filter:drop-shadow(0 0 30px #FFD23F)}}
 .fart.a-mer .a1{animation:fartm 3.4s ease-in-out infinite}
 @keyframes fartm{0%,100%{transform:translateX(-12px) rotate(-8deg)}50%{transform:translateX(12px) rotate(8deg)}}
@@ -3898,7 +3912,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v246";
+const APP_VER = "v250";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -8433,6 +8447,8 @@ function openKgNew(){
 }
 let kgFeltW = 0, kgFeltH = 0; addEventListener("resize", () => { kgFeltW = 0; if (kgId) drawKg(); }); let kgId = null, kgBusy = false, kgSel = null, kgBidSel = null, kgPrev = null, kgSwept = null, kgSweptAt = 0, kgNeedleA = null;
 let kgFlip = false, kgDisc = [], kgAbSel = null, kgResAt = 0, kgScoreOpen = false, kgFinAt = 0;
+/* トリックの演出（勝者へカードが集まる・特殊カードの演出）の最中か */
+function kgFxBusy(){ return (kgSweptAt && Date.now() - kgSweptAt < 3500) || !!document.querySelector(".sbfx:not(.dmfx)"); }
 function openKg(id){ kgScoreOpen = false; kgFeltW = 0; kgId = id; kgSel = null; kgBidSel = null; kgPrev = null; kgNeedleA = null; kgFlip = false; kgDisc = []; kgAbSel = null; $("#kgg").hidden = false; document.body.style.overflow = "hidden"; drawKg(); }
 function closeKg(){ kgId = null; $("#kgg").hidden = true; document.body.style.overflow = ""; render(); }
 
@@ -8726,7 +8742,12 @@ function drawKg(){
   if (ph === "roundend" && (g.history || []).length && g.status !== "finished"){
     const h = g.history[g.history.length - 1];
     const rd = Math.max(0, kgResAt - Date.now());
-    resOv = `<div class="kgres2 ${rd ? "late" : ""}" style="--rd:${(rd / 1000).toFixed(2)}s"><b class="rt">ROUND ${h.round} の結果</b>${g.players.map((p, i) => { const r = h.rows[p]; return `<span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><span class="nm2"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small></span><b class="hm">${r.bid === r.won ? "的中" : ""}</b><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>`; }).join("")}</div>`;
+    // 合計点の順に並べる。前のラウンドからの順位の上がり下がりは、行が動いて ▲▼ で見せる
+    const tot = p => (g.scores || {})[p] || 0, bef = p => tot(p) - ((h.rows[p] || {}).pts || 0);
+    const ordNow = g.players.slice().sort((a, b) => tot(b) - tot(a) || g.players.indexOf(a) - g.players.indexOf(b));
+    const ordPrev = g.players.slice().sort((a, b) => bef(b) - bef(a) || g.players.indexOf(a) - g.players.indexOf(b));
+    const rk = ordNow.map((p, now) => ({ p, now, prev: ordPrev.indexOf(p) }));
+    resOv = `<div class="kgres2 ${rd ? "late" : ""}" style="--rd:${(rd / 1000).toFixed(2)}s"><b class="rt">ROUND ${h.round} の結果</b>${rk.map(({ p, now, prev }, i) => { const r = h.rows[p], mv = prev - now; return `<div class="kgrw" style="--mv:${mv};--d:${(i * .1).toFixed(2)}s"><b class="rkn">${now + 1}</b><span class="${r.bid === r.won ? "rh" : "rm"}" style="--pc:${pcolor(p)};--d:${(i * .1).toFixed(2)}s"><span class="nm2"><i>${esc(pname(p))}</i><small>予想${r.bid}・獲得${r.won}${r.bonus ? `・ボーナス${r.bonus}` : ""}${r.ras ? `・賭け${r.ras > 0 ? "+" : ""}${r.ras}` : ""}${r.loot ? `・同盟+${r.loot}` : ""}</small></span><b class="hm">${r.bid === r.won ? "的中" : ""}</b><em>${r.pts >= 0 ? "+" : ""}${r.pts}</em><strong>${g.scores[p]}</strong></span>${mv ? `<i class="rkm ${mv > 0 ? "up" : "dn"}">${mv > 0 ? "▲" : "▼"}${Math.abs(mv)}</i>` : ""}</div>`; }).join("")}</div>`;
   }
   const thOf = {}; order.forEach((p, k) => { thOf[p] = 90 + 360 * k / N; });
 
@@ -8773,7 +8794,9 @@ function drawKg(){
   const spLast = show.slice().reverse().find(x => kgKind(x) !== "num");
   const artK = spLast ? (kgInfo(spLast.c).t === "tig" ? (spLast.tg === "pirate" ? "tigp" : "tige") : kgInfo(spLast.c).t) : null;
   const ART = { king: ["👑", "💀"], mer: ["🧜‍♀️", "🌊"], pir: ["⚔️", "🏴‍☠️"], tigp: ["🐯", "⚔️"], tige: ["🐯", "🏳️"], esc: ["🏳️", "💨"], kra: ["🐙", "🌀"], wha: ["🐋", "💦"], loot: ["🪙", "✨"] };
-  const fart = artK && !swept ? `<div class="fart a-${artK}" aria-hidden="true"><i class="a1">${ART[artK][0]}</i><i class="a2">${ART[artK][1]}</i><i class="a3">${ART[artK][1]}</i></div>` : "";
+  const ARTC = { king: "#FFD23F", mer: "#3FD8F0", pir: "#FF4D5E", tigp: "#FF8A2A", tige: "#F2F2F2", esc: "#E8F4FF", kra: "#B06BFF", wha: "#3F8CFF", loot: "#FFD23F" };
+  // 派手に：色つきの光の輪・大きなキャラ・まわりを舞う小さな絵
+  const fart = artK && !swept ? `<div class="fart a-${artK}" style="--ac:${ARTC[artK]}" aria-hidden="true"><span class="ag"></span><span class="ag g2"></span><i class="a1">${ART[artK][0]}</i><i class="a2">${ART[artK][1]}</i><i class="a3">${ART[artK][1]}</i>${Array.from({ length: 8 }, (_, k) => `<i class="ap" style="--k:${k}">${ART[artK][k % 3 === 0 ? 0 : 1]}</i>`).join("")}</div>` : "";
   // 羅針盤から今いちばん強いカードへ伸びる光の線
   let beam = "";
   if (wPl && !swept && !(isLast && sweepEl >= 0)){
@@ -8812,7 +8835,7 @@ function drawKg(){
       <div class="kbr"><em>⚔️</em><p><b>海賊の能力 ${use("abil")}</b>その海賊で勝った時に使う（最後のトリックはハリーだけ）</p></div>
       ${Object.values(KG_PIR).map(x => `<div class="kbr pir"><em>${x.h}</em><p><b>${x.n}</b>${x.d}</p></div>`).join("")}
     </div></div>`;
-  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><button class="kgscb" id="kgScore">得点表</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span>${fart}${beam}<div class="compass ${wSeat != null ? "pt" : "idle"} ${lead ? "lc" : ""}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"};--lc:${lead ? KG_SUITS[lead].c : "#F3DFB0"}"><span class="chalo" style="--ph:-${((performance.now() % 2200) / 1000).toFixed(3)}s"></span><span class="corb" style="--ph:-${((performance.now() % 3200) / 1000).toFixed(3)}s"><i></i><i></i><i></i></span><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" style="fill:color-mix(in srgb,var(--lc) 55%,#F3DFB0)" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
+  const table = `<div class="kgflip ${kgFlip ? "on" : ""}"><button class="kgflipb" id="kgFlip">${kgFlip ? "🧭 テーブル" : "📜 早見表"}</button><button class="kgscb" id="kgScore">得点表</button><div class="kg3"><div class="kgtable"><span class="sea"><i></i><i></i></span><span class="lant l1"></span><span class="lant l2"></span>${info}<div class="felt ${N >= 6 ? "many" : ""}"><div class="fwrap"><span class="ring"></span>${fart}${beam}<div class="compass ${wSeat != null ? "pt" : "idle"} ${lead ? "lc" : ""}" style="--pc:${wPl ? pcolor(wPl.p) : "#E8B12A"};--lc:${lead ? KG_SUITS[lead].c : "#F3DFB0"}">${(() => { if (!show.length) return ""; if (lead) return `<b class="cldl" style="--lc:${KG_SUITS[lead].c}">リード：${KG_SUITS[lead].n}</b>`; const f = show.find(x => !["esc", "loot", "kra", "wha"].includes(kgKind(x))); return f ? `<b class="cldl none">リード色なし</b>` : `<b class="cldl none">リード色はまだ</b>`; })()}<span class="chalo" style="--ph:-${((performance.now() % 2200) / 1000).toFixed(3)}s"></span><span class="corb" style="--ph:-${((performance.now() % 3200) / 1000).toFixed(3)}s"><i></i><i></i><i></i></span><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" style="fill:color-mix(in srgb,var(--lc) 55%,#F3DFB0)" stroke="#5A3416" stroke-width="4"/><circle cx="50" cy="50" r="38" fill="none" stroke="#8A5A2C" stroke-width="1.5" stroke-dasharray="3 4"/>
       <path d="M50 8L54 50L50 92L46 50Z" fill="#C9A06A" opacity=".5"/><path d="M8 50L50 46L92 50L50 54Z" fill="#C9A06A" opacity=".5"/><text x="50" y="22" text-anchor="middle" font-size="11" font-weight="900" fill="#5A3416">N</text></svg>
       <span class="needle" data-a="${wSeat != null ? wSeat + 90 : ""}"><svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="kgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".45" stop-color="#FFD23F"/><stop offset="1" stop-color="#E09A12"/></linearGradient><filter id="kgBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><polygon class="glo" points="50,9 58,50 42,50" fill="none" stroke="#FFE15A" stroke-width="11" stroke-linejoin="round" filter="url(#kgBlur)"/><polygon points="50,9 58,50 42,50" fill="url(#kgGold)" stroke="#1B1838" stroke-width="2" stroke-linejoin="round"/><polygon points="50,9 50,50 42,50" fill="rgba(0,0,0,.22)"/><polygon points="42,50 58,50 50,86" fill="#D5D8DE" stroke="#A4AAB6" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="hub"></span></div>${zonesT}${seatsT}</div>${resOv}</div></div>${back}</div></div>`;
   // 下部
@@ -8834,13 +8857,13 @@ function drawKg(){
     if (inGame && myAb){
       const pi = Object.values(KG_PIR).find(x => x.k === pend.k);
       if (pend.k !== "bendt"){
-        const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
+        const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw - 12;
         if (hand.length) bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => `<button class="kh dis" data-kc="${c}" style="--i:${i}">${kgCard(c)}</button>`).join("")}</div>`;
         bottom += `<div class="kgab"><small>${pi.d}</small></div>`;
       }
       if (pend.k === "bendt"){
         const k = (pend.drew || []).length; kgDisc = kgDisc.filter(c => hand.includes(c));
-        const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
+        const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw - 12;
         bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => `<button class="kh ${kgDisc.includes(c) ? "sel" : ""} ${(pend.drew || []).includes(c) ? "nw" : ""}" data-kd="${c}" style="--i:${i}">${kgCard(c)}</button>`).join("")}</div>`;
         bottom += `<div class="nbtns one"><button class="nb end ${kgDisc.length === k ? "go" : ""}" id="kgAbGo" ${kgDisc.length === k ? "" : "disabled"}>${kgDisc.length === k ? `この${k}枚を捨てる` : `捨てるカードを${k}枚選んでね（${kgDisc.length}/${k}）`}</button></div>`;
       } else {
@@ -8860,7 +8883,7 @@ function drawKg(){
     else if (inGame){
       if (kgSel && !hand.includes(kgSel)) kgSel = null;
       const canPlay = mt && ph === "play";
-      const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw + 2;
+      const W = Math.min(window.innerWidth, 480) - 30, cw = 52, step = hand.length > 1 ? Math.min(cw + 4, (W - cw) / (hand.length - 1)) : 0, ov = hand.length > 1 && step < cw - 12;
       bottom += `<div class="kghand ${ov ? "ov" : ""}" style="--step:${step.toFixed(1)}px;--n:${hand.length}">${hand.map((c, i) => { const ok = !canPlay || kgLegal(hand, plays, c); return `<button class="kh ${kgSel === c ? "sel" : ""} ${ok ? "" : "ng"} ${canPlay && ok ? "" : "dis"}" data-kc="${c}" style="--i:${i}">${kgCard(c)}</button>`; }).join("")}</div>`;
       if (ph === "bid" && bids[me] == null){
         if (kgBidSel != null && kgBidSel > n) kgBidSel = null;
@@ -8962,7 +8985,7 @@ function drawKg(){
   { const bg = el.querySelector("#kgPopBg"); if (bg) bg.onclick = e => { if (e.target === bg && !dmJustLp()){ kgScoreOpen = false; drawKg(); } }; }
   on("kgClose", closeKg); on("kgClose2", closeKg); on("kgMenu", () => kgMenu(g));
   on("kgBid", act(async () => { const v = kgBidSel; kgBidSel = null; if (v != null) await kgBid(v); }));
-  on("kgPlay", act(async () => { const c = kgSel; kgSel = null; if (c) await kgPlay(c); }));
+  on("kgPlay", act(async () => { if (kgFxBusy()){ toast("演出が終わってから出せます", 1200); return; } const c = kgSel; kgSel = null; if (c) await kgPlay(c); }));
   on("kgTigE", act(async () => { kgSel = null; await kgPlay("tig", "escape"); }));
   on("kgTigP", act(async () => { kgSel = null; await kgPlay("tig", "pirate"); }));
   on("kgNext", act(kgNextRound));
@@ -9635,8 +9658,8 @@ const DMT = {
     // 条件つきのアタック：条件を満たさなかったときは、アタックの演出も出さない
     if (t.c === "minion" && !st.turn.minion) return;        // 寵臣で +$2 を選んだ
     if (t.c === "replace" && !st.turn.repCurse) return;     // 交換で勝利点カードを獲得しなかった
-    // 呪いを渡すだけのアタックで、呪いの山が空なら、アタック自体を中止（演出に❌）
-    if (DM_CURSE_ONLY.includes(t.c) && !(st.supply.curse > 0)){ dmL(st, `❌${DM[t.c].n}のアタックは中止（呪いの山が空）`); dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, cancel: 1 }); return; }
+    // 呪いを渡すだけのアタックで、呪いの山が空なら、アタック自体を失敗にする（演出に❌）
+    if (DM_CURSE_ONLY.includes(t.c) && !(st.supply.curse > 0)){ dmL(st, `❌${DM[t.c].n}のアタック　呪いの山が空：失敗`); dmFxAdd(st, { k: "atk", p: t.pid, c: t.c, cancel: 1 }); return; }
     const tg = dmOthers(st, t.pid), hit = [], safe = [], rs = [];   // rs：公開したリアクション（全員に演出で見せる）
     tg.forEach(o => { if (st.pl[o].hand.includes("moat")){ safe.push(o); rs.push({ p: o, c: "moat", tx: "アタックを防いだ！" }); dmL(st, `🛡️${pname(o)}は堀を公開して防いだ`); } else if (dmNextHas(st, o, "lh")){ safe.push(o); rs.push({ p: o, c: "lighthouse", tx: "灯台で守られている" }); dmL(st, `🗼${pname(o)}は灯台で守られている`); } else hit.push(o); });
     tg.forEach(o => { const P = st.pl[o]; if (P.hand.includes("horsetraders")) rs.push({ p: o, c: "horsetraders", tx: "脇に置いた（次のターン +1カード）" }); if (P.hand.includes("diplomat") && P.hand.length >= 5) rs.push({ p: o, c: "diplomat", tx: "2枚引いて3枚捨てる" }); });
@@ -10288,8 +10311,9 @@ CPU_AI.kg_games = g => {
     return { wait: 1800, run: () => kgAbil(v, p, g.id) };
   }
   if (g.phase === "play" && g.turn && isCpu(g.turn.pid) && !pd){
-    const p = g.turn.pid, o = kgAiPlay(g, p);
-    if (o) return { wait: 1700, run: () => kgPlay(o.c, o.tg, p, g.id) };
+    const p = g.turn.pid, o = kgAiPlay(g, p), ver = g.version || 0;
+    // トリックを取る演出（カードが勝者へ集まる）などが終わるまで待ってから出す
+    if (o) return { wait: 1700, run: async () => { for (let k = 0; k < 20 && kgId === g.id && kgFxBusy(); k++) await new Promise(r => setTimeout(r, 400)); const g2 = kgById(g.id); if (!g2 || (g2.version || 0) !== ver) return; return kgPlay(o.c, o.tg, p, g.id); } };
   }
   return null;
 };
@@ -11805,11 +11829,11 @@ function dmFx(e, g){
       </div>`;
     kind = c === "province" ? "pv pvk-end" : "pv pvk-max";
   } else if (e.k === "atk" && e.cancel){
-    // 呪いがないのでアタック中止：カードに大きな❌
+    // 呪いがないのでアタック失敗：カードに大きな❌
     ms = 2400; kind = "atk dm-atkx";
     html = `<span class="awash axwash"></span><div class="tx" style="animation:none"><div class="datk axc">${dmCardHtml(e.c, "dfx dfxb")}<i class="axx">❌</i></div><div class="bigt"><span style="--d:.25s"><s>ATTACK</s></span></div>
       <div class="who"><i style="color:${pc}">●</i> ${esc(pname(e.p))}の${esc(DM[e.c].n)}</div>
-      <div class="axmsg">呪いの山が空なので中止</div></div>`;
+      <div class="axmsg">呪いの山が空：失敗</div></div>`;
   } else if (e.k === "atk"){
     ms = 2400;
     html = `<span class="awash"></span><div class="tx" style="animation:none"><div class="datk">${dmCardHtml(e.c, "dfx dfxb")}</div><div class="bigt"><span style="--d:.25s">ATTACK</span><span class="ex" style="--d:.5s">!</span></div>
