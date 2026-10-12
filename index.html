@@ -2850,6 +2850,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .de-s{display:flex;align-items:baseline;gap:3px}
 .de-s .de-vp{font-family:var(--disp);font-size:26px;min-width:1.2em;text-align:right}
 .de-s small{font-size:10px;font-weight:900}
+.de-avg{font-size:10.5px;font-weight:900;color:#8A6A10;background:#FFF3C4;border:1px solid #E8B12A;border-radius:99px;padding:0 6px}
 .de-sub{margin:2px 0 6px 36px;font-size:11px;font-weight:800;color:#6A5A4A;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
 .de-vb{display:flex;flex-wrap:wrap;gap:3px}
 .de-vb span{padding:1px 6px;border-radius:6px;background:#E6F6EA;color:#1E7E46;font-size:10px}
@@ -3912,7 +3913,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v252";
+const APP_VER = "v253";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -9963,6 +9964,7 @@ function dmVP(st, pid){ const a = dmDeckOf(st, pid), tok = st.pl[pid].vpt || 0; 
 const dmCount = (st, pid) => dmDeckOf(st, pid).length;
 function dmEndTurn(st){
   const T = st.turn, P = st.pl[T.pid];
+  P.mny = (P.mny || 0) + (T.coins || 0) + (T.spent || 0); P.mtn = (P.mtn || 0) + 1;   // 最終結果の「平均金量」用（そのターンに出せたお金の合計）
   // 錬金術師：場にポーションがあれば山札の上へ ／ 薬草商：場の財宝を山札の上へ
   if (P.play.includes("potion")){ let k = 0; while (P.play.includes("alchemist")){ dmTake(P.play, ["alchemist"]); P.deck.push("alchemist"); k++; } if (k){ dmL(st, `${pname(T.pid)}がカード${k}枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: T.pid, cnt: k }); } }
   for (let i = 0; i < (T.herb || 0); i++){ const tr = ["potion", "platinum", "gold", "philosophersstone", "silver"].find(x => P.play.includes(x)); if (!tr) break; dmTake(P.play, [tr]); P.deck.push(tr); dmL(st, `${pname(T.pid)}がカード1枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: T.pid, cnt: 1 }); }
@@ -10075,7 +10077,7 @@ function dmDoBuy(c, who = me, gid = dmId){
   return dmCommit(gid, st => {
     const T = st.turn;
     if (T.pid !== who || !dmIdle(st) || T.buys < 1 || T.coins < dmCost(st, c) || (T.pots || 0) < (DM[c].pot || 0) || !(st.supply[c] > 0) || (c === "grandmarket" && st.pl[who].play.includes("copper"))) return null;
-    T.coins -= dmCost(st, c); T.pots = (T.pots || 0) - (DM[c].pot || 0); T.buys--; T.bought = true; T.phase = "buy";
+    T.spent = (T.spent || 0) + dmCost(st, c); T.coins -= dmCost(st, c); T.pots = (T.pots || 0) - (DM[c].pot || 0); T.buys--; T.bought = true; T.phase = "buy";
     dmGain(st, who, c); dmL(st, `${pname(who)}が${DM[c].n}を購入（$${dmCost(st, c)}・残り$${T.coins}${T.buys ? `・あと${T.buys}回買える` : ""}）`); dmFxAdd(st, { k: DM_BIGFX.includes(c) ? "prov" : "buy", p: who, c });
     return true;
   });
@@ -11420,7 +11422,7 @@ function dmEndFinalHtml(g){
     const win = w.includes(x.p);
     return `<div class="de-row ${win ? "win" : ""}" style="--pc:${pcolor(x.p)};--i:${i}">
       <div class="de-h"><i class="de-m">${medal(i)}</i><b class="de-n">${esc(pname(x.p))}</b><span class="de-s"><b class="de-vp" data-vp="${x.vp}">${x.vp}</b><small>勝利点</small></span></div>
-      <div class="de-sub">${deck.length}枚・${x.t}ターン${vpParts ? `<span class="de-vb">${vpParts}</span>` : ""}</div>
+      <div class="de-sub">${deck.length}枚・${x.t}ターン${st.pl[x.p].mtn ? `<span class="de-avg">平均$${(st.pl[x.p].mny / st.pl[x.p].mtn).toFixed(1)}</span>` : ""}${vpParts ? `<span class="de-vb">${vpParts}</span>` : ""}</div>
       <div class="de-deck">${ks.map(c => `<button class="de-c ${(v => v > 0 ? "vpc" : v < 0 ? "vpm" : "")(c === "gardens" ? Math.floor(deck.length / 10) : c === "duke" ? deck.filter(y => y === "duchy").length : DM[c].vp || 0)}" data-pv="${c}">${dmCardHtml(c, "sm")}<i>×${cnt[c]}</i></button>`).join("")}</div>
     </div>`;
   }).join("");
