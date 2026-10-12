@@ -2995,6 +2995,17 @@ body.dmnoguide .dbn:not(.lg){display:none}
 @keyframes dsusbg{to{opacity:.25}}
 .dmend.dsus .dpl:not(.w):not(.sc){opacity:.45;transition:opacity .6s}
 .dr-sub,.dr-sus{min-height:34px;display:flex;align-items:center;justify-content:center}
+.dpl-pan{position:absolute;right:46px;top:50%;width:0;height:0;pointer-events:none;z-index:2}
+.dpl-pan>i{position:absolute;opacity:0}
+.dpl-pan .pf{left:-50px;top:-50px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,#fff 0 30%,rgba(255,227,138,.9) 45%,rgba(255,227,138,0) 70%);animation:dppf .5s ease-out var(--sd) forwards}
+.dpl-pan .pr{left:-14px;top:-14px;width:28px;height:28px;border-radius:50%;border:4px solid #FFE38A;animation:dppr .7s cubic-bezier(.1,.7,.3,1) var(--sd) forwards}
+.dpl-pan .pr.r2{border:2.5px solid #fff;animation-delay:calc(var(--sd) + .08s)}
+.dpl-pan .pk{left:-3px;top:-3px;width:8px;height:8px;border-radius:50%;background:#FFE38A;box-shadow:0 0 8px #fff;transform:rotate(var(--a));animation:dppk .7s cubic-bezier(.15,.8,.35,1) var(--sd) forwards}
+@keyframes dppf{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(1.6)}}
+@keyframes dppr{0%{opacity:1;transform:scale(.4)}100%{opacity:0;transform:scale(4)}}
+@keyframes dppk{0%{opacity:1;transform:rotate(var(--a)) translateY(0)}100%{opacity:0;transform:rotate(var(--a)) translateY(-80px)}}
+.dpl.sc{animation:dpsus .14s linear infinite,dphit .35s ease-out var(--sd)}
+@keyframes dphit{0%{transform:scale(1.06)}100%{transform:none}}
 .dr-win{animation:dpbang .55s cubic-bezier(.2,1.6,.4,1) both}
 .dpl.rv.dbang{animation:none}
 .dpl.rv.dbang:not(.w)::before{content:"";position:absolute;inset:0;border-radius:inherit;background:#fff;opacity:0;pointer-events:none;animation:dpfl .5s ease-out}
@@ -3954,7 +3965,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v268";
+const APP_VER = "v270";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -11419,12 +11430,12 @@ function dmEndHtml(g){
   const plate = x => {
     const inTop = top.has(x.p), rv = inTop ? winShown : shown.has(x.p), sc = inTop && sus;   // sc：点数だけ先に見せる
     const champ = x.win && winShown;
-    return `${champ ? `<div class="dpl-cw"><span class="dpl-rays" aria-hidden="true">${rays}</span><span class="dpl-crown">👑</span>` : ""}<div class="dpl ${rv ? "rv" : ""} ${x.win ? "w" : ""} ${sc ? "sus sc" : ""} ${rv && inTop ? "dbang" : ""} ${champ ? "champ" : ""}" style="--pc:${pcolor(x.p)};--sd:${x.win ? 1.7 : .4}s">${champ ? `<span class="dpl-shine"></span>` : ""}
-      <i class="dpl-r">第${x.rk}位</i>${rv ? `<b class="dpl-n">${esc(pname(x.p))}</b><span class="dpl-v">${inTop ? `<b>${x.vp}</b>` : `<b data-ek="${g.id}:${x.p}" data-vp="${x.vp}">${x.vp}</b>`}<small>勝利点</small></span>` : sc ? `<b class="dpl-q">？？？</b><span class="dpl-v dpl-sc"><b>${x.vp}</b><small>勝利点</small></span>` : `<b class="dpl-q">？？？</b>`}</div>${champ ? `</div>` : ""}`;
+    return `${champ ? `<div class="dpl-cw"><span class="dpl-rays" aria-hidden="true">${rays}</span><span class="dpl-crown">👑</span>` : ""}<div class="dpl ${rv ? "rv" : ""} ${x.win ? "w" : ""} ${sc ? "sus sc" : ""} ${rv && inTop ? "dbang" : ""} ${champ ? "champ" : ""}" style="--pc:${pcolor(x.p)};--sd:${x.win ? 3.3 : 1.3}s">${champ ? `<span class="dpl-shine"></span>` : ""}
+      <i class="dpl-r">第${x.rk}位</i>${rv ? `<b class="dpl-n">${esc(pname(x.p))}</b><span class="dpl-v">${inTop ? `<b>${x.vp}</b>` : `<b data-ek="${g.id}:${x.p}" data-vp="${x.vp}">${x.vp}</b>`}<small>勝利点</small></span>` : sc ? `<b class="dpl-q">？？？</b><span class="dpl-v dpl-sc"><b>${x.vp}</b><small>勝利点</small></span><i class="dpl-pan" aria-hidden="true"><i class="pr"></i><i class="pr r2"></i><i class="pf"></i>${Array.from({ length: 10 }, (_, k) => `<i class="pk" style="--a:${k * 36}deg"></i>`).join("")}</i>` : `<b class="dpl-q">？？？</b>`}</div>${champ ? `</div>` : ""}`;
   };
   let lead = "";
   if (S.s === 0) lead = `<p class="dr-sub">全員の勝利点を集計しました</p><button class="dr-go" id="dmEndGo"><span>結果発表をはじめる</span></button>`;
-  else if (sus) lead = `<p class="dr-sus">${second ? "そして、第2位と第1位は……" : "そして、第1位は……"}</p>`;
+  else if (sus) lead = `<p class="dr-sus">第1位は……</p>`;
   else if (S.k < nR + 1) lead = `<p class="dr-sub on">${S.k === 0 ? "最下位から発表します" : `第${order[Math.min(S.k, nR) - 1].rk}位は ${esc(pname(order[Math.min(S.k, nR) - 1].p))}`}</p>`;
   else lead = `<p class="dr-sus dr-win">🎉 ${r.winners.length > 1 ? "引き分け！" : "優勝おめでとう！"} 🎉</p>`;
   const conf = winShown ? Array.from({ length: 60 }, (_, k) => `<i class="cf" style="left:${(seed(k) * 100).toFixed(1)}%;--c:${["#FFE38A", "#E8B12A", "#fff", wc, "#2DBE60", "#FF6FB5"][k % 6]};--dur:${(2.6 + seed(k + 50) * 2.2).toFixed(2)}s;--dl:${(seed(k + 9) * 1.6).toFixed(2)}s;--r:${Math.round(seed(k + 3) * 720 - 360)}deg;--w:${(6 + seed(k + 7) * 7).toFixed(0)}px"></i>`).join("") : "";
@@ -11446,13 +11457,14 @@ function dmEndStep(gid){
   const S = dmEndSt[gid]; if (!S || S.s !== 1) return;
   const nR = Math.max(0, dmRanks(g.st).rows.filter(x => !x.win).length - 1);   // 1人ずつ発表するのは第3位以下
   // 次へ進むまでの時間：最初の一言 → 各順位 → 溜め（2位・1位の点数）→ 名前をバン → 全員のデッキ
-  const wait = S.k === 0 ? 1500 : S.k < nR ? 2400 : S.k === nR ? 2000 : S.k === nR + 1 ? 4200 : 5200;
+  const wait = S.k === 0 ? 1500 : S.k < nR ? 2400 : S.k === nR ? 2000 : S.k === nR + 1 ? 5600 : 5200;
   dmEndTm = setTimeout(() => {
     if (dmId !== gid || !dmEndSt[gid] || dmEndSt[gid].s !== 1) return;
     if (S.k >= nR + 2){ dmEndSt[gid] = { s: 2, k: 0 }; drawDm(); return; }
     S.k++;
     if (S.k === nR + 2){ try { navigator.vibrate && navigator.vibrate([120, 60, 120, 60, 300]); } catch (_) {} }
     else if (S.k <= nR){ try { navigator.vibrate && navigator.vibrate(40); } catch (_) {} }
+    else if (S.k === nR + 1){ try { [1300, 3300].forEach(t => setTimeout(() => navigator.vibrate && navigator.vibrate(70), t)); } catch (_) {} }   // 点数がパンと出るタイミング
     drawDm(); dmEndStep(gid);
   }, wait);
 }
