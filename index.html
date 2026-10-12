@@ -2595,6 +2595,16 @@ body.dmnoguide .dmbig .dpls{align-items:center}
 .dmtrbin{position:fixed;z-index:60;pointer-events:none;white-space:nowrap;font-weight:900;font-size:13px;color:#fff;background:#5A3416;border:2px solid #E8B12A;border-radius:99px;padding:3px 12px;box-shadow:0 3px 0 rgba(0,0,0,.35)}
 .dmstup{position:fixed;z-index:48;pointer-events:none;font-weight:900;font-size:15px;color:#fff;padding:1px 8px;border-radius:99px;border:2px solid var(--ink);white-space:nowrap;box-shadow:0 2px 0 var(--ink)}
 .dmstup.s-a{background:#F07A2A}.dmstup.s-b{background:#1E9E5A}.dmstup.s-c{background:#E8B12A;color:#4A2A0C}
+.sbfx.dm-gend{z-index:80}
+.sbfx .geb{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(60,20,10,.75),rgba(5,3,10,.95) 70%);animation:emw var(--ms) forwards}
+.sbfx .gefl{position:absolute;inset:0;background:#fff;opacity:0;animation:gefl .5s .55s both}
+@keyframes gefl{0%{opacity:0}20%{opacity:.85}100%{opacity:0}}
+.sbfx .gebox{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px}
+.sbfx .get{display:flex;font-family:var(--disp);font-weight:400;font-size:min(15vw,64px);line-height:1;color:#FFE38A;-webkit-text-stroke:2.5px #3A1E0C;paint-order:stroke fill;text-shadow:0 0 24px rgba(255,210,63,.8)}
+.sbfx .get span{display:inline-block;animation:gesl .5s cubic-bezier(.2,1.6,.4,1) calc(.2s + var(--k) * .06s) both}
+@keyframes gesl{0%{transform:translateY(-60px) scale(2.2);opacity:0}100%{transform:none;opacity:1}}
+.sbfx .gew{font-size:19px;font-weight:900;color:#fff;background:#C8102E;border:3px solid #fff;border-radius:99px;padding:4px 18px;box-shadow:0 4px 0 rgba(0,0,0,.4);animation:dmlres var(--ms) 1.1s both}
+.sbfx .ges{font-size:14px;font-weight:900;color:#FFE38A;letter-spacing:.2em;animation:fadein .5s 2s both}
 .sbfx .chwash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,227,138,.55),rgba(40,30,60,.82) 70%);animation:emw var(--ms) forwards}
 .sbfx .chbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;animation:emb var(--ms) forwards}
 .sbfx .chbox .dmlsrc{font-size:14px;font-weight:900;color:#fff;background:#3A2A18;border:2px solid #E8B12A;border-radius:99px;padding:3px 14px}
@@ -2850,7 +2860,6 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .de-s{display:flex;align-items:baseline;gap:3px}
 .de-s .de-vp{font-family:var(--disp);font-size:26px;min-width:1.2em;text-align:right}
 .de-s small{font-size:10px;font-weight:900}
-.de-avg{font-size:10.5px;font-weight:900;color:#8A6A10;background:#FFF3C4;border:1px solid #E8B12A;border-radius:99px;padding:0 6px}
 .de-sub{margin:2px 0 6px 36px;font-size:11px;font-weight:800;color:#6A5A4A;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
 .de-vb{display:flex;flex-wrap:wrap;gap:3px}
 .de-vb span{padding:1px 6px;border-radius:6px;background:#E6F6EA;color:#1E7E46;font-size:10px}
@@ -3266,6 +3275,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .dmg.askb .nlog{height:calc(3 * 1.4em)}
 .dmsupw{position:relative;flex:none;margin-top:9px}
 .dmsupw>.dmsup{padding-top:12px}
+.dmrnd{position:absolute;right:10px;top:-8px;z-index:3;padding:0 8px;border-radius:99px;background:#3A2A18;border:1.5px solid #E8B12A;color:#FFE38A;font-size:9.5px;font-weight:900;line-height:15px;white-space:nowrap}
 .nbtns.dmlock .nb{pointer-events:none;filter:grayscale(.6);opacity:.45;transition:none}
 #dmBtns .nb{transition:opacity .25s,filter .25s}
 #dmg.fxbusy .nbtns .nb,#dmg.fxbusy .dmmodal .nb{opacity:.5;filter:grayscale(.5)}
@@ -3913,7 +3923,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v253";
+const APP_VER = "v261";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -9964,7 +9974,6 @@ function dmVP(st, pid){ const a = dmDeckOf(st, pid), tok = st.pl[pid].vpt || 0; 
 const dmCount = (st, pid) => dmDeckOf(st, pid).length;
 function dmEndTurn(st){
   const T = st.turn, P = st.pl[T.pid];
-  P.mny = (P.mny || 0) + (T.coins || 0) + (T.spent || 0); P.mtn = (P.mtn || 0) + 1;   // 最終結果の「平均金量」用（そのターンに出せたお金の合計）
   // 錬金術師：場にポーションがあれば山札の上へ ／ 薬草商：場の財宝を山札の上へ
   if (P.play.includes("potion")){ let k = 0; while (P.play.includes("alchemist")){ dmTake(P.play, ["alchemist"]); P.deck.push("alchemist"); k++; } if (k){ dmL(st, `${pname(T.pid)}がカード${k}枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: T.pid, cnt: k }); } }
   for (let i = 0; i < (T.herb || 0); i++){ const tr = ["potion", "platinum", "gold", "philosophersstone", "silver"].find(x => P.play.includes(x)); if (!tr) break; dmTake(P.play, [tr]); P.deck.push(tr); dmL(st, `${pname(T.pid)}がカード1枚を山札の上に置いた`); dmFxAdd(st, { k: "top", p: T.pid, cnt: 1 }); }
@@ -10077,7 +10086,7 @@ function dmDoBuy(c, who = me, gid = dmId){
   return dmCommit(gid, st => {
     const T = st.turn;
     if (T.pid !== who || !dmIdle(st) || T.buys < 1 || T.coins < dmCost(st, c) || (T.pots || 0) < (DM[c].pot || 0) || !(st.supply[c] > 0) || (c === "grandmarket" && st.pl[who].play.includes("copper"))) return null;
-    T.spent = (T.spent || 0) + dmCost(st, c); T.coins -= dmCost(st, c); T.pots = (T.pots || 0) - (DM[c].pot || 0); T.buys--; T.bought = true; T.phase = "buy";
+    T.coins -= dmCost(st, c); T.pots = (T.pots || 0) - (DM[c].pot || 0); T.buys--; T.bought = true; T.phase = "buy";
     dmGain(st, who, c); dmL(st, `${pname(who)}が${DM[c].n}を購入（$${dmCost(st, c)}・残り$${T.coins}${T.buys ? `・あと${T.buys}回買える` : ""}）`); dmFxAdd(st, { k: DM_BIGFX.includes(c) ? "prov" : "buy", p: who, c });
     return true;
   });
@@ -10092,7 +10101,8 @@ function dmDoEnd(who = me, gid = dmId, key = null){
     if (ended){
       const r = dmResult(st);
       dmL(st, `ゲーム終了！ ${r.rows.map(x => `${pname(x.p)}${x.vp}点`).join("・")}`);
-      dmFxAdd(st, { k: "end" });
+      const why = st.supply.province === 0 ? "属州がなくなった！" : st.supply.colony === 0 ? "植民地がなくなった！" : `サプライの山が${st.players.length >= 5 ? 4 : 3}つ空になった！`;
+      dmFxAdd(st, { k: "end", why });
       return { status: { status: "finished", winner: r.winners[0] } };
     }
     dmL(st, `${pname(st.turn.pid)}の番`);
@@ -11163,20 +11173,24 @@ function dmSetNameOf(g){
   return hit ? hit.n : "オリジナル";
 }
 let dmPlayKey = "", dmTurnSeen = { k: null, at: 0 };
-const DM_LOCK_MS = 1000;
+const DM_LOCK_MS = 500;
 function drawDm(){
   if (!dmId) return;
   const g = dmById(dmId); if (!g || !g.st) return closeDm();
   const st = g.st, T = st.turn, playing = g.status === "playing", inGame = st.players.includes(me);
   dmFxCheck(g);
   const el = $("#dmg"), myTurn = playing && T.pid === me, idle = dmIdle(st);
-  const myAsk = (st.asks || []).find(a => a.pid === me);
+  // 自分への選択（民兵で捨てるカードなど）は、アタックなどの演出が終わってから出す
+  // （一度出した選択は、あとから別の演出が来ても引っ込めない）
+  const myAsk0 = (st.asks || []).find(a => a.pid === me), askWait = myAsk0 && Date.now() < dmFxBusy && drawDm.askShown !== myAsk0.id;
+  const myAsk = askWait ? null : myAsk0; if (myAsk) drawDm.askShown = myAsk.id;
+  if (askWait){ clearTimeout(drawDm.askTm); drawDm.askTm = setTimeout(() => { if (dmId === g.id) drawDm(); }, dmFxBusy - Date.now() + 60); }
   // 自分の番が始まった時刻（始まってすぐの押し間違い防止に使う）
   const tk = myTurn ? dmTurnKey(st) : null; if (tk && dmTurnSeen.k !== tk) dmTurnSeen = { k: tk, at: Date.now() };
   const lockLeft = tk ? DM_LOCK_MS - (Date.now() - dmTurnSeen.at) : 0;
   const waitAsk = (st.asks || []).filter(a => a.pid !== me);
   if (myAsk && myAsk.id !== (dmPick.id || null)) dmPick = { id: myAsk.id, sel: [] };
-  if (!myAsk) dmPick = [];
+  if (!myAsk0) dmPick = [];
   if (!myAsk || myAsk.k !== "supply") dmGainSel = null;
   // 席
   const seats = st.players.map(p => {
@@ -11219,7 +11233,7 @@ function drawDm(){
       if (hn) return `<button class="dh dhold" data-hn="${hn}" data-c="${c}" style="--i:${k}" disabled>${dmCardHtml(c)}</button>`;   // 山札の上に置く演出の前（まだ手札に見せておく）
       const okA = handAsk ? (!myAsk.filter || dmIs(c, myAsk.filter)) : canUse(c), sel = handAsk ? dmPick.sel.includes(i) : dmSel.some(x => x.i === i);
       return `<button class="dh ${sel ? "sel" : ""} ${okA ? "" : "ng"}" data-dh="${i}" data-c="${c}" data-ok="${okA ? 1 : 0}" style="--i:${k}">${dmCardHtml(c)}</button>`; }).join("")}</div>`;
-    if (!myAsk || !(myAsk.k === "hand" || myAsk.k === "supply")) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b>${P.deck.length}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b>${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button>${(P.stay || []).length + (P.haven || []).length ? `<button class="dpk du" id="dmDur">⏳持続中 <b>${(P.stay || []).length + (P.haven || []).length}</b></button>` : ""}${(P.nv || []).length ? `<button class="dpk du" id="dmNv">🛖村マット <b>${P.nv.length}</b></button>` : ""}${(P.isl || []).length ? `<button class="dpk du" id="dmIsl">🏝️島 <b>${P.isl.length}</b></button>` : ""}${P.vpt ? `<span class="dpk vt">🟢勝利点トークン <b>${P.vpt}</b></span>` : ""}${(st.prizes || []).length ? `<button class="dpk du" id="dmPrize">🏆褒賞 <b>${st.prizes.length}</b></button>` : ""}</div>`;
+    if (!myAsk || !(myAsk.k === "hand" || myAsk.k === "supply")) bottom += `<div class="dmpile"><button class="dpk" id="dmDeck"><span class="bk"><i></i><i></i><i></i></span>山札 <b id="dmDeckN">${dmDeckCount(g.id, P)}</b></button><button class="dpk" id="dmDisc">${P.disc.length ? dmCardHtml(P.disc[P.disc.length - 1], "dpl2") : `<span class="emp"></span>`}捨て札 <b id="dmDiscN">${P.disc.length}</b></button><button class="dpk tr" id="dmTrash">廃棄置き場 <b>${st.trash.length}</b></button>${(P.stay || []).length + (P.haven || []).length ? `<button class="dpk du" id="dmDur">⏳持続中 <b>${(P.stay || []).length + (P.haven || []).length}</b></button>` : ""}${(P.nv || []).length ? `<button class="dpk du" id="dmNv">🛖村マット <b>${P.nv.length}</b></button>` : ""}${(P.isl || []).length ? `<button class="dpk du" id="dmIsl">🏝️島 <b>${P.isl.length}</b></button>` : ""}${P.vpt ? `<span class="dpk vt">🟢勝利点トークン <b>${P.vpt}</b></span>` : ""}${(st.prizes || []).length ? `<button class="dpk du" id="dmPrize">🏆褒賞 <b>${st.prizes.length}</b></button>` : ""}</div>`;
     if (myAsk && (myAsk.k === "hand" || myAsk.k === "supply")) bottom += dmAskHtml(myAsk, st);
     else if (myTurn && idle){
       const hasT = !T.bought && P.hand.some(c => dmIs(c, "t") && !DM_TRE_ASK.includes(c));
@@ -11239,7 +11253,7 @@ function drawDm(){
   dmPatch(el, `<div class="nbg dmbg" aria-hidden="true">${["🏰", "🪙", "👑", "🌳", "🏰", "🪙", "⚔️", "📜"].map((x, i) => `<i style="left:${(i * 13 + 4) % 92}%;top:${(i * 29 + 8) % 88}%;font-size:${22 + (i % 3) * 14}px;--dur:${8 + i}s;--dl:-${i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * 30}px;--dy:-40px;--rot:${i * 17 - 50}deg;opacity:.14">${x}</i>`).join("")}</div>
     <div class="ntop"><b class="nt dmt">DOMINION</b><span class="ndk"></span><button class="dmgd ${dmGuide ? "on" : ""}" id="dmGuide" aria-pressed="${dmGuide}">ガイド<i>${dmGuide ? "ON" : "OFF"}</i></button><button class="nmini" id="dmMenu" aria-label="メニュー">…</button><button class="nmini" id="dmClose" aria-label="閉じる">×</button></div>
     <div class="nseats2 ${st.players.length >= 5 ? "tight" : ""}">${seats}</div>
-    <div class="dmsupw">${supply}<span class="dmsetb">-&nbsp;&nbsp;${esc(dmSetNameOf(g))}&nbsp;&nbsp;-</span></div>${stat}
+    <div class="dmsupw">${supply}<span class="dmsetb">-&nbsp;&nbsp;${esc(dmSetNameOf(g))}&nbsp;&nbsp;-</span>${st.round ? `<span class="dmrnd">${st.round}ターン目</span>` : ""}</div>${stat}
     <div class="nlogw"><ul class="nlog">${lg}</ul></div>
     <div class="nbottom">${bottom}</div>${myAsk && (myAsk.k === "list" || myAsk.k === "yn" || myAsk.k === "opt") && !dmView ? (dmAskMin === myAsk.id
       ? `<div class="dmaskpad"></div><button class="dmaskbar" id="dmAskMax"><span>${esc(myAsk.title)}</span><b>選ぶ ▲</b></button>`
@@ -11422,7 +11436,7 @@ function dmEndFinalHtml(g){
     const win = w.includes(x.p);
     return `<div class="de-row ${win ? "win" : ""}" style="--pc:${pcolor(x.p)};--i:${i}">
       <div class="de-h"><i class="de-m">${medal(i)}</i><b class="de-n">${esc(pname(x.p))}</b><span class="de-s"><b class="de-vp" data-vp="${x.vp}">${x.vp}</b><small>勝利点</small></span></div>
-      <div class="de-sub">${deck.length}枚・${x.t}ターン${st.pl[x.p].mtn ? `<span class="de-avg">平均$${(st.pl[x.p].mny / st.pl[x.p].mtn).toFixed(1)}</span>` : ""}${vpParts ? `<span class="de-vb">${vpParts}</span>` : ""}</div>
+      <div class="de-sub">${deck.length}枚・${x.t}ターン${vpParts ? `<span class="de-vb">${vpParts}</span>` : ""}</div>
       <div class="de-deck">${ks.map(c => `<button class="de-c ${(v => v > 0 ? "vpc" : v < 0 ? "vpm" : "")(c === "gardens" ? Math.floor(deck.length / 10) : c === "duke" ? deck.filter(y => y === "duchy").length : DM[c].vp || 0)}" data-pv="${c}">${dmCardHtml(c, "sm")}<i>×${cnt[c]}</i></button>`).join("")}</div>
     </div>`;
   }).join("");
@@ -11547,11 +11561,13 @@ function dmAnimHand(g, el, P){
         { transform: `translate(${rnd(-10, 10)}px,-34px) scale(${o.s * 1.12}) rotate(${rot * .3}deg)`, opacity: 1, offset: .38, easing: "cubic-bezier(.6,0,.9,.5)" },
         { transform: `translate(${dx * .55}px,${dy * .55 - 20}px) scale(${o.s * .7},${o.s * .55}) rotate(${rot}deg)`, opacity: 1, offset: .75 },
         { transform: `translate(${dx}px,${dy}px) scale(.18) rotate(${rot * 2}deg)`, opacity: .2 }
-      ], { duration: 640, delay: t0, fill: "both" }).onfinish = () => w.remove();
+      ], { duration: 640, delay: t0, fill: "both" }).onfinish = () => { w.remove(); const n = el.querySelector("#dmDiscN"); if (n) n.textContent = Math.min(P.disc.length, Number(n.textContent) + 1); };
     });
+    // 捨て札の枚数：1枚入るごとに増やす（入りきってから、山札から引く）
+    { const n = el.querySelector("#dmDiscN"); if (n) n.textContent = Math.max(0, P.disc.length - out.length); }
     const tEnd = 640 + (out.length - 1) * 70;
     setTimeout(() => { if (!disc.isConnected) return; disc.animate([{ transform: "scale(1)" }, { transform: "scale(1.25)" }, { transform: "scale(1)" }], { duration: 300 }); spark(zx, zy, 10, ["#FFE38A", "#fff", "#C9A06A"], 34); }, Math.min(tEnd, 640 + 4 * 70));
-    delay = tEnd + 120;
+    delay = tEnd + 380;   // 捨て札に入りきって、ひと呼吸おいてから引く
   }
   // ② シャッフル
   if (dmShufNow){
@@ -11589,6 +11605,9 @@ function dmAnimHand(g, el, P){
   el.querySelectorAll(".dmhand .dh:not(.dhold)").forEach(b => { const c = b.dataset.c; if (left[c] > 0) left[c]--; else news.push(b); });
   if (!news.length || news.length > 10) return;
   dmReveal = { key, list: news.map((b, k) => ({ c: b.dataset.c, at: Date.now() + delay + k * 190 + 640 })) };
+  // 山札の枚数：配り終わるまでは、まだ山札にある分も数えて、1枚配るごとに減らす（シャッフル直後は全部の枚数）
+  const upN = () => { const n = el.querySelector("#dmDeckN"); if (n) n.textContent = dmDeckCount(key, P); };
+  upN(); dmReveal.list.forEach(x => setTimeout(upN, x.at - Date.now() - 600));
   // ③ 山札から：光の尾を引いて大きく弧を描き、手札でくるっと表に返ってキラッ
   const cx = dd.left + dd.width / 2, cy = dd.top + dd.height / 2;
   news.forEach((b, k) => {
@@ -11608,6 +11627,11 @@ function dmAnimHand(g, el, P){
     };
     if (dk) dk.animate([{ transform: "none" }, { transform: "translateY(-5px) scale(1.25)" }, { transform: "none" }], { duration: 260, delay: t0 });
   });
+}
+/* 山札の表示枚数：配っている途中のカードは、まだ山札にあるものとして数える */
+function dmDeckCount(key, P){
+  const pend = dmReveal && dmReveal.key === key ? dmReveal.list.filter(x => x.at - 600 > Date.now()).length : 0;
+  return P.deck.length + pend;
 }
 /* 持続中の効果を1行ずつ（次のターンの最初に起きること） */
 function dmDurList(P){
@@ -11731,7 +11755,7 @@ function dmFxCheck(g){
   const evs = [...evs0.filter(e => !isH(e)), ...evs0.filter(isH)];
   // 「山がなくなった」は、その山のカードを獲得・購入した演出のあとに回す
   for (let i = 0; i < evs.length; i++){ const e = evs[i]; if (e.k !== "pileout" || e._mv) continue; const j = evs.findIndex((x, k) => k > i && (((x.k === "gain" || x.k === "buy" || x.k === "prov") && x.c === e.c) || (x.k === "curse" && e.c === "curse"))); if (j > i){ evs.splice(i, 1); evs.splice(j, 0, { ...e, _mv: 1 }); i--; } }
-  let t = 0, gq = 0, hEnd = 0, busy = 0;
+  let t = 0, gq = 0, hEnd = 0, busy = 0, dealBusy = 0;
   // 手札から出ていったカードは「前の手札」から引いておく（同じ名前のカードを引き直しても、新しく引いたカードとして見せる）
   const ph = dmPrevHand[g.id];
   if (ph) evs.forEach(e => { if (e.p !== me) return; const cs = e.k === "dis" || e.k === "tre" || (e.k === "trash" && e.h) ? (e.cs || []) : e.k === "play" ? [e.c] : []; cs.forEach(c => { if (ph[c] > 0) ph[c]--; }); });
@@ -11745,7 +11769,7 @@ function dmFxCheck(g){
       if (t <= 0){ dmSnap("dis", e.cs); return; }
       // 前に演出がある（寵臣のアタックなど）ときは、その順番が来るまで手札に残しておき、来たら捨て札へ飛ばす
       (e.cs || []).forEach(c => dmHeld.push({ gid: g.id, c, n: e.n, at: Date.now() + t + 60 }));
-      busy = Math.max(busy, t + 1000);   // 新しく引いたカードは、捨て札へ飛んだあとに配る
+      busy = Math.max(busy, t + 1000); dealBusy = Math.max(dealBusy, t + 1000);   // 新しく引いたカードは、捨て札へ飛んだあとに配る
       setTimeout(() => {
         const hs = [...document.querySelectorAll(`#dmg .dmhand .dhold[data-hn="${e.n}"]`)];
         hs.forEach(b => { const r = b.getBoundingClientRect(); if (r.width) dmOut.push({ c: b.dataset.c, x: r.left + r.width / 2, y: r.top + r.height / 2, s: r.width / 56 }); });
@@ -11758,9 +11782,9 @@ function dmFxCheck(g){
     if (e.k === "top" && e.p === me && e.hc && e.hc.length){ const used = new Set(), r = []; e.hc.forEach(c => { const b = [...document.querySelectorAll(`#dmg .dmhand .dh:not(.dhold)[data-c="${c}"]`)].find(x => !used.has(x)); if (b){ used.add(b); r.push({ c, rc: b.getBoundingClientRect() }); } }); if (r.length){ evs[evs.indexOf(e0)] = e0; e0._from = r; } e.hc.forEach(c => dmHeld.push({ gid: g.id, c, n: e.n, at: Date.now() + t + 60 })); e0._hold = true; }
     if (e.k === "buy" || e.k === "gain" || e.k === "prov"){ const w = e.hg ? hEnd : e.k === "prov" ? t + 4600 : t; dmGains.push({ ...e, wait: w }); gq = Math.max(gq, w) + 1250; if (e.k !== "prov"){ if (!e.hg) t = Math.max(t, w) + 1100; return; } }   // 獲得は順番に（アタックなどの演出に隠れないよう、前後の演出とずらす）
     if (e.k === "hoard"){ const st0 = Math.max(t, gq); setTimeout(() => dmFx(e, g), st0); t = st0 + 2300; hEnd = t; return; }
-    if (e.k === "play" && e.p === me) dmDealDelay += 2600;
-    if (e.k === "end"){ dmEndFresh[g.id] = t + 300; }
-    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, wish: 6000, choice: 1700, reveal: 2300, mq: 2600, pileout: 2000, mill: 1500, dis: 1500, react: 2000, gain: 1100, trash: 1200, play: 2700, tre: 900, end: 0 }[e.k] || 900;
+    if (e.k === "play" && e.p === me) dmDealDelay = Math.max(dmDealDelay, t + 1000);   // 自分が使ったカードで引く分は、演出の途中から配り始める（待たせない）
+    if (e.k === "end"){ dmEndFresh[g.id] = t + 3400; }   // ゲーム終了の演出が終わってから結果発表の画面へ
+    const d = { top: 1500, hoard: 2300, buy: 1400, prov: 4800, atk: 2300, curse: 1500, empty: 1800, wish: 6000, choice: 1700, reveal: 2300, mq: 2600, pileout: 2000, mill: 1600, dis: 1700, react: 2000, gain: 1100, trash: 1600, play: 2700, tre: 900, end: 3400 }[e.k] || 900;
     if (e0._hold) setTimeout(() => {
       // 山札へ飛ぶ瞬間まで手札に残しておいたカード：今の位置から飛ばして、手札から外す
       const hs = [...document.querySelectorAll(`#dmg .dmhand .dhold[data-hn="${e.n}"]`)];
@@ -11768,13 +11792,14 @@ function dmFxCheck(g){
       dmHeld = dmHeld.filter(x => x.n !== e.n); hs.forEach(b => b.remove());
       dmFx(e, g); if (dmId === g.id) drawDm();
     }, t);
-    else setTimeout(() => dmFx(e, g), t); t += ["play", "prov", "reveal", "wish", "mq", "react", "pileout", "choice"].includes(e.k) ? d : Math.min(d, 1600);   // 見せたい演出は最後まで
+    else setTimeout(() => dmFx(e, g), t); t += ["play", "prov", "reveal", "wish", "trash", "mill", "dis", "mq", "react", "pileout", "choice"].includes(e.k) ? d : Math.min(d, 1600);   // 見せたい演出は最後まで
     if (e.k !== "tre" && e.k !== "end") busy = Math.max(busy, t);
+    if (e.k !== "tre" && e.k !== "end" && !(e.k === "play" && e.p === me)) dealBusy = Math.max(dealBusy, t);
   });
   busy = Math.max(busy, ...dmGains.map(x => (x.wait || 0) + 1300));
   if (busy > 0) dmBusyFor(busy + 150);
   // 演出の裏で手札が増えても見えないので、引いたカードを配る演出は演出が終わってから（議事堂で他の人が引く時など）
-  if (busy > 0) dmDealDelay = Math.max(dmDealDelay, busy);
+  if (dealBusy > 0) dmDealDelay = Math.max(dmDealDelay, dealBusy);
 }
 /* 演出中は、ゲームのボタンを押せない（閉じる・メニュー・ガイドだけは押せる） */
 function dmBusyFor(ms){
@@ -11904,13 +11929,27 @@ function dmFx(e, g){
       <div class="emt">${esc(DM[e.c].n)}がもうありません</div>
       <div class="emp">${ps.map(p => `<span style="--pc:${pcolor(p)}">${esc(pname(p))}</span>`).join("")}<em>は獲得なし</em></div></div>`;
   } else if (e.k === "trash"){
-    ms = 1300; html = `<div class="dtr"><div class="dtrr">${(e.cs || []).slice(0, 5).map((c, i) => `<span style="--i:${i}">${dmCardHtml(c, "dfx")}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が廃棄</small></div>`;
+    ms = 1600; html = `<div class="dtr"><div class="dtrr">${(e.cs || []).slice(0, 5).map((c, i) => `<span style="--i:${i}">${dmCardHtml(c, "dfx")}</span>`).join("")}</div><small style="background:${pc}">${esc(pname(e.p))}が廃棄</small></div>`;
   } else if (e.k === "end"){
-    return;
+    // ゲーム終了：画面が暗くなって「GAME END」がドン、終わった理由
+    ms = 3400; kind = "gend";
+    html = `<span class="geb"></span><span class="gefl"></span><div class="gebox"><div class="get">${"GAME END".split("").map((ch, k) => `<span style="--k:${k}">${ch === " " ? "&nbsp;" : ch}</span>`).join("")}</div><div class="gew">${esc(e.why || "")}</div><div class="ges">結果発表へ…</div></div>`;
   } else return;
   document.querySelectorAll(".sbfx.dmfx").forEach(x => x.remove());
   const fx = document.createElement("div"); fx.className = "sbfx dmfx dm-" + kind; fx.style.cssText = `--pc:${pc};--ms:${ms}ms`;
   fx.innerHTML = html; document.body.appendChild(fx);
+  // 捨てる・廃棄する：カードは最後に「捨て札」「廃棄置き場」のボタンの中へ吸い込まれていく（全員の画面で同じ）
+  if (e.k === "dis" || e.k === "mill" || e.k === "trash"){
+    const tg = document.querySelector(e.k === "trash" ? "#dmg #dmTrash" : "#dmg #dmDisc"), tr = tg && tg.getBoundingClientRect();
+    const tx = tr && tr.width ? tr.left + tr.width / 2 : (e.k === "trash" ? innerWidth - 60 : 70), ty = tr && tr.width ? tr.top + tr.height / 2 : innerHeight - 80;
+    fx.querySelectorAll(".dtrr>span").forEach((sp, i) => {
+      sp.style.animation = "none"; const r = sp.getBoundingClientRect(), dx = tx - (r.left + r.width / 2), dy = ty - (r.top + r.height / 2);
+      sp.animate([{ transform: "translateY(-30px) rotateY(90deg) scale(.7)", opacity: 0 }, { transform: "none", opacity: 1, offset: .2 }, { transform: "none", opacity: 1, offset: .45, filter: "none" },
+        { transform: `translate(${dx}px,${dy}px) scale(.16) rotate(${e.k === "trash" ? 25 : -15}deg)`, opacity: .9, offset: .93, filter: e.k === "trash" ? "grayscale(1) brightness(.5)" : "none" },
+        { transform: `translate(${dx}px,${dy}px) scale(.08)`, opacity: 0 }], { duration: ms, delay: i * 70, easing: "cubic-bezier(.5,0,.6,1)", fill: "both" });
+    });
+    if (tg) setTimeout(() => { if (tg.isConnected) tg.animate([{ transform: "scale(1)" }, { transform: "scale(1.22)" }, { transform: "scale(1)" }], { duration: 320 }); }, ms * .93);
+  }
   if (e.k === "top" && e._from && e._from.length){
     fx.querySelectorAll(".tpc").forEach((tc, i) => {
       const f = e._from[i]; if (!f) return;
