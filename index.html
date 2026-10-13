@@ -3320,6 +3320,7 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .dmrnd{position:absolute;right:10px;top:-8px;z-index:3;padding:0 8px;border-radius:99px;background:#3A2A18;border:1.5px solid #E8B12A;color:#FFE38A;font-size:9.5px;font-weight:900;line-height:15px;white-space:nowrap}
 .nbtns.dmlock .nb{pointer-events:none;filter:grayscale(.6);opacity:.45;transition:none}
 #dmBtns .nb{transition:opacity .25s,filter .25s}
+#dmg.askmodal>*:not(.dmmodal):not(.kgpop){pointer-events:none}
 #dmg.fxbusy .nbtns .nb,#dmg.fxbusy .dmmodal .nb{opacity:.5;filter:grayscale(.5)}
 .dmsetb{position:absolute;left:50%;top:-9px;transform:translateX(-50%);z-index:3;max-width:80%;padding:1px 10px;border-radius:99px;background:linear-gradient(180deg,#FFF3C4,#E8B12A);border:1.5px solid #5A3416;color:#4A2A0C;font-size:10px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 0 #5A3416;pointer-events:none}
 .ntop .dmsetn{flex:1;min-width:0;margin:0 6px;font-size:10.5px;font-weight:900;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;align-self:center}
@@ -3965,7 +3966,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v270";
+const APP_VER = "v272";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -10098,7 +10099,7 @@ function dmDoPlay(list, who = me, gid = dmId){
       if (!dmIdle(st) || !P.hand.includes(c)){ dmSkipped++; continue; }
       if (dmIs(c, "a")){
         if (T.phase !== "action" || T.actions < 1){ dmSkipped++; continue; }
-        T.actions--; dmTake(P.hand, [c]); P.play.push(c);
+        T.actions--; T.au = (T.au || 0) + 1; dmTake(P.hand, [c]); P.play.push(c);
         dmL(st, `${pname(who)}：${DM[c].n}${dmPlusLog(c)}`); dmFxAdd(st, { k: "play", p: who, c });
         dmPlayCard(st, who, c); dmRun(st); n++;
       } else if (dmIs(c, "t")){
@@ -10128,7 +10129,7 @@ function dmDoBuy(c, who = me, gid = dmId){
   return dmCommit(gid, st => {
     const T = st.turn;
     if (T.pid !== who || !dmIdle(st) || T.buys < 1 || T.coins < dmCost(st, c) || (T.pots || 0) < (DM[c].pot || 0) || !(st.supply[c] > 0) || (c === "grandmarket" && st.pl[who].play.includes("copper"))) return null;
-    T.coins -= dmCost(st, c); T.pots = (T.pots || 0) - (DM[c].pot || 0); T.buys--; T.bought = true; T.phase = "buy";
+    T.coins -= dmCost(st, c); T.cu = (T.cu || 0) + dmCost(st, c); T.pots = (T.pots || 0) - (DM[c].pot || 0); T.buys--; T.bu = (T.bu || 0) + 1; T.bought = true; T.phase = "buy";
     dmGain(st, who, c); dmL(st, `${pname(who)}が${DM[c].n}を購入（$${dmCost(st, c)}・残り$${T.coins}${T.buys ? `・あと${T.buys}回買える` : ""}）`); dmFxAdd(st, { k: DM_BIGFX.includes(c) ? "prov" : "buy", p: who, c });
     return true;
   });
@@ -10694,6 +10695,7 @@ function openDmNew(){
 }
 
 /* ---- 画面 ---- */
+let dmModalSeen = { id: null, at: 0 };
 let dmAskMin = null, dmFxBusy = 0, dmHeld = [], dmGains = [], dmDealDelay = 0, dmReveal = null, dmCleanNow = false, dmShufNow = false, dmPrevHand = {};
 let dmId = null, dmBusy = false, dmSel = [], dmPick = [], dmView = null, dmSeen = {}, dmGainSel = null;
 function openDm(id){ delete dmPrevHand[id]; delete dmSeen[id]; delete dmStatPrev[id]; dmId = id; dmSel = []; dmPick = []; dmView = null; dmGainSel = null; $("#dmg").hidden = false; document.body.style.overflow = "hidden"; drawDm(); }
@@ -11307,6 +11309,13 @@ function drawDm(){
     if (pl && key !== dmPlayKey){ dmPlayKey = key; if (pl.scrollWidth > pl.clientWidth + 2) requestAnimationFrame(() => pl.scrollTo({ left: pl.scrollWidth, behavior: "smooth" })); } }
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   const act = fn => async () => { if (dmBusy) return; dmBusy = true; try { await fn(); } finally { dmBusy = false; } };
+  // 選択のポップアップが出ている間は、ほかの画面は押せない（外側を押しても何も選ばない。ポップアップを揺らして知らせる）
+  { const mod = el.querySelector(".dmmodal"); el.classList.toggle("askmodal", !!mod);
+    if (mod){ const stop = e => { if (e.target === mod || e.target.classList.contains("dmmw")){ e.preventDefault(); e.stopPropagation(); if (e.type === "click"){ const b = mod.querySelector(".dmask"); if (b) b.animate([{ transform: "translateX(0)" }, { transform: "translateX(-8px)" }, { transform: "translateX(8px)" }, { transform: "translateX(-5px)" }, { transform: "translateX(0)" }], { duration: 280 }); } } };
+      mod.onclick = stop; mod.onpointerdown = stop; mod.oncontextmenu = stop;
+      // 出た直後の押し間違い（前の操作の連打）は受け付けない
+      if (dmModalSeen.id !== myAsk.id) dmModalSeen = { id: myAsk.id, at: Date.now() };
+      if (!mod._cap) (mod._cap = 1, mod.addEventListener("click", e => { if (Date.now() - dmModalSeen.at < 450 && e.target.closest(".nb,.dmopt,.dmyn,button")){ e.preventDefault(); e.stopPropagation(); } }, true)); } }
   on("dmClose", closeDm); on("dmClose2", closeDm); on("dmMenu", () => dmMenu(g));
   on("dmGuide", () => { dmGuide = !dmGuide; try { localStorage.setItem("ojk:dmGuide", dmGuide ? "1" : "0"); } catch (_) {} dmGuideApply(); drawDm(); toast(dmGuide ? "ガイド表示：カード左に +カード・+アクション・+購入・+$ を出します" : "ガイド表示をオフにしました", 2200); });
   // ターン開始から1秒は、下の3つのボタンを押せない（見た目も薄く）
@@ -11618,14 +11627,16 @@ function dmOtherDrawAnim(gid, p, n, b){
 }
 function dmStatPop(g, el){
   const st = g.st, T = st.turn; if (!T) return;
-  const key = dmTurnKey(st), cur = { a: T.actions, b: T.buys, c: T.coins }, prev = dmStatPrev[g.id];
-  dmStatPrev[g.id] = { key, ...cur };
+  const key = dmTurnKey(st), cur = { a: T.actions, b: T.buys, c: T.coins }, used = { a: T.au || 0, b: T.bu || 0, c: T.cu || 0 }, prev = dmStatPrev[g.id];
+  dmStatPrev[g.id] = { key, ...cur, used };
   if (!prev || prev.key !== key) return;
-  const ups = Object.keys(cur).filter(k => cur[k] > prev[k]).map(k => ({ k, d: cur[k] - prev[k] }));
+  // 使った分（アクションカードを使った-1・購入で使った分）は先に減らして見せ、効果で増えた分（+2アクションなら+2）をあとでポンと足す
+  const sp = k => Math.max(0, used[k] - ((prev.used || {})[k] || 0));
+  const ups = Object.keys(cur).map(k => ({ k, d: cur[k] - prev[k] + sp(k), base: prev[k] - sp(k) })).filter(x => x.d > 0);
   if (!ups.length) return;
   const wait = Math.max(0, dmFxBusy - Date.now());
   const H = dmStatHold[g.id] = dmStatHold[g.id] || {};
-  ups.forEach(({ k }, i) => { H[k] = { v: prev[k], until: Date.now() + wait + i * 120 + 50 }; const n = el.querySelector(`.dmstat [data-st="${k}"] b`); if (n && wait > 0) n.textContent = prev[k]; });
+  ups.forEach(({ k, base }, i) => { H[k] = { v: base, until: Date.now() + wait + i * 120 + 50 }; const n = el.querySelector(`.dmstat [data-st="${k}"] b`); if (n) n.textContent = base; });
   setTimeout(() => ups.forEach(({ k, d }, i) => setTimeout(() => {
     delete H[k];
     const b = document.querySelector(`#dmg .dmstat [data-st="${k}"]`); if (!b) return;
