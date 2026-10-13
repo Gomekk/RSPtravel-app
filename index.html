@@ -2899,6 +2899,9 @@ body.dmnoguide .dbn:not(.lg){display:none}
 .dmshl.dis{background:#5A3416}
 .dmshl.drw{background:linear-gradient(90deg,#E8B12A,#E2364F);font-size:15px;padding:3px 14px}
 .dmshl.shf{font-size:15px;padding:3px 14px}
+.dmhand .dh.dhin{display:none}
+.dmhand.dslide{transition:width .28s ease}
+.dmhand.dslide .dh{transition:left .28s ease,transform .15s}
 .dmhand .dh{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .dpv{padding:0;border:0;background:none;line-height:0;cursor:pointer}
 .dmsv{display:flex;justify-content:center;padding:6px 0 4px}
@@ -3966,7 +3969,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v273";
+const APP_VER = "v275";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -9850,7 +9853,7 @@ const DMT = {
     const T = st.tortT || [], R = st.tortR || {}; delete st.tortT; delete st.tortR;
     T.forEach(o => {
       const r = R[o]; if (!r) return;
-      if (r.curse){ dmL(st, `拷問人：${pname(o)}は呪いを選んだ`); if (dmGain(st, o, "curse", "hand")){ dmL(st, `${pname(o)}は呪いを手札に獲得`); dmFxAdd(st, { k: "curse", p: o }); } }
+      if (r.curse){ dmL(st, `拷問人：${pname(o)}は呪いを選んだ`); if (dmGain(st, o, "curse", "hand")){ dmL(st, `${pname(o)}は呪いを手札に獲得`); dmFxAdd(st, { k: "curse", p: o }); dmFxAdd(st, { k: "gain", p: o, c: "curse", dest: "hand" }); } }
       else { const P = st.pl[o], cs = r.d.filter(c => P.hand.includes(c)); if (!cs.length){ dmL(st, `拷問人：${pname(o)}は捨てる手札がなかった`); return; } dmTake(P.hand, cs); P.disc.push(...cs); dmFxAdd(st, { k: "dis", p: o, cs, c: "torturer" }); dmL(st, `拷問人：${pname(o)}は${dmCntNames(cs)}を捨てた`); }
     });
   },
@@ -11396,8 +11399,8 @@ function drawDm(){
   on("dmAskCard", () => { if (myAsk && myAsk.card){ dmView = { c: myAsk.card, h: 1 }; drawDm(); } });
   requestAnimationFrame(() => dmFitBig(el));
   el.classList.toggle("askb", !!(myAsk && (myAsk.k === "hand" || myAsk.k === "supply")));   // 下に選択が出ている間は、ログを短くして画面に収める
+  dmAnimGains(el, st);   // 先に：手札に獲得したカードを知らせておく（山札から引いた演出と二重にしない）
   dmAnimHand(g, el, P);
-  dmAnimGains(el, st);
   dmStatPop(g, el);
   dmOtherDraws(g, el);
   setTimeout(cpuKick, 0);
@@ -11719,14 +11722,19 @@ function dmAnimHand(g, el, P){
   // 描き直しの途中でも、まだ配られていないカードは見せない
   if (dmReveal && dmReveal.key === key){
     const pend = dmReveal.list.filter(x => x.at > Date.now()), used = new Set();
-    pend.forEach(x => { const b = [...el.querySelectorAll(`.dmhand .dh[data-c="${x.c}"]`)].find(y => !used.has(y)); if (!b) return; used.add(b); b.style.opacity = "0"; setTimeout(() => { if (b.isConnected) b.style.opacity = ""; }, x.at - Date.now()); });
+    pend.forEach(x => { const b = [...el.querySelectorAll(`.dmhand .dh[data-c="${x.c}"]`)].find(y => !used.has(y)); if (!b) return; used.add(b); b.classList.add("dhin"); setTimeout(() => dmHandIn(b), x.at - Date.now()); });
     if (!pend.length) dmReveal = null;
   }
   // 選択中（風車など）で山札の表示がないときも、引いたカードの演出は出す（画面左下から飛んでくる）
   const dd = d || (() => { const h = el.querySelector(".dmhand"); if (!h) return null; const r = h.getBoundingClientRect(); return { left: r.left + 4, top: r.bottom + 24, width: 40, height: 56 }; })();
+  dmHandGainHide = dmHandGainHide.filter(x => x.until > Date.now() - 300);
+  { const cnt = {}; dmHandGainHide.forEach(x => { const all = [...el.querySelectorAll(`.dmhand .dh[data-c="${x.c}"]`)]; cnt[x.c] = (cnt[x.c] || 0) + 1; const b = all[all.length - cnt[x.c]]; if (b && x.until > Date.now()) b.classList.add("dhin"); }); }
+  dmHandLayout(el);
   if (!prev || !dd) return;
   const left = { ...prev }, news = [];
   el.querySelectorAll(".dmhand .dh:not(.dhold)").forEach(b => { const c = b.dataset.c; if (left[c] > 0) left[c]--; else news.push(b); });
+  // サプライから手札に獲得したカードは、山札から引く演出をしない（獲得の演出が手札まで運ぶ）
+  dmHandGainHide.filter(x => x.until > Date.now() && !x.seen).forEach(x => { x.seen = 1; const j = news.map(b => b.dataset.c).lastIndexOf(x.c); if (j >= 0) news.splice(j, 1); });
   if (!news.length || news.length > 10) return;
   dmReveal = { key, list: news.map((b, k) => ({ c: b.dataset.c, at: Date.now() + delay + k * 190 + 640 })) };
   // 山札の枚数：配り終わるまでは、まだ山札にある分も数えて、1枚配るごとに減らす（シャッフル直後は全部の枚数）
@@ -11734,9 +11742,11 @@ function dmAnimHand(g, el, P){
   upN(); dmReveal.list.forEach(x => setTimeout(upN, x.at - Date.now() - 600));
   // ③ 山札から：光の尾を引いて大きく弧を描き、手札でくるっと表に返ってキラッ
   const cx = dd.left + dd.width / 2, cy = dd.top + dd.height / 2;
+  // 届くまでは手札に場所も取らない。飛んでいく先は手札のまん中（並ぶ位置で中身が分からないように）
+  news.forEach(b => b.classList.add("dhin")); dmHandLayout(el);
+  const hz = (el.querySelector(".dmhand") || el).getBoundingClientRect(), hr = { left: hz.left + hz.width / 2 - 28, top: hz.bottom - 80, width: 56, height: 80 };
   news.forEach((b, k) => {
-    b.style.opacity = "0";
-    const r = b.getBoundingClientRect(), t0 = delay + k * 190;
+    const r = hr, t0 = delay + k * 190;
     const dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2), up = 90 + rnd(0, 30);
     const kf = [{ transform: `translate(${dx}px,${dy}px) scale(.3) rotate(-30deg)`, opacity: 1 }, { transform: `translate(${dx * .45}px,${dy * .45 - up}px) scale(1.05) rotate(${k % 2 ? 200 : -160}deg)`, opacity: 1, offset: .55 }, { transform: "translate(0,-10px) scale(1.12) rotate(360deg)", opacity: 1, offset: .88 }, { transform: "none", opacity: 1 }];
     [2, 1].forEach(g2 => { const gh = back(r.left, r.top, "ghost"); gh.style.opacity = "0"; gh.animate(kf.map(f => ({ ...f, opacity: .35 / g2 })), { duration: 520, delay: t0 + g2 * 45, easing: "cubic-bezier(.3,.8,.4,1)", fill: "forwards" }).onfinish = () => gh.remove(); });
@@ -11744,7 +11754,7 @@ function dmAnimHand(g, el, P){
     e.animate(kf, { duration: 520, delay: t0, easing: "cubic-bezier(.3,.8,.4,1)", fill: "forwards" }).onfinish = () => {
       e.animate([{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }], { duration: 100, fill: "forwards" }).onfinish = () => {
         e.remove(); if (!b.isConnected) return;
-        b.style.opacity = "";
+        dmHandIn(b);
         b.animate([{ transform: "scaleX(0) scaleY(1.1)" }, { transform: "scaleX(1.12) scaleY(1.05)", offset: .6 }, { transform: "none" }], { duration: 300, easing: "ease-out" });
         const rr = b.getBoundingClientRect(); spark(rr.left + rr.width / 2, rr.top + rr.height / 2, 8, ["#FFE38A", "#fff", "#9BEA8A"], 46);
       };
@@ -11775,13 +11785,60 @@ function dmPileSheet(title, cards, note, empty, head = ""){
   });
 }
 /* サプライから獲得：一旦画面の中央に大きく見せてから、その人の捨て札（または席）へ */
+let dmHandGainHide = [];
+/* 手札の並び：まだ届いていないカード（.dhin）は場所も取らない（空いた場所からカードが予想できないように）。届いたら詰めていた札がスッとずれる */
+function dmHandLayout(root, slide){
+  const h = root && root.querySelector(".dmhand"); if (!h) return;
+  const vis = [...h.querySelectorAll(".dh")].filter(b => !b.classList.contains("dhin"));
+  const W = Math.min(window.innerWidth, 480) - 30, cw = 56, n = vis.length, step = n > 1 ? Math.min(cw + 4, (W - cw) / (n - 1)) : 0;
+  if (slide){ h.classList.add("dslide"); clearTimeout(h._sl); h._sl = setTimeout(() => h.classList.remove("dslide"), 340); }
+  h.style.setProperty("--step", step.toFixed(1) + "px"); h.style.setProperty("--n", Math.max(1, n));
+  h.classList.toggle("ov", step < cw + 2 && n > 1);
+  vis.forEach((b, k) => b.style.setProperty("--i", k));
+}
+const dmHandIn = b => { if (!b || !b.isConnected) return; b.classList.remove("dhin"); dmHandLayout($("#dmg"), true); };
+function dmGainToHand(ev, until){
+  const root = $("#dmg"); if (!root || root.hidden) return;
+  const tile = ev.from === "trash" ? root.querySelector("#dmTrash") : root.querySelector(`[data-dc="${ev.c}"]`), tr = tile && tile.getBoundingClientRect();
+  const hz = root.querySelector(".dmhand"), hb0 = hz && hz.getBoundingClientRect(), br = hb0 && { left: hb0.left + hb0.width / 2 - 28, top: hb0.bottom - 80, width: 56, height: 80 };   // 手札のまん中へ（入る場所は空けていない）
+  const W = innerWidth, H = innerHeight;
+  const sx = tr ? tr.left + tr.width / 2 : W / 2, sy = tr ? tr.top + tr.height / 2 : 0, s0 = tr ? tr.width / 56 : .5;
+  const dx = br ? br.left + br.width / 2 : W / 2, dy = br ? br.top + br.height / 2 : H - 120, s1 = br ? br.width / 56 : 1;
+  const w = document.createElement("div"); w.className = "dmgain"; w.innerHTML = dmCardHtml(ev.c);
+  w.style.left = (sx - 28) + "px"; w.style.top = (sy - 40) + "px"; document.body.appendChild(w);
+  const mx = (dx - sx) / 2, my = (dy - sy) / 2 - 60;
+  w.animate([
+    { transform: `scale(${s0})`, opacity: 1 },
+    { transform: `translate(${mx}px,${my}px) scale(${(s0 + s1) / 2 * 1.25}) rotate(-6deg)`, opacity: 1, offset: .5 },
+    { transform: `translate(${dx - sx}px,${dy - sy}px) scale(${s1})`, opacity: 1 }
+  ], { duration: 680, easing: "cubic-bezier(.4,.1,.3,1)", fill: "forwards" }).onfinish = () => {
+    w.remove();
+    const all = [...document.querySelectorAll(`#dmg .dmhand .dh[data-c="${ev.c}"]`)], hb = all[all.length - 1];
+    dmHandGainHide = dmHandGainHide.filter(x => x.until !== until);
+    if (!hb) return; dmHandIn(hb);
+    hb.animate([{ transform: "scale(1.25)" }, { transform: "scale(.95)", offset: .6 }, { transform: "none" }], { duration: 320, easing: "ease-out" });
+    const r = hb.getBoundingClientRect();
+    for (let i = 0; i < 10; i++){ const e = document.createElement("i"); e.className = "dmspk"; e.style.left = (r.left + r.width / 2) + "px"; e.style.top = (r.top + r.height / 2) + "px"; e.style.background = ["#FFE38A", "#fff", "#9BEA8A"][i % 3]; document.body.appendChild(e);
+      const a = Math.random() * Math.PI * 2, d = 30 + Math.random() * 25;
+      e.animate([{ transform: "translate(-50%,-50%) scale(1)", opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px),calc(-50% + ${Math.sin(a) * d}px)) scale(.2)`, opacity: 0 }], { duration: 500, easing: "cubic-bezier(.2,.8,.3,1)", fill: "forwards" }).onfinish = () => e.remove(); }
+  };
+  if (tile && tile.isConnected) tile.animate([{ transform: "scale(1)" }, { transform: "scale(1.12)" }, { transform: "scale(1)" }], { duration: 260 });
+}
 function dmAnimGains(el, st){
   const list = dmGains; dmGains = [];
   if (!list.length) return;
   const rnd = (a, b) => a + Math.random() * (b - a);
   let t = 0;
   list.forEach(ev => {
-    const start = Math.max(t, ev.wait || 0); t = start + 1250;
+    const start = Math.max(t, ev.wait || 0);
+    if (ev.p === me && ev.dest === "hand"){
+      // 自分の手札に獲得：サプライから手札へそのまま飛んでくる（シンプルに）
+      t = start + 800; const until = Date.now() + start + 700;
+      dmHandGainHide.push({ c: ev.c, until });
+      setTimeout(() => dmGainToHand(ev, until), start);
+      return;
+    }
+    t = start + 1250;
     setTimeout(() => {
       const root = $("#dmg"); if (!root || root.hidden) return;
       const tile = ev.from === "trash" ? root.querySelector("#dmTrash") : root.querySelector(`[data-dc="${ev.c}"]`), tr = tile && tile.getBoundingClientRect();   // 廃棄置き場から取ったカードは、廃棄置き場のボタンから出てくる
