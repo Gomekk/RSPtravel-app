@@ -3966,7 +3966,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v272";
+const APP_VER = "v273";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -10059,6 +10059,7 @@ function dmMyTurn(g){
   if (st.asks && st.asks.some(a => a.pid === me)) return true;
   return st.turn.pid === me && !(st.asks || []).length;
 }
+const dmNetErr = e => /TypeError|Load failed|Failed to fetch|NetworkError|network|fetch|timeout|ECONN/i.test(String((e && (e.message || e.name)) || e));
 async function dmCommit(id, fn){
   for (let tries = 0; tries < 6; tries++){
     const g = dmById(id); if (!g) return false;
@@ -10069,8 +10070,11 @@ async function dmCommit(id, fn){
     const body = { st, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
     if (r.status) Object.assign(body, r.status);
     if (lines.length){ const lg = (g.log || []).slice(), now = Date.now(); lines.forEach((m, i) => lg.push({ t: new Date(now + i).toISOString(), m })); body.log = lg.slice(-60); }
-    const { data, error } = await sb.from("dm_games").update(body).eq("id", id).eq("version", g.version || 1).select();
-    if (error){ fail(error, "保存"); return false; }
+    let data, error;
+    try { ({ data, error } = await sb.from("dm_games").update(body).eq("id", id).eq("version", g.version || 1).select()); } catch (e) { error = e; }
+    // 通信が一瞬切れた（スマホのスリープ明け・電波など）ときは、少し待ってそのままやり直す
+    if (error && dmNetErr(error) && tries < 5){ await new Promise(r => setTimeout(r, 600 * (tries + 1))); await loadTable("dm_games"); continue; }
+    if (error){ if (dmNetErr(error)) toast("通信が不安定なため保存できませんでした。電波の良い所でもう一度どうぞ", 3500); else fail(error, "保存"); return false; }
     if (data && data.length){
       const before = g.st;
       Object.assign(g, data[0]); drawDm();
@@ -10175,11 +10179,17 @@ function cpuKick(){
       if (!mv){ delete cpuTimers[key]; return; }
       const humans = g.players.filter(x => !isCpu(x)), my = Math.max(0, humans.indexOf(me));
       const wait = (mv.wait || 1200) + my * 900 + Math.random() * 300;   // 端末ごとに少しずらす
-      cpuTimers[key] = { ver, tm: setTimeout(async () => {
+      const tries0 = cur && cur.ver === -1 ? cur.tries || 0 : 0;
+      cpuTimers[key] = { ver, tries: tries0, tm: setTimeout(async () => {
         const g2 = (db[tb] || []).find(x => x.id === g.id);
         if (!g2 || (g2.version || 0) !== ver || !(g2.status === "playing" || g2.status === "round_over")){ delete cpuTimers[key]; cpuKick(); return; }
-        try { await mv.run(); } catch (e) { console.error(e); }
-        cpuTimers[key] = { ver, done: true };   // 同じ状態ではもう打たない（打てなかった時の空回り防止）
+        let ok = true;
+        try { ok = await mv.run(); } catch (e) { console.error(e); ok = false; }
+        const tries = ((cpuTimers[key] || {}).tries || 0) + 1;
+        cpuTimers[key] = { ver, done: true, tries };   // 同じ状態ではもう打たない（打てなかった時の空回り防止）
+        // 保存に失敗した（通信が切れた等）ときは、少し待ってやり直す（CPUが止まったままにならないように）
+        const g3 = (db[tb] || []).find(x => x.id === g.id);
+        if (ok === false && tries < 6 && g3 && (g3.version || 0) === ver) setTimeout(() => { const c2 = cpuTimers[key]; if (c2 && c2.ver === ver && c2.done){ cpuTimers[key] = { ver: -1, tries }; cpuKick(); } }, 2500 * tries);
         setTimeout(cpuKick, 50);
       }, wait) };
     });
