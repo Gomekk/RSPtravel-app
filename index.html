@@ -3929,6 +3929,117 @@ body.bgpause .hxemb i{animation-play-state:paused}
 .hxsk.wide b{white-space:nowrap;flex:none}.hxsk.wide small{flex:1;min-width:0}
 .hxboard .hc.spc{filter:drop-shadow(0 0 3px #FFD45A)}
 
+/* ===== 四季の巡り ===== */
+.arena.szg{padding:calc(var(--safe-t) + 8px) 10px calc(var(--safe-b) + 12px);background:radial-gradient(circle at 15% 8%,rgba(232,106,154,.18),transparent 40%),radial-gradient(circle at 90% 25%,rgba(46,158,91,.14),transparent 40%),radial-gradient(circle at 12% 80%,rgba(217,119,43,.16),transparent 45%),radial-gradient(circle at 88% 92%,rgba(74,143,214,.16),transparent 45%),linear-gradient(170deg,#FFFDF7,#F6EEDC);color:#2A2418;overflow-y:auto;overscroll-behavior:contain;gap:7px}
+.sztop{display:flex;align-items:center;gap:6px;flex:none}
+.szlogo{font-family:var(--disp);font-weight:400;font-size:20px;letter-spacing:.06em;display:flex;align-items:baseline;gap:6px;background:linear-gradient(90deg,#E86A9A,#2E9E5B,#D9772B,#4A8FD6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.szlogo small{font-size:10px;letter-spacing:.3em;color:#9A8B6A;-webkit-text-fill-color:#9A8B6A}
+.szno{flex:1;font-size:12px;font-weight:900;color:#8A7A5A}
+.szbtn{width:34px;height:34px;border-radius:10px;border:2px solid #2A2418;background:#fff;font-weight:900;font-size:16px;box-shadow:0 2px 0 #2A2418}
+.szseats{display:flex;gap:5px;flex:none;overflow-x:auto;padding:8px 2px 4px}
+.szseat{position:relative;flex:1;min-width:64px;padding:5px 5px 4px;border-radius:12px;background:#fff;border:2px solid var(--pc);text-align:center;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2}
+.szseat b{font-size:11.5px;font-weight:900;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.szchr{font-size:9.5px;font-weight:900;color:#6A5A3A;background:#F6EEDC;border-radius:99px;padding:0 5px}
+.szchr.used{opacity:.5;text-decoration:line-through}
+.szhn{font-size:10px;font-weight:700;color:#6A5A3A}.szhn b{font-size:13px;color:#2A2418}
+.szfl{font-size:8.5px;font-weight:900;color:#3A6AA8}
+.szseat.act{box-shadow:0 0 0 3px #F2C94C,0 0 14px rgba(242,201,76,.8)}
+.szseat.mine{background:#FFF8E2}
+.szseat.tgt{background:#FFE9EF;border-style:dashed}
+.szturn{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;font-weight:900;padding:1px 7px;border-radius:99px;background:#E2364F;color:#fff;white-space:nowrap}
+.sztgi{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;font-weight:900;padding:0 6px;border-radius:99px;background:#E86A9A;color:#fff;white-space:nowrap}
+.szmid{display:flex;align-items:center;gap:10px;flex:none;padding:4px 0}
+.szwheel{position:relative;width:132px;height:132px;flex:none;border-radius:50%;background:conic-gradient(from -45deg,rgba(232,106,154,.22) 0 25%,rgba(46,158,91,.22) 0 50%,rgba(217,119,43,.22) 0 75%,rgba(74,143,214,.22) 0);border:2px solid #2A2418}
+.szw{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(var(--a)) translate(48px) rotate(calc(-1 * var(--a)));line-height:1;opacity:.55}
+.szw i{font-style:normal;font-size:16px}.szw b{font-size:10px;font-weight:900;color:var(--sc)}
+.szw.on{opacity:1;transform:rotate(var(--a)) translate(48px) rotate(calc(-1 * var(--a))) scale(1.3);filter:drop-shadow(0 0 6px var(--sc))}
+.szwc{position:absolute;inset:34px;border-radius:50%;background:#fff;border:2px solid #2A2418;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.szwc small{font-size:8px;font-weight:900;color:#8A7A5A}
+.szwc b{font-family:var(--disp);font-weight:400;font-size:22px}
+.szchain{display:flex;gap:3px;margin:2px 0}
+.szchain i{width:9px;height:9px;border-radius:50%;background:#E6DCC4;border:1px solid #8A7A5A}
+.szchain i.on{background:#E2364F;border-color:#7A1020;box-shadow:0 0 5px #E2364F}
+.szside{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.szpile{display:flex;align-items:center;gap:2px;flex-wrap:wrap}
+.szpc{display:flex;flex-direction:column;align-items:center;min-width:42px;padding:3px 3px;border-radius:7px;background:#fff;border:2px solid var(--sc);font-size:14px;line-height:1.1}
+.szpc b{font-size:9.5px;font-weight:900;white-space:nowrap}
+.szpc small{font-size:8px;font-weight:900;color:var(--sc)}
+.szpc.top{box-shadow:0 0 0 2px var(--sc),0 3px 8px rgba(0,0,0,.2);transform:scale(1.08)}
+.szarr{font-style:normal;font-size:10px;font-weight:900;color:#9A8B6A}
+.szarr.adv{color:#E2364F}
+.szpiles{display:flex;gap:6px;font-size:11px;font-weight:900;color:#6A5A3A}
+.szpiles span,.szpiles button{padding:3px 8px;border-radius:99px;background:#fff;border:1.5px solid #CDBF9F;font-weight:900;font-size:11px;color:#6A5A3A}
+.szsteps{display:flex;gap:3px;flex:none}
+.szsteps span{flex:1;text-align:center;font-size:10.5px;font-weight:900;padding:3px 0;border-radius:99px;background:#EFE6D0;color:#9A8B6A}
+.szsteps span.done{background:#D8CDB2;color:#6A5A3A}
+.szsteps span.now{background:#2A2418;color:#FFE38A}
+.szguide{margin:0;font-size:12px;font-weight:900;color:#4A3E26;background:#fff;border-radius:10px;padding:6px 10px;border:1.5px solid #E6DCC4;flex:none}
+.szbtns{display:flex;gap:6px;flex-wrap:wrap;flex:none}
+.szb{flex:1;min-width:120px;padding:11px 8px;border-radius:12px;border:2px solid #2A2418;background:#fff;font-weight:900;font-size:13.5px;color:#2A2418;box-shadow:0 3px 0 #2A2418}
+.szb.go{background:#2A2418;color:#FFE38A}
+.szb:disabled{opacity:.4}
+.szb small{display:block;font-size:10px;color:#8A7A5A}
+.szhand{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;flex:none}
+.szc{position:relative;padding:5px 6px 6px;border-radius:10px;background:#fff;border:2px solid var(--sc);box-shadow:0 2px 0 rgba(0,0,0,.18);text-align:left;cursor:pointer;line-height:1.25}
+.szc.sel{transform:translateY(-4px);box-shadow:0 0 0 3px #2A2418,0 6px 12px rgba(0,0,0,.25)}
+.szc.ng{opacity:.5}
+.szc.shun{background:linear-gradient(180deg,#FFF8DA,#fff)}
+.szch{display:flex;align-items:center;gap:3px;margin-bottom:2px}
+.szch b{flex:1;font-size:12.5px;font-weight:900;color:var(--sc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.szch small{font-size:9px;font-weight:900;color:#fff;background:var(--sc);border-radius:4px;padding:0 4px}
+.szsi{font-size:13px}
+.szc ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.szc li{font-size:9.5px;font-weight:700;color:#4A3E26}
+.szc li i{font-style:normal;display:inline-block;font-size:8.5px;font-weight:900;color:#fff;background:#6A5A3A;border-radius:3px;padding:0 3px;margin-right:2px}
+.szc li.u i{background:#2E7FC9}.szc li.p i{background:#E2364F}.szc li.d i{background:#7A5AB0}.szc li.e i{background:#C98E12}
+.szc li em{display:block;font-style:normal;font-size:9px;color:#B07A00}
+.szplain{margin:0;font-size:9.5px;color:#9A8B6A;font-weight:700}
+.szshun{position:absolute;top:-7px;right:-5px;font-size:9px;font-weight:900;padding:1px 5px;border-radius:99px;background:#F2C94C;color:#3A2405;border:1.5px solid #2A2418}
+.szc.sm{padding:4px 5px}
+.szmych{display:flex;align-items:flex-start;gap:8px;padding:7px 9px;border-radius:12px;background:#fff;border:2px solid #CDBF9F;flex:none;flex-wrap:wrap}
+.szci{font-size:26px;line-height:1}
+.szmych>div{flex:1;min-width:160px}
+.szmych b{font-size:13px;font-weight:900}.szmych b small{font-size:10px;color:#8A7A5A;margin-left:6px}
+.szmych p,.szchsheet p{margin:2px 0 0;font-size:11px;font-weight:700;color:#4A3E26}
+.szmych p i,.szchsheet p i{font-style:normal;font-size:9px;font-weight:900;color:#fff;background:#6A5A3A;border-radius:3px;padding:0 4px;margin-right:4px}
+.szmych p.used{opacity:.5}
+.szcb{flex:none;padding:7px 10px;border-radius:10px;border:2px solid #2A2418;background:#FFE38A;font-weight:900;font-size:12px;box-shadow:0 2px 0 #2A2418}
+.szcb.on{background:#2A2418;color:#FFE38A}
+.szlog{list-style:none;margin:0;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.7);font-size:11px;font-weight:700;color:#6A5A3A;flex:none}
+.szask{position:fixed;inset:0;z-index:46;background:rgba(30,20,10,.5);display:grid;place-items:center;padding:16px}
+.szaskin{width:min(100%,420px);max-height:84vh;overflow:auto;background:#FFFDF7;border:3px solid #2A2418;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 0 #2A2418}
+.szaskin>b{font-size:14px;font-weight:900}
+.szaskp{display:flex;flex-direction:column;gap:6px}
+.szaskp .szb{border-color:var(--pc)}
+.szlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}
+.szend{position:fixed;inset:0;z-index:45;background:rgba(30,20,10,.55);overflow-y:auto;padding:calc(var(--safe-t) + 14px) 12px 20px}
+.szendin{max-width:440px;margin:0 auto;background:#FFFDF7;border:3px solid #2A2418;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.szendt{font-family:var(--disp);font-size:24px;text-align:center;display:flex;flex-direction:column}
+.szendt small{font-family:inherit;font-size:11px;font-weight:900;color:#6A5A3A}
+.szres{border:2px solid var(--pc);border-radius:12px;padding:7px 9px;background:#fff}
+.szres.win{background:linear-gradient(180deg,#FFF3C4,#fff);box-shadow:0 0 0 3px #F2C94C}
+.szrh{display:flex;align-items:center;gap:6px}
+.szrk{font-weight:900;font-size:15px;width:24px;text-align:center}
+.szrh b{font-size:14px}.szrh small{font-size:10px;font-weight:900;color:#8A7A5A}
+.szpt{margin-left:auto;font-family:var(--disp);font-size:24px}.szpt small{font-size:11px}
+.szrc{display:flex;flex-wrap:wrap;gap:3px;margin:5px 0}
+.szm{font-size:10px;font-weight:900;padding:1px 5px;border-radius:5px;border:1.5px solid var(--sc);color:var(--sc);background:#fff;white-space:nowrap}
+.szm.set{box-shadow:inset 0 0 0 1.5px var(--sc);background:#F3FAF0}
+.szm.eaten{text-decoration:line-through;opacity:.45}
+.szm.shun{background:#FFF1B8}
+.szri{list-style:none;margin:0;padding:0;font-size:11px;font-weight:700}
+.szri li{display:flex;justify-content:space-between;border-top:1px dashed #E6DCC4;padding:1px 0}
+.sznote{margin:0;font-size:11px;color:#8A7A5A;font-weight:700}.sznote.small{font-size:10px}
+.szfx{position:fixed;left:50%;top:38%;z-index:47;transform:translateX(-50%);padding:9px 18px;border-radius:99px;background:#2A2418;color:#FFE38A;font-weight:900;font-size:15px;white-space:nowrap;pointer-events:none;animation:szfx 2.2s ease both;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.szfx.adv{background:#E2364F;color:#fff}.szfx.cal{background:linear-gradient(90deg,#E86A9A,#2E9E5B,#D9772B,#4A8FD6);color:#fff;font-size:20px}.szfx.back{background:#4A8FD6;color:#fff}.szfx.shun{background:#F2C94C;color:#3A2405}
+@keyframes szfx{0%{opacity:0;transform:translateX(-50%) scale(.6)}12%{opacity:1;transform:translateX(-50%) scale(1.08)}20%{transform:translateX(-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-20px)}}
+.szchsheet{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.szchsheet b{font-size:18px}.szchsheet small{color:#8A7A5A;font-weight:900}
+.szloglist{list-style:none;margin:0;padding:0;font-size:12px;font-weight:700}.szloglist li{padding:3px 0;border-bottom:1px dashed #E6DCC4}
+.sztb{width:100%;border-collapse:collapse;font-size:11.5px;margin:4px 0 8px}
+.sztb th,.sztb td{border:1px solid #E6DCC4;padding:3px 5px;text-align:left;vertical-align:top}
+.sztb th{background:#F6EEDC}
+.gic.szi{background:linear-gradient(135deg,#FFE3EC,#E3F5E8 50%,#FBE5D2 50%,#E0ECFA)}
 </style>
 </head>
 <body>
@@ -3958,6 +4069,7 @@ body.bgpause .hxemb i{animation-play-state:paused}
 <div class="arena neu kgg" id="kgg" hidden></div>
 <div class="arena neu dmg" id="dmg" hidden></div>
 <div class="arena hxg" id="hxg" hidden></div>
+<div class="arena szg" id="szg" hidden></div>
 <div class="sheet" id="sheet"><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -3970,7 +4082,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v279";
+const APP_VER = "v280";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -3986,7 +4098,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
 const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#5A6378"];
-const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games", "kg_games", "dm_games", "hx_games"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games", "kg_games", "dm_games", "hx_games", "sz_games"];
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
@@ -4017,7 +4129,7 @@ const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
 const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
 
-const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [], kg_games: [], dm_games: [], hx_games: [] };
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [], kg_games: [], dm_games: [], hx_games: [], sz_games: [] };
 let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
@@ -4067,7 +4179,7 @@ const fail = (e, what) => { console.error(e); toast(`${what}できませんで�
 /* ---------- データ ---------- */
 async function loadTable(t){
   const { data, error } = await sb.from(t).select("*");
-  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games" || t === "dm_games" || t === "hx_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
+  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games" || t === "dm_games" || t === "hx_games" || t === "sz_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
   if (error) throw error;
   db[t] = data || [];
   if (t === "players"){ db.allPlayers = db[t]; applyGuestFilter(); }
@@ -4098,6 +4210,11 @@ function subscribe(){
         if (cur && (cur.version || 1) >= (nw.version || 1)) return;      // 自分の保存のこだま（もう反映済み）
         if (cur){ Object.assign(cur, nw); if (dmId === nw.id){ clearTimeout(reloadTimer.dmDraw); reloadTimer.dmDraw = setTimeout(() => { drawDm(); turnBuzz(); }, 30); } else if (!dmId) render(); setTimeout(cpuKick, 0); return; }
       }
+      if (t === "sz_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
+        const nw = JSON.parse(cpuUuidIn(JSON.stringify(payload.new))), cur = (db.sz_games || []).find(x => x.id === nw.id);
+        if (cur && (cur.version || 1) >= (nw.version || 1)) return;
+        if (cur){ Object.assign(cur, nw); if (szId === nw.id) drawSz(); else if (!dmId && !hxId && !szId) render(); turnBuzz(); setTimeout(cpuKick, 0); return; }
+      }
       if (t === "hx_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
         const nw = JSON.parse(cpuUuidIn(JSON.stringify(payload.new))), cur = (db.hx_games || []).find(x => x.id === nw.id);
         if (cur && (cur.version || 1) >= (nw.version || 1)) return;
@@ -4105,7 +4222,7 @@ function subscribe(){
       }
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); if (t === "hx_games") drawHx(); turnBuzz(); cpuKick(); } catch (e) { console.error(e); }
+        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); if (t === "hx_games") drawHx(); if (t === "sz_games") drawSz(); turnBuzz(); cpuKick(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -4147,7 +4264,7 @@ function render(){
   $("#neuIco").hidden = !loaded || !db.players.length;
   $("#neuIco").disabled = !player(me);
   $("#neuIco").title = player(me) ? "ゲーム一覧" : "自分を選ぶと遊べます";
-  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive() && !kgActive() && !dmActive() && !hxActive();
+  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive() && !kgActive() && !dmActive() && !hxActive() && !szActive();
   const mp = player(me);
   const nlen = mp ? [...mp.name].length : 0, nfs = nlen <= 4 ? 12 : nlen <= 5 ? 11 : nlen <= 6 ? 10 : nlen <= 8 ? 9 : 8;
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span style="font-size:${nfs}px">${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
@@ -4193,9 +4310,9 @@ function viewHome(t){
   if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><span>今日の特権・<b class="who">${esc(pname(tp.player_id))}</b></span><small class="pno">特権${KANJI[tp.kind]}</small><b class="pnm">${PRIVS[tp.kind].name}</b></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
-  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive();
+  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive(), zg = szActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中</b><small>${ng.status === "playing" && ng.turn && ng.turn.pid === me ? `<em class="yt">あなたの番！</em>第${ng.round}回戦・合計${ng.total}` : `第${ng.round}回戦・合計${ng.total}・タップで入る`}</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}${zg && zg.st && zg.st.sz ? `<button class="neubar live2" data-act="openSz">${GAMES[8].icon}<div><b>四季の巡り 対戦中</b><small>${szMyTurn(zg) ? `<em class="yt">あなたの番！</em>` : ""}今の季節：${SZ_SN[szCur(zg.st)]}・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -4353,6 +4470,7 @@ function bindView(){
     openKg: () => { const g = kgActive(); if (g) openKg(g.id); },
     openDm: () => { const g = dmActive(); if (g) openDm(g.id); },
     openHx: () => { const g = hxActive(); if (g) openHx(g.id); },
+    openSz: () => { const g = szActive(); if (g) openSz(g.id); },
     completeTrip: () => openCompleteTrip(curTrip()), reopenTrip: () => reopenTrip(curTrip()), listBack: () => { listTripId = null; render(); },
     togglePend: () => { localStorage.setItem("ojk:pendOpen", localStorage.getItem("ojk:pendOpen") === "0" ? "1" : "0"); render(); },
     travelTotal: () => openTravelTotal(curTrip()), resetTickets: () => resetTickets(curTrip()), rouletteReset: () => resetRoulette(curTrip(), rouletteDay),
@@ -6202,8 +6320,8 @@ document.addEventListener("click", e => { const b = e.target.closest && e.target
 
 /* ===================== ゲームのルール（図解） ===================== */
 function openGameRules(k){
-  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール", kg: "スカルキングのルール", dm: "ドミニオンのルール", hx: "どんぐり戦争のルール" }[k];
-  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml, kg: kgRulesHtml, dm: dmRulesHtml, hx: hxRulesHtml }[k]();
+  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール", kg: "スカルキングのルール", dm: "ドミニオンのルール", hx: "どんぐり戦争のルール" , sz: "四季の巡りのルール"}[k];
+  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml, kg: kgRulesHtml, dm: dmRulesHtml, hx: hxRulesHtml, sz: szRulesHtml }[k]();
   let el = $("#artpop");
   if (!el){ el = document.createElement("div"); el.id = "artpop"; el.className = "artpop"; document.body.appendChild(el); el.addEventListener("click", e => { if (e.target === el || e.target.closest("[data-artclose]")) el.classList.remove("on"); }); }
   el.innerHTML = `<div class="artin wide" role="dialog" aria-modal="true"><div class="arth"><b>${title}</b><button class="artx" data-artclose aria-label="閉じる">×</button></div><div class="gr">${html}</div></div>`;
@@ -6392,8 +6510,8 @@ function pickMine(list){ return list.find(g => me && (g.players || []).includes(
 const turnSeen = {};
 function turnBuzz(){
   if (!me) return;
-  [...neuLive(), ...csLive(), ...sbLive(), ...skLive(), ...coLive(), ...kgLive(), ...dmLive(), ...hxLive()].filter(g => (g.players || []).includes(me)).forEach(g => {
-    const now = g.st && g.st.hx ? hxMyTurn(g) : g.st ? dmMyTurn(g) : g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
+  [...neuLive(), ...csLive(), ...sbLive(), ...skLive(), ...coLive(), ...kgLive(), ...dmLive(), ...hxLive(), ...szLive()].filter(g => (g.players || []).includes(me)).forEach(g => {
+    const now = g.st && g.st.sz ? szMyTurn(g) : g.st && g.st.hx ? hxMyTurn(g) : g.st ? dmMyTurn(g) : g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
     const prev = turnSeen[g.id];
     turnSeen[g.id] = now;
     if (prev === false && now){ try { if (navigator.vibrate) navigator.vibrate([120, 70, 120, 70, 200]); } catch (e) {} }
@@ -6471,7 +6589,14 @@ const GAMES = [
   { id: "hx", name: "どんぐり戦争", desc: "【オリジナル】リスの縄張り戦争。六角マスの森でリスを戦わせ、相手のどんぐり貯蔵庫2つを壊す団体戦。スキルカード50種類以上", players: "2〜6人", time: "20〜40分",
     get icon(){ return HX_ICON; },
     count: () => hxGames().filter(x => x.status === "finished").length,
-    live: () => hxLive(), active: () => hxActive(), start: () => openHxNew(), open: g => openHx(g.id) }
+    live: () => hxLive(), active: () => hxActive(), start: () => openHxNew(), open: g => openHx(g.id) },
+  { id: "sz", name: "四季の巡り", desc: "【オリジナル】終わったときの手札がそのまま得点になる、四すくみの手札管理ゲーム。季節を進めて終わらせるか、足止めして粘るか", players: "3〜5人", time: "15〜25分",
+    icon: `<span class="gic szi"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="#fff" stroke="#1B1838" stroke-width="2.5"/>
+      <path d="M32 7A25 25 0 0 1 57 32H32Z" fill="#F7B6CC"/><path d="M57 32A25 25 0 0 1 32 57V32Z" fill="#9AD9A8"/><path d="M32 57A25 25 0 0 1 7 32H32Z" fill="#F4B27A"/><path d="M7 32A25 25 0 0 1 32 7V32Z" fill="#A9CBF2"/>
+      <circle cx="32" cy="32" r="25" fill="none" stroke="#1B1838" stroke-width="2.5"/><circle cx="32" cy="32" r="8" fill="#fff" stroke="#1B1838" stroke-width="2"/>
+      <text x="44" y="24" font-size="11" text-anchor="middle">🌸</text><text x="44" y="47" font-size="11" text-anchor="middle">☀️</text><text x="20" y="47" font-size="11" text-anchor="middle">🍁</text><text x="20" y="24" font-size="11" text-anchor="middle">❄️</text></svg></span>`,
+    count: () => szGames().filter(x => x.status === "finished").length,
+    live: () => szLive(), active: () => szActive(), start: () => openSzNew(), open: g => openSz(g.id) }
 ];
 function openGames(){
   const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
@@ -13877,13 +14002,700 @@ async function clearBadge(){
   } catch (e) {}
 }
 try { ["ojk:pk:games", "ojk:pk:guide"].forEach(k => localStorage.removeItem(k)); } catch (e) {}   // 試作していたポーカーのデータを片づける
+/* ======================= 四季の巡り（仮）：エンジン ======================= */
+const SZ_TITLE = "四季の巡り";
+const SZ_SE = ["spr", "sum", "aut", "win"];
+const SZ_SN = { spr: "春", sum: "夏", aut: "秋", win: "冬" };
+const SZ_SI = { spr: "🌸", sum: "☀️", aut: "🍁", win: "❄️" };
+const SZ_SC = { spr: "#E86A9A", sum: "#2E9E5B", aut: "#D9772B", win: "#4A8FD6" };
+const szNext = s => SZ_SE[(SZ_SE.indexOf(s) + 1) % 4];
+const szPrev = s => SZ_SE[(SZ_SE.indexOf(s) + 3) % 4];
+const szPrey = s => szNext(s);   // 春は夏を、夏は秋を、秋は冬を、冬は春を食う
+/* カード（各季節10枚）。use:[通常, 旬] pass / disc / end：説明文 */
+const SZ_DEF = {
+  wakaba: { n: "若葉", s: "spr", x: 3 },
+  tsukushi: { n: "つくし", s: "spr", x: 2, use: ["1枚引く", "3枚引く"] },
+  uguisu: { n: "鶯", s: "spr", x: 1, use: ["好きな人の手札を見る", "さらに自分の札1枚と相手の札1枚を交換"] },
+  nanohana: { n: "菜の花", s: "spr", x: 1, pass: "渡した人が1枚引く" },
+  haruichi: { n: "春一番", s: "spr", x: 1, disc: "1枚引く" },
+  sakura: { n: "桜", s: "spr", x: 1, end: "手札の春1枚につき+1点" },
+  tane: { n: "種", s: "spr", x: 1, end: "旬が春なら+5点" },
+  aoba: { n: "青葉", s: "sum", x: 3 },
+  hanabi: { n: "花火", s: "sum", x: 2, use: ["好きな人の手札を1枚見る", "その札を除外させる"] },
+  kaminari: { n: "雷", s: "sum", x: 1, pass: "受け取った人は手札を1枚除外する" },
+  yuudachi: { n: "夕立", s: "sum", x: 1, disc: "続けてもう1枚、季節の制限なしで捨ててよい" },
+  ka: { n: "蚊", s: "sum", x: 1, end: "−2点（押し付け用）" },
+  semi: { n: "蝉", s: "sum", x: 1, end: "手札で食われた秋1枚につき+2点" },
+  kitsune: { n: "狐の嫁入り", s: "sum", x: 1, end: "春に食われず、逆に春を1枚食う" },
+  momiji: { n: "紅葉", s: "aut", x: 3 },
+  inekari: { n: "稲刈り", s: "aut", x: 2, use: ["捨て札の一番上を手札に加える（季節が戻る）", "上から2枚"] },
+  kaki: { n: "柿", s: "aut", x: 1, pass: "渡した人と受け取った人が1枚ずつ引く" },
+  kuri: { n: "栗", s: "aut", x: 1, disc: "除外置き場から1枚選んで手札に加える" },
+  tsukimi: { n: "月見", s: "aut", x: 1, end: "食われずに残れば+3点" },
+  fukubukuro: { n: "福袋", s: "aut", x: 1, end: "+3点" },
+  hosaku: { n: "豊作", s: "aut", x: 1, end: "一年が2組以上なら+4点" },
+  yuki: { n: "雪", s: "win", x: 3 },
+  koharu: { n: "小春日和", s: "win", x: 2, use: ["捨て札の一番上を除外（季節を1つ戻す）", "さらに1枚引く"] },
+  shimobashira: { n: "霜柱", s: "win", x: 1, use: ["次に受け取る札の渡し効果を無効", "その札を送り主に返す"] },
+  tsurara: { n: "氷柱", s: "win", x: 1, pass: "受け取った人は次の手番、使用できない" },
+  ooyuki: { n: "大雪", s: "win", x: 1, disc: "次の人は次の手番、捨てられない" },
+  joya: { n: "除夜の鐘", s: "win", x: 1, disc: "この札で暦が完成したら、捨てた人は+5点" },
+  yukiusagi: { n: "雪うさぎ", s: "win", x: 1, end: "手札の冬が3枚以上なら、冬すべて+1点" }
+};
+/* キャラクター：常時能力＋1ゲーム1回の能力 */
+const SZ_CHAR = {
+  hayazaki: { n: "早咲き", t: "先行逃げ切り", a: "捨てで季節を進めるたびに1枚引く", o: "季節に関係なく、1枚を「次の季節」として捨てられる", i: "🌷" },
+  niwashi: { n: "庭師", t: "堅実", a: "一年1組につき、さらに+1点", o: "渡された札を受け取らず、渡した人に返す", i: "🪴" },
+  fuyugomori: { n: "冬籠り", t: "後半捲り", a: "受け取った札の渡し効果を受けない。終了時、手札が単独最多なら+4点", o: "捨て札の一番上を取り除き、季節を1つ戻す", i: "🐻" },
+  koyomi: { n: "暦読み", t: "時計操作", a: "足止め（今の季節の札を捨てる）するたびに1枚引く", o: "暦が完成した瞬間、それを取り消してゲームを続行（捨て札の一番上を除外）", i: "📜" },
+  yubin: { n: "郵便屋", t: "照準・妨害", a: "渡す相手を、数えた位置の両隣からも選べる", o: "その手番、2枚渡す", i: "✉️" },
+  ogui: { n: "大食い", t: "偏重", a: "自分の手札で食われた札1枚につき+1点", o: "終了時、属性を1つ選ぶ。その属性は食われない（いちばん得になる属性を自動で選ぶ）", i: "🍙" }
+};
+const SZ_CHAR_KEYS = Object.keys(SZ_CHAR);
+/* 40枚のカード：id → 種類 */
+const SZ_CARDS = (() => { const out = {}; let i = 0; Object.entries(SZ_DEF).forEach(([k, d]) => { for (let j = 0; j < d.x; j++) out["c" + (i++)] = k; }); return out; })();
+const szK = c => SZ_CARDS[c];
+const szD = c => SZ_DEF[SZ_CARDS[c]];
+const szSeason = c => szD(c).s;
+const szShuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const szL = (st, m) => { (st._log = st._log || []).push(m); };
+const szFx = (st, e) => { st.fxn = (st.fxn || 0) + 1; e.n = st.fxn; st.fx = (st.fx || []).concat([e]).slice(-30); };
+const szNm = p => (typeof pname === "function" ? pname(p) : p);
+
+/* ---------- 準備 ---------- */
+function szSetup(players, opt = {}){
+  const deck = szShuffle(Object.keys(SZ_CARDS)), hands = {}, chars = {};
+  const cs = szShuffle(SZ_CHAR_KEYS);
+  players.forEach((p, i) => { hands[p] = [deck.pop(), deck.pop(), deck.pop()]; if (opt.chars !== false) chars[p] = cs[i % cs.length]; });
+  const first = deck.pop();
+  const order = szShuffle(players.slice());
+  const startI = Math.floor(Math.random() * players.length);
+  const st = { sz: 1, v: 1, players: players.slice(), chars, used: {}, deck, pile: [{ c: first }], exile: [], hands, flags: {}, ask: null, bonus: {}, turn: null, no: 0, fx: [], fxn: 0, status: "playing", seen: {} };
+  players.forEach(p => { st.flags[p] = {}; });
+  szL(st, `最初の季節は${SZ_SN[szSeason(first)]}（${szD(first).n}）`);
+  szStartTurn(st, players[startI]);
+  return st;
+}
+const szCur = st => { const t = st.pile[st.pile.length - 1]; return t ? (t.as || szSeason(t.c)) : null; };
+const szPileS = e => e.as || szSeason(e.c);
+/* 暦：捨て札の上から何回続けて季節が進んでいるか（3で完成） */
+function szChain(st){
+  const p = st.pile; let n = 0;
+  for (let i = p.length - 1; i > 0 && n < 3; i--){ if (szPileS(p[i]) === szNext(szPileS(p[i - 1]))) n++; else break; }
+  return n;
+}
+const szSeat = (st, p, k) => st.players[(st.players.indexOf(p) + k + st.players.length * 10) % st.players.length];
+const szHas = (st, p, ch) => st.chars[p] === ch;
+const szOnce = (st, p, ch) => st.chars[p] === ch && !st.used[p];
+
+/* ---------- 山札 ---------- */
+/* n枚引く。山札が尽きたら除外置き場を混ぜて新しい山札に。どちらも尽きたらゲーム終了 */
+function szDraw(st, p, n){
+  let k = 0;
+  for (let i = 0; i < n; i++){
+    if (!st.deck.length){
+      if (st.exile.length){ st.deck = szShuffle(st.exile); st.exile = []; szL(st, "山札が尽きたので、除外置き場を混ぜて新しい山札に"); szFx(st, { k: "reshuffle" }); }
+      else { szEnd(st, "deck"); return k; }
+    }
+    st.hands[p].push(st.deck.pop()); k++;
+  }
+  if (k) szFx(st, { k: "draw", p, cnt: k });
+  return k;
+}
+const szTake = (arr, c) => { const i = arr.indexOf(c); if (i >= 0) arr.splice(i, 1); return i >= 0; };
+
+/* ---------- 手番 ---------- */
+function szStartTurn(st, p){
+  if (st.status !== "playing") return;
+  st.no++;
+  const f = st.flags[p] || (st.flags[p] = {});
+  st.turn = { pid: p, step: "use", noUse: !!f.noUse, noDisc: !!f.noDisc, free: 0, haya: false, two: false, passed: 0, discN: 0 };
+  f.noUse = 0; f.noDisc = 0;
+  szL(st, `${szNm(p)}の番`);
+  szDraw(st, p, 2);
+  if (st.status !== "playing") return;
+  if (st.turn.noUse) st.turn.step = st.turn.noDisc ? "pass" : "disc";
+  else if (!st.hands[p].some(c => szD(c).use)) st.turn.step = st.turn.noDisc ? "pass" : "disc";
+  if (st.turn.step === "pass") szEnterPass(st);
+}
+function szEndTurn(st){
+  if (st.status !== "playing") return;
+  const p = st.turn.pid; st.turn = null;
+  szStartTurn(st, szSeat(st, p, 1));
+}
+/* 渡す相手：手札の枚数だけ時計回り（人数で割り切れる・0枚なら渡さない） */
+function szPassTargets(st, p){
+  const n = st.players.length, cnt = st.hands[p].length, k = cnt % n;
+  if (!cnt || !k) return [];
+  const base = szSeat(st, p, k);
+  if (!szHas(st, p, "yubin")) return [base];
+  return [...new Set([szSeat(st, p, k - 1), base, szSeat(st, p, k + 1)])].filter(x => x !== p);
+}
+function szEnterPass(st){
+  const T = st.turn; T.step = "pass";
+  if (!szPassTargets(st, T.pid).length){ szL(st, `${szNm(T.pid)}は手札${st.hands[T.pid].length}枚：自分に戻るので渡さない`); szFx(st, { k: "nopass", p: T.pid }); szEndTurn(st); }
+}
+/* 次の段階へ（使用→捨て→渡し） */
+function szAdvance(st, p){
+  const T = st.turn; if (!T || T.pid !== p || st.ask) return false;
+  if (T.step === "use"){ T.step = T.noDisc ? "pass" : "disc"; if (T.step === "pass") szEnterPass(st); return true; }
+  if (T.step === "disc"){ szEnterPass(st); return true; }
+  return false;
+}
+/* ---------- 使用 ---------- */
+function szCanUse(st, p, c){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "use" || T.noUse || st.ask) return false;
+  if (!st.hands[p].includes(c)) return false;
+  const k = szK(c), d = SZ_DEF[k]; if (!d.use) return false;
+  if ((k === "inekari" || k === "koharu") && st.pile.length < 2) return false;   // 捨て札は最低1枚残す
+  return true;
+}
+function szUse(st, p, c){
+  if (!szCanUse(st, p, c)) return false;
+  const k = szK(c), d = SZ_DEF[k], shun = d.s === szCur(st);
+  szTake(st.hands[p], c); st.exile.push(c);
+  szL(st, `${szNm(p)}が${d.n}を使った${shun ? "（旬！）" : ""}`);
+  szFx(st, { k: "use", p, c, shun });
+  const others = st.players.filter(x => x !== p);
+  switch (k){
+    case "tsukushi": szDraw(st, p, shun ? 3 : 1); break;
+    case "uguisu": st.ask = { pid: p, k: "player", opts: others.filter(x => st.hands[x].length), title: `鶯：手札を見る相手を選ぶ${shun ? "（旬：交換もできる）" : ""}`, then: { t: "ugu", shun } }; if (!st.ask.opts.length){ st.ask = null; szL(st, "手札のある相手がいない"); } break;
+    case "hanabi": st.ask = { pid: p, k: "player", opts: others.filter(x => st.hands[x].length), title: `花火：手札を1枚見る相手を選ぶ${shun ? "（旬：その札を除外させる）" : ""}`, then: { t: "hana", shun } }; if (!st.ask.opts.length){ st.ask = null; szL(st, "手札のある相手がいない"); } break;
+    case "inekari": { const n = Math.min(shun ? 2 : 1, st.pile.length - 1), got = []; for (let i = 0; i < n; i++){ const e = st.pile.pop(); st.hands[p].push(e.c); got.push(e.c); } szL(st, `稲刈り：捨て札の${got.map(x => szD(x).n).join("・")}を手札に（季節は${SZ_SN[szCur(st)]}に戻る）`); szFx(st, { k: "unpile", p, cs: got, to: "hand" }); break; }
+    case "koharu": { const e = st.pile.pop(); st.exile.push(e.c); szL(st, `小春日和：捨て札の${szD(e.c).n}を除外（季節は${SZ_SN[szCur(st)]}に戻る）`); szFx(st, { k: "unpile", p, cs: [e.c], to: "exile" }); if (shun) szDraw(st, p, 1); break; }
+    case "shimobashira": st.flags[p].shield = shun ? 2 : 1; szL(st, `霜柱：次に受け取る札の渡し効果を${shun ? "送り主に返す" : "無効にする"}`); break;
+  }
+  szAfterAct(st);
+  return true;
+}
+/* ---------- 捨て ---------- */
+/* mode：normal（今か次の季節）/ free（夕立のあと、季節の制限なし）/ haya（早咲き：次の季節として） */
+function szCanDisc(st, p, c, mode = "normal"){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "disc" || T.noDisc || st.ask) return false;
+  if (!st.hands[p].includes(c)) return false;
+  if (mode === "haya") return szOnce(st, p, "hayazaki");
+  if (mode === "free") return T.free > 0;
+  const s = szSeason(c), cur = szCur(st);
+  return s === cur || s === szNext(cur);
+}
+function szDisc(st, p, c, mode = "normal"){
+  if (!szCanDisc(st, p, c, mode)) return false;
+  const T = st.turn, cur = szCur(st), k = szK(c), d = SZ_DEF[k];
+  szTake(st.hands[p], c);
+  const as = mode === "haya" ? szNext(cur) : null;
+  const e = { c, by: p }; if (as && as !== d.s) e.as = as;
+  st.pile.push(e);
+  if (mode === "haya"){ st.used[p] = 1; szL(st, `🌷早咲き：${szNm(p)}が${d.n}を「${SZ_SN[as]}」として捨てた`); }
+  if (mode === "free") T.free--;
+  const ns = szPileS(e), adv = ns === szNext(cur), stall = ns === cur;
+  T.discN++;
+  szL(st, `${szNm(p)}が${d.n}を捨てた：${adv ? `季節が${SZ_SN[ns]}に進む` : stall ? `${SZ_SN[ns]}のまま（足止め）` : `季節は${SZ_SN[ns]}に`}`);
+  szFx(st, { k: "disc", p, c, adv, stall, s: ns });
+  // 暦の完成（手番の途中でも終わる）
+  if (szChain(st) >= 3){ if (szCalDone(st)) return true; }
+  // 捨て効果
+  if (k === "haruichi") szDraw(st, p, 1);
+  if (k === "yuudachi"){ T.free++; szL(st, "夕立：続けてもう1枚、季節の制限なしで捨ててよい"); }
+  if (k === "ooyuki"){ const nx = szSeat(st, p, 1); st.flags[nx].noDisc = 1; szL(st, `大雪：${szNm(nx)}は次の手番、捨てられない`); }
+  if (k === "kuri"){ if (st.exile.length) st.ask = { pid: p, k: "list", cards: st.exile.slice(), min: 1, max: 1, title: "栗：除外置き場から手札に加える札を選ぶ", then: { t: "kuri" } }; else szL(st, "栗：除外置き場が空"); }
+  // キャラの常時能力
+  if (adv && szHas(st, p, "hayazaki")){ szL(st, "🌷早咲き：季節を進めたので1枚引く"); szDraw(st, p, 1); }
+  if (stall && szHas(st, p, "koyomi")){ szL(st, "📜暦読み：足止めしたので1枚引く"); szDraw(st, p, 1); }
+  szAfterAct(st);
+  return true;
+}
+/* 暦が完成：暦読みの1回能力が残っていれば、その人に取り消すか聞く */
+function szCalDone(st){
+  const kp = st.players.find(x => szOnce(st, x, "koyomi"));
+  szFx(st, { k: "cal" });
+  if (kp){ st.ask = { pid: kp, k: "yn", title: "📜暦読み：暦が完成した！取り消してゲームを続ける？（1ゲーム1回）", yes: "取り消して続ける", no: "このまま終わる", then: { t: "koyomi", turnP: st.turn && st.turn.pid } }; return true; }
+  szEnd(st, "cal"); return true;
+}
+/* ---------- 渡し ---------- */
+function szCanPass(st, p, c, to){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "pass" || st.ask) return false;
+  if (!st.hands[p].includes(c)) return false;
+  const tg = T.fixed ? [T.fixed] : szPassTargets(st, p);
+  return tg.includes(to);
+}
+function szPass(st, p, c, to){
+  if (!szCanPass(st, p, c, to)) return false;
+  const T = st.turn, d = szD(c);
+  if (!T.passed && T.wantTwo && szOnce(st, p, "yubin") && st.hands[p].length >= 2){ st.used[p] = 1; T.two = true; szL(st, "✉️郵便屋：この手番は2枚渡す"); }
+  T.fixed = to;
+  szTake(st.hands[p], c); st.hands[to].push(c); T.passed++;
+  szL(st, `${szNm(p)}が${szNm(to)}に${d.n}を渡した`);
+  szFx(st, { k: "pass", p, to, c });
+  szReceive(st, p, to, c);
+  szAfterAct(st);
+  return true;
+}
+/* 受け取ったときの処理（庭師の返却・霜柱・渡し効果） */
+function szReceive(st, from, to, c){
+  if (szOnce(st, to, "niwashi")){ st.ask = { pid: to, k: "yn", card: c, title: `🪴庭師：${szNm(from)}から${szD(c).n}が渡された。受け取らずに返す？（1ゲーム1回）`, yes: "返す", no: "受け取る", then: { t: "niwa", from, c } }; return; }
+  szRecv2(st, from, to, c);
+}
+function szRecv2(st, from, to, c){
+  const f = st.flags[to];
+  if (f.shield){
+    const s = f.shield; f.shield = 0;
+    if (s === 2){ szTake(st.hands[to], c); st.hands[from].push(c); szL(st, `❄️霜柱：${szNm(to)}は${szD(c).n}を${szNm(from)}に返した`); szFx(st, { k: "ret", p: to, to: from, c }); return; }
+    if (szD(c).pass){ szL(st, `❄️霜柱：${szD(c).n}の渡し効果を無効にした`); } return;
+  }
+  const k = szK(c), imm = szHas(st, to, "fuyugomori");
+  if (k === "nanohana"){ szL(st, `菜の花：${szNm(from)}が1枚引く`); szDraw(st, from, 1); }
+  if (k === "kaki"){ szL(st, `柿：${szNm(from)}${imm ? "" : `と${szNm(to)}`}が1枚引く`); szDraw(st, from, 1); if (!imm) szDraw(st, to, 1); }
+  if (k === "kaminari"){ if (imm) szL(st, `🐻冬籠り：雷の効果を受けない`); else if (st.hands[to].length) st.ask = { pid: to, k: "hand", min: 1, max: 1, title: "雷：手札を1枚除外する", then: { t: "kami" } }; }
+  if (k === "tsurara"){ if (imm) szL(st, `🐻冬籠り：氷柱の効果を受けない`); else { st.flags[to].noUse = 1; szL(st, `氷柱：${szNm(to)}は次の手番、使用できない`); } }
+}
+/* 行動のあと：渡しが終わっていれば手番終了 */
+function szAfterAct(st){
+  if (st.status !== "playing" || st.ask) return;
+  const T = st.turn; if (!T) return;
+  if (T.step === "use" && !st.hands[T.pid].some(c => szD(c).use) && !(szOnce(st, T.pid, "fuyugomori") && st.pile.length > 1)){ T.step = T.noDisc ? "pass" : "disc"; if (T.step === "pass"){ szEnterPass(st); return; } }
+  if (T.step === "pass" && T.passed > 0){
+    if (T.two && T.passed < 2 && st.hands[T.pid].length) return;
+    szEndTurn(st);
+  }
+}
+/* キャラの1回能力（自分の番に押すもの） */
+function szCharAct(st, p, what){
+  const T = st.turn;
+  if (what === "fuyu"){ if (!szOnce(st, p, "fuyugomori") || !T || T.pid !== p || st.ask || st.pile.length < 2 || T.step === "pass") return false; st.used[p] = 1; const e = st.pile.pop(); st.exile.push(e.c); szL(st, `🐻冬籠り：捨て札の${szD(e.c).n}を取り除き、季節は${SZ_SN[szCur(st)]}に戻る`); szFx(st, { k: "unpile", p, cs: [e.c], to: "exile" }); return true; }
+  if (what === "two"){ if (!szOnce(st, p, "yubin") || !T || T.pid !== p || T.step !== "pass" || T.passed) return false; T.wantTwo = !T.wantTwo; return true; }
+  return false;
+}
+/* ---------- 選択への答え ---------- */
+function szAnswer(st, p, v){
+  const a = st.ask; if (!a || a.pid !== p) return false;
+  const th = a.then; st.ask = null;
+  switch (th.t){
+    case "ugu": {
+      const tg = v; if (!a.opts.includes(tg)){ st.ask = a; return false; }
+      szL(st, `鶯：${szNm(p)}が${szNm(tg)}の手札を見た`);
+      if (th.shun && st.hands[p].length) st.ask = { pid: p, k: "list", cards: st.hands[tg].slice(), min: 0, max: 1, title: `鶯（旬）：${szNm(tg)}の手札。交換して受け取る札を選ぶ（選ばなければ交換しない）`, then: { t: "ugu2", tg } };
+      else st.ask = { pid: p, k: "info", cards: st.hands[tg].slice(), title: `鶯：${szNm(tg)}の手札`, then: { t: "none" } };
+      break;
+    }
+    case "ugu2": {
+      if (!v || !v.length){ szL(st, "鶯：交換はしなかった"); break; }
+      st.ask = { pid: p, k: "hand", min: 1, max: 1, title: "鶯（旬）：代わりに渡す自分の札を選ぶ", then: { t: "ugu3", tg: th.tg, get: v[0] } };
+      break;
+    }
+    case "ugu3": {
+      const mine = v && v[0]; if (!mine || !st.hands[p].includes(mine) || !st.hands[th.tg].includes(th.get)) break;
+      szTake(st.hands[p], mine); szTake(st.hands[th.tg], th.get); st.hands[p].push(th.get); st.hands[th.tg].push(mine);
+      szL(st, `鶯（旬）：${szNm(p)}と${szNm(th.tg)}が札を1枚ずつ交換した`); szFx(st, { k: "swap", p, to: th.tg });
+      break;
+    }
+    case "hana": {
+      const tg = v; if (!a.opts.includes(tg)){ st.ask = a; return false; }
+      const h = st.hands[tg]; const c = h[Math.floor(Math.random() * h.length)];
+      if (th.shun){ szTake(h, c); st.exile.push(c); szL(st, `花火（旬）：${szNm(tg)}の${szD(c).n}を除外させた`); szFx(st, { k: "exile", p: tg, c }); st.ask = { pid: p, k: "info", cards: [c], title: `花火（旬）：${szNm(tg)}の${szD(c).n}を除外させた`, then: { t: "none" } }; }
+      else { szL(st, `花火：${szNm(p)}が${szNm(tg)}の手札を1枚見た`); st.ask = { pid: p, k: "info", cards: [c], title: `花火：${szNm(tg)}の手札の1枚`, then: { t: "none" } }; }
+      break;
+    }
+    case "kuri": { const c = v && v[0]; if (c && szTake(st.exile, c)){ st.hands[p].push(c); szL(st, `栗：除外置き場の${szD(c).n}を手札に`); szFx(st, { k: "fromexile", p, c }); } break; }
+    case "kami": { const c = v && v[0]; if (c && szTake(st.hands[p], c)){ st.exile.push(c); szL(st, `雷：${szNm(p)}は${szD(c).n}を除外した`); szFx(st, { k: "exile", p, c }); } else { st.ask = a; return false; } break; }
+    case "niwa": {
+      if (v){ st.used[p] = 1; szTake(st.hands[p], th.c); st.hands[th.from].push(th.c); szL(st, `🪴庭師：${szNm(p)}は${szD(th.c).n}を受け取らず${szNm(th.from)}に返した`); szFx(st, { k: "ret", p, to: th.from, c: th.c }); }
+      else szRecv2(st, th.from, p, th.c);
+      break;
+    }
+    case "koyomi": {
+      if (v){ st.used[p] = 1; const e = st.pile.pop(); st.exile.push(e.c); szL(st, `📜暦読み：${szNm(p)}が暦の完成を取り消した（${szD(e.c).n}を除外）`); szFx(st, { k: "uncal", p }); }
+      else { szEnd(st, "cal"); return true; }
+      break;
+    }
+  }
+  szAfterAct(st);
+  return true;
+}
+/* ---------- 終了と得点 ---------- */
+function szEnd(st, why){
+  if (st.status !== "playing") return;
+  st.status = "finished"; st.ask = null;
+  const shun = szCur(st);
+  // 除夜の鐘：その札で暦が完成したら、捨てた人に+5点
+  const top = st.pile[st.pile.length - 1];
+  if (why === "cal" && top && szK(top.c) === "joya" && top.by){ st.bonus[top.by] = (st.bonus[top.by] || 0) + 5; }
+  const res = {}; st.players.forEach(p => { res[p] = szScore(st, p, shun); });
+  // 冬籠り：手札が単独最多なら+4点
+  st.players.forEach(p => { if (szHas(st, p, "fuyugomori")){ const n = st.hands[p].length; if (st.players.every(o => o === p || st.hands[o].length < n)){ res[p].items.push(["🐻冬籠り：手札が単独最多", 4]); res[p].total += 4; } } });
+  st.players.forEach(p => { if (st.bonus[p]){ res[p].items.push(["除夜の鐘で暦を完成", st.bonus[p]]); res[p].total += st.bonus[p]; } });
+  st.end = { why, shun, res, at: Date.now() };
+  szL(st, why === "cal" ? `暦が完成！ 最後の季節は${SZ_SN[shun]}（${SZ_SN[shun]}の札が旬）` : "山札も除外置き場も尽きたのでゲーム終了");
+  szFx(st, { k: "end", why });
+}
+/* 手札の得点（組・食い合いは持ち主にいちばん得になるように自動で決める） */
+const SZ_KEEP = { tsukimi: 9, fukubukuro: 8, sakura: 6, tane: 6, hosaku: 6, yukiusagi: 4, semi: 4, kitsune: 3 };   // 残したい札（大きいほど残す）。蚊は食われたい
+const szKeep = c => { const k = szK(c); return k === "ka" ? -5 : (SZ_KEEP[k] || (SZ_DEF[k].use || SZ_DEF[k].pass || SZ_DEF[k].disc ? 1 : 0)); };
+function szScore(st, p, shun, ogui){
+  const hand = st.hands[p];
+  if (szHas(st, p, "ogui") && !st.used[p] && ogui === undefined){
+    // 大食い（1回）：守る属性を4つ試して、いちばん高いものを選ぶ
+    let best = null; for (const s of [null, ...SZ_SE]){ const r = szScore(st, p, shun, s); if (!best || r.total > best.total) best = r; }
+    if (best.ogui) best.items.push([`🍙大食い：${SZ_SN[best.ogui]}は食われない`, 0]);
+    return best;
+  }
+  const by = {}; SZ_SE.forEach(s => { by[s] = hand.filter(c => szSeason(c) === s).sort((a, b) => szKeep(b) - szKeep(a)); });
+  const sets = Math.min(...SZ_SE.map(s => by[s].length));
+  const inSet = new Set(); SZ_SE.forEach(s => by[s].slice(0, sets).forEach(c => inSet.add(c)));
+  const rest = {}; SZ_SE.forEach(s => { rest[s] = by[s].filter(c => !inSet.has(c)); });
+  const eaten = new Set();
+  const safe = c => szSeason(c) === shun || (ogui && szSeason(c) === ogui) || inSet.has(c);
+  // 食い合い（同時に解決）：食う側は旬でない残りの札。狐の嫁入りは春に食われず、逆に春を食う
+  const kit = rest.sum.filter(c => szK(c) === "kitsune" && szSeason(c) !== shun);
+  SZ_SE.forEach(s => {
+    if (s === shun) return;
+    const t = szPrey(s);
+    let pred = rest[s].filter(c => !(s === "sum" && szK(c) === "kitsune")).length;
+    let prey = rest[t].filter(c => !safe(c) && !(t === "sum" && szK(c) === "kitsune"));
+    prey.sort((a, b) => szKeep(a) - szKeep(b));   // 持ち主に得な順（蚊から）に食われる
+    prey.slice(0, pred).forEach(c => eaten.add(c));
+  });
+  if (shun !== "sum"){ const sp = rest.spr.filter(c => !safe(c) && !eaten.has(c)).sort((a, b) => szKeep(a) - szKeep(b)); sp.slice(0, kit.length).forEach(c => eaten.add(c)); }
+  const items = [], alive = hand.filter(c => !eaten.has(c));
+  const basic = alive.reduce((s, c) => s + (szSeason(c) === shun ? 2 : 1), 0);
+  items.push([`残った札 ${alive.length}枚（旬は2点）`, basic]);
+  if (sets){ items.push([`一年 ${sets}組`, sets * 3]); if (szHas(st, p, "niwashi")) items.push([`🪴庭師：一年1組につき+1`, sets]); }
+  alive.forEach(c => {
+    const k = szK(c);
+    if (k === "sakura") items.push(["桜：手札の春", hand.filter(x => szSeason(x) === "spr").length]);
+    if (k === "tane" && shun === "spr") items.push(["種：旬が春", 5]);
+    if (k === "ka") items.push(["蚊", -2]);
+    if (k === "semi") items.push(["蝉：食われた秋", 2 * hand.filter(x => eaten.has(x) && szSeason(x) === "aut").length]);
+    if (k === "tsukimi") items.push(["月見：食われずに残った", 3]);
+    if (k === "fukubukuro") items.push(["福袋", 3]);
+    if (k === "hosaku" && sets >= 2) items.push(["豊作：一年2組以上", 4]);
+    if (k === "yukiusagi" && hand.filter(x => szSeason(x) === "win").length >= 3) items.push(["雪うさぎ：冬すべて+1", alive.filter(x => szSeason(x) === "win").length]);
+  });
+  if (szHas(st, p, "ogui") && eaten.size) items.push([`🍙大食い：食われた札`, eaten.size]);
+  const total = items.reduce((s, x) => s + x[1], 0);
+  return { total, items, sets, inSet: [...inSet], eaten: [...eaten], alive, ogui: ogui || null };
+}
+
+/* ---------- CPU ---------- */
+/* だいたいの得点（相手の手札は見えないので枚数で見積もる） */
+function szWantEnd(st, p){
+  const mine = szScore(st, p, szCur(st)).total;
+  const oth = Math.max(...st.players.filter(x => x !== p).map(x => st.hands[x].length * 1.35 + (st.bonus[x] || 0)));
+  return mine >= oth;
+}
+function szCpuStep(st, p){
+  const a = st.ask;
+  if (a && a.pid === p){
+    if (a.k === "player"){ const t = a.opts.slice().sort((x, y) => st.hands[y].length - st.hands[x].length)[0]; return ["answer", t]; }
+    if (a.k === "info") return ["answer", true];
+    if (a.k === "yn"){
+      if (a.then.t === "koyomi") return ["answer", !szWantEnd(st, p)];
+      if (a.then.t === "niwa"){ const c = a.card; return ["answer", szK(c) === "ka" || szK(c) === "kaminari" || szK(c) === "tsurara"]; }
+      return ["answer", false];
+    }
+    if (a.k === "list"){
+      if (a.min === 0){ const best = a.cards.slice().sort((x, y) => szKeep(y) - szKeep(x))[0]; return ["answer", best && szKeep(best) >= 3 ? [best] : []]; }
+      const best = a.cards.slice().sort((x, y) => szKeep(y) - szKeep(x))[0]; return ["answer", [best]];
+    }
+    if (a.k === "hand"){ const h = st.hands[p].slice().sort((x, y) => szKeep(x) - szKeep(y)); return ["answer", h.slice(0, a.min || 1)]; }
+    return ["answer", null];
+  }
+  const T = st.turn; if (!T || T.pid !== p || st.ask) return null;
+  const cur = szCur(st), chain = szChain(st), want = szWantEnd(st, p), h = st.hands[p];
+  if (T.step === "use"){
+    const c = h.find(x => szCanUse(st, p, x) && ((szK(x) === "tsukushi" && szSeason(x) === cur) || (szK(x) === "koharu" && chain >= 2 && !want) || (szK(x) === "hanabi" && szSeason(x) === cur) || (szK(x) === "shimobashira" && szSeason(x) === cur) || (szK(x) === "inekari" && chain >= 2 && !want)));
+    if (c) return ["use", c];
+    if (szOnce(st, p, "fuyugomori") && chain >= 2 && !want && st.pile.length > 1) return ["char", "fuyu"];
+    return ["next"];
+  }
+  if (T.step === "disc"){
+    // 蚊は今のうちに手放す
+    const ka = h.find(x => szK(x) === "ka" && szCanDisc(st, p, x));
+    if (ka) return ["disc", ka, "normal"];
+    const low = arr => arr.slice().sort((x, y) => szKeep(x) - szKeep(y))[0];
+    if (want){
+      const adv = h.filter(x => szSeason(x) === szNext(cur) && szCanDisc(st, p, x));
+      if (adv.length && (chain >= 1 || h.length >= 6)) return ["disc", low(adv), "normal"];
+      if (chain >= 2 && szOnce(st, p, "hayazaki") && h.length) return ["disc", low(h), "haya"];
+      if (T.free > 0 && chain >= 2){ const any = h.filter(x => szSeason(x) === szNext(cur)); if (any.length) return ["disc", low(any), "free"]; }
+    } else if (chain >= 2){
+      const stall = h.filter(x => szSeason(x) === cur && szCanDisc(st, p, x));
+      if (stall.length) return ["disc", low(stall), "normal"];
+    }
+    return ["next"];
+  }
+  if (T.step === "pass"){
+    const tg = T.fixed ? [T.fixed] : szPassTargets(st, p);
+    if (!tg.length) return null;
+    // 相手を選べるなら、手札の多い人（得点が高そうな人）へ
+    const to = tg.slice().sort((x, y) => st.hands[y].length - st.hands[x].length)[0];
+    const atk = h.find(x => ["ka", "kaminari", "tsurara"].includes(szK(x)));
+    if (atk) return ["pass", atk, to];
+    // 自分の得点がいちばん下がらない札を渡す
+    let best = null, bv = -1e9; const sh = szCur(st);
+    h.forEach(c => { const st2 = { ...st, hands: { ...st.hands, [p]: h.filter(x => x !== c) } }; const v = szScore(st2, p, sh).total; if (v > bv){ bv = v; best = c; } });
+    return ["pass", best, to];
+  }
+  return null;
+}
+function szApply(st, p, mv){
+  if (!mv) return false;
+  const [k, a, b] = mv;
+  if (k === "answer") return szAnswer(st, p, a);
+  if (k === "use") return szUse(st, p, a);
+  if (k === "disc") return szDisc(st, p, a, b || "normal");
+  if (k === "pass") return szPass(st, p, a, b);
+  if (k === "next") return szAdvance(st, p);
+  if (k === "char") return szCharAct(st, p, a);
+  return false;
+}
+
+/* ======================= 四季の巡り：画面 ======================= */
+const szGames = () => db.sz_games || [];
+const szLive = () => szGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const szActive = () => pickMine(szLive());
+const szById = id => szGames().find(g => g.id === id);
+const szActor = st => st.ask ? st.ask.pid : st.turn ? st.turn.pid : null;
+function szMyTurn(g){ const st = g && g.st; return !!(st && st.sz && g.status === "playing" && me && szActor(st) === me); }
+async function szCommit(id, fn){
+  for (let tries = 0; tries < 6; tries++){
+    const g = szById(id); if (!g || g.status !== "playing") return false;
+    const st = JSON.parse(JSON.stringify(g.st)); st._log = [];
+    const r = fn(st, g); if (!r) return false;
+    const lines = st._log; delete st._log;
+    const body = { st, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
+    if (st.status !== "playing") body.status = "finished";
+    if (lines.length){ const lg = (g.log || []).slice(), now = Date.now(); lines.forEach((m, i) => lg.push({ t: new Date(now + i).toISOString(), m })); body.log = lg.slice(-80); }
+    let data, error;
+    try { ({ data, error } = await sb.from("sz_games").update(body).eq("id", id).eq("version", g.version || 1).select()); } catch (e) { error = e; }
+    if (error && dmNetErr(error) && tries < 5){ await new Promise(r2 => setTimeout(r2, 600 * (tries + 1))); await loadTable("sz_games"); continue; }
+    if (error){ fail(error, "保存"); return false; }
+    if (data && data.length){
+      const before = szActor(g.st);
+      Object.assign(g, data[0]); drawSz();
+      const nx = szActor(st); if (nx && nx !== before && nx !== me && !isCpu(nx)) pushCall({ type: "game_turn", game: SZ_TITLE, to: nx });
+      return true;
+    }
+    await loadTable("sz_games");
+  }
+  drawSz(); toast("混み合っています。もう一度タップしてください", 2000); return false;
+}
+const szDo = (id, p, mv) => szCommit(id, st => szApply(st, p, mv));
+CPU_AI.sz_games = g => {
+  const st = g.st; if (!st || !st.sz || g.status !== "playing") return null;
+  const p = szActor(st); if (!isCpu(p)) return null;
+  const mv = szCpuStep(st, p); if (!mv) return null;
+  const wait = mv[0] === "next" ? 700 : mv[0] === "answer" ? 900 : 1300;
+  return { wait, run: () => szDo(g.id, p, mv) };
+};
+
+/* ---------- 新しい対戦 ---------- */
+function openSzNew(){
+  const t = curTrip();
+  let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 5), chars = true;
+  const s = openSheet("四季の巡りを始める", `
+    <p class="note">【オリジナル】ゲーム終了時の手札がそのまま得点になる、四すくみの手札管理ゲーム。春は夏を、夏は秋を、秋は冬を、冬は春を食う。捨て札で季節が3回続けて進んだら終わり（3〜5人）。</p>
+    <button type="button" class="grbtn" data-grule="sz">ルールを見る</button>
+    <div class="f"><span>参加者（タップで選ぶ・3〜5人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え（最初の人はランダム）</span><div id="szOrder" class="norder"></div><button class="shufbtn" id="szShuf">順番をシャッフル</button></div>
+    <div class="f"><span>キャラクター</span><div class="chips"><button type="button" class="pc" data-ch="1" aria-pressed="true">ランダムに配る</button><button type="button" class="pc" data-ch="0" aria-pressed="false">なし（季節カードだけ）</button></div></div>
+    <div class="btns"><button class="btn" id="szGo">はじめる</button></div>`);
+  s.querySelector("[data-close]").onclick = openGames;
+  const draw = () => { $("#szOrder").innerHTML = seatHtml(order); seatDrag($("#szOrder"), () => order, o => order = o, draw); };
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
+    if (on && order.length >= 5){ toast("最大5人です"); return; }
+    b.setAttribute("aria-pressed", String(on)); order = on ? [...order, id] : order.filter(x => x !== id); draw();
+  });
+  s.querySelectorAll("[data-ch]").forEach(b => b.onclick = () => { chars = b.dataset.ch === "1"; s.querySelectorAll("[data-ch]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+  $("#szShuf").onclick = () => { order = shuffle(order); draw(); };
+  draw();
+  $("#szGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
+    if (order.length < 3 || order.length > 5){ toast("参加者は3〜5人です"); return; }
+    const st = szSetup(order, { chars }); const lg = st._log || []; delete st._log;
+    const row = { trip_id: t ? t.id : null, status: "playing", players: order, st, created_by: me || null, log: lg.map((m, i) => ({ t: new Date(Date.now() + i).toISOString(), m })) };
+    const { data: res, error } = await sb.from("sz_games").insert(row).select().single();
+    if (error){ if (/sz_games|relation|exist|schema/i.test(error.message || "")) toast("四季の巡りを使うには schema17.sql を実行してください", 3500); else fail(error, "作成"); return; }
+    await loadTable("sz_games"); closeSheet(); openSz(res.id); order.forEach(p => pushCall({ type: "game_turn", game: SZ_TITLE, to: p }));
+  };
+}
+let szId = null, szSel = null, szMode = "normal", szAskSel = [], szSeenFx = {};
+function openSz(id){ szId = id; szSel = null; szMode = "normal"; szAskSel = []; const g = szById(id); if (g && g.st) szSeenFx[id] = g.st.fxn || 0; $("#szg").hidden = false; document.body.style.overflow = "hidden"; drawSz(); }
+function closeSz(){ szId = null; $("#szg").hidden = true; document.body.style.overflow = ""; render(); }
+function szMenu(g){
+  const s = openSheet("四季の巡りのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="log">これまでの流れ<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openGameRules("sz");
+  s.querySelector('[data-x="log"]').onclick = () => openSheet("これまでの流れ", `<ul class="szloglist">${(g.log || []).slice().reverse().map(x => `<li>${esc(x.m)}</li>`).join("")}</ul>`);
+  s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); const { error } = await sb.from("sz_games").update({ status: "aborted", version: (g.version || 1) + 1 }).eq("id", g.id); if (error){ fail(error, "保存"); return; } await loadTable("sz_games"); closeSz(); };
+}
+
+/* ---------- 見た目 ---------- */
+function szCardHtml(c, cls = "", st){
+  const d = szD(c), s = d.s, cur = st ? szCur(st) : null;
+  const lines = [d.use && `<li class="u"><i>使</i>${esc(d.use[0])}<em>旬：${esc(d.use[1])}</em></li>`, d.pass && `<li class="p"><i>渡</i>${esc(d.pass)}</li>`, d.disc && `<li class="d"><i>捨</i>${esc(d.disc)}</li>`, d.end && `<li class="e"><i>終</i>${esc(d.end)}</li>`].filter(Boolean).join("");
+  return `<div class="szc s-${s} ${cls} ${cur === s ? "shun" : ""}" data-c="${c}" style="--sc:${SZ_SC[s]}"><div class="szch"><span class="szsi">${SZ_SI[s]}</span><b>${esc(d.n)}</b><small>${SZ_SN[s]}</small></div>${lines ? `<ul>${lines}</ul>` : `<p class="szplain">効果なし</p>`}${cur === s ? `<span class="szshun">旬</span>` : ""}</div>`;
+}
+const szMini = (c, cls = "") => { const d = szD(c); return `<span class="szm s-${d.s} ${cls}" style="--sc:${SZ_SC[d.s]}">${SZ_SI[d.s]}${esc(d.n)}</span>`; };
+const szPname = p => esc(pname(p));
+function szWheel(st){
+  const cur = szCur(st), ch = szChain(st);
+  return `<div class="szwheel">${SZ_SE.map((s, i) => `<span class="szw ${s === cur ? "on" : ""}" style="--sc:${SZ_SC[s]};--a:${i * 90 - 90}deg"><i>${SZ_SI[s]}</i><b>${SZ_SN[s]}</b></span>`).join("")}<div class="szwc"><small>今の季節</small><b style="color:${SZ_SC[cur]}">${SZ_SN[cur]}</b><span class="szchain">${[0, 1, 2].map(i => `<i class="${i < ch ? "on" : ""}"></i>`).join("")}</span><small>暦 ${ch}/3</small></div></div>`;
+}
+function drawSz(){
+  setTimeout(cpuKick, 0);
+  if (!szId) return;
+  const g = szById(szId); if (!g || !g.st || g.status === "aborted") return closeSz();
+  const st = g.st, T = st.turn, el = $("#szg");
+  const myAsk = st.ask && st.ask.pid === me ? st.ask : null;
+  const myTurn = g.status === "playing" && T && T.pid === me && !st.ask;
+  const hand = st.hands[me] || [];
+  if (szSel && !hand.includes(szSel)) szSel = null;
+  const cur = szCur(st);
+  const tg = myTurn && T.step === "pass" ? (T.fixed ? [T.fixed] : szPassTargets(st, me)) : [];
+  // 席
+  const seats = st.players.map(p => {
+    const ch = st.chars[p] && SZ_CHAR[st.chars[p]], f = st.flags[p] || {}, act = szActor(st) === p;
+    const fl = [f.noUse ? "🧊使用不可" : "", f.noDisc ? "☃️捨て不可" : "", f.shield ? "❄️霜柱" : ""].filter(Boolean).join(" ");
+    return `<div class="szseat ${act ? "act" : ""} ${tg.includes(p) ? "tgt" : ""} ${p === me ? "mine" : ""}" style="--pc:${pcolor(p)}" data-seat="${p}">${act ? `<em class="szturn">${st.ask && st.ask.pid === p && (!T || T.pid !== p) ? "選択中" : "手番"}</em>` : ""}<b>${szPname(p)}</b>${ch ? `<small class="szchr ${st.used[p] ? "used" : ""}">${ch.i}${ch.n}</small>` : ""}<span class="szhn">手札 <b>${st.hands[p].length}</b></span>${fl ? `<small class="szfl">${fl}</small>` : ""}${tg.includes(p) ? `<i class="sztgi">渡す相手</i>` : ""}</div>`;
+  }).join("");
+  // 捨て札（上から4枚）
+  const top = st.pile.slice(-4);
+  const pileHtml = `<div class="szpile">${top.map((e, i) => `${i ? `<i class="szarr ${szPileS(e) === szNext(szPileS(top[i - 1])) ? "adv" : "stay"}">${szPileS(e) === szNext(szPileS(top[i - 1])) ? "▶" : "＝"}</i>` : ""}<span class="szpc s-${szPileS(e)} ${i === top.length - 1 ? "top" : ""}" style="--sc:${SZ_SC[szPileS(e)]}">${SZ_SI[szPileS(e)]}<b>${esc(szD(e.c).n)}</b>${e.as ? `<small>→${SZ_SN[e.as]}として</small>` : ""}</span>`).join("")}</div>`;
+  // 手番の段階
+  const steps = [["draw", "ドロー"], ["use", "使用"], ["disc", "捨て"], ["pass", "渡し"]];
+  const stepIx = T ? ({ use: 1, disc: 2, pass: 3 }[T.step] || 0) : 0;
+  const stepBar = T ? `<div class="szsteps">${steps.map(([k, n], i) => `<span class="${i < stepIx ? "done" : i === stepIx ? "now" : ""}">${i + 1} ${n}</span>`).join("")}</div>` : "";
+  let guide = "";
+  if (g.status === "playing" && T){
+    if (myTurn){
+      if (T.step === "use") guide = T.noUse ? "🧊 氷柱の効果で、この手番は使用できません" : "使う札をタップ（季節の制限なし。今の季節と同じ札は「旬」の効果）。使わないなら「捨てへ」";
+      else if (T.step === "disc") guide = T.noDisc ? "☃️ 大雪の効果で、この手番は捨てられません" : szMode === "haya" ? "🌷早咲き：捨てる札を1枚選ぶ（次の季節として扱う）" : T.free ? "夕立：もう1枚、季節に関係なく捨てられます" : `捨てられるのは ${SZ_SI[cur]}${SZ_SN[cur]}（足止め）か ${SZ_SI[szNext(cur)]}${SZ_SN[szNext(cur)]}（季節を進める）。捨てないなら「渡しへ」`;
+      else if (T.step === "pass") guide = tg.length ? `手札${hand.length}枚 → ${tg.length > 1 ? "渡す相手と" : `${szPname(tg[0])}に`}渡す札を選ぶ${T.two ? `（2枚渡す：あと${2 - T.passed}枚）` : ""}` : "";
+    } else guide = `${szPname(szActor(st))}が${st.ask && (!T || st.ask.pid !== T.pid) ? "選んでいます" : `${({ use: "使う札", disc: "捨てる札", pass: "渡す札" })[T.step]}を選んでいます`}…`;
+  }
+  // 自分の手札
+  const canAct = c => myTurn && (T.step === "use" ? szCanUse(st, me, c) : T.step === "disc" ? szCanDisc(st, me, c, szMode === "haya" ? "haya" : szCanDisc(st, me, c) ? "normal" : T.free ? "free" : "normal") : T.step === "pass");
+  const sorted = hand.slice().sort((a, b) => SZ_SE.indexOf(szSeason(a)) - SZ_SE.indexOf(szSeason(b)) || szK(a).localeCompare(szK(b)));
+  const handHtml = `<div class="szhand">${sorted.map(c => szCardHtml(c, `${szSel === c ? "sel" : ""} ${myTurn && !canAct(c) ? "ng" : ""}`, st)).join("") || `<p class="sznote">手札なし</p>`}</div>`;
+  // 行動ボタン
+  let btns = "";
+  if (myTurn){
+    const sel = szSel;
+    if (T.step === "use") btns = `<button class="szb go" id="szUseB" ${sel && szCanUse(st, me, sel) ? "" : "disabled"}>${sel ? `${esc(szD(sel).n)}を使う${szSeason(sel) === cur ? "（旬）" : ""}` : "使う札を選ぶ"}</button><button class="szb" id="szNext">捨てへ ▶</button>`;
+    else if (T.step === "disc"){
+      const mode = szMode === "haya" ? "haya" : sel && szCanDisc(st, me, sel) ? "normal" : T.free ? "free" : "normal";
+      const ok = sel && szCanDisc(st, me, sel, mode);
+      const eff = ok ? (mode === "haya" ? `→${SZ_SN[szNext(cur)]}として` : szSeason(sel) === cur ? "（足止め）" : szSeason(sel) === szNext(cur) ? "（季節を進める）" : "（夕立）") : "";
+      btns = `<button class="szb go" id="szDiscB" ${ok ? "" : "disabled"}>${sel ? `${esc(szD(sel).n)}を捨てる${eff}` : "捨てる札を選ぶ"}</button><button class="szb" id="szNext">渡しへ ▶</button>`;
+    } else if (T.step === "pass") btns = tg.map(p => `<button class="szb go" data-pto="${p}" ${sel ? "" : "disabled"}>${sel ? `${esc(szD(sel).n)}を` : ""}${szPname(p)}に渡す</button>`).join("");
+  }
+  // キャラの欄
+  const myCh = st.chars[me] && SZ_CHAR[st.chars[me]];
+  let chBtn = "";
+  if (myCh && myTurn && !st.used[me]){
+    if (st.chars[me] === "hayazaki" && T.step === "disc" && !T.noDisc) chBtn = `<button class="szcb ${szMode === "haya" ? "on" : ""}" id="szHaya">${szMode === "haya" ? "早咲きをやめる" : "🌷早咲きを使う"}</button>`;
+    if (st.chars[me] === "fuyugomori" && T.step !== "pass" && st.pile.length > 1) chBtn = `<button class="szcb" id="szFuyu">🐻季節を1つ戻す</button>`;
+    if (st.chars[me] === "yubin" && T.step === "pass" && !T.passed && hand.length >= 2) chBtn = `<button class="szcb ${T.wantTwo ? "on" : ""}" id="szTwo">${T.wantTwo ? "✉️2枚渡す：ON" : "✉️この手番は2枚渡す"}</button>`;
+  }
+  const chHtml = myCh ? `<div class="szmych"><span class="szci">${myCh.i}</span><div><b>${myCh.n}<small>${myCh.t}</small></b><p><i>常時</i>${esc(myCh.a)}</p><p class="${st.used[me] ? "used" : ""}"><i>1回</i>${esc(myCh.o)}${st.used[me] ? "（使用済み）" : ""}</p></div>${chBtn}</div>` : "";
+  const lg = (g.log || []).slice(-4).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  el.innerHTML = `
+    <div class="sztop"><b class="szlogo">四季の巡り<small>SHIKI</small></b><span class="szno">${T ? `${st.no}手番目` : ""}</span><button class="szbtn" id="szMenu">…</button><button class="szbtn" id="szX">×</button></div>
+    <div class="szseats">${seats}</div>
+    <div class="szmid">${szWheel(st)}<div class="szside">${pileHtml}<div class="szpiles"><span>山札 <b>${st.deck.length}</b></span><button id="szExile">除外 <b>${st.exile.length}</b></button></div></div></div>
+    ${stepBar}
+    ${guide ? `<p class="szguide">${guide}</p>` : ""}
+    <div class="szbtns">${btns}</div>
+    ${handHtml}
+    ${chHtml}
+    <ul class="szlog">${lg}</ul>
+    ${myAsk ? szAskHtml(st, myAsk) : ""}
+    ${g.status === "finished" && st.end ? szEndHtml(g) : ""}`;
+  // 操作
+  const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
+  on("szX", closeSz); on("szMenu", () => szMenu(g));
+  on("szExile", () => openSheet("除外置き場", st.exile.length ? `<div class="szlist">${st.exile.map(c => szCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだありません</p>`));
+  el.querySelectorAll(".szhand .szc").forEach(b => b.onclick = () => { szSel = szSel === b.dataset.c ? null : b.dataset.c; drawSz(); });
+  el.querySelectorAll("[data-seat]").forEach(b => b.onclick = () => { const p = b.dataset.seat, ch = st.chars[p] && SZ_CHAR[st.chars[p]]; if (ch) openSheet(`${pname(p)}のキャラ`, `<div class="szchsheet"><span class="szci">${ch.i}</span><b>${ch.n}</b><small>${ch.t}</small><p><i>常時</i>${esc(ch.a)}</p><p><i>1回</i>${esc(ch.o)}${st.used[p] ? "（使用済み）" : ""}</p></div>`); });
+  on("szUseB", async () => { const c = szSel; szSel = null; await szDo(g.id, me, ["use", c]); });
+  on("szDiscB", async () => { const c = szSel, mode = szMode === "haya" ? "haya" : szCanDisc(st, me, c) ? "normal" : "free"; szSel = null; szMode = "normal"; await szDo(g.id, me, ["disc", c, mode]); });
+  on("szNext", async () => { szSel = null; szMode = "normal"; await szDo(g.id, me, ["next"]); });
+  on("szHaya", () => { szMode = szMode === "haya" ? "normal" : "haya"; drawSz(); });
+  on("szFuyu", async () => { if (!confirm("冬籠りの能力（1回）で、捨て札の一番上を取り除いて季節を1つ戻しますか？")) return; await szDo(g.id, me, ["char", "fuyu"]); });
+  on("szTwo", async () => { await szDo(g.id, me, ["char", "two"]); });
+  el.querySelectorAll("[data-pto]").forEach(b => b.onclick = async () => { const c = szSel; if (!c) return; szSel = null; await szDo(g.id, me, ["pass", c, b.dataset.pto]); });
+  // 選択
+  if (myAsk){
+    el.querySelectorAll("[data-ap]").forEach(b => b.onclick = async () => { szAskSel = []; await szDo(g.id, me, ["answer", b.dataset.ap]); });
+    el.querySelectorAll(".szask .szc").forEach(b => b.onclick = () => { const c = b.dataset.c, mx = myAsk.max || 1; szAskSel = szAskSel.includes(c) ? szAskSel.filter(x => x !== c) : mx === 1 ? [c] : [...szAskSel, c].slice(0, mx); drawSz(); });
+    on("szAskGo", async () => { const v = szAskSel.slice(); szAskSel = []; await szDo(g.id, me, ["answer", v]); });
+    on("szAskOk", async () => { szAskSel = []; await szDo(g.id, me, ["answer", true]); });
+    on("szYes", async () => { await szDo(g.id, me, ["answer", true]); });
+    on("szNo", async () => { await szDo(g.id, me, ["answer", false]); });
+  }
+  on("szEndClose", closeSz);
+  on("szAgain", () => { closeSz(); openSzNew(); });
+  szFxShow(g, el);
+}
+function szAskHtml(st, a){
+  let body = "";
+  if (a.k === "player") body = `<div class="szaskp">${a.opts.map(p => `<button class="szb" data-ap="${p}" style="--pc:${pcolor(p)}">${szPname(p)}<small>手札${st.hands[p].length}枚</small></button>`).join("")}</div>`;
+  else if (a.k === "list" || a.k === "hand"){
+    const cs = a.k === "hand" ? st.hands[me] : a.cards;
+    const n = szAskSel.length, ok = n >= (a.min || 0) && n <= (a.max || 1);
+    body = `<div class="szlist">${cs.map(c => szCardHtml(c, `sm ${szAskSel.includes(c) ? "sel" : ""}`, st)).join("")}</div><div class="szbtns"><button class="szb go" id="szAskGo" ${ok ? "" : "disabled"}>${a.min === 0 && !n ? "選ばない" : "決定"}</button></div>`;
+  } else if (a.k === "info") body = `<div class="szlist">${a.cards.map(c => szCardHtml(c, "sm", st)).join("") || `<p class="sznote">手札なし</p>`}</div><div class="szbtns"><button class="szb go" id="szAskOk">OK</button></div>`;
+  else if (a.k === "yn") body = `${a.card ? `<div class="szlist">${szCardHtml(a.card, "sm", st)}</div>` : ""}<div class="szbtns"><button class="szb" id="szNo">${esc(a.no || "いいえ")}</button><button class="szb go" id="szYes">${esc(a.yes || "はい")}</button></div>`;
+  return `<div class="szask"><div class="szaskin"><b>${esc(a.title)}</b>${body}</div></div>`;
+}
+function szEndHtml(g){
+  const st = g.st, E = st.end, rank = st.players.slice().sort((a, b) => E.res[b].total - E.res[a].total), best = E.res[rank[0]].total;
+  return `<div class="szend"><div class="szendin">
+    <div class="szendt">${E.why === "cal" ? "暦の完成" : "山札が尽きた"}<small>最後の季節：${SZ_SI[E.shun]}${SZ_SN[E.shun]}（${SZ_SN[E.shun]}の札が旬：2点・食われない）</small></div>
+    ${rank.map((p, i) => { const r = E.res[p], win = r.total === best; return `<div class="szres ${win ? "win" : ""}" style="--pc:${pcolor(p)}"><div class="szrh"><span class="szrk">${win ? "👑" : i + 1}</span><b>${szPname(p)}</b>${st.chars[p] ? `<small>${SZ_CHAR[st.chars[p]].i}${SZ_CHAR[st.chars[p]].n}</small>` : ""}<span class="szpt">${r.total}<small>点</small></span></div>
+      <div class="szrc">${st.hands[p].slice().sort((a, b) => SZ_SE.indexOf(szSeason(a)) - SZ_SE.indexOf(szSeason(b))).map(c => szMini(c, `${r.eaten.includes(c) ? "eaten" : ""} ${r.inSet.includes(c) ? "set" : ""} ${szSeason(c) === E.shun ? "shun" : ""}`)).join("") || "<small>手札なし</small>"}</div>
+      <ul class="szri">${r.items.filter(x => x[1] || x[0].includes("大食い")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v > 0 ? "+" : ""}${v}</b></li>`).join("")}</ul></div>`; }).join("")}
+    <p class="sznote small">枠つき＝一年の組（食われない）／取り消し線＝食われた札（得点・効果なし）／金色＝旬</p>
+    <div class="szbtns"><button class="szb" id="szEndClose">閉じる</button><button class="szb go" id="szAgain">もう一度遊ぶ</button></div></div></div>`;
+}
+/* 起きたことを短い帯で見せる（季節が進んだ・暦の完成など） */
+function szFxShow(g, el){
+  const st = g.st, seen = szSeenFx[g.id] || 0; szSeenFx[g.id] = st.fxn || 0;
+  const evs = (st.fx || []).filter(e => e.n > seen).slice(-3);
+  evs.forEach((e, i) => {
+    let tx = "", cls = "";
+    if (e.k === "disc") { tx = e.adv ? `季節が${SZ_SI[e.s]}${SZ_SN[e.s]}に進んだ` : e.stall ? `${SZ_SI[e.s]}${SZ_SN[e.s]}で足止め` : `季節は${SZ_SN[e.s]}`; cls = e.adv ? "adv" : "stay"; }
+    else if (e.k === "pass" && e.to === me) { tx = `${pname(e.p)}から${szD(e.c).n}が届いた`; cls = "pass"; }
+    else if (e.k === "use" && e.shun) { tx = `${pname(e.p)}：${szD(e.c).n}（旬）`; cls = "shun"; }
+    else if (e.k === "unpile") { tx = `季節が${SZ_SN[szCur(st)]}に戻った`; cls = "back"; }
+    else if (e.k === "cal") { tx = "暦が完成！"; cls = "cal"; }
+    else if (e.k === "uncal") { tx = "📜 暦読みが完成を取り消した"; cls = "back"; }
+    else if (e.k === "nopass" && e.p === me) { tx = "手札の枚数が人数で割り切れるので、渡さない"; cls = "stay"; }
+    if (!tx) return;
+    const b = document.createElement("div"); b.className = "szfx " + cls; b.textContent = tx; b.style.animationDelay = (i * .5) + "s"; el.appendChild(b);
+    setTimeout(() => b.remove(), 2600 + i * 500);
+  });
+}
+function szRulesHtml(){
+  const card = k => { const d = SZ_DEF[k]; return `<tr><td><b style="color:${SZ_SC[d.s]}">${d.n}</b></td><td>${d.x}</td><td>${[d.use && `使：${d.use[0]}／旬：${d.use[1]}`, d.pass && `渡：${d.pass}`, d.disc && `捨：${d.disc}`, d.end && `終：${d.end}`].filter(Boolean).join("<br>") || "—"}</td></tr>`; };
+  return `<div class="goal"><b>終わったときの<span class="r">手札</span>がそのまま得点！</b><small>春 → 夏 → 秋 → 冬 → 春 の四すくみ（矢印の元が先の札を食う）。共通の捨て札の一番上の季節が「今の季節」</small></div>
+  <h4>準備</h4><ol><li>キャラクターを1枚ずつ配る</li><li>季節カード（40枚）を3枚ずつ配る</li><li>山札の一番上を捨て札に置く（最初の季節・効果なし）</li><li>ランダムな人から時計回り</li></ol>
+  <h4>手番</h4><ol><li><b>ドロー</b>：山札から2枚引く（自動）</li><li><b>使用</b>（何枚でも）：使用効果のある札を使う。季節の制限なし。使った札は除外置き場へ（季節は動かない）。今の季節と同じ札は「旬」の効果になる</li><li><b>捨て</b>（何枚でも）：今の季節（足止め）か次の季節（季節が進む）の札だけを1枚ずつ捨て札に置く。捨て効果が発動</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）。渡し効果が発動</li></ol>
+  <p>山札が尽きたら除外置き場を混ぜて新しい山札に。どちらも尽きたら終了。</p>
+  <h4>ゲーム終了：暦の完成</h4><p>捨て札の上から4枚が四季の順に並んだ瞬間（3回続けて季節が進んだ瞬間）、手番の途中でも終わり。足止めや季節を戻す効果が挟まると連続は途切れる。最後の季節がそのまま「旬」になる。</p>
+  <h4>得点</h4><ol><li><b>一年</b>：春・夏・秋・冬を1枚ずつ組にする。1組 +3点。組の札は食われない</li><li><b>食い合い</b>：組に入らない旬でない札どうしで、食う側1枚が獲物1枚を食う（自分の手札の中で）</li><li><b>基本点</b>：食われずに残った札1点、旬の札2点</li><li><b>終了時の効果</b>（食われた札の効果は発動しない）</li></ol>
+  <p class="note">アプリでは、組に入れる札・食われる札は持ち主にいちばん得になるように自動で選びます（蚊は先に食われる）。</p>
+  <h4>キャラクター</h4><table class="sztb"><tr><th>キャラ</th><th>常時</th><th>1回</th></tr>${SZ_CHAR_KEYS.map(k => { const c = SZ_CHAR[k]; return `<tr><td><b>${c.i}${c.n}</b><br><small>${c.t}</small></td><td>${esc(c.a)}</td><td>${esc(c.o)}</td></tr>`; }).join("")}</table>
+  <h4>カード</h4>${SZ_SE.map(s => `<h5 style="color:${SZ_SC[s]}">${SZ_SI[s]}${SZ_SN[s]}（10枚）</h5><table class="sztb"><tr><th>名前</th><th>枚</th><th>効果</th></tr>${Object.keys(SZ_DEF).filter(k => SZ_DEF[k].s === s).map(card).join("")}</table>`).join("")}`;
+}
+
 let lastBadgeN = null;
 clearBadge();
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
   clearBadge();
   dmQuiet = Date.now() + 2500; if (dmId){ delete dmPrevHand[dmId]; delete dmStatPrev[dmId]; delete dmOthPrev[dmId]; }   // ドミニオン：戻ってきたら、たまった演出は飛ばして今の状態から
-  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); drawHx(); } catch (e) { console.error(e); }
+  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); drawHx(); drawSz(); } catch (e) { console.error(e); }
 });
 (async () => {
   try { await loadAll(); }
