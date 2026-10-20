@@ -3929,125 +3929,136 @@ body.bgpause .hxemb i{animation-play-state:paused}
 .hxsk.wide b{white-space:nowrap;flex:none}.hxsk.wide small{flex:1;min-width:0}
 .hxboard .hc.spc{filter:drop-shadow(0 0 3px #FFD45A)}
 
-/* ===== 四季の巡り ===== */
-.arena.szg{padding:calc(var(--safe-t) + 8px) 10px calc(var(--safe-b) + 12px);background:radial-gradient(circle at 15% 8%,rgba(232,106,154,.18),transparent 40%),radial-gradient(circle at 90% 25%,rgba(46,158,91,.14),transparent 40%),radial-gradient(circle at 12% 80%,rgba(217,119,43,.16),transparent 45%),radial-gradient(circle at 88% 92%,rgba(74,143,214,.16),transparent 45%),linear-gradient(170deg,#FFFDF7,#F6EEDC);color:#2A2418;overflow-y:auto;overscroll-behavior:contain;gap:7px}
-.sztop{display:flex;align-items:center;gap:6px;flex:none}
-.szlogo{font-family:var(--disp);font-weight:400;font-size:20px;letter-spacing:.06em;display:flex;align-items:baseline;gap:6px;background:linear-gradient(90deg,#E86A9A,#2E9E5B,#D9772B,#4A8FD6);-webkit-background-clip:text;background-clip:text;color:transparent}
-.szlogo small{font-size:10px;letter-spacing:.3em;color:#9A8B6A;-webkit-text-fill-color:#9A8B6A}
-.szno{flex:1;font-size:12px;font-weight:900;color:#8A7A5A}
-.szbtn{width:34px;height:34px;border-radius:10px;border:2px solid #2A2418;background:#fff;font-weight:900;font-size:16px;box-shadow:0 2px 0 #2A2418}
-.szseats{display:flex;gap:5px;flex:none;overflow-x:auto;padding:8px 2px 4px}
-.szseat{position:relative;flex:1;min-width:64px;padding:5px 5px 4px;border-radius:12px;background:#fff;border:2px solid var(--pc);text-align:center;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2}
-.szseat b{font-size:11.5px;font-weight:900;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.szchr{font-size:9.5px;font-weight:900;color:#6A5A3A;background:#F6EEDC;border-radius:99px;padding:0 5px}
-.szchr.used{opacity:.5;text-decoration:line-through}
-.szhn{font-size:10px;font-weight:700;color:#6A5A3A}.szhn b{font-size:13px;color:#2A2418}
-.szfl{font-size:8.5px;font-weight:900;color:#3A6AA8}
-.szseat.act{box-shadow:0 0 0 3px #F2C94C,0 0 14px rgba(242,201,76,.8)}
-.szseat.mine{background:#FFF8E2}
-.szseat.tgt{background:#FFE9EF;border-style:dashed}
-.szturn{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;font-weight:900;padding:1px 7px;border-radius:99px;background:#E2364F;color:#fff;white-space:nowrap}
-.sztgi{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;font-weight:900;padding:0 6px;border-radius:99px;background:#E86A9A;color:#fff;white-space:nowrap}
-.szmid{display:flex;align-items:center;gap:10px;flex:none;padding:4px 0}
-.szwheel{position:relative;width:132px;height:132px;flex:none;border-radius:50%;background:conic-gradient(from -45deg,rgba(232,106,154,.22) 0 25%,rgba(46,158,91,.22) 0 50%,rgba(217,119,43,.22) 0 75%,rgba(74,143,214,.22) 0);border:2px solid #2A2418}
-.szw{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(var(--a)) translate(48px) rotate(calc(-1 * var(--a)));line-height:1;opacity:.55}
-.szw i{font-style:normal;font-size:16px}.szw b{font-size:10px;font-weight:900;color:var(--sc)}
-.szw.on{opacity:1;transform:rotate(var(--a)) translate(48px) rotate(calc(-1 * var(--a))) scale(1.3);filter:drop-shadow(0 0 6px var(--sc))}
-.szwc{position:absolute;inset:34px;border-radius:50%;background:#fff;border:2px solid #2A2418;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
-.szwc small{font-size:8px;font-weight:900;color:#8A7A5A}
-.szwc b{font-family:var(--disp);font-weight:400;font-size:22px}
+/* ===== 四季の巡り（和紙と墨・四季の色） ===== */
+.arena.szg{--szink:#2B2420;--szpaper:#FBF7EE;--szline:#D9CDB4;--szgold:#B8892E;--szmin:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+  padding:calc(var(--safe-t) + 8px) 10px calc(var(--safe-b) + 14px);color:var(--szink);overflow-y:auto;overscroll-behavior:contain;gap:8px;
+  background:radial-gradient(circle at 0 100%,transparent 18px,rgba(43,36,32,.035) 19px,transparent 20px) 0 0/40px 20px,radial-gradient(circle at 20px 100%,transparent 18px,rgba(43,36,32,.035) 19px,transparent 20px) 0 10px/40px 20px,linear-gradient(175deg,#FDFAF3,#F3EBDB)}
+.sztop{display:flex;align-items:center;gap:6px;flex:none;border-bottom:1px solid var(--szline);padding-bottom:6px}
+.szlogo{font-family:var(--szmin);font-weight:700;font-size:21px;letter-spacing:.18em;color:var(--szink)}
+.szno{flex:1;font-family:var(--szmin);font-size:11.5px;color:#7A6A55}
+.szbtn{width:32px;height:32px;border-radius:50%;border:1px solid var(--szink);background:var(--szpaper);font-size:15px;color:var(--szink)}
+.szart{width:26px;height:26px;flex:none}
+.szart.xs{width:16px;height:16px}
+/* 席 */
+.szseats{display:flex;gap:5px;flex:none;overflow-x:auto;padding:9px 1px 4px}
+.szseat{position:relative;flex:1;min-width:66px;padding:6px 5px 5px;background:var(--szpaper);border:1px solid var(--szline);border-top:3px solid var(--pc);border-radius:4px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2;box-shadow:0 1px 3px rgba(43,36,32,.08)}
+.szseat b{font-size:11.5px;font-weight:700;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.szhn{font-family:var(--szmin);font-size:10px;color:#7A6A55}.szhn b{font-size:14px;color:var(--szink)}
+.szseat.act{border-color:var(--szgold);box-shadow:0 0 0 2px rgba(184,137,46,.5)}
+.szseat.mine{background:#FFFDF6}
+.szseat.tgt{background:#FBEFF2;border-style:dashed}
+.szturn{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;padding:1px 7px;background:#B33A3A;color:#fff;white-space:nowrap;border-radius:2px;font-family:var(--szmin)}
+.sztgi{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);font-style:normal;font-size:9px;padding:0 6px;background:#C9577E;color:#fff;white-space:nowrap;border-radius:2px}
+.szmons{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;min-height:4px}
+.szmons small{font-size:9px;color:#9A8A70}
+/* 紋 */
+.szmon{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--mc);box-shadow:inset 0 0 0 1.5px var(--szpaper),inset 0 0 0 2.5px var(--mc);background:var(--szpaper);flex:none}
+.szmon b{font-family:var(--szmin);font-size:10.5px;font-weight:700;color:var(--mc);line-height:1}
+.szmon.t-c{--mc:#2E4A7A}.szmon.t-e{--mc:#B33A3A}.szmon.t-o{--mc:#9A7420}
+.szmon.used{opacity:.35}
+.szpart .szmon{width:34px;height:34px}.szpart .szmon b{font-size:17px}
+/* 季節の輪 */
+.szmid{display:flex;align-items:center;gap:10px;flex:none}
+.szwheel{position:relative;width:134px;height:134px;flex:none;border-radius:50%;background:var(--szpaper);border:1px solid var(--szink);box-shadow:inset 0 0 0 5px var(--szpaper),inset 0 0 0 6px var(--szline)}
+.szw{position:absolute;left:50%;top:50%;width:40px;height:44px;margin:-22px -20px;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(var(--a)) translate(46px) rotate(calc(-1 * var(--a)));line-height:1;opacity:.4;transition:opacity .3s}
+.szw b{font-family:var(--szmin);font-size:10px;color:var(--sc)}
+.szw.on{opacity:1}
+.szw.on .szart{width:32px;height:32px;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--sc) 60%,transparent))}
+.szwc{position:absolute;inset:36px;border-radius:50%;background:#fff;border:1px solid var(--szline);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
+.szwc small{font-size:8px;color:#9A8A70;font-family:var(--szmin)}
+.szwc b{font-family:var(--szmin);font-weight:700;font-size:24px}
 .szchain{display:flex;gap:3px;margin:2px 0}
-.szchain i{width:9px;height:9px;border-radius:50%;background:#E6DCC4;border:1px solid #8A7A5A}
-.szchain i.on{background:#E2364F;border-color:#7A1020;box-shadow:0 0 5px #E2364F}
+.szchain i{width:8px;height:8px;border-radius:50%;border:1px solid #9A8A70}
+.szchain i.on{background:#B33A3A;border-color:#B33A3A}
 .szside{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
 .szpile{display:flex;align-items:center;gap:2px;flex-wrap:wrap}
-.szpc{display:flex;flex-direction:column;align-items:center;min-width:42px;padding:3px 3px;border-radius:7px;background:#fff;border:2px solid var(--sc);font-size:14px;line-height:1.1}
-.szpc b{font-size:9.5px;font-weight:900;white-space:nowrap}
-.szpc small{font-size:8px;font-weight:900;color:var(--sc)}
-.szpc.top{box-shadow:0 0 0 2px var(--sc),0 3px 8px rgba(0,0,0,.2);transform:scale(1.08)}
-.szarr{font-style:normal;font-size:10px;font-weight:900;color:#9A8B6A}
-.szarr.adv{color:#E2364F}
-.szpiles{display:flex;gap:6px;font-size:11px;font-weight:900;color:#6A5A3A}
-.szpiles span,.szpiles button{padding:3px 8px;border-radius:99px;background:#fff;border:1.5px solid #CDBF9F;font-weight:900;font-size:11px;color:#6A5A3A}
+.szpc{display:flex;flex-direction:column;align-items:center;min-width:38px;padding:3px 3px;background:#fff;border:1px solid var(--szline);border-bottom:3px solid var(--sc);border-radius:3px;line-height:1.1}
+.szpc b{font-family:var(--szmin);font-size:10px;color:var(--sc)}
+.szpc small{font-size:7.5px;color:var(--sc)}
+.szpc.top{box-shadow:0 2px 8px rgba(43,36,32,.18);transform:translateY(-2px)}
+.szarr{font-style:normal;font-family:var(--szmin);font-size:9px;color:#9A8A70}
+.szarr.adv{color:#B33A3A}
+.szpiles{display:flex;gap:6px}
+.szpiles span,.szpiles button{padding:3px 9px;border-radius:2px;background:var(--szpaper);border:1px solid var(--szline);font-family:var(--szmin);font-size:11px;color:#5A4A35}
+/* 季節の値打ち */
+.szval{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:4px;flex:none}
+.szval.end{grid-template-columns:repeat(4,1fr)}
+.szv{display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 2px;background:#fff;border:1px solid var(--szline);border-radius:3px;line-height:1.15}
+.szv b{font-family:var(--szmin);font-size:12px;color:var(--sc)}
+.szv span{font-size:9.5px;color:#7A6A55}.szv em{font-style:normal;font-family:var(--szmin);font-size:14px;color:var(--szink);font-weight:700}
+.szv i{display:block;font-style:normal;font-size:9px;color:#fff;background:var(--szgold);padding:0 4px;border-radius:2px;margin-top:1px}
+.szv small{font-size:9px;color:#5A4A35}
+.szv i.opp{background:#7A6A55}
+.szv.opp{opacity:.55;background:repeating-linear-gradient(135deg,#fff 0 6px,#F1EADB 6px 7px)}
+.szri li.opp{color:#9A8A70}
+.szv.shun{border-color:var(--szgold);box-shadow:inset 0 0 0 1px var(--szgold);background:#FFFBEF}
+.szvt{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 8px;background:var(--szink);color:#F3E6C8;border-radius:3px;line-height:1.1}
+.szvt b{font-family:var(--szmin);font-size:20px}.szvt small{font-size:8.5px}
+/* 手番 */
 .szsteps{display:flex;gap:3px;flex:none}
-.szsteps span{flex:1;text-align:center;font-size:10.5px;font-weight:900;padding:3px 0;border-radius:99px;background:#EFE6D0;color:#9A8B6A}
-.szsteps span.done{background:#D8CDB2;color:#6A5A3A}
-.szsteps span.now{background:#2A2418;color:#FFE38A}
-.szguide{margin:0;font-size:12px;font-weight:900;color:#4A3E26;background:#fff;border-radius:10px;padding:6px 10px;border:1.5px solid #E6DCC4;flex:none}
+.szsteps span{flex:1;text-align:center;font-family:var(--szmin);font-size:10.5px;padding:3px 0;border-bottom:2px solid var(--szline);color:#9A8A70}
+.szsteps span.done{color:#7A6A55;border-color:#B7A887}
+.szsteps span.now{color:var(--szink);border-color:#B33A3A;font-weight:700}
+.szguide{margin:0;font-size:12px;color:#4A3E2E;background:rgba(255,255,255,.7);padding:6px 10px;border-left:3px solid var(--szgold);flex:none;line-height:1.5}
 .szbtns{display:flex;gap:6px;flex-wrap:wrap;flex:none}
-.szb{flex:1;min-width:120px;padding:11px 8px;border-radius:12px;border:2px solid #2A2418;background:#fff;font-weight:900;font-size:13.5px;color:#2A2418;box-shadow:0 3px 0 #2A2418}
-.szb.go{background:#2A2418;color:#FFE38A}
-.szb:disabled{opacity:.4}
-.szb small{display:block;font-size:10px;color:#8A7A5A}
-.szhand{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px;flex:none}
-.szc{position:relative;height:74px;border-radius:10px;background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--sc) 14%,#fff));border:2.5px solid var(--sc);box-shadow:0 2px 0 rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;line-height:1}
-.szc .szsi{font-size:24px}
-.szc>b{font-family:var(--disp);font-weight:400;font-size:16px;color:var(--sc)}
-.szc.sel{transform:translateY(-4px);box-shadow:0 0 0 3px #2A2418,0 6px 12px rgba(0,0,0,.25)}
-.szc.ng{opacity:.5}
-.szc.shun{background:linear-gradient(180deg,#FFF8DA,#fff)}
-.szch{display:flex;align-items:center;gap:3px;margin-bottom:2px}
-.szch b{flex:1;font-size:12.5px;font-weight:900;color:var(--sc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.szch small{font-size:9px;font-weight:900;color:#fff;background:var(--sc);border-radius:4px;padding:0 4px}
-.szsi{font-size:13px}
-.szc ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
-.szc li{font-size:9.5px;font-weight:700;color:#4A3E26}
-.szc li i{font-style:normal;display:inline-block;font-size:8.5px;font-weight:900;color:#fff;background:#6A5A3A;border-radius:3px;padding:0 3px;margin-right:2px}
-.szc li.u i{background:#2E7FC9}.szc li.p i{background:#E2364F}.szc li.d i{background:#7A5AB0}.szc li.e i{background:#C98E12}
-.szc li em{display:block;font-style:normal;font-size:9px;color:#B07A00}
-.szplain{margin:0;font-size:9.5px;color:#9A8B6A;font-weight:700}
-.szshun{position:absolute;top:-7px;right:-5px;font-size:9px;font-weight:900;padding:1px 5px;border-radius:99px;background:#F2C94C;color:#3A2405;border:1.5px solid #2A2418}
-.szc.sm{padding:4px 5px}
-.szmych{display:flex;align-items:flex-start;gap:8px;padding:7px 9px;border-radius:12px;background:#fff;border:2px solid #CDBF9F;flex:none;flex-wrap:wrap}
-.szci{font-size:26px;line-height:1}
-.szmych>div{flex:1;min-width:160px}
-.szmych b{font-size:13px;font-weight:900}.szmych b small{font-size:10px;color:#8A7A5A;margin-left:6px}
-.szmych p,.szchsheet p{margin:2px 0 0;font-size:11px;font-weight:700;color:#4A3E26}
-.szmych p i,.szchsheet p i{font-style:normal;font-size:9px;font-weight:900;color:#fff;background:#6A5A3A;border-radius:3px;padding:0 4px;margin-right:4px}
-.szmych p.used{opacity:.5}
-.szcb{flex:none;padding:7px 10px;border-radius:10px;border:2px solid #2A2418;background:#FFE38A;font-weight:900;font-size:12px;box-shadow:0 2px 0 #2A2418}
-.szcb.on{background:#2A2418;color:#FFE38A}
-.szlog{list-style:none;margin:0;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.7);font-size:11px;font-weight:700;color:#6A5A3A;flex:none}
-.szask{position:fixed;inset:0;z-index:46;background:rgba(30,20,10,.5);display:grid;place-items:center;padding:16px}
-.szaskin{width:min(100%,420px);max-height:84vh;overflow:auto;background:#FFFDF7;border:3px solid #2A2418;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 0 #2A2418}
-.szaskin>b{font-size:14px;font-weight:900}
-.szaskp{display:flex;flex-direction:column;gap:6px}
-.szaskp .szb{border-color:var(--pc)}
-.szlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
-.szend{position:fixed;inset:0;z-index:45;background:rgba(30,20,10,.55);overflow-y:auto;padding:calc(var(--safe-t) + 14px) 12px 20px}
-.szendin{max-width:440px;margin:0 auto;background:#FFFDF7;border:3px solid #2A2418;border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px}
-.szendt{font-family:var(--disp);font-size:24px;text-align:center;display:flex;flex-direction:column}
-.szendt small{font-family:inherit;font-size:11px;font-weight:900;color:#6A5A3A}
-.szres{border:2px solid var(--pc);border-radius:12px;padding:7px 9px;background:#fff}
-.szres.win{background:linear-gradient(180deg,#FFF3C4,#fff);box-shadow:0 0 0 3px #F2C94C}
-.szrh{display:flex;align-items:center;gap:6px}
-.szrk{font-weight:900;font-size:15px;width:24px;text-align:center}
-.szrh b{font-size:14px}.szrh small{font-size:10px;font-weight:900;color:#8A7A5A}
-.szpt{margin-left:auto;font-family:var(--disp);font-size:24px}.szpt small{font-size:11px}
-.szrc{display:flex;flex-wrap:wrap;gap:3px;margin:5px 0}
-.szm{font-size:10px;font-weight:900;padding:1px 5px;border-radius:5px;border:1.5px solid var(--sc);color:var(--sc);background:#fff;white-space:nowrap}
-.szm.set{box-shadow:inset 0 0 0 1.5px var(--sc);background:#F3FAF0}
-.szm.eaten{text-decoration:line-through;opacity:.45}
-.szm.shun{background:#FFF1B8}
-.szri{list-style:none;margin:0;padding:0;font-size:11px;font-weight:700}
-.szri li{display:flex;justify-content:space-between;border-top:1px dashed #E6DCC4;padding:1px 0}
-.sznote{margin:0;font-size:11px;color:#8A7A5A;font-weight:700}.sznote.small{font-size:10px}
-.szfx{position:fixed;left:50%;top:38%;z-index:47;transform:translateX(-50%);padding:9px 18px;border-radius:99px;background:#2A2418;color:#FFE38A;font-weight:900;font-size:15px;white-space:nowrap;pointer-events:none;animation:szfx 2.2s ease both;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.szfx.adv{background:#E2364F;color:#fff}.szfx.cal{background:linear-gradient(90deg,#E86A9A,#2E9E5B,#D9772B,#4A8FD6);color:#fff;font-size:20px}.szfx.back{background:#4A8FD6;color:#fff}.szfx.shun{background:#F2C94C;color:#3A2405}
-@keyframes szfx{0%{opacity:0;transform:translateX(-50%) scale(.6)}12%{opacity:1;transform:translateX(-50%) scale(1.08)}20%{transform:translateX(-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-20px)}}
-.szchsheet{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
-.szchsheet b{font-size:18px}.szchsheet small{color:#8A7A5A;font-weight:900}
-.szloglist{list-style:none;margin:0;padding:0;font-size:12px;font-weight:700}.szloglist li{padding:3px 0;border-bottom:1px dashed #E6DCC4}
-.sztb{width:100%;border-collapse:collapse;font-size:11.5px;margin:4px 0 8px}
-.sztb th,.sztb td{border:1px solid #E6DCC4;padding:3px 5px;text-align:left;vertical-align:top}
-.sztb th{background:#F6EEDC}
-.gic.szi{background:linear-gradient(135deg,#FFE3EC,#E3F5E8 50%,#FBE5D2 50%,#E0ECFA)}
+.szb{flex:1;min-width:120px;padding:11px 8px;border-radius:3px;border:1px solid var(--szink);background:var(--szpaper);font-family:var(--szmin);font-weight:700;font-size:13.5px;color:var(--szink)}
+.szb.go{background:var(--szink);color:#F3E6C8}
+.szb:disabled{opacity:.35}
+/* 手札 */
+.szhand{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px;flex:none}
+.szc{position:relative;height:76px;border-radius:4px;background:linear-gradient(180deg,#fff,color-mix(in srgb,var(--sc) 9%,#fff));border:1px solid color-mix(in srgb,var(--sc) 55%,#fff);box-shadow:0 1px 0 rgba(43,36,32,.12),inset 0 0 0 3px #fff,inset 0 0 0 4px color-mix(in srgb,var(--sc) 30%,#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;line-height:1}
+.szc .szart{width:30px;height:30px}
+.szc>b{font-family:var(--szmin);font-weight:700;font-size:15px;color:var(--sc)}
+.szc.sel{transform:translateY(-5px);box-shadow:0 0 0 2px var(--szink),0 6px 12px rgba(43,36,32,.22)}
+.szc.ng{opacity:.42}
+.szlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.szlist.one{grid-template-columns:60px;justify-content:center}
+/* 能力カード */
+.szpl{display:flex;flex-direction:column;gap:5px}
+.szpart{display:flex;align-items:flex-start;gap:8px;padding:7px 9px;background:#fff;border:1px solid var(--szline);border-radius:3px;text-align:left}
+.szpart>div{flex:1;min-width:0}
+.szpart small{display:flex;align-items:center;gap:6px;font-size:9.5px;color:#9A8A70}
+.szpart b{display:block;font-family:var(--szmin);font-size:13.5px;font-weight:700}
+.szpart p{margin:1px 0 0;font-size:11px;color:#4A3E2E;line-height:1.45}
+.szpart.t-c{border-left:3px solid #2E4A7A}.szpart.t-e{border-left:3px solid #B33A3A}.szpart.t-o{border-left:3px solid #9A7420}
+.szpart.used{opacity:.45}
+.szpart.can{box-shadow:0 0 0 2px var(--szgold);background:#FFFBEF;cursor:pointer}
+.szpart.far{opacity:.6}
+.szcost{display:inline-flex;gap:3px;margin-left:auto}
+.szcost i{display:inline-flex;align-items:center;gap:1px;font-style:normal;padding:0 4px 0 1px;border:1px solid var(--sc);border-radius:2px;background:#fff}
+.szcost i b{font-family:var(--szmin);font-size:11px;color:var(--sc)}
+.szmkt,.szmyp{flex:none;display:flex;flex-direction:column;gap:5px}
+.szmkt h5,.szmyp h5,.szsub{margin:4px 0 0;font-family:var(--szmin);font-size:13px;display:flex;flex-direction:column}
+.szmkt h5 small{font-family:inherit;font-size:10px;color:#9A8A70;font-weight:400}
 .szcbs{display:flex;flex-direction:column;gap:5px}
-.szrch{border:1.5px solid #E6DCC4;border-radius:10px;padding:6px 8px;margin:5px 0}
-.szrch b small{font-size:10px;color:#8A7A5A;margin-left:6px}
-.szrch ul{list-style:none;margin:4px 0 0;padding:0;font-size:12px}
-.szrch li i,.szmych p i{white-space:nowrap}
-.szrch li i{font-style:normal;font-size:9px;font-weight:900;color:#fff;background:#6A5A3A;border-radius:3px;padding:0 4px;margin-right:4px}
+.szcb{padding:8px 10px;border-radius:3px;border:1px solid var(--szgold);background:#FFF8E6;font-family:var(--szmin);font-weight:700;font-size:12.5px;color:#6A4A10}
+.szcb.on{background:var(--szink);color:#F3E6C8;border-color:var(--szink)}
+.szlog{list-style:none;margin:0;padding:6px 10px;background:rgba(255,255,255,.6);border:1px solid var(--szline);font-size:11px;color:#6A5A45;flex:none;line-height:1.5}
+/* 選択・結果 */
+.szask{position:fixed;inset:0;z-index:46;background:rgba(30,22,16,.5);display:grid;place-items:center;padding:16px}
+.szaskin{width:min(100%,400px);background:var(--szpaper);border:1px solid var(--szink);box-shadow:0 0 0 4px var(--szpaper),0 0 0 5px var(--szline),0 10px 30px rgba(0,0,0,.3);padding:16px 14px;display:flex;flex-direction:column;gap:12px}
+.szaskin>b{font-family:var(--szmin);font-size:14px;line-height:1.5}
+.szend{position:fixed;inset:0;z-index:45;background:rgba(30,22,16,.55);overflow-y:auto;padding:calc(var(--safe-t) + 14px) 12px 20px}
+.szendin{max-width:440px;margin:0 auto;background:var(--szpaper);border:1px solid var(--szink);box-shadow:0 0 0 4px var(--szpaper),0 0 0 5px var(--szline);padding:14px 12px;display:flex;flex-direction:column;gap:8px}
+.szendt{font-family:var(--szmin);font-weight:700;font-size:26px;letter-spacing:.2em;text-align:center;display:flex;flex-direction:column;gap:2px}
+.szendt small{font-size:11px;letter-spacing:0;color:#7A6A55;font-weight:400}
+.szres{background:#fff;border:1px solid var(--szline);border-left:4px solid var(--pc);border-radius:3px;padding:7px 9px}
+.szres.win{border-color:var(--szgold);box-shadow:0 0 0 1px var(--szgold);background:#FFFBEF}
+.szrh{display:flex;align-items:center;gap:6px}
+.szrk{font-family:var(--szmin);font-weight:700;font-size:16px;width:22px;text-align:center}
+.szres.win .szrk{color:#B33A3A}
+.szrh b{font-size:14px}
+.szpt{margin-left:auto;font-family:var(--szmin);font-weight:700;font-size:24px}.szpt small{font-size:11px}
+.szri{list-style:none;margin:4px 0 0;padding:0;font-size:11px}
+.szri li{display:flex;justify-content:space-between;gap:6px;border-top:1px dotted var(--szline);padding:2px 0}
+.szri b{font-family:var(--szmin)}
+.szm{display:inline-flex;align-items:center;gap:2px;font-size:10px;padding:1px 5px;border:1px solid var(--sc);color:var(--sc);border-radius:2px;background:#fff}
+.sznote{margin:0;font-size:11px;color:#8A7A60}
+.szfx{position:fixed;left:50%;top:38%;z-index:47;transform:translateX(-50%);padding:10px 22px;background:var(--szpaper);color:var(--szink);border:1px solid var(--szink);box-shadow:0 0 0 3px var(--szpaper),0 0 0 4px var(--szline),0 8px 22px rgba(0,0,0,.25);font-family:var(--szmin);font-weight:700;font-size:15px;white-space:nowrap;pointer-events:none;animation:szfx 2.2s ease both}
+.szfx.adv{color:#B33A3A}.szfx.cal{font-size:22px;letter-spacing:.25em;color:#B33A3A}.szfx.back{color:#46679A}.szfx.combo{color:#2E4A7A}
+@keyframes szfx{0%{opacity:0;transform:translateX(-50%) translateY(8px)}12%{opacity:1;transform:translateX(-50%)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-14px)}}
+.szloglist{list-style:none;margin:0;padding:0;font-size:12px}.szloglist li{padding:3px 0;border-bottom:1px dotted #D9CDB4}
+.gic.szi{background:#FBF6EA}
 </style>
 </head>
 <body>
@@ -4090,7 +4101,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v281";
+const APP_VER = "v283";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -4320,7 +4331,7 @@ function viewHome(t){
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
   const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive(), zg = szActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中</b><small>${ng.status === "playing" && ng.turn && ng.turn.pid === me ? `<em class="yt">あなたの番！</em>第${ng.round}回戦・合計${ng.total}` : `第${ng.round}回戦・合計${ng.total}・タップで入る`}</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}${zg && zg.st && zg.st.v === 2 ? `<button class="neubar live2" data-act="openSz">${GAMES[8].icon}<div><b>四季の巡り 対戦中</b><small>${szMyTurn(zg) ? `<em class="yt">あなたの番！</em>` : ""}今の季節：${SZ_SN[szCur(zg.st)]}・タップで入る</small></div></button>` : ""}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}${zg && zg.st && zg.st.v === 4 ? `<button class="neubar live2" data-act="openSz">${GAMES[8].icon}<div><b>四季の巡り 対戦中</b><small>${szMyTurn(zg) ? `<em class="yt">あなたの番！</em>` : ""}今の季節：${SZ_SN[szCur(zg.st)]}・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -6598,11 +6609,8 @@ const GAMES = [
     get icon(){ return HX_ICON; },
     count: () => hxGames().filter(x => x.status === "finished").length,
     live: () => hxLive(), active: () => hxActive(), start: () => openHxNew(), open: g => openHx(g.id) },
-  { id: "sz", name: "四季の巡り", desc: "【オリジナル】終わったときの手札の枚数が得点。キャラごとのコンボで札を増やし、季節を進めて終わらせるか、足止めして粘るか", players: "3〜5人", time: "15〜25分",
-    icon: `<span class="gic szi"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="#fff" stroke="#1B1838" stroke-width="2.5"/>
-      <path d="M32 7A25 25 0 0 1 57 32H32Z" fill="#F7B6CC"/><path d="M57 32A25 25 0 0 1 32 57V32Z" fill="#9AD9A8"/><path d="M32 57A25 25 0 0 1 7 32H32Z" fill="#F4B27A"/><path d="M7 32A25 25 0 0 1 32 7V32Z" fill="#A9CBF2"/>
-      <circle cx="32" cy="32" r="25" fill="none" stroke="#1B1838" stroke-width="2.5"/><circle cx="32" cy="32" r="8" fill="#fff" stroke="#1B1838" stroke-width="2"/>
-      <text x="44" y="24" font-size="11" text-anchor="middle">🌸</text><text x="44" y="47" font-size="11" text-anchor="middle">☀️</text><text x="20" y="47" font-size="11" text-anchor="middle">🍁</text><text x="20" y="24" font-size="11" text-anchor="middle">❄️</text></svg></span>`,
+  { id: "sz", name: "四季の巡り", desc: "【オリジナル】捨て札に積もった季節ほど、その季節の手札が高い点に。季節カードで能力カード（全100種類）を買い、自分だけのコンボを組み立てる", players: "3〜5人", time: "20〜30分",
+    get icon(){ return SZ_ICON; },
     count: () => szGames().filter(x => x.status === "finished").length,
     live: () => szLive(), active: () => szActive(), start: () => openSzNew(), open: g => openSz(g.id) }
 ];
@@ -14011,59 +14019,145 @@ async function clearBadge(){
 }
 try { ["ojk:pk:games", "ojk:pk:guide"].forEach(k => localStorage.removeItem(k)); } catch (e) {}   // 試作していたポーカーのデータを片づける
 /* ======================= 四季の巡り（仮）：エンジン ======================= */
-/* 季節カードは効果なし（春・夏・秋・冬 各10枚）。得点は終わったときの手札の枚数＋キャラのボーナス */
+/* 季節カードは効果なし（春・夏・秋・冬 各10枚）。手番は ドロー1枚 → 捨て・購入 → 渡し。
+   能力カード（全100種類）は3枚を表向きに並べ、手札の季節カードを払って買う（1手番に1枚まで）。買われたらすぐ補充。
+   得点：季節ごとに「捨て札にあるその季節の枚数 × 手札のその季節の枚数」。終了時の季節（旬）は2倍、旬の反対の季節は0点 */
 const SZ_TITLE = "四季の巡り";
 const SZ_SE = ["spr", "sum", "aut", "win"];
 const SZ_SN = { spr: "春", sum: "夏", aut: "秋", win: "冬" };
-const SZ_SI = { spr: "🌸", sum: "☀️", aut: "🍁", win: "❄️" };
-const SZ_SC = { spr: "#E86A9A", sum: "#2E9E5B", aut: "#D9772B", win: "#4A8FD6" };
+const SZ_SC = { spr: "#C9577E", sum: "#2F7D6B", aut: "#B85A23", win: "#46679A" };
 const szNext = s => SZ_SE[(SZ_SE.indexOf(s) + 1) % 4];
-/* キャラクター：コンボ（常時）3つ＋1ゲーム1回の能力 */
-const SZ_CHAR = {
-  hayazaki: { n: "早咲き", t: "先行逃げ切り", i: "🌷", c: ["季節を進めるたびに1枚引く", "1手番に季節を2回進めたら、さらに1枚引く", "自分の捨てで暦を完成させたら+1点"], o: "季節に関係なく、1枚を「次の季節」として捨てられる" },
-  niwashi: { n: "庭師", t: "堅実", i: "🪴", c: ["終了時、春夏秋冬1枚ずつの組1つにつき+2点", "受け取った札の季節が手札になければ1枚引く", "手札に4つの季節がそろった状態で手番を終えたら1枚引く"], o: "渡された札を受け取らず、渡した人に返す" },
-  fuyugomori: { n: "冬籠り", t: "後半捲り", i: "🐻", c: ["手番のはじめ、手札が最多（同数を含む）ならさらに1枚引く", "冬の札を捨てたら（足止めでも進行でも）2枚引く", "終了時、手札が最多（同数を含む）なら+3点"], o: "捨て札の一番上を取り除き、季節を1つ戻す" },
-  koyomi: { n: "暦読み", t: "時計操作", i: "📜", c: ["足止めするたびに1枚引く", "1手番に2回足止めしたら、さらに1枚引く", "ほかの人が暦を完成させたら+3点"], o: "暦が完成した瞬間、それを取り消してゲームを続行（捨て札の一番上を除外）" },
-  yubin: { n: "郵便屋", t: "照準", i: "✉️", c: ["渡す相手を、数えた位置の両隣からも選べる", "今の季節の札を渡したら1枚引く", "手札が人数で割り切れて渡せないとき、1枚引く"], o: "渡す代わりに、その相手の手札からランダムに1枚もらう" },
-  ogui: { n: "大食い", t: "溜め込み", i: "🍙", c: ["終了時、いちばん多い季節の札が4枚以上なら+3点", "手札にある季節の札を受け取ったら1枚引く", "手番のはじめ、手札が単独最少ならさらに1枚引く"], o: "山札から2枚引く" }
+const szPrev = s => SZ_SE[(SZ_SE.indexOf(s) + 3) % 4];
+const SZ_TYPE = { c: "コンボ", e: "終了時", o: "1回" };
+/* ---------- 能力カード（100種類） ---------- */
+/* 季節ごとに作る15系統×4季節＝60種類 */
+const SZ_FAM = {
+  dsc: { t: "c", n: "散り", m: "散", c: 2, tx: X => `${X}の札を捨てたら1枚引く` },
+  dsc2: { t: "c", n: "嵐", m: "嵐", c: 3, tx: X => `${X}の札を捨てたら2枚引く` },
+  adv: { t: "c", n: "迎え", m: "迎", c: 2, tx: X => `季節を${X}に進めたら1枚引く` },
+  stl: { t: "c", n: "留め", m: "留", c: 2, tx: X => `${X}で足止めしたら1枚引く` },
+  rcv: { t: "c", n: "便り", m: "便", c: 2, tx: X => `${X}の札を受け取ったら1枚引く` },
+  psn: { t: "c", n: "贈り", m: "贈", c: 2, tx: X => `${X}の札を渡したら1枚引く` },
+  hrv: { t: "c", n: "実り", m: "実", c: 2, tx: X => `手番のはじめ、手札に${X}が3枚以上あればさらに1枚引く` },
+  per: { t: "e", n: "好き", m: "好", c: 3, tx: X => `終了時、手札の${X}1枚につき+1点` },
+  wai: { t: "e", n: "待ち", m: "待", c: 2, tx: X => `終了時、旬が${X}なら+6点` },
+  acc: { t: "e", n: "積もり", m: "積", c: 3, tx: X => `終了時、${X}の捨て札を+2枚として数える（自分の得点だけ）` },
+  maj: { t: "e", n: "自慢", m: "誇", c: 2, tx: X => `終了時、手札の${X}が全員の中で最多（同数を含む）なら+4点` },
+  dbl: { t: "e", n: "盛り", m: "盛", c: 4, tx: X => `終了時、手札の${X}は旬でなくても2倍で数える` },
+  sek: { t: "o", n: "探し", m: "探", c: 3, tx: X => `山札から${X}の札を2枚まで探して手札に加える（山札は混ぜる）` },
+  pre: { t: "o", n: "先取り", m: "先", c: 2, tx: X => `${X}の札1枚を、季節に関係なく「次の季節」として捨てられる` },
+  tax: { t: "o", n: "集め", m: "集", c: 3, tx: X => `ほかの全員から、手札の${X}を1枚ずつもらう` }
 };
-const SZ_CHAR_KEYS = Object.keys(SZ_CHAR);
-/* 40枚：c0〜c39 → 季節 */
+/* 季節に関係しない40種類 */
+const SZ_GEN = {
+  advDraw: { cost: { spr: 2, sum: 1 }, t: "c", n: "開花", m: "開", tx: "季節を進めるたびに1枚引く" },
+  adv2: { cost: { spr: 1, sum: 1 }, t: "c", n: "満開", m: "満", tx: "1手番に季節を2回進めたら、さらに1枚引く" },
+  stallDraw: { cost: { win: 2, aut: 1 }, t: "c", n: "足踏み", m: "踏", tx: "足止めするたびに1枚引く" },
+  stall2: { cost: { win: 1, aut: 1 }, t: "c", n: "根回し", m: "根", tx: "1手番に2回足止めしたら、さらに1枚引く" },
+  mostStart: { cost: { aut: 2, win: 1 }, t: "c", n: "蓄え", m: "蓄", tx: "手番のはじめ、手札が最多（同数を含む）ならさらに1枚引く" },
+  leastStart: { cost: { spr: 1, sum: 1 }, t: "c", n: "空腹", m: "腹", tx: "手番のはじめ、手札が単独最少ならさらに1枚引く" },
+  newSeason: { cost: { spr: 1, aut: 1 }, t: "c", n: "新顔", m: "新", tx: "手札にない季節の札を受け取ったら1枚引く" },
+  sameSeason: { cost: { sum: 1, win: 1 }, t: "c", n: "仲間", m: "仲", tx: "手札にある季節の札を受け取ったら1枚引く" },
+  passCur: { cost: { sum: 2 }, t: "c", n: "旬の贈り物", m: "旬", tx: "今の季節の札を渡したら1枚引く" },
+  noPass: { cost: { aut: 1, win: 1 }, t: "c", n: "留守番", m: "宅", tx: "手札が人数で割り切れて渡せないとき、1枚引く" },
+  aim: { cost: { sum: 1, aut: 1 }, t: "c", n: "照準", m: "的", tx: "渡す相手を、数えた位置の両隣からも選べる" },
+  fourEnd: { cost: { spr: 1, sum: 1, aut: 1, win: 1 }, t: "c", n: "四季の庭", m: "庭", tx: "4つの季節がそろった状態で手番を終えたら1枚引く" },
+  disc3: { cost: { spr: 1, aut: 2 }, t: "c", n: "大掃除", m: "掃", tx: "1手番に3枚以上捨てたら、手番の終わりに2枚引く" },
+  noDisc: { cost: { win: 2, sum: 1 }, t: "c", n: "籠もり", m: "籠", tx: "1枚も捨てずに手番を終えたら1枚引く" },
+  late: { cost: { aut: 1, win: 1 }, t: "c", n: "晩成", m: "晩", tx: "手番のはじめ、山札が10枚以下ならさらに1枚引く" },
+  buyDraw: { cost: { spr: 2, win: 1 }, t: "c", n: "商い", m: "商", tx: "能力カードを買った手番、1枚引く" },
+  rich: { cost: { sum: 1, aut: 2, win: 1 }, t: "c", n: "物持ち", m: "富", tx: "手番のはじめ、能力カードを4枚以上持っていればさらに1枚引く" },
+  sets: { cost: { spr: 1, sum: 1, aut: 1, win: 1 }, t: "e", n: "一年", m: "年", tx: "終了時、春夏秋冬1枚ずつの組1つにつき+3点" },
+  calSelf: { cost: { spr: 1, sum: 1, aut: 1 }, t: "e", n: "締めくくり", m: "締", tx: "終了時、自分の捨てで暦を完成させていたら+6点" },
+  calOther: { cost: { win: 2 }, t: "e", n: "見届け", m: "見", tx: "終了時、ほかの人が暦を完成させていたら+4点" },
+  mostEnd: { cost: { aut: 2, win: 2 }, t: "e", n: "冬籠り", m: "冬", tx: "終了時、手札が最多（同数を含む）なら+5点" },
+  bigSeason: { cost: { sum: 2, aut: 1 }, t: "e", n: "偏愛", m: "愛", tx: "終了時、自分の手札でいちばん多い季節は、捨て札を+1枚として数える" },
+  shun3: { cost: { spr: 1, sum: 1, aut: 1, win: 1 }, t: "e", n: "旬の目利き", m: "利", tx: "終了時、自分の旬の倍率が2倍から3倍になる" },
+  abilPts: { cost: { spr: 2, win: 1 }, t: "e", n: "収集家", m: "蒐", tx: "終了時、持っている能力カード1枚につき+1点" },
+  allFour: { cost: { sum: 1, win: 2 }, t: "e", n: "四季彩", m: "彩", tx: "終了時、手札に4つの季節がそろっていれば+5点" },
+  minPts: { cost: { spr: 1, aut: 1, win: 1 }, t: "e", n: "判官贔屓", m: "贔", tx: "終了時、手札でいちばん少ない季節の札1枚につき+2点（0枚の季節は除く）" },
+  big10: { cost: { spr: 2, aut: 2 }, t: "e", n: "大荷物", m: "荷", tx: "終了時、手札が10枚以上なら+5点" },
+  deckEnd: { cost: { sum: 2, win: 1 }, t: "e", n: "天寿", m: "寿", tx: "終了時、暦の完成ではなく山札切れで終わっていたら+5点" },
+  haya: { cost: { spr: 2 }, t: "o", n: "早咲き", m: "咲", tx: "好きな札1枚を、季節に関係なく「次の季節」として捨てられる" },
+  ret: { cost: { sum: 1, win: 1 }, t: "o", n: "突き返し", m: "返", tx: "渡された札を受け取らず、渡した人に返す" },
+  back: { cost: { win: 2 }, t: "o", n: "巻き戻し", m: "戻", tx: "捨て札の一番上を取り除き、季節を1つ戻す" },
+  uncal: { cost: { aut: 2, win: 1 }, t: "o", n: "暦読み", m: "暦", tx: "暦が完成した瞬間、それを取り消してゲームを続ける（捨て札の一番上を除外）" },
+  steal: { cost: { sum: 2, aut: 1 }, t: "o", n: "横取り", m: "奪", tx: "渡す代わりに、その相手の手札からランダムに1枚もらう" },
+  draw2: { cost: { aut: 2 }, t: "o", n: "大食い", m: "食", tx: "山札から2枚引く" },
+  shunPick: { cost: { spr: 1, win: 1 }, t: "o", n: "季節読み", m: "読", tx: "終了時、自分の得点だけ旬を好きな季節にする（いちばん得な季節を自動で選ぶ）" },
+  refresh: { cost: { spr: 1 }, t: "o", n: "衣替え", m: "替", tx: "能力カードの場の3枚を入れ替える" },
+  buy2: { cost: { sum: 1 }, t: "o", n: "大市", m: "市", tx: "この手番、能力カードをもう1枚買える" },
+  takeTop: { cost: { aut: 1, sum: 1 }, t: "o", n: "落ち穂拾い", m: "拾", tx: "捨て札の一番上を手札に加える（季節は1つ戻る）" },
+  skip: { cost: { win: 1, spr: 1 }, t: "o", n: "通せんぼ", m: "止", tx: "次の人の手番を1回飛ばす" },
+  exile2: { cost: { aut: 1, win: 1 }, t: "o", n: "掘り出し", m: "掘", tx: "除外置き場からランダムに2枚手札に加える" }
+};
+const SZ_PARTS = (() => {
+  const out = {};
+  Object.entries(SZ_FAM).forEach(([f, F]) => SZ_SE.forEach(s => {
+    const X = SZ_SN[s], a = Math.ceil(F.c / 2), b = F.c - a, cost = { [s]: a }; if (b) cost[szPrev(s)] = b;
+    out[`${f}_${s}`] = { t: F.t, n: `${X}${F.n}`, m: F.m, s, fam: f, cost, tx: F.tx(X) };
+  }));
+  Object.entries(SZ_GEN).forEach(([k, P]) => { out[k] = { ...P, fam: k }; });
+  return out;
+})();
+const SZ_PART_KEYS = Object.keys(SZ_PARTS);
+/* 40枚の季節カード：c0〜c39 → 季節 */
 const SZ_CARDS = (() => { const out = {}; let i = 0; SZ_SE.forEach(s => { for (let j = 0; j < 10; j++) out["c" + (i++)] = s; }); return out; })();
 const szSeason = c => SZ_CARDS[c];
-const szCn = c => SZ_SN[szSeason(c)];
 const szShuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const szL = (st, m) => { (st._log = st._log || []).push(m); };
 const szFx = (st, e) => { st.fxn = (st.fxn || 0) + 1; e.n = st.fxn; st.fx = (st.fx || []).concat([e]).slice(-30); };
-const szNm = p => (typeof pname === "function" ? pname(p) : p);
+const szNoEmoji = t => String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F\u200D]/gu, "");
+const szNm = p => (typeof pname === "function" ? szNoEmoji(pname(p)) : p);
 const szCnt = (st, p, s) => st.hands[p].filter(c => szSeason(c) === s).length;
+const szHas = (st, p, k) => !!(st.parts[p] && st.parts[p].includes(k));
+const szOwn = (st, p, f) => (st.parts[p] || []).filter(k => SZ_PARTS[k].fam === f);
+const szHasF = (st, p, f, s) => szHas(st, p, `${f}_${s}`);
+const szOnce = (st, p, k) => szHas(st, p, k) && !st.used[p + ":" + k];
+const szUse1 = (st, p, k) => { st.used[p + ":" + k] = 1; };
 
 /* ---------- 準備 ---------- */
+const SZ_MARKET = 3;
 function szSetup(players, opt = {}){
-  const deck = szShuffle(Object.keys(SZ_CARDS)), hands = {}, chars = {};
-  const cs = szShuffle(SZ_CHAR_KEYS);
-  players.forEach((p, i) => { hands[p] = [deck.pop(), deck.pop(), deck.pop()]; if (opt.chars !== false) chars[p] = cs[i % cs.length]; });
-  const first = deck.pop();
-  const st = { sz: 2, v: 2, players: players.slice(), chars, used: {}, deck, pile: [{ c: first }], exile: [], hands, ask: null, bonus: {}, turn: null, no: 0, fx: [], fxn: 0, status: "playing" };
+  const deck = szShuffle(Object.keys(SZ_CARDS)), hands = {}, parts = {};
+  players.forEach(p => { hands[p] = [deck.pop(), deck.pop(), deck.pop()]; parts[p] = []; });
+  const first = deck.pop(), mdeck = opt.abil === false ? [] : szShuffle(SZ_PART_KEYS);
+  const st = { sz: 3, v: 4, players: players.slice(), parts, used: {}, deck, pile: [{ c: first }], exile: [], hands, ask: null, turn: null, no: 0, fx: [], fxn: 0, status: "playing", market: mdeck.splice(0, SZ_MARKET), mdeck, skip: {} };
   szL(st, `最初の季節は${SZ_SN[szSeason(first)]}`);
   szStartTurn(st, players[Math.floor(Math.random() * players.length)]);
   return st;
 }
+/* ---------- 能力カードを買う ---------- */
+const szCostTx = k => SZ_SE.filter(s => SZ_PARTS[k].cost[s]).map(s => `${SZ_SN[s]}${SZ_PARTS[k].cost[s]}`).join("・");
+const szCostN = k => Object.values(SZ_PARTS[k].cost).reduce((a, b) => a + b, 0);
+const szAfford = (st, p, k) => SZ_SE.every(s => szCnt(st, p, s) >= (SZ_PARTS[k].cost[s] || 0));
+function szCanBuy(st, p, k){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "disc" || st.ask || T.bought >= (T.buyMax || 1)) return false;
+  return st.market.includes(k) && szAfford(st, p, k);
+}
+function szBuy(st, p, k){
+  if (!szCanBuy(st, p, k)) return false;
+  const P = SZ_PARTS[k];
+  SZ_SE.forEach(s => { for (let i = 0; i < (P.cost[s] || 0); i++){ const c = st.hands[p].find(x => szSeason(x) === s); szTake(st.hands[p], c); st.exile.push(c); } });
+  st.market.splice(st.market.indexOf(k), 1); st.parts[p].push(k); st.turn.bought = (st.turn.bought || 0) + 1;
+  if (st.mdeck.length) st.market.push(st.mdeck.shift());   // すぐに補充
+  szL(st, `${szNm(p)}が${szCostTx(k)}を払って「${P.n}」を手に入れた`);
+  szFx(st, { k: "buy", p, part: k });
+  if (szHas(st, p, "buyDraw")){ szCombo(st, p, "buyDraw", "能力カードを買ったので1枚引く"); szDraw(st, p, 1); }
+  return true;
+}
 const szPileS = e => e.as || szSeason(e.c);
 const szCur = st => { const t = st.pile[st.pile.length - 1]; return t ? szPileS(t) : null; };
-/* 暦：捨て札の上から何回続けて季節が進んでいるか（3で完成） */
+const szDisCount = (st, s) => st.pile.filter(e => szPileS(e) === s).length;
 function szChain(st){
   const p = st.pile; let n = 0;
   for (let i = p.length - 1; i > 0 && n < 3; i--){ if (szPileS(p[i]) === szNext(szPileS(p[i - 1]))) n++; else break; }
   return n;
 }
 const szSeat = (st, p, k) => st.players[(st.players.indexOf(p) + k + st.players.length * 10) % st.players.length];
-const szHas = (st, p, ch) => st.chars[p] === ch;
-const szOnce = (st, p, ch) => st.chars[p] === ch && !st.used[p];
-const szSoleMost = (st, p) => { const n = st.hands[p].length; return st.players.every(o => o === p || st.hands[o].length < n); };
 const szMost = (st, p) => { const n = st.hands[p].length; return st.players.every(o => st.hands[o].length <= n); };
 const szSoleLeast = (st, p) => { const n = st.hands[p].length; return st.players.every(o => o === p || st.hands[o].length > n); };
-const szCombo = (st, p, ch, i, tx) => { szL(st, `${SZ_CHAR[ch].i}${SZ_CHAR[ch].n}のコンボ${"①②③"[i]}：${tx}`); szFx(st, { k: "combo", p, ch, i }); };
+const szCombo = (st, p, k, tx) => { szL(st, `「${SZ_PARTS[k].n}」${szNm(p)}：${tx}`); szFx(st, { k: "combo", p, part: k }); };
 
 /* ---------- 山札 ---------- */
 function szDraw(st, p, n){
@@ -14071,9 +14165,7 @@ function szDraw(st, p, n){
   for (let i = 0; i < n; i++){
     if (st.status !== "playing") break;
     if (!st.deck.length){
-      // 山札切れ：除外置き場と、捨て札（上の3枚は暦のために残す）を混ぜて新しい山札に
-      const re = st.exile.concat(st.pile.slice(0, -3).map(e => e.c));
-      if (re.length){ st.deck = szShuffle(re); st.exile = []; st.pile = st.pile.slice(-3); szL(st, "山札が尽きたので、除外置き場と捨て札（上の3枚以外）を混ぜて新しい山札に"); szFx(st, { k: "reshuffle" }); }
+      if (st.exile.length){ st.deck = szShuffle(st.exile); st.exile = []; szL(st, "山札が尽きたので、除外置き場を混ぜて新しい山札に"); szFx(st, { k: "reshuffle" }); }
       else { szEnd(st, "deck"); return k; }
     }
     st.hands[p].push(st.deck.pop()); k++;
@@ -14083,38 +14175,44 @@ function szDraw(st, p, n){
 }
 const szTake = (arr, c) => { const i = arr.indexOf(c); if (i >= 0) arr.splice(i, 1); return i >= 0; };
 
-/* ---------- 手番：ドロー → 捨て → 渡し ---------- */
+/* ---------- 手番：ドロー1枚 → 捨て・購入 → 渡し ---------- */
 function szStartTurn(st, p){
   if (st.status !== "playing") return;
+  if (st.skip && st.skip[p]){ st.skip[p] = 0; szL(st, `「通せんぼ」${szNm(p)}の手番は飛ばされた`); szFx(st, { k: "skip", p }); szStartTurn(st, szSeat(st, p, 1)); return; }
   st.no++;
-  st.turn = { pid: p, step: "disc", passed: 0, discN: 0, advN: 0, stallN: 0 };
+  st.turn = { pid: p, step: "disc", passed: 0, discN: 0, advN: 0, stallN: 0, bought: 0, buyMax: 1 };
   szL(st, `${szNm(p)}の番`);
-  const extra = szHas(st, p, "fuyugomori") && szMost(st, p), least = szHas(st, p, "ogui") && szSoleLeast(st, p);
-  szDraw(st, p, 2);
-  if (extra && st.status === "playing"){ szCombo(st, p, "fuyugomori", 0, "手札が最多なので、さらに1枚引く"); szDraw(st, p, 1); }
-  if (least && st.status === "playing"){ szCombo(st, p, "ogui", 2, "手札が単独最少なので、さらに1枚引く"); szDraw(st, p, 1); }
+  const pre = [];
+  if (szHas(st, p, "mostStart") && szMost(st, p)) pre.push(["mostStart", "手札が最多なので、さらに1枚引く"]);
+  if (szHas(st, p, "leastStart") && szSoleLeast(st, p)) pre.push(["leastStart", "手札が単独最少なので、さらに1枚引く"]);
+  if (szHas(st, p, "late") && st.deck.length <= 10) pre.push(["late", "山札が10枚以下なので、さらに1枚引く"]);
+  if (szHas(st, p, "rich") && st.parts[p].length >= 4) pre.push(["rich", "能力カードが4枚以上あるので、さらに1枚引く"]);
+  szOwn(st, p, "hrv").forEach(k => { if (szCnt(st, p, SZ_PARTS[k].s) >= 3) pre.push([k, `手札に${SZ_SN[SZ_PARTS[k].s]}が3枚以上あるので、さらに1枚引く`]); });
+  szDraw(st, p, 1);
+  pre.forEach(([k, tx]) => { if (st.status === "playing"){ szCombo(st, p, k, tx); szDraw(st, p, 1); } });
 }
 function szEndTurn(st){
   if (st.status !== "playing") return;
   const T = st.turn, p = T.pid;
-  if (szHas(st, p, "niwashi") && SZ_SE.every(s => szCnt(st, p, s) > 0)){ szCombo(st, p, "niwashi", 2, "4つの季節がそろっているので1枚引く"); szDraw(st, p, 1); }
+  if (szHas(st, p, "fourEnd") && SZ_SE.every(s => szCnt(st, p, s) > 0)){ szCombo(st, p, "fourEnd", "4つの季節がそろっているので1枚引く"); szDraw(st, p, 1); }
+  if (szHas(st, p, "disc3") && T.discN >= 3 && st.status === "playing"){ szCombo(st, p, "disc3", "3枚以上捨てたので2枚引く"); szDraw(st, p, 2); }
+  if (szHas(st, p, "noDisc") && !T.discN && st.status === "playing"){ szCombo(st, p, "noDisc", "1枚も捨てなかったので1枚引く"); szDraw(st, p, 1); }
   if (st.status !== "playing") return;
   st.turn = null;
   szStartTurn(st, szSeat(st, p, 1));
 }
-/* 渡す相手：手札の枚数だけ時計回り（人数で割り切れる・0枚なら渡さない） */
 function szPassTargets(st, p){
   const n = st.players.length, cnt = st.hands[p].length, k = cnt % n;
   if (!cnt || !k) return [];
   const base = szSeat(st, p, k);
-  if (!szHas(st, p, "yubin")) return [base];
+  if (!szHas(st, p, "aim")) return [base];
   return [...new Set([szSeat(st, p, k - 1), base, szSeat(st, p, k + 1)])].filter(x => x !== p);
 }
 function szEnterPass(st){
   const T = st.turn; T.step = "pass";
   if (!szPassTargets(st, T.pid).length){
     szL(st, `${szNm(T.pid)}は手札${st.hands[T.pid].length}枚：自分に戻るので渡さない`); szFx(st, { k: "nopass", p: T.pid });
-    if (szHas(st, T.pid, "yubin")){ szCombo(st, T.pid, "yubin", 2, "渡せないので1枚引く"); szDraw(st, T.pid, 1); }
+    if (szHas(st, T.pid, "noPass")){ szCombo(st, T.pid, "noPass", "渡せないので1枚引く"); szDraw(st, T.pid, 1); }
     szEndTurn(st);
   }
 }
@@ -14124,11 +14222,11 @@ function szAdvance(st, p){
   return false;
 }
 /* ---------- 捨て ---------- */
-/* mode：normal（今か次の季節）/ haya（早咲き：次の季節として） */
+/* mode：normal（今か次の季節）/ 「早咲き」「〇先取り」の能力カードのキー（次の季節として捨てる） */
 function szCanDisc(st, p, c, mode = "normal"){
   const T = st.turn; if (!T || T.pid !== p || T.step !== "disc" || st.ask) return false;
   if (!st.hands[p].includes(c)) return false;
-  if (mode === "haya") return szOnce(st, p, "hayazaki");
+  if (mode !== "normal"){ if (!szOnce(st, p, mode)) return false; const P = SZ_PARTS[mode]; return mode === "haya" || (P.fam === "pre" && P.s === szSeason(c)); }
   const s = szSeason(c), cur = szCur(st);
   return s === cur || s === szNext(cur);
 }
@@ -14136,29 +14234,34 @@ function szDisc(st, p, c, mode = "normal"){
   if (!szCanDisc(st, p, c, mode)) return false;
   const T = st.turn, cur = szCur(st), s = szSeason(c);
   szTake(st.hands[p], c);
-  const e = { c, by: p }; if (mode === "haya" && szNext(cur) !== s) e.as = szNext(cur);
-  if (mode === "haya"){ st.used[p] = 1; szL(st, `🌷早咲き：${szNm(p)}が${SZ_SN[s]}の札を「${SZ_SN[szNext(cur)]}」として捨てた`); }
+  const e = { c, by: p }; if (mode !== "normal" && szNext(cur) !== s) e.as = szNext(cur);
+  if (mode !== "normal"){ szUse1(st, p, mode); szL(st, `「${SZ_PARTS[mode].n}」${szNm(p)}が${SZ_SN[s]}の札を「${SZ_SN[szNext(cur)]}」として捨てた`); }
   st.pile.push(e);
   const ns = szPileS(e), adv = ns === szNext(cur), stall = ns === cur;
   T.discN++;
   szL(st, `${szNm(p)}が${SZ_SN[s]}を捨てた：${adv ? `季節が${SZ_SN[ns]}に進む` : `${SZ_SN[ns]}のまま（足止め）`}`);
   szFx(st, { k: "disc", p, c, adv, stall, s: ns });
-  if (szChain(st) >= 3){ szCalDone(st, p); return true; }   // 暦の完成（手番の途中でも終わる）
-  // コンボ
+  if (szChain(st) >= 3){ szCalDone(st, p); return true; }
+  const draws = [];
   if (adv){ T.advN++;
-    if (szHas(st, p, "hayazaki")){ szCombo(st, p, "hayazaki", 0, "季節を進めたので1枚引く"); szDraw(st, p, 1); if (T.advN === 2){ szCombo(st, p, "hayazaki", 1, "この手番2回目の進行で、さらに1枚引く"); szDraw(st, p, 1); } }
+    if (szHas(st, p, "advDraw")) draws.push(["advDraw", 1, "季節を進めたので1枚引く"]);
+    if (szHas(st, p, "adv2") && T.advN === 2) draws.push(["adv2", 1, "この手番2回目の進行で、さらに1枚引く"]);
+    if (szHasF(st, p, "adv", ns)) draws.push([`adv_${ns}`, 1, `季節を${SZ_SN[ns]}に進めたので1枚引く`]);
   }
   if (stall){ T.stallN++;
-    if (szHas(st, p, "koyomi")){ szCombo(st, p, "koyomi", 0, "足止めしたので1枚引く"); szDraw(st, p, 1); if (T.stallN === 2){ szCombo(st, p, "koyomi", 1, "この手番2回目の足止めで、さらに1枚引く"); szDraw(st, p, 1); } }
+    if (szHas(st, p, "stallDraw")) draws.push(["stallDraw", 1, "足止めしたので1枚引く"]);
+    if (szHas(st, p, "stall2") && T.stallN === 2) draws.push(["stall2", 1, "この手番2回目の足止めで、さらに1枚引く"]);
+    if (szHasF(st, p, "stl", ns)) draws.push([`stl_${ns}`, 1, `${SZ_SN[ns]}で足止めしたので1枚引く`]);
   }
-  if (szHas(st, p, "fuyugomori") && s === "win"){ szCombo(st, p, "fuyugomori", 1, "冬を捨てたので2枚引く"); szDraw(st, p, 2); }
+  if (szHasF(st, p, "dsc", s)) draws.push([`dsc_${s}`, 1, `${SZ_SN[s]}を捨てたので1枚引く`]);
+  if (szHasF(st, p, "dsc2", s)) draws.push([`dsc2_${s}`, 2, `${SZ_SN[s]}を捨てたので2枚引く`]);
+  draws.forEach(([k, n, tx]) => { if (st.status === "playing"){ szCombo(st, p, k, tx); szDraw(st, p, n); } });
   return true;
 }
-/* 暦が完成：暦読みの1回能力が残っていれば、その人に取り消すか聞く */
 function szCalDone(st, by){
   szFx(st, { k: "cal", p: by });
-  const kp = st.players.find(x => szOnce(st, x, "koyomi"));
-  if (kp){ st.ask = { pid: kp, k: "yn", title: "📜暦読み：暦が完成した！取り消してゲームを続ける？（1ゲーム1回）", yes: "取り消して続ける", no: "このまま終わる", then: { t: "koyomi", by } }; return; }
+  const kp = st.players.find(x => szOnce(st, x, "uncal"));
+  if (kp){ st.ask = { pid: kp, k: "yn", title: "暦読み：暦が完成した。取り消してゲームを続けますか？（1ゲーム1回）", yes: "取り消して続ける", no: "このまま終わる", then: { t: "uncal", by } }; return; }
   szEnd(st, "cal", by);
 }
 /* ---------- 渡し ---------- */
@@ -14172,47 +14275,65 @@ function szPass(st, p, c, to){
   szTake(st.hands[p], c); st.hands[to].push(c); T.passed = 1;
   szL(st, `${szNm(p)}が${szNm(to)}に${SZ_SN[s]}を渡した`);
   szFx(st, { k: "pass", p, to, c });
-  if (szHas(st, p, "yubin") && s === cur){ szCombo(st, p, "yubin", 1, "今の季節の札を渡したので1枚引く"); szDraw(st, p, 1); }
-  if (szOnce(st, to, "niwashi")){ st.ask = { pid: to, k: "yn", card: c, title: `🪴庭師：${szNm(p)}から${SZ_SN[s]}が渡された。受け取らずに返す？（1ゲーム1回）`, yes: "返す", no: "受け取る", then: { t: "niwa", from: p, c } }; return true; }
+  if (szHas(st, p, "passCur") && s === cur){ szCombo(st, p, "passCur", "今の季節の札を渡したので1枚引く"); szDraw(st, p, 1); }
+  if (szHasF(st, p, "psn", s)){ szCombo(st, p, `psn_${s}`, `${SZ_SN[s]}を渡したので1枚引く`); szDraw(st, p, 1); }
+  if (szOnce(st, to, "ret")){ st.ask = { pid: to, k: "yn", card: c, title: `突き返し：${szNm(p)}から${SZ_SN[s]}が渡された。受け取らずに返しますか？（1ゲーム1回）`, yes: "返す", no: "受け取る", then: { t: "ret", from: p, c } }; return true; }
   szRecv(st, p, to, c);
   szAfterAct(st);
   return true;
 }
-/* 受け取ったときのコンボ（受け取る前の手札で判定） */
 function szRecv(st, from, to, c){
   const s = szSeason(c), had = st.hands[to].filter(x => x !== c && szSeason(x) === s).length;
-  if (szHas(st, to, "niwashi") && !had){ szCombo(st, to, "niwashi", 1, `手札になかった${SZ_SN[s]}が届いたので1枚引く`); szDraw(st, to, 1); }
-  if (szHas(st, to, "ogui") && had){ szCombo(st, to, "ogui", 1, `手札にある${SZ_SN[s]}が届いたので1枚引く`); szDraw(st, to, 1); }
+  if (szHas(st, to, "newSeason") && !had){ szCombo(st, to, "newSeason", `手札になかった${SZ_SN[s]}が届いたので1枚引く`); szDraw(st, to, 1); }
+  if (szHas(st, to, "sameSeason") && had){ szCombo(st, to, "sameSeason", `手札にある${SZ_SN[s]}が届いたので1枚引く`); szDraw(st, to, 1); }
+  if (szHasF(st, to, "rcv", s)){ szCombo(st, to, `rcv_${s}`, `${SZ_SN[s]}が届いたので1枚引く`); szDraw(st, to, 1); }
 }
 function szAfterAct(st){
   if (st.status !== "playing" || st.ask) return;
   const T = st.turn; if (!T || T.step !== "pass") return;
   if (T.passed) szEndTurn(st); else if (!szPassTargets(st, T.pid).length) szEnterPass(st);
 }
-/* キャラの1回能力（自分の番に押すもの） */
-function szCharAct(st, p, what, arg){
-  const T = st.turn; if (!T || T.pid !== p || st.ask || st.status !== "playing") return false;
-  if (what === "fuyu"){ if (!szOnce(st, p, "fuyugomori") || st.pile.length < 2 || T.step !== "disc") return false; st.used[p] = 1; const e = st.pile.pop(); st.exile.push(e.c); szL(st, `🐻冬籠り：捨て札の一番上を取り除き、季節は${SZ_SN[szCur(st)]}に戻る`); szFx(st, { k: "unpile", p }); return true; }
-  if (what === "ogui"){ if (!szOnce(st, p, "ogui") || T.step !== "disc") return false; st.used[p] = 1; szL(st, "🍙大食い：山札から2枚引く"); szDraw(st, p, 2); return true; }
-  if (what === "steal"){
-    if (!szOnce(st, p, "yubin") || T.step !== "pass" || T.passed || !szPassTargets(st, p).includes(arg) || !st.hands[arg].length) return false;
-    st.used[p] = 1; const h = st.hands[arg], c = h[Math.floor(Math.random() * h.length)];
-    szTake(h, c); st.hands[p].push(c); T.passed = 1;
-    szL(st, `✉️郵便屋：${szNm(p)}は渡す代わりに${szNm(arg)}の手札から1枚もらった`); szFx(st, { k: "steal", p, to: arg });
-    szAfterAct(st); return true;
-  }
+/* ---------- 1回の能力（自分の番に押して使う） ---------- */
+const SZ_ACT_ONCE = ["back", "takeTop", "draw2", "exile2", "refresh", "buy2", "skip", "steal"];
+const szIsActOnce = k => SZ_ACT_ONCE.includes(k) || ["sek", "tax"].includes(SZ_PARTS[k].fam);
+function szOnceOk(st, p, k, arg){
+  const T = st.turn; if (!T || T.pid !== p || st.ask || st.status !== "playing" || !szOnce(st, p, k)) return false;
+  const P = SZ_PARTS[k];
+  if (k === "steal") return T.step === "pass" && !T.passed && (arg === undefined ? szPassTargets(st, p).some(x => st.hands[x].length) : szPassTargets(st, p).includes(arg) && st.hands[arg].length > 0);
+  if (T.step !== "disc") return false;
+  if (k === "back" || k === "takeTop") return st.pile.length > 1;
+  if (k === "exile2") return st.exile.length > 0;
+  if (k === "refresh") return st.mdeck.length > 0;
+  if (k === "buy2" || k === "draw2" || k === "skip") return true;
+  if (P.fam === "sek") return st.deck.some(c => szSeason(c) === P.s);
+  if (P.fam === "tax") return st.players.some(o => o !== p && szCnt(st, o, P.s) > 0);
   return false;
 }
-/* ---------- 選択への答え ---------- */
+function szCharAct(st, p, k, arg){
+  if (!szOnceOk(st, p, k, arg) || (k === "steal" && arg === undefined)) return false;
+  const T = st.turn, P = SZ_PARTS[k], nm = `「${P.n}」${szNm(p)}`;
+  szUse1(st, p, k);
+  if (k === "back"){ const e = st.pile.pop(); st.exile.push(e.c); szL(st, `${nm}：捨て札の一番上を取り除き、季節は${SZ_SN[szCur(st)]}に戻る`); szFx(st, { k: "unpile", p }); }
+  else if (k === "takeTop"){ const e = st.pile.pop(); st.hands[p].push(e.c); szL(st, `${nm}：捨て札の一番上を手札に（季節は${SZ_SN[szCur(st)]}に戻る）`); szFx(st, { k: "unpile", p }); }
+  else if (k === "draw2"){ szL(st, `${nm}：山札から2枚引く`); szDraw(st, p, 2); }
+  else if (k === "exile2"){ const got = szShuffle(st.exile).slice(0, 2); got.forEach(c => { szTake(st.exile, c); st.hands[p].push(c); }); szL(st, `${nm}：除外置き場から${got.length}枚手札に`); }
+  else if (k === "refresh"){ st.mdeck.push(...st.market); st.market = st.mdeck.splice(0, SZ_MARKET); szL(st, `${nm}：能力カードの場を入れ替えた`); szFx(st, { k: "refresh", p }); }
+  else if (k === "buy2"){ T.buyMax = (T.buyMax || 1) + 1; szL(st, `${nm}：この手番、能力カードをもう1枚買える`); }
+  else if (k === "skip"){ const nx = szSeat(st, p, 1); st.skip[nx] = 1; szL(st, `${nm}：${szNm(nx)}の次の手番を飛ばす`); }
+  else if (P.fam === "sek"){ const got = []; for (let i = st.deck.length - 1; i >= 0 && got.length < 2; i--) if (szSeason(st.deck[i]) === P.s){ got.push(st.deck[i]); st.deck.splice(i, 1); } st.hands[p].push(...got); st.deck = szShuffle(st.deck); szL(st, `${nm}：山札から${SZ_SN[P.s]}を${got.length}枚手札に`); }
+  else if (P.fam === "tax"){ let n = 0; st.players.forEach(o => { if (o === p) return; const c = st.hands[o].find(x => szSeason(x) === P.s); if (c){ szTake(st.hands[o], c); st.hands[p].push(c); n++; } }); szL(st, `${nm}：ほかの人から${SZ_SN[P.s]}を${n}枚もらった`); szFx(st, { k: "tax", p, s: P.s }); }
+  else if (k === "steal"){ const h = st.hands[arg], c = h[Math.floor(Math.random() * h.length)]; szTake(h, c); st.hands[p].push(c); T.passed = 1; szL(st, `${nm}は渡す代わりに${szNm(arg)}の手札から1枚もらった`); szFx(st, { k: "steal", p, to: arg }); szAfterAct(st); }
+  return true;
+}
 function szAnswer(st, p, v){
   const a = st.ask; if (!a || a.pid !== p) return false;
   const th = a.then; st.ask = null;
-  if (th.t === "niwa"){
-    if (v){ st.used[p] = 1; szTake(st.hands[p], th.c); st.hands[th.from].push(th.c); szL(st, `🪴庭師：${szNm(p)}は受け取らずに${szNm(th.from)}に返した`); szFx(st, { k: "ret", p, to: th.from, c: th.c }); }
+  if (th.t === "ret"){
+    if (v){ szUse1(st, p, "ret"); szTake(st.hands[p], th.c); st.hands[th.from].push(th.c); szL(st, `「突き返し」${szNm(p)}は受け取らずに${szNm(th.from)}に返した`); szFx(st, { k: "ret", p, to: th.from, c: th.c }); }
     else szRecv(st, th.from, p, th.c);
   }
-  if (th.t === "koyomi"){
-    if (v){ st.used[p] = 1; const e = st.pile.pop(); st.exile.push(e.c); szL(st, `📜暦読み：${szNm(p)}が暦の完成を取り消した`); szFx(st, { k: "uncal", p }); }
+  if (th.t === "uncal"){
+    if (v){ szUse1(st, p, "uncal"); const e = st.pile.pop(); st.exile.push(e.c); szL(st, `「暦読み」${szNm(p)}が暦の完成を取り消した`); szFx(st, { k: "uncal", p }); }
     else { szEnd(st, "cal", th.by); return true; }
   }
   szAfterAct(st);
@@ -14222,24 +14343,53 @@ function szAnswer(st, p, v){
 function szEnd(st, why, by){
   if (st.status !== "playing") return;
   st.status = "finished"; st.ask = null;
-  const res = {}; st.players.forEach(p => { res[p] = szScore(st, p, why === "cal" ? by : null); });
-  st.end = { why, by: by || null, last: szCur(st), res, at: Date.now() };
-  szL(st, why === "cal" ? `暦が完成！（${szNm(by)}）` : "山札も除外置き場も尽きたのでゲーム終了");
+  const res = {}; st.players.forEach(p => { res[p] = szScore(st, p, why === "cal" ? by : null, undefined, why); });
+  st.end = { why, by: by || null, last: szCur(st), res, dis: Object.fromEntries(SZ_SE.map(s => [s, szDisCount(st, s)])), at: Date.now() };
+  szL(st, why === "cal" ? `暦が完成（${szNm(by)}）` : "山札も除外置き場も尽きたのでゲーム終了");
   szFx(st, { k: "end", why });
 }
-/* 得点：手札1枚＝1点＋キャラのボーナス */
-function szScore(st, p, calBy){
-  const h = st.hands[p], items = [[`手札 ${h.length}枚`, h.length]], ch = st.chars[p];
-  const cnt = SZ_SE.map(s => szCnt(st, p, s));
-  if (ch === "niwashi"){ const sets = Math.min(...cnt); if (sets) items.push([`🪴庭師①：四季の組 ${sets}組`, sets * 2]); }
-  if (ch === "fuyugomori" && szMost(st, p)) items.push(["🐻冬籠り③：手札が最多", 3]);
-  if (ch === "ogui" && Math.max(...cnt) >= 4) items.push([`🍙大食い①：${SZ_SN[SZ_SE[cnt.indexOf(Math.max(...cnt))]]}が${Math.max(...cnt)}枚`, 3]);
-  if (ch === "hayazaki" && calBy === p) items.push(["🌷早咲き③：自分で暦を完成", 1]);
-  if (ch === "koyomi" && calBy && calBy !== p) items.push(["📜暦読み③：ほかの人が暦を完成", 3]);
-  return { total: items.reduce((s, x) => s + x[1], 0), items };
+/* 得点：季節ごとに「捨て札のその季節の枚数 × 手札のその季節の枚数」。旬は2倍。能力カードのボーナスを足す */
+function szScore(st, p, calBy, shunOver, why){
+  if (shunOver === undefined && szOnce(st, p, "shunPick")){
+    let best = null; SZ_SE.forEach(s => { const r = szScore(st, p, calBy, s, why); if (!best || r.total > best.total) best = r; });
+    best.items.push([`「季節読み」旬を${SZ_SN[best.shun]}として計算`, 0]); return best;
+  }
+  const shun = shunOver || szCur(st), mult = szHas(st, p, "shun3") ? 3 : 2, opp = szNext(szNext(shun));   // 旬からいちばん遠い季節は0点（枚数には数える）
+  const cnt = Object.fromEntries(SZ_SE.map(s => [s, szCnt(st, p, s)]));
+  const big = szHas(st, p, "bigSeason") ? SZ_SE.slice().sort((a, b) => cnt[b] - cnt[a])[0] : null;
+  const rows = SZ_SE.map(s => {
+    const d = szDisCount(st, s) + (s === big && cnt[s] ? 1 : 0) + (szHasF(st, p, "acc", s) ? 2 : 0);
+    const m = s === opp ? 0 : s === shun ? mult : szHasF(st, p, "dbl", s) ? 2 : 1;
+    return { s, h: cnt[s], d, m, pt: cnt[s] * d * m, opp: s === opp };
+  });
+  const items = [], add = (n, v) => { if (v) items.push([n, v]); };
+  const sets = Math.min(...SZ_SE.map(s => cnt[s]));
+  if (szHas(st, p, "sets")) add(`「一年」四季の組 ${sets}組`, sets * 3);
+  if (szHas(st, p, "mostEnd") && szMost(st, p)) add("「冬籠り」手札が最多", 5);
+  if (szHas(st, p, "calSelf") && calBy === p) add("「締めくくり」自分で暦を完成", 6);
+  if (szHas(st, p, "calOther") && calBy && calBy !== p) add("「見届け」ほかの人が暦を完成", 4);
+  if (szHas(st, p, "abilPts")) add(`「収集家」能力カード${st.parts[p].length}枚`, st.parts[p].length);
+  if (szHas(st, p, "allFour") && sets > 0) add("「四季彩」4つの季節がそろった", 5);
+  if (szHas(st, p, "minPts")){ const v = SZ_SE.map(s => cnt[s]).filter(x => x > 0); if (v.length) add("「判官贔屓」いちばん少ない季節", Math.min(...v) * 2); }
+  if (szHas(st, p, "big10") && st.hands[p].length >= 10) add("「大荷物」手札10枚以上", 5);
+  if (szHas(st, p, "deckEnd") && (why || (st.end && st.end.why)) === "deck") add("「天寿」山札切れで終了", 5);
+  SZ_SE.forEach(s => {
+    if (szHasF(st, p, "per", s)) add(`「${SZ_SN[s]}好き」${SZ_SN[s]}${cnt[s]}枚`, cnt[s]);
+    if (szHasF(st, p, "wai", s) && shun === s) add(`「${SZ_SN[s]}待ち」旬が${SZ_SN[s]}`, 6);
+    if (szHasF(st, p, "maj", s) && cnt[s] > 0 && st.players.every(o => szCnt(st, o, s) <= cnt[s])) add(`「${SZ_SN[s]}自慢」${SZ_SN[s]}が最多`, 4);
+  });
+  if (big && cnt[big]) items.push([`「偏愛」${SZ_SN[big]}の捨て札を+1枚として計算`, 0]);
+  const total = rows.reduce((s, r) => s + r.pt, 0) + items.reduce((s, x) => s + x[1], 0);
+  return { total, rows, items, shun, mult, opp };
 }
 
 /* ---------- CPU ---------- */
+function szPartVal(st, p, k){
+  const P = SZ_PARTS[k], base = { c: 3, e: 3, o: 2 }[P.t], s = P.s;
+  let v = base + (["advDraw", "stallDraw", "sets", "shun3", "mostEnd", "bigSeason"].includes(k) ? 2 : 0);
+  if (s){ const c = szCnt(st, p, s); if (["per", "acc", "dbl", "maj", "hrv", "wai"].includes(P.fam)) v += c * 1.2 - 1; if (["dsc", "dsc2", "psn", "pre"].includes(P.fam)) v += c * .5; }
+  return v - szCostN(k) * .6;
+}
 function szWantEnd(st, p){
   const mine = szScore(st, p, p).total;
   const oth = Math.max(...st.players.filter(x => x !== p).map(x => szScore(st, x, p).total));
@@ -14248,40 +14398,56 @@ function szWantEnd(st, p){
 function szCpuStep(st, p){
   const a = st.ask;
   if (a && a.pid === p){
-    if (a.then.t === "koyomi") return ["answer", !szWantEnd(st, p)];
-    if (a.then.t === "niwa") return ["answer", false];
+    if (a.then.t === "uncal") return ["answer", !szWantEnd(st, p)];
+    if (a.then.t === "ret"){ const s = szSeason(a.card); return ["answer", szCnt(st, p, s) === 0 && szDisCount(st, s) <= 1]; }
     return ["answer", false];
   }
   const T = st.turn; if (!T || T.pid !== p || st.ask) return null;
-  const cur = szCur(st), chain = szChain(st), want = szWantEnd(st, p), h = st.hands[p], ch = st.chars[p];
-  if (szOnce(st, p, "ogui")) return ["char", "ogui"];
-  // 手札のうち、手放してよい札（いちばん多い季節から。庭師は組を崩さないように）
-  const pick = arr => { if (!arr.length) return null; const by = s => szCnt(st, p, s); return arr.slice().sort((x, y) => by(szSeason(y)) - by(szSeason(x)))[0]; };
+  const cur = szCur(st), chain = szChain(st), want = szWantEnd(st, p), h = st.hands[p];
+  const sc = () => szScore(st, p, null).total;
+  const gain = c => { const base = sc(); const st2 = { ...st, hands: { ...st.hands, [p]: h.filter(x => x !== c) }, pile: st.pile.concat([{ c }]) }; return szScore(st2, p, null).total - base; };
   if (T.step === "disc"){
-    const advs = h.filter(x => szSeason(x) === szNext(cur)), stalls = h.filter(x => szSeason(x) === cur);
-    if (want){
-      if (advs.length && (chain >= 2 || ch === "hayazaki" || chain >= 1 && h.length >= 5)) return ["disc", pick(advs), "normal"];
-      if (ch === "koyomi" && stalls.length && T.stallN < 2) return ["disc", pick(stalls), "normal"];
-      if (ch === "fuyugomori"){ const w = h.find(x => szSeason(x) === "win" && szCanDisc(st, p, x)); if (w) return ["disc", w, "normal"]; }
-      if (chain >= 2 && szOnce(st, p, "hayazaki") && h.length) return ["disc", pick(h), "haya"];
-    } else {
-      if (chain >= 2 && szOnce(st, p, "fuyugomori") && st.pile.length > 1) return ["char", "fuyu"];
-      if (stalls.length && (chain >= 2 || (ch === "koyomi" && T.stallN < 2) || (ch === "fuyugomori" && stalls.some(x => szSeason(x) === "win")))) return ["disc", ch === "fuyugomori" && stalls.find(x => szSeason(x) === "win") || pick(stalls), "normal"];
+    const once = (st.parts[p] || []).find(k => ["draw2", "exile2", "buy2"].includes(k) || ["sek", "tax"].includes(SZ_PARTS[k].fam));
+    if (once && szOnceOk(st, p, once)) return ["char", once];
+    if (T.bought < (T.buyMax || 1)){
+      const buy = st.market.filter(k => szAfford(st, p, k)).map(k => [k, szPartVal(st, p, k)]).sort((x, y) => y[1] - x[1])[0];
+      if (buy && buy[1] > 0 && h.length - szCostN(buy[0]) >= 2) return ["buy", buy[0]];
     }
+    const ok = h.filter(x => szCanDisc(st, p, x));
+    if (chain >= 2){
+      const adv = ok.filter(x => szSeason(x) === szNext(cur)), stall = ok.filter(x => szSeason(x) === cur);
+      if (want && adv.length) return ["disc", adv.sort((x, y) => gain(y) - gain(x))[0], "normal"];
+      const pk = (st.parts[p] || []).find(k => (k === "haya" || SZ_PARTS[k].fam === "pre") && szOnce(st, p, k) && h.some(x => szCanDisc(st, p, x, k)));
+      if (want && pk) return ["disc", h.find(x => szCanDisc(st, p, x, pk)), pk];
+      if (!want && szOnceOk(st, p, "back")) return ["char", "back"];
+      if (!want && szOnceOk(st, p, "takeTop")) return ["char", "takeTop"];
+      if (!want && stall.length && T.stallN < 2) return ["disc", stall.sort((x, y) => gain(y) - gain(x))[0], "normal"];
+      if (!want) return ["next"];
+    }
+    const drawsOn = x => { const s = szSeason(x), adv = s === szNext(cur), stl = s === cur;
+      return (adv && (szHas(st, p, "advDraw") || szHasF(st, p, "adv", s) || (szHas(st, p, "adv2") && T.advN === 1))) || (stl && (szHas(st, p, "stallDraw") || szHasF(st, p, "stl", s) || (szHas(st, p, "stall2") && T.stallN === 1))) || szHasF(st, p, "dsc", s) || szHasF(st, p, "dsc2", s); };
+    const safe = x => !(chain === 1 && szSeason(x) === szNext(cur) && !want);
+    const f = ok.filter(x => drawsOn(x) && safe(x)).sort((x, y) => gain(y) - gain(x))[0];
+    if (f && T.discN < 4) return ["disc", f, "normal"];
+    const g2 = ok.filter(safe).map(x => [x, gain(x)]).sort((x, y) => y[1] - x[1])[0];
+    if (g2 && g2[1] > 0 && T.discN < 3) return ["disc", g2[0], "normal"];
+    if (szOnceOk(st, p, "skip") && want) return ["char", "skip"];
     return ["next"];
   }
   if (T.step === "pass"){
     const tg = szPassTargets(st, p); if (!tg.length) return null;
-    const to = tg.slice().sort((x, y) => szScore(st, x).total - szScore(st, y).total)[0];   // 点の低い人に渡す
-    if (szOnce(st, p, "yubin")){ const rich = tg.slice().sort((x, y) => st.hands[y].length - st.hands[x].length)[0]; if (st.hands[rich].length >= 6) return ["char", "steal", rich]; }
-    if (ch === "yubin"){ const cc = h.find(x => szSeason(x) === cur); if (cc) return ["pass", cc, to]; }
-    return ["pass", pick(h), to];
+    const to = tg.slice().sort((x, y) => szScore(st, x).total - szScore(st, y).total)[0];
+    if (szOnce(st, p, "steal")){ const rich = tg.slice().sort((x, y) => st.hands[y].length - st.hands[x].length)[0]; if (st.hands[rich].length >= 5 && szOnceOk(st, p, "steal", rich)) return ["char", "steal", rich]; }
+    let best = null, bv = -1e9;
+    h.forEach(c => { const st2 = { ...st, hands: { ...st.hands, [p]: h.filter(x => x !== c) } }; let v = szScore(st2, p, null).total; if ((szHas(st, p, "passCur") && szSeason(c) === cur) || szHasF(st, p, "psn", szSeason(c))) v += 1.5; if (v > bv){ bv = v; best = c; } });
+    return ["pass", best, to];
   }
   return null;
 }
 function szApply(st, p, mv){
   if (!mv) return false;
   const [k, a, b] = mv;
+  if (k === "buy") return szBuy(st, p, a);
   if (k === "answer") return szAnswer(st, p, a);
   if (k === "disc") return szDisc(st, p, a, b || "normal");
   if (k === "pass") return szPass(st, p, a, b);
@@ -14290,13 +14456,13 @@ function szApply(st, p, mv){
   return false;
 }
 
-/* ======================= 四季の巡り：画面 ======================= */
+/* ======================= 四季の巡り：画面（絵文字は使わず、和柄のSVGで描く） ======================= */
 const szGames = () => db.sz_games || [];
 const szLive = () => szGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
 const szActive = () => pickMine(szLive());
 const szById = id => szGames().find(g => g.id === id);
 const szActor = st => st.ask ? st.ask.pid : st.turn ? st.turn.pid : null;
-function szMyTurn(g){ const st = g && g.st; return !!(st && st.sz && g.status === "playing" && me && szActor(st) === me); }
+function szMyTurn(g){ const st = g && g.st; return !!(st && st.v === 4 && g.status === "playing" && me && szActor(st) === me); }
 async function szCommit(id, fn){
   for (let tries = 0; tries < 6; tries++){
     const g = szById(id); if (!g || g.status !== "playing") return false;
@@ -14322,23 +14488,47 @@ async function szCommit(id, fn){
 }
 const szDo = (id, p, mv) => szCommit(id, st => szApply(st, p, mv));
 CPU_AI.sz_games = g => {
-  const st = g.st; if (!st || st.v !== 2 || g.status !== "playing") return null;
+  const st = g.st; if (!st || st.v !== 4 || g.status !== "playing") return null;
   const p = szActor(st); if (!isCpu(p)) return null;
   const mv = szCpuStep(st, p); if (!mv) return null;
-  const wait = mv[0] === "next" ? 700 : mv[0] === "answer" ? 900 : 1300;
+  const wait = mv[0] === "next" ? 700 : mv[0] === "buy" ? 1500 : 1300;
   return { wait, run: () => szDo(g.id, p, mv) };
 };
+
+/* ---------- 和柄の絵（SVG） ---------- */
+function szArtG(s){
+  if (s === "spr"){   // 桜
+    const pet = "M20 20C14.5 15 13.5 8.5 16.6 4.8L20 7.6L23.4 4.8C26.5 8.5 25.5 15 20 20Z";
+    return `${[0, 72, 144, 216, 288].map(a => `<path d="${pet}" transform="rotate(${a} 20 20)" fill="#F5C3D2" stroke="#B9466E" stroke-width="1.1" stroke-linejoin="round"/>`).join("")}${[0, 72, 144, 216, 288].map(a => `<path d="M20 20L20 15" transform="rotate(${a + 36} 20 20)" stroke="#B9466E" stroke-width=".9" stroke-linecap="round"/><circle cx="20" cy="14.6" r=".9" transform="rotate(${a + 36} 20 20)" fill="#B9466E"/>`).join("")}<circle cx="20" cy="20" r="2.1" fill="#E4A33A"/>`;
+  }
+  if (s === "sum"){   // 青海波
+    const arc = (x, y) => [9, 6.2, 3.4].map(r => `<path d="M${x - r} ${y}A${r} ${r} 0 0 1 ${x + r} ${y}" fill="none" stroke="#2F7D6B" stroke-width="1.5"/>`).join("");
+    return `<circle cx="20" cy="20" r="16" fill="#E3F1EC"/><g>${[[11, 34], [29, 34], [20, 27], [2, 27], [38, 27], [11, 20], [29, 20], [20, 13]].map(([x, y]) => `<path d="M${x - 9} ${y}A9 9 0 0 1 ${x + 9} ${y}Z" fill="#E3F1EC"/>${arc(x, y)}`).join("")}</g><circle cx="20" cy="20" r="16" fill="none" stroke="#2F7D6B" stroke-width="1.6"/>`;
+  }
+  if (s === "aut"){   // 紅葉
+    const pts = []; const R = [15, 6.5], lobes = 7;
+    for (let i = 0; i <= lobes * 2; i++){ const a = (-90 - 150 + i * (300 / (lobes * 2))) * Math.PI / 180, r = i % 2 ? R[1] : (i === lobes ? R[0] : R[0] - Math.abs(i - lobes) * 1.1); pts.push(`${(20 + r * Math.cos(a)).toFixed(1)},${(19 + r * Math.sin(a)).toFixed(1)}`); }
+    return `<polygon points="${pts.join(" ")} 20,22" fill="#E2793B" stroke="#8E3A12" stroke-width="1.1" stroke-linejoin="round"/>${[0, 1, 2, 3, 4, 5, 6].map(i => { const a = (-90 - 150 + (2 * i + 0) * (300 / 14) + 300 / 14 * 0) * Math.PI / 180; return ""; }).join("")}${[-60, -30, 0, 30, 60].map(d => { const a = (-90 + d) * Math.PI / 180; return `<path d="M20 20L${(20 + 11 * Math.cos(a)).toFixed(1)} ${(19 + 11 * Math.sin(a)).toFixed(1)}" stroke="#8E3A12" stroke-width=".8"/>`; }).join("")}<path d="M20 20L21.5 34" stroke="#8E3A12" stroke-width="1.4" stroke-linecap="round"/>`;
+  }
+  // 雪輪
+  return `${[0, 60, 120, 180, 240, 300].map(a => `<circle cx="20" cy="9.5" r="6" transform="rotate(${a} 20 20)" fill="#DDE7F4" stroke="#46679A" stroke-width="1.3"/>`).join("")}<circle cx="20" cy="20" r="10.6" fill="#DDE7F4"/>${[0, 60, 120].map(a => `<path d="M20 12.5V27.5M17.6 14.6L20 16.6L22.4 14.6M17.6 25.4L20 23.4L22.4 25.4" transform="rotate(${a} 20 20)" fill="none" stroke="#46679A" stroke-width="1.1" stroke-linecap="round"/>`).join("")}`;
+}
+const szArt = (s, cls = "") => `<svg class="szart ${cls}" viewBox="0 0 40 40" aria-hidden="true">${szArtG(s)}</svg>`;
+const SZ_ICON = `<span class="gic szi"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="3" width="58" height="58" rx="10" fill="#FBF6EA" stroke="#2A2418" stroke-width="2"/><path d="M32 4V60M4 32H60" stroke="#2A2418" stroke-width="1.2" opacity=".35"/>
+  <g transform="translate(4 4) scale(.68)">${szArtG("spr")}</g><g transform="translate(33 4) scale(.68)">${szArtG("sum")}</g><g transform="translate(33 33) scale(.68)">${szArtG("aut")}</g><g transform="translate(4 33) scale(.68)">${szArtG("win")}</g></svg></span>`;
+/* 紋（パーツの印） */
+const szMon = (k, cls = "") => { const P = SZ_PARTS[k]; return `<span class="szmon t-${P.t} ${P.s ? "ss" : ""} ${cls}" ${P.s ? `style="--mc:${SZ_SC[P.s]}"` : ""}><b>${P.m}</b></span>`; };
 
 /* ---------- 新しい対戦 ---------- */
 function openSzNew(){
   const t = curTrip();
-  let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 5), chars = true;
+  let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 5), draft = true;
   const s = openSheet("四季の巡りを始める", `
-    <p class="note">【オリジナル】終わったときの手札の枚数がそのまま得点。キャラクターのコンボで札を増やし、季節を進めて終わらせるか、足止めして粘るか。捨て札で季節が3回続けて進んだら終わり（3〜5人）。</p>
+    <p class="note">【オリジナル】捨て札に多く積もった季節ほど、その季節の手札が高い点になる手札管理ゲーム。終わったときの季節（旬）は2倍。季節カードを払って能力カードを買い、自分だけのコンボを組み立てる（3〜5人）。</p>
     <button type="button" class="grbtn" data-grule="sz">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・3〜5人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え（最初の人はランダム）</span><div id="szOrder" class="norder"></div><button class="shufbtn" id="szShuf">順番をシャッフル</button></div>
-    <div class="f"><span>キャラクター</span><div class="chips"><button type="button" class="pc" data-ch="1" aria-pressed="true">ランダムに配る</button><button type="button" class="pc" data-ch="0" aria-pressed="false">なし（季節カードだけ）</button></div></div>
+    <div class="f"><span>能力カード</span><div class="chips"><button type="button" class="pc" data-ch="1" aria-pressed="true">あり（季節カードで買う）</button><button type="button" class="pc" data-ch="0" aria-pressed="false">なし（季節カードだけ）</button></div></div>
     <div class="btns"><button class="btn" id="szGo">はじめる</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#szOrder").innerHTML = seatHtml(order); seatDrag($("#szOrder"), () => order, o => order = o, draw); };
@@ -14347,21 +14537,22 @@ function openSzNew(){
     if (on && order.length >= 5){ toast("最大5人です"); return; }
     b.setAttribute("aria-pressed", String(on)); order = on ? [...order, id] : order.filter(x => x !== id); draw();
   });
-  s.querySelectorAll("[data-ch]").forEach(b => b.onclick = () => { chars = b.dataset.ch === "1"; s.querySelectorAll("[data-ch]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
+  s.querySelectorAll("[data-ch]").forEach(b => b.onclick = () => { draft = b.dataset.ch === "1"; s.querySelectorAll("[data-ch]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); });
   $("#szShuf").onclick = () => { order = shuffle(order); draw(); };
   draw();
   $("#szGo").onclick = async () => {
     if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
     if (order.length < 3 || order.length > 5){ toast("参加者は3〜5人です"); return; }
-    const st = szSetup(order, { chars }); const lg = st._log || []; delete st._log;
+    const st = szSetup(order, { abil: draft }); const lg = st._log || []; delete st._log;
     const row = { trip_id: t ? t.id : null, status: "playing", players: order, st, created_by: me || null, log: lg.map((m, i) => ({ t: new Date(Date.now() + i).toISOString(), m })) };
     const { data: res, error } = await sb.from("sz_games").insert(row).select().single();
     if (error){ if (/sz_games|relation|exist|schema/i.test(error.message || "")) toast("四季の巡りを使うには schema17.sql を実行してください", 3500); else fail(error, "作成"); return; }
-    await loadTable("sz_games"); closeSheet(); openSz(res.id); order.forEach(p => pushCall({ type: "game_turn", game: SZ_TITLE, to: p }));
+    await loadTable("sz_games"); closeSz0(); openSz(res.id); order.forEach(p => pushCall({ type: "game_turn", game: SZ_TITLE, to: p }));
   };
 }
-let szId = null, szSel = null, szMode = "normal", szAskSel = [], szSeenFx = {};
-function openSz(id){ const g0 = szById(id); if (g0 && g0.st && g0.st.v !== 2){ toast("古いルールの対戦です。新しく始めてください", 2500); return; } szId = id; szSel = null; szMode = "normal"; szAskSel = []; const g = szById(id); if (g && g.st) szSeenFx[id] = g.st.fxn || 0; $("#szg").hidden = false; document.body.style.overflow = "hidden"; drawSz(); }
+const closeSz0 = () => closeSheet();
+let szId = null, szSel = null, szMode = "normal", szSeenFx = {};
+function openSz(id){ const g0 = szById(id); if (g0 && g0.st && g0.st.v !== 4){ toast("古いルールの対戦です。新しく始めてください", 2500); return; } szId = id; szSel = null; szMode = "normal"; if (g0 && g0.st) szSeenFx[id] = g0.st.fxn || 0; $("#szg").hidden = false; document.body.style.overflow = "hidden"; drawSz(); }
 function closeSz(){ szId = null; $("#szg").hidden = true; document.body.style.overflow = ""; render(); }
 function szMenu(g){
   const s = openSheet("四季の巡りのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="log">これまでの流れ<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
@@ -14369,160 +14560,158 @@ function szMenu(g){
   s.querySelector('[data-x="log"]').onclick = () => openSheet("これまでの流れ", `<ul class="szloglist">${(g.log || []).slice().reverse().map(x => `<li>${esc(x.m)}</li>`).join("")}</ul>`);
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); const { error } = await sb.from("sz_games").update({ status: "aborted", version: (g.version || 1) + 1 }).eq("id", g.id); if (error){ fail(error, "保存"); return; } await loadTable("sz_games"); closeSz(); };
 }
-
-/* ---------- 見た目 ---------- */
-function szCardHtml(c, cls = "", st){
-  const sn = szSeason(c);
-  return `<div class="szc s-${sn} ${cls}" data-c="${c}" style="--sc:${SZ_SC[sn]}"><span class="szsi">${SZ_SI[sn]}</span><b>${SZ_SN[sn]}</b></div>`;
+function szPartsSheet(st, p){
+  const ps = st.parts[p] || [];
+  openSheet(`${szNm(p)}の能力`, ps.length ? `<div class="szpl">${ps.map(k => szPartHtml(k, st.used[p + ":" + k] ? "used" : "")).join("")}</div>` : `<p class="note">まだ能力カードを持っていません</p>`);
 }
-const szMini = (c, cls = "") => { const sn = szSeason(c); return `<span class="szm s-${sn} ${cls}" style="--sc:${SZ_SC[sn]}">${SZ_SI[sn]}${SZ_SN[sn]}</span>`; };
-const szPname = p => esc(pname(p));
+
+/* ---------- 見た目の部品 ---------- */
+const szCardHtml = (c, cls = "") => { const s = szSeason(c); return `<div class="szc s-${s} ${cls}" data-c="${c}" style="--sc:${SZ_SC[s]}">${szArt(s)}<b>${SZ_SN[s]}</b></div>`; };
+const szMini = s => `<span class="szm" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}${SZ_SN[s]}</span>`;
+const szPname = p => esc(szNm(p));
+const szCostHtml = k => `<span class="szcost">${SZ_SE.filter(s => SZ_PARTS[k].cost[s]).map(s => `<i style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_PARTS[k].cost[s]}</b></i>`).join("")}</span>`;
+const szPartHtml = (k, cls = "", data = "", cost = false) => { const P = SZ_PARTS[k]; return `<div class="szpart t-${P.t} ${cls}" ${data}>${szMon(k)}<div><small>${SZ_TYPE[P.t]}${cost ? szCostHtml(k) : ""}</small><b>${P.n}</b><p>${esc(P.tx)}</p></div></div>`; };
 function szWheel(st){
   const cur = szCur(st), ch = szChain(st);
-  return `<div class="szwheel">${SZ_SE.map((s, i) => `<span class="szw ${s === cur ? "on" : ""}" style="--sc:${SZ_SC[s]};--a:${i * 90 - 90}deg"><i>${SZ_SI[s]}</i><b>${SZ_SN[s]}</b></span>`).join("")}<div class="szwc"><small>今の季節</small><b style="color:${SZ_SC[cur]}">${SZ_SN[cur]}</b><span class="szchain">${[0, 1, 2].map(i => `<i class="${i < ch ? "on" : ""}"></i>`).join("")}</span><small>暦 ${ch}/3</small></div></div>`;
+  return `<div class="szwheel">${SZ_SE.map((s, i) => `<span class="szw ${s === cur ? "on" : ""}" style="--sc:${SZ_SC[s]};--a:${i * 90 - 90}deg">${szArt(s)}<b>${SZ_SN[s]}</b></span>`).join("")}<div class="szwc"><small>今の季節</small><b style="color:${SZ_SC[cur]}">${SZ_SN[cur]}</b><span class="szchain">${[0, 1, 2].map(i => `<i class="${i < ch ? "on" : ""}"></i>`).join("")}</span><small>暦 ${ch}/3</small></div></div>`;
+}
+/* 季節ごとの値打ち（捨て札の枚数）と、自分の今の得点 */
+function szValueHtml(st){
+  const cur = szCur(st), mine = st.hands[me] ? szScore(st, me, null) : null;
+  return `<div class="szval">${SZ_SE.map(s => { const r = mine && mine.rows.find(x => x.s === s); return `<div class="szv ${s === cur ? "shun" : s === szNext(szNext(cur)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${szDisCount(st, s)}</em>${s === cur ? `<i>旬×${mine ? mine.mult : 2}</i>` : s === szNext(szNext(cur)) ? `<i class="opp">0点</i>` : ""}</span>${r ? `<small>手札${r.h}枚 → ${r.pt}点</small>` : ""}</div>`; }).join("")}${mine ? `<div class="szvt"><small>今終われば</small><b>${mine.total}</b><small>点</small></div>` : ""}</div>`;
 }
 function drawSz(){
   setTimeout(cpuKick, 0);
   if (!szId) return;
   const g = szById(szId); if (!g || !g.st || g.status === "aborted") return closeSz();
-  const st = g.st, T = st.turn, el = $("#szg");
+  const st = g.st, el = $("#szg");
+  const T = st.turn;
   const myAsk = st.ask && st.ask.pid === me ? st.ask : null;
   const myTurn = g.status === "playing" && T && T.pid === me && !st.ask;
   const hand = st.hands[me] || [];
   if (szSel && !hand.includes(szSel)) szSel = null;
   const cur = szCur(st);
-  const tg = myTurn && T.step === "pass" ? (T.fixed ? [T.fixed] : szPassTargets(st, me)) : [];
-  // 席
+  const tg = myTurn && T.step === "pass" ? szPassTargets(st, me) : [];
   const seats = st.players.map(p => {
-    const ch = st.chars[p] && SZ_CHAR[st.chars[p]], act = szActor(st) === p;
-    const fl = "";
-    return `<div class="szseat ${act ? "act" : ""} ${tg.includes(p) ? "tgt" : ""} ${p === me ? "mine" : ""}" style="--pc:${pcolor(p)}" data-seat="${p}">${act ? `<em class="szturn">${st.ask && st.ask.pid === p && (!T || T.pid !== p) ? "選択中" : "手番"}</em>` : ""}<b>${szPname(p)}</b>${ch ? `<small class="szchr ${st.used[p] ? "used" : ""}">${ch.i}${ch.n}</small>` : ""}<span class="szhn">手札 <b>${st.hands[p].length}</b></span>${fl ? `<small class="szfl">${fl}</small>` : ""}${tg.includes(p) ? `<i class="sztgi">渡す相手</i>` : ""}</div>`;
+    const act = szActor(st) === p, ps = st.parts[p] || [];
+    return `<div class="szseat ${act ? "act" : ""} ${tg.includes(p) ? "tgt" : ""} ${p === me ? "mine" : ""}" style="--pc:${pcolor(p)}" data-seat="${p}">${act ? `<em class="szturn">${st.ask && st.ask.pid === p && (!T || T.pid !== p) ? "選択中" : "手番"}</em>` : ""}<b>${szPname(p)}</b><span class="szmons">${ps.map(k => szMon(k, st.used[p + ":" + k] ? "used" : "")).join("")}</span><span class="szhn">手札 <b>${st.hands[p].length}</b></span>${tg.includes(p) ? `<i class="sztgi">渡す相手</i>` : ""}</div>`;
   }).join("");
-  // 捨て札（上から4枚）
   const top = st.pile.slice(-4);
-  const pileHtml = `<div class="szpile">${top.map((e, i) => `${i ? `<i class="szarr ${szPileS(e) === szNext(szPileS(top[i - 1])) ? "adv" : "stay"}">${szPileS(e) === szNext(szPileS(top[i - 1])) ? "▶" : "＝"}</i>` : ""}<span class="szpc s-${szPileS(e)} ${i === top.length - 1 ? "top" : ""}" style="--sc:${SZ_SC[szPileS(e)]}">${SZ_SI[szPileS(e)]}<b>${SZ_SN[szSeason(e.c)]}</b>${e.as ? `<small>→${SZ_SN[e.as]}として</small>` : ""}</span>`).join("")}</div>`;
-  // 手番の段階
-  const steps = [["draw", "ドロー（2枚）"], ["disc", "捨て"], ["pass", "渡し"]];
+  const pileHtml = `<div class="szpile">${top.map((e, i) => `${i ? `<i class="szarr ${szPileS(e) === szNext(szPileS(top[i - 1])) ? "adv" : "stay"}">${szPileS(e) === szNext(szPileS(top[i - 1])) ? "進" : "止"}</i>` : ""}<span class="szpc ${i === top.length - 1 ? "top" : ""}" style="--sc:${SZ_SC[szPileS(e)]}">${szArt(szPileS(e), "xs")}<b>${SZ_SN[szPileS(e)]}</b>${e.as ? `<small>${SZ_SN[szSeason(e.c)]}を${SZ_SN[e.as]}として</small>` : ""}</span>`).join("")}</div>`;
+  const steps = [["draw", "ドロー（1枚）"], ["disc", "捨て・購入"], ["pass", "渡し"]];
   const stepIx = T ? ({ disc: 1, pass: 2 }[T.step] || 0) : 0;
-  const stepBar = T ? `<div class="szsteps">${steps.map(([k, n], i) => `<span class="${i < stepIx ? "done" : i === stepIx ? "now" : ""}">${i + 1} ${n}</span>`).join("")}</div>` : "";
+  const stepBar = T ? `<div class="szsteps">${steps.map(([k, n], i) => `<span class="${i < stepIx ? "done" : i === stepIx ? "now" : ""}">${["一", "二", "三"][i]}　${n}</span>`).join("")}</div>` : "";
   let guide = "";
   if (g.status === "playing" && T){
     if (myTurn){
-      if (T.step === "disc") guide = szMode === "haya" ? "🌷早咲き：捨てる札を1枚選ぶ（次の季節として扱う）" : `捨てられるのは ${SZ_SI[cur]}${SZ_SN[cur]}（足止め）か ${SZ_SI[szNext(cur)]}${SZ_SN[szNext(cur)]}（季節を進める）。捨てると手札（＝得点）は1枚減る。捨てないなら「渡しへ」`;
+      if (T.step === "disc") guide = szMode !== "normal" ? `「${SZ_PARTS[szMode].n}」：捨てる札を1枚選ぶ（次の季節として扱う）` : `捨てられるのは${SZ_SN[cur]}（足止め）か${SZ_SN[szNext(cur)]}（季節を進める）。能力カードも1枚まで買える${T.bought ? "（この手番は購入済み）" : ""}。今終わると、旬の反対の${SZ_SN[szNext(szNext(cur))]}は0点`;
       else if (T.step === "pass") guide = tg.length ? `手札${hand.length}枚 → ${tg.length > 1 ? "渡す相手と" : `${szPname(tg[0])}に`}渡す札を選ぶ` : "";
     } else guide = `${szPname(szActor(st))}が${st.ask && (!T || st.ask.pid !== T.pid) ? "選んでいます" : `${({ disc: "捨てる札", pass: "渡す札" })[T.step]}を選んでいます`}…`;
   }
-  // 自分の手札
-  const canAct = c => myTurn && (T.step === "disc" ? szCanDisc(st, me, c, szMode === "haya" ? "haya" : "normal") : T.step === "pass");
+  if (szMode !== "normal" && !szOnce(st, me, szMode)) szMode = "normal";
+  const canAct = c => myTurn && (T.step === "disc" ? szCanDisc(st, me, c, szMode) : T.step === "pass");
   const sorted = hand.slice().sort((a, b) => SZ_SE.indexOf(szSeason(a)) - SZ_SE.indexOf(szSeason(b)) || a.localeCompare(b));
-  const handHtml = `<div class="szhand">${sorted.map(c => szCardHtml(c, `${szSel === c ? "sel" : ""} ${myTurn && !canAct(c) ? "ng" : ""}`, st)).join("") || `<p class="sznote">手札なし</p>`}</div>`;
-  // 行動ボタン
+  const handHtml = `<div class="szhand">${sorted.map(c => szCardHtml(c, `${szSel === c ? "sel" : ""} ${myTurn && !canAct(c) ? "ng" : ""}`)).join("") || `<p class="sznote">手札なし</p>`}</div>`;
   let btns = "";
   if (myTurn){
     const sel = szSel;
     if (T.step === "disc"){
-      const mode = szMode === "haya" ? "haya" : "normal";
-      const ok = sel && szCanDisc(st, me, sel, mode);
-      const eff = ok ? (mode === "haya" ? `→${SZ_SN[szNext(cur)]}として` : szSeason(sel) === cur ? "（足止め）" : "（季節を進める）") : "";
-      btns = `<button class="szb go" id="szDiscB" ${ok ? "" : "disabled"}>${sel ? `${SZ_SN[szSeason(sel)]}を捨てる${eff}` : "捨てる札を選ぶ"}</button><button class="szb" id="szNext">渡しへ ▶</button>`;
+      const mode = szMode, ok = sel && szCanDisc(st, me, sel, mode);
+      const eff = ok ? (mode !== "normal" ? `（${SZ_SN[szNext(cur)]}として）` : szSeason(sel) === cur ? "（足止め）" : "（季節を進める）") : "";
+      btns = `<button class="szb go" id="szDiscB" ${ok ? "" : "disabled"}>${sel ? `${SZ_SN[szSeason(sel)]}を捨てる${eff}` : "捨てる札を選ぶ"}</button><button class="szb" id="szNext">渡しへ</button>`;
     } else if (T.step === "pass") btns = tg.map(p => `<button class="szb go" data-pto="${p}" ${sel ? "" : "disabled"}>${sel ? `${SZ_SN[szSeason(sel)]}を` : ""}${szPname(p)}に渡す</button>`).join("");
   }
-  // キャラの欄
-  const myCh = st.chars[me] && SZ_CHAR[st.chars[me]];
+  // 自分の個性
+  const myParts = st.parts[me] || [];
   let chBtn = "";
-  if (myCh && myTurn && !st.used[me]){
-    if (st.chars[me] === "hayazaki" && T.step === "disc") chBtn = `<button class="szcb ${szMode === "haya" ? "on" : ""}" id="szHaya">${szMode === "haya" ? "早咲きをやめる" : "🌷早咲きを使う"}</button>`;
-    if (st.chars[me] === "fuyugomori" && T.step === "disc" && st.pile.length > 1) chBtn = `<button class="szcb" id="szFuyu">🐻季節を1つ戻す</button>`;
-    if (st.chars[me] === "yubin" && T.step === "pass" && !T.passed) chBtn = tg.filter(p => st.hands[p].length).map(p => `<button class="szcb" data-steal="${p}">✉️${szPname(p)}から1枚もらう</button>`).join("");
-    if (st.chars[me] === "ogui" && T.step === "disc") chBtn = `<button class="szcb" id="szOgui">🍙山札から2枚引く</button>`;
+  if (myTurn){
+    myParts.forEach(k => {
+      const P = SZ_PARTS[k];
+      if ((k === "haya" || P.fam === "pre") && szOnce(st, me, k) && T.step === "disc" && hand.some(c => szCanDisc(st, me, c, k))) chBtn += `<button class="szcb ${szMode === k ? "on" : ""}" data-mode="${k}">${szMode === k ? `「${P.n}」をやめる` : `「${P.n}」を使う`}</button>`;
+      else if (k === "steal" && szOnceOk(st, me, k)) chBtn += tg.filter(p => st.hands[p].length).map(p => `<button class="szcb" data-steal="${p}">「横取り」${szPname(p)}から1枚もらう</button>`).join("");
+      else if (szIsActOnce(k) && k !== "steal" && szOnceOk(st, me, k)) chBtn += `<button class="szcb" data-once="${k}">「${P.n}」を使う</button>`;
+    });
   }
-  const chHtml = myCh ? `<div class="szmych"><span class="szci">${myCh.i}</span><div><b>${myCh.n}<small>${myCh.t}</small></b>${myCh.c.map((x, i) => `<p><i>コンボ${"①②③"[i]}</i>${esc(x)}</p>`).join("")}<p class="${st.used[me] ? "used" : ""}"><i>1回</i>${esc(myCh.o)}${st.used[me] ? "（使用済み）" : ""}</p></div><div class="szcbs">${chBtn}</div></div>` : "";
+  const chHtml = myParts.length ? `<div class="szmyp"><h5>あなたの能力</h5><div class="szpl">${myParts.map(k => szPartHtml(k, st.used[me + ":" + k] ? "used" : "")).join("")}</div>${chBtn ? `<div class="szcbs">${chBtn}</div>` : ""}</div>` : "";
+  // 能力カードの場（買える札は明るく）
+  const mkt = (st.market || []).length ? `<div class="szmkt"><h5>能力カードの場<small>手札の季節カードを払って買う（1手番に1枚・払った札は除外置き場へ）。残り${st.mdeck.length}枚</small></h5><div class="szpl">${st.market.map(k => szPartHtml(k, myTurn && szCanBuy(st, me, k) ? "can" : szAfford(st, me, k) ? "" : "far", `data-buy="${k}"`, true)).join("")}</div></div>` : "";
   const lg = (g.log || []).slice(-4).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
   el.innerHTML = `
-    <div class="sztop"><b class="szlogo">四季の巡り<small>SHIKI</small></b><span class="szno">${T ? `${st.no}手番目` : ""}</span><button class="szbtn" id="szMenu">…</button><button class="szbtn" id="szX">×</button></div>
+    <div class="sztop"><b class="szlogo">四季の巡り</b><span class="szno">${T ? `${st.no}手番目・山札${st.deck.length}` : ""}</span><button class="szbtn" id="szMenu" aria-label="メニュー">…</button><button class="szbtn" id="szX" aria-label="閉じる">×</button></div>
     <div class="szseats">${seats}</div>
     <div class="szmid">${szWheel(st)}<div class="szside">${pileHtml}<div class="szpiles"><span>山札 <b>${st.deck.length}</b></span><button id="szExile">除外 <b>${st.exile.length}</b></button></div></div></div>
+    ${szValueHtml(st)}
     ${stepBar}
     ${guide ? `<p class="szguide">${guide}</p>` : ""}
     <div class="szbtns">${btns}</div>
     ${handHtml}
     ${chHtml}
+    ${mkt}
     <ul class="szlog">${lg}</ul>
     ${myAsk ? szAskHtml(st, myAsk) : ""}
     ${g.status === "finished" && st.end ? szEndHtml(g) : ""}`;
-  // 操作
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   on("szX", closeSz); on("szMenu", () => szMenu(g));
-  on("szExile", () => openSheet("除外置き場", st.exile.length ? `<div class="szlist">${st.exile.map(c => szCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだありません</p>`));
+  on("szExile", () => openSheet("除外置き場", st.exile.length ? `<div class="szlist">${st.exile.map(c => szCardHtml(c)).join("")}</div>` : `<p class="note">まだありません</p>`));
   el.querySelectorAll(".szhand .szc").forEach(b => b.onclick = () => { szSel = szSel === b.dataset.c ? null : b.dataset.c; drawSz(); });
-  el.querySelectorAll("[data-seat]").forEach(b => b.onclick = () => { const p = b.dataset.seat, ch = st.chars[p] && SZ_CHAR[st.chars[p]]; if (ch) openSheet(`${pname(p)}のキャラ`, `<div class="szchsheet"><span class="szci">${ch.i}</span><b>${ch.n}</b><small>${ch.t}</small>${ch.c.map((x, i) => `<p><i>コンボ${"①②③"[i]}</i>${esc(x)}</p>`).join("")}<p><i>1回</i>${esc(ch.o)}${st.used[p] ? "（使用済み）" : ""}</p></div>`); });
-  on("szDiscB", async () => { const c = szSel, mode = szMode === "haya" ? "haya" : "normal"; szSel = null; szMode = "normal"; await szDo(g.id, me, ["disc", c, mode]); });
+  el.querySelectorAll("[data-seat]").forEach(b => b.onclick = () => szPartsSheet(st, b.dataset.seat));
+  on("szDiscB", async () => { const c = szSel, mode = szMode; szSel = null; szMode = "normal"; await szDo(g.id, me, ["disc", c, mode]); });
   on("szNext", async () => { szSel = null; szMode = "normal"; await szDo(g.id, me, ["next"]); });
-  on("szHaya", () => { szMode = szMode === "haya" ? "normal" : "haya"; drawSz(); });
-  on("szFuyu", async () => { if (!confirm("冬籠りの能力（1回）で、捨て札の一番上を取り除いて季節を1つ戻しますか？")) return; await szDo(g.id, me, ["char", "fuyu"]); });
-  on("szOgui", async () => { if (!confirm("大食いの能力（1回）で、山札から2枚引きますか？")) return; await szDo(g.id, me, ["char", "ogui"]); });
-  el.querySelectorAll("[data-steal]").forEach(b => b.onclick = async () => { if (!confirm(`郵便屋の能力（1回）で、渡す代わりに${pname(b.dataset.steal)}の手札からランダムに1枚もらいますか？`)) return; szSel = null; await szDo(g.id, me, ["char", "steal", b.dataset.steal]); });
+  el.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { szMode = szMode === b.dataset.mode ? "normal" : b.dataset.mode; szSel = null; drawSz(); });
+  el.querySelectorAll("[data-once]").forEach(b => b.onclick = async () => { const k = b.dataset.once; if (!confirm(`「${SZ_PARTS[k].n}」（1回）を使いますか？\n${SZ_PARTS[k].tx}`)) return; await szDo(g.id, me, ["char", k]); });
+  el.querySelectorAll("[data-steal]").forEach(b => b.onclick = async () => { if (!confirm(`横取り（1回）で、渡す代わりに${szNm(b.dataset.steal)}の手札からランダムに1枚もらいますか？`)) return; szSel = null; await szDo(g.id, me, ["char", "steal", b.dataset.steal]); });
+  el.querySelectorAll("[data-buy]").forEach(b => b.onclick = async () => { const k = b.dataset.buy, P = SZ_PARTS[k];
+    if (!szCanBuy(st, me, k)){ openSheet(`能力カード「${P.n}」`, `<div class="szpl">${szPartHtml(k, "", "", true)}</div><p class="note">${myTurn && T.step === "disc" ? T.bought ? "この手番はもう買いました" : `手札が足りません（${szCostTx(k)}が必要）` : "自分の番の「捨て・購入」の段階で買えます"}</p>`); return; }
+    if (!confirm(`${szCostTx(k)}を払って「${P.n}」を買いますか？（払った札は除外置き場へ）`)) return; szSel = null; await szDo(g.id, me, ["buy", k]); });
   el.querySelectorAll("[data-pto]").forEach(b => b.onclick = async () => { const c = szSel; if (!c) return; szSel = null; await szDo(g.id, me, ["pass", c, b.dataset.pto]); });
-  // 選択
-  if (myAsk){
-    el.querySelectorAll("[data-ap]").forEach(b => b.onclick = async () => { szAskSel = []; await szDo(g.id, me, ["answer", b.dataset.ap]); });
-    el.querySelectorAll(".szask .szc").forEach(b => b.onclick = () => { const c = b.dataset.c, mx = myAsk.max || 1; szAskSel = szAskSel.includes(c) ? szAskSel.filter(x => x !== c) : mx === 1 ? [c] : [...szAskSel, c].slice(0, mx); drawSz(); });
-    on("szAskGo", async () => { const v = szAskSel.slice(); szAskSel = []; await szDo(g.id, me, ["answer", v]); });
-    on("szAskOk", async () => { szAskSel = []; await szDo(g.id, me, ["answer", true]); });
-    on("szYes", async () => { await szDo(g.id, me, ["answer", true]); });
-    on("szNo", async () => { await szDo(g.id, me, ["answer", false]); });
-  }
+  if (myAsk){ on("szYes", async () => { await szDo(g.id, me, ["answer", true]); }); on("szNo", async () => { await szDo(g.id, me, ["answer", false]); }); }
   on("szEndClose", closeSz);
   on("szAgain", () => { closeSz(); openSzNew(); });
   szFxShow(g, el);
 }
 function szAskHtml(st, a){
-  let body = "";
-  if (a.k === "player") body = `<div class="szaskp">${a.opts.map(p => `<button class="szb" data-ap="${p}" style="--pc:${pcolor(p)}">${szPname(p)}<small>手札${st.hands[p].length}枚</small></button>`).join("")}</div>`;
-  else if (a.k === "list" || a.k === "hand"){
-    const cs = a.k === "hand" ? st.hands[me] : a.cards;
-    const n = szAskSel.length, ok = n >= (a.min || 0) && n <= (a.max || 1);
-    body = `<div class="szlist">${cs.map(c => szCardHtml(c, `sm ${szAskSel.includes(c) ? "sel" : ""}`, st)).join("")}</div><div class="szbtns"><button class="szb go" id="szAskGo" ${ok ? "" : "disabled"}>${a.min === 0 && !n ? "選ばない" : "決定"}</button></div>`;
-  } else if (a.k === "info") body = `<div class="szlist">${a.cards.map(c => szCardHtml(c, "sm", st)).join("") || `<p class="sznote">手札なし</p>`}</div><div class="szbtns"><button class="szb go" id="szAskOk">OK</button></div>`;
-  else if (a.k === "yn") body = `${a.card ? `<div class="szlist">${szCardHtml(a.card, "sm", st)}</div>` : ""}<div class="szbtns"><button class="szb" id="szNo">${esc(a.no || "いいえ")}</button><button class="szb go" id="szYes">${esc(a.yes || "はい")}</button></div>`;
-  return `<div class="szask"><div class="szaskin"><b>${esc(a.title)}</b>${body}</div></div>`;
+  return `<div class="szask"><div class="szaskin"><b>${esc(a.title)}</b>${a.card ? `<div class="szlist one">${szCardHtml(a.card)}</div>` : ""}<div class="szbtns"><button class="szb" id="szNo">${esc(a.no || "いいえ")}</button><button class="szb go" id="szYes">${esc(a.yes || "はい")}</button></div></div></div>`;
 }
 function szEndHtml(g){
   const st = g.st, E = st.end, rank = st.players.slice().sort((a, b) => E.res[b].total - E.res[a].total), best = E.res[rank[0]].total;
   return `<div class="szend"><div class="szendin">
-    <div class="szendt">${E.why === "cal" ? "暦の完成" : "山札が尽きた"}<small>${E.why === "cal" ? `${szPname(E.by)}が暦を完成させた（最後の季節：${SZ_SI[E.last]}${SZ_SN[E.last]}）` : "山札も捨て札も尽きたので終了"}</small></div>
-    ${rank.map((p, i) => { const r = E.res[p], win = r.total === best; return `<div class="szres ${win ? "win" : ""}" style="--pc:${pcolor(p)}"><div class="szrh"><span class="szrk">${win ? "👑" : i + 1}</span><b>${szPname(p)}</b>${st.chars[p] ? `<small>${SZ_CHAR[st.chars[p]].i}${SZ_CHAR[st.chars[p]].n}</small>` : ""}<span class="szpt">${r.total}<small>点</small></span></div>
-      <div class="szrc">${st.hands[p].slice().sort((a, b) => SZ_SE.indexOf(szSeason(a)) - SZ_SE.indexOf(szSeason(b))).map(c => szMini(c)).join("") || "<small>手札なし</small>"}</div>
-      <ul class="szri">${r.items.map(([n, v]) => `<li><span>${esc(n)}</span><b>+${v}</b></li>`).join("")}</ul></div>`; }).join("")}
+    <div class="szendt">${E.why === "cal" ? "暦の完成" : "山札が尽きた"}<small>${E.why === "cal" ? `${szPname(E.by)}が暦を完成させた。` : ""}最後の季節は${SZ_SN[E.last]}（旬：2倍）、反対の${SZ_SN[szNext(szNext(E.last))]}は0点</small></div>
+    <div class="szval end">${SZ_SE.map(s => `<div class="szv ${s === E.last ? "shun" : s === szNext(szNext(E.last)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${E.dis[s]}</em>${s === E.last ? "<i>旬×2</i>" : s === szNext(szNext(E.last)) ? `<i class="opp">0点</i>` : ""}</span></div>`).join("")}</div>
+    ${rank.map((p, i) => { const r = E.res[p], win = r.total === best; return `<div class="szres ${win ? "win" : ""}" style="--pc:${pcolor(p)}"><div class="szrh"><span class="szrk">${win ? "一" : ["一", "二", "三", "四", "五"][i]}</span><b>${szPname(p)}</b><span class="szmons">${(st.parts[p] || []).map(k => szMon(k)).join("")}</span><span class="szpt">${r.total}<small>点</small></span></div>
+      <ul class="szri">${r.rows.filter(x => x.h).map(x => `<li class="${x.opp ? "opp" : ""}"><span>${SZ_SN[x.s]}　手札${x.h}枚 × 捨て札${x.d}枚${x.opp ? "（旬の反対：0点）" : x.m > 1 ? ` × ${x.s === r.shun ? "旬" : ""}${x.m}倍` : ""}</span><b>${x.pt}</b></li>`).join("")}${r.items.filter(x => x[1] || x[0].includes("季節読み") || x[0].includes("偏愛")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v ? `+${v}` : ""}</b></li>`).join("")}</ul></div>`; }).join("")}
     <div class="szbtns"><button class="szb" id="szEndClose">閉じる</button><button class="szb go" id="szAgain">もう一度遊ぶ</button></div></div></div>`;
 }
-/* 起きたことを短い帯で見せる（季節が進んだ・暦の完成など） */
+/* 起きたことを短い帯で見せる */
 function szFxShow(g, el){
   const st = g.st, seen = szSeenFx[g.id] || 0; szSeenFx[g.id] = st.fxn || 0;
   const evs = (st.fx || []).filter(e => e.n > seen).slice(-3);
   evs.forEach((e, i) => {
     let tx = "", cls = "";
-    if (e.k === "disc") { tx = e.adv ? `季節が${SZ_SI[e.s]}${SZ_SN[e.s]}に進んだ` : e.stall ? `${SZ_SI[e.s]}${SZ_SN[e.s]}で足止め` : `季節は${SZ_SN[e.s]}`; cls = e.adv ? "adv" : "stay"; }
-    else if (e.k === "pass" && e.to === me) { tx = `${pname(e.p)}から${SZ_SN[szSeason(e.c)]}が届いた`; cls = "pass"; }
-    else if (e.k === "combo") { tx = `${SZ_CHAR[e.ch].i}${SZ_CHAR[e.ch].n}のコンボ${"①②③"[e.i]}！`; cls = "shun"; }
-    else if (e.k === "steal" && e.to === me) { tx = `✉️${pname(e.p)}に手札を1枚取られた`; cls = "back"; }
-    else if (e.k === "unpile") { tx = `季節が${SZ_SN[szCur(st)]}に戻った`; cls = "back"; }
-    else if (e.k === "cal") { tx = "暦が完成！"; cls = "cal"; }
-    else if (e.k === "uncal") { tx = "📜 暦読みが完成を取り消した"; cls = "back"; }
-    else if (e.k === "nopass" && e.p === me) { tx = "手札の枚数が人数で割り切れるので、渡さない"; cls = "stay"; }
+    if (e.k === "disc"){ tx = e.adv ? `季節は${SZ_SN[e.s]}へ` : `${SZ_SN[e.s]}で足止め`; cls = e.adv ? "adv" : "stay"; }
+    else if (e.k === "pass" && e.to === me){ tx = `${szNm(e.p)}から${SZ_SN[szSeason(e.c)]}が届いた`; cls = "pass"; }
+    else if (e.k === "combo"){ tx = `${szNm(e.p)}「${SZ_PARTS[e.part].n}」`; cls = "combo"; }
+    else if (e.k === "buy" && e.p !== me){ tx = `${szNm(e.p)}が「${SZ_PARTS[e.part].n}」を買った`; cls = "pass"; }
+    else if (e.k === "steal" && e.to === me){ tx = `${szNm(e.p)}に手札を1枚取られた`; cls = "back"; }
+    else if (e.k === "unpile"){ tx = `季節が${SZ_SN[szCur(st)]}に戻った`; cls = "back"; }
+    else if (e.k === "cal"){ tx = "暦が完成"; cls = "cal"; }
+    else if (e.k === "uncal"){ tx = "暦読みが完成を取り消した"; cls = "back"; }
+    else if (e.k === "nopass" && e.p === me){ tx = "手札が人数で割り切れるので、渡さない"; cls = "stay"; }
     if (!tx) return;
     const b = document.createElement("div"); b.className = "szfx " + cls; b.textContent = tx; b.style.animationDelay = (i * .5) + "s"; b.style.top = `calc(34% + ${i * 52}px)`; el.appendChild(b);
     setTimeout(() => b.remove(), 2600 + i * 500);
   });
 }
 function szRulesHtml(){
-  return `<div class="goal"><b>終わったときの<span class="r">手札の枚数</span>が得点！</b><small>1枚＝1点。キャラクターのコンボでボーナス。季節カードは春・夏・秋・冬 各10枚（効果なし）。共通の捨て札の一番上の季節が「今の季節」</small></div>
-  <h4>準備</h4><ol><li>キャラクターを1人1枚ずつ配る</li><li>季節カードを3枚ずつ配る</li><li>山札の一番上を捨て札に置く（最初の季節）</li><li>ランダムな人から時計回り</li></ol>
-  <h4>手番</h4><ol><li><b>ドロー</b>：山札から2枚引く（自動）</li><li><b>捨て</b>（何枚でも）：今の季節（足止め）か次の季節（季節が進む）の札だけを1枚ずつ捨て札に置く。捨てると手札（＝得点）が減るが、ゲームの終わりを動かせる</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）。渡すと相手の得点が1点増える</li></ol>
-  <p>山札が尽きたら、除外置き場と捨て札（上の3枚以外）を混ぜて新しい山札に。それも尽きたら終了。</p>
+  const fam = t => Object.entries(SZ_FAM).filter(([, F]) => F.t === t).map(([f, F]) => `<div class="szpart t-${t}"><span class="szmon t-${t}"><b>${F.m}</b></span><div><small>${SZ_TYPE[t]}・春夏秋冬の4種類・値段${F.c}枚</small><b>〇${F.n}</b><p>${esc(F.tx("〇"))}</p></div></div>`).join("");
+  const grp = t => fam(t) + Object.keys(SZ_GEN).filter(k => SZ_GEN[k].t === t).map(k => szPartHtml(k, "", "", true)).join("");
+  return `<div class="goal"><b>積もった季節ほど<span class="r">高い点</span>になる</b><small>季節カードは春・夏・秋・冬 各10枚（効果なし）。共通の捨て札の一番上の季節が「今の季節」</small></div>
+  <h4>準備</h4><ol><li>季節カードを3枚ずつ配り、山札の一番上を捨て札に置く（最初の季節）</li><li>能力カード（100種類）をよく混ぜて、3枚を表向きに並べる（能力カードの場）</li></ol>
+  <h4>手番</h4><ol><li><b>ドロー</b>：山札から1枚引く（自動）</li><li><b>捨て・購入</b>：今の季節（足止め）か次の季節（季節が進む）の札だけを、何枚でも1枚ずつ捨て札に置く。また、能力カードの場から1枚まで買える（書かれた季節カードを手札から払う。払った札は捨て札ではなく除外置き場へ）。買った能力はすぐに使える</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）</li></ol>
+  <p>山札が尽きたら除外置き場を混ぜて新しい山札に。どちらも尽きたら終了。</p>
   <h4>ゲーム終了：暦の完成</h4><p>捨て札の上から4枚が四季の順に並んだ瞬間（3回続けて季節が進んだ瞬間）、手番の途中でも終わり。足止めや季節を戻す能力が挟まると連続は途切れる。</p>
-  <h4>得点</h4><p>手札1枚につき1点＋キャラクターの終了時ボーナス。</p>
-  <h4>キャラクター（コンボ3つ＋1ゲーム1回の能力）</h4>${SZ_CHAR_KEYS.map(k => { const c = SZ_CHAR[k]; return `<div class="szrch"><b>${c.i}${c.n}<small>${c.t}</small></b><ul>${c.c.map((x, i) => `<li><i>コンボ${"①②③"[i]}</i>${esc(x)}</li>`).join("")}<li><i>1回</i>${esc(c.o)}</li></ul></div>`; }).join("")}`;
+  <h4>得点（最後にまとめて計算）</h4><p>季節ごとに<b>「捨て札にあるその季節の枚数 × 手札のその季節の枚数」</b>。終わったときの季節は<b>旬</b>として2倍。旬からいちばん遠い季節（春と秋、夏と冬）の手札は<b>0点</b>（手札の枚数には数える）。これに能力カードの終了時ボーナスを足す。</p>
+  <p class="note">例：捨て札に春が4枚、手札に春が3枚なら 4×3＝12点。春が旬なら24点、秋が旬なら0点。</p>
+  <h4>能力カード（全100種類）</h4><p class="note">山から3枚を表向きに並べる。買われたらすぐに山から補充。「〇」は春・夏・秋・冬のどれか（季節ごとに1枚ずつ、値段はその季節中心）。</p><h5>コンボ（手番中に発動）</h5><div class="szpl">${grp("c")}</div><h5>終了時のボーナス</h5><div class="szpl">${grp("e")}</div><h5>1ゲーム1回の能力</h5><div class="szpl">${grp("o")}</div>`;
 }
 
 let lastBadgeN = null;
