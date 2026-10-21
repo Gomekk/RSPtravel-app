@@ -4102,7 +4102,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v285";
+const APP_VER = "v286";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -14053,9 +14053,9 @@ const SZ_FAM = {
 /* 季節に関係しない40種類 */
 const SZ_GEN = {
   advDraw: { cost: { spr: 2, sum: 1 }, t: "c", n: "開花", m: "開", tx: "季節を進めるたびに1枚引く" },
-  adv2: { cost: { spr: 1, sum: 1 }, t: "c", n: "満開", m: "満", tx: "1手番に季節を2回進めたら、さらに1枚引く" },
+  adv2: { cost: { spr: 1, sum: 1 }, t: "c", n: "満開", m: "満", tx: "2手番続けて季節を進めたら、さらに1枚引く" },
   stallDraw: { cost: { win: 2, aut: 1 }, t: "c", n: "足踏み", m: "踏", tx: "足止めするたびに1枚引く" },
-  stall2: { cost: { win: 1, aut: 1 }, t: "c", n: "根回し", m: "根", tx: "1手番に2回足止めしたら、さらに1枚引く" },
+  stall2: { cost: { win: 1, aut: 1 }, t: "c", n: "根回し", m: "根", tx: "2手番続けて足止めしたら、さらに1枚引く" },
   mostStart: { cost: { aut: 2, win: 1 }, t: "c", n: "蓄え", m: "蓄", tx: "手番のはじめ、手札が最多（同数を含む）ならさらに1枚引く" },
   leastStart: { cost: { spr: 1, sum: 1 }, t: "c", n: "空腹", m: "腹", tx: "手番のはじめ、手札が単独最少ならさらに1枚引く" },
   newSeason: { cost: { spr: 1, aut: 1 }, t: "c", n: "新顔", m: "新", tx: "手札にない季節の札を受け取ったら1枚引く" },
@@ -14064,7 +14064,7 @@ const SZ_GEN = {
   noPass: { cost: { aut: 1, win: 1 }, t: "c", n: "留守番", m: "宅", tx: "手札が人数で割り切れて渡せないとき、1枚引く" },
   aim: { cost: { sum: 1, aut: 1 }, t: "c", n: "照準", m: "的", tx: "渡す相手を、数えた位置の両隣からも選べる" },
   fourEnd: { cost: { spr: 1, sum: 1, aut: 1, win: 1 }, t: "c", n: "四季の庭", m: "庭", tx: "4つの季節がそろった状態で手番を終えたら1枚引く" },
-  disc3: { cost: { spr: 1, aut: 2 }, t: "c", n: "大掃除", m: "掃", tx: "1手番に3枚以上場に出したら、手番の終わりに2枚引く" },
+  disc3: { cost: { spr: 1, aut: 2 }, t: "c", n: "身軽", m: "軽", tx: "場に出して手札が1枚以下になったら、さらに2枚引く" },
   noDisc: { cost: { win: 2, sum: 1 }, t: "c", n: "籠もり", m: "籠", tx: "1枚も場に出さずに手番を終えたら1枚引く" },
   late: { cost: { aut: 1, win: 1 }, t: "c", n: "晩成", m: "晩", tx: "手番のはじめ、山札が10枚以下ならさらに1枚引く" },
   buyDraw: { cost: { spr: 2, win: 1 }, t: "c", n: "商い", m: "商", tx: "能力カードを買った手番、1枚引く" },
@@ -14208,7 +14208,7 @@ function szEndTurn(st){
   if (st.status !== "playing") return;
   const T = st.turn, p = T.pid;
   if (szHas(st, p, "fourEnd") && SZ_SE.every(s => szCnt(st, p, s) > 0)){ szCombo(st, p, "fourEnd", "4つの季節がそろっているので1枚引く"); szDraw(st, p, 1); }
-  if (szHas(st, p, "disc3") && T.discN >= 3 && st.status === "playing"){ szCombo(st, p, "disc3", "3枚以上場に出したので2枚引く"); szDraw(st, p, 2); }
+  st.prevPlay = st.prevPlay || {}; st.prevPlay[p] = T.advN ? "adv" : T.stallN ? "stall" : null;   // 2手番続けてのコンボ用
   if (szHas(st, p, "noDisc") && !T.discN && st.status === "playing"){ szCombo(st, p, "noDisc", "1枚も場に出さなかったので1枚引く"); szDraw(st, p, 1); }
   if (st.status !== "playing") return;
   if (st.endBy){ szEnd(st, "owari", p); return; }
@@ -14238,7 +14238,7 @@ function szAdvance(st, p){
 /* ---------- 捨て ---------- */
 /* mode：normal（今か次の季節）/ 「早咲き」「〇先取り」の能力カードのキー（次の季節として捨てる） */
 function szCanDisc(st, p, c, mode = "normal"){
-  const T = st.turn; if (!T || T.pid !== p || T.step !== "disc" || st.ask) return false;
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "disc" || st.ask || T.discN >= 1) return false;   // 場に出せるのは1手番に1回
   if (!st.hands[p].includes(c)) return false;
   if (mode !== "normal"){ if (!szOnce(st, p, mode)) return false; const P = SZ_PARTS[mode]; return mode === "haya" || (P.fam === "pre" && P.s === szSeason(c)); }
   const s = szSeason(c), cur = szCur(st);
@@ -14255,16 +14255,18 @@ function szDisc(st, p, c, mode = "normal"){
   T.discN++;
   szL(st, `${szNm(p)}が${SZ_SN[s]}を場に出した：${adv ? `季節が${SZ_SN[ns]}に進む（2枚引く）` : `${SZ_SN[ns]}のまま・足止め（1枚引く）`}`);
   szFx(st, { k: "disc", p, c, adv, stall, s: ns });
+  const light = szHas(st, p, "disc3") && st.hands[p].length <= 1;
   szDraw(st, p, adv ? 2 : 1);
   const draws = [];
+  if (light) draws.push(["disc3", 2, "手札が1枚以下になったので、さらに2枚引く"]);
   if (adv){ T.advN++;
     if (szHas(st, p, "advDraw")) draws.push(["advDraw", 1, "季節を進めたので1枚引く"]);
-    if (szHas(st, p, "adv2") && T.advN === 2) draws.push(["adv2", 1, "この手番2回目の進行で、さらに1枚引く"]);
+    if (szHas(st, p, "adv2") && (st.prevPlay || {})[p] === "adv") draws.push(["adv2", 1, "2手番続けて季節を進めたので、さらに1枚引く"]);
     if (szHasF(st, p, "adv", ns)) draws.push([`adv_${ns}`, 1, `季節を${SZ_SN[ns]}に進めたので1枚引く`]);
   }
   if (stall){ T.stallN++;
     if (szHas(st, p, "stallDraw")) draws.push(["stallDraw", 1, "足止めしたので1枚引く"]);
-    if (szHas(st, p, "stall2") && T.stallN === 2) draws.push(["stall2", 1, "この手番2回目の足止めで、さらに1枚引く"]);
+    if (szHas(st, p, "stall2") && (st.prevPlay || {})[p] === "stall") draws.push(["stall2", 1, "2手番続けて足止めしたので、さらに1枚引く"]);
     if (szHasF(st, p, "stl", ns)) draws.push([`stl_${ns}`, 1, `${SZ_SN[ns]}で足止めしたので1枚引く`]);
   }
   if (szHasF(st, p, "dsc", s)) draws.push([`dsc_${s}`, 1, `${SZ_SN[s]}を場に出したので1枚引く`]);
@@ -14421,8 +14423,8 @@ function szCpuStep(st, p){
     const ok = h.filter(x => szCanDisc(st, p, x));
     // 場に出す：進めると2枚・足止めで1枚引けるので、得点が大きく下がらなければ出す
     const extra = x => { const s = szSeason(x), adv = s === szNext(cur), stl = s === cur; let n = adv ? 2 : 1;
-      if (adv && (szHas(st, p, "advDraw") || szHasF(st, p, "adv", s) || (szHas(st, p, "adv2") && T.advN === 1))) n++;
-      if (stl && (szHas(st, p, "stallDraw") || szHasF(st, p, "stl", s) || (szHas(st, p, "stall2") && T.stallN === 1))) n++;
+      if (adv && (szHas(st, p, "advDraw") || szHasF(st, p, "adv", s) || (szHas(st, p, "adv2") && (st.prevPlay || {})[p] === "adv"))) n++;
+      if (stl && (szHas(st, p, "stallDraw") || szHasF(st, p, "stl", s) || (szHas(st, p, "stall2") && (st.prevPlay || {})[p] === "stall"))) n++;
       if (szHasF(st, p, "dsc", s)) n++; if (szHasF(st, p, "dsc2", s)) n += 2; return n; };
     const best = ok.map(x => [x, gain(x) + extra(x) * 1.2 - 1.2]).sort((x, y) => y[1] - x[1])[0];
     if (best && best[1] > 0 && T.discN < 6) return ["disc", best[0], "normal"];
@@ -14609,7 +14611,7 @@ function drawSz(){
   let guide = "";
   if (g.status === "playing" && T){
     if (myTurn){
-      if (T.step === "disc") guide = szMode !== "normal" ? `「${SZ_PARTS[szMode].n}」：場に出す札を1枚選ぶ（次の季節として扱う）` : `場に出せるのは${SZ_SN[szNext(cur)]}（季節を進める：2枚引く）か${SZ_SN[cur]}（足止め：1枚引く）。能力カードも1枚まで買える${T.bought ? "（この手番は購入済み）" : ""}。今終わると、${SZ_SN[szNext(szNext(cur))]}は時期外れで0点`;
+      if (T.step === "disc") guide = szMode !== "normal" ? `「${SZ_PARTS[szMode].n}」：場に出す札を1枚選ぶ（次の季節として扱う）` : `${T.discN ? "この手番はもう場に出しました。" : `場に出せるのは1手番に1枚：${SZ_SN[szNext(cur)]}（季節を進める：2枚引く）か${SZ_SN[cur]}（足止め：1枚引く）。`}能力カードも1枚まで買える${T.bought ? "（この手番は購入済み）" : ""}。今終わると、${SZ_SN[szNext(szNext(cur))]}は時期外れで0点`;
       else if (T.step === "pass") guide = tg.length ? `手札${hand.length}枚 → ${tg.length > 1 ? "渡す相手と" : `${szPname(tg[0])}に`}渡す札を選ぶ` : "";
     } else guide = `${szPname(szActor(st))}が${st.ask && (!T || st.ask.pid !== T.pid) ? "選んでいます" : `${({ disc: "場に出す札", pass: "渡す札" })[T.step]}を選んでいます`}…`;
   }
@@ -14711,7 +14713,7 @@ function szRulesHtml(){
   const grp = t => fam(t) + Object.keys(SZ_GEN).filter(k => SZ_GEN[k].t === t).map(k => szPartHtml(k, "", "", true)).join("");
   return `<div class="goal"><b>積もった季節ほど<span class="r">高い点</span>になる</b><small>季節カードは春・夏・秋・冬 各15枚（効果なし）。場に出ている一番上の札の季節が「今の季節」</small></div>
   <h4>準備</h4><ol><li>季節カードを3枚ずつ配り、山札の一番上を場に置く（最初の季節）</li><li>能力カード（100種類）に「終」の札を3枚混ぜ、3枚を表向きに並べる（能力カードの場）</li></ol>
-  <h4>手番</h4><ol><li><b>ドロー</b>：山札から1枚引く（自動）</li><li><b>場に出す・購入</b>：次の季節の札を出すと<b>季節が進んで2枚引く</b>。今の季節の札を出すと<b>足止めで1枚引く</b>。それ以外の季節は出せない。何枚でも1枚ずつ出せる。また、能力カードの場から1枚まで買える（書かれた季節カードを手札から払う。払った札は除外置き場へ）</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）</li></ol>
+  <h4>手番</h4><ol><li><b>ドロー</b>：山札から1枚引く（自動）</li><li><b>場に出す・購入</b>：次の季節の札を出すと<b>季節が進んで2枚引く</b>。今の季節の札を出すと<b>足止めで1枚引く</b>。それ以外の季節は出せない。場に出せるのは<b>1手番に1枚だけ</b>。また、能力カードの場から1枚まで買える（書かれた季節カードを手札から払う。払った札は除外置き場へ）</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）</li></ol>
   <h4>ゲーム終了</h4><ul><li><b>山札切れ</b>：季節カードの山札が尽きたら終了（除外置き場は戻さない）</li><li><b>終の札</b>：能力カードを補充するときに「終」の札がめくれたら脇に置き、代わりにもう1枚めくる。3枚目の「終」がめくれたら、その人の手番の終わりでゲーム終了</li></ul>
   <h4>得点（最後にまとめて計算）</h4><p>季節ごとに<b>「場にあるその季節の枚数 × 手札のその季節の枚数」</b>。終わったときの季節は<b>旬</b>として2倍。旬からいちばん遠い季節（春と秋、夏と冬）は<b>時期外れ</b>として、その手札は<b>0点</b>（手札の枚数には数える）。これに能力カードの終了時ボーナスを足す。</p>
   <p class="note">例：場に春が4枚、手札に春が3枚なら 4×3＝12点。春が旬なら24点、秋が旬なら春は時期外れで0点。</p>
