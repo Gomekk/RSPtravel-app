@@ -4101,7 +4101,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v283";
+const APP_VER = "v284";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -14021,7 +14021,7 @@ try { ["ojk:pk:games", "ojk:pk:guide"].forEach(k => localStorage.removeItem(k));
 /* ======================= 四季の巡り（仮）：エンジン ======================= */
 /* 季節カードは効果なし（春・夏・秋・冬 各10枚）。手番は ドロー1枚 → 捨て・購入 → 渡し。
    能力カード（全100種類）は3枚を表向きに並べ、手札の季節カードを払って買う（1手番に1枚まで）。買われたらすぐ補充。
-   得点：季節ごとに「捨て札にあるその季節の枚数 × 手札のその季節の枚数」。終了時の季節（旬）は2倍、旬の反対の季節は0点 */
+   得点：季節ごとに「捨て札にあるその季節の枚数 × 手札のその季節の枚数」。終了時の季節（旬）は2倍、時期外れの季節は0点 */
 const SZ_TITLE = "四季の巡り";
 const SZ_SE = ["spr", "sum", "aut", "win"];
 const SZ_SN = { spr: "春", sum: "夏", aut: "秋", win: "冬" };
@@ -14458,7 +14458,16 @@ function szApply(st, p, mv){
 
 /* ======================= 四季の巡り：画面（絵文字は使わず、和柄のSVGで描く） ======================= */
 const szGames = () => db.sz_games || [];
-const szLive = () => szGames().filter(g => g.status === "playing").sort((a, b) => b.created_at.localeCompare(a.created_at));
+const szOld = g => !(g.st && g.st.v === 4);
+const szLive = () => { szCleanOld(); return szGames().filter(g => g.status === "playing" && !szOld(g)).sort((a, b) => b.created_at.localeCompare(a.created_at)); };
+/* 古いルールのまま残った対戦は、一覧に出さず「やめた」扱いにして片づける */
+const szCleaned = new Set();
+function szCleanOld(){
+  szGames().filter(g => g.status === "playing" && szOld(g) && !szCleaned.has(g.id)).forEach(g => {
+    szCleaned.add(g.id); g.status = "aborted";
+    sb.from("sz_games").update({ status: "aborted", version: (g.version || 1) + 1 }).eq("id", g.id).then(({ error }) => { if (error) console.error(error); });
+  });
+}
 const szActive = () => pickMine(szLive());
 const szById = id => szGames().find(g => g.id === id);
 const szActor = st => st.ask ? st.ask.pid : st.turn ? st.turn.pid : null;
@@ -14578,7 +14587,7 @@ function szWheel(st){
 /* 季節ごとの値打ち（捨て札の枚数）と、自分の今の得点 */
 function szValueHtml(st){
   const cur = szCur(st), mine = st.hands[me] ? szScore(st, me, null) : null;
-  return `<div class="szval">${SZ_SE.map(s => { const r = mine && mine.rows.find(x => x.s === s); return `<div class="szv ${s === cur ? "shun" : s === szNext(szNext(cur)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${szDisCount(st, s)}</em>${s === cur ? `<i>旬×${mine ? mine.mult : 2}</i>` : s === szNext(szNext(cur)) ? `<i class="opp">0点</i>` : ""}</span>${r ? `<small>手札${r.h}枚 → ${r.pt}点</small>` : ""}</div>`; }).join("")}${mine ? `<div class="szvt"><small>今終われば</small><b>${mine.total}</b><small>点</small></div>` : ""}</div>`;
+  return `<div class="szval">${SZ_SE.map(s => { const r = mine && mine.rows.find(x => x.s === s); return `<div class="szv ${s === cur ? "shun" : s === szNext(szNext(cur)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${szDisCount(st, s)}</em>${s === cur ? `<i>旬×${mine ? mine.mult : 2}</i>` : s === szNext(szNext(cur)) ? `<i class="opp">時期外れ</i>` : ""}</span>${r ? `<small>手札${r.h}枚 → ${r.pt}点</small>` : ""}</div>`; }).join("")}${mine ? `<div class="szvt"><small>今終われば</small><b>${mine.total}</b><small>点</small></div>` : ""}</div>`;
 }
 function drawSz(){
   setTimeout(cpuKick, 0);
@@ -14604,7 +14613,7 @@ function drawSz(){
   let guide = "";
   if (g.status === "playing" && T){
     if (myTurn){
-      if (T.step === "disc") guide = szMode !== "normal" ? `「${SZ_PARTS[szMode].n}」：捨てる札を1枚選ぶ（次の季節として扱う）` : `捨てられるのは${SZ_SN[cur]}（足止め）か${SZ_SN[szNext(cur)]}（季節を進める）。能力カードも1枚まで買える${T.bought ? "（この手番は購入済み）" : ""}。今終わると、旬の反対の${SZ_SN[szNext(szNext(cur))]}は0点`;
+      if (T.step === "disc") guide = szMode !== "normal" ? `「${SZ_PARTS[szMode].n}」：捨てる札を1枚選ぶ（次の季節として扱う）` : `捨てられるのは${SZ_SN[cur]}（足止め）か${SZ_SN[szNext(cur)]}（季節を進める）。能力カードも1枚まで買える${T.bought ? "（この手番は購入済み）" : ""}。今終わると、${SZ_SN[szNext(szNext(cur))]}は時期外れで0点`;
       else if (T.step === "pass") guide = tg.length ? `手札${hand.length}枚 → ${tg.length > 1 ? "渡す相手と" : `${szPname(tg[0])}に`}渡す札を選ぶ` : "";
     } else guide = `${szPname(szActor(st))}が${st.ask && (!T || st.ask.pid !== T.pid) ? "選んでいます" : `${({ disc: "捨てる札", pass: "渡す札" })[T.step]}を選んでいます`}…`;
   }
@@ -14675,10 +14684,10 @@ function szAskHtml(st, a){
 function szEndHtml(g){
   const st = g.st, E = st.end, rank = st.players.slice().sort((a, b) => E.res[b].total - E.res[a].total), best = E.res[rank[0]].total;
   return `<div class="szend"><div class="szendin">
-    <div class="szendt">${E.why === "cal" ? "暦の完成" : "山札が尽きた"}<small>${E.why === "cal" ? `${szPname(E.by)}が暦を完成させた。` : ""}最後の季節は${SZ_SN[E.last]}（旬：2倍）、反対の${SZ_SN[szNext(szNext(E.last))]}は0点</small></div>
-    <div class="szval end">${SZ_SE.map(s => `<div class="szv ${s === E.last ? "shun" : s === szNext(szNext(E.last)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${E.dis[s]}</em>${s === E.last ? "<i>旬×2</i>" : s === szNext(szNext(E.last)) ? `<i class="opp">0点</i>` : ""}</span></div>`).join("")}</div>
+    <div class="szendt">${E.why === "cal" ? "暦の完成" : "山札が尽きた"}<small>${E.why === "cal" ? `${szPname(E.by)}が暦を完成させた。` : ""}最後の季節は${SZ_SN[E.last]}（旬：2倍）、${SZ_SN[szNext(szNext(E.last))]}は時期外れで0点</small></div>
+    <div class="szval end">${SZ_SE.map(s => `<div class="szv ${s === E.last ? "shun" : s === szNext(szNext(E.last)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${E.dis[s]}</em>${s === E.last ? "<i>旬×2</i>" : s === szNext(szNext(E.last)) ? `<i class="opp">時期外れ</i>` : ""}</span></div>`).join("")}</div>
     ${rank.map((p, i) => { const r = E.res[p], win = r.total === best; return `<div class="szres ${win ? "win" : ""}" style="--pc:${pcolor(p)}"><div class="szrh"><span class="szrk">${win ? "一" : ["一", "二", "三", "四", "五"][i]}</span><b>${szPname(p)}</b><span class="szmons">${(st.parts[p] || []).map(k => szMon(k)).join("")}</span><span class="szpt">${r.total}<small>点</small></span></div>
-      <ul class="szri">${r.rows.filter(x => x.h).map(x => `<li class="${x.opp ? "opp" : ""}"><span>${SZ_SN[x.s]}　手札${x.h}枚 × 捨て札${x.d}枚${x.opp ? "（旬の反対：0点）" : x.m > 1 ? ` × ${x.s === r.shun ? "旬" : ""}${x.m}倍` : ""}</span><b>${x.pt}</b></li>`).join("")}${r.items.filter(x => x[1] || x[0].includes("季節読み") || x[0].includes("偏愛")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v ? `+${v}` : ""}</b></li>`).join("")}</ul></div>`; }).join("")}
+      <ul class="szri">${r.rows.filter(x => x.h).map(x => `<li class="${x.opp ? "opp" : ""}"><span>${SZ_SN[x.s]}　手札${x.h}枚 × 捨て札${x.d}枚${x.opp ? "（時期外れ：0点）" : x.m > 1 ? ` × ${x.s === r.shun ? "旬" : ""}${x.m}倍` : ""}</span><b>${x.pt}</b></li>`).join("")}${r.items.filter(x => x[1] || x[0].includes("季節読み") || x[0].includes("偏愛")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v ? `+${v}` : ""}</b></li>`).join("")}</ul></div>`; }).join("")}
     <div class="szbtns"><button class="szb" id="szEndClose">閉じる</button><button class="szb go" id="szAgain">もう一度遊ぶ</button></div></div></div>`;
 }
 /* 起きたことを短い帯で見せる */
@@ -14709,8 +14718,8 @@ function szRulesHtml(){
   <h4>手番</h4><ol><li><b>ドロー</b>：山札から1枚引く（自動）</li><li><b>捨て・購入</b>：今の季節（足止め）か次の季節（季節が進む）の札だけを、何枚でも1枚ずつ捨て札に置く。また、能力カードの場から1枚まで買える（書かれた季節カードを手札から払う。払った札は捨て札ではなく除外置き場へ）。買った能力はすぐに使える</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）</li></ol>
   <p>山札が尽きたら除外置き場を混ぜて新しい山札に。どちらも尽きたら終了。</p>
   <h4>ゲーム終了：暦の完成</h4><p>捨て札の上から4枚が四季の順に並んだ瞬間（3回続けて季節が進んだ瞬間）、手番の途中でも終わり。足止めや季節を戻す能力が挟まると連続は途切れる。</p>
-  <h4>得点（最後にまとめて計算）</h4><p>季節ごとに<b>「捨て札にあるその季節の枚数 × 手札のその季節の枚数」</b>。終わったときの季節は<b>旬</b>として2倍。旬からいちばん遠い季節（春と秋、夏と冬）の手札は<b>0点</b>（手札の枚数には数える）。これに能力カードの終了時ボーナスを足す。</p>
-  <p class="note">例：捨て札に春が4枚、手札に春が3枚なら 4×3＝12点。春が旬なら24点、秋が旬なら0点。</p>
+  <h4>得点（最後にまとめて計算）</h4><p>季節ごとに<b>「捨て札にあるその季節の枚数 × 手札のその季節の枚数」</b>。終わったときの季節は<b>旬</b>として2倍。旬からいちばん遠い季節（春と秋、夏と冬）は<b>時期外れ</b>として、その手札は<b>0点</b>（手札の枚数には数える）。これに能力カードの終了時ボーナスを足す。</p>
+  <p class="note">例：捨て札に春が4枚、手札に春が3枚なら 4×3＝12点。春が旬なら24点、秋が旬なら春は時期外れで0点。</p>
   <h4>能力カード（全100種類）</h4><p class="note">山から3枚を表向きに並べる。買われたらすぐに山から補充。「〇」は春・夏・秋・冬のどれか（季節ごとに1枚ずつ、値段はその季節中心）。</p><h5>コンボ（手番中に発動）</h5><div class="szpl">${grp("c")}</div><h5>終了時のボーナス</h5><div class="szpl">${grp("e")}</div><h5>1ゲーム1回の能力</h5><div class="szpl">${grp("o")}</div>`;
 }
 
