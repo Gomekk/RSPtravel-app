@@ -4059,6 +4059,7 @@ body.bgpause .hxemb i{animation-play-state:paused}
 @keyframes szfx{0%{opacity:0;transform:translateX(-50%) translateY(8px)}12%{opacity:1;transform:translateX(-50%)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-14px)}}
 .szloglist{list-style:none;margin:0;padding:0;font-size:12px}.szloglist li{padding:3px 0;border-bottom:1px dotted #D9CDB4}
 .gic.szi{background:#FBF6EA}
+.szpilel{font-family:var(--szmin);font-size:10px;color:#9A8A70;margin-right:2px}
 </style>
 </head>
 <body>
@@ -4101,7 +4102,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v284";
+const APP_VER = "v285";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -4331,7 +4332,7 @@ function viewHome(t){
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
   const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive(), zg = szActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中</b><small>${ng.status === "playing" && ng.turn && ng.turn.pid === me ? `<em class="yt">あなたの番！</em>第${ng.round}回戦・合計${ng.total}` : `第${ng.round}回戦・合計${ng.total}・タップで入る`}</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}${zg && zg.st && zg.st.v === 4 ? `<button class="neubar live2" data-act="openSz">${GAMES[8].icon}<div><b>四季の巡り 対戦中</b><small>${szMyTurn(zg) ? `<em class="yt">あなたの番！</em>` : ""}今の季節：${SZ_SN[szCur(zg.st)]}・タップで入る</small></div></button>` : ""}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}${zg && zg.st && zg.st.v === 5 ? `<button class="neubar live2" data-act="openSz">${GAMES[8].icon}<div><b>四季の巡り 対戦中</b><small>${szMyTurn(zg) ? `<em class="yt">あなたの番！</em>` : ""}今の季節：${SZ_SN[szCur(zg.st)]}・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -6609,7 +6610,7 @@ const GAMES = [
     get icon(){ return HX_ICON; },
     count: () => hxGames().filter(x => x.status === "finished").length,
     live: () => hxLive(), active: () => hxActive(), start: () => openHxNew(), open: g => openHx(g.id) },
-  { id: "sz", name: "四季の巡り", desc: "【オリジナル】捨て札に積もった季節ほど、その季節の手札が高い点に。季節カードで能力カード（全100種類）を買い、自分だけのコンボを組み立てる", players: "3〜5人", time: "20〜30分",
+  { id: "sz", name: "四季の巡り", desc: "【オリジナル】場に積もった季節ほど、その季節の手札が高い点に。季節を進めて札を増やし、能力カード（全100種類）で自分だけのコンボを。「終」の札がいつ出るかはお楽しみ", players: "3〜5人", time: "20〜30分",
     get icon(){ return SZ_ICON; },
     count: () => szGames().filter(x => x.status === "finished").length,
     live: () => szLive(), active: () => szActive(), start: () => openSzNew(), open: g => openSz(g.id) }
@@ -14019,9 +14020,10 @@ async function clearBadge(){
 }
 try { ["ojk:pk:games", "ojk:pk:guide"].forEach(k => localStorage.removeItem(k)); } catch (e) {}   // 試作していたポーカーのデータを片づける
 /* ======================= 四季の巡り（仮）：エンジン ======================= */
-/* 季節カードは効果なし（春・夏・秋・冬 各10枚）。手番は ドロー1枚 → 捨て・購入 → 渡し。
-   能力カード（全100種類）は3枚を表向きに並べ、手札の季節カードを払って買う（1手番に1枚まで）。買われたらすぐ補充。
-   得点：季節ごとに「捨て札にあるその季節の枚数 × 手札のその季節の枚数」。終了時の季節（旬）は2倍、時期外れの季節は0点 */
+/* 季節カードは効果なし（春・夏・秋・冬 各15枚）。手番は ドロー1枚 → 場に出す・購入 → 渡し。
+   場に出して季節を進めたら2枚、足止めなら1枚引く。山札が尽きたら終了（除外置き場は戻さない）。
+   能力カード（全100種類）の山には「終」の札が3枚。3枚目が表に出たら、その人の手番の終わりにゲーム終了。
+   得点：季節ごとに「場にあるその季節の枚数 × 手札のその季節の枚数」。終了時の季節（旬）は2倍、時期外れの季節は0点 */
 const SZ_TITLE = "四季の巡り";
 const SZ_SE = ["spr", "sum", "aut", "win"];
 const SZ_SN = { spr: "春", sum: "夏", aut: "秋", win: "冬" };
@@ -14032,8 +14034,8 @@ const SZ_TYPE = { c: "コンボ", e: "終了時", o: "1回" };
 /* ---------- 能力カード（100種類） ---------- */
 /* 季節ごとに作る15系統×4季節＝60種類 */
 const SZ_FAM = {
-  dsc: { t: "c", n: "散り", m: "散", c: 2, tx: X => `${X}の札を捨てたら1枚引く` },
-  dsc2: { t: "c", n: "嵐", m: "嵐", c: 3, tx: X => `${X}の札を捨てたら2枚引く` },
+  dsc: { t: "c", n: "散り", m: "散", c: 2, tx: X => `${X}の札を場に出したら1枚引く` },
+  dsc2: { t: "c", n: "嵐", m: "嵐", c: 3, tx: X => `${X}の札を場に出したら2枚引く` },
   adv: { t: "c", n: "迎え", m: "迎", c: 2, tx: X => `季節を${X}に進めたら1枚引く` },
   stl: { t: "c", n: "留め", m: "留", c: 2, tx: X => `${X}で足止めしたら1枚引く` },
   rcv: { t: "c", n: "便り", m: "便", c: 2, tx: X => `${X}の札を受け取ったら1枚引く` },
@@ -14041,11 +14043,11 @@ const SZ_FAM = {
   hrv: { t: "c", n: "実り", m: "実", c: 2, tx: X => `手番のはじめ、手札に${X}が3枚以上あればさらに1枚引く` },
   per: { t: "e", n: "好き", m: "好", c: 3, tx: X => `終了時、手札の${X}1枚につき+1点` },
   wai: { t: "e", n: "待ち", m: "待", c: 2, tx: X => `終了時、旬が${X}なら+6点` },
-  acc: { t: "e", n: "積もり", m: "積", c: 3, tx: X => `終了時、${X}の捨て札を+2枚として数える（自分の得点だけ）` },
+  acc: { t: "e", n: "積もり", m: "積", c: 3, tx: X => `終了時、場の${X}を+2枚として数える（自分の得点だけ）` },
   maj: { t: "e", n: "自慢", m: "誇", c: 2, tx: X => `終了時、手札の${X}が全員の中で最多（同数を含む）なら+4点` },
   dbl: { t: "e", n: "盛り", m: "盛", c: 4, tx: X => `終了時、手札の${X}は旬でなくても2倍で数える` },
   sek: { t: "o", n: "探し", m: "探", c: 3, tx: X => `山札から${X}の札を2枚まで探して手札に加える（山札は混ぜる）` },
-  pre: { t: "o", n: "先取り", m: "先", c: 2, tx: X => `${X}の札1枚を、季節に関係なく「次の季節」として捨てられる` },
+  pre: { t: "o", n: "先取り", m: "先", c: 2, tx: X => `${X}の札1枚を、季節に関係なく「次の季節」として場に出せる` },
   tax: { t: "o", n: "集め", m: "集", c: 3, tx: X => `ほかの全員から、手札の${X}を1枚ずつもらう` }
 };
 /* 季節に関係しない40種類 */
@@ -14062,32 +14064,32 @@ const SZ_GEN = {
   noPass: { cost: { aut: 1, win: 1 }, t: "c", n: "留守番", m: "宅", tx: "手札が人数で割り切れて渡せないとき、1枚引く" },
   aim: { cost: { sum: 1, aut: 1 }, t: "c", n: "照準", m: "的", tx: "渡す相手を、数えた位置の両隣からも選べる" },
   fourEnd: { cost: { spr: 1, sum: 1, aut: 1, win: 1 }, t: "c", n: "四季の庭", m: "庭", tx: "4つの季節がそろった状態で手番を終えたら1枚引く" },
-  disc3: { cost: { spr: 1, aut: 2 }, t: "c", n: "大掃除", m: "掃", tx: "1手番に3枚以上捨てたら、手番の終わりに2枚引く" },
-  noDisc: { cost: { win: 2, sum: 1 }, t: "c", n: "籠もり", m: "籠", tx: "1枚も捨てずに手番を終えたら1枚引く" },
+  disc3: { cost: { spr: 1, aut: 2 }, t: "c", n: "大掃除", m: "掃", tx: "1手番に3枚以上場に出したら、手番の終わりに2枚引く" },
+  noDisc: { cost: { win: 2, sum: 1 }, t: "c", n: "籠もり", m: "籠", tx: "1枚も場に出さずに手番を終えたら1枚引く" },
   late: { cost: { aut: 1, win: 1 }, t: "c", n: "晩成", m: "晩", tx: "手番のはじめ、山札が10枚以下ならさらに1枚引く" },
   buyDraw: { cost: { spr: 2, win: 1 }, t: "c", n: "商い", m: "商", tx: "能力カードを買った手番、1枚引く" },
   rich: { cost: { sum: 1, aut: 2, win: 1 }, t: "c", n: "物持ち", m: "富", tx: "手番のはじめ、能力カードを4枚以上持っていればさらに1枚引く" },
   sets: { cost: { spr: 1, sum: 1, aut: 1, win: 1 }, t: "e", n: "一年", m: "年", tx: "終了時、春夏秋冬1枚ずつの組1つにつき+3点" },
-  calSelf: { cost: { spr: 1, sum: 1, aut: 1 }, t: "e", n: "締めくくり", m: "締", tx: "終了時、自分の捨てで暦を完成させていたら+6点" },
-  calOther: { cost: { win: 2 }, t: "e", n: "見届け", m: "見", tx: "終了時、ほかの人が暦を完成させていたら+4点" },
+  calSelf: { cost: { spr: 1, sum: 1, aut: 1 }, t: "e", n: "幕引き", m: "幕", tx: "終了時、3枚目の「終」の札を自分の手番に出していたら+6点" },
+  calOther: { cost: { win: 2 }, t: "e", n: "働き者", m: "働", tx: "終了時、自分が場に出した季節カード2枚につき+1点" },
   mostEnd: { cost: { aut: 2, win: 2 }, t: "e", n: "冬籠り", m: "冬", tx: "終了時、手札が最多（同数を含む）なら+5点" },
-  bigSeason: { cost: { sum: 2, aut: 1 }, t: "e", n: "偏愛", m: "愛", tx: "終了時、自分の手札でいちばん多い季節は、捨て札を+1枚として数える" },
+  bigSeason: { cost: { sum: 2, aut: 1 }, t: "e", n: "偏愛", m: "愛", tx: "終了時、自分の手札でいちばん多い季節は、場の枚数を+1枚として数える" },
   shun3: { cost: { spr: 1, sum: 1, aut: 1, win: 1 }, t: "e", n: "旬の目利き", m: "利", tx: "終了時、自分の旬の倍率が2倍から3倍になる" },
   abilPts: { cost: { spr: 2, win: 1 }, t: "e", n: "収集家", m: "蒐", tx: "終了時、持っている能力カード1枚につき+1点" },
   allFour: { cost: { sum: 1, win: 2 }, t: "e", n: "四季彩", m: "彩", tx: "終了時、手札に4つの季節がそろっていれば+5点" },
   minPts: { cost: { spr: 1, aut: 1, win: 1 }, t: "e", n: "判官贔屓", m: "贔", tx: "終了時、手札でいちばん少ない季節の札1枚につき+2点（0枚の季節は除く）" },
   big10: { cost: { spr: 2, aut: 2 }, t: "e", n: "大荷物", m: "荷", tx: "終了時、手札が10枚以上なら+5点" },
-  deckEnd: { cost: { sum: 2, win: 1 }, t: "e", n: "天寿", m: "寿", tx: "終了時、暦の完成ではなく山札切れで終わっていたら+5点" },
-  haya: { cost: { spr: 2 }, t: "o", n: "早咲き", m: "咲", tx: "好きな札1枚を、季節に関係なく「次の季節」として捨てられる" },
+  deckEnd: { cost: { sum: 2, win: 1 }, t: "e", n: "天寿", m: "寿", tx: "終了時、「終」の札ではなく山札切れで終わっていたら+5点" },
+  haya: { cost: { spr: 2 }, t: "o", n: "早咲き", m: "咲", tx: "好きな札1枚を、季節に関係なく「次の季節」として場に出せる" },
   ret: { cost: { sum: 1, win: 1 }, t: "o", n: "突き返し", m: "返", tx: "渡された札を受け取らず、渡した人に返す" },
-  back: { cost: { win: 2 }, t: "o", n: "巻き戻し", m: "戻", tx: "捨て札の一番上を取り除き、季節を1つ戻す" },
-  uncal: { cost: { aut: 2, win: 1 }, t: "o", n: "暦読み", m: "暦", tx: "暦が完成した瞬間、それを取り消してゲームを続ける（捨て札の一番上を除外）" },
+  back: { cost: { win: 2 }, t: "o", n: "巻き戻し", m: "戻", tx: "場の一番上を取り除き、季節を1つ戻す" },
+  uncal: { cost: { aut: 2, win: 1 }, t: "o", n: "先延ばし", m: "延", tx: "表に出ている「終」の札を1枚、能力カードの山に戻して混ぜる" },
   steal: { cost: { sum: 2, aut: 1 }, t: "o", n: "横取り", m: "奪", tx: "渡す代わりに、その相手の手札からランダムに1枚もらう" },
   draw2: { cost: { aut: 2 }, t: "o", n: "大食い", m: "食", tx: "山札から2枚引く" },
   shunPick: { cost: { spr: 1, win: 1 }, t: "o", n: "季節読み", m: "読", tx: "終了時、自分の得点だけ旬を好きな季節にする（いちばん得な季節を自動で選ぶ）" },
   refresh: { cost: { spr: 1 }, t: "o", n: "衣替え", m: "替", tx: "能力カードの場の3枚を入れ替える" },
   buy2: { cost: { sum: 1 }, t: "o", n: "大市", m: "市", tx: "この手番、能力カードをもう1枚買える" },
-  takeTop: { cost: { aut: 1, sum: 1 }, t: "o", n: "落ち穂拾い", m: "拾", tx: "捨て札の一番上を手札に加える（季節は1つ戻る）" },
+  takeTop: { cost: { aut: 1, sum: 1 }, t: "o", n: "落ち穂拾い", m: "拾", tx: "場の一番上を手札に加える（季節は1つ戻る）" },
   skip: { cost: { win: 1, spr: 1 }, t: "o", n: "通せんぼ", m: "止", tx: "次の人の手番を1回飛ばす" },
   exile2: { cost: { aut: 1, win: 1 }, t: "o", n: "掘り出し", m: "掘", tx: "除外置き場からランダムに2枚手札に加える" }
 };
@@ -14101,8 +14103,8 @@ const SZ_PARTS = (() => {
   return out;
 })();
 const SZ_PART_KEYS = Object.keys(SZ_PARTS);
-/* 40枚の季節カード：c0〜c39 → 季節 */
-const SZ_CARDS = (() => { const out = {}; let i = 0; SZ_SE.forEach(s => { for (let j = 0; j < 10; j++) out["c" + (i++)] = s; }); return out; })();
+/* 60枚の季節カード：c0〜c39 → 季節 */
+const SZ_CARDS = (() => { const out = {}; let i = 0; SZ_SE.forEach(s => { for (let j = 0; j < 15; j++) out["c" + (i++)] = s; }); return out; })();
 const szSeason = c => SZ_CARDS[c];
 const szShuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const szL = (st, m) => { (st._log = st._log || []).push(m); };
@@ -14118,11 +14120,25 @@ const szUse1 = (st, p, k) => { st.used[p + ":" + k] = 1; };
 
 /* ---------- 準備 ---------- */
 const SZ_MARKET = 3;
+/* 能力カードの場を3枚にする。「終」の札が出たら脇に置いてもう1枚。3枚目でその人の手番の終わりに終了 */
+function szRefill(st, p){
+  while (st.market.length < SZ_MARKET && st.mdeck.length){
+    const k = st.mdeck.shift();
+    if (k === "owari"){
+      st.owari = (st.owari || 0) + 1;
+      szL(st, `「終」の札がめくれた（${st.owari}/3）`); szFx(st, { k: "owari", n2: st.owari, p });
+      if (st.owari >= 3 && !st.endBy){ st.endBy = p || "_"; szL(st, p ? `3枚目の「終」：${szNm(p)}の手番の終わりにゲーム終了` : "3枚目の「終」：ゲーム終了"); }
+      continue;
+    }
+    st.market.push(k);
+  }
+}
 function szSetup(players, opt = {}){
   const deck = szShuffle(Object.keys(SZ_CARDS)), hands = {}, parts = {};
   players.forEach(p => { hands[p] = [deck.pop(), deck.pop(), deck.pop()]; parts[p] = []; });
-  const first = deck.pop(), mdeck = opt.abil === false ? [] : szShuffle(SZ_PART_KEYS);
-  const st = { sz: 3, v: 4, players: players.slice(), parts, used: {}, deck, pile: [{ c: first }], exile: [], hands, ask: null, turn: null, no: 0, fx: [], fxn: 0, status: "playing", market: mdeck.splice(0, SZ_MARKET), mdeck, skip: {} };
+  const first = deck.pop(), mdeck = opt.abil === false ? [] : szShuffle(SZ_PART_KEYS.concat(["owari", "owari", "owari"]));
+  const st = { sz: 3, v: 5, players: players.slice(), parts, used: {}, deck, pile: [{ c: first }], exile: [], hands, ask: null, turn: null, no: 0, fx: [], fxn: 0, status: "playing", market: [], mdeck, skip: {}, owari: 0, endBy: null };
+  szRefill(st, null);
   szL(st, `最初の季節は${SZ_SN[szSeason(first)]}`);
   szStartTurn(st, players[Math.floor(Math.random() * players.length)]);
   return st;
@@ -14140,7 +14156,7 @@ function szBuy(st, p, k){
   const P = SZ_PARTS[k];
   SZ_SE.forEach(s => { for (let i = 0; i < (P.cost[s] || 0); i++){ const c = st.hands[p].find(x => szSeason(x) === s); szTake(st.hands[p], c); st.exile.push(c); } });
   st.market.splice(st.market.indexOf(k), 1); st.parts[p].push(k); st.turn.bought = (st.turn.bought || 0) + 1;
-  if (st.mdeck.length) st.market.push(st.mdeck.shift());   // すぐに補充
+  szRefill(st, p);   // すぐに補充
   szL(st, `${szNm(p)}が${szCostTx(k)}を払って「${P.n}」を手に入れた`);
   szFx(st, { k: "buy", p, part: k });
   if (szHas(st, p, "buyDraw")){ szCombo(st, p, "buyDraw", "能力カードを買ったので1枚引く"); szDraw(st, p, 1); }
@@ -14149,7 +14165,7 @@ function szBuy(st, p, k){
 const szPileS = e => e.as || szSeason(e.c);
 const szCur = st => { const t = st.pile[st.pile.length - 1]; return t ? szPileS(t) : null; };
 const szDisCount = (st, s) => st.pile.filter(e => szPileS(e) === s).length;
-function szChain(st){
+function szChainUnused(st){
   const p = st.pile; let n = 0;
   for (let i = p.length - 1; i > 0 && n < 3; i--){ if (szPileS(p[i]) === szNext(szPileS(p[i - 1]))) n++; else break; }
   return n;
@@ -14164,10 +14180,7 @@ function szDraw(st, p, n){
   let k = 0;
   for (let i = 0; i < n; i++){
     if (st.status !== "playing") break;
-    if (!st.deck.length){
-      if (st.exile.length){ st.deck = szShuffle(st.exile); st.exile = []; szL(st, "山札が尽きたので、除外置き場を混ぜて新しい山札に"); szFx(st, { k: "reshuffle" }); }
-      else { szEnd(st, "deck"); return k; }
-    }
+    if (!st.deck.length){ szEnd(st, "deck"); return k; }   // 山札切れで終了（除外置き場は戻さない）
     st.hands[p].push(st.deck.pop()); k++;
   }
   if (k) szFx(st, { k: "draw", p, cnt: k });
@@ -14195,9 +14208,10 @@ function szEndTurn(st){
   if (st.status !== "playing") return;
   const T = st.turn, p = T.pid;
   if (szHas(st, p, "fourEnd") && SZ_SE.every(s => szCnt(st, p, s) > 0)){ szCombo(st, p, "fourEnd", "4つの季節がそろっているので1枚引く"); szDraw(st, p, 1); }
-  if (szHas(st, p, "disc3") && T.discN >= 3 && st.status === "playing"){ szCombo(st, p, "disc3", "3枚以上捨てたので2枚引く"); szDraw(st, p, 2); }
-  if (szHas(st, p, "noDisc") && !T.discN && st.status === "playing"){ szCombo(st, p, "noDisc", "1枚も捨てなかったので1枚引く"); szDraw(st, p, 1); }
+  if (szHas(st, p, "disc3") && T.discN >= 3 && st.status === "playing"){ szCombo(st, p, "disc3", "3枚以上場に出したので2枚引く"); szDraw(st, p, 2); }
+  if (szHas(st, p, "noDisc") && !T.discN && st.status === "playing"){ szCombo(st, p, "noDisc", "1枚も場に出さなかったので1枚引く"); szDraw(st, p, 1); }
   if (st.status !== "playing") return;
+  if (st.endBy){ szEnd(st, "owari", p); return; }
   st.turn = null;
   szStartTurn(st, szSeat(st, p, 1));
 }
@@ -14235,13 +14249,13 @@ function szDisc(st, p, c, mode = "normal"){
   const T = st.turn, cur = szCur(st), s = szSeason(c);
   szTake(st.hands[p], c);
   const e = { c, by: p }; if (mode !== "normal" && szNext(cur) !== s) e.as = szNext(cur);
-  if (mode !== "normal"){ szUse1(st, p, mode); szL(st, `「${SZ_PARTS[mode].n}」${szNm(p)}が${SZ_SN[s]}の札を「${SZ_SN[szNext(cur)]}」として捨てた`); }
+  if (mode !== "normal"){ szUse1(st, p, mode); szL(st, `「${SZ_PARTS[mode].n}」${szNm(p)}が${SZ_SN[s]}の札を「${SZ_SN[szNext(cur)]}」として場に出した`); }
   st.pile.push(e);
   const ns = szPileS(e), adv = ns === szNext(cur), stall = ns === cur;
   T.discN++;
-  szL(st, `${szNm(p)}が${SZ_SN[s]}を捨てた：${adv ? `季節が${SZ_SN[ns]}に進む` : `${SZ_SN[ns]}のまま（足止め）`}`);
+  szL(st, `${szNm(p)}が${SZ_SN[s]}を場に出した：${adv ? `季節が${SZ_SN[ns]}に進む（2枚引く）` : `${SZ_SN[ns]}のまま・足止め（1枚引く）`}`);
   szFx(st, { k: "disc", p, c, adv, stall, s: ns });
-  if (szChain(st) >= 3){ szCalDone(st, p); return true; }
+  szDraw(st, p, adv ? 2 : 1);
   const draws = [];
   if (adv){ T.advN++;
     if (szHas(st, p, "advDraw")) draws.push(["advDraw", 1, "季節を進めたので1枚引く"]);
@@ -14253,16 +14267,10 @@ function szDisc(st, p, c, mode = "normal"){
     if (szHas(st, p, "stall2") && T.stallN === 2) draws.push(["stall2", 1, "この手番2回目の足止めで、さらに1枚引く"]);
     if (szHasF(st, p, "stl", ns)) draws.push([`stl_${ns}`, 1, `${SZ_SN[ns]}で足止めしたので1枚引く`]);
   }
-  if (szHasF(st, p, "dsc", s)) draws.push([`dsc_${s}`, 1, `${SZ_SN[s]}を捨てたので1枚引く`]);
-  if (szHasF(st, p, "dsc2", s)) draws.push([`dsc2_${s}`, 2, `${SZ_SN[s]}を捨てたので2枚引く`]);
+  if (szHasF(st, p, "dsc", s)) draws.push([`dsc_${s}`, 1, `${SZ_SN[s]}を場に出したので1枚引く`]);
+  if (szHasF(st, p, "dsc2", s)) draws.push([`dsc2_${s}`, 2, `${SZ_SN[s]}を場に出したので2枚引く`]);
   draws.forEach(([k, n, tx]) => { if (st.status === "playing"){ szCombo(st, p, k, tx); szDraw(st, p, n); } });
   return true;
-}
-function szCalDone(st, by){
-  szFx(st, { k: "cal", p: by });
-  const kp = st.players.find(x => szOnce(st, x, "uncal"));
-  if (kp){ st.ask = { pid: kp, k: "yn", title: "暦読み：暦が完成した。取り消してゲームを続けますか？（1ゲーム1回）", yes: "取り消して続ける", no: "このまま終わる", then: { t: "uncal", by } }; return; }
-  szEnd(st, "cal", by);
 }
 /* ---------- 渡し ---------- */
 function szCanPass(st, p, c, to){
@@ -14294,7 +14302,7 @@ function szAfterAct(st){
   if (T.passed) szEndTurn(st); else if (!szPassTargets(st, T.pid).length) szEnterPass(st);
 }
 /* ---------- 1回の能力（自分の番に押して使う） ---------- */
-const SZ_ACT_ONCE = ["back", "takeTop", "draw2", "exile2", "refresh", "buy2", "skip", "steal"];
+const SZ_ACT_ONCE = ["back", "takeTop", "draw2", "exile2", "refresh", "buy2", "skip", "steal", "uncal"];
 const szIsActOnce = k => SZ_ACT_ONCE.includes(k) || ["sek", "tax"].includes(SZ_PARTS[k].fam);
 function szOnceOk(st, p, k, arg){
   const T = st.turn; if (!T || T.pid !== p || st.ask || st.status !== "playing" || !szOnce(st, p, k)) return false;
@@ -14305,6 +14313,7 @@ function szOnceOk(st, p, k, arg){
   if (k === "exile2") return st.exile.length > 0;
   if (k === "refresh") return st.mdeck.length > 0;
   if (k === "buy2" || k === "draw2" || k === "skip") return true;
+  if (k === "uncal") return (st.owari || 0) > 0;
   if (P.fam === "sek") return st.deck.some(c => szSeason(c) === P.s);
   if (P.fam === "tax") return st.players.some(o => o !== p && szCnt(st, o, P.s) > 0);
   return false;
@@ -14313,12 +14322,13 @@ function szCharAct(st, p, k, arg){
   if (!szOnceOk(st, p, k, arg) || (k === "steal" && arg === undefined)) return false;
   const T = st.turn, P = SZ_PARTS[k], nm = `「${P.n}」${szNm(p)}`;
   szUse1(st, p, k);
-  if (k === "back"){ const e = st.pile.pop(); st.exile.push(e.c); szL(st, `${nm}：捨て札の一番上を取り除き、季節は${SZ_SN[szCur(st)]}に戻る`); szFx(st, { k: "unpile", p }); }
-  else if (k === "takeTop"){ const e = st.pile.pop(); st.hands[p].push(e.c); szL(st, `${nm}：捨て札の一番上を手札に（季節は${SZ_SN[szCur(st)]}に戻る）`); szFx(st, { k: "unpile", p }); }
+  if (k === "back"){ const e = st.pile.pop(); st.exile.push(e.c); szL(st, `${nm}：場の一番上を取り除き、季節は${SZ_SN[szCur(st)]}に戻る`); szFx(st, { k: "unpile", p }); }
+  else if (k === "takeTop"){ const e = st.pile.pop(); st.hands[p].push(e.c); szL(st, `${nm}：場の一番上を手札に（季節は${SZ_SN[szCur(st)]}に戻る）`); szFx(st, { k: "unpile", p }); }
   else if (k === "draw2"){ szL(st, `${nm}：山札から2枚引く`); szDraw(st, p, 2); }
   else if (k === "exile2"){ const got = szShuffle(st.exile).slice(0, 2); got.forEach(c => { szTake(st.exile, c); st.hands[p].push(c); }); szL(st, `${nm}：除外置き場から${got.length}枚手札に`); }
-  else if (k === "refresh"){ st.mdeck.push(...st.market); st.market = st.mdeck.splice(0, SZ_MARKET); szL(st, `${nm}：能力カードの場を入れ替えた`); szFx(st, { k: "refresh", p }); }
+  else if (k === "refresh"){ st.mdeck.push(...st.market); st.market = []; szRefill(st, p); szL(st, `${nm}：能力カードの場を入れ替えた`); szFx(st, { k: "refresh", p }); }
   else if (k === "buy2"){ T.buyMax = (T.buyMax || 1) + 1; szL(st, `${nm}：この手番、能力カードをもう1枚買える`); }
+  else if (k === "uncal"){ st.owari--; if (st.owari < 3) st.endBy = null; st.mdeck.push("owari"); st.mdeck = szShuffle(st.mdeck); szL(st, `${nm}：「終」の札を1枚、能力カードの山に戻した（${st.owari}/3）`); szFx(st, { k: "unowari", p }); }
   else if (k === "skip"){ const nx = szSeat(st, p, 1); st.skip[nx] = 1; szL(st, `${nm}：${szNm(nx)}の次の手番を飛ばす`); }
   else if (P.fam === "sek"){ const got = []; for (let i = st.deck.length - 1; i >= 0 && got.length < 2; i--) if (szSeason(st.deck[i]) === P.s){ got.push(st.deck[i]); st.deck.splice(i, 1); } st.hands[p].push(...got); st.deck = szShuffle(st.deck); szL(st, `${nm}：山札から${SZ_SN[P.s]}を${got.length}枚手札に`); }
   else if (P.fam === "tax"){ let n = 0; st.players.forEach(o => { if (o === p) return; const c = st.hands[o].find(x => szSeason(x) === P.s); if (c){ szTake(st.hands[o], c); st.hands[p].push(c); n++; } }); szL(st, `${nm}：ほかの人から${SZ_SN[P.s]}を${n}枚もらった`); szFx(st, { k: "tax", p, s: P.s }); }
@@ -14332,10 +14342,6 @@ function szAnswer(st, p, v){
     if (v){ szUse1(st, p, "ret"); szTake(st.hands[p], th.c); st.hands[th.from].push(th.c); szL(st, `「突き返し」${szNm(p)}は受け取らずに${szNm(th.from)}に返した`); szFx(st, { k: "ret", p, to: th.from, c: th.c }); }
     else szRecv(st, th.from, p, th.c);
   }
-  if (th.t === "uncal"){
-    if (v){ szUse1(st, p, "uncal"); const e = st.pile.pop(); st.exile.push(e.c); szL(st, `「暦読み」${szNm(p)}が暦の完成を取り消した`); szFx(st, { k: "uncal", p }); }
-    else { szEnd(st, "cal", th.by); return true; }
-  }
   szAfterAct(st);
   return true;
 }
@@ -14343,12 +14349,12 @@ function szAnswer(st, p, v){
 function szEnd(st, why, by){
   if (st.status !== "playing") return;
   st.status = "finished"; st.ask = null;
-  const res = {}; st.players.forEach(p => { res[p] = szScore(st, p, why === "cal" ? by : null, undefined, why); });
+  const res = {}; st.players.forEach(p => { res[p] = szScore(st, p, why === "owari" ? by : null, undefined, why); });
   st.end = { why, by: by || null, last: szCur(st), res, dis: Object.fromEntries(SZ_SE.map(s => [s, szDisCount(st, s)])), at: Date.now() };
-  szL(st, why === "cal" ? `暦が完成（${szNm(by)}）` : "山札も除外置き場も尽きたのでゲーム終了");
+  szL(st, why === "owari" ? `「終」の札が3枚そろった（${szNm(by)}の手番）ので、ゲーム終了` : "山札が尽きたのでゲーム終了");
   szFx(st, { k: "end", why });
 }
-/* 得点：季節ごとに「捨て札のその季節の枚数 × 手札のその季節の枚数」。旬は2倍。能力カードのボーナスを足す */
+/* 得点：季節ごとに「場のその季節の枚数 × 手札のその季節の枚数」。旬は2倍。能力カードのボーナスを足す */
 function szScore(st, p, calBy, shunOver, why){
   if (shunOver === undefined && szOnce(st, p, "shunPick")){
     let best = null; SZ_SE.forEach(s => { const r = szScore(st, p, calBy, s, why); if (!best || r.total > best.total) best = r; });
@@ -14366,8 +14372,8 @@ function szScore(st, p, calBy, shunOver, why){
   const sets = Math.min(...SZ_SE.map(s => cnt[s]));
   if (szHas(st, p, "sets")) add(`「一年」四季の組 ${sets}組`, sets * 3);
   if (szHas(st, p, "mostEnd") && szMost(st, p)) add("「冬籠り」手札が最多", 5);
-  if (szHas(st, p, "calSelf") && calBy === p) add("「締めくくり」自分で暦を完成", 6);
-  if (szHas(st, p, "calOther") && calBy && calBy !== p) add("「見届け」ほかの人が暦を完成", 4);
+  if (szHas(st, p, "calSelf") && calBy === p) add("「幕引き」自分の手番に3枚目の「終」", 6);
+  if (szHas(st, p, "calOther")){ const n = st.pile.filter(e => e.by === p).length; add(`「働き者」場に出した${n}枚`, Math.floor(n / 2)); }
   if (szHas(st, p, "abilPts")) add(`「収集家」能力カード${st.parts[p].length}枚`, st.parts[p].length);
   if (szHas(st, p, "allFour") && sets > 0) add("「四季彩」4つの季節がそろった", 5);
   if (szHas(st, p, "minPts")){ const v = SZ_SE.map(s => cnt[s]).filter(x => x > 0); if (v.length) add("「判官贔屓」いちばん少ない季節", Math.min(...v) * 2); }
@@ -14378,7 +14384,7 @@ function szScore(st, p, calBy, shunOver, why){
     if (szHasF(st, p, "wai", s) && shun === s) add(`「${SZ_SN[s]}待ち」旬が${SZ_SN[s]}`, 6);
     if (szHasF(st, p, "maj", s) && cnt[s] > 0 && st.players.every(o => szCnt(st, o, s) <= cnt[s])) add(`「${SZ_SN[s]}自慢」${SZ_SN[s]}が最多`, 4);
   });
-  if (big && cnt[big]) items.push([`「偏愛」${SZ_SN[big]}の捨て札を+1枚として計算`, 0]);
+  if (big && cnt[big]) items.push([`「偏愛」場の${SZ_SN[big]}を+1枚として計算`, 0]);
   const total = rows.reduce((s, r) => s + r.pt, 0) + items.reduce((s, x) => s + x[1], 0);
   return { total, rows, items, shun, mult, opp };
 }
@@ -14398,12 +14404,11 @@ function szWantEnd(st, p){
 function szCpuStep(st, p){
   const a = st.ask;
   if (a && a.pid === p){
-    if (a.then.t === "uncal") return ["answer", !szWantEnd(st, p)];
     if (a.then.t === "ret"){ const s = szSeason(a.card); return ["answer", szCnt(st, p, s) === 0 && szDisCount(st, s) <= 1]; }
     return ["answer", false];
   }
   const T = st.turn; if (!T || T.pid !== p || st.ask) return null;
-  const cur = szCur(st), chain = szChain(st), want = szWantEnd(st, p), h = st.hands[p];
+  const cur = szCur(st), want = szWantEnd(st, p), h = st.hands[p];
   const sc = () => szScore(st, p, null).total;
   const gain = c => { const base = sc(); const st2 = { ...st, hands: { ...st.hands, [p]: h.filter(x => x !== c) }, pile: st.pile.concat([{ c }]) }; return szScore(st2, p, null).total - base; };
   if (T.step === "disc"){
@@ -14414,23 +14419,14 @@ function szCpuStep(st, p){
       if (buy && buy[1] > 0 && h.length - szCostN(buy[0]) >= 2) return ["buy", buy[0]];
     }
     const ok = h.filter(x => szCanDisc(st, p, x));
-    if (chain >= 2){
-      const adv = ok.filter(x => szSeason(x) === szNext(cur)), stall = ok.filter(x => szSeason(x) === cur);
-      if (want && adv.length) return ["disc", adv.sort((x, y) => gain(y) - gain(x))[0], "normal"];
-      const pk = (st.parts[p] || []).find(k => (k === "haya" || SZ_PARTS[k].fam === "pre") && szOnce(st, p, k) && h.some(x => szCanDisc(st, p, x, k)));
-      if (want && pk) return ["disc", h.find(x => szCanDisc(st, p, x, pk)), pk];
-      if (!want && szOnceOk(st, p, "back")) return ["char", "back"];
-      if (!want && szOnceOk(st, p, "takeTop")) return ["char", "takeTop"];
-      if (!want && stall.length && T.stallN < 2) return ["disc", stall.sort((x, y) => gain(y) - gain(x))[0], "normal"];
-      if (!want) return ["next"];
-    }
-    const drawsOn = x => { const s = szSeason(x), adv = s === szNext(cur), stl = s === cur;
-      return (adv && (szHas(st, p, "advDraw") || szHasF(st, p, "adv", s) || (szHas(st, p, "adv2") && T.advN === 1))) || (stl && (szHas(st, p, "stallDraw") || szHasF(st, p, "stl", s) || (szHas(st, p, "stall2") && T.stallN === 1))) || szHasF(st, p, "dsc", s) || szHasF(st, p, "dsc2", s); };
-    const safe = x => !(chain === 1 && szSeason(x) === szNext(cur) && !want);
-    const f = ok.filter(x => drawsOn(x) && safe(x)).sort((x, y) => gain(y) - gain(x))[0];
-    if (f && T.discN < 4) return ["disc", f, "normal"];
-    const g2 = ok.filter(safe).map(x => [x, gain(x)]).sort((x, y) => y[1] - x[1])[0];
-    if (g2 && g2[1] > 0 && T.discN < 3) return ["disc", g2[0], "normal"];
+    // 場に出す：進めると2枚・足止めで1枚引けるので、得点が大きく下がらなければ出す
+    const extra = x => { const s = szSeason(x), adv = s === szNext(cur), stl = s === cur; let n = adv ? 2 : 1;
+      if (adv && (szHas(st, p, "advDraw") || szHasF(st, p, "adv", s) || (szHas(st, p, "adv2") && T.advN === 1))) n++;
+      if (stl && (szHas(st, p, "stallDraw") || szHasF(st, p, "stl", s) || (szHas(st, p, "stall2") && T.stallN === 1))) n++;
+      if (szHasF(st, p, "dsc", s)) n++; if (szHasF(st, p, "dsc2", s)) n += 2; return n; };
+    const best = ok.map(x => [x, gain(x) + extra(x) * 1.2 - 1.2]).sort((x, y) => y[1] - x[1])[0];
+    if (best && best[1] > 0 && T.discN < 6) return ["disc", best[0], "normal"];
+    if (szOnceOk(st, p, "uncal") && !want) return ["char", "uncal"];
     if (szOnceOk(st, p, "skip") && want) return ["char", "skip"];
     return ["next"];
   }
@@ -14458,7 +14454,7 @@ function szApply(st, p, mv){
 
 /* ======================= 四季の巡り：画面（絵文字は使わず、和柄のSVGで描く） ======================= */
 const szGames = () => db.sz_games || [];
-const szOld = g => !(g.st && g.st.v === 4);
+const szOld = g => !(g.st && g.st.v === 5);
 const szLive = () => { szCleanOld(); return szGames().filter(g => g.status === "playing" && !szOld(g)).sort((a, b) => b.created_at.localeCompare(a.created_at)); };
 /* 古いルールのまま残った対戦は、一覧に出さず「やめた」扱いにして片づける */
 const szCleaned = new Set();
@@ -14471,7 +14467,7 @@ function szCleanOld(){
 const szActive = () => pickMine(szLive());
 const szById = id => szGames().find(g => g.id === id);
 const szActor = st => st.ask ? st.ask.pid : st.turn ? st.turn.pid : null;
-function szMyTurn(g){ const st = g && g.st; return !!(st && st.v === 4 && g.status === "playing" && me && szActor(st) === me); }
+function szMyTurn(g){ const st = g && g.st; return !!(st && st.v === 5 && g.status === "playing" && me && szActor(st) === me); }
 async function szCommit(id, fn){
   for (let tries = 0; tries < 6; tries++){
     const g = szById(id); if (!g || g.status !== "playing") return false;
@@ -14497,7 +14493,7 @@ async function szCommit(id, fn){
 }
 const szDo = (id, p, mv) => szCommit(id, st => szApply(st, p, mv));
 CPU_AI.sz_games = g => {
-  const st = g.st; if (!st || st.v !== 4 || g.status !== "playing") return null;
+  const st = g.st; if (!st || st.v !== 5 || g.status !== "playing") return null;
   const p = szActor(st); if (!isCpu(p)) return null;
   const mv = szCpuStep(st, p); if (!mv) return null;
   const wait = mv[0] === "next" ? 700 : mv[0] === "buy" ? 1500 : 1300;
@@ -14533,7 +14529,7 @@ function openSzNew(){
   const t = curTrip();
   let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 5), draft = true;
   const s = openSheet("四季の巡りを始める", `
-    <p class="note">【オリジナル】捨て札に多く積もった季節ほど、その季節の手札が高い点になる手札管理ゲーム。終わったときの季節（旬）は2倍。季節カードを払って能力カードを買い、自分だけのコンボを組み立てる（3〜5人）。</p>
+    <p class="note">【オリジナル】場に多く積もった季節ほど、その季節の手札が高い点になる手札管理ゲーム。終わったときの季節（旬）は2倍。季節カードを払って能力カードを買い、自分だけのコンボを組み立てる（3〜5人）。</p>
     <button type="button" class="grbtn" data-grule="sz">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・3〜5人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え（最初の人はランダム）</span><div id="szOrder" class="norder"></div><button class="shufbtn" id="szShuf">順番をシャッフル</button></div>
@@ -14561,7 +14557,7 @@ function openSzNew(){
 }
 const closeSz0 = () => closeSheet();
 let szId = null, szSel = null, szMode = "normal", szSeenFx = {};
-function openSz(id){ const g0 = szById(id); if (g0 && g0.st && g0.st.v !== 4){ toast("古いルールの対戦です。新しく始めてください", 2500); return; } szId = id; szSel = null; szMode = "normal"; if (g0 && g0.st) szSeenFx[id] = g0.st.fxn || 0; $("#szg").hidden = false; document.body.style.overflow = "hidden"; drawSz(); }
+function openSz(id){ const g0 = szById(id); if (g0 && g0.st && g0.st.v !== 5){ toast("古いルールの対戦です。新しく始めてください", 2500); return; } szId = id; szSel = null; szMode = "normal"; if (g0 && g0.st) szSeenFx[id] = g0.st.fxn || 0; $("#szg").hidden = false; document.body.style.overflow = "hidden"; drawSz(); }
 function closeSz(){ szId = null; $("#szg").hidden = true; document.body.style.overflow = ""; render(); }
 function szMenu(g){
   const s = openSheet("四季の巡りのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="log">これまでの流れ<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
@@ -14581,13 +14577,13 @@ const szPname = p => esc(szNm(p));
 const szCostHtml = k => `<span class="szcost">${SZ_SE.filter(s => SZ_PARTS[k].cost[s]).map(s => `<i style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_PARTS[k].cost[s]}</b></i>`).join("")}</span>`;
 const szPartHtml = (k, cls = "", data = "", cost = false) => { const P = SZ_PARTS[k]; return `<div class="szpart t-${P.t} ${cls}" ${data}>${szMon(k)}<div><small>${SZ_TYPE[P.t]}${cost ? szCostHtml(k) : ""}</small><b>${P.n}</b><p>${esc(P.tx)}</p></div></div>`; };
 function szWheel(st){
-  const cur = szCur(st), ch = szChain(st);
-  return `<div class="szwheel">${SZ_SE.map((s, i) => `<span class="szw ${s === cur ? "on" : ""}" style="--sc:${SZ_SC[s]};--a:${i * 90 - 90}deg">${szArt(s)}<b>${SZ_SN[s]}</b></span>`).join("")}<div class="szwc"><small>今の季節</small><b style="color:${SZ_SC[cur]}">${SZ_SN[cur]}</b><span class="szchain">${[0, 1, 2].map(i => `<i class="${i < ch ? "on" : ""}"></i>`).join("")}</span><small>暦 ${ch}/3</small></div></div>`;
+  const cur = szCur(st), ow = st.owari || 0;
+  return `<div class="szwheel">${SZ_SE.map((s, i) => `<span class="szw ${s === cur ? "on" : ""}" style="--sc:${SZ_SC[s]};--a:${i * 90 - 90}deg">${szArt(s)}<b>${SZ_SN[s]}</b></span>`).join("")}<div class="szwc"><small>今の季節</small><b style="color:${SZ_SC[cur]}">${SZ_SN[cur]}</b><span class="szchain">${[0, 1, 2].map(i => `<i class="${i < ow ? "on" : ""}"></i>`).join("")}</span><small>終 ${ow}/3</small></div></div>`;
 }
-/* 季節ごとの値打ち（捨て札の枚数）と、自分の今の得点 */
+/* 季節ごとの値打ち（場の枚数）と、自分の今の得点 */
 function szValueHtml(st){
   const cur = szCur(st), mine = st.hands[me] ? szScore(st, me, null) : null;
-  return `<div class="szval">${SZ_SE.map(s => { const r = mine && mine.rows.find(x => x.s === s); return `<div class="szv ${s === cur ? "shun" : s === szNext(szNext(cur)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${szDisCount(st, s)}</em>${s === cur ? `<i>旬×${mine ? mine.mult : 2}</i>` : s === szNext(szNext(cur)) ? `<i class="opp">時期外れ</i>` : ""}</span>${r ? `<small>手札${r.h}枚 → ${r.pt}点</small>` : ""}</div>`; }).join("")}${mine ? `<div class="szvt"><small>今終われば</small><b>${mine.total}</b><small>点</small></div>` : ""}</div>`;
+  return `<div class="szval">${SZ_SE.map(s => { const r = mine && mine.rows.find(x => x.s === s); return `<div class="szv ${s === cur ? "shun" : s === szNext(szNext(cur)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>場 <em>${szDisCount(st, s)}</em>${s === cur ? `<i>旬×${mine ? mine.mult : 2}</i>` : s === szNext(szNext(cur)) ? `<i class="opp">時期外れ</i>` : ""}</span>${r ? `<small>手札${r.h}枚 → ${r.pt}点</small>` : ""}</div>`; }).join("")}${mine ? `<div class="szvt"><small>今終われば</small><b>${mine.total}</b><small>点</small></div>` : ""}</div>`;
 }
 function drawSz(){
   setTimeout(cpuKick, 0);
@@ -14606,16 +14602,16 @@ function drawSz(){
     return `<div class="szseat ${act ? "act" : ""} ${tg.includes(p) ? "tgt" : ""} ${p === me ? "mine" : ""}" style="--pc:${pcolor(p)}" data-seat="${p}">${act ? `<em class="szturn">${st.ask && st.ask.pid === p && (!T || T.pid !== p) ? "選択中" : "手番"}</em>` : ""}<b>${szPname(p)}</b><span class="szmons">${ps.map(k => szMon(k, st.used[p + ":" + k] ? "used" : "")).join("")}</span><span class="szhn">手札 <b>${st.hands[p].length}</b></span>${tg.includes(p) ? `<i class="sztgi">渡す相手</i>` : ""}</div>`;
   }).join("");
   const top = st.pile.slice(-4);
-  const pileHtml = `<div class="szpile">${top.map((e, i) => `${i ? `<i class="szarr ${szPileS(e) === szNext(szPileS(top[i - 1])) ? "adv" : "stay"}">${szPileS(e) === szNext(szPileS(top[i - 1])) ? "進" : "止"}</i>` : ""}<span class="szpc ${i === top.length - 1 ? "top" : ""}" style="--sc:${SZ_SC[szPileS(e)]}">${szArt(szPileS(e), "xs")}<b>${SZ_SN[szPileS(e)]}</b>${e.as ? `<small>${SZ_SN[szSeason(e.c)]}を${SZ_SN[e.as]}として</small>` : ""}</span>`).join("")}</div>`;
-  const steps = [["draw", "ドロー（1枚）"], ["disc", "捨て・購入"], ["pass", "渡し"]];
+  const pileHtml = `<div class="szpile"><small class="szpilel">場</small>${top.map((e, i) => `${i ? `<i class="szarr ${szPileS(e) === szNext(szPileS(top[i - 1])) ? "adv" : "stay"}">${szPileS(e) === szNext(szPileS(top[i - 1])) ? "進" : "止"}</i>` : ""}<span class="szpc ${i === top.length - 1 ? "top" : ""}" style="--sc:${SZ_SC[szPileS(e)]}">${szArt(szPileS(e), "xs")}<b>${SZ_SN[szPileS(e)]}</b>${e.as ? `<small>${SZ_SN[szSeason(e.c)]}を${SZ_SN[e.as]}として</small>` : ""}</span>`).join("")}</div>`;
+  const steps = [["draw", "ドロー（1枚）"], ["disc", "場に出す・購入"], ["pass", "渡し"]];
   const stepIx = T ? ({ disc: 1, pass: 2 }[T.step] || 0) : 0;
   const stepBar = T ? `<div class="szsteps">${steps.map(([k, n], i) => `<span class="${i < stepIx ? "done" : i === stepIx ? "now" : ""}">${["一", "二", "三"][i]}　${n}</span>`).join("")}</div>` : "";
   let guide = "";
   if (g.status === "playing" && T){
     if (myTurn){
-      if (T.step === "disc") guide = szMode !== "normal" ? `「${SZ_PARTS[szMode].n}」：捨てる札を1枚選ぶ（次の季節として扱う）` : `捨てられるのは${SZ_SN[cur]}（足止め）か${SZ_SN[szNext(cur)]}（季節を進める）。能力カードも1枚まで買える${T.bought ? "（この手番は購入済み）" : ""}。今終わると、${SZ_SN[szNext(szNext(cur))]}は時期外れで0点`;
+      if (T.step === "disc") guide = szMode !== "normal" ? `「${SZ_PARTS[szMode].n}」：場に出す札を1枚選ぶ（次の季節として扱う）` : `場に出せるのは${SZ_SN[szNext(cur)]}（季節を進める：2枚引く）か${SZ_SN[cur]}（足止め：1枚引く）。能力カードも1枚まで買える${T.bought ? "（この手番は購入済み）" : ""}。今終わると、${SZ_SN[szNext(szNext(cur))]}は時期外れで0点`;
       else if (T.step === "pass") guide = tg.length ? `手札${hand.length}枚 → ${tg.length > 1 ? "渡す相手と" : `${szPname(tg[0])}に`}渡す札を選ぶ` : "";
-    } else guide = `${szPname(szActor(st))}が${st.ask && (!T || st.ask.pid !== T.pid) ? "選んでいます" : `${({ disc: "捨てる札", pass: "渡す札" })[T.step]}を選んでいます`}…`;
+    } else guide = `${szPname(szActor(st))}が${st.ask && (!T || st.ask.pid !== T.pid) ? "選んでいます" : `${({ disc: "場に出す札", pass: "渡す札" })[T.step]}を選んでいます`}…`;
   }
   if (szMode !== "normal" && !szOnce(st, me, szMode)) szMode = "normal";
   const canAct = c => myTurn && (T.step === "disc" ? szCanDisc(st, me, c, szMode) : T.step === "pass");
@@ -14626,8 +14622,8 @@ function drawSz(){
     const sel = szSel;
     if (T.step === "disc"){
       const mode = szMode, ok = sel && szCanDisc(st, me, sel, mode);
-      const eff = ok ? (mode !== "normal" ? `（${SZ_SN[szNext(cur)]}として）` : szSeason(sel) === cur ? "（足止め）" : "（季節を進める）") : "";
-      btns = `<button class="szb go" id="szDiscB" ${ok ? "" : "disabled"}>${sel ? `${SZ_SN[szSeason(sel)]}を捨てる${eff}` : "捨てる札を選ぶ"}</button><button class="szb" id="szNext">渡しへ</button>`;
+      const eff = ok ? (mode !== "normal" ? `（${SZ_SN[szNext(cur)]}として）` : szSeason(sel) === cur ? "（足止め・1枚引く）" : "（季節を進める・2枚引く）") : "";
+      btns = `<button class="szb go" id="szDiscB" ${ok ? "" : "disabled"}>${sel ? `${SZ_SN[szSeason(sel)]}を場に出す${eff}` : "場に出す札を選ぶ"}</button><button class="szb" id="szNext">渡しへ</button>`;
     } else if (T.step === "pass") btns = tg.map(p => `<button class="szb go" data-pto="${p}" ${sel ? "" : "disabled"}>${sel ? `${SZ_SN[szSeason(sel)]}を` : ""}${szPname(p)}に渡す</button>`).join("");
   }
   // 自分の個性
@@ -14648,7 +14644,7 @@ function drawSz(){
   el.innerHTML = `
     <div class="sztop"><b class="szlogo">四季の巡り</b><span class="szno">${T ? `${st.no}手番目・山札${st.deck.length}` : ""}</span><button class="szbtn" id="szMenu" aria-label="メニュー">…</button><button class="szbtn" id="szX" aria-label="閉じる">×</button></div>
     <div class="szseats">${seats}</div>
-    <div class="szmid">${szWheel(st)}<div class="szside">${pileHtml}<div class="szpiles"><span>山札 <b>${st.deck.length}</b></span><button id="szExile">除外 <b>${st.exile.length}</b></button></div></div></div>
+    <div class="szmid">${szWheel(st)}<div class="szside">${pileHtml}<div class="szpiles"><span>山札 <b>${st.deck.length}</b></span><span>能力の山 <b>${st.mdeck.length}</b></span><button id="szExile">除外 <b>${st.exile.length}</b></button></div></div></div>
     ${szValueHtml(st)}
     ${stepBar}
     ${guide ? `<p class="szguide">${guide}</p>` : ""}
@@ -14670,7 +14666,7 @@ function drawSz(){
   el.querySelectorAll("[data-once]").forEach(b => b.onclick = async () => { const k = b.dataset.once; if (!confirm(`「${SZ_PARTS[k].n}」（1回）を使いますか？\n${SZ_PARTS[k].tx}`)) return; await szDo(g.id, me, ["char", k]); });
   el.querySelectorAll("[data-steal]").forEach(b => b.onclick = async () => { if (!confirm(`横取り（1回）で、渡す代わりに${szNm(b.dataset.steal)}の手札からランダムに1枚もらいますか？`)) return; szSel = null; await szDo(g.id, me, ["char", "steal", b.dataset.steal]); });
   el.querySelectorAll("[data-buy]").forEach(b => b.onclick = async () => { const k = b.dataset.buy, P = SZ_PARTS[k];
-    if (!szCanBuy(st, me, k)){ openSheet(`能力カード「${P.n}」`, `<div class="szpl">${szPartHtml(k, "", "", true)}</div><p class="note">${myTurn && T.step === "disc" ? T.bought ? "この手番はもう買いました" : `手札が足りません（${szCostTx(k)}が必要）` : "自分の番の「捨て・購入」の段階で買えます"}</p>`); return; }
+    if (!szCanBuy(st, me, k)){ openSheet(`能力カード「${P.n}」`, `<div class="szpl">${szPartHtml(k, "", "", true)}</div><p class="note">${myTurn && T.step === "disc" ? T.bought ? "この手番はもう買いました" : `手札が足りません（${szCostTx(k)}が必要）` : "自分の番の「場に出す・購入」の段階で買えます"}</p>`); return; }
     if (!confirm(`${szCostTx(k)}を払って「${P.n}」を買いますか？（払った札は除外置き場へ）`)) return; szSel = null; await szDo(g.id, me, ["buy", k]); });
   el.querySelectorAll("[data-pto]").forEach(b => b.onclick = async () => { const c = szSel; if (!c) return; szSel = null; await szDo(g.id, me, ["pass", c, b.dataset.pto]); });
   if (myAsk){ on("szYes", async () => { await szDo(g.id, me, ["answer", true]); }); on("szNo", async () => { await szDo(g.id, me, ["answer", false]); }); }
@@ -14684,10 +14680,10 @@ function szAskHtml(st, a){
 function szEndHtml(g){
   const st = g.st, E = st.end, rank = st.players.slice().sort((a, b) => E.res[b].total - E.res[a].total), best = E.res[rank[0]].total;
   return `<div class="szend"><div class="szendin">
-    <div class="szendt">${E.why === "cal" ? "暦の完成" : "山札が尽きた"}<small>${E.why === "cal" ? `${szPname(E.by)}が暦を完成させた。` : ""}最後の季節は${SZ_SN[E.last]}（旬：2倍）、${SZ_SN[szNext(szNext(E.last))]}は時期外れで0点</small></div>
-    <div class="szval end">${SZ_SE.map(s => `<div class="szv ${s === E.last ? "shun" : s === szNext(szNext(E.last)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>捨て札 <em>${E.dis[s]}</em>${s === E.last ? "<i>旬×2</i>" : s === szNext(szNext(E.last)) ? `<i class="opp">時期外れ</i>` : ""}</span></div>`).join("")}</div>
+    <div class="szendt">${E.why === "owari" ? "終" : "山札が尽きた"}<small>${E.why === "owari" ? `「終」の札が3枚そろい、${szPname(E.by)}の手番で終了。` : ""}最後の季節は${SZ_SN[E.last]}（旬：2倍）、${SZ_SN[szNext(szNext(E.last))]}は時期外れで0点</small></div>
+    <div class="szval end">${SZ_SE.map(s => `<div class="szv ${s === E.last ? "shun" : s === szNext(szNext(E.last)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>場 <em>${E.dis[s]}</em>${s === E.last ? "<i>旬×2</i>" : s === szNext(szNext(E.last)) ? `<i class="opp">時期外れ</i>` : ""}</span></div>`).join("")}</div>
     ${rank.map((p, i) => { const r = E.res[p], win = r.total === best; return `<div class="szres ${win ? "win" : ""}" style="--pc:${pcolor(p)}"><div class="szrh"><span class="szrk">${win ? "一" : ["一", "二", "三", "四", "五"][i]}</span><b>${szPname(p)}</b><span class="szmons">${(st.parts[p] || []).map(k => szMon(k)).join("")}</span><span class="szpt">${r.total}<small>点</small></span></div>
-      <ul class="szri">${r.rows.filter(x => x.h).map(x => `<li class="${x.opp ? "opp" : ""}"><span>${SZ_SN[x.s]}　手札${x.h}枚 × 捨て札${x.d}枚${x.opp ? "（時期外れ：0点）" : x.m > 1 ? ` × ${x.s === r.shun ? "旬" : ""}${x.m}倍` : ""}</span><b>${x.pt}</b></li>`).join("")}${r.items.filter(x => x[1] || x[0].includes("季節読み") || x[0].includes("偏愛")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v ? `+${v}` : ""}</b></li>`).join("")}</ul></div>`; }).join("")}
+      <ul class="szri">${r.rows.filter(x => x.h).map(x => `<li class="${x.opp ? "opp" : ""}"><span>${SZ_SN[x.s]}　手札${x.h}枚 × 場${x.d}枚${x.opp ? "（時期外れ：0点）" : x.m > 1 ? ` × ${x.s === r.shun ? "旬" : ""}${x.m}倍` : ""}</span><b>${x.pt}</b></li>`).join("")}${r.items.filter(x => x[1] || x[0].includes("季節読み") || x[0].includes("偏愛")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v ? `+${v}` : ""}</b></li>`).join("")}</ul></div>`; }).join("")}
     <div class="szbtns"><button class="szb" id="szEndClose">閉じる</button><button class="szb go" id="szAgain">もう一度遊ぶ</button></div></div></div>`;
 }
 /* 起きたことを短い帯で見せる */
@@ -14702,8 +14698,8 @@ function szFxShow(g, el){
     else if (e.k === "buy" && e.p !== me){ tx = `${szNm(e.p)}が「${SZ_PARTS[e.part].n}」を買った`; cls = "pass"; }
     else if (e.k === "steal" && e.to === me){ tx = `${szNm(e.p)}に手札を1枚取られた`; cls = "back"; }
     else if (e.k === "unpile"){ tx = `季節が${SZ_SN[szCur(st)]}に戻った`; cls = "back"; }
-    else if (e.k === "cal"){ tx = "暦が完成"; cls = "cal"; }
-    else if (e.k === "uncal"){ tx = "暦読みが完成を取り消した"; cls = "back"; }
+    else if (e.k === "owari"){ tx = `「終」の札がめくれた　${e.n2}／3`; cls = "cal"; }
+    else if (e.k === "unowari"){ tx = "「終」の札が山に戻された"; cls = "back"; }
     else if (e.k === "nopass" && e.p === me){ tx = "手札が人数で割り切れるので、渡さない"; cls = "stay"; }
     if (!tx) return;
     const b = document.createElement("div"); b.className = "szfx " + cls; b.textContent = tx; b.style.animationDelay = (i * .5) + "s"; b.style.top = `calc(34% + ${i * 52}px)`; el.appendChild(b);
@@ -14713,13 +14709,12 @@ function szFxShow(g, el){
 function szRulesHtml(){
   const fam = t => Object.entries(SZ_FAM).filter(([, F]) => F.t === t).map(([f, F]) => `<div class="szpart t-${t}"><span class="szmon t-${t}"><b>${F.m}</b></span><div><small>${SZ_TYPE[t]}・春夏秋冬の4種類・値段${F.c}枚</small><b>〇${F.n}</b><p>${esc(F.tx("〇"))}</p></div></div>`).join("");
   const grp = t => fam(t) + Object.keys(SZ_GEN).filter(k => SZ_GEN[k].t === t).map(k => szPartHtml(k, "", "", true)).join("");
-  return `<div class="goal"><b>積もった季節ほど<span class="r">高い点</span>になる</b><small>季節カードは春・夏・秋・冬 各10枚（効果なし）。共通の捨て札の一番上の季節が「今の季節」</small></div>
-  <h4>準備</h4><ol><li>季節カードを3枚ずつ配り、山札の一番上を捨て札に置く（最初の季節）</li><li>能力カード（100種類）をよく混ぜて、3枚を表向きに並べる（能力カードの場）</li></ol>
-  <h4>手番</h4><ol><li><b>ドロー</b>：山札から1枚引く（自動）</li><li><b>捨て・購入</b>：今の季節（足止め）か次の季節（季節が進む）の札だけを、何枚でも1枚ずつ捨て札に置く。また、能力カードの場から1枚まで買える（書かれた季節カードを手札から払う。払った札は捨て札ではなく除外置き場へ）。買った能力はすぐに使える</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）</li></ol>
-  <p>山札が尽きたら除外置き場を混ぜて新しい山札に。どちらも尽きたら終了。</p>
-  <h4>ゲーム終了：暦の完成</h4><p>捨て札の上から4枚が四季の順に並んだ瞬間（3回続けて季節が進んだ瞬間）、手番の途中でも終わり。足止めや季節を戻す能力が挟まると連続は途切れる。</p>
-  <h4>得点（最後にまとめて計算）</h4><p>季節ごとに<b>「捨て札にあるその季節の枚数 × 手札のその季節の枚数」</b>。終わったときの季節は<b>旬</b>として2倍。旬からいちばん遠い季節（春と秋、夏と冬）は<b>時期外れ</b>として、その手札は<b>0点</b>（手札の枚数には数える）。これに能力カードの終了時ボーナスを足す。</p>
-  <p class="note">例：捨て札に春が4枚、手札に春が3枚なら 4×3＝12点。春が旬なら24点、秋が旬なら春は時期外れで0点。</p>
+  return `<div class="goal"><b>積もった季節ほど<span class="r">高い点</span>になる</b><small>季節カードは春・夏・秋・冬 各15枚（効果なし）。場に出ている一番上の札の季節が「今の季節」</small></div>
+  <h4>準備</h4><ol><li>季節カードを3枚ずつ配り、山札の一番上を場に置く（最初の季節）</li><li>能力カード（100種類）に「終」の札を3枚混ぜ、3枚を表向きに並べる（能力カードの場）</li></ol>
+  <h4>手番</h4><ol><li><b>ドロー</b>：山札から1枚引く（自動）</li><li><b>場に出す・購入</b>：次の季節の札を出すと<b>季節が進んで2枚引く</b>。今の季節の札を出すと<b>足止めで1枚引く</b>。それ以外の季節は出せない。何枚でも1枚ずつ出せる。また、能力カードの場から1枚まで買える（書かれた季節カードを手札から払う。払った札は除外置き場へ）</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）</li></ol>
+  <h4>ゲーム終了</h4><ul><li><b>山札切れ</b>：季節カードの山札が尽きたら終了（除外置き場は戻さない）</li><li><b>終の札</b>：能力カードを補充するときに「終」の札がめくれたら脇に置き、代わりにもう1枚めくる。3枚目の「終」がめくれたら、その人の手番の終わりでゲーム終了</li></ul>
+  <h4>得点（最後にまとめて計算）</h4><p>季節ごとに<b>「場にあるその季節の枚数 × 手札のその季節の枚数」</b>。終わったときの季節は<b>旬</b>として2倍。旬からいちばん遠い季節（春と秋、夏と冬）は<b>時期外れ</b>として、その手札は<b>0点</b>（手札の枚数には数える）。これに能力カードの終了時ボーナスを足す。</p>
+  <p class="note">例：場に春が4枚、手札に春が3枚なら 4×3＝12点。春が旬なら24点、秋が旬なら春は時期外れで0点。</p>
   <h4>能力カード（全100種類）</h4><p class="note">山から3枚を表向きに並べる。買われたらすぐに山から補充。「〇」は春・夏・秋・冬のどれか（季節ごとに1枚ずつ、値段はその季節中心）。</p><h5>コンボ（手番中に発動）</h5><div class="szpl">${grp("c")}</div><h5>終了時のボーナス</h5><div class="szpl">${grp("e")}</div><h5>1ゲーム1回の能力</h5><div class="szpl">${grp("o")}</div>`;
 }
 
