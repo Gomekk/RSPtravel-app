@@ -4165,11 +4165,333 @@ body.bgpause .hxemb i{animation-play-state:paused}
 @keyframes szkanji2{from{transform:scale(2);opacity:0}}
 .szendt em{font-style:normal;font-size:18px;letter-spacing:.2em}
 .szres{animation:szrin .5s cubic-bezier(.2,1.3,.4,1) both}
-.szres:nth-of-type(2){animation-delay:.5s}.szres:nth-of-type(3){animation-delay:.65s}.szres:nth-of-type(4){animation-delay:.8s}.szres:nth-of-type(5){animation-delay:.95s}.szres:nth-of-type(6){animation-delay:1.1s}
+.szres{animation-delay:var(--dl,0s)}.szres.win{animation:szrin .5s cubic-bezier(.2,1.3,.4,1) var(--dl,0s) both,szwinglow 1.2s calc(var(--dl,0s) + .5s) ease-out both}
 @keyframes szrin{from{opacity:0;transform:translateX(-18px)}}
+@keyframes szwinglow{from{box-shadow:0 0 0 1px #C99A3C,0 0 50px rgba(255,210,110,1)}}
+.szri li.zero{color:#B0A38A}
+.szend.seen .szendin,.szend.seen .szendk,.szend.seen .szres,.szend.seen .szwin{animation:none}
+/* ===== LEMNISCATE（深い夜空・金・数字ごとのネオン） ===== */
+.arena.lmg{--lmbg:#070A1E;--lmink:#EAF0FF;--lmmute:#8E98C8;--lmline:rgba(160,180,255,.18);--lmgold:#FFD35A;--lmcz:"Cinzel",serif;
+  padding:calc(var(--safe-t) + 8px) 10px calc(var(--safe-b) + 16px);color:var(--lmink);overflow-y:auto;overscroll-behavior:contain;gap:8px;
+  background:radial-gradient(90% 50% at 80% 0,rgba(196,107,255,.22),transparent 60%),radial-gradient(80% 50% at 0 100%,rgba(94,200,255,.18),transparent 65%),
+  repeating-linear-gradient(60deg,rgba(255,255,255,.025) 0 1px,transparent 1px 22px),repeating-linear-gradient(-60deg,rgba(255,255,255,.025) 0 1px,transparent 1px 22px),linear-gradient(180deg,#0B1030,#05061A)}
+.lmtop{display:flex;align-items:center;gap:6px;flex:none}
+.lmtop .lminf{width:42px;height:21px;flex:none;filter:drop-shadow(0 0 6px rgba(196,107,255,.7))}
+.lmtop .lminf path{stroke-dasharray:100;animation:lmdash 6s linear infinite}
+@keyframes lmdash{from{stroke-dashoffset:200}to{stroke-dashoffset:0}}
+.lmlogo{font-family:var(--lmcz);font-weight:900;font-size:19px;letter-spacing:.14em;background:linear-gradient(100deg,#9FB4FF 0%,#FFFFFF 40%,#FFD35A 55%,#C46BFF 75%,#9FB4FF 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:lmshine 6s linear infinite;flex:1;white-space:nowrap;overflow:hidden}
+@keyframes lmshine{from{background-position:120% 0}to{background-position:-130% 0}}
+.lmrd{display:flex;align-items:baseline;gap:2px;font-family:var(--lmcz);color:var(--lmgold)}
+.lmrd small{font-size:8.5px;letter-spacing:.1em;color:var(--lmmute)}.lmrd b{font-size:22px;font-weight:900;text-shadow:0 0 10px rgba(255,211,90,.6)}
+.lmbtn{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,211,90,.5);background:rgba(255,255,255,.06);color:var(--lmink);font-size:15px}
+.lmrbar{height:3px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden;flex:none}
+.lmrbar i{display:block;height:100%;background:linear-gradient(90deg,#5EC8FF,#C46BFF,#FF5A7A,#FFD35A);box-shadow:0 0 8px #C46BFF;transition:width .6s}
+/* ボーナス */
+.lmbonus{display:flex;align-items:center;gap:5px;flex:none;padding:6px 8px;border:1px solid rgba(255,211,90,.35);border-radius:8px;background:linear-gradient(90deg,rgba(255,211,90,.12),rgba(255,211,90,.02))}
+.lmbl{font-family:var(--lmcz);font-weight:900;font-size:11px;letter-spacing:.15em;color:var(--lmgold)}
+.lmbm{display:flex;flex-wrap:wrap;gap:4px;margin-left:auto}
+.lmbm i{font-style:normal;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:9px;border:1px solid var(--nc);color:var(--nc);background:rgba(0,0,0,.25)}
+.lmmc{display:inline-grid;place-items:center;width:22px;height:30px;border-radius:4px;border:1.5px solid var(--nc);background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(0,0,0,.3));box-shadow:0 0 8px color-mix(in srgb,var(--nc) 50%,transparent)}
+.lmmc b{font-family:var(--lmcz);font-weight:900;font-size:15px;color:var(--nc)}
+/* 席 */
+.lmseats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;flex:none}
+.lmseats.n4{grid-template-columns:repeat(2,1fr)}
+.lmseat{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 7px 5px;border-radius:8px;border:1px solid var(--lmline);border-left:3px solid var(--pc);background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));color:var(--lmink);text-align:left;min-width:0;line-height:1.2}
+.lmseat>b{font-size:11.5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lmsc{font-family:var(--lmcz);font-weight:900;font-size:20px;color:#fff;text-shadow:0 0 10px rgba(159,180,255,.5)}
+.lmseat small{font-size:9px;color:var(--lmmute)}
+.lmseat.act{border-color:rgba(255,211,90,.8);box-shadow:0 0 0 1px rgba(255,211,90,.6),0 0 18px rgba(255,211,90,.35);animation:lmact 1.6s ease-in-out infinite}
+@keyframes lmact{50%{box-shadow:0 0 0 1px rgba(255,211,90,.9),0 0 26px rgba(255,211,90,.6)}}
+.lmseat.mine{background:linear-gradient(160deg,rgba(196,107,255,.16),rgba(94,200,255,.06))}
+.lmseat.tgt{border-style:dashed;border-color:#FF5A7A;animation:lmact 1s infinite}
+.lmturn{position:absolute;top:-7px;right:6px;font-style:normal;font-family:var(--lmcz);font-weight:900;font-size:8px;letter-spacing:.12em;padding:1px 6px;border-radius:6px;background:var(--lmgold);color:#1A1030}
+.lmsb{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;min-height:14px}
+.lmsb i{font-style:normal;display:inline-grid;place-items:center;min-width:13px;height:14px;padding:0 2px;border-radius:3px;font-family:var(--lmcz);font-weight:900;font-size:9.5px;color:#0B1030;background:var(--nc)}
+.lmsb i.side{transform:rotate(90deg) scale(.9);outline:1px solid #fff}
+.lmsb i.more{background:rgba(255,255,255,.2);color:#fff;font-family:inherit}
+.lmmons{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px}
+.lmplus{position:absolute;right:8px;top:18px;font-style:normal;font-family:var(--lmcz);font-weight:900;font-size:18px;color:var(--lmgold);text-shadow:0 0 10px rgba(255,211,90,.9);animation:lmplus 2.2s cubic-bezier(.2,1.4,.4,1) both;pointer-events:none}
+@keyframes lmplus{0%{opacity:0;transform:translateY(10px) scale(.5)}15%{opacity:1;transform:none}75%{opacity:1}100%{opacity:0;transform:translateY(-16px)}}
+/* スペシャルの紋章（六角形） */
+.lmsp{display:inline-grid;place-items:center;width:20px;height:22px;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:linear-gradient(160deg,#FFE9A8,#C9902C);position:relative}
+.lmsp::before{content:"";position:absolute;inset:1.5px;clip-path:inherit;background:linear-gradient(160deg,#1B1F4A,#0B0E28)}
+.lmsp b{position:relative;font-size:10.5px;font-weight:900;color:#FFE9A8;line-height:1}
+.lmsp.used{opacity:.35}
+.lmsp.xl{width:76px;height:86px}.lmsp.xl b{font-size:38px}
+/* 山札 */
+.lmpiles{display:flex;gap:6px;flex:none;flex-wrap:wrap}
+.lmpiles span{font-size:10.5px;color:var(--lmmute);padding:2px 9px;border-radius:10px;border:1px solid var(--lmline);background:rgba(255,255,255,.04)}
+.lmpiles b{font-family:var(--lmcz);color:#fff}
+.lmpiles .seal{color:#FF9A4A;border-color:#FF9A4A}
+/* 束 */
+.lmmine,.lmsupply{flex:none;display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:10px;border:1px solid var(--lmline);background:rgba(255,255,255,.035)}
+.lmmine h5,.lmsupply h5,.lmsheet h5{margin:0;font-family:var(--lmcz);font-weight:900;font-size:12px;letter-spacing:.12em;color:var(--lmgold);display:flex;flex-direction:column}
+.lmmine h5 small,.lmsupply h5 small{font-family:var(--body);letter-spacing:0;font-weight:500;font-size:10px;color:var(--lmmute)}
+.lmnote{margin:0;font-size:11px;color:var(--lmmute)}
+.lmbuns{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:flex-end}
+.lmbun{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:2px;transition:transform .3s}
+.lmbun .lmbs{position:relative;display:grid;place-items:center;width:34px;height:46px;border-radius:5px;border:1.5px solid var(--nc);background:linear-gradient(160deg,color-mix(in srgb,var(--nc) 30%,#151A40),#0B0E28);box-shadow:0 0 10px color-mix(in srgb,var(--nc) 40%,transparent)}
+.lmbun .lmbs i{position:absolute;inset:0;border-radius:5px;border:1px solid color-mix(in srgb,var(--nc) 60%,transparent);transform:translate(calc(var(--i) * 2px),calc(var(--i) * -2px));z-index:-1;background:#0B0E28}
+.lmbun .lmbs b{font-family:var(--lmcz);font-weight:900;font-size:20px;color:var(--nc);text-shadow:0 0 8px color-mix(in srgb,var(--nc) 70%,transparent)}
+.lmbun em{font-style:normal;font-family:var(--lmcz);font-weight:900;font-size:12px;color:#fff}.lmbun em small{font-size:8px;color:var(--lmmute)}
+.lmx{position:absolute;top:-6px;right:-6px;font-size:9px;font-weight:900;padding:0 4px;border-radius:7px;background:var(--lmgold);color:#1A1030;z-index:1}
+.lmbun.side .lmbs{transform:rotate(90deg);margin:-6px 6px}
+.lmbun.fresh .lmbs{outline:2px dashed #FF5A7A;outline-offset:2px}
+.lmbun.fresh em::after{content:"奪取";margin-left:3px;font-family:var(--body);font-size:8px;color:#FF5A7A}
+.lmbun.fused .lmfb{display:flex;gap:2px}
+.lmbun.fused .lmfb .lmbs{width:26px;height:36px}
+.lmbun.fused .lmfb .lmbs b{font-size:14px}
+.lmbtop{position:absolute;top:-4px;left:50%;transform:translateX(-50%);display:grid;place-items:center;min-width:30px;height:24px;padding:0 4px;border-radius:5px;background:linear-gradient(160deg,#FFE9A8,#C9902C);box-shadow:0 0 12px rgba(255,211,90,.7)}
+.lmbtop b{font-family:var(--lmcz);font-weight:900;font-size:14px;color:#1A1030}
+.lmbun.pick{cursor:pointer}.lmbun.pick .lmbs{animation:lmact 1.2s infinite}
+.lmbun.pick.on{transform:translateY(-6px)}.lmbun.pick.on .lmbs{box-shadow:0 0 0 2px #fff,0 0 18px var(--nc)}
+.lmbuns.sm .lmbun .lmbs{width:24px;height:32px}.lmbuns.sm .lmbun .lmbs b{font-size:13px}.lmbuns.sm .lmbun em{font-size:9.5px}
+/* ガイド・ボタン */
+.lmguide{margin:0;flex:none;font-size:12px;line-height:1.55;padding:7px 10px;border-radius:8px;background:rgba(94,200,255,.08);border-left:3px solid #5EC8FF;color:#D8E2FF}
+.lmguide b{font-family:var(--lmcz);font-size:15px;color:#fff}.lmguide em{font-style:normal;color:var(--lmgold);font-weight:700}
+.lmbtns{display:flex;flex-wrap:wrap;gap:6px;flex:none}
+.lmb{flex:1;min-width:120px;padding:11px 8px;border-radius:10px;border:1px solid rgba(159,180,255,.45);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));color:#fff;font-weight:900;font-size:13.5px;transition:transform .1s}
+.lmb:active{transform:scale(.97)}
+.lmb.go{position:relative;overflow:hidden;border-color:var(--lmgold);background:linear-gradient(180deg,#FFE08A,#E0A23A);color:#1A1030;box-shadow:0 0 16px rgba(255,211,90,.45)}
+.lmb.go::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.6) 50%,transparent 65%) 0 0/250% 100%;animation:lmshine 2.4s linear infinite}
+.lmb:disabled{opacity:.35;box-shadow:none}.lmb:disabled::after{display:none}
+.lmspb{display:flex;flex-wrap:wrap;gap:6px;width:100%}
+.lmb.sp{display:flex;align-items:center;justify-content:center;gap:6px;flex:1;min-width:110px;font-size:12.5px;padding:8px;border-color:rgba(255,211,90,.5);background:linear-gradient(180deg,rgba(255,211,90,.16),rgba(255,211,90,.04))}
+/* 手札 */
+.lmhand{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:7px;flex:none;padding-top:6px}
+.lmhand.wait{opacity:.8}
+.lmc{position:relative;height:80px;border-radius:8px;overflow:hidden;cursor:pointer;border:1.5px solid var(--nc);
+  background:radial-gradient(120% 70% at 50% 0,color-mix(in srgb,var(--nc) 34%,#141A44),#0A0D26 75%);
+  box-shadow:0 3px 8px rgba(0,0,0,.45),0 0 10px color-mix(in srgb,var(--nc) 30%,transparent),inset 0 0 0 3px rgba(10,13,38,.8),inset 0 0 0 4px color-mix(in srgb,var(--nc) 35%,transparent);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:transform .2s cubic-bezier(.2,1.5,.4,1),box-shadow .2s}
+.lmc>b{position:relative;z-index:1;font-family:var(--lmcz);font-weight:900;font-size:30px;line-height:1;color:var(--nc);text-shadow:0 0 12px color-mix(in srgb,var(--nc) 80%,transparent),0 2px 0 rgba(0,0,0,.6)}
+.lmc .lmemb{position:absolute;inset:auto 0 4px;margin:auto;width:30px;height:30px;opacity:.85}
+.lmc>b{margin-bottom:20px}
+.lmcn{position:absolute;top:3px;left:5px;font-style:normal;font-family:var(--lmcz);font-weight:700;font-size:8px;color:color-mix(in srgb,var(--nc) 70%,#fff);opacity:.8;letter-spacing:.02em}
+.lmcn::before{content:"×"}
+.lmup{position:absolute;top:3px;right:4px;font-style:normal;font-size:8.5px;font-weight:900;padding:0 3px;border-radius:4px;background:var(--lmgold);color:#1A1030}
+.lmc::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.35) 48%,transparent 60%) 0 0/260% 100%;opacity:0;pointer-events:none}
+.lmc.sel{transform:translateY(-10px) scale(1.05);box-shadow:0 0 0 2px #fff,0 0 22px var(--nc),0 12px 18px rgba(0,0,0,.5)}
+.lmc.sel::after{opacity:1;animation:lmshine 1.4s linear infinite}
+.lmc.n8{border-color:#FFE9A8;background:radial-gradient(120% 70% at 50% 0,rgba(255,233,168,.35),#1A1030 70%),conic-gradient(from 0deg,#5EC8FF,#C46BFF,#FF5A7A,#FFD35A,#5EC8FF)}
+.lmc.n8>b{background:linear-gradient(180deg,#FFFFFF,#FFD35A);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 8px rgba(255,211,90,.8))}
+/* サプライ */
+.lmsps{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:5px}
+.lmspc{display:flex;align-items:center;gap:5px;padding:5px 6px;border-radius:8px;border:1px solid rgba(255,211,90,.3);background:rgba(255,211,90,.06);color:#fff;text-align:left}
+.lmspc b{font-size:11.5px;flex:1}.lmspc small{font-size:9px;color:var(--lmmute)}
+.lmspc.out{opacity:.35}.lmspc.own{border-color:var(--lmgold);box-shadow:0 0 10px rgba(255,211,90,.35)}
+.lmspr{display:flex;align-items:flex-start;gap:9px;padding:8px 9px;border-radius:9px;border:1px solid rgba(255,211,90,.3);background:linear-gradient(160deg,#151A44,#0B0E28);color:#EAF0FF;text-align:left}
+.lmspr .lmsp{width:30px;height:34px}.lmspr .lmsp b{font-size:15px}
+.lmspr>div{flex:1;min-width:0}.lmspr b{font-size:13.5px}.lmspr p{margin:2px 0 0;font-size:11px;line-height:1.45;color:#B8C3EE}
+.lmspr.used{opacity:.45}.lmspr.pick{cursor:pointer;animation:lmact 1.6s infinite}
+.lmleft{font-size:10px;color:var(--lmgold);white-space:nowrap}
+.lmrsp{display:flex;flex-direction:column;gap:5px}
+.lmlog{list-style:none;margin:0;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid var(--lmline);font-size:10.5px;color:var(--lmmute);line-height:1.55;flex:none}
+.lmloglist{list-style:none;margin:0;padding:0;font-size:12px}.lmloglist li{padding:3px 0;border-bottom:1px dotted #ccd}
+.lmsheet .lmbuns{background:#0B0E28;padding:12px 8px 8px;border-radius:10px}
+.lmsheet .lmbun em{color:#fff}
+.lmsum{font-size:12.5px;margin:0 0 8px}
+/* 選択 */
+.lmask{position:fixed;inset:0;z-index:46;display:grid;place-items:center;padding:16px;background:rgba(3,4,16,.72);backdrop-filter:blur(3px)}
+.lmaskin{width:min(100%,420px);max-height:86vh;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:16px 14px;border-radius:14px;border:1px solid rgba(159,180,255,.4);background:linear-gradient(170deg,#151A44,#080A22);box-shadow:0 0 40px rgba(196,107,255,.35);color:#fff;animation:lmpop .35s cubic-bezier(.2,1.4,.4,1) both}
+.lmaskin.gold{border-color:var(--lmgold);box-shadow:0 0 50px rgba(255,211,90,.4)}
+.lmaskin>b{font-size:14.5px;line-height:1.5;display:flex;flex-direction:column}.lmaskin>b small{font-size:11px;font-weight:500;color:var(--lmmute)}
+@keyframes lmpop{from{opacity:0;transform:scale(.85)}}
+.lmaskc{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.lmpick{display:flex;flex-direction:column;align-items:center;gap:4px;width:74px;background:none;border:0;color:#fff;padding:0}
+.lmpick .lmc{width:64px;height:88px}
+.lmpick small{font-size:10px;color:var(--lmmute)}
+.lmback{display:grid;place-items:center;width:64px;height:88px;border-radius:8px;border:1.5px solid #9FB4FF;background:repeating-linear-gradient(45deg,#141A44 0 6px,#0B0E28 6px 12px)}
+.lmback .lminf{width:46px}
+.lmasq{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:10px;background:rgba(255,255,255,.04)}
+.lmasq>span{font-size:12px;font-weight:700;border-left:3px solid var(--pc);padding-left:6px}
+/* 結果 */
+.lmend{position:fixed;inset:0;z-index:45;overflow-y:auto;padding:calc(var(--safe-t) + 14px) 12px 24px;background:radial-gradient(circle at 50% 20%,rgba(196,107,255,.35),rgba(3,4,16,.92) 60%)}
+.lmendin{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.lmendt{display:flex;flex-direction:column;align-items:center;gap:0;margin-bottom:6px}
+.lmendt .lminf{width:160px;height:80px;filter:drop-shadow(0 0 14px rgba(196,107,255,.9))}
+.lmendt .lminf path{stroke-dasharray:100;stroke-dashoffset:100;animation:lmdraw 1.4s .2s ease forwards}
+@keyframes lmdraw{to{stroke-dashoffset:0}}
+.lmendt b{font-family:var(--lmcz);font-weight:900;font-size:38px;letter-spacing:.25em;background:linear-gradient(180deg,#fff,#FFD35A);-webkit-background-clip:text;background-clip:text;color:transparent;animation:lmpop .8s .6s both}
+.lmendt small{font-size:11px;color:var(--lmmute)}
+.lmres{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;border:1px solid var(--lmline);border-left:4px solid var(--pc);background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));animation:lmrin .55s cubic-bezier(.2,1.3,.4,1) var(--dl,0s) both}
+@keyframes lmrin{from{opacity:0;transform:translateX(-24px) scale(.96)}}
+.lmres>div{flex:1;min-width:0}.lmres>div>b{font-size:14px}
+.lmrk{font-family:var(--lmcz);font-weight:900;font-size:24px;width:30px;text-align:center;color:var(--lmmute)}
+.lmres em{font-style:normal;font-family:var(--lmcz);font-weight:900;font-size:26px}.lmres em small{font-size:10px;color:var(--lmmute)}
+.lmres.win{border-color:var(--lmgold);background:linear-gradient(160deg,rgba(255,211,90,.25),rgba(196,107,255,.12));animation:lmrin .55s cubic-bezier(.2,1.3,.4,1) var(--dl,0s) both,lmwin 1.6s calc(var(--dl,0s) + .5s) ease-out both}
+@keyframes lmwin{from{box-shadow:0 0 0 2px #FFD35A,0 0 70px rgba(255,211,90,1)}to{box-shadow:0 0 0 1px #FFD35A,0 0 22px rgba(255,211,90,.5)}}
+.lmres.win .lmrk{color:var(--lmgold);font-size:32px;text-shadow:0 0 14px rgba(255,211,90,.9)}
+.lmres.win em{color:var(--lmgold);font-size:32px;text-shadow:0 0 14px rgba(255,211,90,.7)}
+.lmend.seen .lmres,.lmend.seen .lmendt b,.lmend.seen .lmendt .lminf path{animation:none;stroke-dashoffset:0}
+/* 大きな演出 */
+.lmbig{position:fixed;inset:0;z-index:48;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;color:#fff;text-align:center;animation:lmbgin var(--ms,1.6s) ease both}
+@keyframes lmbgin{0%{opacity:0}10%,78%{opacity:1}100%{opacity:0}}
+.lmbig small{font-family:var(--lmcz);font-weight:900;font-size:15px;letter-spacing:.4em;color:var(--lmgold);text-shadow:0 0 12px rgba(255,211,90,.8)}
+.lmbig p{margin:8px 0 0;font-size:14px;font-weight:700;text-shadow:0 2px 6px rgba(0,0,0,.8)}
+.lmbig>b{font-family:var(--lmcz);font-weight:900;line-height:1}
+.lmbig.merge{background:radial-gradient(circle,rgba(5,6,26,.55),transparent 60%)}
+.lmbig.merge>b{font-size:min(40vw,170px);color:var(--nc);text-shadow:0 0 30px var(--nc),0 0 70px var(--nc);animation:lmzoom 1.4s cubic-bezier(.2,1.5,.4,1) both}
+.lmmx{font-family:var(--lmcz);font-weight:900;font-size:26px;color:#fff;margin-top:-6px;letter-spacing:.1em}
+@keyframes lmzoom{0%{transform:scale(2.6);opacity:0;filter:blur(8px)}25%{transform:scale(1);opacity:1;filter:blur(0)}80%{transform:scale(1.05)}100%{transform:scale(.9);opacity:0}}
+.lmbig.eight{background:radial-gradient(circle,rgba(40,20,70,.85),rgba(3,4,16,.6) 70%);animation-duration:2.6s}
+.lmbig.eight .lminf{width:min(88vw,380px);height:min(44vw,190px);filter:drop-shadow(0 0 18px #C46BFF) drop-shadow(0 0 36px #FFD35A)}
+.lmbig.eight .lminf path{stroke-dasharray:100;stroke-dashoffset:100;animation:lmdraw 1.1s cubic-bezier(.6,0,.3,1) forwards}
+.lmbig.eight>b{position:absolute;font-size:min(30vw,130px);background:linear-gradient(180deg,#fff,#FFD35A);-webkit-background-clip:text;background-clip:text;color:transparent;animation:lmzoom 2.4s .5s cubic-bezier(.2,1.5,.4,1) both;filter:drop-shadow(0 0 20px rgba(255,211,90,.9))}
+.lmbig.eight small{margin-top:10px;font-size:20px;letter-spacing:.35em}
+.lmbig.steal{background:linear-gradient(160deg,transparent 35%,rgba(255,40,80,.35) 48%,rgba(255,40,80,.35) 52%,transparent 65%),rgba(10,0,10,.45);animation-duration:1.8s}
+.lmbig.steal small{font-size:34px;letter-spacing:.3em;color:#FF5A7A;text-shadow:0 0 20px #FF5A7A;animation:lmslash .5s cubic-bezier(.2,1.4,.4,1) both}
+.lmbig.steal>b{font-size:90px;color:#fff;text-shadow:0 0 20px #FF5A7A;animation:lmzoom 1.7s .1s both}
+@keyframes lmslash{from{transform:translateX(-120%) skewX(-20deg);opacity:0}}
+.lmbig.sp{background:radial-gradient(circle,rgba(60,40,10,.7),rgba(3,4,16,.4) 70%);animation-duration:2s}
+.lmbig.sp .lmsp,.lmbig.sp .lmc{animation:lmzoom 2s cubic-bezier(.2,1.5,.4,1) both;filter:drop-shadow(0 0 20px rgba(255,211,90,.8))}
+.lmbig.sp .lmc{width:80px;height:110px}
+.lmbig .nm{font-family:inherit;font-size:30px;margin-top:8px;text-shadow:0 0 14px rgba(255,211,90,.9)}
+.lmbig>b.nm{font-family:var(--body)}
+.lmbig.score{background:linear-gradient(180deg,transparent 40%,rgba(255,211,90,.18) 50%,transparent 60%)}
+.lmbig.score>b{font-size:48px;letter-spacing:.3em;background:linear-gradient(180deg,#fff,#FFD35A);-webkit-background-clip:text;background-clip:text;color:transparent;animation:lmpop .6s both}
+.lmbig.freeze{background:radial-gradient(circle,rgba(150,220,255,.5),rgba(3,4,16,.6) 70%);animation-duration:1.9s}
+.lmbig.freeze>b{font-size:120px;color:#E8FAFF;text-shadow:0 0 30px #5EC8FF}
+.lmbig.small{justify-content:flex-start;padding-top:30vh}
+.lmbig.bonus{background:radial-gradient(circle,rgba(30,20,60,.9),rgba(3,4,16,.75) 70%);animation-duration:3.2s}
+.lmbr{display:flex;gap:12px;margin-top:14px}
+.lmbr span{animation:lmflip .7s var(--d) cubic-bezier(.2,1.4,.4,1) both}
+.lmbr .lmc{width:70px;height:98px}.lmbr .lmc>b{font-size:38px}
+@keyframes lmflip{from{transform:rotateY(90deg) translateY(30px);opacity:0}}
+.lmburst{position:fixed;left:50%;top:50%;z-index:49;pointer-events:none}
+.lmburst i{position:absolute;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c),0 0 20px var(--c);animation:lmbst 1.1s cubic-bezier(.1,.8,.3,1) forwards}
+.lmburst i:nth-child(3n){width:3px;height:14px;border-radius:2px}
+@keyframes lmbst{from{transform:rotate(var(--a)) translateX(0) scale(1.4);opacity:1}to{transform:rotate(var(--a)) translateX(var(--r)) scale(.2);opacity:0}}
+.lmshake{animation:lmshake .45s both}
+@keyframes lmshake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.gic.lmi{background:#0E1230}
+.lmrules .lmspr{background:#151A44}
+/* ===== LEMNISCATE：卓 ===== */
+.lmtable{position:relative;flex:none;display:flex;flex-direction:column;gap:6px;padding:10px 8px 8px;border-radius:38px 38px 26px 26px;
+  background:radial-gradient(70% 55% at 50% 45%,rgba(120,90,220,.28),transparent 70%),radial-gradient(120% 90% at 50% 40%,#1A1F55,#0A0C2A 75%);
+  box-shadow:0 0 0 2px #8C6420,0 0 0 4px rgba(255,211,90,.55),0 0 0 7px #120F2E,0 0 0 8px rgba(255,211,90,.25),0 14px 30px rgba(0,0,0,.6),inset 0 0 40px rgba(0,0,0,.6)}
+.lmtable::before{content:"";position:absolute;left:50%;top:50%;width:min(80%,320px);aspect-ratio:2/1;transform:translate(-50%,-58%);pointer-events:none;opacity:.08;
+  background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50'%3E%3Cpath d='M50 25C40 8 14 8 14 25s26 17 36 0 36-17 36 0-26 17-36 0z' fill='none' stroke='%23FFD35A' stroke-width='3'/%3E%3C/svg%3E")}
+.lmtrow{display:flex;justify-content:center;gap:6px}
+.lmtrow .lmpod{flex:0 1 46%}
+.lmtmid{display:grid;grid-template-columns:minmax(0,1fr) minmax(104px,.9fr) minmax(0,1fr);gap:6px;align-items:center}
+.lmtable.o1 .lmtmid,.lmtable.o0 .lmtmid{grid-template-columns:0 1fr 0}
+.lmtcol{display:flex;flex-direction:column;gap:6px;min-width:0}
+/* 相手の席 */
+.lmpod{position:relative;display:flex;flex-direction:column;gap:3px;min-width:0;padding:7px 6px 6px;border-radius:12px;color:var(--lmink);text-align:left;line-height:1.15;
+  border:1px solid rgba(159,180,255,.22);border-top:3px solid var(--pc);background:linear-gradient(170deg,rgba(255,255,255,.1),rgba(255,255,255,.03));box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.lmpod.act,.lmme.act{border-color:rgba(255,211,90,.85);box-shadow:0 0 0 1px rgba(255,211,90,.7),0 0 20px rgba(255,211,90,.4);animation:lmact 1.6s ease-in-out infinite}
+.lmpod.tgt{border-style:dashed;border-color:#FF5A7A;animation:lmact 1s infinite}
+.lmph{display:flex;align-items:center;gap:4px;min-width:0}
+.lmph>b{flex:1;min-width:0;font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lmhc{display:flex;align-items:center;gap:2px;flex:none}
+.lmhc>i{font-style:normal;font-family:var(--lmcz);font-weight:900;font-size:11px;color:#C9D4FF}
+.lmfan{position:relative;display:inline-block;width:18px;height:16px}
+.lmfan i{position:absolute;left:5px;top:1px;width:9px;height:13px;border-radius:2px;border:1px solid #9FB4FF;background:linear-gradient(160deg,#2A3170,#101436);transform:rotate(calc(var(--i) * 14deg));transform-origin:50% 120%}
+.lmps{display:flex;align-items:baseline;gap:4px}
+.lmps .lmsc{font-size:19px}.lmps small{font-size:9px;color:var(--lmmute)}
+.lmchips{display:flex;flex-wrap:wrap;gap:3px;min-height:26px;padding:4px;border-radius:8px;background:rgba(0,0,0,.28);box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}
+.lmnone{font-style:normal;font-size:9.5px;color:#5E6898;align-self:center;padding-left:2px}
+.lmchip{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:22px;height:28px;border-radius:4px;font-style:normal;
+  border:1.5px solid var(--nc);background:linear-gradient(160deg,color-mix(in srgb,var(--nc) 38%,#141A44),#0A0D26);box-shadow:0 0 6px color-mix(in srgb,var(--nc) 45%,transparent),2px -2px 0 -1px #0A0D26,2px -2px 0 0 color-mix(in srgb,var(--nc) 50%,transparent)}
+.lmchip b{font-family:var(--lmcz);font-weight:900;font-size:14px;line-height:1;color:var(--nc);text-shadow:0 0 6px color-mix(in srgb,var(--nc) 70%,transparent)}
+.lmchip small{position:absolute;top:-5px;right:-5px;font-size:7.5px;font-weight:900;padding:0 2px;border-radius:5px;background:var(--lmgold);color:#1A1030;line-height:1.3}
+.lmchip u{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);text-decoration:none;font-size:7px;color:#C9D4FF;white-space:nowrap;background:#0A0D26;padding:0 2px;border-radius:3px}
+.lmchip.side{transform:rotate(90deg);margin:0 3px}
+.lmchip.fresh{outline:1.5px dashed #FF5A7A;outline-offset:1px}
+.lmchip.fused{width:auto;min-width:30px;padding:0 4px;border-color:#FFE9A8;background:linear-gradient(160deg,#FFE9A8,#C9902C)}
+.lmchip.fused b{color:#1A1030;text-shadow:none}
+.lmchip.big{width:40px;height:52px}.lmchip.big b{font-size:26px}
+/* 卓の中央 */
+.lmcenter{display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0}
+.lmround{position:relative;width:62px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.lmround svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.lmround circle{fill:none;stroke-width:3}
+.lmround .bg{stroke:rgba(255,255,255,.1)}
+.lmround .fg{stroke:var(--lmgold);stroke-linecap:round;filter:drop-shadow(0 0 3px rgba(255,211,90,.9));transition:stroke-dasharray .8s}
+.lmround small{font-family:var(--lmcz);font-size:6.5px;letter-spacing:.12em;color:var(--lmmute)}
+.lmround b{font-family:var(--lmcz);font-weight:900;font-size:22px;color:#fff;text-shadow:0 0 10px rgba(255,211,90,.6)}
+.lmpl{display:flex;gap:8px;align-items:flex-end}
+.lmdeck,.lmex{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px}
+.lmdeck{width:42px;height:68px}
+.lmbk{position:absolute;left:0;top:0;width:42px;height:58px;border-radius:5px;border:1.5px solid #9FB4FF;display:grid;place-items:center;
+  background:repeating-linear-gradient(45deg,#1B2160 0 5px,#0E1238 5px 10px);box-shadow:0 0 10px rgba(159,180,255,.35)}
+.lmbk.b2{transform:translate(2px,-2px)}.lmbk.b3{transform:translate(4px,-4px);opacity:.6}
+.lmbk .lminf{width:30px;height:15px}
+.lmdeck>b,.lmex>b{position:absolute;bottom:-4px;font-family:var(--lmcz);font-weight:900;font-size:12px;color:#fff;background:#0A0C2A;padding:0 5px;border-radius:7px;border:1px solid rgba(159,180,255,.4)}
+.lmdeck>small,.lmex>small{position:absolute;top:-12px;font-size:8px;color:var(--lmmute);white-space:nowrap}
+.lmex{width:36px;height:68px}
+.lmexc{width:36px;height:50px;margin-top:8px;border-radius:5px;border:1.5px dashed color-mix(in srgb,var(--nc) 70%,transparent);display:grid;place-items:center;background:rgba(0,0,0,.35);transform:rotate(-8deg)}
+.lmexc b{font-family:var(--lmcz);font-weight:900;font-size:18px;color:var(--nc);opacity:.8}
+.lmexc.none{border-color:rgba(159,180,255,.25)}
+.lmdeck.pull .lmbk:last-of-type{animation:lmpull .5s}
+@keyframes lmpull{40%{transform:translateY(-6px) scale(1.06);box-shadow:0 0 22px #9FB4FF}}
+.lmcenter .lmbonus{flex-direction:column;gap:3px;padding:5px 6px;background:rgba(255,211,90,.08)}
+.lmbcs{display:flex;gap:3px}
+.lmcenter .lmbm{margin:0;justify-content:center}
+.lmseal{font-size:9.5px;color:#FF9A4A;border:1px solid #FF9A4A;border-radius:8px;padding:0 6px}
+/* 自分の席（卓の手前） */
+.lmme{position:relative;display:flex;flex-direction:column;gap:5px;padding:8px;border-radius:14px 14px 20px 20px;border:1px solid rgba(159,180,255,.25);border-top:3px solid var(--pc);
+  background:linear-gradient(180deg,rgba(196,107,255,.16),rgba(94,200,255,.05))}
+.lmmeh{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.lmmeh>b{font-size:12.5px}.lmmeh .lmsc{font-size:22px}.lmmeh small{font-size:9.5px;color:var(--lmmute)}
+.lmmeh .lmmons{margin:0 0 0 auto}
+.lmme .lmbuns{padding:6px 4px 2px;border-radius:9px;background:rgba(0,0,0,.25);min-height:40px}
+.lmme .lmnote{padding:6px 2px}
+.lmturn{z-index:2}
+.lmme .lmturn{left:50%;right:auto;transform:translateX(-50%)}
+/* 届いた・当たった */
+.lmpod.hit,.lmme.hit,.lmdeck.hit,.lmex.hit,.lmchip.hit,.lmbun.hit{animation:lmhit .65s ease-out}
+@keyframes lmhit{0%{box-shadow:0 0 0 2px var(--hc),0 0 30px var(--hc)}100%{box-shadow:0 0 0 0 transparent}}
+.lmpod.hurt,.lmme.hurt{animation:lmhurt .65s ease-out}
+@keyframes lmhurt{0%{box-shadow:0 0 0 2px var(--hc),0 0 30px var(--hc);transform:translateX(-4px)}30%{transform:translateX(4px)}60%{transform:translateX(-2px)}100%{transform:none}}
+.lmchip.nb,.lmbun.nb{animation:lmnb .55s var(--nd,0ms) cubic-bezier(.2,1.6,.4,1) both}
+@keyframes lmnb{from{opacity:0;transform:scale(2.2) rotate(-20deg);filter:brightness(2.5)}}
+.lmc.nw{animation:lmnw .55s var(--nd,0ms) cubic-bezier(.2,1.4,.4,1) both}
+@keyframes lmnw{0%{opacity:0;transform:translateY(-30px) rotateY(90deg) scale(.8)}60%{opacity:1;box-shadow:0 0 0 2px #fff,0 0 26px var(--nc)}100%{transform:none}}
+.lmfly{position:fixed;z-index:47;pointer-events:none;will-change:transform}
+.lmflyb{display:grid;place-items:center;width:30px;height:42px;border-radius:4px;border:1.5px solid #9FB4FF;background:repeating-linear-gradient(45deg,#2A3170 0 4px,#121640 4px 8px);box-shadow:0 0 14px rgba(159,180,255,.8),0 0 4px #fff}
+.lmflyb .lminf{width:22px;height:11px}
+.lmfly.dim .lmflyb{border-color:#FF9A4A;box-shadow:0 0 10px rgba(255,154,74,.7)}
+.lmfly.face .lmc{width:44px;height:60px;box-shadow:0 0 18px var(--nc),0 0 6px #fff}
+.lmfly.face .lmc>b{font-size:22px;margin-bottom:14px}.lmfly.face .lmc .lmemb{width:20px;height:20px}
+.lmfly.steal{filter:drop-shadow(0 0 12px #FF5A7A) drop-shadow(0 0 24px #FF5A7A)}
+.lmspark{display:block;width:8px;height:8px;border-radius:50%;background:#FFE9A8;box-shadow:0 0 10px #FFD35A,0 0 20px #FFD35A}
+.lmsp.fl{width:40px;height:46px}.lmsp.fl b{font-size:20px}
+.lmtag{position:fixed;z-index:48;transform:translate(-50%,0);font-style:normal;font-family:var(--lmcz);font-weight:900;font-size:17px;color:var(--c);text-shadow:0 0 10px var(--c),0 2px 4px #000;pointer-events:none;white-space:nowrap;animation:lmtag 1.6s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes lmtag{0%{opacity:0;transform:translate(-50%,12px) scale(.5)}15%{opacity:1;transform:translate(-50%,0) scale(1.15)}30%{transform:translate(-50%,0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-22px)}}
+.lmburst{position:fixed;z-index:49;pointer-events:none;width:0;height:0}
+.lmbig.merge{background:radial-gradient(circle,rgba(5,6,26,.78),rgba(5,6,26,.2) 65%,transparent)}
+.lmbig.merge p,.lmbig.steal p,.lmbig.sp p{background:rgba(5,6,26,.7);padding:3px 12px;border-radius:12px}
+.lmend{background:radial-gradient(circle at 50% 18%,rgba(70,40,130,.97),rgba(4,5,18,.98) 65%)}
+.lmres .lmchips{margin-top:4px;background:rgba(0,0,0,.3)}
+.lmres .lmmons{margin-top:2px}
+.lmtag,.lmfly{z-index:44}
+.lmc.n8>b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#FFF3C8;filter:none;text-shadow:0 0 10px #FFD35A,0 0 22px #C46BFF,0 2px 0 rgba(0,0,0,.6)}
+.lmc.n8{background:radial-gradient(120% 70% at 50% 0,rgba(255,233,168,.45),#1A1030 72%)}
+.lmc.n8::before{content:"";position:absolute;inset:-1px;border-radius:8px;padding:1.5px;background:conic-gradient(from 0deg,#5EC8FF,#C46BFF,#FF5A7A,#FFD35A,#5EC8FF);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.lmchips{gap:7px 3px}.lmchip.side u{display:none}
+.lmend{background:radial-gradient(circle at 50% 18%,rgba(70,40,130,.97),rgba(4,5,18,.98) 65%)}
+.lmres .lmchips{margin-top:4px;background:rgba(0,0,0,.3)}
+.lmres .lmmons{margin-top:2px}
+.lmtag,.lmfly{z-index:44}
+.lmc.n8>b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#FFF3C8;filter:none;text-shadow:0 0 10px #FFD35A,0 0 22px #C46BFF,0 2px 0 rgba(0,0,0,.6)}
+.lmc.n8{background:radial-gradient(120% 70% at 50% 0,rgba(255,233,168,.45),#1A1030 72%)}
+.lmc.n8::before{content:"";position:absolute;inset:-1px;border-radius:8px;padding:1.5px;background:conic-gradient(from 0deg,#5EC8FF,#C46BFF,#FF5A7A,#FFD35A,#5EC8FF);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.lmend{background:radial-gradient(circle at 50% 18%,rgba(70,40,130,.97),rgba(4,5,18,.98) 65%)}
+.lmres .lmchips{margin-top:4px;background:rgba(0,0,0,.3)}
+.lmres .lmmons{margin-top:2px}
+.lmtag,.lmfly{z-index:44}
+.lmc.n8>b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#FFF3C8;filter:none;text-shadow:0 0 10px #FFD35A,0 0 22px #C46BFF,0 2px 0 rgba(0,0,0,.6)}
+.lmc.n8{background:radial-gradient(120% 70% at 50% 0,rgba(255,233,168,.45),#1A1030 72%)}
+.lmc.n8::before{content:"";position:absolute;inset:-1px;border-radius:8px;padding:1.5px;background:conic-gradient(from 0deg,#5EC8FF,#C46BFF,#FF5A7A,#FFD35A,#5EC8FF);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.lmend{background:radial-gradient(circle at 50% 18%,rgba(70,40,130,.97),rgba(4,5,18,.98) 65%)}
+.lmres .lmchips{margin-top:4px;background:rgba(0,0,0,.3)}
+.lmres .lmmons{margin-top:2px}
+.lmtag,.lmfly{z-index:44}
 .szres.win{background:linear-gradient(180deg,#FFFBEA,#FBEBC0);box-shadow:0 0 0 1px #C99A3C,0 0 18px rgba(201,154,60,.55)}
 .szres.win .szpt{background:linear-gradient(180deg,#B88A2E,#6E4C12);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:28px}
-.szwin{display:inline-grid;place-items:center;width:28px;height:28px;font-style:normal;font-size:17px;color:#fff;background:#C8423F;border-radius:4px;box-shadow:inset 0 0 0 2px #C8423F,inset 0 0 0 3px rgba(255,255,255,.7);transform:rotate(-8deg);animation:szstamp2 .5s 1.2s cubic-bezier(.3,1.8,.5,1) both}
+.szwin{display:inline-grid;place-items:center;width:28px;height:28px;font-style:normal;font-size:17px;color:#fff;background:#C8423F;border-radius:4px;box-shadow:inset 0 0 0 2px #C8423F,inset 0 0 0 3px rgba(255,255,255,.7);transform:rotate(-8deg);animation:szstamp2 .5s calc(var(--dl,0s) + .35s) cubic-bezier(.3,1.8,.5,1) both}
 @keyframes szstamp2{from{transform:scale(3) rotate(-25deg);opacity:0}}
 .szrk{width:30px}
 </style>
@@ -4202,6 +4524,7 @@ body.bgpause .hxemb i{animation-play-state:paused}
 <div class="arena neu dmg" id="dmg" hidden></div>
 <div class="arena hxg" id="hxg" hidden></div>
 <div class="arena szg" id="szg" hidden></div>
+<div class="arena lmg" id="lmg" hidden></div>
 <div class="sheet" id="sheet"><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -4214,7 +4537,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v288";
+const APP_VER = "v291";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -4230,7 +4553,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSe
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
 const COLORS = ["#E8B931", "#E2364F", "#3FC1C9", "#8B6CFF", "#5BD67A", "#FF8A3D", "#FF6FB5", "#5A6378"];
-const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games", "kg_games", "dm_games", "hx_games", "sz_games"];
+const TABLES = ["players", "trips", "payments", "drives", "jankens", "app_settings", "tickets", "privileges", "predictions", "neu_games", "cs_games", "sb_games", "sk_games", "co_games", "kg_games", "dm_games", "hx_games", "sz_games", "lm_games"];
 const TRAVEL_KINDS = ["飛行機", "新幹線", "宿", "車"];
 const DEPTS = ["1日目", "2日目", "3日目", ...KINDS, "支払勝率"];
 const KANJI = ["", "一", "二", "三", "四", "五"];
@@ -4261,7 +4584,7 @@ const yen = n => "¥" + Math.round(n || 0).toLocaleString("ja-JP");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "±") + "¥" + Math.abs(Math.round(n)).toLocaleString("ja-JP");
 const todayStr = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); };
 
-const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [], kg_games: [], dm_games: [], hx_games: [], sz_games: [] };
+const db = { players: [], trips: [], payments: [], drives: [], jankens: [], app_settings: [], tickets: [], privileges: [], predictions: [], neu_games: [], cs_games: [], sb_games: [], sk_games: [], co_games: [], kg_games: [], dm_games: [], hx_games: [], sz_games: [], lm_games: [] };
 let tab = "home", listFilter = "all", loaded = false;
 let me = localStorage.getItem("ojk:me") || "";
 
@@ -4311,7 +4634,7 @@ const fail = (e, what) => { console.error(e); toast(`${what}できませんで�
 /* ---------- データ ---------- */
 async function loadTable(t){
   const { data, error } = await sb.from(t).select("*");
-  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games" || t === "dm_games" || t === "hx_games" || t === "sz_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
+  if (error && (t === "neu_games" || t === "cs_games" || t === "sb_games" || t === "sk_games" || t === "co_games" || t === "kg_games" || t === "dm_games" || t === "hx_games" || t === "sz_games" || t === "lm_games")){ db[t] = []; return; }  // NEUのテーブルが未作成でもアプリは動かす
   if (error) throw error;
   db[t] = data || [];
   if (t === "players"){ db.allPlayers = db[t]; applyGuestFilter(); }
@@ -4345,7 +4668,12 @@ function subscribe(){
       if (t === "sz_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
         const nw = JSON.parse(cpuUuidIn(JSON.stringify(payload.new))), cur = (db.sz_games || []).find(x => x.id === nw.id);
         if (cur && (cur.version || 1) >= (nw.version || 1)) return;
-        if (cur){ Object.assign(cur, nw); if (szId === nw.id) drawSz(); else if (!dmId && !hxId && !szId) render(); turnBuzz(); setTimeout(cpuKick, 0); return; }
+        if (cur){ Object.assign(cur, nw); if (szId === nw.id) drawSz(); else if (!dmId && !hxId && !szId && !lmId) render(); turnBuzz(); setTimeout(cpuKick, 0); return; }
+      }
+      if (t === "lm_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
+        const nw = JSON.parse(cpuUuidIn(JSON.stringify(payload.new))), cur = (db.lm_games || []).find(x => x.id === nw.id);
+        if (cur && (cur.version || 1) >= (nw.version || 1)) return;
+        if (cur){ Object.assign(cur, nw); if (lmId === nw.id) drawLm(); else if (!dmId && !hxId && !szId && !lmId) render(); turnBuzz(); setTimeout(cpuKick, 0); return; }
       }
       if (t === "hx_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
         const nw = JSON.parse(cpuUuidIn(JSON.stringify(payload.new))), cur = (db.hx_games || []).find(x => x.id === nw.id);
@@ -4354,7 +4682,7 @@ function subscribe(){
       }
       clearTimeout(reloadTimer[t]);
       reloadTimer[t] = setTimeout(async () => {
-        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); if (t === "hx_games") drawHx(); if (t === "sz_games") drawSz(); turnBuzz(); cpuKick(); } catch (e) { console.error(e); }
+        try { await loadTable(t); if (!dmId) render(); if (t === "jankens") syncArena(); if (t === "neu_games") drawNeu(); if (t === "cs_games") drawCs(); if (t === "sb_games") drawSb(); if (t === "sk_games") drawSk(); if (t === "co_games") drawCo(); if (t === "kg_games") drawKg(); if (t === "dm_games") drawDm(); if (t === "hx_games") drawHx(); if (t === "sz_games") drawSz(); if (t === "lm_games") drawLm(); turnBuzz(); cpuKick(); } catch (e) { console.error(e); }
       }, 120);
     })
     .subscribe();
@@ -4396,7 +4724,7 @@ function render(){
   $("#neuIco").hidden = !loaded || !db.players.length;
   $("#neuIco").disabled = !player(me);
   $("#neuIco").title = player(me) ? "ゲーム一覧" : "自分を選ぶと遊べます";
-  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive() && !kgActive() && !dmActive() && !hxActive() && !szActive();
+  $("#neuIco .gdot").hidden = !neuActive() && !csActive() && !sbActive() && !skActive() && !coActive() && !kgActive() && !dmActive() && !hxActive() && !szActive() && !lmActive();
   const mp = player(me);
   const nlen = mp ? [...mp.name].length : 0, nfs = nlen <= 4 ? 12 : nlen <= 5 ? 11 : nlen <= 6 ? 10 : nlen <= 8 ? 9 : 8;
   $("#meBtn").innerHTML = mp ? `<span class="dot" style="background:${mp.color}"></span><span style="font-size:${nfs}px">${esc(mp.name)}</span>` : `<span class="dot" style="background:var(--line)"></span><span>自分を選ぶ</span>`;
@@ -4442,9 +4770,9 @@ function viewHome(t){
   if (tp) h += `<div class="todaypriv"><span class="pk pico" style="--pi:var(--priv-${tp.kind})"></span><div><span>今日の特権・<b class="who">${esc(pname(tp.player_id))}</b></span><small class="pno">特権${KANJI[tp.kind]}</small><b class="pnm">${PRIVS[tp.kind].name}</b></div></div>`;
   else if (day) h += `<button class="todaypriv ask" data-act="privToday"><span class="pk">？</span><div><b>今日の特権がまだ宣言されていません</b><span>タップして宣言する</span></div></button>`;
   if (lj) h += `<button class="live" data-act="openLive"><div><b>じゃんけん進行中</b><br><span>${esc(lj.label)}（${yen(lj.amount)}）・タップで入る</span></div></button>`;
-  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive(), zg = szActive();
+  const ng = neuActive(), cg = csActive(), bg = sbActive(), kg = skActive(), yg = coActive(), xg = kgActive(), dg = dmActive(), hg = hxActive(), zg = szActive(), lg2 = lmActive();
   const neuBtn = ng ? `<button class="neubar live2" data-act="openNeu">${GAMES[0].icon}<div><b>NEU 対戦中</b><small>${ng.status === "playing" && ng.turn && ng.turn.pid === me ? `<em class="yt">あなたの番！</em>第${ng.round}回戦・合計${ng.total}` : `第${ng.round}回戦・合計${ng.total}・タップで入る`}</small></div></button>` : "";
-  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}${zg && zg.st && zg.st.v === 5 ? `<button class="neubar live2" data-act="openSz">${GAMES[8].icon}<div><b>四季の巡り 対戦中</b><small>${szMyTurn(zg) ? `<em class="yt">あなたの番！</em>` : ""}今の季節：${SZ_SN[szCur(zg.st)]}・タップで入る</small></div></button>` : ""}`;
+  h += `<div class="acts"><button class="big" data-act="newJanken"><span>じゃんけん開始</span><i class="kr k1" aria-hidden="true"></i><i class="kr k2" aria-hidden="true"></i><i class="kr k3" aria-hidden="true"></i></button><button class="sub" data-act="drive">運転</button></div>${neuBtn}${cg ? `<button class="neubar live2" data-act="openCs">${GAMES[1].icon}<div><b>キャントストップ 対戦中</b><small>${cg.turn && cg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}タップで入る</small></div></button>` : ""}${bg ? `<button class="neubar live2" data-act="openSb">${GAMES[2].icon}<div><b>セブンブリッジ 対戦中</b><small>${bg.turn && bg.turn.pid === me ? `<em class="yt">あなたの番！</em>` : ""}第${bg.round}ラウンド・タップで入る</small></div></button>` : ""}${kg ? `<button class="neubar live2" data-act="openSk">${GAMES[3].icon}<div><b>スカル 対戦中</b><small>${skMyTurn(kg) ? `<em class="yt">あなたの番！</em>` : ""}第${kg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${yg ? `<button class="neubar live2" data-act="openCo">${GAMES[4].icon}<div><b>コヨーテ 対戦中</b><small>${coMyTurn(yg) ? `<em class="yt">あなたの番！</em>` : ""}第${yg.round || 1}ラウンド・タップで入る</small></div></button>` : ""}${xg ? `<button class="neubar live2" data-act="openKg">${GAMES[5].icon}<div><b>スカルキング 対戦中</b><small>${kgMyTurn(xg) ? `<em class="yt">${xg.phase === "bid" ? "予想しよう！" : "あなたの番！"}</em>` : ""}第${xg.round}/10ラウンド・タップで入る</small></div></button>` : ""}${dg && dg.st ? `<button class="neubar live2" data-act="openDm">${GAMES[6].icon}<div><b>ドミニオン 対戦中</b><small>${dmMyTurn(dg) ? `<em class="yt">あなたの番！</em>` : ""}第${dg.st.round}ラウンド・タップで入る</small></div></button>` : ""}${hg && hg.st && hg.st.v === 5 ? `<button class="neubar live2" data-act="openHx">${GAMES[7].icon}<div><b>どんぐり戦争 対戦中</b><small>${hxMyTurn(hg) ? `<em class="yt">${hg.st.phase === "pick" ? "出撃準備！" : "あなたの番！"}</em>` : ""}${hg.st.phase === "pick" ? "出撃準備中" : `第${Math.floor(hg.st.ti / hg.st.order.length) + 1}ラウンド`}・タップで入る</small></div></button>` : ""}${zg && zg.st && zg.st.v === 5 ? `<button class="neubar live2" data-act="openSz">${GAMES[8].icon}<div><b>四季の巡り 対戦中</b><small>${szMyTurn(zg) ? `<em class="yt">あなたの番！</em>` : ""}今の季節：${SZ_SN[szCur(zg.st)]}・タップで入る</small></div></button>` : ""}${lg2 && lg2.st && lg2.st.lm ? `<button class="neubar live2" data-act="openLm">${LM_ICON}<div><b>LEMNISCATE 対戦中</b><small>${lmMyTurn(lg2) ? `<em class="yt">あなたの番！</em>` : ""}ラウンド${Math.min(lg2.st.round, LM_ROUNDS)}/${LM_ROUNDS}・タップで入る</small></div></button>` : ""}`;
   if (pending.length){
     const open = localStorage.getItem("ojk:pendOpen") !== "0";
     h += `<button class="h2 red fold" data-act="togglePend" aria-expanded="${open}">未決着<small>${pending.length}件</small><span class="fold-i">${open ? "閉じる" : "開く"}</span></button>`;
@@ -4603,6 +4931,7 @@ function bindView(){
     openDm: () => { const g = dmActive(); if (g) openDm(g.id); },
     openHx: () => { const g = hxActive(); if (g) openHx(g.id); },
     openSz: () => { const g = szActive(); if (g) openSz(g.id); },
+    openLm: () => { const g = lmActive(); if (g) openLm(g.id); },
     completeTrip: () => openCompleteTrip(curTrip()), reopenTrip: () => reopenTrip(curTrip()), listBack: () => { listTripId = null; render(); },
     togglePend: () => { localStorage.setItem("ojk:pendOpen", localStorage.getItem("ojk:pendOpen") === "0" ? "1" : "0"); render(); },
     travelTotal: () => openTravelTotal(curTrip()), resetTickets: () => resetTickets(curTrip()), rouletteReset: () => resetRoulette(curTrip(), rouletteDay),
@@ -6452,8 +6781,8 @@ document.addEventListener("click", e => { const b = e.target.closest && e.target
 
 /* ===================== ゲームのルール（図解） ===================== */
 function openGameRules(k){
-  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール", kg: "スカルキングのルール", dm: "ドミニオンのルール", hx: "どんぐり戦争のルール" , sz: "四季の巡りのルール"}[k];
-  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml, kg: kgRulesHtml, dm: dmRulesHtml, hx: hxRulesHtml, sz: szRulesHtml }[k]();
+  const title = { neu: "NEUのルール", cs: "キャントストップのルール", sb: "セブンブリッジのルール", sk: "スカルのルール", co: "コヨーテのルール", kg: "スカルキングのルール", dm: "ドミニオンのルール", hx: "どんぐり戦争のルール" , sz: "四季の巡りのルール", lm: "LEMNISCATEのルール"}[k];
+  const html = { neu: neuRulesHtml, cs: csRulesHtml, sb: sbRulesHtml, sk: skRulesHtml, co: coRulesHtml, kg: kgRulesHtml, dm: dmRulesHtml, hx: hxRulesHtml, sz: szRulesHtml, lm: lmRulesHtml }[k]();
   let el = $("#artpop");
   if (!el){ el = document.createElement("div"); el.id = "artpop"; el.className = "artpop"; document.body.appendChild(el); el.addEventListener("click", e => { if (e.target === el || e.target.closest("[data-artclose]")) el.classList.remove("on"); }); }
   el.innerHTML = `<div class="artin wide" role="dialog" aria-modal="true"><div class="arth"><b>${title}</b><button class="artx" data-artclose aria-label="閉じる">×</button></div><div class="gr">${html}</div></div>`;
@@ -6642,8 +6971,8 @@ function pickMine(list){ return list.find(g => me && (g.players || []).includes(
 const turnSeen = {};
 function turnBuzz(){
   if (!me) return;
-  [...neuLive(), ...csLive(), ...sbLive(), ...skLive(), ...coLive(), ...kgLive(), ...dmLive(), ...hxLive(), ...szLive()].filter(g => (g.players || []).includes(me)).forEach(g => {
-    const now = g.st && g.st.sz ? szMyTurn(g) : g.st && g.st.hx ? hxMyTurn(g) : g.st ? dmMyTurn(g) : g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
+  [...neuLive(), ...csLive(), ...sbLive(), ...skLive(), ...coLive(), ...kgLive(), ...dmLive(), ...hxLive(), ...szLive(), ...lmLive()].filter(g => (g.players || []).includes(me)).forEach(g => {
+    const now = g.st && g.st.lm ? lmMyTurn(g) : g.st && g.st.sz ? szMyTurn(g) : g.st && g.st.hx ? hxMyTurn(g) : g.st ? dmMyTurn(g) : g.history ? kgMyTurn(g) : g.discs ? skMyTurn(g) : g.lives ? coMyTurn(g) : g.status === "playing" && g.turn && g.turn.pid === me && !(g.claim);
     const prev = turnSeen[g.id];
     turnSeen[g.id] = now;
     if (prev === false && now){ try { if (navigator.vibrate) navigator.vibrate([120, 70, 120, 70, 200]); } catch (e) {} }
@@ -6722,10 +7051,14 @@ const GAMES = [
     get icon(){ return HX_ICON; },
     count: () => hxGames().filter(x => x.status === "finished").length,
     live: () => hxLive(), active: () => hxActive(), start: () => openHxNew(), open: g => openHx(g.id) },
-  { id: "sz", name: "四季の巡り", desc: "【オリジナル】場に積もった季節ほど、その季節の手札が高い点に。季節を進めて札を増やし、能力カード（全100種類・毎試合30種）で自分だけのコンボを。「終」の札がいつ出るかはお楽しみ", players: "3〜5人", time: "20〜30分",
+  { id: "sz", name: "四季の巡り", desc: "【オリジナル】場に積もった季節ほど、その季節の手札が高い点に。季節を進めて札を増やし、能力カード（全100種類・毎試合50種）で自分だけのコンボを。「終」の札がいつ出るかはお楽しみ", players: "3〜5人", time: "20〜30分",
     get icon(){ return SZ_ICON; },
     count: () => szGames().filter(x => x.status === "finished").length,
-    live: () => szLive(), active: () => szActive(), start: () => openSzNew(), open: g => openSz(g.id) }
+    live: () => szLive(), active: () => szActive(), start: () => openSzNew(), open: g => openSz(g.id) },
+  { id: "lm", name: "LEMNISCATE", desc: "【オリジナル】1〜8の数字カードを同じ数字どうしで合成して「束」に。束は毎ラウンド点数を生み、4枚以上の合成で相手の束を奪える。8の合成・5の合成2回でスペシャルカード（20種から毎試合7種）。15ラウンド", players: "3〜6人", time: "30〜45分",
+    get icon(){ return LM_ICON; },
+    count: () => lmGames().filter(x => x.status === "finished").length,
+    live: () => lmLive(), active: () => lmActive(), start: () => openLmNew(), open: g => openLm(g.id) }
 ];
 function openGames(){
   const s = openSheet("ゲーム", `<p class="note">旅先でみんなのスマホを使って対戦できます。</p>
@@ -14134,7 +14467,7 @@ try { ["ojk:pk:games", "ojk:pk:guide"].forEach(k => localStorage.removeItem(k));
 /* ======================= 四季の巡り（仮）：エンジン ======================= */
 /* 季節カードは効果なし（春・夏・秋・冬 各15枚）。手番は ドロー1枚 → 場に出す・購入 → 渡し。
    場に出して季節を進めたら2枚、足止めなら1枚引く。山札が尽きたら終了（除外置き場は戻さない）。
-   能力カード（全100種類から毎試合30種）の山には「終」の札が3枚。3枚目が表に出たら、その人の手番の終わりにゲーム終了。
+   能力カード（全100種類から毎試合50種）の山には「終」の札が3枚。3枚目が表に出たら、その人の手番の終わりにゲーム終了。
    得点：季節ごとに「場にあるその季節の枚数 × 手札のその季節の枚数」。終了時の季節（旬）は2倍、時期外れの季節は0点 */
 const SZ_TITLE = "四季の巡り";
 const SZ_SE = ["spr", "sum", "aut", "win"];
@@ -14144,7 +14477,7 @@ const szNext = s => SZ_SE[(SZ_SE.indexOf(s) + 1) % 4];
 const szPrev = s => SZ_SE[(SZ_SE.indexOf(s) + 3) % 4];
 const SZ_TYPE = { c: "コンボ", e: "終了時", o: "1回" };
 /* ---------- 能力カード（100種類。1試合ではそのうち SZ_ABIL_N 種類を使う） ---------- */
-const SZ_ABIL_N = 30;
+const SZ_ABIL_N = 50;
 /* 季節ごとに作る15系統×4季節＝60種類 */
 const SZ_FAM = {
   dsc: { t: "c", n: "散り", m: "散", c: 2, tx: X => `${X}の札を場に出したら1枚引く` },
@@ -14790,6 +15123,7 @@ function drawSz(){
   el.querySelectorAll("[data-pto]").forEach(b => b.onclick = async () => { const c = szSel || (b.dataset.pto === me ? hand[0] : null); if (!c) return; szSel = null; await szDo(g.id, me, ["pass", c, b.dataset.pto]); });
   if (myAsk){ on("szYes", async () => { await szDo(g.id, me, ["answer", true]); }); on("szNo", async () => { await szDo(g.id, me, ["answer", false]); }); }
   on("szEndClose", closeSz);
+  szEndReveal(g, el);
   on("szAgain", () => { closeSz(); openSzNew(); });
   el.dataset.season = cur; el.classList.toggle("szfin", g.status === "finished");
   szAmbient(g.status === "finished" ? "kin" : cur);
@@ -14798,13 +15132,29 @@ function drawSz(){
 function szAskHtml(st, a){
   return `<div class="szask"><div class="szaskin"><b>${esc(a.title)}</b>${a.card ? `<div class="szlist one">${szCardHtml(a.card)}</div>` : ""}<div class="szbtns"><button class="szb" id="szNo">${esc(a.no || "いいえ")}</button><button class="szb go" id="szYes">${esc(a.yes || "はい")}</button></div></div></div>`;
 }
+/* 結果発表：最下位から1人ずつ、出る瞬間にその段まで自動でスクロール（初回だけ演出） */
+const szEndSeen = {};
+function szEndReveal(g, el){
+  const box = el.querySelector(".szend"); if (!box) return;
+  if (szEndSeen[g.id]){ box.classList.add("seen"); return; }
+  szEndSeen[g.id] = 1;
+  const rows = [...box.querySelectorAll(".szres")];
+  rows.slice().reverse().forEach((r, j) => {
+    const i = rows.length - 1 - j, dl = parseFloat(r.style.getPropertyValue("--dl")) || 0;
+    setTimeout(() => {
+      const b = document.querySelector("#szg .szend"), x = b && b.querySelectorAll(".szres")[i]; if (!x) return;
+      const top = x.offsetTop - (i === 0 ? b.clientHeight * .25 : b.clientHeight * .45);
+      b.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    }, Math.max(0, dl * 1000 - 350));
+  });
+}
 function szEndHtml(g){
   const st = g.st, E = st.end, rank = st.players.slice().sort((a, b) => E.res[b].total - E.res[a].total), best = E.res[rank[0]].total;
   return `<div class="szend"><div class="szendin">
     <div class="szendt"><span class="szendk">${E.why === "owari" ? "終" : "結"}</span>${E.why === "owari" ? "" : "<em>山札が尽きた</em>"}<small>${E.why === "owari" ? `「終」の札が3枚そろい、${szPname(E.by)}の手番で終了。` : ""}最後の季節は${SZ_SN[E.last]}（旬：2倍）、${SZ_SN[szNext(szNext(E.last))]}は時期外れで0点</small></div>
     <div class="szval end">${SZ_SE.map(s => `<div class="szv ${s === E.last ? "shun" : s === szNext(szNext(E.last)) ? "opp" : ""}" style="--sc:${SZ_SC[s]}">${szArt(s, "xs")}<b>${SZ_SN[s]}</b><span>場 <em>${E.dis[s]}</em>${s === E.last ? "<i>旬×2</i>" : s === szNext(szNext(E.last)) ? `<i class="opp">時期外れ</i>` : ""}</span></div>`).join("")}</div>
-    ${rank.map((p, i) => { const r = E.res[p], win = r.total === best; return `<div class="szres ${win ? "win" : ""}" style="--pc:${pcolor(p)}"><div class="szrh"><span class="szrk">${win ? `<i class="szwin">勝</i>` : ["一", "二", "三", "四", "五"][i]}</span><b>${szPname(p)}</b><span class="szmons">${(st.parts[p] || []).map(k => szMon(k)).join("")}</span><span class="szpt">${r.total}<small>点</small></span></div>
-      <ul class="szri">${r.rows.filter(x => x.h).map(x => `<li class="${x.opp ? "opp" : ""}"><span>${SZ_SN[x.s]}　手札${x.h}枚 × 場${x.d}枚${x.opp ? "（時期外れ：0点）" : x.m > 1 ? ` × ${x.s === r.shun ? "旬" : ""}${x.m}倍` : ""}</span><b>${x.pt}</b></li>`).join("")}${r.items.filter(x => x[1] || x[0].includes("季節読み") || x[0].includes("偏愛")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v ? `+${v}` : ""}</b></li>`).join("")}</ul></div>`; }).join("")}
+    ${rank.map((p, i) => { const r = E.res[p], win = r.total === best, dl = (.6 + (rank.length - 1 - i) * .9 + (i === 0 ? .7 : 0)).toFixed(2); return `<div class="szres ${win ? "win" : ""}" style="--pc:${pcolor(p)};--dl:${dl}s"><div class="szrh"><span class="szrk">${win ? `<i class="szwin">勝</i>` : ["一", "二", "三", "四", "五"][i]}</span><b>${szPname(p)}</b><span class="szmons">${(st.parts[p] || []).map(k => szMon(k)).join("")}</span><span class="szpt">${r.total}<small>点</small></span></div>
+      <ul class="szri">${r.rows.map(x => `<li class="${x.opp ? "opp" : ""} ${x.h ? "" : "zero"}"><span>${SZ_SN[x.s]}　手札${x.h}枚 × 場${x.d}枚${x.opp ? "（時期外れ：0点）" : x.m > 1 ? ` × ${x.s === r.shun ? "旬" : ""}${x.m}倍` : ""}</span><b>${x.pt}</b></li>`).join("")}${r.items.filter(x => x[1] || x[0].includes("季節読み") || x[0].includes("偏愛")).map(([n, v]) => `<li><span>${esc(n)}</span><b>${v ? `+${v}` : ""}</b></li>`).join("")}</ul></div>`; }).join("")}
     <div class="szbtns"><button class="szb" id="szEndClose">閉じる</button><button class="szb go" id="szAgain">もう一度遊ぶ</button></div></div></div>`;
 }
 /* 起きたことを短い帯で見せる */
@@ -14870,12 +15220,778 @@ function szRulesHtml(){
   const fam = t => Object.entries(SZ_FAM).filter(([, F]) => F.t === t).map(([f, F]) => `<div class="szpart t-${t}"><span class="szmon t-${t}"><b>${F.m}</b></span><div><small>${SZ_TYPE[t]}・春夏秋冬の4種類・値段${F.c}枚</small><b>〇${F.n}</b><p>${esc(F.tx("〇"))}</p></div></div>`).join("");
   const grp = t => fam(t) + Object.keys(SZ_GEN).filter(k => SZ_GEN[k].t === t).map(k => szPartHtml(k, "", "", true)).join("");
   return `<div class="goal"><b>積もった季節ほど<span class="r">高い点</span>になる</b><small>季節カードは春・夏・秋・冬 各15枚（効果なし）。場に出ている一番上の札の季節が「今の季節」</small></div>
-  <h4>準備</h4><ol><li>季節カードを3枚ずつ配り、山札の一番上を場に置く（最初の季節）</li><li>能力カード100種類からランダムに30種を選び、「終」の札を3枚混ぜて山にする（33枚）。そこから3枚を表向きに並べる（能力カードの場）</li></ol>
+  <h4>準備</h4><ol><li>季節カードを3枚ずつ配り、山札の一番上を場に置く（最初の季節）</li><li>能力カード100種類からランダムに50種を選び、「終」の札を3枚混ぜて山にする（53枚）。そこから3枚を表向きに並べる（能力カードの場）</li></ol>
   <h4>手番</h4><ol><li><b>ドロー</b>：山札から1枚引く（自動）</li><li><b>場に出す・購入</b>：次の季節の札を出すと<b>季節が進んで2枚引く</b>。今の季節の札を出すと<b>足止めで1枚引く</b>。それ以外の季節は出せない。場に出せるのは<b>1手番に1枚だけ</b>。また、能力カードの場から1枚まで買える（書かれた季節カードを手札から払う。払った札は除外置き場へ）</li><li><b>渡し</b>：手札の枚数だけ時計回りに進んだ人に1枚を表向きで渡す（人数で割り切れる枚数や0枚なら渡さない）</li></ol>
   <h4>ゲーム終了</h4><ul><li><b>山札切れ</b>：季節カードの山札が尽きたら終了（除外置き場は戻さない）</li><li><b>終の札</b>：能力カードを補充するときに「終」の札がめくれたら脇に置き、代わりにもう1枚めくる。3枚目の「終」がめくれたら、その人の手番の終わりでゲーム終了</li></ul>
   <h4>得点（最後にまとめて計算）</h4><p>季節ごとに<b>「場にあるその季節の枚数 × 手札のその季節の枚数」</b>。終わったときの季節は<b>旬</b>として2倍。旬からいちばん遠い季節（春と秋、夏と冬）は<b>時期外れ</b>として、その手札は<b>0点</b>（手札の枚数には数える）。これに能力カードの終了時ボーナスを足す。</p>
   <p class="note">例：場に春が4枚、手札に春が3枚なら 4×3＝12点。春が旬なら24点、秋が旬なら春は時期外れで0点。</p>
-  <h4>能力カード（全100種類）</h4><p class="note">毎試合ランダムに30種だけを使う。山から3枚を表向きに並べる。買われたらすぐに山から補充。「〇」は春・夏・秋・冬のどれか（季節ごとに1枚ずつ、値段はその季節中心）。</p><h5>コンボ（手番中に発動）</h5><div class="szpl">${grp("c")}</div><h5>終了時のボーナス</h5><div class="szpl">${grp("e")}</div><h5>1ゲーム1回の能力</h5><div class="szpl">${grp("o")}</div>`;
+  <h4>能力カード（全100種類）</h4><p class="note">毎試合ランダムに50種だけを使う。山から3枚を表向きに並べる。買われたらすぐに山から補充。「〇」は春・夏・秋・冬のどれか（季節ごとに1枚ずつ、値段はその季節中心）。</p><h5>コンボ（手番中に発動）</h5><div class="szpl">${grp("c")}</div><h5>終了時のボーナス</h5><div class="szpl">${grp("e")}</div><h5>1ゲーム1回の能力</h5><div class="szpl">${grp("o")}</div>`;
+}
+
+/* ======================= LEMNISCATE（レムニスケート）：エンジン ======================= */
+/* 1〜8の数字カード。同じ数字を合成して束にし、束の点数を毎ラウンドもらう。15ラウンド。 */
+const LM_TITLE = "LEMNISCATE";
+const LM_CNT = [0, 90, 81, 72, 63, 54, 45, 36, 27];     // 数字ごとの総枚数（計468枚）
+const LM_ROUNDS = 15, LM_HAND = 8, LM_CAP = 10, LM_REFILL = 2, LM_STEAL = 4, LM_SP_PICK = 7, LM_SP_COPY = 3;
+const LM_SP = {
+  amp:    { n: "増幅",     m: "増", tx: "合成で引く枚数＋2" },
+  dbl:    { n: "二連",     m: "連", tx: "1手番に2組目の合成もできる（2組目は1か2の合成だけ）" },
+  wild:   { n: "万能",     m: "万", tx: "手札1枚を好きな数字として合成に使える（8にはできない）" },
+  up:     { n: "昇格",     m: "昇", tx: "1手番に手札2枚まで数字を＋1できる（8は不可）。＋1したカード同士ではペアにできない" },
+  wall:   { n: "防壁",     m: "壁", tx: "自分の束を奪うには、5枚以上の合成が必要" },
+  rev:    { n: "逆襲",     m: "逆", tx: "束を奪われたら、すぐにその相手の束（奪われた数字以下）を1つ奪い返す（1手番に1回）" },
+  raid:   { n: "略奪",     m: "略", tx: "奪える範囲が「合成した数字＋3」まで広がる" },
+  rob:    { n: "強奪",     m: "強", tx: "3枚の合成でも奪取できる" },
+  aim:    { n: "狙い撃ち", m: "狙", tx: "取った時に山札を1枚めくる。その数字の束は自分だけ、さらに＋1倍" },
+  crown:  { n: "王冠",     m: "冠", tx: "自分の8の束は得点2倍" },
+  acc:    { n: "蓄積",     m: "蓄", tx: "ラウンドの得点計算で、自分の束の数×1点を追加" },
+  swap:   { n: "交換",     m: "換", tx: "1手番に1回、相手1人と手札をランダムに1枚交換" },
+  see:    { n: "透視",     m: "視", tx: "ドローの代わりに山札の上3枚を見て1枚を選ぶ（残りは山札の下へ）" },
+  fill:   { n: "補充",     m: "補", tx: "手番の終わりに手札が5枚以下なら、5枚になるまで引く" },
+  seal:   { n: "封印",     m: "封", tx: "自分が合成した数字は、次の自分の番まで他の人が合成できない" },
+  fuse:   { n: "融合",     m: "融", tx: "【1回だけ】自分の束2つを1束にする。数字・点数は合計＋1" },
+  relive: { n: "再起",     m: "再", tx: "ドローの代わりに、除外置き場の一番上を引ける" },
+  freeze: { n: "凍結",     m: "凍", tx: "最終ラウンドだけ使える。相手1人のそのラウンドの得点を0にする" },
+  solo:   { n: "単独",     m: "単", tx: "1枚だけでも合成できる（引く枚数は0・スペシャルはもらえない）" },
+  comeback:{ n: "逆転",    m: "転", tx: "ラウンドの終わりに自分が最下位なら、山札から3枚引く" }
+};
+const LM_SP_KEYS = Object.keys(LM_SP);
+const lmShuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const lmL = (st, m) => { (st._log = st._log || []).push(m); };
+const lmFx = (st, e) => { st.fxn = (st.fxn || 0) + 1; e.n = st.fxn; st.fx = (st.fx || []).concat([e]).slice(-60); };
+const lmNoEmoji = t => String(t).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}️‍]/gu, "");
+const lmNm = p => (typeof pname === "function" ? lmNoEmoji(pname(p)) : p);
+/* 手札のカード：1〜8。昇格したカードは 10＋新しい数字（例：3を昇格→14）で持つ */
+const lmVal = c => c > 10 ? c - 10 : c;
+const lmOrig = c => c > 10 ? c - 11 : c;
+const lmIsUp = c => c > 10;
+const lmHas = (st, p, k) => !!(st.sp[p] && st.sp[p].includes(k));
+const lmMult = (st, p, v) => v >= 1 && v <= 8 ? st.mult[v] + (st.aim[p] === v ? 1 : 0) : 1;
+function lmPts(st, p, b){
+  if (b.parts) return b.parts.reduce((s, x) => s + lmPts(st, p, x), 0) + 1;
+  return b.v * lmMult(st, p, b.v) * (b.v === 8 && lmHas(st, p, "crown") ? 2 : 1);
+}
+const lmRoundPts = (st, p) => st.bun[p].reduce((s, b) => s + (b.side === st.round ? 0 : lmPts(st, p, b)), 0) + (lmHas(st, p, "acc") ? st.bun[p].length : 0);
+const lmBunVal = b => b.v;   // 奪取の判定に使う数字（融合した束は合計＋1）
+const lmNewB = (st, v, n, p) => ({ id: "b" + (st.bseq = (st.bseq || 0) + 1), v, n, by: p, side: 0 });
+
+function lmSetup(players){
+  const deck = lmShuffle(LM_CNT.flatMap((c, v) => Array(c).fill(v)));
+  const hands = {}, bun = {}, sp = {}, c5 = {}, aim = {}, total = {};
+  players.forEach(p => { hands[p] = []; bun[p] = []; sp[p] = []; c5[p] = 0; total[p] = 0; });
+  players.forEach(p => { for (let i = 0; i < LM_HAND; i++) hands[p].push(deck.pop()); });
+  const bonus = [deck.pop(), deck.pop(), deck.pop()];
+  const mult = [0, 1, 1, 1, 1, 1, 1, 1, 1]; bonus.forEach(v => mult[v]++);
+  const picks = lmShuffle(LM_SP_KEYS).slice(0, LM_SP_PICK), supply = {}; picks.forEach(k => supply[k] = LM_SP_COPY);
+  const first = Math.floor(Math.random() * players.length);
+  const order = players.slice(first).concat(players.slice(0, first));
+  const st = { lm: 1, v: 1, players: players.slice(), order, deck, exile: [], hands, bun, sp, c5, aim, total, bonus, mult, supply, picks,
+    round: 1, ti: 0, turn: null, ask: null, seal: null, freeze: null, used: {}, status: "playing", fx: [], fxn: 0, no: 0, last: {}, reshuf: 0 };
+  lmL(st, `ボーナス：${bonus.join("・")}（${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => mult[v] > 1).map(v => `${v}の束×${mult[v]}`).join("、")}）`);
+  lmFx(st, { k: "bonus", b: bonus });
+  lmStartTurn(st);
+  return st;
+}
+function lmDraw(st, p, n){
+  let got = 0;
+  for (let i = 0; i < n; i++){
+    if (!st.deck.length && st.exile.length){ st.deck = lmShuffle(st.exile.map(lmOrig)); st.exile = []; st.reshuf++; lmL(st, "山札が尽きたので、除外置き場を混ぜて新しい山札にした"); lmFx(st, { k: "reshuf" }); }
+    if (!st.deck.length) break;
+    st.hands[p].push(st.deck.pop()); got++;
+  }
+  if (got && st.hands[p]) lmFx(st, { k: "draw", p, c: got });
+  return got;
+}
+const lmCur = st => st.order[st.ti];
+function lmStartTurn(st){
+  const p = lmCur(st);
+  if (st.seal && st.seal.by === p) st.seal = null;
+  st.no++;
+  st.turn = { pid: p, step: "draw", merges: 0, dbl: 0, ups: 0, swap: 0, rev: {}, made: [] };
+  st.last[p] = st.no;
+  const canSee = lmHas(st, p, "see") && st.deck.length + st.exile.length > 0, canRe = lmHas(st, p, "relive") && st.exile.length > 0;
+  if (canSee || canRe){
+    const opts = [];
+    if (canSee){ if (st.deck.length < 3 && st.exile.length){ st.deck = lmShuffle(st.exile.map(lmOrig)).concat(st.deck); st.exile = []; } opts.push(...st.deck.slice(-3).reverse().map((c, i) => ({ src: "see", i, c }))); }
+    else opts.push({ src: "deck" });
+    if (canRe) opts.push({ src: "ex", c: lmOrig(st.exile[st.exile.length - 1]) });
+    st.ask = { pid: p, k: "draw", opts };
+    return;
+  }
+  lmDraw(st, p, 1); st.turn.step = "act";
+}
+function lmDrawPick(st, p, i){
+  const a = st.ask, o = a && a.opts[i]; if (!o) return false;
+  if (o.src === "deck") lmDraw(st, p, 1);
+  else if (o.src === "ex"){ st.hands[p].push(lmOrig(st.exile.pop())); lmL(st, `「再起」${lmNm(p)}：除外置き場から${o.c}を引いた`); lmFx(st, { k: "draw", p, c: 1, src: "ex" }); }
+  else {
+    const top3 = st.deck.splice(-3).reverse();   // [一番上, 2番目, 3番目]
+    const c = top3.splice(o.i, 1)[0]; st.hands[p].push(c);
+    st.deck = top3.reverse().concat(st.deck);      // 残りは山札の下へ
+    lmL(st, `「透視」${lmNm(p)}：山札の上3枚から1枚を選んだ`); lmFx(st, { k: "draw", p, c: 1 });
+  }
+  st.ask = null; st.turn.step = "act"; return true;
+}
+/* 合成できるか：idx は手札の位置。戻り値 {v, k, wild} または null */
+function lmMergeInfo(st, p, idx){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask) return null;
+  const h = st.hands[p]; if (!idx.length || new Set(idx).size !== idx.length || idx.some(i => h[i] === undefined)) return null;
+  if (T.merges >= 1 && !(lmHas(st, p, "dbl") && T.merges === 1)) return null;
+  const cs = idx.map(i => h[i]), vals = cs.map(lmVal);
+  if (cs.filter(lmIsUp).length >= 2) return null;            // ＋1した同士ではペアにできない
+  const cnt = {}; vals.forEach(v => cnt[v] = (cnt[v] || 0) + 1);
+  const ks = Object.keys(cnt).map(Number);
+  let v, wild = false;
+  if (ks.length === 1) v = ks[0];
+  else if (ks.length === 2 && lmHas(st, p, "wild") && Math.min(cnt[ks[0]], cnt[ks[1]]) === 1){
+    // 1枚だけ違う数字を、万能でもう一方の数字として使う（万能で8は作れない）
+    const [a, b] = ks;
+    if (cnt[a] !== cnt[b]) v = cnt[a] > cnt[b] ? a : b;
+    else v = a === 8 ? b : b === 8 ? a : Math.max(a, b);
+    if (v === 8) return null;
+    wild = true;
+  } else return null;
+  const k = cs.length;
+  if (k === 1 && !lmHas(st, p, "solo")) return null;
+  if (T.merges === 1 && !(v === 1 || v === 2)) return null;  // 二連の2組目は1か2だけ
+  if (st.seal && st.seal.by !== p && st.seal.v === v) return null;
+  return { v, k, wild };
+}
+const lmStealNeed = (st, p, q) => lmHas(st, q, "wall") ? 5 : lmHas(st, p, "rob") ? 3 : LM_STEAL;
+function lmStealTargets(st, p, v, k){
+  const range = v + (lmHas(st, p, "raid") ? 3 : 1), out = [];
+  st.players.forEach(q => { if (q === p || k < lmStealNeed(st, p, q)) return; st.bun[q].forEach(b => { if (lmBunVal(b) <= range) out.push({ q, id: b.id }); }); });
+  return out;
+}
+function lmMerge(st, p, idx){
+  const M = lmMergeInfo(st, p, idx); if (!M) return false;
+  const T = st.turn, h = st.hands[p];
+  idx.slice().sort((a, b) => b - a).forEach(i => h.splice(i, 1));
+  const b = lmNewB(st, M.v, M.k, p); st.bun[p].push(b); T.merges++; T.made.push(b.id);
+  const n = M.k === 1 ? 0 : M.v + (lmHas(st, p, "amp") ? 2 : 0);
+  lmFx(st, { k: "merge", p, v: M.v, c: M.k, d: n, wild: M.wild, b: b.id });
+  const got = lmDraw(st, p, n);
+  lmL(st, `${lmNm(p)}が${M.v}を${M.k}枚合成${M.wild ? "（万能）" : ""}して束に。${got}枚引いた`);
+  if (lmHas(st, p, "seal")){ st.seal = { v: M.v, by: p }; lmL(st, `「封印」${lmNm(p)}：次の番まで${M.v}は合成できない`); }
+  let sp = 0;
+  if (M.k >= 2){
+    if (M.v === 8) sp++;
+    if (M.v === 5){ st.c5[p]++; if (st.c5[p] % 2 === 0) sp++; }
+  }
+  T.pendSp = (T.pendSp || 0) + sp;
+  const tg = lmStealTargets(st, p, M.v, M.k);
+  if (tg.length) st.ask = { pid: p, k: "steal", v: M.v, tg };
+  else lmNextAsk(st, p);
+  return true;
+}
+function lmNextAsk(st, p){
+  const T = st.turn;
+  while (T.pendSp > 0){
+    const can = st.picks.filter(k => st.supply[k] > 0 && !lmHas(st, p, k));
+    if (!can.length){ lmL(st, `${lmNm(p)}：もらえるスペシャルが残っていない`); T.pendSp = 0; break; }
+    st.ask = { pid: p, k: "sp", can }; return;
+  }
+  st.ask = null;
+}
+function lmSteal(st, p, id){
+  const a = st.ask; if (!a || a.k !== "steal" || a.pid !== p) return false;
+  if (id == null){ st.ask = null; lmNextAsk(st, p); return true; }
+  const t = a.tg.find(x => x.id === id); if (!t) return false;
+  const arr = st.bun[t.q], i = arr.findIndex(b => b.id === id); if (i < 0) return false;
+  const b = arr.splice(i, 1)[0]; b.side = st.round; st.bun[p].push(b);
+  lmL(st, `${lmNm(p)}が${lmNm(t.q)}の${b.v}の束を奪った（このラウンドは得点なし）`);
+  lmFx(st, { k: "steal", p, q: t.q, v: b.v, b: b.id });
+  st.ask = null;
+  // 逆襲：奪われた人がすぐ奪い返す
+  const q = t.q;
+  if (lmHas(st, q, "rev") && !st.turn.rev[q]){
+    const back = st.bun[p].filter(x => x.id !== b.id && lmBunVal(x) <= b.v).sort((x, y) => lmPts(st, q, y) - lmPts(st, q, x))[0];
+    if (back){
+      st.turn.rev[q] = 1; st.bun[p].splice(st.bun[p].indexOf(back), 1); back.side = st.round; st.bun[q].push(back);
+      lmL(st, `「逆襲」${lmNm(q)}：${lmNm(p)}の${back.v}の束を奪い返した`); lmFx(st, { k: "steal", p: q, q: p, v: back.v, rev: 1, b: back.id });
+    }
+  }
+  lmNextAsk(st, p); return true;
+}
+function lmPickSp(st, p, k){
+  const a = st.ask; if (!a || a.k !== "sp" || a.pid !== p) return false;
+  if (k != null){
+    if (!a.can.includes(k) || !(st.supply[k] > 0)) return false;
+    st.supply[k]--; st.sp[p].push(k);
+    lmL(st, `${lmNm(p)}がスペシャル「${LM_SP[k].n}」を獲得`); lmFx(st, { k: "getsp", p, s: k });
+    if (k === "aim"){
+      if (!st.deck.length && st.exile.length){ st.deck = lmShuffle(st.exile.map(lmOrig)); st.exile = []; }
+      const c = st.deck.pop();
+      if (c){ st.aim[p] = c; st.exile.push(c); lmFx(st, { k: "disc", p: "_deck", c: 1 }); lmL(st, `「狙い撃ち」${lmNm(p)}：めくれたのは${c}。${lmNm(p)}の${c}の束は＋1倍`); lmFx(st, { k: "aim", p, v: c }); }
+    }
+  }
+  st.turn.pendSp = Math.max(0, (st.turn.pendSp || 1) - 1);
+  st.ask = null; lmNextAsk(st, p); return true;
+}
+/* 昇格：手札1枚を＋1 */
+function lmUp(st, p, i){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmHas(st, p, "up") || T.ups >= 2) return false;
+  const c = st.hands[p][i]; if (c === undefined || lmIsUp(c) || lmVal(c) >= 8) return false;
+  st.hands[p][i] = 10 + c + 1; T.ups++;
+  lmL(st, `「昇格」${lmNm(p)}：手札の${c}を${c + 1}にした`); lmFx(st, { k: "sp", p, s: "up" }); return true;
+}
+function lmSwap(st, p, q){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmHas(st, p, "swap") || T.swap || q === p || !st.players.includes(q)) return false;
+  const a = st.hands[p], b = st.hands[q]; if (!a.length || !b.length) return false;
+  const i = Math.floor(Math.random() * a.length), j = Math.floor(Math.random() * b.length);
+  const x = a[i]; a[i] = b[j]; b[j] = x; T.swap = 1;
+  lmL(st, `「交換」${lmNm(p)}が${lmNm(q)}と手札を1枚交換した`); lmFx(st, { k: "swap", p, q }); return true;
+}
+function lmFuse(st, p, id1, id2){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmHas(st, p, "fuse") || st.used[p + ":fuse"] || id1 === id2) return false;
+  const arr = st.bun[p], a = arr.find(b => b.id === id1), b = arr.find(x => x.id === id2); if (!a || !b) return false;
+  const nb = { id: "b" + (st.bseq = (st.bseq || 0) + 1), v: a.v + b.v + 1, n: a.n + b.n, by: p, side: a.side === st.round || b.side === st.round ? st.round : a.side || b.side ? -1 : 0, parts: [a, b] };
+  arr.splice(arr.indexOf(a), 1); arr.splice(arr.indexOf(b), 1); arr.push(nb); st.used[p + ":fuse"] = 1;
+  lmL(st, `「融合」${lmNm(p)}：${a.v}と${b.v}の束を合体（${nb.v}の束）`); lmFx(st, { k: "fuse", p, v: nb.v, b: nb.id }); return true;
+}
+function lmFreeze(st, p, q){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmHas(st, p, "freeze") || st.round !== LM_ROUNDS || st.used[p + ":freeze"] || q === p || !st.players.includes(q)) return false;
+  st.freeze = (st.freeze || []).concat([q]); st.used[p + ":freeze"] = 1;
+  lmL(st, `「凍結」${lmNm(p)}：${lmNm(q)}の最終ラウンドの得点を0に`); lmFx(st, { k: "freeze", p, q }); return true;
+}
+/* 手番の終わり：disc は捨てる手札の位置（10枚を超えた分） */
+function lmEndTurn(st, p, disc = []){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask) return false;
+  const h = st.hands[p], over = Math.max(0, h.length - LM_CAP);
+  if (disc.length !== over || new Set(disc).size !== disc.length || disc.some(i => h[i] === undefined)) return false;
+  if (over){ disc.slice().sort((a, b) => b - a).forEach(i => st.exile.push(h.splice(i, 1)[0])); lmL(st, `${lmNm(p)}は手札が10枚を超えたので${over}枚捨てた`); lmFx(st, { k: "disc", p, c: over }); }
+  if (h.length <= LM_REFILL){ const nd = h.length; st.exile.push(...h.splice(0)); if (nd) lmFx(st, { k: "disc", p, c: nd }); lmFx(st, { k: "refill", p }); const g = lmDraw(st, p, LM_HAND); lmL(st, `${lmNm(p)}は手札が2枚以下になったので捨てて${g}枚引き直した`); }
+  else if (lmHas(st, p, "fill") && h.length <= 5){ const g = lmDraw(st, p, 5 - h.length); if (g){ lmL(st, `「補充」${lmNm(p)}：${g}枚引いた`); lmFx(st, { k: "sp", p, s: "fill" }); } }
+  st.turn = null; st.ti++;
+  if (st.ti >= st.order.length){ lmScoreRound(st); if (st.status !== "playing") return true; st.ti = 0; st.round++; }
+  lmStartTurn(st); return true;
+}
+function lmScoreRound(st){
+  const got = {};
+  st.players.forEach(p => { got[p] = (st.freeze || []).includes(p) && st.round === LM_ROUNDS ? 0 : lmRoundPts(st, p); st.total[p] += got[p]; });
+  st.players.forEach(p => st.bun[p].forEach(b => { if (b.side === st.round) b.side = -1; }));   // 横向き（-1 は以後も横向き表示、得点はもらえる）
+  lmL(st, `第${st.round}ラウンドの得点：${st.players.map(p => `${lmNm(p)} +${got[p]}`).join("、")}`);
+  lmFx(st, { k: "score", r: st.round, got });
+  st.lastGot = got;
+  if (st.round >= LM_ROUNDS){ lmEnd(st); return; }
+  const lo = Math.min(...st.players.map(p => st.total[p]));
+  st.players.forEach(p => { if (lmHas(st, p, "comeback") && st.total[p] === lo){ const g = lmDraw(st, p, 3); if (g){ lmL(st, `「逆転」${lmNm(p)}：最下位なので${g}枚引いた`); lmFx(st, { k: "sp", p, s: "comeback" }); } } });
+}
+function lmEnd(st){
+  st.status = "finished"; st.turn = null; st.ask = null;
+  const rank = st.players.slice().sort((a, b) => st.total[b] - st.total[a]);
+  st.end = { rank, total: { ...st.total } };
+  lmL(st, `ゲーム終了。1位は${lmNm(rank[0])}（${st.total[rank[0]]}点）`);
+  lmFx(st, { k: "end" });
+}
+function lmApply(st, p, mv){
+  if (st.status !== "playing") return false;
+  const [k, a, b] = mv;
+  if (st.ask && st.ask.pid === p){
+    if (k === "draw") return lmDrawPick(st, p, a);
+    if (k === "steal") return lmSteal(st, p, a);
+    if (k === "sp") return lmPickSp(st, p, a);
+    return false;
+  }
+  if (k === "merge") return lmMerge(st, p, a);
+  if (k === "up") return lmUp(st, p, a);
+  if (k === "swap") return lmSwap(st, p, a);
+  if (k === "fuse") return lmFuse(st, p, a, b);
+  if (k === "freeze") return lmFreeze(st, p, a);
+  if (k === "end") return lmEndTurn(st, p, a || []);
+  return false;
+}
+/* ---------- CPU ---------- */
+const LM_SP_PREF = ["amp", "crown", "rob", "raid", "dbl", "wild", "acc", "aim", "wall", "rev", "fill", "up", "see", "relive", "seal", "solo", "comeback", "fuse", "freeze", "swap"];
+function lmCpuStep(st, p){
+  const a = st.ask;
+  if (a && a.pid === p){
+    if (a.k === "draw"){
+      const h = st.hands[p].map(lmVal), cnt = {}; h.forEach(v => cnt[v] = (cnt[v] || 0) + 1);
+      let best = 0, bv = -1; a.opts.forEach((o, i) => { const v = o.c == null ? 0 : (cnt[o.c] || 0) * 10 + o.c * lmMult(st, p, o.c); if (v > bv){ bv = v; best = i; } });
+      return ["draw", best];
+    }
+    if (a.k === "steal"){ const t = a.tg.slice().sort((x, y) => { const bx = st.bun[x.q].find(b => b.id === x.id), by = st.bun[y.q].find(b => b.id === y.id); return lmPts(st, y.q, by) - lmPts(st, x.q, bx) || st.total[y.q] - st.total[x.q]; })[0]; return ["steal", t.id]; }
+    if (a.k === "sp"){ const k = LM_SP_PREF.find(x => a.can.includes(x)) || a.can[0]; return ["sp", k]; }
+    return null;
+  }
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act") return null;
+  const h = st.hands[p];
+  // 凍結（最終ラウンド・まだ手番が残っている首位を狙う → 首位なら誰でも）
+  if (lmHas(st, p, "freeze") && st.round === LM_ROUNDS && !st.used[p + ":freeze"]){ const q = st.players.filter(x => x !== p).sort((x, y) => (st.total[y] + lmRoundPts(st, y)) - (st.total[x] + lmRoundPts(st, x)))[0]; if (q) return ["freeze", q]; }
+  // 融合：後半に、奪われやすい小さい束2つをまとめる
+  if (lmHas(st, p, "fuse") && !st.used[p + ":fuse"] && st.round >= 8 && st.bun[p].length >= 3){ const bs = st.bun[p].filter(b => b.side !== st.round).slice().sort((x, y) => lmPts(st, p, y) - lmPts(st, p, x)); if (bs.length >= 2) return ["fuse", bs[0].id, bs[1].id]; }
+  if (lmHas(st, p, "swap") && !T.swap && T.merges === 0 && Math.random() < .3){ const q = st.players.filter(x => x !== p && st.hands[x].length)[0]; if (q) return ["swap", q]; }
+  // 昇格：1枚だけの数字を＋1すると、ペアになる／より大きい組になる
+  if (lmHas(st, p, "up") && T.ups < 2 && T.merges === 0){
+    const cnt = {}; h.forEach(c => { if (!lmIsUp(c)) cnt[lmVal(c)] = (cnt[lmVal(c)] || 0) + 1; });
+    for (let v = 7; v >= 1; v--){ if (cnt[v] === 1 && (cnt[v + 1] || 0) >= 1 && !h.some(c => lmIsUp(c) && lmVal(c) === v + 1)){ const i = h.findIndex(c => c === v); if (i >= 0) return ["up", i]; } }
+  }
+  // 合成：いちばん価値の高い組
+  const can = T.merges === 0 || (lmHas(st, p, "dbl") && T.merges === 1);
+  if (can){
+    const byV = {}; h.forEach((c, i) => { const v = lmVal(c); (byV[v] = byV[v] || []).push(i); });
+    let best = null, bv = -1e9;
+    Object.keys(byV).map(Number).forEach(v => {
+      let idx = byV[v].slice(); const ups = idx.filter(i => lmIsUp(h[i])); if (ups.length > 1) idx = idx.filter(i => !lmIsUp(h[i])).concat([ups[0]]);
+      const tryK = ks => ks.forEach(k => { if (k > idx.length) return; const use = idx.slice(0, k); const M = lmMergeInfo(st, p, use); if (!M) return;
+        const tg = lmStealTargets(st, p, M.v, M.k); let val = M.v * lmMult(st, p, M.v) * 1.5 + (M.k === 1 ? -M.v : M.v * .5) + (M.v === 8 && M.k >= 2 ? 8 : 0) + (M.v === 5 && M.k >= 2 && st.c5[p] % 2 === 1 ? 6 : 0) - (k - 2) * .8;
+        if (tg.length){ const bp = Math.max(...tg.map(t => lmPts(st, t.q, st.bun[t.q].find(b => b.id === t.id)))); val += bp * 2.5; }
+        if (val > bv){ bv = val; best = use; } });
+      const need = Math.min(...st.players.filter(q => q !== p).map(q => lmStealNeed(st, p, q)));
+      tryK([2, need, idx.length >= need + 1 && lmHas(st, p, "wall") ? need + 1 : 0, 1].filter(Boolean));
+    });
+    if (!best && lmHas(st, p, "wild")){ // 万能：1枚ずつの数字2枚を組にする
+      const singles = Object.keys(byV).map(Number).filter(v => v < 8).sort((x, y) => y - x);
+      if (singles.length >= 2){ const use = [byV[singles[0]][0], byV[singles[1]][0]]; if (lmMergeInfo(st, p, use)) best = use; }
+    }
+    if (best) return ["merge", best];
+  }
+  // 終わり：超えた分は、ペアにならない小さい数字から捨てる
+  const over = Math.max(0, h.length - LM_CAP);
+  const cnt = {}; h.forEach(c => cnt[lmVal(c)] = (cnt[lmVal(c)] || 0) + 1);
+  const order = h.map((c, i) => i).sort((i, j) => ((cnt[lmVal(h[i])] >= 2) - (cnt[lmVal(h[j])] >= 2)) || lmVal(h[i]) - lmVal(h[j]));
+  return ["end", order.slice(0, over)];
+}
+
+/* ======================= LEMNISCATE：画面 ======================= */
+const lmGames = () => db.lm_games || [];
+const lmLive = () => lmGames().filter(g => g.status === "playing" && g.st && g.st.lm).sort((a, b) => b.created_at.localeCompare(a.created_at));
+const lmActive = () => pickMine(lmLive());
+const lmById = id => lmGames().find(g => g.id === id);
+const lmActor = st => st.ask ? st.ask.pid : st.turn ? st.turn.pid : null;
+function lmMyTurn(g){ const st = g && g.st; return !!(st && st.lm && g.status === "playing" && me && lmActor(st) === me); }
+async function lmCommit(id, fn){
+  for (let tries = 0; tries < 6; tries++){
+    const g = lmById(id); if (!g || g.status !== "playing") return false;
+    const st = JSON.parse(JSON.stringify(g.st)); st._log = [];
+    const r = fn(st, g); if (!r) return false;
+    const lines = st._log; delete st._log;
+    const body = { st, version: (g.version || 1) + 1, updated_at: new Date().toISOString() };
+    if (st.status !== "playing") body.status = "finished";
+    if (lines.length){ const lg = (g.log || []).slice(), now = Date.now(); lines.forEach((m, i) => lg.push({ t: new Date(now + i).toISOString(), m })); body.log = lg.slice(-100); }
+    let data, error;
+    try { ({ data, error } = await sb.from("lm_games").update(body).eq("id", id).eq("version", g.version || 1).select()); } catch (e) { error = e; }
+    if (error && dmNetErr(error) && tries < 5){ await new Promise(r2 => setTimeout(r2, 600 * (tries + 1))); await loadTable("lm_games"); continue; }
+    if (error){ fail(error, "保存"); return false; }
+    if (data && data.length){
+      const before = lmActor(g.st);
+      Object.assign(g, data[0]); drawLm();
+      const nx = lmActor(st); if (nx && nx !== before && nx !== me && !isCpu(nx)) pushCall({ type: "game_turn", game: LM_TITLE, to: nx });
+      return true;
+    }
+    await loadTable("lm_games");
+  }
+  drawLm(); toast("混み合っています。もう一度タップしてください", 2000); return false;
+}
+const lmDo = (id, p, mv) => lmCommit(id, st => lmApply(st, p, mv));
+CPU_AI.lm_games = g => {
+  const st = g.st; if (!st || !st.lm || g.status !== "playing") return null;
+  const p = lmActor(st); if (!isCpu(p)) return null;
+  const mv = lmCpuStep(st, p); if (!mv) return null;
+  const base = mv[0] === "end" ? 900 : mv[0] === "merge" ? 1400 : 1100;
+  const wait = Math.max(base, (lmAnimUntil || 0) - Date.now() + 350);
+  return { wait, run: () => lmDo(g.id, p, mv) };
+};
+
+/* ---------- 絵：数字ごとの紋章（1は円、2は対の点、3〜8は正多角形。8は∞入り） ---------- */
+const LM_COL = [null, "#5EC8FF", "#3FE0B0", "#A8E05A", "#FFD35A", "#FF9A4A", "#FF5A7A", "#C46BFF", "#FFE9A8"];
+function lmEmblem(v){
+  const c = LM_COL[v], R = 15, cx = 20, cy = 20;
+  if (v === 1) return `<circle cx="20" cy="20" r="13" fill="none" stroke="${c}" stroke-width="1.6"/><circle cx="20" cy="20" r="4.5" fill="${c}"/>`;
+  if (v === 2) return `<circle cx="20" cy="20" r="14" fill="none" stroke="${c}" stroke-width=".8" opacity=".6"/><line x1="9" y1="31" x2="31" y2="9" stroke="${c}" stroke-width="1.4"/><circle cx="12" cy="28" r="4" fill="${c}"/><circle cx="28" cy="12" r="4" fill="${c}"/>`;
+  const pts = Array.from({ length: v }, (_, i) => { const a = (-90 + i * 360 / v) * Math.PI / 180; return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; });
+  const poly = pts.map(p => p.map(x => x.toFixed(1)).join(",")).join(" ");
+  const inner = pts.map(p => [cx + (p[0] - cx) * .55, cy + (p[1] - cy) * .55]).map(p => p.map(x => x.toFixed(1)).join(",")).join(" ");
+  const dots = pts.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="1.9" fill="${c}"/>`).join("");
+  const core = v === 8 ? `<path d="M13 20c0-3 4.5-3 7 0s7 3 7 0-4.5-3-7 0-7 3-7 0z" fill="none" stroke="${c}" stroke-width="1.6"/>` : `<polygon points="${inner}" fill="${c}" opacity=".22"/>`;
+  return `<polygon points="${poly}" fill="none" stroke="${c}" stroke-width="1.4"/>${core}${dots}`;
+}
+const lmEmb = (v, cls = "") => `<svg class="lmemb ${cls}" viewBox="0 0 40 40" aria-hidden="true">${lmEmblem(v)}</svg>`;
+const LM_INF = `<svg class="lminf" viewBox="0 0 100 50" aria-hidden="true"><defs><linearGradient id="lmgr" x1="0" x2="1"><stop offset="0" stop-color="#5EC8FF"/><stop offset=".35" stop-color="#C46BFF"/><stop offset=".7" stop-color="#FF5A7A"/><stop offset="1" stop-color="#FFD35A"/></linearGradient></defs><path d="M50 25C40 8 14 8 14 25s26 17 36 0 36-17 36 0-26 17-36 0z" fill="none" stroke="url(#lmgr)" stroke-width="6" stroke-linecap="round" pathLength="100"/></svg>`;
+const LM_ICON = `<span class="gic lmi"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lmig" x1="0" x2="1"><stop offset="0" stop-color="#5EC8FF"/><stop offset=".5" stop-color="#C46BFF"/><stop offset="1" stop-color="#FFD35A"/></linearGradient></defs><rect x="3" y="3" width="58" height="58" rx="12" fill="#0E1230" stroke="#FFD35A" stroke-width="2"/><path d="M32 32C26 22 12 22 12 32s14 10 20 0 20-10 20 0-14 10-20 0z" fill="none" stroke="url(#lmig)" stroke-width="5" stroke-linecap="round"/><text x="32" y="56" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="9" fill="#FFE9A8">8</text></svg></span>`;
+const lmCard = (c, cls = "", data = "") => { const v = lmVal(c); return `<div class="lmc n${v} ${lmIsUp(c) ? "up" : ""} ${cls}" style="--nc:${LM_COL[v]}" ${data}><i class="lmcn">${LM_CNT[v]}</i>${lmIsUp(c) ? `<i class="lmup">＋1</i>` : ""}<b>${v}</b>${lmEmb(v)}</div>`; };
+const lmMiniCard = v => `<span class="lmmc n${v}" style="--nc:${LM_COL[v]}"><b>${v}</b></span>`;
+const lmSpBadge = (k, cls = "") => `<span class="lmsp ${cls}" title="${LM_SP[k].n}"><b>${LM_SP[k].m}</b></span>`;
+const lmPname = p => esc(lmNm(p));
+function lmBunHtml(st, p, b, cls = "", data = "", sty = ""){
+  const pts = lmPts(st, p, b), side = b.side ? "side" : "", fresh = b.side === st.round ? "fresh" : "";
+  if (b.parts){
+    return `<div class="lmbun fused ${side} ${fresh} ${cls}" style="${sty}" ${data}><div class="lmfb">${b.parts.map(x => `<span class="lmbs n${x.v}" style="--nc:${LM_COL[x.v] || "#fff"}"><b>${x.v}</b></span>`).join("")}</div><span class="lmbtop"><b>${b.v}</b></span><em>${pts}<small>点</small></em></div>`;
+  }
+  const m = lmMult(st, p, b.v), cr = b.v === 8 && lmHas(st, p, "crown");
+  return `<div class="lmbun n${b.v} ${side} ${fresh} ${cls}" style="--nc:${LM_COL[b.v]};${sty}" ${data}><span class="lmbs"><b>${b.v}</b>${Array.from({ length: Math.min(b.n, 6) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>${m > 1 || cr ? `<small class="lmx">×${m * (cr ? 2 : 1)}</small>` : ""}<em>${pts}<small>点</small></em></div>`;
+}
+
+let lmId = null, lmSel = [], lmMode = "normal", lmSeenFx = {}, lmFuseSel = [];
+function openLm(id){ const g0 = lmById(id); lmId = id; lmSel = []; lmMode = "normal"; lmFuseSel = []; if (g0 && g0.st) lmSeenFx[id] = Math.max(0, (g0.st.fxn || 0) - (g0.st.no <= 1 ? 3 : 0)); $("#lmg").hidden = false; document.body.style.overflow = "hidden"; drawLm(); }
+function closeLm(){ lmId = null; $("#lmg").hidden = true; document.body.style.overflow = ""; render(); }
+function lmMenu(g){
+  const s = openSheet("LEMNISCATEのメニュー", `<div class="menu"><button data-x="rule">ルールを見る<span></span></button><button data-x="log">これまでの流れ<span></span></button><button data-x="abort">この対戦をやめる<span></span></button></div>`);
+  s.querySelector('[data-x="rule"]').onclick = () => openGameRules("lm");
+  s.querySelector('[data-x="log"]').onclick = () => openSheet("これまでの流れ", `<ul class="lmloglist">${(g.log || []).slice().reverse().map(x => `<li>${esc(x.m)}</li>`).join("")}</ul>`);
+  s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); const { error } = await sb.from("lm_games").update({ status: "aborted", version: (g.version || 1) + 1 }).eq("id", g.id); if (error){ fail(error, "保存"); return; } await loadTable("lm_games"); closeLm(); };
+}
+const lmSpRow = (k, cls = "", data = "", extra = "") => `<div class="lmspr ${cls}" ${data}>${lmSpBadge(k)}<div><b>${LM_SP[k].n}</b><p>${LM_SP[k].tx}</p></div>${extra}</div>`;
+function lmSeatSheet(st, p){
+  const bs = st.bun[p];
+  openSheet(`${lmNm(p)}`, `<div class="lmsheet"><p class="lmsum">合計 <b>${st.total[p]}</b>点・このラウンド <b>${lmRoundPts(st, p)}</b>点見込み・手札${st.hands[p].length}枚</p>
+    <h5>束</h5>${bs.length ? `<div class="lmbuns">${bs.map(b => lmBunHtml(st, p, b)).join("")}</div>` : `<p class="note">まだ束はありません</p>`}
+    <h5>スペシャル</h5>${st.sp[p].length ? st.sp[p].map(k => lmSpRow(k, st.used[p + ":" + k] ? "used" : "")).join("") : `<p class="note">まだありません</p>`}</div>`);
+}
+function openLmNew(){
+  const t = curTrip();
+  let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 6);
+  const s = openSheet("LEMNISCATEを始める", `
+    <p class="note">【オリジナル】1〜8の数字カードを同じ数字どうしで合成して「束」にし、束の点数を毎ラウンドもらう。大きな数字ほど多く引け、8の合成と5の合成2回でスペシャルカード。4枚以上の合成で相手の束を奪える。15ラウンド（3〜6人・4〜6人推奨）。</p>
+    <button type="button" class="grbtn" data-grule="lm">ルールを見る</button>
+    <div class="f"><span>参加者（タップで選ぶ・3〜6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え（最初の人はランダム）</span><div id="lmOrder" class="norder"></div><button class="shufbtn" id="lmShuf">順番をシャッフル</button></div>
+    <div class="btns"><button class="btn" id="lmGo">はじめる</button></div>`);
+  s.querySelector("[data-close]").onclick = openGames;
+  const draw = () => { $("#lmOrder").innerHTML = seatHtml(order); seatDrag($("#lmOrder"), () => order, o => order = o, draw); };
+  s.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+    const id = b.dataset.p, on = b.getAttribute("aria-pressed") !== "true";
+    if (on && order.length >= 6){ toast("最大6人です"); return; }
+    b.setAttribute("aria-pressed", String(on)); order = on ? [...order, id] : order.filter(x => x !== id); draw();
+  });
+  $("#lmShuf").onclick = () => { order = shuffle(order); draw(); };
+  draw();
+  $("#lmGo").onclick = async () => {
+    if (!order.some(id => !isCpu(id))){ toast("人間のプレイヤーを1人以上入れてください"); return; }
+    if (order.length < 3 || order.length > 6){ toast("参加者は3〜6人です"); return; }
+    const st = lmSetup(order); const lg = st._log || []; delete st._log;
+    const row = { trip_id: t ? t.id : null, status: "playing", players: order, st, created_by: me || null, log: lg.map((m, i) => ({ t: new Date(Date.now() + i).toISOString(), m })) };
+    const { data: res, error } = await sb.from("lm_games").insert(row).select().single();
+    if (error){ if (/lm_games|relation|exist|schema/i.test(error.message || "")) toast("LEMNISCATEを使うには schema18.sql を実行してください", 3500); else fail(error, "作成"); return; }
+    await loadTable("lm_games"); closeSheet(); openLm(res.id); order.forEach(p => pushCall({ type: "game_turn", game: LM_TITLE, to: p }));
+  };
+}
+function lmAskHtml(st, a){
+  if (a.k === "draw") return `<div class="lmask"><div class="lmaskin"><b>${a.opts[0].src === "see" ? "「透視」山札の上3枚から1枚を選んで引く" : "どこから引きますか？"}</b>
+    <div class="lmaskc">${a.opts.map((o, i) => o.src === "deck" ? `<button class="lmpick deck" data-dp="${i}"><span class="lmback">${LM_INF}</span><small>山札から引く</small></button>` : `<button class="lmpick" data-dp="${i}">${lmCard(o.c)}<small>${o.src === "ex" ? "除外の一番上（再起）" : ["一番上", "2枚目", "3枚目"][o.i]}</small></button>`).join("")}</div></div></div>`;
+  if (a.k === "steal"){
+    const by = {}; a.tg.forEach(t => (by[t.q] = by[t.q] || []).push(t.id));
+    return `<div class="lmask"><div class="lmaskin"><b>4枚以上の合成！奪う束を1つ選ぶ<small>（${a.v}の合成：${a.v + (lmHas(st, me, "raid") ? 3 : 1)}以下の束を奪える。奪った束は横向きで、このラウンドは得点なし）</small></b>
+      ${Object.entries(by).map(([q, ids]) => `<div class="lmasq"><span style="--pc:${pcolor(q)}">${lmPname(q)}</span><div class="lmbuns">${ids.map(id => lmBunHtml(st, q, st.bun[q].find(b => b.id === id), "pick", `data-st="${id}"`)).join("")}</div></div>`).join("")}
+      <button class="lmb" id="lmNoSteal">奪わない</button></div></div>`;
+  }
+  if (a.k === "sp") return `<div class="lmask"><div class="lmaskin gold"><b>スペシャルカードを1枚獲得！</b>${a.can.map(k => lmSpRow(k, "pick", `data-sp="${k}"`, `<small class="lmleft">残り${st.supply[k]}</small>`)).join("")}<button class="lmb" id="lmNoSp">今回はもらわない</button></div></div>`;
+  return "";
+}
+const lmEndSeen = {};
+function lmEndHtml(g){
+  const st = g.st, rank = st.end.rank, best = st.total[rank[0]];
+  return `<div class="lmend"><div class="lmendin"><div class="lmendt">${LM_INF}<b>FINAL</b><small>15ラウンド終了</small></div>
+    ${rank.map((p, i) => { const win = st.total[p] === best, dl = (.8 + (rank.length - 1 - i) * .9 + (i === 0 ? .8 : 0)).toFixed(2);
+      return `<div class="lmres ${win ? "win" : ""}" style="--pc:${pcolor(p)};--dl:${dl}s"><span class="lmrk">${win ? "1" : i + 1}</span><div><b>${lmPname(p)}</b><span class="lmmons">${st.sp[p].map(k => lmSpBadge(k)).join("")}</span><span class="lmchips">${st.bun[p].map(b => lmChip(st, p, b, { bun: {} })).join("") || `<em class="lmnone">束なし</em>`}</span></div><em>${st.total[p]}<small>点</small></em></div>`; }).join("")}
+    <div class="lmbtns"><button class="lmb" id="lmEndClose">閉じる</button><button class="lmb go" id="lmAgain">もう一度遊ぶ</button></div></div></div>`;
+}
+function lmEndReveal(g, el){
+  const box = el.querySelector(".lmend"); if (!box) return;
+  if (lmEndSeen[g.id]){ box.classList.add("seen"); return; }
+  lmEndSeen[g.id] = 1;
+  const rows = [...box.querySelectorAll(".lmres")];
+  rows.forEach((r, i) => { const dl = parseFloat(r.style.getPropertyValue("--dl")) || 0;
+    setTimeout(() => { const b = document.querySelector("#lmg .lmend"), x = b && b.querySelectorAll(".lmres")[i]; if (!x) return; b.scrollTo({ top: Math.max(0, x.offsetTop - (i === 0 ? b.clientHeight * .25 : b.clientHeight * .45)), behavior: "smooth" }); }, Math.max(0, dl * 1000 - 350)); });
+}
+function drawLm(){
+  setTimeout(cpuKick, 0);
+  if (!lmId) return;
+  const g = lmById(lmId); if (!g || !g.st || g.status === "aborted") return closeLm();
+  const st = g.st, el = $("#lmg"), T = st.turn, fin = g.status === "finished";
+  const myAsk = st.ask && st.ask.pid === me ? st.ask : null;
+  const myTurn = !fin && T && T.pid === me && !st.ask;
+  const hand = st.hands[me] || [], inGame = st.players.includes(me);
+  lmSel = lmSel.filter(i => hand[i] !== undefined);
+  if (!myTurn){ lmSel = []; if (lmMode !== "normal") lmMode = "normal"; }
+  const M = myTurn && lmSel.length ? lmMergeInfo(st, me, lmSel) : null;
+  const over = myTurn ? Math.max(0, hand.length - LM_CAP) : 0;
+  // 演出の予定（新しい出来事）を先に決めて、手札・束の「届く」タイミングに合わせる
+  const plan = lmPlan(g);
+  const now = Date.now();
+  const holdAsk = (myAsk || fin) && lmAnimUntil > now + 60;
+  if (holdAsk){ clearTimeout(lmHoldTm); lmHoldTm = setTimeout(drawLm, lmAnimUntil - now + 80); }
+  // 卓：自分から見て左（次の手番）→上→右 の時計回り
+  const lay = lmSeatsAround(st);
+  const pod = p => lmPodHtml(st, p, fin, plan);
+  const prog = ((Math.min(st.round, LM_ROUNDS) - 1 + st.ti / st.order.length) / LM_ROUNDS * 100).toFixed(1);
+  const center = `<div class="lmcenter">
+      <div class="lmround"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" class="bg"/><circle cx="30" cy="30" r="26" class="fg" pathLength="100" style="stroke-dasharray:${prog} 100"/></svg><small>ROUND</small><b>${Math.min(st.round, LM_ROUNDS)}</b><small>/ ${LM_ROUNDS}</small></div>
+      <div class="lmpl"><div class="lmdeck" id="lmDeck"><span class="lmbk b3"></span><span class="lmbk b2"></span><span class="lmbk">${LM_INF}</span><b>${st.deck.length}</b><small>山札</small></div><div class="lmex" id="lmEx">${st.exile.length ? `<span class="lmexc" style="--nc:${LM_COL[lmVal(st.exile[st.exile.length - 1])]}"><b>${lmVal(st.exile[st.exile.length - 1])}</b></span>` : `<span class="lmexc none"></span>`}<b>${st.exile.length}</b><small>除外</small></div></div>
+      <div class="lmbonus"><span class="lmbl">BONUS</span><span class="lmbcs">${st.bonus.map(v => lmMiniCard(v)).join("")}</span><span class="lmbm">${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => st.mult[v] > 1).map(v => `<i style="--nc:${LM_COL[v]}">${v}の束×${st.mult[v]}</i>`).join("")}</span></div>
+      ${st.seal ? `<span class="lmseal">封印中 ${st.seal.v}</span>` : ""}
+    </div>`;
+  const supply = `<div class="lmsupply"><h5>SPECIAL<small>8の合成、または5の合成2回ごとに1枚（各3枚・同じ種類は1人1枚）</small></h5><div class="lmsps">${st.picks.map(k => `<button class="lmspc ${st.supply[k] ? "" : "out"} ${lmHas(st, me, k) ? "own" : ""}" data-spi="${k}">${lmSpBadge(k)}<b>${LM_SP[k].n}</b><small>${st.supply[k] ? `残り${st.supply[k]}` : "品切れ"}</small></button>`).join("")}</div></div>`;
+  const meAct = lmActor(st) === me && !fin;
+  const meZone = inGame ? `<div class="lmme ${meAct ? "act" : ""}" id="lmMe" data-seat="${me}" style="--pc:${pcolor(me)}">${meAct ? `<i class="lmturn">YOUR TURN</i>` : ""}
+      <div class="lmmeh"><b>${lmPname(me)}</b><span class="lmsc">${st.total[me]}</span><small>＋${lmRoundPts(st, me)}／R${st.aim[me] ? `・狙い撃ち${st.aim[me]}` : ""}${st.c5[me] % 2 ? "・5をあと1回でSP" : ""}</small><span class="lmmons">${st.sp[me].map(k => lmSpBadge(k, st.used[me + ":" + k] ? "used" : "")).join("")}</span></div>
+      ${st.bun[me].length ? `<div class="lmbuns">${st.bun[me].map(b => lmBunHtml(st, me, b, (lmMode === "fuse" ? (lmFuseSel.includes(b.id) ? "pick on" : "pick") : "") + (plan.bun[b.id] != null ? " nb" : ""), `data-fb="${b.id}" data-b="${b.id}"`, `--nd:${Math.round(plan.bun[b.id] || 0)}ms`)).join("")}</div>` : `<p class="lmnote">まだ束はありません。同じ数字を2枚以上選んで合成しよう</p>`}</div>` : "";
+  const table = `<div class="lmtable o${lay.n}">
+      ${lay.top.length ? `<div class="lmtrow">${lay.top.map(pod).join("")}</div>` : ""}
+      <div class="lmtmid"><div class="lmtcol">${lay.left.map(pod).join("")}</div>${center}<div class="lmtcol">${lay.right.map(pod).join("")}</div></div>
+      ${meZone}</div>`;
+  // 手札
+  const ord = hand.map((c, i) => i).sort((i, j) => lmVal(hand[i]) - lmVal(hand[j]) || i - j);
+  const fresh = inGame ? lmFreshCards(g, hand, plan) : {};
+  const handHtml = inGame ? `<div class="lmhand ${myTurn ? "" : "wait"}" id="lmHand">${ord.map(i => lmCard(hand[i], `${lmSel.includes(i) ? "sel" : ""} ${fresh[i] != null ? "nw" : ""}`, `data-hi="${i}" ${fresh[i] != null ? `style="--nc:${LM_COL[lmVal(hand[i])]};--nd:${Math.round(fresh[i])}ms"` : ""}`)).join("")}</div>` : "";
+  // ガイドとボタン
+  let guide = "", btns = "";
+  if (fin) guide = "ゲーム終了";
+  else if (!T && !st.ask) guide = "";
+  else if (myAsk) guide = "選んでください";
+  else if (!myTurn) guide = `${lmPname(lmActor(st))}の番です`;
+  else if (lmMode === "discard") guide = `手札が10枚を超えています。捨てるカードを<b>${over}枚</b>選んでください（選択中${lmSel.length}枚）`;
+  else if (lmMode === "up") guide = "＋1するカードをタップ（8は不可・1手番2枚まで）";
+  else if (lmMode === "swap") guide = "手札を1枚交換する相手の席をタップ";
+  else if (lmMode === "freeze") guide = "最終ラウンドの得点を0にする相手の席をタップ";
+  else if (lmMode === "fuse") guide = `合体する束を2つタップ（選択中${lmFuseSel.length}つ）`;
+  else if (M){ const tg = lmStealTargets(st, me, M.v, M.k); guide = `<b>${M.v}</b>を${M.k}枚で合成 → ${M.k === 1 ? "引く枚数0" : `${M.v + (lmHas(st, me, "amp") ? 2 : 0)}枚引く`}・${M.v}の束（${M.v * lmMult(st, me, M.v)}点／R）${tg.length ? `・<em>相手の束を奪える</em>` : M.k >= LM_STEAL ? "・奪える束なし" : ""}${M.k >= 2 && (M.v === 8 || (M.v === 5 && st.c5[me] % 2 === 1)) ? "・<em>スペシャル獲得</em>" : ""}`; }
+  else if (lmSel.length) guide = "その組み合わせは合成できません（同じ数字を2枚以上。＋1したカード同士は組めない）";
+  else guide = T.merges ? (lmHas(st, me, "dbl") && T.merges === 1 ? "「二連」で1か2の合成がもう1組できます。終わるなら「手番を終える」" : "合成しました。終わるなら「手番を終える」") : "同じ数字のカードを2枚以上タップして合成（1手番に1組）。合成しないで終えることもできます";
+  if (myTurn){
+    if (lmMode === "discard") btns = `<button class="lmb" id="lmCancel">戻る</button><button class="lmb go" id="lmDiscGo" ${lmSel.length === over ? "" : "disabled"}>${over}枚捨てて手番を終える</button>`;
+    else if (lmMode !== "normal") btns = `<button class="lmb" id="lmCancel">やめる</button>${lmMode === "fuse" ? `<button class="lmb go" id="lmFuseGo" ${lmFuseSel.length === 2 ? "" : "disabled"}>合体する</button>` : ""}`;
+    else {
+      btns = `<button class="lmb go" id="lmMerge" ${M ? "" : "disabled"}>合成する</button><button class="lmb" id="lmEnd">手番を終える${over ? `（${over}枚捨てる）` : ""}</button>`;
+      const sb2 = [];
+      if (lmHas(st, me, "up") && T.ups < 2) sb2.push(`<button class="lmb sp" id="lmUp">${lmSpBadge("up")}昇格（あと${2 - T.ups}枚）</button>`);
+      if (lmHas(st, me, "swap") && !T.swap) sb2.push(`<button class="lmb sp" id="lmSwap">${lmSpBadge("swap")}交換</button>`);
+      if (lmHas(st, me, "fuse") && !st.used[me + ":fuse"] && st.bun[me].length >= 2) sb2.push(`<button class="lmb sp" id="lmFuse">${lmSpBadge("fuse")}融合（1回だけ）</button>`);
+      if (lmHas(st, me, "freeze") && !st.used[me + ":freeze"] && st.round === LM_ROUNDS) sb2.push(`<button class="lmb sp" id="lmFreeze">${lmSpBadge("freeze")}凍結</button>`);
+      if (sb2.length) btns += `<div class="lmspb">${sb2.join("")}</div>`;
+    }
+  }
+  const lg = (g.log || []).slice(-4).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
+  el.innerHTML = `
+    <div class="lmtop">${LM_INF}<b class="lmlogo">LEMNISCATE</b><button class="lmbtn" id="lmMenu" aria-label="メニュー">…</button><button class="lmbtn" id="lmX" aria-label="閉じる">×</button></div>
+    ${table}
+    <p class="lmguide">${guide}</p>
+    <div class="lmbtns">${btns}</div>
+    ${handHtml}
+    ${supply}
+    <ul class="lmlog">${lg}</ul>
+    ${myAsk && !holdAsk ? lmAskHtml(st, myAsk) : ""}
+    ${fin && st.end && !holdAsk ? lmEndHtml(g) : ""}`;
+  const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
+  on("lmX", closeLm); on("lmMenu", () => lmMenu(g));
+  on("lmEndClose", closeLm); on("lmAgain", () => { closeLm(); openLmNew(); });
+  lmEndReveal(g, el);
+  el.querySelectorAll("[data-spi]").forEach(b => b.onclick = () => { const k = b.dataset.spi; openSheet(LM_SP[k].n, `${lmSpRow(k)}<p class="note">${st.supply[k] ? `サプライ残り${st.supply[k]}枚` : "品切れ"}。持っている人：${st.players.filter(p => lmHas(st, p, k)).map(lmPname).join("、") || "なし"}</p>`); });
+  el.querySelectorAll("[data-seat]").forEach(b => b.onclick = async () => {
+    const p = b.dataset.seat;
+    if ((lmMode === "swap" || lmMode === "freeze") && p !== me){ const k = lmMode; lmMode = "normal"; await lmDo(g.id, me, [k, p]); return; }
+    lmSeatSheet(st, p);
+  });
+  el.querySelectorAll("[data-hi]").forEach(c => c.onclick = async () => {
+    if (!myTurn) return;
+    const i = +c.dataset.hi;
+    if (lmMode === "up"){ lmMode = "normal"; await lmDo(g.id, me, ["up", i]); return; }
+    lmSel = lmSel.includes(i) ? lmSel.filter(x => x !== i) : lmMode === "discard" && lmSel.length >= over ? lmSel : [...lmSel, i];
+    drawLm();
+  });
+  el.querySelectorAll("[data-fb]").forEach(b => b.onclick = () => { if (lmMode !== "fuse") return; const id = b.dataset.fb; lmFuseSel = lmFuseSel.includes(id) ? lmFuseSel.filter(x => x !== id) : lmFuseSel.length >= 2 ? lmFuseSel : [...lmFuseSel, id]; drawLm(); });
+  on("lmMerge", async () => { const s = lmSel.slice(); lmSel = []; await lmDo(g.id, me, ["merge", s]); });
+  on("lmEnd", async () => { if (over){ lmMode = "discard"; lmSel = []; drawLm(); return; } await lmDo(g.id, me, ["end", []]); });
+  on("lmDiscGo", async () => { const s = lmSel.slice(); lmSel = []; lmMode = "normal"; await lmDo(g.id, me, ["end", s]); });
+  on("lmCancel", () => { lmMode = "normal"; lmSel = []; lmFuseSel = []; drawLm(); });
+  on("lmUp", () => { lmMode = "up"; lmSel = []; drawLm(); });
+  on("lmSwap", () => { lmMode = "swap"; drawLm(); });
+  on("lmFreeze", () => { lmMode = "freeze"; drawLm(); });
+  on("lmFuse", () => { lmMode = "fuse"; lmFuseSel = []; drawLm(); });
+  on("lmFuseGo", async () => { const [a, b] = lmFuseSel; lmFuseSel = []; lmMode = "normal"; await lmDo(g.id, me, ["fuse", a, b]); });
+  el.querySelectorAll("[data-dp]").forEach(b => b.onclick = () => lmDo(g.id, me, ["draw", +b.dataset.dp]));
+  el.querySelectorAll("[data-st]").forEach(b => b.onclick = () => lmDo(g.id, me, ["steal", b.dataset.st]));
+  on("lmNoSteal", () => lmDo(g.id, me, ["steal", null]));
+  el.querySelectorAll("[data-sp]").forEach(b => b.onclick = () => lmDo(g.id, me, ["sp", b.dataset.sp]));
+  on("lmNoSp", () => lmDo(g.id, me, ["sp", null]));
+  lmRunPlan(g, plan);
+}
+/* ---------- 卓の配置 ---------- */
+let lmAnimUntil = 0, lmHoldTm = null, lmPrevHand = {};
+const LM_LAYOUT = { 1: [0, 1, 0], 2: [1, 0, 1], 3: [1, 1, 1], 4: [1, 2, 1], 5: [2, 1, 2], 6: [2, 2, 2] };
+function lmSeatsAround(st){
+  const ord = st.order, i0 = ord.indexOf(me);
+  const opp = i0 >= 0 ? ord.slice(i0 + 1).concat(ord.slice(0, i0)) : ord.slice();
+  const [L, Tn] = LM_LAYOUT[opp.length] || [2, 2, 2];
+  return { n: opp.length, left: opp.slice(0, L).reverse(), top: opp.slice(L, L + Tn), right: opp.slice(L + Tn) };
+}
+const lmFan = n => `<span class="lmfan">${Array.from({ length: Math.min(n, 5) }, (_, i) => `<i style="--i:${i - (Math.min(n, 5) - 1) / 2}"></i>`).join("")}</span>`;
+function lmChip(st, p, b, plan){
+  const nb = plan.bun[b.id], side = b.side ? "side" : "", fresh = b.side === st.round ? "fresh" : "";
+  if (b.parts) return `<i class="lmchip fused ${side} ${fresh} ${nb != null ? "nb" : ""}" data-b="${b.id}" style="--nd:${nb || 0}ms"><b>${b.v}</b><u>${b.parts.map(x => x.v).join("+")}</u></i>`;
+  const m = lmMult(st, p, b.v) * (b.v === 8 && lmHas(st, p, "crown") ? 2 : 1);
+  return `<i class="lmchip n${b.v} ${side} ${fresh} ${nb != null ? "nb" : ""}" data-b="${b.id}" style="--nc:${LM_COL[b.v]};--nd:${nb || 0}ms"><b>${b.v}</b>${m > 1 ? `<small>×${m}</small>` : ""}${b.n > 2 ? `<u>${b.n}枚</u>` : ""}</i>`;
+}
+function lmPodHtml(st, p, fin, plan){
+  const act = lmActor(st) === p && !fin, bs = st.bun[p], tgt = (lmMode === "swap" || lmMode === "freeze") && p !== me;
+  return `<button class="lmpod ${act ? "act" : ""} ${tgt ? "tgt" : ""}" data-seat="${p}" style="--pc:${pcolor(p)}">${act ? `<i class="lmturn">TURN</i>` : ""}
+    <span class="lmph"><b>${lmPname(p)}</b><span class="lmhc">${lmFan(st.hands[p].length)}<i>${st.hands[p].length}</i></span></span>
+    <span class="lmps"><span class="lmsc">${st.total[p]}</span><small>＋${lmRoundPts(st, p)}/R</small></span>
+    ${st.sp[p].length ? `<span class="lmmons">${st.sp[p].map(k => lmSpBadge(k, st.used[p + ":" + k] ? "used" : "")).join("")}</span>` : ""}
+    <span class="lmchips">${bs.length ? bs.map(b => lmChip(st, p, b, plan)).join("") : `<em class="lmnone">束なし</em>`}</span></button>`;
+}
+/* 手札で新しく来たカード（前回の手札にない分）に、届く時刻を付ける */
+function lmFreshCards(g, hand, plan){
+  const prev = lmPrevHand[g.id], out = {};
+  lmPrevHand[g.id] = hand.slice();
+  if (!prev) return out;
+  const pool = prev.slice();
+  const news = [];
+  hand.forEach((c, i) => { const j = pool.indexOf(c); if (j >= 0) pool.splice(j, 1); else news.push(i); });
+  const at = plan.hand.length ? plan.hand : [0];
+  news.forEach((i, k) => { out[i] = at[Math.min(k, at.length - 1)]; });
+  return out;
+}
+/* ---------- 演出の予定 ---------- */
+const LM_DUR = { bonus: 3300, merge: 1050, merge8: 2500, draw: 0, disc: 0, steal: 1500, getsp: 1800, score: 1700, aim: 1600, fuse: 1500, freeze: 1700, reshuf: 1100, refill: 500, swap: 900, sp: 500, end: 0 };
+function lmPlan(g){
+  const st = g.st, seen = lmSeenFx[g.id] || 0; lmSeenFx[g.id] = st.fxn || 0;
+  let evs = (st.fx || []).filter(e => e.n > seen);
+  if (evs.length > 30) evs = evs.slice(-30);
+  const plan = { list: [], bun: {}, hand: [], total: 0 };
+  // 前の演出がまだ続いていれば、その後ろにつなげる（順番が入れ替わらないように）
+  const base = evs.length ? Math.min(6000, Math.max(0, lmAnimUntil - Date.now())) : 0;
+  let t = 0;
+  evs.forEach(e => {
+    let d;
+    if (e.k === "draw") d = 220 + Math.min(e.c, 10) * 75 + 420;
+    else if (e.k === "disc") d = 180 + Math.min(e.c, 10) * 60 + 380;
+    else if (e.k === "merge") d = e.v === 8 && e.c >= 2 ? LM_DUR.merge8 : LM_DUR.merge;
+    else d = LM_DUR[e.k] != null ? LM_DUR[e.k] : 600;
+    plan.list.push({ e, t });
+    if (e.k === "draw" && e.p === me) for (let i = 0; i < Math.min(e.c, 10); i++) plan.hand.push(t + 220 + i * 75 + 520);
+    if (e.k === "merge" && e.b) plan.bun[e.b] = t + 650;
+    if ((e.k === "steal" || e.k === "fuse") && e.b) plan.bun[e.b] = t + 800;
+    t += d;
+  });
+  // 長すぎるときは詰める（最大9秒）
+  const k = t > 9000 ? 9000 / t : 1;
+  if (k < 1){ plan.list.forEach(x => x.t *= k); Object.keys(plan.bun).forEach(id => plan.bun[id] *= k); plan.hand = plan.hand.map(x => x * k); t = 9000; }
+  plan.list.forEach(x => x.t += base); Object.keys(plan.bun).forEach(id => plan.bun[id] += base); plan.hand = plan.hand.map(x => x + base);
+  plan.total = t ? t + base : 0;
+  if (t) lmAnimUntil = Date.now() + t + base;
+  return plan;
+}
+function lmRunPlan(g, plan){
+  plan.list.forEach(({ e, t }) => setTimeout(() => { try { lmRun(g, e); } catch (err) { console.error(err); } }, t));
+}
+/* ---------- 飛ぶカード ---------- */
+const lmQ = sel => document.querySelector("#lmg " + sel);
+const lmSeatEl = p => p === me ? (lmQ("#lmMe") || lmQ(`[data-seat="${p}"]`)) : lmQ(`.lmpod[data-seat="${p}"]`);
+function lmRect(el){ if (!el) return null; const r = el.getBoundingClientRect(); return r.width ? r : null; }
+const LM_BACK = `<span class="lmflyb">${LM_INF}</span>`;
+function lmFly(from, to, html, o = {}){
+  if (!from || !to) return;
+  const d = document.createElement("div"); d.className = "lmfly " + (o.cls || ""); d.innerHTML = html; document.body.appendChild(d);
+  const fx = from.left + from.width / 2, fy = from.top + from.height / 2;
+  const jx = o.jit === 0 ? 0 : (Math.random() - .5) * Math.min(to.width * .55, 70), jy = o.jit === 0 ? 0 : (Math.random() - .5) * Math.min(to.height * .35, 24);
+  const tx = to.left + to.width / 2 + jx - fx, ty = to.top + to.height / 2 + jy - fy;
+  const lift = o.lift != null ? o.lift : -70 - Math.random() * 40, rot = o.rot != null ? o.rot : (Math.random() - .5) * 50;
+  d.style.left = fx + "px"; d.style.top = fy + "px";
+  const s0 = o.s0 || .55, s1 = o.s1 || 1.2, s2 = o.s2 || .75;
+  const a = d.animate([
+    { transform: `translate(-50%,-50%) scale(${s0}) rotate(0deg)`, opacity: 0 },
+    { transform: `translate(calc(-50% + ${tx * .45}px),calc(-50% + ${ty * .45 + lift}px)) scale(${s1}) rotate(${rot * .6}deg)`, opacity: 1, offset: .45 },
+    { transform: `translate(calc(-50% + ${tx}px),calc(-50% + ${ty}px)) scale(${s2}) rotate(${rot}deg)`, opacity: 1, offset: .92 },
+    { transform: `translate(calc(-50% + ${tx}px),calc(-50% + ${ty}px)) scale(${s2 * .8}) rotate(${rot}deg)`, opacity: 0 }
+  ], { duration: o.dur || 560, delay: o.delay || 0, easing: "cubic-bezier(.35,.6,.25,1)", fill: "both" });
+  a.onfinish = () => d.remove();
+  setTimeout(() => d.remove(), (o.dur || 560) + (o.delay || 0) + 200);
+}
+function lmHit(el, color, cls = "hit"){
+  if (!el) return;
+  el.style.setProperty("--hc", color || "#FFD35A");
+  el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
+  setTimeout(() => el.classList.remove(cls), 700);
+}
+function lmTag(el, text, color){
+  if (!el) return; const r = lmRect(el); if (!r) return;
+  const d = document.createElement("i"); d.className = "lmtag"; d.textContent = text; d.style.left = (r.left + r.width / 2) + "px"; d.style.top = (r.top + 14) + "px"; d.style.setProperty("--c", color || "#FFD35A");
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1600);
+}
+function lmBig(html, cls, ms){
+  const d = document.createElement("div"); d.className = "lmbig " + cls; d.innerHTML = html; d.style.animationDuration = ms + "ms"; document.body.appendChild(d);
+  setTimeout(() => d.remove(), ms);
+}
+function lmBurstAt(r, color, n = 18, spread = 1){
+  if (!r) r = { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
+  const d = document.createElement("div"); d.className = "lmburst"; d.style.left = (r.left + r.width / 2) + "px"; d.style.top = (r.top + r.height / 2) + "px";
+  d.innerHTML = Array.from({ length: n }, (_, i) => `<i style="--a:${(i * 360 / n + Math.random() * 12).toFixed(0)}deg;--r:${((60 + Math.random() * 80) * spread).toFixed(0)}px;--c:${color}"></i>`).join("");
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1200);
+}
+const lmBurst = (color, n) => lmBurstAt(null, color, n, 1.4);
+function lmRun(g, e){
+  const st = g.st;
+  const deck = lmRect(lmQ("#lmDeck")), ex = lmRect(lmQ("#lmEx"));
+  const seat = p => lmSeatEl(p), seatR = p => lmRect(seat(p));
+  const handR = () => lmRect(lmQ("#lmHand")) || seatR(me);
+  const bunR = id => lmRect(lmQ(`[data-b="${id}"]`));
+  if (e.k === "bonus"){ lmBig(`<small>BONUS</small><div class="lmbr">${e.b.map((v, i) => `<span style="--d:${(.3 + i * .4).toFixed(2)}s">${lmCard(v)}</span>`).join("")}</div><p>${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => st.mult[v] > 1).map(v => `${v}の束 ×${st.mult[v]}`).join("　")}</p>`, "bonus", 3200); return; }
+  if (e.k === "draw"){
+    const from = e.src === "ex" ? ex : deck, to = e.p === me ? handR() : seatR(e.p), n = Math.min(e.c, 10);
+    lmHit(lmQ(e.src === "ex" ? "#lmEx" : "#lmDeck"), "#9FB4FF", "pull");
+    for (let i = 0; i < n; i++) lmFly(from, to, LM_BACK, { delay: 220 + i * 75 - 220, dur: 600, cls: "back" });
+    setTimeout(() => { lmHit(seat(e.p), "#9FB4FF"); lmTag(seat(e.p), `+${e.c}枚`, "#9FB4FF"); }, n * 75 + 480);
+    return;
+  }
+  if (e.k === "disc"){
+    const from = e.p === "_deck" ? deck : e.p === me ? handR() : seatR(e.p), n = Math.min(e.c, 10);
+    for (let i = 0; i < n; i++) lmFly(from, ex, LM_BACK, { delay: i * 60, dur: 520, cls: "back dim", lift: -30 });
+    setTimeout(() => lmHit(lmQ("#lmEx"), "#FF9A4A"), n * 60 + 420);
+    return;
+  }
+  if (e.k === "merge"){
+    const c = LM_COL[e.v], from = e.p === me ? handR() : seatR(e.p);
+    setTimeout(() => { const to = bunR(e.b) || seatR(e.p); for (let i = 0; i < Math.min(e.c, 8); i++) lmFly(from, to, lmCard(e.v), { delay: i * 70, dur: 560, cls: "face", s1: 1.35, s2: .45, jit: 0 }); setTimeout(() => { lmBurstAt(bunR(e.b) || seatR(e.p), c, 16 + e.c * 2, .9); lmHit(lmQ(`[data-b="${e.b}"]`), c); }, 560 + Math.min(e.c, 8) * 70); }, 0);
+    if (e.v === 8 && e.c >= 2){ lmBig(`${LM_INF}<b>8</b><small>LEMNISCATE</small><p>${lmPname(e.p)}　8の合成</p>`, "eight", 2500); lmBurst("#FFE9A8", 30); setTimeout(() => lmBurst("#C46BFF", 24), 300); setTimeout(() => lmBurst("#5EC8FF", 24), 600); }
+    else lmBig(`<b style="--nc:${c}">${e.v}</b><span class="lmmx">× ${e.c}</span><p>${lmPname(e.p)}　${e.d}枚ドロー</p>`, "merge", 1300);
+    return;
+  }
+  if (e.k === "steal"){
+    const from = seatR(e.q);
+    lmBig(`<small>${e.rev ? "REVENGE" : "STEAL"}</small><b>${e.v}</b><p>${lmPname(e.q)} → ${lmPname(e.p)}</p>`, "steal", 1500);
+    setTimeout(() => { const to = bunR(e.b) || seatR(e.p); lmFly(from, to, `<i class="lmchip n${e.v} big" style="--nc:${LM_COL[e.v] || "#FFD35A"}"><b>${e.v}</b></i>`, { dur: 800, cls: "steal", s1: 1.8, s2: 1, lift: -90, jit: 0, rot: 90 }); lmHit(seat(e.q), "#FF5A7A", "hurt"); setTimeout(() => { lmBurstAt(to, "#FF5A7A", 18, .9); lmHit(seat(e.p), "#FF5A7A"); }, 800); }, 200);
+    const host = $("#lmg"); host.classList.remove("lmshake"); void host.offsetWidth; host.classList.add("lmshake");
+    return;
+  }
+  if (e.k === "getsp"){
+    const src = lmRect(lmQ(`[data-spi="${e.s}"]`)) || deck;
+    lmBig(`<small>SPECIAL</small>${lmSpBadge(e.s, "xl")}<b class="nm">${LM_SP[e.s].n}</b><p>${lmPname(e.p)}</p>`, "sp", 1700);
+    setTimeout(() => { lmFly(src, seatR(e.p), lmSpBadge(e.s, "fl"), { dur: 700, s1: 2, s2: 1, jit: 0, rot: 0 }); setTimeout(() => { lmBurstAt(seatR(e.p), "#FFD35A", 20, .8); lmHit(seat(e.p), "#FFD35A"); }, 700); }, 900);
+    return;
+  }
+  if (e.k === "score"){
+    lmBig(`<small>ROUND ${e.r}</small><b>SCORE</b>`, "score", 1500);
+    st.players.forEach((p, i) => {
+      const el = seat(p); if (!el) return; const v = e.got[p] || 0;
+      setTimeout(() => {
+        const sc = lmRect(el.querySelector(".lmsc")) || lmRect(el);
+        [...el.querySelectorAll(".lmchip, .lmbun")].slice(0, 8).forEach((c, j) => lmFly(lmRect(c), sc, `<i class="lmspark"></i>`, { delay: j * 50, dur: 520, s0: 1, s1: 1.4, s2: .6, jit: 0, lift: -20 }));
+        setTimeout(() => { lmTag(el, `+${v}`, "#FFD35A"); lmHit(el, "#FFD35A"); }, 600);
+      }, 250 + i * 90);
+    });
+    return;
+  }
+  if (e.k === "aim"){ lmBig(`<small>狙い撃ち</small>${lmCard(e.v)}<p>${lmPname(e.p)}の${e.v}の束 ＋1倍</p>`, "sp", 1500); return; }
+  if (e.k === "fuse"){ lmBig(`<small>FUSION</small><b>${e.v}</b><p>${lmPname(e.p)}</p>`, "sp", 1500); setTimeout(() => lmBurstAt(bunR(e.b) || seatR(e.p), "#5EC8FF", 26, 1), 700); return; }
+  if (e.k === "freeze"){ lmBig(`<small>FREEZE</small><b>0</b><p>${lmPname(e.q)}の最終ラウンド</p>`, "freeze", 1700); setTimeout(() => lmHit(seat(e.q), "#9FE6FF", "hurt"), 500); return; }
+  if (e.k === "swap"){ lmFly(seatR(e.p), seatR(e.q), LM_BACK, { dur: 600, cls: "back" }); lmFly(seatR(e.q), seatR(e.p), LM_BACK, { delay: 150, dur: 600, cls: "back" }); return; }
+  if (e.k === "reshuf"){ for (let i = 0; i < 8; i++) lmFly(ex, deck, LM_BACK, { delay: i * 60, dur: 520, cls: "back", lift: -40 }); lmBig(`<small>RESHUFFLE</small><p>除外置き場を混ぜて新しい山札に</p>`, "small", 1100); return; }
+  if (e.k === "refill"){ lmTag(seat(e.p), "引き直し", "#5EC8FF"); return; }
+  if (e.k === "sp"){ lmTag(seat(e.p), LM_SP[e.s].n, "#FFD35A"); lmHit(seat(e.p), "#FFD35A"); return; }
+  if (e.k === "end"){ lmBurst("#FFD35A", 30); return; }
+}
+function lmRulesHtml(){
+  return `<div class="lmrules">
+  <p><b>1〜8の数字カード</b>を、同じ数字どうしで<b>合成</b>して「束」にする。束はラウンドごとに点数を生み続ける。15ラウンドで合計点が一番多い人の勝ち（3〜6人・4〜6人推奨）。</p>
+  <h4>カード（計468枚）</h4><p>${[1, 2, 3, 4, 5, 6, 7, 8].map(v => `${v}：${LM_CNT[v]}枚`).join("　")}<br>カードの隅の小さな数字が、その数字の総枚数。</p>
+  <h4>準備</h4><ol><li>全員に8枚ずつ配る</li><li>山札の上から3枚めくって<b>ボーナス</b>。その数字の束は2倍。2枚かぶったら3倍、3枚同じなら4倍</li><li>スペシャルカード20種からランダムに7種を選び、各3枚をサプライに並べる</li></ol>
+  <h4>手番</h4><ol><li>山札から1枚引く</li><li><b>合成</b>（1手番に1組）：同じ数字を2枚以上出して束にする。<b>その数字の枚数</b>だけ山札から引く（4の合成なら4枚）</li><li><b>4枚以上</b>で合成したら、相手の束のうち「合成した数字＋1」以下のものを1つ奪える。奪った束は横向きに置き、<b>奪ったラウンドは得点なし</b>。奪い返されることもある</li><li>手番の終わりに手札が10枚を超えていたら、超えた分を好きに選んで除外置き場へ</li><li>手札が2枚以下なら全部捨てて8枚引き直す</li></ol>
+  <h4>得点</h4><p>全員の手番が1周するたびに、自分の束の点数（数字×ボーナス倍率）をもらう。</p>
+  <h4>スペシャルカード</h4><p><b>8の合成</b>、または<b>5の合成2回ごと</b>に1枚もらえる（同じ種類は1人1枚まで）。毎ターン効果を使える（融合だけ1回限り）。</p>
+  <div class="lmrsp">${LM_SP_KEYS.map(k => lmSpRow(k)).join("")}</div>
+  <h4>山札</h4><p>山札が尽きたら、除外置き場を混ぜて新しい山札にする。</p></div>`;
 }
 
 let lastBadgeN = null;
@@ -14884,7 +16000,7 @@ document.addEventListener("visibilitychange", async () => {
   if (document.hidden) return;
   clearBadge();
   dmQuiet = Date.now() + 2500; if (dmId){ delete dmPrevHand[dmId]; delete dmStatPrev[dmId]; delete dmOthPrev[dmId]; }   // ドミニオン：戻ってきたら、たまった演出は飛ばして今の状態から
-  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); drawHx(); drawSz(); } catch (e) { console.error(e); }
+  try { await loadAll(); render(); syncArena(); drawNeu(); drawCs(); drawSb(); drawSk(); drawCo(); drawKg(); drawDm(); drawHx(); drawSz(); drawLm(); } catch (e) { console.error(e); }
 });
 (async () => {
   try { await loadAll(); }
