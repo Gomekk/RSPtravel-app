@@ -4537,7 +4537,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v291";
+const APP_VER = "v292";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -15663,7 +15663,7 @@ function openLmNew(){
     const st = lmSetup(order); const lg = st._log || []; delete st._log;
     const row = { trip_id: t ? t.id : null, status: "playing", players: order, st, created_by: me || null, log: lg.map((m, i) => ({ t: new Date(Date.now() + i).toISOString(), m })) };
     const { data: res, error } = await sb.from("lm_games").insert(row).select().single();
-    if (error){ if (/lm_games|relation|exist|schema/i.test(error.message || "")) toast("LEMNISCATEを使うには schema18.sql を実行してください", 3500); else fail(error, "作成"); return; }
+    if (error){ console.error(error); const msg = error.message || String(error); if (/permission denied/i.test(msg)) toast(`データベースの権限が足りません。schema18.sql をもう一度実行してください（${msg}）`, 6000); else if (/lm_games|relation|exist|schema/i.test(msg)) toast(`LEMNISCATEのテーブルが見つかりません。schema18.sql を実行してください（${msg}）`, 6000); else fail(error, "作成"); return; }
     await loadTable("lm_games"); closeSheet(); openLm(res.id); order.forEach(p => pushCall({ type: "game_turn", game: LM_TITLE, to: p }));
   };
 }
