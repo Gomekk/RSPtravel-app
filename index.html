@@ -4537,7 +4537,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v292";
+const APP_VER = "v293";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -15283,8 +15283,7 @@ function lmSetup(players){
   const bonus = [deck.pop(), deck.pop(), deck.pop()];
   const mult = [0, 1, 1, 1, 1, 1, 1, 1, 1]; bonus.forEach(v => mult[v]++);
   const picks = lmShuffle(LM_SP_KEYS).slice(0, LM_SP_PICK), supply = {}; picks.forEach(k => supply[k] = LM_SP_COPY);
-  const first = Math.floor(Math.random() * players.length);
-  const order = players.slice(first).concat(players.slice(0, first));
+  const order = players.slice();   // 設定した順番どおり（先頭の人から）
   const st = { lm: 1, v: 1, players: players.slice(), order, deck, exile: [], hands, bun, sp, c5, aim, total, bonus, mult, supply, picks,
     round: 1, ti: 0, turn: null, ask: null, seal: null, freeze: null, used: {}, status: "playing", fx: [], fxn: 0, no: 0, last: {}, reshuf: 0 };
   lmL(st, `ボーナス：${bonus.join("・")}（${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => mult[v] > 1).map(v => `${v}の束×${mult[v]}`).join("、")}）`);
@@ -15646,7 +15645,7 @@ function openLmNew(){
     <p class="note">【オリジナル】1〜8の数字カードを同じ数字どうしで合成して「束」にし、束の点数を毎ラウンドもらう。大きな数字ほど多く引け、8の合成と5の合成2回でスペシャルカード。4枚以上の合成で相手の束を奪える。15ラウンド（3〜6人・4〜6人推奨）。</p>
     <button type="button" class="grbtn" data-grule="lm">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・3〜6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
-    <div class="f"><span>手番の順番・名前を指で動かして並べ替え（最初の人はランダム）</span><div id="lmOrder" class="norder"></div><button class="shufbtn" id="lmShuf">順番をシャッフル</button></div>
+    <div class="f"><span>手番の順番・名前を指で動かして並べ替え（1番の人から始まる）</span><div id="lmOrder" class="norder"></div><button class="shufbtn" id="lmShuf">順番をシャッフル</button></div>
     <div class="btns"><button class="btn" id="lmGo">はじめる</button></div>`);
   s.querySelector("[data-close]").onclick = openGames;
   const draw = () => { $("#lmOrder").innerHTML = seatHtml(order); seatDrag($("#lmOrder"), () => order, o => order = o, draw); };
