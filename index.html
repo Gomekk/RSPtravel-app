@@ -4668,6 +4668,30 @@ body.bgpause .hxemb i{animation-play-state:paused}
 @keyframes lmaflip{from{transform:rotate(180deg)}}
 .lmart.lmbigart.m-split .a1{animation:lmasplit1 .7s cubic-bezier(.2,1.5,.4,1) both}.lmart.lmbigart.m-split .a2{animation:lmasplit2 .7s .1s cubic-bezier(.2,1.5,.4,1) both}
 @keyframes lmasplit1{from{transform:translate(8px,4px) rotate(10deg);opacity:0}}@keyframes lmasplit2{from{transform:translate(-8px,-4px) rotate(-10deg);opacity:0}}
+/* スタートプレイヤー・1周の最後 */
+.lmstart{position:absolute;top:-9px;left:6px;z-index:2;display:inline-flex;align-items:center;gap:2px;font-style:normal;padding:0 6px 0 3px;border-radius:8px;background:linear-gradient(180deg,#FFF3C8,#E0A23A);box-shadow:0 0 10px rgba(255,211,90,.8);line-height:1.4}
+.lmstart .lminf{width:16px;height:8px}.lmstart .lminf path{stroke:#1A1030;stroke-width:9;animation:none;stroke-dasharray:none}
+.lmstart b{font-family:var(--lmcz);font-weight:900;font-size:8px;letter-spacing:.1em;color:#1A1030}
+.lmstart.go{animation:lmstartgo 1s cubic-bezier(.2,1.8,.4,1)}
+@keyframes lmstartgo{0%{transform:scale(2.2);box-shadow:0 0 30px #FFD35A}100%{transform:none}}
+.lmlast{position:absolute;top:-8px;left:6px;z-index:2;font-style:normal;font-size:8px;font-weight:900;padding:0 6px;border-radius:7px;border:1px dashed #9FB4FF;background:#0E1238;color:#C9D4FF;line-height:1.5}
+.lmme .lmstart,.lmme .lmlast{left:10px}
+/* この周の進み具合 */
+.lmtrack{display:flex;align-items:center;gap:3px;padding:2px 6px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid rgba(159,180,255,.2)}
+.lmtrack .s .lminf{width:14px;height:7px;display:block}.lmtrack .s .lminf path{animation:none;stroke-dasharray:none;stroke-width:9}
+.lmtrack i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--pc);background:transparent;opacity:.6}
+.lmtrack i.done{background:var(--pc);opacity:.55}
+.lmtrack i.now{background:var(--pc);opacity:1;box-shadow:0 0 0 2px rgba(255,211,90,.8),0 0 8px var(--pc);transform:scale(1.25)}
+.lmtrack .f{font-size:7.5px;font-weight:900;color:var(--lmgold);margin-left:1px}
+/* 新しい周の始まり */
+.lmbig.newround{background:radial-gradient(circle,rgba(40,30,90,.75),rgba(3,4,16,.35) 70%)}
+.lmnr{display:flex;flex-direction:column;align-items:center}
+.lmnr .lminf{width:min(60vw,240px);height:min(30vw,120px);filter:drop-shadow(0 0 14px #C46BFF) drop-shadow(0 0 26px #FFD35A)}
+.lmnr .lminf path{stroke-dasharray:100;stroke-dashoffset:100;animation:lmdraw .9s cubic-bezier(.6,0,.3,1) forwards}
+.lmnr small{margin-top:-8px}
+.lmnr b{font-family:var(--lmcz);font-weight:900;font-size:64px;line-height:1;background:linear-gradient(180deg,#fff,#FFD35A);-webkit-background-clip:text;background-clip:text;color:transparent;animation:lmpop .6s .3s cubic-bezier(.2,1.6,.4,1) both}
+.lmnr p{animation:lmfadeup .5s .5s both}
+.lmtrack{margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -4711,7 +4735,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v315";
+const APP_VER = "v316";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -15663,7 +15687,7 @@ function lmEndTurn(st, p, disc = []){
   if (h.length <= LM_REFILL){ const nd = h.length; st.exile.push(...h.splice(0)); if (nd) lmFx(st, { k: "disc", p, c: nd }); lmFx(st, { k: "refill", p }); const g = lmDraw(st, p, LM_HAND); lmL(st, `${lmNm(p)}は手札が2枚以下になったので捨てて${g}枚引き直した`); }
   if (st.revOn && st.revOn[p]) delete st.revOn[p];   // 逆襲モードは自分の手番が終わるまで
   st.turn = null; st.ti++;
-  if (st.ti >= st.order.length){ lmScoreRound(st); if (st.status !== "playing") return true; st.ti = 0; st.round++; }
+  if (st.ti >= st.order.length){ lmScoreRound(st); if (st.status !== "playing") return true; st.ti = 0; st.round++; lmFx(st, { k: "newround", r: st.round, p: st.order[0] }); }
   lmStartTurn(st); return true;
 }
 function lmScoreRound(st){
@@ -15844,6 +15868,8 @@ const lmLockB = (st, p) => `${st.seal && st.seal.by === p ? `<span class="lmlock
 const lmPname = p => esc(lmNm(p));
 /* 5の合成の回数（奇数＝あと1回でスペシャル） */
 const lmAimB = (st, p) => st.aim[p] && lmOn(st, p, "aim") ? `<span class="lmaim" title="狙い撃ち"><b>狙</b>${st.aim[p]}<small>の束＋1倍</small></span>` : "";
+/* スタートプレイヤーと、1周の最後の人の印 */
+const lmSeatMark = (st, p) => p === st.order[0] ? `<i class="lmstart" title="スタートプレイヤー（ここから1周）">${LM_INF}<b>START</b></i>` : p === st.order[st.order.length - 1] ? `<i class="lmlast" title="この人の手番が終わると1周＝得点計算">1周の最後</i>` : "";
 const lmBn = (st, p) => `<span class="lmbn" title="束の数"><i></i>${st.bun[p].length}</span>`;
 const lmC5 = (st, p) => `<span class="lmc5s ${st.c5[p] % 2 ? "on" : ""}" title="${st.c5[p] % 2 ? "5の合成：あと1回でスペシャル" : "5の合成：0回（あと2回でスペシャル）"}">5</span>`;
 function lmBunHtml(st, p, b, cls = "", data = "", sty = ""){
@@ -15965,13 +15991,14 @@ function drawLm(){
   const prog = ((Math.min(st.round, LM_ROUNDS) - 1 + st.ti / st.order.length) / LM_ROUNDS * 100).toFixed(1);
   const center = `<div class="lmcenter">
       <div class="lmround"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" class="bg"/><circle cx="30" cy="30" r="26" class="fg" pathLength="100" style="stroke-dasharray:${prog} 100"/></svg><small>ROUND</small><b>${Math.min(st.round, LM_ROUNDS)}</b><small>/ ${LM_ROUNDS}</small></div>
+      <div class="lmtrack" title="この周の手番の進み具合"><span class="s">${LM_INF}</span>${st.order.map((p, i) => `<i class="${i < st.ti ? "done" : i === st.ti ? "now" : ""}" style="--pc:${pcolor(p)}"></i>`).join("")}<span class="f">得点</span></div>
       <div class="lmpl"><div class="lmdeck" id="lmDeck"><span class="lmbk b3"></span><span class="lmbk b2"></span><span class="lmbk">${LM_INF}</span><b>${st.deck.length}<small>枚</small></b><small>山札</small></div><div class="lmex" id="lmEx">${st.exile.length ? `<span class="lmexc" style="--nc:${LM_COL[lmVal(st.exile[st.exile.length - 1])]}"><b>${lmVal(st.exile[st.exile.length - 1])}</b></span>` : `<span class="lmexc none"></span>`}<b>${st.exile.length}<small>枚</small></b><small>除外</small></div></div>
       <div class="lmbonus"><span class="lmbl">BONUS</span><span class="lmbcs">${st.bonus.map(v => lmMiniCard(v)).join("")}</span><span class="lmbm">${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => st.mult[v] > 1).map(v => `<i style="--nc:${LM_COL[v]}">${v}の束×${st.mult[v]}</i>`).join("")}</span></div>
       ${st.seal ? `<span class="lmseal">封印 ${(st.seal.vs || [st.seal.v]).join("・")}</span>` : ""}
     </div>`;
   const supply = `<div class="lmsupply top"><h5>SPECIAL<small>8の合成・5の合成2回で1枚（各2枚・1人1種1枚）</small></h5><div class="lmsps">${st.picks.map(k => `<button class="lmspc ${st.supply[k] ? "" : "out"} ${lmHas(st, me, k) ? "own" : ""}" data-spi="${k}">${lmSpArt(k, "sm")}<b>${LM_SP[k].n}</b><small>${st.supply[k] ? `残り${st.supply[k]}` : "品切れ"}</small></button>`).join("")}</div></div>`;
   const meAct = lmActor(st) === me && !fin;
-  const meZone = inGame ? `<div class="lmme ${meAct ? "act" : ""}" id="lmMe" data-seat="${me}" style="--pc:${pcolor(me)}">${meAct ? `<i class="lmturn">YOUR TURN</i>` : ""}
+  const meZone = inGame ? `<div class="lmme ${meAct ? "act" : ""}" id="lmMe" data-seat="${me}" style="--pc:${pcolor(me)}">${meAct ? `<i class="lmturn">YOUR TURN</i>` : ""}${lmSeatMark(st, me)}
       <div class="lmmeh"><b>${lmPname(me)}</b><span class="lmmyh">手札 <b>${hand.length}</b><small>枚</small></span><span class="lmsc">${st.total[me]}</span><small>＋${lmRoundPts(st, me)}／R</small>${lmBn(st, me)}${lmC5(st, me)}${lmAimB(st, me)}${lmLockB(st, me)}<span class="lmmons">${st.sp[me].map(k => lmSpB(st, me, k)).join("")}</span></div>
       ${st.bun[me].length ? `<div class="lmbuns">${st.bun[me].map(b => lmBunHtml(st, me, b, (lmMode === "fuse" ? (lmFuseSel.includes(b.id) ? "pick on" : "pick") : lmMode === "ice" && !b.ice ? "pick" : "") + (b.ice ? " ice" : "") + (plan.bun[b.id] != null ? " lmnew" : ""), `data-fb="${b.id}" data-b="${b.id}"`, `--nd:${Math.round(plan.bun[b.id] || 0)}ms`)).join("")}</div>` : `<p class="lmnote">まだ束はありません。同じ数字を2枚以上選んで合成しよう</p>`}</div>` : "";
   const table = `<div class="lmtable o${lay.n}">
@@ -16095,7 +16122,7 @@ function lmChip(st, p, b, plan){
 }
 function lmPodHtml(st, p, fin, plan){
   const act = lmActor(st) === p && !fin, bs = st.bun[p], tgt = lmMode === "swap" && p !== me;
-  return `<button class="lmpod ${act ? "act" : ""} ${tgt ? "tgt" : ""} ${lmStealSel ? "stealmode" : ""}" data-seat="${p}" style="--pc:${pcolor(p)}">${act ? `<i class="lmturn">TURN</i>` : ""}
+  return `<button class="lmpod ${act ? "act" : ""} ${tgt ? "tgt" : ""} ${lmStealSel ? "stealmode" : ""}" data-seat="${p}" style="--pc:${pcolor(p)}">${act ? `<i class="lmturn">TURN</i>` : ""}${lmSeatMark(st, p)}
     <span class="lmph"><b>${lmPname(p)}</b><span class="lmhc">${lmFan(st.hands[p].length)}<i>${st.hands[p].length}<small>枚</small></i></span></span>
     <span class="lmps"><span class="lmsc">${st.total[p]}</span><small>＋${lmRoundPts(st, p)}/R</small>${lmBn(st, p)}${lmC5(st, p)}</span>${lmAimB(st, p)}${lmLockB(st, p)}
     ${st.sp[p].length ? `<span class="lmmons ${lmStealSel ? "named" : ""}">${st.sp[p].map(k => lmStealSel ? `<span class="lmspn">${lmSpB(st, p, k)}${LM_SP[k].n}</span>` : lmSpB(st, p, k)).join("")}</span>` : ""}
@@ -16114,7 +16141,7 @@ function lmFreshCards(g, hand, plan){
   return out;
 }
 /* ---------- 演出の予定 ---------- */
-const LM_DUR = { bonus: 3300, merge: 1050, merge8: 2500, draw: 0, disc: 0, steal: 1500, getsp: 1800, score: 1700, aim: 1600, fuse: 1500, freeze: 2300, reshuf: 1100, refill: 500, spfx: 1100, seal: 1400, revon: 1500, upright: 900, swap: 900, sp: 500, end: 5600 };
+const LM_DUR = { bonus: 3300, merge: 1050, merge8: 2500, draw: 0, disc: 0, steal: 1500, getsp: 1800, score: 1700, aim: 1600, fuse: 1500, freeze: 2300, reshuf: 1100, refill: 500, newround: 1600, spfx: 1100, seal: 1400, revon: 1500, upright: 900, swap: 900, sp: 500, end: 5600 };
 function lmPlan(g){
   const st = g.st, seen = lmSeenFx[g.id] || 0; lmSeenFx[g.id] = st.fxn || 0;
   let evs = (st.fx || []).filter(e => e.n > seen);
@@ -16154,7 +16181,8 @@ const LM_DM = { in: 380, gap: 90, hold: 700, out: 460, ogap: 55 };
 const lmDrawMeDur = n => LM_DM.in + n * LM_DM.gap + LM_DM.hold + LM_DM.out + n * LM_DM.ogap + 120;
 const lmDrawMeArrive = (n, i) => LM_DM.in + n * LM_DM.gap + LM_DM.hold + i * LM_DM.ogap + LM_DM.out - 60;
 function lmDrawMe(e, from, to){
-  const n = Math.min(e.c, 10), vals = lmDrawVals.splice(0, n);
+  const n = Math.min(e.c, 10); let vals = lmDrawVals.splice(0, n);
+  if (vals.length < n){ const g0 = lmById(lmId), h = g0 && g0.st.hands[me] ? g0.st.hands[me] : []; vals = h.slice(-n).map(lmVal); }   // 念のため：手札の末尾（引いたばかりの札）
   const d = document.createElement("div"); d.className = "lmdc";
   d.innerHTML = `<small>DRAW ${e.c}</small><div class="lmdcr">${Array.from({ length: n }, (_, i) => vals[i] != null ? lmCard(vals[i]) : `<span class="lmflyb lmxl">${LM_INF}</span>`).join("")}</div>`;
   document.body.appendChild(d);
@@ -16272,6 +16300,11 @@ function lmRun(g, e){
   }
   if (e.k === "swap"){ lmFly(seatR(e.p), seatR(e.q), LM_BACK, { dur: 600, cls: "back" }); lmFly(seatR(e.q), seatR(e.p), LM_BACK, { delay: 150, dur: 600, cls: "back" }); return; }
   if (e.k === "reshuf"){ for (let i = 0; i < 8; i++) lmFly(ex, deck, LM_BACK, { delay: i * 60, dur: 520, cls: "back", lift: -40 }); lmBig(`<small>RESHUFFLE</small><p>除外置き場を混ぜて新しい山札に</p>`, "small", 1100); return; }
+  if (e.k === "newround"){
+    lmBig(`<div class="lmnr">${LM_INF}<small>ROUND</small><b>${e.r}</b><p>${lmPname(e.p)}から新しい1周</p></div>`, "newround", 1700);
+    setTimeout(() => { const el = lmSeatEl(e.p); if (el){ lmHit(el, "#FFD35A"); const m = el.querySelector(".lmstart"); if (m){ m.classList.remove("go"); void m.offsetWidth; m.classList.add("go"); } } }, 900);
+    return;
+  }
   if (e.k === "spfx"){ lmSpFx(g, e); return; }
   if (e.k === "seal"){ lmBig(`<small>SEAL</small><b>${(e.vs || []).join("・")}</b><p>${lmPname(e.p)}の次の手番まで、他の人は合成できない</p>`, "steal", 1500); lmHit(seat(e.p), "#FF5A7A"); return; }
   if (e.k === "revon"){ lmBig(`<small>REVENGE MODE</small>${lmSpBadge("rev", "xl hot")}<p>${lmPname(e.p)}：次の手番は${lmPname(e.q)}から2枚で奪える</p>`, "steal", 1600); lmHit(seat(e.p), "#FF5A7A", "hurt"); return; }
