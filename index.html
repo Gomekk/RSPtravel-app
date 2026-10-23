@@ -4595,6 +4595,79 @@ body.bgpause .hxemb i{animation-play-state:paused}
 .lmsupply.top .lmspc .lmsp{width:20px;height:22px}
 .lmsupply.top .lmspc b{font-size:10px;flex:none;white-space:nowrap}
 .lmsupply.top .lmspc small{font-size:8px}
+.lmchip.ice{outline:2px solid #9FE6FF;outline-offset:1px;box-shadow:0 0 10px rgba(159,230,255,.9)}
+.lmchip.ice::after{content:"凍";position:absolute;left:-5px;top:-6px;font-size:7.5px;font-weight:900;padding:0 2px;border-radius:4px;background:#9FE6FF;color:#0A1830;line-height:1.3}
+.lmbun.ice .lmbs{outline:2px solid #9FE6FF;outline-offset:2px;box-shadow:0 0 14px rgba(159,230,255,.9)}
+.lmbun.ice::after{content:"凍結";position:absolute;left:-2px;top:-6px;font-size:8px;font-weight:900;padding:0 3px;border-radius:4px;background:#9FE6FF;color:#0A1830;z-index:2}
+/* 凍結：束を氷で卓に固定 */
+.lmchip.ice,.lmbun.ice .lmbs{outline:none}
+.lmchip.ice::after,.lmbun.ice::after{content:none}
+.lmchip.ice::before,.lmbun.ice .lmbs::after{content:"";position:absolute;inset:-6px -6px -7px -6px;z-index:3;pointer-events:none;background:center/100% 100% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 56' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23F2FDFF' stop-opacity='.78'/%3E%3Cstop offset='.45' stop-color='%23A8EAFF' stop-opacity='.32'/%3E%3Cstop offset='1' stop-color='%235EC8FF' stop-opacity='.6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2 52 L6 46 L4 34 L6 16 L3 7 L14 3 L24 5 L33 2 L41 8 L39 22 L42 36 L38 47 L42 53 L30 50 L22 54 L12 50 Z' fill='url%28%23g%29' stroke='%23EFFFFF' stroke-width='1.1' stroke-linejoin='round'/%3E%3Cpath d='M9 9 L20 22 L15 38 M20 22 L33 15 M20 22 L28 40 L37 44 M15 38 L8 46' fill='none' stroke='%23FFFFFF' stroke-opacity='.75' stroke-width='.7'/%3E%3Cpath d='M7 9 L14 6' stroke='%23FFFFFF' stroke-width='1.6' stroke-linecap='round' opacity='.95'/%3E%3Cpath d='M33 6 L37 9' stroke='%23FFFFFF' stroke-width='1.2' stroke-linecap='round' opacity='.8'/%3E%3Cpath d='M0 56 L5 49 L9 56 Z M16 56 L19 51 L23 56 Z M30 56 L34 50 L38 56 Z M38 56 L42 51 L44 56 Z' fill='%23DDF7FF' fill-opacity='.85'/%3E%3C/svg%3E");filter:drop-shadow(0 0 4px rgba(159,230,255,.9));animation:lmice 3.2s ease-in-out infinite}
+@keyframes lmice{50%{filter:drop-shadow(0 0 8px rgba(190,240,255,1)) brightness(1.15)}}
+.lmchip.ice{box-shadow:0 0 12px rgba(159,230,255,.8)}
+.lmchip.ice b,.lmbun.ice .lmbs b{filter:saturate(.6) brightness(1.15)}
+.lmbun.ice .lmbs{position:relative}
+.lmbun.ice em::after{content:"凍結";margin-left:3px;font-family:var(--body);font-size:8px;color:#9FE6FF}
+/* 凍結した瞬間：氷が張る */
+.lmchip.icing::before,.lmbun.icing .lmbs::after{animation:lmicein .9s cubic-bezier(.2,1.4,.4,1) both,lmice 3.2s .9s ease-in-out infinite}
+@keyframes lmicein{0%{transform:scale(.2);opacity:0;filter:brightness(3) drop-shadow(0 0 14px #fff)}60%{transform:scale(1.15);opacity:1}100%{transform:none;opacity:1}}
+.lmfrost{position:fixed;inset:0;z-index:47;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(160,230,255,.18) 65%,rgba(220,248,255,.55) 100%);box-shadow:inset 0 0 80px rgba(200,245,255,.6);animation:lmfrost 2s ease both}
+@keyframes lmfrost{0%{opacity:0}20%,70%{opacity:1}100%{opacity:0}}
+.lmsnow{position:fixed;z-index:49;pointer-events:none;width:0;height:0}
+.lmsnow i{position:absolute;width:10px;height:10px;margin:-5px;background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cg stroke='%23EFFFFF' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M10 1v18M2.2 5.5l15.6 9M2.2 14.5l15.6-9'/%3E%3C/g%3E%3C/svg%3E");filter:drop-shadow(0 0 4px #9FE6FF);animation:lmsnow 1.2s cubic-bezier(.1,.8,.3,1) forwards}
+@keyframes lmsnow{from{transform:rotate(var(--a)) translateX(0) scale(1.4) rotate(0);opacity:1}to{transform:rotate(var(--a)) translateX(var(--r)) scale(.3) rotate(180deg);opacity:0}}
+.lmbig.freeze{background:radial-gradient(circle,rgba(150,220,255,.45),rgba(3,4,16,.55) 70%)}
+.lmbig.freeze>b{font-size:110px;color:#F2FDFF;text-shadow:0 0 20px #9FE6FF,0 0 50px #5EC8FF}
+/* スペシャルのイラスト */
+.lmart{display:block;flex:none;filter:drop-shadow(0 0 4px color-mix(in srgb,currentColor 60%,transparent))}
+.lmart.sm{width:24px;height:24px}
+.lmart.row{width:34px;height:34px;padding:2px;border-radius:9px;background:radial-gradient(circle,color-mix(in srgb,currentColor 18%,transparent),transparent 70%)}
+.lmart.lmbigart{width:min(40vw,150px);height:min(40vw,150px);filter:drop-shadow(0 0 12px currentColor) drop-shadow(0 0 26px currentColor)}
+.lmsupply.top .lmspc .lmart{width:22px;height:22px}
+/* 発動エフェクト（画面中央） */
+.lmbig.spfx{background:radial-gradient(circle,color-mix(in srgb,#05061A 50%,transparent),transparent 65%)}
+.lmsfx{display:flex;flex-direction:column;align-items:center;gap:4px;animation:lmsfxin 1.25s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes lmsfxin{0%{transform:scale(.4);opacity:0}20%{transform:scale(1.08);opacity:1}35%{transform:scale(1)}80%{opacity:1}100%{transform:scale(1.15);opacity:0}}
+.lmsfx>b{font-size:26px;font-weight:900;color:#fff;text-shadow:0 0 12px var(--c),0 0 26px var(--c);letter-spacing:.15em}
+.lmsfx>p{margin:0!important;font-size:12px!important;color:var(--c)!important;background:rgba(5,6,26,.7);padding:2px 10px;border-radius:10px}
+/* 席の上に飛び出すイラスト */
+.lmpopart{position:fixed;z-index:46;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;pointer-events:none;animation:lmpopart 1.6s cubic-bezier(.2,1.5,.4,1) both}
+.lmpopart .lmart{width:40px;height:40px}
+.lmpopart small{font-size:10px;font-weight:900;color:#fff;text-shadow:0 0 6px var(--c),0 1px 3px #000;white-space:nowrap}
+@keyframes lmpopart{0%{opacity:0;transform:translate(-50%,-60%) scale(.3)}20%{opacity:1;transform:translate(-50%,-110%) scale(1.15)}35%{transform:translate(-50%,-100%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-140%)}}
+/* 動きの種類 */
+.lmart.lmbigart.m-pulse .a1,.lmart.lmbigart.m-pulse .a2,.lmart.lmbigart.m-pulse .a3{transform-origin:24px 24px;animation:lmapulse 1s ease-out infinite}
+.lmart.lmbigart.m-pulse .a2{animation-delay:.15s}.lmart.lmbigart.m-pulse .a3{animation-delay:.3s}
+@keyframes lmapulse{0%{transform:scale(.5);opacity:0}40%{opacity:1}100%{transform:scale(1.25);opacity:0}}
+.lmart.lmbigart.m-spin .a1{transform-origin:24px 24px;animation:lmaspin 1.2s cubic-bezier(.3,.7,.3,1) both}
+@keyframes lmaspin{from{transform:rotate(-200deg) scale(.4)}to{transform:none}}
+.lmart.lmbigart.m-rise .a1,.lmart.lmbigart.m-rise .a2,.lmart.lmbigart.m-rise .a3{animation:lmarise .7s cubic-bezier(.2,1.5,.4,1) both}
+.lmart.lmbigart.m-rise .a2{animation-delay:.12s}.lmart.lmbigart.m-rise .a3{animation-delay:.24s}
+@keyframes lmarise{from{transform:translateY(16px);opacity:0}}
+.lmart.lmbigart.m-shield .a1{transform-origin:24px 24px;animation:lmashield .9s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes lmashield{0%{transform:scale(1.8);opacity:0;stroke-width:6}60%{opacity:1}100%{transform:none}}
+.lmart.lmbigart.m-swing .a1{animation:lmaswing .8s ease both}.lmart.lmbigart.m-swing .a2{animation:lmaswing2 .8s .15s ease both}
+@keyframes lmaswing{from{transform:translate(-10px,10px);opacity:0}}@keyframes lmaswing2{from{transform:translate(10px,-10px);opacity:0}}
+.lmart.lmbigart.m-drop .a1,.lmart.lmbigart.m-drop .a2{animation:lmadrop .6s cubic-bezier(.3,1.6,.4,1) both}.lmart.lmbigart.m-drop .a2{animation-delay:.12s}
+@keyframes lmadrop{from{transform:translateY(-22px);opacity:0}}
+.lmart.lmbigart.m-slash .a1{stroke-dasharray:40;stroke-dashoffset:40;animation:lmaslash .45s .1s ease-out forwards}
+@keyframes lmaslash{to{stroke-dashoffset:0}}
+.lmart.lmbigart.m-lock .a1{transform-origin:24px 24px;animation:lmalock .8s cubic-bezier(.2,1.4,.4,1) both}.lmart.lmbigart.m-lock .a2{animation:lmafade .4s .5s both}
+@keyframes lmalock{0%{transform:scale(2.4) rotate(60deg);opacity:0}100%{transform:none;opacity:1}}
+@keyframes lmafade{from{opacity:0}}
+.lmart.lmbigart.m-blink .a1{transform-origin:24px 24px;animation:lmablink 1s ease both}
+@keyframes lmablink{0%,30%{transform:scaleY(.1)}60%{transform:scaleY(1.2)}100%{transform:none}}
+.lmart.lmbigart.m-shake .a2{animation:lmashake .5s .2s both}.lmart.lmbigart.m-shake .a1{animation:lmadrop .5s both}
+@keyframes lmashake{0%{opacity:0;transform:scale(1.4)}40%{opacity:1;transform:translateX(-3px)}70%{transform:translateX(3px)}100%{transform:none}}
+.lmart.lmbigart.m-merge .a1{animation:lmamerge1 .9s ease both}.lmart.lmbigart.m-merge .a2{animation:lmamerge2 .9s ease both}
+@keyframes lmamerge1{from{transform:translateX(-12px)}}@keyframes lmamerge2{from{transform:translateX(12px)}}
+.lmart.lmbigart.m-flame .a1{transform-origin:24px 44px;animation:lmaflame .5s ease-in-out infinite alternate}.lmart.lmbigart.m-flame .a2{transform-origin:24px 44px;animation:lmaflame .35s ease-in-out infinite alternate-reverse}
+@keyframes lmaflame{from{transform:scaleY(.85)}to{transform:scaleY(1.1)}}
+.lmart.lmbigart.m-spot .a2{animation:lmafade .6s both}.lmart.lmbigart.m-spot .a1{animation:lmadrop .6s .2s cubic-bezier(.3,1.6,.4,1) both}
+.lmart.lmbigart.m-flip .a1{transform-origin:24px 24px;animation:lmaflip .9s cubic-bezier(.5,0,.3,1) both}
+@keyframes lmaflip{from{transform:rotate(180deg)}}
+.lmart.lmbigart.m-split .a1{animation:lmasplit1 .7s cubic-bezier(.2,1.5,.4,1) both}.lmart.lmbigart.m-split .a2{animation:lmasplit2 .7s .1s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes lmasplit1{from{transform:translate(8px,4px) rotate(10deg);opacity:0}}@keyframes lmasplit2{from{transform:translate(-8px,-4px) rotate(-10deg);opacity:0}}
 </style>
 </head>
 <body>
@@ -4638,7 +4711,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v313";
+const APP_VER = "v315";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -15352,7 +15425,7 @@ const LM_SP = {
   seal:   { n: "封印",     m: "封", tx: "自分が合成した数字は、次の自分の番まで他の人が合成できない" },
   fuse:   { n: "融合",     m: "融", tx: "【1回だけ】自分の束2つを、数字を足した1つの束にする（1と3なら4の束。4の倍率もかかる）" },
   relive: { n: "再起",     m: "再", tx: "ドローの代わりに、除外置き場の一番上を引ける" },
-  freeze: { n: "凍結",     m: "凍", tx: "自分が合成した数字は、そのラウンドが終わるまで他の人が合成できない（二連のときは1組目の数字だけ）" },
+  freeze: { n: "凍結",     m: "凍", tx: "【1回だけ】自分の束の数字を1つ選び、その時点でその数字の束をすべて凍結（奪われなくなる）。後から増えた同じ数字の束は対象外" },
   solo:   { n: "単独",     m: "単", tx: "1枚だけでも合成できる（引く枚数は0・スペシャルはもらえない）" },
   comeback:{ n: "逆転",    m: "転", tx: "ラウンドの終わりに自分が最下位なら、山札から3枚引く" },
   ward:   { n: "結界",     m: "結", tx: "自分の束を奪える範囲が「合成した数字−1」以下に狭まる（略奪を持つ相手には＋1以下）" }
@@ -15464,16 +15537,16 @@ function lmMergeInfo(st, p, idx){
     if (G.idx.filter(i => lmIsUp(h[i])).length >= 2) return null;   // ＋1した同士ではペアにできない
     if (G.k === 1 && !lmOn(st, p, "solo")) return null;
     if (st.seal && st.seal.by !== p && (st.seal.vs || [st.seal.v]).includes(G.v)) return null;
-    if (st.frz && st.frz.round === st.round && st.frz.by !== p && st.frz.vs.includes(G.v)) return null;
   }
   return { groups, v: groups[0].v, k: groups[0].k, wild };
 }
 /* スペシャルが効いた印（その手番の間、バッジを赤く光らせる） */
-const lmLight = (st, p, k, plus = 0) => { st.lit = st.lit || {}; st.lit[p + ":" + k] = st.no + plus; };
+const LM_OWNFX = ["freeze", "seal", "fuse", "swap"];   // 自前の演出があるもの
+const lmLight = (st, p, k, plus = 0) => { st.lit = st.lit || {}; const was = st.lit[p + ":" + k] >= st.no + plus; st.lit[p + ":" + k] = st.no + plus; if (!was && !LM_OWNFX.includes(k)) lmFx(st, { k: "spfx", p, s: k }); };
 const lmStealNeed = (st, p, q) => st.revOn && st.revOn[p] === q ? 2 : lmOn(st, q, "wall") ? 5 : lmOn(st, p, "rob") ? 3 : LM_STEAL;
 function lmStealTargets(st, p, v, k){
   const range = v + (lmOn(st, p, "raid") ? 3 : 1), out = [];
-  st.players.forEach(q => { if (q === p || k < lmStealNeed(st, p, q)) return; const r = range - (lmOn(st, q, "ward") ? 2 : 0); st.bun[q].forEach(b => { if (lmBunVal(b) <= r) out.push({ q, id: b.id }); }); });
+  st.players.forEach(q => { if (q === p || k < lmStealNeed(st, p, q)) return; const r = range - (lmOn(st, q, "ward") ? 2 : 0); st.bun[q].forEach(b => { if (!b.ice && lmBunVal(b) <= r) out.push({ q, id: b.id }); }); });
   return out;
 }
 function lmMerge(st, p, idx){
@@ -15485,17 +15558,16 @@ function lmMerge(st, p, idx){
   M.groups.forEach((G, gi) => {
     const b = lmNewB(st, G.v, G.k, p); st.bun[p].push(b); T.made.push(b.id);
     const d = G.k === 1 ? 0 : lmDrawN(G.v) + (gi === 0 && lmOn(st, p, "amp") ? 3 : 0); n += d;
+    lmFx(st, { k: "merge", p, v: G.v, c: G.k, d, wild: !!G.wild, up: !!G.up, b: b.id, dbl: M.groups.length > 1 ? gi + 1 : 0 });
     if (gi === 0 && G.k > 1 && lmOn(st, p, "amp")) lmLight(st, p, "amp");
     if (G.wild) lmLight(st, p, "wild"); if (G.up) lmLight(st, p, "up"); if (G.k === 1) lmLight(st, p, "solo"); if (M.groups.length > 1) lmLight(st, p, "dbl");
-    lmFx(st, { k: "merge", p, v: G.v, c: G.k, d, wild: !!G.wild, up: !!G.up, b: b.id, dbl: M.groups.length > 1 ? gi + 1 : 0 });
     lmL(st, `${lmNm(p)}が${G.v}を${G.k}枚合成${G.wild ? "（万能）" : G.up ? "（昇格で＋1）" : ""}${M.groups.length > 1 ? "（二連）" : ""}して束に`);
     if (G.k >= 2){ if (G.v === 8) sp++; if (G.v === 5){ st.c5[p]++; if (st.c5[p] % 2 === 0) sp++; } }
     T.stealQ.push({ v: G.v, k: G.k });
   });
   const got = lmDraw(st, p, n);
   lmL(st, `${lmNm(p)}は${got}枚引いた`);
-  if (lmOn(st, p, "fill")){ lmLight(st, p, "fill"); const k = M.groups.reduce((s, G) => s + G.k, 0); lmFx(st, { k: "sp", p, s: "fill" }); const g2 = lmDraw(st, p, k); if (g2) lmL(st, `「補充」${lmNm(p)}：出した${k}枚分、さらに${g2}枚引いた`); }
-  if (lmOn(st, p, "freeze")){ lmLight(st, p, "freeze"); st.frz = { vs: [M.groups[0].v], by: p, round: st.round };   /* 1組目の数字だけ */ lmL(st, `「凍結」${lmNm(p)}：このラウンドの間、${st.frz.vs.join("・")}は他の人が合成できない`); lmFx(st, { k: "freeze", p, vs: st.frz.vs }); }
+  if (lmOn(st, p, "fill")){ lmLight(st, p, "fill"); const k = M.groups.reduce((s, G) => s + G.k, 0); const g2 = lmDraw(st, p, k); if (g2) lmL(st, `「補充」${lmNm(p)}：出した${k}枚分、さらに${g2}枚引いた`); }
   if (lmOn(st, p, "seal")){ st.seal = { vs: M.groups.map(G => G.v), by: p }; lmL(st, `「封印」${lmNm(p)}：次の番まで${st.seal.vs.join("・")}は合成できない`); lmFx(st, { k: "seal", p, vs: st.seal.vs }); }
   T.pendSp = (T.pendSp || 0) + sp;
   lmNextSteal(st, p);
@@ -15576,10 +15648,11 @@ function lmFuse(st, p, id1, id2){
   arr.splice(arr.indexOf(a), 1); arr.splice(arr.indexOf(b), 1); arr.push(nb); st.used[p + ":fuse"] = 1;
   lmLight(st, p, "fuse"); lmL(st, `「融合」${lmNm(p)}：${a.v}と${b.v}の束を合体（${nb.v}の束）`); lmFx(st, { k: "fuse", p, v: nb.v, b: nb.id }); return true;
 }
-function lmFreeze(st, p, q){
-  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmOn(st, p, "freeze") || st.round !== LM_ROUNDS || st.used[p + ":freeze"] || q === p || !st.players.includes(q)) return false;
-  st.freeze = (st.freeze || []).concat([q]); st.used[p + ":freeze"] = 1;
-  lmL(st, `「凍結」${lmNm(p)}：${lmNm(q)}の最終ラウンドの得点を0に`); lmFx(st, { k: "freeze", p, q }); return true;
+function lmFreeze(st, p, v){
+  const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmOn(st, p, "freeze") || st.used[p + ":freeze"]) return false;
+  const bs = st.bun[p].filter(b => b.v === v && !b.ice); if (!bs.length) return false;
+  bs.forEach(b => b.ice = 1); st.used[p + ":freeze"] = 1; lmLight(st, p, "freeze");
+  lmL(st, `「凍結」${lmNm(p)}：${v}の束（${bs.length}つ）を凍結。もう奪われない`); lmFx(st, { k: "freeze", p, v, ids: bs.map(b => b.id) }); return true;
 }
 /* 手番の終わり：disc は捨てる手札の位置（10枚を超えた分） */
 function lmEndTurn(st, p, disc = []){
@@ -15631,6 +15704,7 @@ function lmApply(st, p, mv){
   if (k === "merge") return lmMerge(st, p, a);
   if (k === "swap") return lmSwap(st, p, a);
   if (k === "fuse") return lmFuse(st, p, a, b);
+  if (k === "freeze") return lmFreeze(st, p, a);
   if (k === "end") return lmEndTurn(st, p, a || []);
   return false;
 }
@@ -15654,6 +15728,10 @@ function lmCpuStep(st, p){
   // 融合：後半に、奪われやすい小さい束2つをまとめる
   if (lmOn(st, p, "fuse") && !st.used[p + ":fuse"] && st.round >= 8 && st.bun[p].length >= 3){ const bs = st.bun[p].filter(b => !b.side).slice().sort((x, y) => lmPts(st, p, y) - lmPts(st, p, x)); if (bs.length >= 2) return ["fuse", bs[0].id, bs[1].id]; }
   if (lmOn(st, p, "swap") && !T.swap && T.merges === 0 && Math.random() < .3){ const q = st.players.filter(x => x !== p && st.hands[x].length)[0]; if (q) return ["swap", q]; }
+  if (lmOn(st, p, "freeze") && !st.used[p + ":freeze"] && st.round >= 4){
+    const by = {}; st.bun[p].forEach(b => { if (!b.ice) by[b.v] = (by[b.v] || 0) + lmPts(st, p, b); });
+    const best = Object.entries(by).sort((x, y) => y[1] - x[1])[0]; if (best && best[1] >= 10) return ["freeze", +best[0]];
+  }
   // 合成：いちばん価値の高い組
   const can = T.merges === 0;
   if (can){
@@ -15755,14 +15833,14 @@ function lmHot(st, p, k){
   if (st.lit && st.lit[p + ":" + k] >= st.no) return true;
   if (k === "rev") return !!(st.revOn && st.revOn[p]);
   if (k === "seal") return !!(st.seal && st.seal.by === p);
-  if (k === "freeze") return !!(st.frz && st.frz.by === p && st.frz.round === st.round);
+  if (k === "freeze") return st.bun[p].some(b => b.ice);
   if (k === "aim") return !!st.aim[p];
   if (k === "crown") return st.bun[p].some(b => b.v === 8 && !b.parts);
   if (k === "acc") return st.bun[p].length > 0;
   return false;
 }
 /* 封印・凍結が効いている数字（全員に見える） */
-const lmLockB = (st, p) => `${st.seal && st.seal.by === p ? `<span class="lmlock">封印<b>${(st.seal.vs || [st.seal.v]).join("・")}</b></span>` : ""}${st.frz && st.frz.by === p && st.frz.round === st.round ? `<span class="lmlock frz">凍結<b>${st.frz.vs.join("・")}</b></span>` : ""}`;
+const lmLockB = (st, p) => `${st.seal && st.seal.by === p ? `<span class="lmlock">封印<b>${(st.seal.vs || [st.seal.v]).join("・")}</b></span>` : ""}`;
 const lmPname = p => esc(lmNm(p));
 /* 5の合成の回数（奇数＝あと1回でスペシャル） */
 const lmAimB = (st, p) => st.aim[p] && lmOn(st, p, "aim") ? `<span class="lmaim" title="狙い撃ち"><b>狙</b>${st.aim[p]}<small>の束＋1倍</small></span>` : "";
@@ -15786,7 +15864,7 @@ function lmMenu(g){
   s.querySelector('[data-x="log"]').onclick = () => openSheet("これまでの流れ", `<ul class="lmloglist">${(g.log || []).slice().reverse().map(x => `<li>${esc(x.m)}</li>`).join("")}</ul>`);
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); const { error } = await sb.from("lm_games").update({ status: "aborted", version: (g.version || 1) + 1 }).eq("id", g.id); if (error){ fail(error, "保存"); return; } await loadTable("lm_games"); closeLm(); };
 }
-const lmSpRow = (k, cls = "", data = "", extra = "") => `<div class="lmspr ${cls}" ${data}>${lmSpBadge(k)}<div><b>${LM_SP[k].n}</b><p>${LM_SP[k].tx}</p></div>${extra}</div>`;
+const lmSpRow = (k, cls = "", data = "", extra = "") => `<div class="lmspr ${cls}" ${data}>${lmSpArt(k, "row")}<div><b>${LM_SP[k].n}</b><p>${LM_SP[k].tx}</p></div>${extra}</div>`;
 function lmSeatSheet(st, p){
   const bs = st.bun[p];
   openSheet(`${lmNm(p)}`, `<div class="lmsheet"><p class="lmsum">合計 <b>${st.total[p]}</b>点・このラウンド <b>${lmRoundPts(st, p)}</b>点見込み・手札${st.hands[p].length}枚</p>
@@ -15889,13 +15967,13 @@ function drawLm(){
       <div class="lmround"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" class="bg"/><circle cx="30" cy="30" r="26" class="fg" pathLength="100" style="stroke-dasharray:${prog} 100"/></svg><small>ROUND</small><b>${Math.min(st.round, LM_ROUNDS)}</b><small>/ ${LM_ROUNDS}</small></div>
       <div class="lmpl"><div class="lmdeck" id="lmDeck"><span class="lmbk b3"></span><span class="lmbk b2"></span><span class="lmbk">${LM_INF}</span><b>${st.deck.length}<small>枚</small></b><small>山札</small></div><div class="lmex" id="lmEx">${st.exile.length ? `<span class="lmexc" style="--nc:${LM_COL[lmVal(st.exile[st.exile.length - 1])]}"><b>${lmVal(st.exile[st.exile.length - 1])}</b></span>` : `<span class="lmexc none"></span>`}<b>${st.exile.length}<small>枚</small></b><small>除外</small></div></div>
       <div class="lmbonus"><span class="lmbl">BONUS</span><span class="lmbcs">${st.bonus.map(v => lmMiniCard(v)).join("")}</span><span class="lmbm">${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => st.mult[v] > 1).map(v => `<i style="--nc:${LM_COL[v]}">${v}の束×${st.mult[v]}</i>`).join("")}</span></div>
-      ${st.seal ? `<span class="lmseal">封印 ${(st.seal.vs || [st.seal.v]).join("・")}</span>` : ""}${st.frz && st.frz.round === st.round ? `<span class="lmseal frz">凍結 ${st.frz.vs.join("・")}</span>` : ""}
+      ${st.seal ? `<span class="lmseal">封印 ${(st.seal.vs || [st.seal.v]).join("・")}</span>` : ""}
     </div>`;
-  const supply = `<div class="lmsupply top"><h5>SPECIAL<small>8の合成・5の合成2回で1枚（各2枚・1人1種1枚）</small></h5><div class="lmsps">${st.picks.map(k => `<button class="lmspc ${st.supply[k] ? "" : "out"} ${lmHas(st, me, k) ? "own" : ""}" data-spi="${k}">${lmSpBadge(k)}<b>${LM_SP[k].n}</b><small>${st.supply[k] ? `残り${st.supply[k]}` : "品切れ"}</small></button>`).join("")}</div></div>`;
+  const supply = `<div class="lmsupply top"><h5>SPECIAL<small>8の合成・5の合成2回で1枚（各2枚・1人1種1枚）</small></h5><div class="lmsps">${st.picks.map(k => `<button class="lmspc ${st.supply[k] ? "" : "out"} ${lmHas(st, me, k) ? "own" : ""}" data-spi="${k}">${lmSpArt(k, "sm")}<b>${LM_SP[k].n}</b><small>${st.supply[k] ? `残り${st.supply[k]}` : "品切れ"}</small></button>`).join("")}</div></div>`;
   const meAct = lmActor(st) === me && !fin;
   const meZone = inGame ? `<div class="lmme ${meAct ? "act" : ""}" id="lmMe" data-seat="${me}" style="--pc:${pcolor(me)}">${meAct ? `<i class="lmturn">YOUR TURN</i>` : ""}
       <div class="lmmeh"><b>${lmPname(me)}</b><span class="lmmyh">手札 <b>${hand.length}</b><small>枚</small></span><span class="lmsc">${st.total[me]}</span><small>＋${lmRoundPts(st, me)}／R</small>${lmBn(st, me)}${lmC5(st, me)}${lmAimB(st, me)}${lmLockB(st, me)}<span class="lmmons">${st.sp[me].map(k => lmSpB(st, me, k)).join("")}</span></div>
-      ${st.bun[me].length ? `<div class="lmbuns">${st.bun[me].map(b => lmBunHtml(st, me, b, (lmMode === "fuse" ? (lmFuseSel.includes(b.id) ? "pick on" : "pick") : "") + (plan.bun[b.id] != null ? " lmnew" : ""), `data-fb="${b.id}" data-b="${b.id}"`, `--nd:${Math.round(plan.bun[b.id] || 0)}ms`)).join("")}</div>` : `<p class="lmnote">まだ束はありません。同じ数字を2枚以上選んで合成しよう</p>`}</div>` : "";
+      ${st.bun[me].length ? `<div class="lmbuns">${st.bun[me].map(b => lmBunHtml(st, me, b, (lmMode === "fuse" ? (lmFuseSel.includes(b.id) ? "pick on" : "pick") : lmMode === "ice" && !b.ice ? "pick" : "") + (b.ice ? " ice" : "") + (plan.bun[b.id] != null ? " lmnew" : ""), `data-fb="${b.id}" data-b="${b.id}"`, `--nd:${Math.round(plan.bun[b.id] || 0)}ms`)).join("")}</div>` : `<p class="lmnote">まだ束はありません。同じ数字を2枚以上選んで合成しよう</p>`}</div>` : "";
   const table = `<div class="lmtable o${lay.n}">
       ${lay.top.length ? `<div class="lmtrow">${lay.top.map(pod).join("")}</div>` : ""}
       <div class="lmtmid"><div class="lmtcol">${lay.left.map(pod).join("")}</div>${center}<div class="lmtcol">${lay.right.map(pod).join("")}</div></div>
@@ -15915,6 +15993,7 @@ function drawLm(){
   else if (!myTurn) guide = `${lmPname(lmActor(st))}の番です`;
   else if (lmMode === "discard") guide = `手札が10枚を超えています。捨てるカードを<b>${over}枚</b>選んでください（選択中${lmSel.length}枚）${over > 1 ? "<br>最後に選んだカードが除外置き場の<em>一番上</em>になります（「再起」で引けるカード）" : ""}`;
   else if (lmMode === "swap") guide = "手札を1枚交換する相手の席をタップ";
+  else if (lmMode === "ice") guide = "凍結する数字の束を1つタップ（その数字の束がすべて奪われなくなる）";
   else if (lmMode === "fuse") guide = `合体する束を2つタップ（選択中${lmFuseSel.length}つ）`;
   else if (M){
     let c5 = st.c5[me], drawN = 0;
@@ -15924,7 +16003,7 @@ function drawLm(){
     const fillN = lmOn(st, me, "fill") ? M.groups.reduce((s, G) => s + G.k, 0) : 0;
     guide = `${M.groups.length > 1 ? "「二連」2組同時に合成<br>" : ""}${parts.join("<br>")}<br>合わせて<b>${drawN + fillN}</b>枚引く${fillN ? `（補充で＋${fillN}枚）` : ""}`;
   }
-  else if (lmSel.length) guide = `その組み合わせは合成できません（同じ数字を2枚以上）${(st.seal && st.seal.by !== me) || (st.frz && st.frz.round === st.round && st.frz.by !== me) ? "。封印・凍結中の数字は合成できない" : ""}`;
+  else if (lmSel.length) guide = `その組み合わせは合成できません（同じ数字を2枚以上）${(st.seal && st.seal.by !== me) ? "。封印中の数字は合成できない" : ""}`;
   else if (!T.merges && st.revOn && st.revOn[me]) guide = `<em>逆襲モード！</em>この手番は${lmPname(st.revOn[me])}から<b>2枚</b>の合成で束を奪える`;
   else guide = T.merges ? "合成しました。終わるなら「手番を終える」" : `同じ数字のカードを2枚以上タップして合成（1手番に1組${lmOn(st, me, "dbl") ? "。「二連」で違う数字の2組を同時に選べる" : ""}${lmOn(st, me, "up") ? "。「昇格」で1つ小さい数字もまぜられる（元の数字が1枚以上必要）" : ""}）。合成しないで終えることもできます`;
   if (stealAsk) btns = `<button class="lmb" id="lmNoSteal">奪わない</button>`;
@@ -15935,6 +16014,7 @@ function drawLm(){
       btns = `<button class="lmb go" id="lmMerge" ${M ? "" : "disabled"}>合成する</button><button class="lmb" id="lmEnd">手番を終える${over ? `（${over}枚捨てる）` : ""}</button>`;
       const sb2 = [];
       if (lmOn(st, me, "swap") && !T.swap) sb2.push(`<button class="lmb sp" id="lmSwap">${lmSpBadge("swap")}交換</button>`);
+      if (lmOn(st, me, "freeze") && !st.used[me + ":freeze"] && st.bun[me].some(b => !b.ice)) sb2.push(`<button class="lmb sp" id="lmFrz">${lmSpBadge("freeze")}凍結（1回だけ）</button>`);
       if (lmOn(st, me, "fuse") && !st.used[me + ":fuse"] && st.bun[me].length >= 2) sb2.push(`<button class="lmb sp" id="lmFuse">${lmSpBadge("fuse")}融合（1回だけ）</button>`);
       if (sb2.length) btns += `<div class="lmspb">${sb2.join("")}</div>`;
     }
@@ -15959,8 +16039,8 @@ function drawLm(){
   el.querySelectorAll("[data-steal]").forEach(c => c.onclick = ev => { ev.stopPropagation(); lmStealSel = null; lmDo(g.id, me, ["steal", c.dataset.steal]); });
   el.querySelectorAll("[data-seat]").forEach(b => b.onclick = async () => {
     const p = b.dataset.seat;
-    if (lmStealSel || lmMode === "fuse" || lmMode === "discard") return;
-    if ((lmMode === "swap" || lmMode === "freeze") && p !== me){ const k = lmMode; lmMode = "normal"; await lmDo(g.id, me, [k, p]); return; }
+    if (lmStealSel || lmMode === "fuse" || lmMode === "discard" || lmMode === "ice") return;
+    if (lmMode === "swap" && p !== me){ const k = lmMode; lmMode = "normal"; await lmDo(g.id, me, [k, p]); return; }
     lmSeatSheet(st, p);
   });
   el.querySelectorAll("[data-hi]").forEach(c => c.onclick = async () => {
@@ -15969,12 +16049,15 @@ function drawLm(){
     lmSel = lmSel.includes(i) ? lmSel.filter(x => x !== i) : lmMode === "discard" && lmSel.length >= over ? lmSel : [...lmSel, i];
     drawLm();
   });
-  el.querySelectorAll("[data-fb]").forEach(b => b.onclick = ev => { if (lmMode !== "fuse") return; ev.stopPropagation(); const id = b.dataset.fb; lmFuseSel = lmFuseSel.includes(id) ? lmFuseSel.filter(x => x !== id) : lmFuseSel.length >= 2 ? lmFuseSel : [...lmFuseSel, id]; drawLm(); });
+  el.querySelectorAll("[data-fb]").forEach(b => b.onclick = ev => {
+    if (lmMode === "ice"){ ev.stopPropagation(); const bb = st.bun[me].find(x => x.id === b.dataset.fb); lmMode = "normal"; if (bb) lmDo(g.id, me, ["freeze", bb.v]); return; }
+    if (lmMode !== "fuse") return; ev.stopPropagation(); const id = b.dataset.fb; lmFuseSel = lmFuseSel.includes(id) ? lmFuseSel.filter(x => x !== id) : lmFuseSel.length >= 2 ? lmFuseSel : [...lmFuseSel, id]; drawLm(); });
   on("lmMerge", async () => { const s = lmSel.slice(); lmSel = []; await lmDo(g.id, me, ["merge", s]); });
   on("lmEnd", async () => { if (over){ lmMode = "discard"; lmSel = []; drawLm(); return; } await lmDo(g.id, me, ["end", []]); });
   on("lmDiscGo", async () => { const s = lmSel.slice(); lmSel = []; lmMode = "normal"; await lmDo(g.id, me, ["end", s]); });
   on("lmCancel", () => { lmMode = "normal"; lmSel = []; lmFuseSel = []; drawLm(); });
   on("lmSwap", () => { lmMode = "swap"; drawLm(); });
+  on("lmFrz", () => { lmMode = "ice"; drawLm(); });
   on("lmFuse", () => { lmMode = "fuse"; lmFuseSel = []; drawLm(); });
   on("lmFuseGo", async () => { const [a, b] = lmFuseSel; lmFuseSel = []; lmMode = "normal"; await lmDo(g.id, me, ["fuse", a, b]); });
   el.querySelectorAll("[data-dp]").forEach(b => b.onclick = () => lmDo(g.id, me, ["draw", +b.dataset.dp]));
@@ -16008,10 +16091,10 @@ function lmChip(st, p, b, plan){
   const nb = plan.bun[b.id], side = b.side ? "side" : "", fresh = b.side ? "fresh" : "";
   if (b.parts) return `<i class="lmchip fused ${side} ${fresh} ${sc} ${nb != null ? "lmnew" : ""}" ${sd} data-b="${b.id}" style="--nd:${nb || 0}ms"><b>${b.v}</b><u>${b.parts.map(x => x.v).join("+")}</u></i>`;
   const m = lmMult(st, p, b.v) * (b.v === 8 && lmOn(st, p, "crown") ? 2 : 1);
-  return `<i class="lmchip n${b.v} ${b.fz ? "fz" : ""} ${side} ${fresh} ${sc} ${nb != null ? "lmnew" : ""}" ${sd} data-b="${b.id}" style="--nc:${LM_COL[b.v] || "#FFE9A8"};--nd:${nb || 0}ms"><b>${b.v}</b>${m > 1 ? `<small>×${m}</small>` : ""}${b.fz ? `<u>${b.fz.join("+")}</u>` : b.n > 2 ? `<u>${b.n}枚</u>` : ""}</i>`;
+  return `<i class="lmchip n${b.v} ${b.fz ? "fz" : ""} ${b.ice ? "ice" : ""} ${side} ${fresh} ${sc} ${nb != null ? "lmnew" : ""}" ${sd} data-b="${b.id}" style="--nc:${LM_COL[b.v] || "#FFE9A8"};--nd:${nb || 0}ms"><b>${b.v}</b>${m > 1 ? `<small>×${m}</small>` : ""}${b.fz ? `<u>${b.fz.join("+")}</u>` : b.n > 2 ? `<u>${b.n}枚</u>` : ""}</i>`;
 }
 function lmPodHtml(st, p, fin, plan){
-  const act = lmActor(st) === p && !fin, bs = st.bun[p], tgt = (lmMode === "swap" || lmMode === "freeze") && p !== me;
+  const act = lmActor(st) === p && !fin, bs = st.bun[p], tgt = lmMode === "swap" && p !== me;
   return `<button class="lmpod ${act ? "act" : ""} ${tgt ? "tgt" : ""} ${lmStealSel ? "stealmode" : ""}" data-seat="${p}" style="--pc:${pcolor(p)}">${act ? `<i class="lmturn">TURN</i>` : ""}
     <span class="lmph"><b>${lmPname(p)}</b><span class="lmhc">${lmFan(st.hands[p].length)}<i>${st.hands[p].length}<small>枚</small></i></span></span>
     <span class="lmps"><span class="lmsc">${st.total[p]}</span><small>＋${lmRoundPts(st, p)}/R</small>${lmBn(st, p)}${lmC5(st, p)}</span>${lmAimB(st, p)}${lmLockB(st, p)}
@@ -16031,7 +16114,7 @@ function lmFreshCards(g, hand, plan){
   return out;
 }
 /* ---------- 演出の予定 ---------- */
-const LM_DUR = { bonus: 3300, merge: 1050, merge8: 2500, draw: 0, disc: 0, steal: 1500, getsp: 1800, score: 1700, aim: 1600, fuse: 1500, freeze: 1700, reshuf: 1100, refill: 500, seal: 1400, revon: 1500, upright: 900, swap: 900, sp: 500, end: 5600 };
+const LM_DUR = { bonus: 3300, merge: 1050, merge8: 2500, draw: 0, disc: 0, steal: 1500, getsp: 1800, score: 1700, aim: 1600, fuse: 1500, freeze: 2300, reshuf: 1100, refill: 500, spfx: 1100, seal: 1400, revon: 1500, upright: 900, swap: 900, sp: 500, end: 5600 };
 function lmPlan(g){
   const st = g.st, seen = lmSeenFx[g.id] || 0; lmSeenFx[g.id] = st.fxn || 0;
   let evs = (st.fx || []).filter(e => e.n > seen);
@@ -16131,6 +16214,11 @@ function lmBurstAt(r, color, n = 18, spread = 1){
   d.innerHTML = Array.from({ length: n }, (_, i) => `<i style="--a:${(i * 360 / n + Math.random() * 12).toFixed(0)}deg;--r:${((60 + Math.random() * 80) * spread).toFixed(0)}px;--c:${color}"></i>`).join("");
   document.body.appendChild(d); setTimeout(() => d.remove(), 1200);
 }
+function lmSnow(r){
+  if (!r) return; const d = document.createElement("div"); d.className = "lmsnow"; d.style.left = (r.left + r.width / 2) + "px"; d.style.top = (r.top + r.height / 2) + "px";
+  d.innerHTML = Array.from({ length: 12 }, (_, i) => `<i style="--a:${i * 30 + Math.random() * 15}deg;--r:${40 + Math.random() * 40}px"></i>`).join("");
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1300);
+}
 const lmBurst = (color, n) => lmBurstAt(null, color, n, 1.4);
 function lmRun(g, e){
   const st = g.st;
@@ -16176,9 +16264,15 @@ function lmRun(g, e){
   if (e.k === "score"){ lmScoreShow(g, e); return; }
   if (e.k === "aim"){ lmBig(`<small>狙い撃ち</small>${lmCard(e.v)}<p>${lmPname(e.p)}の${e.v}の束 ＋1倍</p>`, "sp", 1500); return; }
   if (e.k === "fuse"){ lmBig(`<small>FUSION</small><b>${e.v}</b><p>${lmPname(e.p)}</p>`, "sp", 1500); setTimeout(() => lmBurstAt(bunR(e.b) || seatR(e.p), "#5EC8FF", 26, 1), 700); return; }
-  if (e.k === "freeze"){ lmBig(`<small>FREEZE</small><b>${(e.vs || []).join("・")}</b><p>このラウンドは${lmPname(e.p)}以外 合成できない</p>`, "freeze", 1700); return; }
+  if (e.k === "freeze"){
+    lmBig(`<small>FREEZE</small><b>${e.v}</b><p>${lmPname(e.p)}の${e.v}の束を氷で固定。もう奪われない</p>`, "freeze", 1800);
+    const fr = document.createElement("div"); fr.className = "lmfrost"; document.body.appendChild(fr); setTimeout(() => fr.remove(), 2000);
+    setTimeout(() => (e.ids || []).forEach((id, j) => setTimeout(() => { const el = lmQ(`[data-b="${id}"]`); if (!el) return; el.classList.add("icing"); setTimeout(() => el.classList.remove("icing"), 1000); lmSnow(lmRect(el)); }, j * 180)), 700);
+    return;
+  }
   if (e.k === "swap"){ lmFly(seatR(e.p), seatR(e.q), LM_BACK, { dur: 600, cls: "back" }); lmFly(seatR(e.q), seatR(e.p), LM_BACK, { delay: 150, dur: 600, cls: "back" }); return; }
   if (e.k === "reshuf"){ for (let i = 0; i < 8; i++) lmFly(ex, deck, LM_BACK, { delay: i * 60, dur: 520, cls: "back", lift: -40 }); lmBig(`<small>RESHUFFLE</small><p>除外置き場を混ぜて新しい山札に</p>`, "small", 1100); return; }
+  if (e.k === "spfx"){ lmSpFx(g, e); return; }
   if (e.k === "seal"){ lmBig(`<small>SEAL</small><b>${(e.vs || []).join("・")}</b><p>${lmPname(e.p)}の次の手番まで、他の人は合成できない</p>`, "steal", 1500); lmHit(seat(e.p), "#FF5A7A"); return; }
   if (e.k === "revon"){ lmBig(`<small>REVENGE MODE</small>${lmSpBadge("rev", "xl hot")}<p>${lmPname(e.p)}：次の手番は${lmPname(e.q)}から2枚で奪える</p>`, "steal", 1600); lmHit(seat(e.p), "#FF5A7A", "hurt"); return; }
   if (e.k === "upright"){ (e.ids || []).forEach(id => { const el = lmQ(`[data-b="${id}"]`); if (el){ lmHit(el, "#5EC8FF"); lmBurstAt(lmRect(el), "#5EC8FF", 10, .5); } }); lmTag(seat(e.p), "束が縦に戻った", "#5EC8FF"); return; }
@@ -16231,6 +16325,49 @@ function lmScoreShow(g, e){
   };
   d.onclick = () => { lmAnimUntil = Math.min(lmAnimUntil, Date.now() + 400); close(); };
   timers.push(setTimeout(close, total - 300));
+}
+/* ---------- スペシャルのイラスト（線画SVG）と発動エフェクト ---------- */
+const LM_SP_COL = { amp: "#FFD35A", dbl: "#5EC8FF", wild: "#E58CFF", up: "#3FE0B0", wall: "#9FB4FF", ward: "#C46BFF", rev: "#FF5A7A", raid: "#FF9A4A",
+  rob: "#FF6A3A", aim: "#FF5A7A", crown: "#FFD35A", acc: "#FFE08A", swap: "#5EC8FF", see: "#A8F0FF", fill: "#3FE0B0", seal: "#FF5A7A", fuse: "#5EC8FF",
+  relive: "#FF8A3A", freeze: "#9FE6FF", solo: "#FFFFFF", comeback: "#FFD35A", ward2: "#C46BFF" };
+/* 各イラストは viewBox 0 0 48 48、線は currentColor。class a1〜a3 は動きの付く部品 */
+const LM_SP_ART = {
+  amp: `<circle cx="24" cy="24" r="5" fill="currentColor"/><circle class="a1" cx="24" cy="24" r="11"/><circle class="a2" cx="24" cy="24" r="17"/><circle class="a3" cx="24" cy="24" r="22"/>`,
+  dbl: `<g class="a1"><rect x="8" y="11" width="16" height="23" rx="3"/><text x="16" y="27" font-size="11" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cinzel,serif" font-weight="900">1</text></g><g class="a2"><rect x="24" y="15" width="16" height="23" rx="3"/><text x="32" y="31" font-size="11" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cinzel,serif" font-weight="900">2</text></g>`,
+  wild: `<path class="a1" d="M24 4l5 13 14 1-11 9 4 14-12-8-12 8 4-14-11-9 14-1z"/><circle class="a2" cx="24" cy="24" r="3" fill="currentColor"/>`,
+  up: `<path class="a1" d="M12 30l12-11 12 11"/><path class="a2" d="M12 40l12-11 12 11"/><path class="a3" d="M12 20l12-11 12 11"/>`,
+  wall: `<path class="a1" d="M24 4l17 6v12c0 11-8 18-17 22C15 40 7 33 7 22V10z"/><path class="a2" d="M24 12v24M15 20h18"/>`,
+  ward: `<circle class="a1" cx="24" cy="24" r="19"/><circle cx="24" cy="24" r="13"/><path class="a1" d="M24 5l5 15h15l-12 9 5 15-13-9-13 9 5-15-12-9h15z" stroke-width="1.2"/>`,
+  rev: `<path class="a1" d="M10 34c0-14 10-22 24-22"/><path class="a1" d="M28 6l7 6-7 6"/><path class="a2" d="M38 14c0 14-10 22-24 22"/><path class="a2" d="M20 42l-7-6 7-6"/>`,
+  raid: `<path class="a1" d="M24 6v20"/><path class="a2" d="M14 26c0 8 4 14 10 14s10-6 10-14"/><path class="a2" d="M10 22l4 4 4-4M30 22l4 4 4-4"/><circle cx="24" cy="6" r="2.5" fill="currentColor"/>`,
+  rob: `<path class="a1" d="M10 12l8 24M20 8l6 26M31 9l2 24M40 14l-3 20"/>`,
+  aim: `<circle class="a1" cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="6"/><path class="a2" d="M24 2v12M24 34v12M2 24h12M34 24h12"/>`,
+  crown: `<path class="a1" d="M6 36l4-22 9 10 5-14 5 14 9-10 4 22z"/><path d="M8 42h32"/><circle cx="24" cy="10" r="2" fill="currentColor"/><circle cx="10" cy="14" r="2" fill="currentColor"/><circle cx="38" cy="14" r="2" fill="currentColor"/>`,
+  acc: `<rect class="a1" x="8" y="30" width="8" height="12"/><rect class="a2" x="20" y="20" width="8" height="22"/><rect class="a3" x="32" y="10" width="8" height="32"/>`,
+  swap: `<path class="a1" d="M10 18h26l-6-6M38 30H12l6 6"/>`,
+  see: `<path d="M3 24c6-10 13-15 21-15s15 5 21 15c-6 10-13 15-21 15S9 34 3 24z"/><circle class="a1" cx="24" cy="24" r="7"/><circle cx="24" cy="24" r="3" fill="currentColor"/>`,
+  fill: `<rect x="12" y="14" width="24" height="30" rx="3"/><path class="a1" d="M24 22v14M17 29h14"/><path class="a2" d="M18 8h12M21 3h6"/>`,
+  seal: `<rect x="12" y="20" width="24" height="20" rx="3"/><path class="a1" d="M17 20v-6a7 7 0 0 1 14 0v6"/><path class="a2" d="M4 12l40 30M44 12L4 42" stroke-width="1.4"/>`,
+  fuse: `<circle class="a1" cx="16" cy="24" r="9"/><circle class="a2" cx="32" cy="24" r="9"/><path d="M24 16v16"/>`,
+  relive: `<path class="a1" d="M24 44c-9 0-14-6-14-13 0-8 7-11 8-19 4 3 5 7 5 10 2-2 3-5 3-9 7 5 12 12 12 19 0 7-5 12-14 12z"/><path class="a2" d="M24 44c-3 0-5-2-5-5 0-4 3-5 5-9 2 4 5 5 5 9 0 3-2 5-5 5z"/>`,
+  freeze: `<g class="a1"><path d="M24 4v40M6.7 14l34.6 20M6.7 34l34.6-20"/><path d="M20 8l4 4 4-4M20 40l4-4 4 4M9 20l5 1-1 5M39 28l-5-1 1-5M9 28l5-1-1-5M39 20l-5 1 1 5"/></g>`,
+  solo: `<path class="a2" d="M14 4l-6 40h32l-6-40z" opacity=".35"/><rect class="a1" x="16" y="16" width="16" height="22" rx="3"/><text x="24" y="32" font-size="12" text-anchor="middle" fill="currentColor" stroke="none" font-family="Cinzel,serif" font-weight="900">1</text>`,
+  comeback: `<path class="a1" d="M14 6h20M14 42h20M16 6c0 10 16 12 16 18s-16 8-16 18M32 6c0 10-16 12-16 18s16 8 16 18"/><path class="a2" d="M20 38h8l-4-6z" fill="currentColor"/>`
+};
+/* 動きの種類 */
+const LM_SP_MOTION = { amp: "pulse", dbl: "split", wild: "spin", up: "rise", wall: "shield", ward: "spin", rev: "swing", raid: "drop", rob: "slash", aim: "lock",
+  crown: "drop", acc: "rise", swap: "spin", see: "blink", fill: "drop", seal: "shake", fuse: "merge", relive: "flame", freeze: "spin", solo: "spot", comeback: "flip" };
+const lmSpArt = (k, cls = "") => `<svg class="lmart ${cls} m-${LM_SP_MOTION[k] || "pulse"}" viewBox="0 0 48 48" style="color:${LM_SP_COL[k] || "#FFD35A"}" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${LM_SP_ART[k] || ""}</g></svg>`;
+/* 発動したとき：席の上にイラストが飛び出し、画面中央に名前つきで大きく出す */
+function lmSpFx(g, e){
+  const k = e.s, c = LM_SP_COL[k] || "#FFD35A", seatEl = lmSeatEl(e.p), r = lmRect(seatEl);
+  lmBig(`<div class="lmsfx" style="--c:${c}">${lmSpArt(k, "lmbigart")}<b>${LM_SP[k].n}</b><p>${lmPname(e.p)}</p></div>`, "spfx", 1250);
+  if (r){
+    const d = document.createElement("div"); d.className = "lmpopart"; d.style.left = (r.left + r.width / 2) + "px"; d.style.top = (r.top + 8) + "px"; d.style.setProperty("--c", c);
+    d.innerHTML = lmSpArt(k) + `<small>${LM_SP[k].n}</small>`; document.body.appendChild(d); setTimeout(() => d.remove(), 1600);
+    lmHit(seatEl, c);
+    setTimeout(() => lmBurstAt(r, c, 14, .7), 250);
+  }
 }
 function lmRulesHtml(){
   return `<div class="lmrules">
