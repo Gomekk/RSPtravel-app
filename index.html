@@ -4536,6 +4536,65 @@ body.bgpause .hxemb i{animation-play-state:paused}
 @keyframes lmconf{to{transform:translate(var(--x),108vh) rotate(var(--r));opacity:.6}}
 .lmres.win .lmrk{animation:lmpop .6s calc(var(--dl,0s) + .3s) cubic-bezier(.2,1.8,.4,1) both}
 .lmseal.frz{color:#9FE6FF;border-color:#9FE6FF}
+/* 山札・除外の枚数（崩れないように） */
+.lmdeck>b,.lmex>b{white-space:nowrap;display:flex;align-items:baseline;gap:1px;line-height:1.3}
+.lmdeck>b small,.lmex>b small{font-size:7px}
+/* 狙い撃ち */
+.lmaim{display:inline-flex;align-items:baseline;gap:2px;margin-top:2px;padding:0 5px;border-radius:7px;border:1px solid #FF5A7A;background:rgba(255,90,122,.12);font-family:var(--lmcz);font-weight:900;font-size:11px;color:#fff;line-height:1.5;width:max-content}
+.lmaim b{font-family:var(--body);font-size:9px;color:#FF8FA6}.lmaim small{font-family:var(--body);font-size:8px;color:#FFB3C2;font-weight:700}
+.lmps{flex-wrap:wrap}
+/* 奪う束を卓の上で選ぶ */
+.lmchip.can{cursor:pointer;animation:lmcan 1s ease-in-out infinite;z-index:1}
+@keyframes lmcan{50%{box-shadow:0 0 0 2px #FF5A7A,0 0 16px #FF5A7A;transform:translateY(-2px) scale(1.08)}}
+.lmchip.side.can{animation-name:lmcan}
+.lmchip.no{opacity:.25;filter:grayscale(1)}
+.lmpod.stealmode{border-color:rgba(255,90,122,.5)}
+.lmmons.named{flex-direction:column;gap:2px}
+.lmspn{display:flex;align-items:center;gap:4px;font-size:9.5px;font-weight:700;color:#FFE9A8;white-space:nowrap}
+.lmspn .lmsp{width:16px;height:18px}.lmspn .lmsp b{font-size:9px}
+/* 自分のドロー：中央に並べる */
+.lmdc{position:fixed;left:50%;top:44%;z-index:47;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;width:min(94vw,420px)}
+.lmdc>small{font-family:var(--lmcz);font-weight:900;font-size:13px;letter-spacing:.35em;color:#9FB4FF;text-shadow:0 0 10px rgba(159,180,255,.9);animation:lmfadeup .3s both}
+.lmdcr{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;perspective:600px}
+.lmdcr .lmc{width:58px;height:80px;box-shadow:0 0 22px var(--nc),0 8px 18px rgba(0,0,0,.6)}
+.lmflyb.lmxl{width:58px;height:80px}
+/* ラウンドごとの得点表 */
+.lmhist{flex:none;display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:10px;border:1px solid var(--lmline);background:rgba(255,255,255,.035)}
+.lmhist h5{margin:0;font-family:var(--lmcz);font-weight:900;font-size:12px;letter-spacing:.12em;color:var(--lmgold);display:flex;flex-direction:column}
+.lmhist h5 small{font-family:var(--body);letter-spacing:0;font-weight:500;font-size:10px;color:var(--lmmute)}
+.lmhs{overflow-x:auto}
+.lmhs table{border-collapse:collapse;font-size:10.5px;white-space:nowrap}
+.lmhs th,.lmhs td{padding:3px 5px;text-align:center;border-bottom:1px solid rgba(159,180,255,.12)}
+.lmhs thead th{font-family:var(--lmcz);font-size:9px;color:var(--lmmute);font-weight:700}
+.lmhs tbody th{text-align:left;border-left:3px solid var(--pc);padding-left:5px;max-width:70px;overflow:hidden;text-overflow:ellipsis;position:sticky;left:0;background:#0C1030}
+.lmhs td{font-family:var(--lmcz);color:#D8E2FF}
+.lmhs td.top{color:var(--lmgold);font-weight:900}
+.lmhs .t{font-weight:900;color:#fff;border-left:1px solid rgba(159,180,255,.25)}
+.lmsp.hot{background:linear-gradient(160deg,#FF8FA6,#C8243F);animation:lmhot 1s ease-in-out infinite}
+.lmsp.hot::before{background:linear-gradient(160deg,#5A0E1E,#2A0610)}
+.lmsp.hot b{color:#FFD0DA}
+@keyframes lmhot{50%{filter:drop-shadow(0 0 6px #FF5A7A) drop-shadow(0 0 12px #FF5A7A)}}
+.lmc5s{display:inline-grid;place-items:center;width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,154,74,.45);font-family:var(--lmcz);font-weight:900;font-size:8.5px;color:rgba(255,154,74,.5);line-height:1;flex:none}
+.lmc5s.on{background:#FF9A4A;border-color:#FFC79A;color:#1A1030;box-shadow:0 0 8px rgba(255,154,74,.8)}
+.lmbn+.lmc5s{margin-left:3px}
+.lmps .lmbn{padding:0 3px;font-size:9.5px}
+.lmlock{display:inline-flex;align-items:baseline;gap:3px;margin-top:2px;margin-right:3px;padding:0 6px;border-radius:7px;border:1px solid #FF5A7A;background:rgba(255,40,70,.25);font-size:9px;font-weight:900;color:#FFB3C2;line-height:1.5;width:max-content;box-shadow:0 0 8px rgba(255,90,122,.5)}
+.lmlock b{font-family:var(--lmcz);font-size:12px;color:#fff}
+.lmlock.frz{border-color:#9FE6FF;background:rgba(80,190,255,.2);color:#C9F2FF;box-shadow:0 0 8px rgba(159,230,255,.5)}
+.lmseal{color:#fff;background:rgba(255,40,70,.3);border-color:#FF5A7A;font-weight:900;box-shadow:0 0 10px rgba(255,90,122,.6)}
+.lmseal.frz{background:rgba(80,190,255,.25)}
+.lmchip.fz{outline:1.5px solid #FFE9A8;outline-offset:1px}
+.lmbun.fz .lmbs{outline:2px solid #FFE9A8;outline-offset:2px}
+.lmfzl{position:absolute;top:-9px;left:50%;transform:translateX(-50%);z-index:2;font-family:var(--lmcz);font-weight:900;font-size:8.5px;padding:0 4px;border-radius:5px;background:linear-gradient(160deg,#FFE9A8,#C9902C);color:#1A1030;white-space:nowrap}
+/* サプライ：画面上部に4列×2段 */
+.lmsupply.top{padding:6px;gap:4px}
+.lmsupply.top h5{flex-direction:row;align-items:baseline;gap:6px;font-size:10.5px}
+.lmsupply.top h5 small{font-size:8.5px}
+.lmsupply.top .lmsps{grid-template-columns:repeat(4,1fr);gap:4px}
+.lmsupply.top .lmspc{flex-direction:column;align-items:center;gap:1px;padding:4px 2px;text-align:center}
+.lmsupply.top .lmspc .lmsp{width:20px;height:22px}
+.lmsupply.top .lmspc b{font-size:10px;flex:none;white-space:nowrap}
+.lmsupply.top .lmspc small{font-size:8px}
 </style>
 </head>
 <body>
@@ -4579,7 +4638,7 @@ const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v303";
+const APP_VER = "v313";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -7097,7 +7156,7 @@ const GAMES = [
     get icon(){ return SZ_ICON; },
     count: () => szGames().filter(x => x.status === "finished").length,
     live: () => szLive(), active: () => szActive(), start: () => openSzNew(), open: g => openSz(g.id) },
-  { id: "lm", name: "LEMNISCATE", desc: "【オリジナル】1〜8の数字カードを同じ数字どうしで合成して「束」に。束は毎ラウンド点数を生み、4枚以上の合成で相手の束を奪える。8の合成・5の合成2回でスペシャルカード（21種から毎試合10種）。15ラウンド", players: "3〜6人", time: "30〜45分",
+  { id: "lm", name: "LEMNISCATE", desc: "【オリジナル】1〜8の数字カードを同じ数字どうしで合成して「束」に。束は毎ラウンド点数を生み、4枚以上の合成で相手の束を奪える。8の合成・5の合成2回でスペシャルカード（21種から毎試合8種）。15ラウンド", players: "3〜6人", time: "30〜45分",
     get icon(){ return LM_ICON; },
     count: () => lmGames().filter(x => x.status === "finished").length,
     live: () => lmLive(), active: () => lmActive(), start: () => openLmNew(), open: g => openLm(g.id) }
@@ -15274,24 +15333,24 @@ function szRulesHtml(){
 /* 1〜8の数字カード。同じ数字を合成して束にし、束の点数を毎ラウンドもらう。15ラウンド。 */
 const LM_TITLE = "LEMNISCATE";
 const LM_CNT = [0, 90, 81, 72, 63, 54, 45, 36, 27];     // 数字ごとの総枚数（計468枚）
-const LM_ROUNDS = 15, LM_HAND = 8, LM_CAP = 10, LM_REFILL = 2, LM_STEAL = 4, LM_SP_PICK = 10, LM_SP_COPY = 2;
+const LM_ROUNDS = 15, LM_HAND = 8, LM_CAP = 10, LM_REFILL = 2, LM_STEAL = 4, LM_SP_PICK = 8, LM_SP_COPY = 2;
 const LM_SP = {
-  amp:    { n: "増幅",     m: "増", tx: "合成で引く枚数＋2" },
+  amp:    { n: "増幅",     m: "増", tx: "合成で引く枚数＋3" },
   dbl:    { n: "二連",     m: "連", tx: "手札から2組（違う数字どうし）を同時に合成できる" },
   wild:   { n: "万能",     m: "万", tx: "手札1枚を好きな数字として合成に使える（8にはできない）" },
   up:     { n: "昇格",     m: "昇", tx: "合成するとき、1つ小さい数字のカードを＋1して使える（何枚でも。ただし元の数字のカードが1枚以上必要。例：3・3・4 → 4を3枚）" },
   wall:   { n: "防壁",     m: "壁", tx: "自分の束を奪うには、5枚以上の合成が必要" },
-  rev:    { n: "逆襲",     m: "逆", tx: "束を奪われたら、すぐにその相手の束（奪われた数字以下）を1つ奪い返す（1手番に1回）" },
+  rev:    { n: "逆襲",     m: "逆", tx: "束を奪われたら逆襲モードに。次の自分の手番だけ、奪った相手からは2枚の合成で奪取できる" },
   raid:   { n: "略奪",     m: "略", tx: "奪える範囲が「合成した数字＋3」まで広がる" },
   rob:    { n: "強奪",     m: "強", tx: "3枚の合成でも奪取できる" },
-  aim:    { n: "狙い撃ち", m: "狙", tx: "取った時に山札を1枚めくる。その数字の束は自分だけ、さらに＋1倍" },
+  aim:    { n: "狙い撃ち", m: "狙", tx: "相手の束を奪うたびに山札を1枚めくる。その数字の束は自分だけ、さらに＋1倍（めくるたびに入れ替わる）" },
   crown:  { n: "王冠",     m: "冠", tx: "自分の8の束は得点2倍" },
   acc:    { n: "蓄積",     m: "蓄", tx: "ラウンドの得点計算で、自分の束の数×1点を追加" },
   swap:   { n: "交換",     m: "換", tx: "1手番に1回、相手1人と手札をランダムに1枚交換" },
   see:    { n: "透視",     m: "視", tx: "ドローの代わりに山札の上3枚を見て1枚を選ぶ（残りは山札の下へ）" },
   fill:   { n: "補充",     m: "補", tx: "合成したら、出したカードの枚数分を山札からすぐに追加で引く" },
   seal:   { n: "封印",     m: "封", tx: "自分が合成した数字は、次の自分の番まで他の人が合成できない" },
-  fuse:   { n: "融合",     m: "融", tx: "【1回だけ】自分の束2つを1束にする。数字・点数は合計＋1" },
+  fuse:   { n: "融合",     m: "融", tx: "【1回だけ】自分の束2つを、数字を足した1つの束にする（1と3なら4の束。4の倍率もかかる）" },
   relive: { n: "再起",     m: "再", tx: "ドローの代わりに、除外置き場の一番上を引ける" },
   freeze: { n: "凍結",     m: "凍", tx: "自分が合成した数字は、そのラウンドが終わるまで他の人が合成できない（二連のときは1組目の数字だけ）" },
   solo:   { n: "単独",     m: "単", tx: "1枚だけでも合成できる（引く枚数は0・スペシャルはもらえない）" },
@@ -15299,6 +15358,8 @@ const LM_SP = {
   ward:   { n: "結界",     m: "結", tx: "自分の束を奪える範囲が「合成した数字−1」以下に狭まる（略奪を持つ相手には＋1以下）" }
 };
 const LM_SP_KEYS = Object.keys(LM_SP);
+const LM_DRAW_MAX = 5;   // 合成で引く枚数：その数字の枚数（5以上はすべて5枚）
+const lmDrawN = v => Math.min(v, LM_DRAW_MAX);
 const lmShuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const lmL = (st, m) => { (st._log = st._log || []).push(m); };
 const lmFx = (st, e) => { st.fxn = (st.fxn || 0) + 1; e.n = st.fxn; st.fx = (st.fx || []).concat([e]).slice(-60); };
@@ -15350,10 +15411,8 @@ const lmCur = st => st.order[st.ti];
 function lmStartTurn(st){
   const p = lmCur(st);
   if (st.seal && st.seal.by === p) st.seal = null;
-  // 奪った束は、自分の次の手番が来たら縦に戻して得点に入れる
-  const up = st.bun[p].filter(b => b.side);
-  if (up.length){ up.forEach(b => b.side = 0); lmL(st, `${lmNm(p)}の奪った束（${up.map(b => b.v).join("・")}）が縦に戻り、得点に入るようになった`); lmFx(st, { k: "upright", p, ids: up.map(b => b.id) }); }
   st.no++;
+  if (st.lit) Object.keys(st.lit).forEach(x => { if (st.lit[x] < st.no) delete st.lit[x]; });
   st.turn = { pid: p, step: "draw", merges: 0, dbl: 0, ups: 0, swap: 0, rev: {}, made: [] };
   st.last[p] = st.no;
   const canSee = lmOn(st, p, "see") && st.deck.length + st.exile.length > 0, canRe = lmOn(st, p, "relive") && st.exile.length > 0;
@@ -15370,12 +15429,12 @@ function lmStartTurn(st){
 function lmDrawPick(st, p, i){
   const a = st.ask, o = a && a.opts[i]; if (!o) return false;
   if (o.src === "deck") lmDraw(st, p, 1);
-  else if (o.src === "ex"){ st.hands[p].push(lmOrig(st.exile.pop())); lmL(st, `「再起」${lmNm(p)}：除外置き場から${o.c}を引いた`); lmFx(st, { k: "draw", p, c: 1, src: "ex" }); }
+  else if (o.src === "ex"){ lmLight(st, p, "relive"); st.hands[p].push(lmOrig(st.exile.pop())); lmL(st, `「再起」${lmNm(p)}：除外置き場から${o.c}を引いた`); lmFx(st, { k: "draw", p, c: 1, src: "ex" }); }
   else {
     const top3 = st.deck.splice(-3).reverse();   // [一番上, 2番目, 3番目]
     const c = top3.splice(o.i, 1)[0]; st.hands[p].push(c);
     st.deck = top3.reverse().concat(st.deck);      // 残りは山札の下へ
-    lmL(st, `「透視」${lmNm(p)}：山札の上3枚から1枚を選んだ`); lmFx(st, { k: "draw", p, c: 1 });
+    lmLight(st, p, "see"); lmL(st, `「透視」${lmNm(p)}：山札の上3枚から1枚を選んだ`); lmFx(st, { k: "draw", p, c: 1 });
   }
   st.ask = null; st.turn.step = "act"; return true;
 }
@@ -15409,7 +15468,9 @@ function lmMergeInfo(st, p, idx){
   }
   return { groups, v: groups[0].v, k: groups[0].k, wild };
 }
-const lmStealNeed = (st, p, q) => lmOn(st, q, "wall") ? 5 : lmOn(st, p, "rob") ? 3 : LM_STEAL;
+/* スペシャルが効いた印（その手番の間、バッジを赤く光らせる） */
+const lmLight = (st, p, k, plus = 0) => { st.lit = st.lit || {}; st.lit[p + ":" + k] = st.no + plus; };
+const lmStealNeed = (st, p, q) => st.revOn && st.revOn[p] === q ? 2 : lmOn(st, q, "wall") ? 5 : lmOn(st, p, "rob") ? 3 : LM_STEAL;
 function lmStealTargets(st, p, v, k){
   const range = v + (lmOn(st, p, "raid") ? 3 : 1), out = [];
   st.players.forEach(q => { if (q === p || k < lmStealNeed(st, p, q)) return; const r = range - (lmOn(st, q, "ward") ? 2 : 0); st.bun[q].forEach(b => { if (lmBunVal(b) <= r) out.push({ q, id: b.id }); }); });
@@ -15423,7 +15484,9 @@ function lmMerge(st, p, idx){
   let n = 0, sp = 0;
   M.groups.forEach((G, gi) => {
     const b = lmNewB(st, G.v, G.k, p); st.bun[p].push(b); T.made.push(b.id);
-    const d = G.k === 1 ? 0 : G.v + (gi === 0 && lmOn(st, p, "amp") ? 2 : 0); n += d;
+    const d = G.k === 1 ? 0 : lmDrawN(G.v) + (gi === 0 && lmOn(st, p, "amp") ? 3 : 0); n += d;
+    if (gi === 0 && G.k > 1 && lmOn(st, p, "amp")) lmLight(st, p, "amp");
+    if (G.wild) lmLight(st, p, "wild"); if (G.up) lmLight(st, p, "up"); if (G.k === 1) lmLight(st, p, "solo"); if (M.groups.length > 1) lmLight(st, p, "dbl");
     lmFx(st, { k: "merge", p, v: G.v, c: G.k, d, wild: !!G.wild, up: !!G.up, b: b.id, dbl: M.groups.length > 1 ? gi + 1 : 0 });
     lmL(st, `${lmNm(p)}が${G.v}を${G.k}枚合成${G.wild ? "（万能）" : G.up ? "（昇格で＋1）" : ""}${M.groups.length > 1 ? "（二連）" : ""}して束に`);
     if (G.k >= 2){ if (G.v === 8) sp++; if (G.v === 5){ st.c5[p]++; if (st.c5[p] % 2 === 0) sp++; } }
@@ -15431,9 +15494,9 @@ function lmMerge(st, p, idx){
   });
   const got = lmDraw(st, p, n);
   lmL(st, `${lmNm(p)}は${got}枚引いた`);
-  if (lmOn(st, p, "fill")){ const k = M.groups.reduce((s, G) => s + G.k, 0); lmFx(st, { k: "sp", p, s: "fill" }); const g2 = lmDraw(st, p, k); if (g2) lmL(st, `「補充」${lmNm(p)}：出した${k}枚分、さらに${g2}枚引いた`); }
-  if (lmOn(st, p, "freeze")){ st.frz = { vs: [M.groups[0].v], by: p, round: st.round };   /* 1組目の数字だけ */ lmL(st, `「凍結」${lmNm(p)}：このラウンドの間、${st.frz.vs.join("・")}は他の人が合成できない`); lmFx(st, { k: "freeze", p, vs: st.frz.vs }); }
-  if (lmOn(st, p, "seal")){ st.seal = { vs: M.groups.map(G => G.v), by: p }; lmL(st, `「封印」${lmNm(p)}：次の番まで${st.seal.vs.join("・")}は合成できない`); }
+  if (lmOn(st, p, "fill")){ lmLight(st, p, "fill"); const k = M.groups.reduce((s, G) => s + G.k, 0); lmFx(st, { k: "sp", p, s: "fill" }); const g2 = lmDraw(st, p, k); if (g2) lmL(st, `「補充」${lmNm(p)}：出した${k}枚分、さらに${g2}枚引いた`); }
+  if (lmOn(st, p, "freeze")){ lmLight(st, p, "freeze"); st.frz = { vs: [M.groups[0].v], by: p, round: st.round };   /* 1組目の数字だけ */ lmL(st, `「凍結」${lmNm(p)}：このラウンドの間、${st.frz.vs.join("・")}は他の人が合成できない`); lmFx(st, { k: "freeze", p, vs: st.frz.vs }); }
+  if (lmOn(st, p, "seal")){ st.seal = { vs: M.groups.map(G => G.v), by: p }; lmL(st, `「封印」${lmNm(p)}：次の番まで${st.seal.vs.join("・")}は合成できない`); lmFx(st, { k: "seal", p, vs: st.seal.vs }); }
   T.pendSp = (T.pendSp || 0) + sp;
   lmNextSteal(st, p);
   return true;
@@ -15442,7 +15505,11 @@ function lmNextSteal(st, p){
   const T = st.turn;
   while (T.stealQ && T.stealQ.length){
     const G = T.stealQ.shift(), tg = lmStealTargets(st, p, G.v, G.k);
-    if (tg.length){ st.ask = { pid: p, k: "steal", v: G.v, tg }; return; }
+    if (tg.length){
+      st.ask = { pid: p, k: "steal", v: G.v, n: G.k, tg };
+      st.players.forEach(q => { if (q !== p && st.bun[q].length){ if (lmOn(st, q, "wall")) lmLight(st, q, "wall"); if (lmOn(st, q, "ward")) lmLight(st, q, "ward"); } });
+      return;
+    }
   }
   lmNextAsk(st, p);
 }
@@ -15455,24 +15522,27 @@ function lmNextAsk(st, p){
   }
   st.ask = null;
 }
+function lmAimFlip(st, p){
+  if (!lmOn(st, p, "aim")) return;
+  if (!st.deck.length && st.exile.length){ st.deck = lmShuffle(st.exile.map(lmOrig)); st.exile = []; }
+  const c = st.deck.pop(); if (!c) return;
+  st.aim[p] = c; st.exile.push(c);
+  lmL(st, `「狙い撃ち」${lmNm(p)}：めくれたのは${c}。${lmNm(p)}の${c}の束は＋1倍`); lmFx(st, { k: "aim", p, v: c });
+}
 function lmSteal(st, p, id){
   const a = st.ask; if (!a || a.k !== "steal" || a.pid !== p) return false;
   if (id == null){ st.ask = null; lmNextSteal(st, p); return true; }
   const t = a.tg.find(x => x.id === id); if (!t) return false;
+  { const bb = st.bun[t.q].find(x => x.id === id); if (bb && lmOn(st, p, "raid") && lmBunVal(bb) > a.v + 1) lmLight(st, p, "raid"); if (lmOn(st, p, "rob") && a.n === 3) lmLight(st, p, "rob"); if (st.revOn && st.revOn[p] === t.q && a.n < 3) lmLight(st, p, "rev"); }
   const arr = st.bun[t.q], i = arr.findIndex(b => b.id === id); if (i < 0) return false;
-  const b = arr.splice(i, 1)[0]; b.side = 1; st.bun[p].push(b);   // 横向き：奪った人の次の手番まで得点なし
+  const b = arr.splice(i, 1)[0]; b.side = 1; st.bun[p].push(b);   // 横向き：そのラウンドは得点なし
   lmL(st, `${lmNm(p)}が${lmNm(t.q)}の${b.v}の束を奪った（このラウンドは得点なし）`);
   lmFx(st, { k: "steal", p, q: t.q, v: b.v, b: b.id });
+  lmAimFlip(st, p);
   st.ask = null;
-  // 逆襲：奪われた人がすぐ奪い返す
+  // 逆襲：奪われた人は逆襲モード（次の自分の手番だけ、奪った相手から2枚の合成で奪取できる）
   const q = t.q;
-  if (lmOn(st, q, "rev") && !st.turn.rev[q]){
-    const back = st.bun[p].filter(x => x.id !== b.id && lmBunVal(x) <= b.v).sort((x, y) => lmPts(st, q, y) - lmPts(st, q, x))[0];
-    if (back){
-      st.turn.rev[q] = 1; st.bun[p].splice(st.bun[p].indexOf(back), 1); back.side = 1; st.bun[q].push(back);
-      lmL(st, `「逆襲」${lmNm(q)}：${lmNm(p)}の${back.v}の束を奪い返した`); lmFx(st, { k: "steal", p: q, q: p, v: back.v, rev: 1, b: back.id });
-    }
-  }
+  if (lmOn(st, q, "rev")){ st.revOn = st.revOn || {}; st.revOn[q] = p; lmL(st, `「逆襲」${lmNm(q)}が逆襲モードに。次の手番は${lmNm(p)}から2枚の合成で奪える`); lmFx(st, { k: "revon", p: q, q: p }); }
   lmNextSteal(st, p); return true;
 }
 function lmPickSp(st, p, k){
@@ -15481,11 +15551,6 @@ function lmPickSp(st, p, k){
     if (!a.can.includes(k) || !(st.supply[k] > 0)) return false;
     st.supply[k]--; st.sp[p].push(k); st.spAt = st.spAt || {}; st.spAt[p + ":" + k] = st.no;
     lmL(st, `${lmNm(p)}がスペシャル「${LM_SP[k].n}」を獲得`); lmFx(st, { k: "getsp", p, s: k });
-    if (k === "aim"){
-      if (!st.deck.length && st.exile.length){ st.deck = lmShuffle(st.exile.map(lmOrig)); st.exile = []; }
-      const c = st.deck.pop();
-      if (c){ st.aim[p] = c; st.exile.push(c); lmFx(st, { k: "disc", p: "_deck", c: 1 }); lmL(st, `「狙い撃ち」${lmNm(p)}：めくれたのは${c}。${lmNm(p)}の${c}の束は＋1倍`); lmFx(st, { k: "aim", p, v: c }); }
-    }
   }
   st.turn.pendSp = Math.max(0, (st.turn.pendSp || 1) - 1);
   st.ask = null; lmNextAsk(st, p); return true;
@@ -15502,14 +15567,14 @@ function lmSwap(st, p, q){
   const a = st.hands[p], b = st.hands[q]; if (!a.length || !b.length) return false;
   const i = Math.floor(Math.random() * a.length), j = Math.floor(Math.random() * b.length);
   const x = a[i]; a[i] = b[j]; b[j] = x; T.swap = 1;
-  lmL(st, `「交換」${lmNm(p)}が${lmNm(q)}と手札を1枚交換した`); lmFx(st, { k: "swap", p, q }); return true;
+  lmLight(st, p, "swap"); lmL(st, `「交換」${lmNm(p)}が${lmNm(q)}と手札を1枚交換した`); lmFx(st, { k: "swap", p, q }); return true;
 }
 function lmFuse(st, p, id1, id2){
   const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmOn(st, p, "fuse") || st.used[p + ":fuse"] || id1 === id2) return false;
   const arr = st.bun[p], a = arr.find(b => b.id === id1), b = arr.find(x => x.id === id2); if (!a || !b) return false;
-  const nb = { id: "b" + (st.bseq = (st.bseq || 0) + 1), v: a.v + b.v + 1, n: a.n + b.n, by: p, side: a.side || b.side ? 1 : 0, parts: [a, b] };
+  const nb = { id: "b" + (st.bseq = (st.bseq || 0) + 1), v: a.v + b.v, n: a.n + b.n, by: p, side: a.side || b.side ? 1 : 0, fz: [a.v, b.v] };   /* 合計の数字の束（倍率もその数字のもの） */
   arr.splice(arr.indexOf(a), 1); arr.splice(arr.indexOf(b), 1); arr.push(nb); st.used[p + ":fuse"] = 1;
-  lmL(st, `「融合」${lmNm(p)}：${a.v}と${b.v}の束を合体（${nb.v}の束）`); lmFx(st, { k: "fuse", p, v: nb.v, b: nb.id }); return true;
+  lmLight(st, p, "fuse"); lmL(st, `「融合」${lmNm(p)}：${a.v}と${b.v}の束を合体（${nb.v}の束）`); lmFx(st, { k: "fuse", p, v: nb.v, b: nb.id }); return true;
 }
 function lmFreeze(st, p, q){
   const T = st.turn; if (!T || T.pid !== p || T.step !== "act" || st.ask || !lmOn(st, p, "freeze") || st.round !== LM_ROUNDS || st.used[p + ":freeze"] || q === p || !st.players.includes(q)) return false;
@@ -15523,6 +15588,7 @@ function lmEndTurn(st, p, disc = []){
   if (disc.length !== over || new Set(disc).size !== disc.length || disc.some(i => h[i] === undefined)) return false;
   if (over){ const cards = disc.map(i => h[i]); disc.slice().sort((a, b) => b - a).forEach(i => h.splice(i, 1)); st.exile.push(...cards); /* 選んだ順に置く：最後に選んだカードが一番上 */ lmL(st, `${lmNm(p)}は手札が10枚を超えたので${over}枚捨てた`); lmFx(st, { k: "disc", p, c: over }); }
   if (h.length <= LM_REFILL){ const nd = h.length; st.exile.push(...h.splice(0)); if (nd) lmFx(st, { k: "disc", p, c: nd }); lmFx(st, { k: "refill", p }); const g = lmDraw(st, p, LM_HAND); lmL(st, `${lmNm(p)}は手札が2枚以下になったので捨てて${g}枚引き直した`); }
+  if (st.revOn && st.revOn[p]) delete st.revOn[p];   // 逆襲モードは自分の手番が終わるまで
   st.turn = null; st.ti++;
   if (st.ti >= st.order.length){ lmScoreRound(st); if (st.status !== "playing") return true; st.ti = 0; st.round++; }
   lmStartTurn(st); return true;
@@ -15532,16 +15598,19 @@ function lmScoreRound(st){
   st.players.forEach(p => {
     const frz = (st.freeze || []).includes(p) && st.round === LM_ROUNDS;
     // 得点の内訳：[数字, 点, 奪ったばかりで0点なら1, 融合なら1]
-    rows[p] = { b: st.bun[p].map(b => [b.v, b.side ? 0 : lmPts(st, p, b), b.side ? 1 : 0, b.parts ? 1 : 0, b.v <= 8 && !b.parts ? lmMult(st, p, b.v) * (b.v === 8 && lmOn(st, p, "crown") ? 2 : 1) : 1]),
+    rows[p] = { b: st.bun[p].map(b => [b.v, b.side ? 0 : lmPts(st, p, b), b.side ? 1 : 0, b.fz || b.parts ? 1 : 0, b.v <= 8 && !b.parts ? lmMult(st, p, b.v) * (b.v === 8 && lmOn(st, p, "crown") ? 2 : 1) : 1]),
       acc: lmOn(st, p, "acc") ? st.bun[p].length : 0, frz: frz ? 1 : 0, before: st.total[p] };
     got[p] = frz ? 0 : lmRoundPts(st, p); st.total[p] += got[p];
+    st.hist = st.hist || {}; (st.hist[p] = st.hist[p] || []).push(got[p]);
   });
   lmL(st, `第${st.round}ラウンドの得点：${st.players.map(p => `${lmNm(p)} +${got[p]}`).join("、")}`);
   lmFx(st, { k: "score", r: st.round, got, rows });
+  // 奪った束（横向き）は、ラウンドの得点計算が終わったら縦に戻り、次のラウンドから得点に入る
+  st.players.forEach(p => { const up = st.bun[p].filter(b => b.side); if (up.length){ up.forEach(b => b.side = 0); lmFx(st, { k: "upright", p, ids: up.map(b => b.id) }); } });
   st.lastGot = got;
   if (st.round >= LM_ROUNDS){ lmEnd(st); return; }
   const lo = Math.min(...st.players.map(p => st.total[p]));
-  st.players.forEach(p => { if (lmOn(st, p, "comeback") && st.total[p] === lo){ const g = lmDraw(st, p, 3); if (g){ lmL(st, `「逆転」${lmNm(p)}：最下位なので${g}枚引いた`); lmFx(st, { k: "sp", p, s: "comeback" }); } } });
+  st.players.forEach(p => { if (lmOn(st, p, "comeback") && st.total[p] === lo){ lmLight(st, p, "comeback", 1); const g = lmDraw(st, p, 3); if (g){ lmL(st, `「逆転」${lmNm(p)}：最下位なので${g}枚引いた`); lmFx(st, { k: "sp", p, s: "comeback" }); } } });
 }
 function lmEnd(st){
   st.status = "finished"; st.turn = null; st.ask = null;
@@ -15679,18 +15748,33 @@ const LM_ICON = `<span class="gic lmi"><svg viewBox="0 0 64 64" aria-hidden="tru
 const lmCard = (c, cls = "", data = "") => { const v = lmVal(c); return `<div class="lmc n${v} ${lmIsUp(c) ? "up" : ""} ${cls}" style="--nc:${LM_COL[v]}" ${data}><i class="lmcn">${LM_CNT[v]}</i>${lmIsUp(c) ? `<i class="lmup">＋1</i>` : ""}<b>${v}</b>${lmEmb(v)}</div>`; };
 const lmMiniCard = v => `<span class="lmmc n${v}" style="--nc:${LM_COL[v]}"><b>${v}</b></span>`;
 const lmSpBadge = (k, cls = "") => `<span class="lmsp ${cls}" title="${LM_SP[k].n}"><b>${LM_SP[k].m}</b></span>`;
-const lmSpB = (st, p, k) => lmSpBadge(k, `${st.used[p + ":" + k] ? "used" : ""} ${lmHas(st, p, k) && !lmOn(st, p, k) ? "wait" : ""}`);
+const lmSpB = (st, p, k) => lmSpBadge(k, `${st.used[p + ":" + k] ? "used" : ""} ${lmHas(st, p, k) && !lmOn(st, p, k) ? "wait" : ""} ${lmHot(st, p, k) ? "hot" : ""}`);
+/* 効果が発動中か：その手番に効いた／状態が続いている */
+function lmHot(st, p, k){
+  if (!lmOn(st, p, k)) return false;
+  if (st.lit && st.lit[p + ":" + k] >= st.no) return true;
+  if (k === "rev") return !!(st.revOn && st.revOn[p]);
+  if (k === "seal") return !!(st.seal && st.seal.by === p);
+  if (k === "freeze") return !!(st.frz && st.frz.by === p && st.frz.round === st.round);
+  if (k === "aim") return !!st.aim[p];
+  if (k === "crown") return st.bun[p].some(b => b.v === 8 && !b.parts);
+  if (k === "acc") return st.bun[p].length > 0;
+  return false;
+}
+/* 封印・凍結が効いている数字（全員に見える） */
+const lmLockB = (st, p) => `${st.seal && st.seal.by === p ? `<span class="lmlock">封印<b>${(st.seal.vs || [st.seal.v]).join("・")}</b></span>` : ""}${st.frz && st.frz.by === p && st.frz.round === st.round ? `<span class="lmlock frz">凍結<b>${st.frz.vs.join("・")}</b></span>` : ""}`;
 const lmPname = p => esc(lmNm(p));
 /* 5の合成の回数（奇数＝あと1回でスペシャル） */
-const lmBn = (st, p) => `<span class="lmbn" title="束の数"><i></i>${st.bun[p].length}<small>束</small></span>`;
-const lmC5 = (st, p) => `<span class="lmc5 ${st.c5[p] % 2 ? "near" : ""}" title="5の合成の回数"><b>5</b>×${st.c5[p] || 0}</span>`;
+const lmAimB = (st, p) => st.aim[p] && lmOn(st, p, "aim") ? `<span class="lmaim" title="狙い撃ち"><b>狙</b>${st.aim[p]}<small>の束＋1倍</small></span>` : "";
+const lmBn = (st, p) => `<span class="lmbn" title="束の数"><i></i>${st.bun[p].length}</span>`;
+const lmC5 = (st, p) => `<span class="lmc5s ${st.c5[p] % 2 ? "on" : ""}" title="${st.c5[p] % 2 ? "5の合成：あと1回でスペシャル" : "5の合成：0回（あと2回でスペシャル）"}">5</span>`;
 function lmBunHtml(st, p, b, cls = "", data = "", sty = ""){
   const pts = lmPts(st, p, b), side = b.side ? "side" : "", fresh = b.side ? "fresh" : "";
   if (b.parts){
     return `<div class="lmbun fused ${side} ${fresh} ${cls}" style="${sty}" ${data}><div class="lmfb">${b.parts.map(x => `<span class="lmbs n${x.v}" style="--nc:${LM_COL[x.v] || "#fff"}"><b>${x.v}</b></span>`).join("")}</div><span class="lmbtop"><b>${b.v}</b></span><em>${pts}<small>点</small></em></div>`;
   }
   const m = lmMult(st, p, b.v), cr = b.v === 8 && lmOn(st, p, "crown");
-  return `<div class="lmbun n${b.v} ${side} ${fresh} ${cls}" style="--nc:${LM_COL[b.v]};${sty}" ${data}><span class="lmbs"><b>${b.v}</b>${Array.from({ length: Math.min(b.n, 6) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>${m > 1 || cr ? `<small class="lmx">×${m * (cr ? 2 : 1)}</small>` : ""}<em>${pts}<small>点</small></em></div>`;
+  return `<div class="lmbun n${b.v} ${b.fz ? "fz" : ""} ${side} ${fresh} ${cls}" style="--nc:${LM_COL[b.v] || "#FFE9A8"};${sty}" ${data}>${b.fz ? `<span class="lmfzl">${b.fz.join("+")}</span>` : ""}<span class="lmbs"><b>${b.v}</b>${Array.from({ length: Math.min(b.n, 6) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>${m > 1 || cr ? `<small class="lmx">×${m * (cr ? 2 : 1)}</small>` : ""}<em>${pts}<small>点</small></em></div>`;
 }
 
 let lmId = null, lmSel = [], lmMode = "normal", lmSeenFx = {}, lmFuseSel = [];
@@ -15713,7 +15797,7 @@ function openLmNew(){
   const t = curTrip();
   let order = (t ? activeMembers(t) : db.players.map(p => p.id)).slice(0, 6);
   const s = openSheet("LEMNISCATEを始める", `
-    <p class="note">【オリジナル】1〜8の数字カードを同じ数字どうしで合成して「束」にし、束の点数を毎ラウンドもらう。大きな数字ほど多く引け、8の合成と5の合成2回でスペシャルカード。4枚以上の合成で相手の束を奪える。15ラウンド（3〜6人・4〜6人推奨）。</p>
+    <p class="note">【オリジナル】1〜8の数字カードを同じ数字どうしで合成して「束」にし、束の点数を毎ラウンドもらう。5までは大きな数字ほど多く引け（5以上は5枚）、8の合成と5の合成2回でスペシャルカード。4枚以上の合成で相手の束を奪える。15ラウンド（3〜6人・4〜6人推奨）。</p>
     <button type="button" class="grbtn" data-grule="lm">ルールを見る</button>
     <div class="f"><span>参加者（タップで選ぶ・3〜6人）</span>${chipPlayers(db.players.map(p => p.id), order)}${cpuChips(order)}</div>
     <div class="f"><span>手番の順番・名前を指で動かして並べ替え（1番の人から始まる）</span><div id="lmOrder" class="norder"></div><button class="shufbtn" id="lmShuf">順番をシャッフル</button></div>
@@ -15796,6 +15880,8 @@ function drawLm(){
   const holdAsk = (myAsk || fin) && lmAnimUntil > now + 60;
   if (holdAsk){ clearTimeout(lmHoldTm); lmHoldTm = setTimeout(drawLm, lmAnimUntil - now + 80); }
   // 卓：自分から見て左（次の手番）→上→右 の時計回り
+  const stealAsk = myAsk && myAsk.k === "steal" && !holdAsk ? myAsk : null;
+  lmStealSel = stealAsk ? new Set(stealAsk.tg.map(x => x.id)) : null;
   const lay = lmSeatsAround(st);
   const pod = p => lmPodHtml(st, p, fin, plan);
   const prog = ((Math.min(st.round, LM_ROUNDS) - 1 + st.ti / st.order.length) / LM_ROUNDS * 100).toFixed(1);
@@ -15805,10 +15891,10 @@ function drawLm(){
       <div class="lmbonus"><span class="lmbl">BONUS</span><span class="lmbcs">${st.bonus.map(v => lmMiniCard(v)).join("")}</span><span class="lmbm">${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => st.mult[v] > 1).map(v => `<i style="--nc:${LM_COL[v]}">${v}の束×${st.mult[v]}</i>`).join("")}</span></div>
       ${st.seal ? `<span class="lmseal">封印 ${(st.seal.vs || [st.seal.v]).join("・")}</span>` : ""}${st.frz && st.frz.round === st.round ? `<span class="lmseal frz">凍結 ${st.frz.vs.join("・")}</span>` : ""}
     </div>`;
-  const supply = `<div class="lmsupply"><h5>SPECIAL<small>8の合成、または5の合成2回ごとに1枚（各2枚・同じ種類は1人1枚）</small></h5><div class="lmsps">${st.picks.map(k => `<button class="lmspc ${st.supply[k] ? "" : "out"} ${lmHas(st, me, k) ? "own" : ""}" data-spi="${k}">${lmSpBadge(k)}<b>${LM_SP[k].n}</b><small>${st.supply[k] ? `残り${st.supply[k]}` : "品切れ"}</small></button>`).join("")}</div></div>`;
+  const supply = `<div class="lmsupply top"><h5>SPECIAL<small>8の合成・5の合成2回で1枚（各2枚・1人1種1枚）</small></h5><div class="lmsps">${st.picks.map(k => `<button class="lmspc ${st.supply[k] ? "" : "out"} ${lmHas(st, me, k) ? "own" : ""}" data-spi="${k}">${lmSpBadge(k)}<b>${LM_SP[k].n}</b><small>${st.supply[k] ? `残り${st.supply[k]}` : "品切れ"}</small></button>`).join("")}</div></div>`;
   const meAct = lmActor(st) === me && !fin;
   const meZone = inGame ? `<div class="lmme ${meAct ? "act" : ""}" id="lmMe" data-seat="${me}" style="--pc:${pcolor(me)}">${meAct ? `<i class="lmturn">YOUR TURN</i>` : ""}
-      <div class="lmmeh"><b>${lmPname(me)}</b><span class="lmmyh">手札 <b>${hand.length}</b><small>枚</small></span><span class="lmsc">${st.total[me]}</span><small>＋${lmRoundPts(st, me)}／R${st.aim[me] ? `・狙い撃ち${st.aim[me]}` : ""}</small>${lmBn(st, me)}${lmC5(st, me)}<span class="lmmons">${st.sp[me].map(k => lmSpB(st, me, k)).join("")}</span></div>
+      <div class="lmmeh"><b>${lmPname(me)}</b><span class="lmmyh">手札 <b>${hand.length}</b><small>枚</small></span><span class="lmsc">${st.total[me]}</span><small>＋${lmRoundPts(st, me)}／R</small>${lmBn(st, me)}${lmC5(st, me)}${lmAimB(st, me)}${lmLockB(st, me)}<span class="lmmons">${st.sp[me].map(k => lmSpB(st, me, k)).join("")}</span></div>
       ${st.bun[me].length ? `<div class="lmbuns">${st.bun[me].map(b => lmBunHtml(st, me, b, (lmMode === "fuse" ? (lmFuseSel.includes(b.id) ? "pick on" : "pick") : "") + (plan.bun[b.id] != null ? " lmnew" : ""), `data-fb="${b.id}" data-b="${b.id}"`, `--nd:${Math.round(plan.bun[b.id] || 0)}ms`)).join("")}</div>` : `<p class="lmnote">まだ束はありません。同じ数字を2枚以上選んで合成しよう</p>`}</div>` : "";
   const table = `<div class="lmtable o${lay.n}">
       ${lay.top.length ? `<div class="lmtrow">${lay.top.map(pod).join("")}</div>` : ""}
@@ -15817,12 +15903,14 @@ function drawLm(){
   // 手札
   const ord = hand.map((c, i) => i).sort((i, j) => lmVal(hand[i]) - lmVal(hand[j]) || i - j);
   const fresh = inGame ? lmFreshCards(g, hand, plan) : {};
+  if (plan.hand.length) lmDrawVals = Object.keys(fresh).map(Number).sort((a, b) => a - b).map(i => lmVal(hand[i]));
   const topI = lmMode === "discard" && lmSel.length ? lmSel[lmSel.length - 1] : -1;
   const handHtml = inGame ? `<div class="lmhand ${myTurn ? "" : "wait"} ${lmMode === "discard" ? "disc" : ""}" id="lmHand">${ord.map(i => lmCard(hand[i], `${lmSel.includes(i) ? "sel" : ""} ${i === topI ? "top" : ""} ${fresh[i] != null ? "nw" : ""}`, `data-hi="${i}" ${fresh[i] != null ? `style="--nc:${LM_COL[lmVal(hand[i])]};--nd:${Math.round(fresh[i])}ms"` : ""}`)).join("")}</div>` : "";
   // ガイドとボタン
   let guide = "", btns = "";
   if (fin) guide = "ゲーム終了";
   else if (!T && !st.ask) guide = "";
+  else if (stealAsk) guide = `<em>奪取！</em>奪う束を、卓の上でタップ（${stealAsk.v}の合成：ふつうは${stealAsk.v + (lmOn(st, me, "raid") ? 3 : 1)}以下。光っている束が奪える）<br>奪った束は横向きになり、このラウンドは得点なし`;
   else if (myAsk) guide = "選んでください";
   else if (!myTurn) guide = `${lmPname(lmActor(st))}の番です`;
   else if (lmMode === "discard") guide = `手札が10枚を超えています。捨てるカードを<b>${over}枚</b>選んでください（選択中${lmSel.length}枚）${over > 1 ? "<br>最後に選んだカードが除外置き場の<em>一番上</em>になります（「再起」で引けるカード）" : ""}`;
@@ -15830,14 +15918,16 @@ function drawLm(){
   else if (lmMode === "fuse") guide = `合体する束を2つタップ（選択中${lmFuseSel.length}つ）`;
   else if (M){
     let c5 = st.c5[me], drawN = 0;
-    const parts = M.groups.map((G, gi) => { const tg = lmStealTargets(st, me, G.v, G.k), d = G.k === 1 ? 0 : G.v + (gi === 0 && lmOn(st, me, "amp") ? 2 : 0); drawN += d;
+    const parts = M.groups.map((G, gi) => { const tg = lmStealTargets(st, me, G.v, G.k), d = G.k === 1 ? 0 : lmDrawN(G.v) + (gi === 0 && lmOn(st, me, "amp") ? 3 : 0); drawN += d;
       let sp = G.k >= 2 && G.v === 8; if (G.k >= 2 && G.v === 5){ c5++; if (c5 % 2 === 0) sp = true; }
       return `<b>${G.v}</b>を${G.k}枚${G.wild ? "（万能）" : G.up ? `（昇格：${G.v - 1}を${G.v}として）` : ""} → ${G.v}の束（${G.v * lmMult(st, me, G.v)}点／R）${tg.length ? "・<em>奪取できる</em>" : G.k >= LM_STEAL ? "・奪える束なし" : ""}${sp ? "・<em>スペシャル獲得</em>" : ""}`; });
     const fillN = lmOn(st, me, "fill") ? M.groups.reduce((s, G) => s + G.k, 0) : 0;
     guide = `${M.groups.length > 1 ? "「二連」2組同時に合成<br>" : ""}${parts.join("<br>")}<br>合わせて<b>${drawN + fillN}</b>枚引く${fillN ? `（補充で＋${fillN}枚）` : ""}`;
   }
   else if (lmSel.length) guide = `その組み合わせは合成できません（同じ数字を2枚以上）${(st.seal && st.seal.by !== me) || (st.frz && st.frz.round === st.round && st.frz.by !== me) ? "。封印・凍結中の数字は合成できない" : ""}`;
+  else if (!T.merges && st.revOn && st.revOn[me]) guide = `<em>逆襲モード！</em>この手番は${lmPname(st.revOn[me])}から<b>2枚</b>の合成で束を奪える`;
   else guide = T.merges ? "合成しました。終わるなら「手番を終える」" : `同じ数字のカードを2枚以上タップして合成（1手番に1組${lmOn(st, me, "dbl") ? "。「二連」で違う数字の2組を同時に選べる" : ""}${lmOn(st, me, "up") ? "。「昇格」で1つ小さい数字もまぜられる（元の数字が1枚以上必要）" : ""}）。合成しないで終えることもできます`;
+  if (stealAsk) btns = `<button class="lmb" id="lmNoSteal">奪わない</button>`;
   if (myTurn){
     if (lmMode === "discard") btns = `<button class="lmb" id="lmCancel">戻る</button><button class="lmb go" id="lmDiscGo" ${lmSel.length === over ? "" : "disabled"}>${over}枚捨てて手番を終える</button>`;
     else if (lmMode !== "normal") btns = `<button class="lmb" id="lmCancel">やめる</button>${lmMode === "fuse" ? `<button class="lmb go" id="lmFuseGo" ${lmFuseSel.length === 2 ? "" : "disabled"}>合体する</button>` : ""}`;
@@ -15852,21 +15942,24 @@ function drawLm(){
   const lg = (g.log || []).slice(-4).reverse().map(x => `<li>${esc(x.m)}</li>`).join("");
   el.innerHTML = `
     <div class="lmtop">${LM_INF}<b class="lmlogo">LEMNISCATE</b><button class="lmbtn" id="lmMenu" aria-label="メニュー">…</button><button class="lmbtn" id="lmX" aria-label="閉じる">×</button></div>
+    ${supply}
     ${table}
     <p class="lmguide">${guide}</p>
     <div class="lmbtns">${btns}</div>
     ${handHtml}
-    ${supply}
+    ${lmHistHtml(st)}
     <ul class="lmlog">${lg}</ul>
-    ${myAsk && !holdAsk ? lmAskHtml(st, myAsk) : ""}
+    ${myAsk && !holdAsk && !stealAsk ? lmAskHtml(st, myAsk) : ""}
     ${fin && st.end && !holdAsk ? lmEndHtml(g) : ""}`;
   const on = (id, fn) => { const x = el.querySelector("#" + id); if (x) x.onclick = fn; };
   on("lmX", closeLm); on("lmMenu", () => lmMenu(g));
   on("lmEndClose", closeLm); on("lmAgain", () => { closeLm(); openLmNew(); });
   lmEndReveal(g, el);
   el.querySelectorAll("[data-spi]").forEach(b => b.onclick = () => { const k = b.dataset.spi; openSheet(LM_SP[k].n, `${lmSpRow(k)}<p class="note">${st.supply[k] ? `サプライ残り${st.supply[k]}枚` : "品切れ"}。持っている人：${st.players.filter(p => lmHas(st, p, k)).map(lmPname).join("、") || "なし"}</p>`); });
+  el.querySelectorAll("[data-steal]").forEach(c => c.onclick = ev => { ev.stopPropagation(); lmStealSel = null; lmDo(g.id, me, ["steal", c.dataset.steal]); });
   el.querySelectorAll("[data-seat]").forEach(b => b.onclick = async () => {
     const p = b.dataset.seat;
+    if (lmStealSel || lmMode === "fuse" || lmMode === "discard") return;
     if ((lmMode === "swap" || lmMode === "freeze") && p !== me){ const k = lmMode; lmMode = "normal"; await lmDo(g.id, me, [k, p]); return; }
     lmSeatSheet(st, p);
   });
@@ -15876,7 +15969,7 @@ function drawLm(){
     lmSel = lmSel.includes(i) ? lmSel.filter(x => x !== i) : lmMode === "discard" && lmSel.length >= over ? lmSel : [...lmSel, i];
     drawLm();
   });
-  el.querySelectorAll("[data-fb]").forEach(b => b.onclick = () => { if (lmMode !== "fuse") return; const id = b.dataset.fb; lmFuseSel = lmFuseSel.includes(id) ? lmFuseSel.filter(x => x !== id) : lmFuseSel.length >= 2 ? lmFuseSel : [...lmFuseSel, id]; drawLm(); });
+  el.querySelectorAll("[data-fb]").forEach(b => b.onclick = ev => { if (lmMode !== "fuse") return; ev.stopPropagation(); const id = b.dataset.fb; lmFuseSel = lmFuseSel.includes(id) ? lmFuseSel.filter(x => x !== id) : lmFuseSel.length >= 2 ? lmFuseSel : [...lmFuseSel, id]; drawLm(); });
   on("lmMerge", async () => { const s = lmSel.slice(); lmSel = []; await lmDo(g.id, me, ["merge", s]); });
   on("lmEnd", async () => { if (over){ lmMode = "discard"; lmSel = []; drawLm(); return; } await lmDo(g.id, me, ["end", []]); });
   on("lmDiscGo", async () => { const s = lmSel.slice(); lmSel = []; lmMode = "normal"; await lmDo(g.id, me, ["end", s]); });
@@ -15891,6 +15984,14 @@ function drawLm(){
   on("lmNoSp", () => lmDo(g.id, me, ["sp", null]));
   lmRunPlan(g, plan);
 }
+/* ---------- ラウンドごとの得点（小さな表） ---------- */
+function lmHistHtml(st){
+  const H = st.hist || {}, n = Math.max(0, ...st.players.map(p => (H[p] || []).length));
+  if (!n) return "";
+  const ps = st.order.slice().sort((a, b) => st.total[b] - st.total[a]);
+  const best = Array.from({ length: n }, (_, r) => Math.max(...ps.map(p => (H[p] || [])[r] || 0)));
+  return `<div class="lmhist"><h5>ROUND SCORES<small>ラウンドごとの得点（金色はそのラウンドの最高）</small></h5><div class="lmhs"><table><thead><tr><th></th>${Array.from({ length: n }, (_, r) => `<th>${r + 1}</th>`).join("")}<th class="t">計</th></tr></thead><tbody>${ps.map(p => `<tr style="--pc:${pcolor(p)}"><th>${lmPname(p)}</th>${Array.from({ length: n }, (_, r) => { const v = (H[p] || [])[r]; return `<td class="${v && v === best[r] ? "top" : ""}">${v == null ? "" : v}</td>`; }).join("")}<td class="t">${st.total[p]}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
 /* ---------- 卓の配置 ---------- */
 let lmAnimUntil = 0, lmHoldTm = null, lmPrevHand = {};
 const LM_LAYOUT = { 1: [0, 1, 0], 2: [1, 0, 1], 3: [1, 1, 1], 4: [1, 2, 1], 5: [2, 1, 2], 6: [2, 2, 2] };
@@ -15901,18 +16002,20 @@ function lmSeatsAround(st){
   return { n: opp.length, left: opp.slice(0, L).reverse(), top: opp.slice(L, L + Tn), right: opp.slice(L + Tn) };
 }
 const lmFan = n => `<span class="lmfan">${Array.from({ length: Math.min(n, 5) }, (_, i) => `<i style="--i:${i - (Math.min(n, 5) - 1) / 2}"></i>`).join("")}</span>`;
+let lmStealSel = null;   // 奪う束を選んでいる間：奪える束のid
 function lmChip(st, p, b, plan){
+  const sc = lmStealSel && p !== me ? (lmStealSel.has(b.id) ? "can" : "no") : "", sd = sc === "can" ? `data-steal="${b.id}"` : "";
   const nb = plan.bun[b.id], side = b.side ? "side" : "", fresh = b.side ? "fresh" : "";
-  if (b.parts) return `<i class="lmchip fused ${side} ${fresh} ${nb != null ? "lmnew" : ""}" data-b="${b.id}" style="--nd:${nb || 0}ms"><b>${b.v}</b><u>${b.parts.map(x => x.v).join("+")}</u></i>`;
+  if (b.parts) return `<i class="lmchip fused ${side} ${fresh} ${sc} ${nb != null ? "lmnew" : ""}" ${sd} data-b="${b.id}" style="--nd:${nb || 0}ms"><b>${b.v}</b><u>${b.parts.map(x => x.v).join("+")}</u></i>`;
   const m = lmMult(st, p, b.v) * (b.v === 8 && lmOn(st, p, "crown") ? 2 : 1);
-  return `<i class="lmchip n${b.v} ${side} ${fresh} ${nb != null ? "lmnew" : ""}" data-b="${b.id}" style="--nc:${LM_COL[b.v]};--nd:${nb || 0}ms"><b>${b.v}</b>${m > 1 ? `<small>×${m}</small>` : ""}${b.n > 2 ? `<u>${b.n}枚</u>` : ""}</i>`;
+  return `<i class="lmchip n${b.v} ${b.fz ? "fz" : ""} ${side} ${fresh} ${sc} ${nb != null ? "lmnew" : ""}" ${sd} data-b="${b.id}" style="--nc:${LM_COL[b.v] || "#FFE9A8"};--nd:${nb || 0}ms"><b>${b.v}</b>${m > 1 ? `<small>×${m}</small>` : ""}${b.fz ? `<u>${b.fz.join("+")}</u>` : b.n > 2 ? `<u>${b.n}枚</u>` : ""}</i>`;
 }
 function lmPodHtml(st, p, fin, plan){
   const act = lmActor(st) === p && !fin, bs = st.bun[p], tgt = (lmMode === "swap" || lmMode === "freeze") && p !== me;
-  return `<button class="lmpod ${act ? "act" : ""} ${tgt ? "tgt" : ""}" data-seat="${p}" style="--pc:${pcolor(p)}">${act ? `<i class="lmturn">TURN</i>` : ""}
+  return `<button class="lmpod ${act ? "act" : ""} ${tgt ? "tgt" : ""} ${lmStealSel ? "stealmode" : ""}" data-seat="${p}" style="--pc:${pcolor(p)}">${act ? `<i class="lmturn">TURN</i>` : ""}
     <span class="lmph"><b>${lmPname(p)}</b><span class="lmhc">${lmFan(st.hands[p].length)}<i>${st.hands[p].length}<small>枚</small></i></span></span>
-    <span class="lmps"><span class="lmsc">${st.total[p]}</span><small>＋${lmRoundPts(st, p)}/R</small>${lmBn(st, p)}${lmC5(st, p)}</span>
-    ${st.sp[p].length ? `<span class="lmmons">${st.sp[p].map(k => lmSpB(st, p, k)).join("")}</span>` : ""}
+    <span class="lmps"><span class="lmsc">${st.total[p]}</span><small>＋${lmRoundPts(st, p)}/R</small>${lmBn(st, p)}${lmC5(st, p)}</span>${lmAimB(st, p)}${lmLockB(st, p)}
+    ${st.sp[p].length ? `<span class="lmmons ${lmStealSel ? "named" : ""}">${st.sp[p].map(k => lmStealSel ? `<span class="lmspn">${lmSpB(st, p, k)}${LM_SP[k].n}</span>` : lmSpB(st, p, k)).join("")}</span>` : ""}
     <span class="lmchips">${bs.length ? bs.map(b => lmChip(st, p, b, plan)).join("") : `<em class="lmnone">束なし</em>`}</span></button>`;
 }
 /* 手札で新しく来たカード（前回の手札にない分）に、届く時刻を付ける */
@@ -15928,7 +16031,7 @@ function lmFreshCards(g, hand, plan){
   return out;
 }
 /* ---------- 演出の予定 ---------- */
-const LM_DUR = { bonus: 3300, merge: 1050, merge8: 2500, draw: 0, disc: 0, steal: 1500, getsp: 1800, score: 1700, aim: 1600, fuse: 1500, freeze: 1700, reshuf: 1100, refill: 500, upright: 900, swap: 900, sp: 500, end: 5600 };
+const LM_DUR = { bonus: 3300, merge: 1050, merge8: 2500, draw: 0, disc: 0, steal: 1500, getsp: 1800, score: 1700, aim: 1600, fuse: 1500, freeze: 1700, reshuf: 1100, refill: 500, seal: 1400, revon: 1500, upright: 900, swap: 900, sp: 500, end: 5600 };
 function lmPlan(g){
   const st = g.st, seen = lmSeenFx[g.id] || 0; lmSeenFx[g.id] = st.fxn || 0;
   let evs = (st.fx || []).filter(e => e.n > seen);
@@ -15939,13 +16042,13 @@ function lmPlan(g){
   let t = 0;
   evs.forEach(e => {
     let d;
-    if (e.k === "draw") d = 220 + Math.min(e.c, 10) * 75 + 420;
+    if (e.k === "draw") d = e.p === me ? lmDrawMeDur(Math.min(e.c, 10)) : 220 + Math.min(e.c, 10) * 75 + 420;
     else if (e.k === "disc") d = 180 + Math.min(e.c, 10) * 60 + 380;
     else if (e.k === "merge") d = e.v === 8 && e.c >= 2 ? LM_DUR.merge8 : e.dbl === 1 ? 700 : LM_DUR.merge;
     else if (e.k === "score") d = lmScoreDur(st, e);
     else d = LM_DUR[e.k] != null ? LM_DUR[e.k] : 600;
     plan.list.push({ e, t });
-    if (e.k === "draw" && e.p === me) for (let i = 0; i < Math.min(e.c, 10); i++) plan.hand.push(t + 220 + i * 75 + 520);
+    if (e.k === "draw" && e.p === me){ const n = Math.min(e.c, 10); for (let i = 0; i < n; i++) plan.hand.push(t + lmDrawMeArrive(n, i)); }
     if (e.k === "merge" && e.b) plan.bun[e.b] = t + 650;
     if ((e.k === "steal" || e.k === "fuse") && e.b) plan.bun[e.b] = t + 800;
     t += d;
@@ -15961,6 +16064,28 @@ function lmPlan(g){
 }
 function lmRunPlan(g, plan){
   plan.list.forEach(({ e, t }) => setTimeout(() => { try { lmRun(g, e); } catch (err) { console.error(err); } }, t));
+}
+/* ---------- 自分のドロー：いったん画面の中央に並べてから手札へ ---------- */
+let lmDrawVals = [];
+const LM_DM = { in: 380, gap: 90, hold: 700, out: 460, ogap: 55 };
+const lmDrawMeDur = n => LM_DM.in + n * LM_DM.gap + LM_DM.hold + LM_DM.out + n * LM_DM.ogap + 120;
+const lmDrawMeArrive = (n, i) => LM_DM.in + n * LM_DM.gap + LM_DM.hold + i * LM_DM.ogap + LM_DM.out - 60;
+function lmDrawMe(e, from, to){
+  const n = Math.min(e.c, 10), vals = lmDrawVals.splice(0, n);
+  const d = document.createElement("div"); d.className = "lmdc";
+  d.innerHTML = `<small>DRAW ${e.c}</small><div class="lmdcr">${Array.from({ length: n }, (_, i) => vals[i] != null ? lmCard(vals[i]) : `<span class="lmflyb lmxl">${LM_INF}</span>`).join("")}</div>`;
+  document.body.appendChild(d);
+  lmHit(lmQ(e.src === "ex" ? "#lmEx" : "#lmDeck"), "#9FB4FF", "pull");
+  const cs = [...d.querySelectorAll(".lmdcr > *")];
+  cs.forEach((c, i) => {
+    const r = c.getBoundingClientRect(), fx = from ? from.left + from.width / 2 - (r.left + r.width / 2) : 0, fy = from ? from.top + from.height / 2 - (r.top + r.height / 2) : 0;
+    c.animate([{ transform: `translate(${fx}px,${fy}px) scale(.35) rotateY(180deg)`, opacity: 0 }, { transform: "translate(0,-14px) scale(1.12) rotateY(0)", opacity: 1, offset: .7 }, { transform: "none", opacity: 1 }], { duration: LM_DM.in, delay: i * LM_DM.gap, easing: "cubic-bezier(.3,.7,.3,1)", fill: "both" });
+    setTimeout(() => { if (c.isConnected) lmBurstAt(c.getBoundingClientRect(), LM_COL[vals[i]] || "#9FB4FF", 8, .45); }, i * LM_DM.gap + LM_DM.in - 60);
+    const outAt = LM_DM.in + n * LM_DM.gap + LM_DM.hold + i * LM_DM.ogap;
+    const tx = to ? to.left + to.width / 2 - (r.left + r.width / 2) : 0, ty = to ? to.top + to.height / 2 - (r.top + r.height / 2) : 200;
+    c.animate([{ transform: "none", opacity: 1 }, { transform: `translate(${tx * .5}px,${ty * .5 - 30}px) scale(.8)`, opacity: 1, offset: .5 }, { transform: `translate(${tx}px,${ty}px) scale(.45)`, opacity: 0 }], { duration: LM_DM.out, delay: outAt, easing: "cubic-bezier(.45,0,.3,1)", fill: "forwards" });
+  });
+  setTimeout(() => d.remove(), lmDrawMeDur(n) + 200);
 }
 /* ---------- 飛ぶカード ---------- */
 const lmQ = sel => document.querySelector("#lmg " + sel);
@@ -16014,6 +16139,7 @@ function lmRun(g, e){
   const handR = () => lmRect(lmQ("#lmHand")) || seatR(me);
   const bunR = id => lmRect(lmQ(`[data-b="${id}"]`));
   if (e.k === "bonus"){ lmBig(`<small>BONUS</small><div class="lmbr">${e.b.map((v, i) => `<span style="--d:${(.3 + i * .4).toFixed(2)}s">${lmCard(v)}</span>`).join("")}</div><p>${[1, 2, 3, 4, 5, 6, 7, 8].filter(v => st.mult[v] > 1).map(v => `${v}の束 ×${st.mult[v]}`).join("　")}</p>`, "bonus", 3200); return; }
+  if (e.k === "draw" && e.p === me){ lmDrawMe(e, e.src === "ex" ? ex : deck, handR()); return; }
   if (e.k === "draw"){
     const from = e.src === "ex" ? ex : deck, to = e.p === me ? handR() : seatR(e.p), n = Math.min(e.c, 10);
     lmHit(lmQ(e.src === "ex" ? "#lmEx" : "#lmDeck"), "#9FB4FF", "pull");
@@ -16053,6 +16179,8 @@ function lmRun(g, e){
   if (e.k === "freeze"){ lmBig(`<small>FREEZE</small><b>${(e.vs || []).join("・")}</b><p>このラウンドは${lmPname(e.p)}以外 合成できない</p>`, "freeze", 1700); return; }
   if (e.k === "swap"){ lmFly(seatR(e.p), seatR(e.q), LM_BACK, { dur: 600, cls: "back" }); lmFly(seatR(e.q), seatR(e.p), LM_BACK, { delay: 150, dur: 600, cls: "back" }); return; }
   if (e.k === "reshuf"){ for (let i = 0; i < 8; i++) lmFly(ex, deck, LM_BACK, { delay: i * 60, dur: 520, cls: "back", lift: -40 }); lmBig(`<small>RESHUFFLE</small><p>除外置き場を混ぜて新しい山札に</p>`, "small", 1100); return; }
+  if (e.k === "seal"){ lmBig(`<small>SEAL</small><b>${(e.vs || []).join("・")}</b><p>${lmPname(e.p)}の次の手番まで、他の人は合成できない</p>`, "steal", 1500); lmHit(seat(e.p), "#FF5A7A"); return; }
+  if (e.k === "revon"){ lmBig(`<small>REVENGE MODE</small>${lmSpBadge("rev", "xl hot")}<p>${lmPname(e.p)}：次の手番は${lmPname(e.q)}から2枚で奪える</p>`, "steal", 1600); lmHit(seat(e.p), "#FF5A7A", "hurt"); return; }
   if (e.k === "upright"){ (e.ids || []).forEach(id => { const el = lmQ(`[data-b="${id}"]`); if (el){ lmHit(el, "#5EC8FF"); lmBurstAt(lmRect(el), "#5EC8FF", 10, .5); } }); lmTag(seat(e.p), "束が縦に戻った", "#5EC8FF"); return; }
   if (e.k === "refill"){ lmTag(seat(e.p), "引き直し", "#5EC8FF"); return; }
   if (e.k === "sp"){ lmTag(seat(e.p), LM_SP[e.s].n, "#FFD35A"); lmHit(seat(e.p), "#FFD35A"); return; }
@@ -16065,7 +16193,7 @@ function lmRun(g, e){
 }
 /* ---------- ラウンドの得点計算（小さなパネルで、1人1行ずつ） ---------- */
 const LM_SC_CHIP = 110, LM_SC_ROW0 = 380, LM_SC_ROWEND = 650, LM_SC_HEAD = 600, LM_SC_TAIL = 1500, LM_SC_MAXC = 10;
-const lmScRows = (st, e) => (st.order || st.players).filter(p => e.rows && e.rows[p]);
+const lmScRows = (st, e) => (st.order || st.players).filter(p => e.rows && e.rows[p]).sort((a, b) => (e.got[b] || 0) - (e.got[a] || 0));
 function lmScoreDur(st, e){
   if (!e.rows) return 1700;
   return LM_SC_HEAD + lmScRows(st, e).reduce((s, p) => s + LM_SC_ROW0 + Math.min(e.rows[p].b.length, LM_SC_MAXC) * LM_SC_CHIP + LM_SC_ROWEND, 0) + LM_SC_TAIL;
@@ -16108,8 +16236,8 @@ function lmRulesHtml(){
   return `<div class="lmrules">
   <p><b>1〜8の数字カード</b>を、同じ数字どうしで<b>合成</b>して「束」にする。束はラウンドごとに点数を生み続ける。15ラウンドで合計点が一番多い人の勝ち（3〜6人・4〜6人推奨）。</p>
   <h4>カード（計468枚）</h4><p>${[1, 2, 3, 4, 5, 6, 7, 8].map(v => `${v}：${LM_CNT[v]}枚`).join("　")}<br>カードの隅の小さな数字が、その数字の総枚数。</p>
-  <h4>準備</h4><ol><li>全員に8枚ずつ配る</li><li>山札の上から3枚めくって<b>ボーナス</b>。その数字の束は2倍。2枚かぶったら3倍、3枚同じなら4倍</li><li>スペシャルカード21種からランダムに10種を選び、各2枚をサプライに並べる</li></ol>
-  <h4>手番</h4><ol><li>山札から1枚引く</li><li><b>合成</b>（1手番に1組）：同じ数字を2枚以上出して束にする。<b>その数字の枚数</b>だけ山札から引く（4の合成なら4枚）</li><li><b>4枚以上</b>で合成したら、相手の束のうち「合成した数字＋1」以下のものを1つ奪える。奪った束は横向きに置き、<b>横向きの間は得点なし</b>。自分の次の手番が来たら縦に戻り、得点に入る。横向きの間も奪い返されることがある</li><li>手番の終わりに手札が10枚を超えていたら、超えた分を好きに選んで除外置き場へ</li><li>手札が2枚以下なら全部捨てて8枚引き直す</li></ol>
+  <h4>準備</h4><ol><li>全員に8枚ずつ配る</li><li>山札の上から3枚めくって<b>ボーナス</b>。その数字の束は2倍。2枚かぶったら3倍、3枚同じなら4倍</li><li>スペシャルカード21種からランダムに8種を選び、各2枚をサプライに並べる</li></ol>
+  <h4>手番</h4><ol><li>山札から1枚引く</li><li><b>合成</b>（1手番に1組）：同じ数字を2枚以上出して束にする。<b>その数字の枚数</b>だけ山札から引く（4の合成なら4枚。<b>5以上はすべて5枚</b>）</li><li><b>4枚以上</b>で合成したら、相手の束のうち「合成した数字＋1」以下のものを1つ奪える。奪った束は横向きに置き、<b>そのラウンドは得点なし</b>。ラウンドの得点計算が終わると縦に戻り、次のラウンドから得点に入る。横向きの間も奪い返されることがある</li><li>手番の終わりに手札が10枚を超えていたら、超えた分を好きに選んで除外置き場へ</li><li>手札が2枚以下なら全部捨てて8枚引き直す</li></ol>
   <h4>得点</h4><p>全員の手番が1周するたびに、自分の束の点数（数字×ボーナス倍率）をもらう。</p>
   <h4>スペシャルカード</h4><p><b>8の合成</b>、または<b>5の合成2回ごと</b>に1枚もらえる（同じ種類は1人1枚まで）。毎ターン効果を使える（融合だけ1回限り）。</p>
   <div class="lmrsp">${LM_SP_KEYS.map(k => lmSpRow(k)).join("")}</div>
