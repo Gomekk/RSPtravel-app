@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>男気じゃんけん旅 データ引っ越し</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#14161c;color:#eee;margin:0;padding:16px;max-width:640px}
+h1{font-size:18px}button{font-size:16px;padding:12px 18px;margin:6px 6px 6px 0;border:0;border-radius:10px;background:#E8B931;color:#111;font-weight:700}
+button:disabled{opacity:.4}table{border-collapse:collapse;width:100%;font-size:14px;margin-top:12px}
+td,th{border-bottom:1px solid #333;padding:5px 6px;text-align:left}.ok{color:#5BD67A}.ng{color:#ff6b6b}#log{white-space:pre-wrap;font-size:12px;color:#aaa;margin-top:12px}
+</style></head><body>
+<h1>男気じゃんけん旅：データ引っ越し（旧 → ボドゲスコアの rsp）</h1>
+<p>旧プロジェクトのデータを全部読み、新しい場所へ同じIDのまま書き込みます。何回押しても重複しません（上書きになります）。旧プロジェクトのデータは消しません。</p>
+<button id="go">① 引っ越しを実行</button><button id="chk">② 件数を比べる</button>
+<table><thead><tr><th>表</th><th>旧</th><th>新</th><th></th></tr></thead><tbody id="tb"></tbody></table>
+<div id="log"></div>
+<script>
+"use strict";
+const OLD = { url: "https://mspzgfkommmuucjvdvbm.supabase.co", key: "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via", schema: "public" };
+const NEW = { url: "https://tnjcfgtebiqxvipvklmn.supabase.co", key: "sb_publishable__8N4VJyVjYEdzDjyA2Andg_ZSq41DFT", schema: "rsp" };
+// trips を先に（payments などが trips を参照しているため）
+const T = [["players","id"],["app_settings","key"],["trips","id"],["payments","id"],["drives","id"],["jankens","id"],["tickets","id"],["privileges","id"],["predictions","id"],["push_subs","id"],["notify_log","key"],["neu_games","id"],["cs_games","id"],["sb_games","id"],["sk_games","id"],["co_games","id"],["kg_games","id"],["dm_games","id"],["hx_games","id"],["sz_games","id"],["lm_games","id"]];
+const $ = id => document.getElementById(id), log = m => { $("log").textContent += m + "\n"; };
+const row = (t, a, b, ok) => { let r = $("r_" + t); if (!r) { r = document.createElement("tr"); r.id = "r_" + t; $("tb").appendChild(r); } r.innerHTML = `<td>${t}</td><td>${a ?? ""}</td><td>${b ?? ""}</td><td class="${ok ? "ok" : "ng"}">${ok == null ? "" : ok ? "OK" : "×"}</td>`; };
+
+async function readAll(p, t, pk, cols){
+  const out = [];
+  for (let off = 0; ; off += 1000) {
+    const res = await fetch(`${p.url}/rest/v1/${t}?select=${cols || "*"}&order=${pk}.asc&offset=${off}&limit=1000`,
+      { method: "GET", headers: { "apikey": p.key, "Accept-Profile": p.schema } });
+    const txt = await res.text();
+    if (!res.ok) throw new Error(`${t} 読み込み(${p === OLD ? "旧" : "新"}): ${res.status} ${txt}`);
+    const data = JSON.parse(txt);
+    out.push(...data); if (data.length < 1000) return out;
+  }
+}
+async function write(t, pk, rows){
+  for (let i = 0; i < rows.length; i += 200) {
+    const res = await fetch(`${NEW.url}/rest/v1/${t}?on_conflict=${pk}`, {
+      method: "POST",
+      headers: { "apikey": NEW.key, "Content-Profile": NEW.schema, "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates,return=minimal" },
+      body: JSON.stringify(rows.slice(i, i + 200))
+    });
+    if (!res.ok) throw new Error(`${t} 書き込み: ${res.status} ${await res.text()}`);
+  }
+}
+const count = async (p, t, pk) => (await readAll(p, t, pk, pk)).length;
+
+async function run(){
+  $("go").disabled = $("chk").disabled = true; $("log").textContent = "";
+  try {
+    for (const [t, pk] of T) {
+      const rows = await readAll(OLD, t, pk);
+      await write(t, pk, rows);
+      const n = await count(NEW, t, pk); row(t, rows.length, n, n === rows.length); log(`${t}: ${rows.length}件 → 完了`);
+    }
+    log("\n✅ 全部終わりました。表がすべて OK なら引っ越し完了です。");
+  } catch (e) { log("❌ " + (e && e.message || e)); }
+  $("go").disabled = $("chk").disabled = false;
+}
+async function check(){
+  $("chk").disabled = true; let all = true;
+  try { for (const [t, pk] of T) { const a = await count(OLD, t, pk), b = await count(NEW, t, pk); row(t, a, b, a === b); all = all && a === b; } log(all ? "✅ 件数はすべて一致" : "⚠ 一致しない表があります"); }
+  catch (e) { log("❌ " + (e && e.message || e)); }
+  $("chk").disabled = false;
+}
+$("go").onclick = run; $("chk").onclick = check;
+</script></body></html>
