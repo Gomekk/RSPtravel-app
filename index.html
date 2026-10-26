@@ -4735,7 +4735,7 @@ const SUPABASE_KEY = "sb_publishable__8N4VJyVjYEdzDjyA2Andg_ZSq41DFT";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v318";
+const APP_VER = "v319";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -6770,7 +6770,7 @@ function threePeatHolder(){
 }
 
 /* ---------- 通知 ---------- */
-const VAPID_PUBLIC = "BO1pVt9eZaAXcECHLvNzs6sQaq7zaSFBOtRZcl2v5XQG27Mu5TmOESc8I1MEunPPwF0UOoiXQOi0b5FMHCvuYv0";
+const VAPID_PUBLIC = "BOfwlST-pCOK9Xgc5QV7Gp476ktt8oHHI7Vor71Yrf1IYltsKY0S5NMpVUWCkWALoUz08SOv7B0HSptE9rWGBy4";
 const NOTIFY_DEF = { morning: "08:00", night: "20:00", lastday: "15:00", prize: "21:00" };
 const NOTIFY_LABEL = { morning: "朝：特権の宣言・ルーレット", night: "夜：宿泊費（1日目は行きの旅費も）", lastday: "最終日：帰りの旅費・車代", prize: "最終日：ピタリ賞・ニアピン賞の判定" };
 const notifyTimes = () => ({ ...NOTIFY_DEF, ...(setting("notify_times") || {}) });
@@ -6785,6 +6785,22 @@ async function pushState(){
   if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) return isStandalone() ? "unsupported" : "browser";
   if (Notification.permission === "denied") return "denied";
   try { const reg = await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription(); return sub ? "on" : "off"; } catch (e) { return "off"; }
+}
+/* 通知の鍵が変わったとき（Supabase引っ越しで作り直した）：通知を許可済みの端末は、自動で新しい鍵で登録し直す */
+async function fixPushKey(){
+  try {
+    if (!me || !("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window) || Notification.permission !== "granted") return;
+    const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.getSubscription();
+    if (!sub) return;
+    const k = sub.options && sub.options.applicationServerKey;
+    const cur = k ? btoa(String.fromCharCode(...new Uint8Array(k))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "") : "";
+    if (cur === VAPID_PUBLIC) return;
+    await sb.from("push_subs").delete().eq("endpoint", sub.endpoint);
+    await sub.unsubscribe();
+    const ns = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64u(VAPID_PUBLIC) });
+    const j = ns.toJSON();
+    await sb.from("push_subs").upsert({ player_id: me, endpoint: j.endpoint, subscription: j }, { onConflict: "endpoint" });
+  } catch (e) { console.error("fixPushKey", e); }
 }
 async function subscribePush(){
   if (!player(me)){ toast("先に「自分」を選んでください"); openMe(); return false; }
@@ -16435,6 +16451,7 @@ document.addEventListener("visibilitychange", async () => {
   catch (e) { $("#view").innerHTML = `<div class="empty"><b>データを読み込めませんでした</b>${esc(e.message || e)}<br>Supabaseでテーブルを作成したか確認してください。</div>`; return; }
   render(); subscribe();
   if (db.players.length && !player(me)) openMe();
+  fixPushKey();
 })();
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 })();
