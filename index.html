@@ -4730,12 +4730,12 @@ body.bgpause .hxemb i{animation-play-state:paused}
 <script>
 (() => {
 "use strict";
-const SUPABASE_URL = "https://mspzgfkommmuucjvdvbm.supabase.co";
-const SUPABASE_KEY = "sb_publishable_sj2rETV0MdsP1hA56C70kQ_F5eS1Via";
+const SUPABASE_URL = "https://tnjcfgtebiqxvipvklmn.supabase.co";
+const SUPABASE_KEY = "sb_publishable__8N4VJyVjYEdzDjyA2Andg_ZSq41DFT";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v316";
+const APP_VER = "v317";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -4746,7 +4746,7 @@ async function sbFetch(url, init){
   const txt = await res.text();
   return new Response(cpuUuidIn(txt), { status: res.status, statusText: res.statusText, headers: res.headers });
 }
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false }, global: { fetch: sbFetch } });
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false }, db: { schema: "rsp" }, global: { fetch: sbFetch } });
 
 const KINDS = ["飛行機", "新幹線", "宿", "車", "おみや代", "無駄枠"];
 const SPLIT_KINDS = ["飛行機", "新幹線", "宿"];
@@ -4855,7 +4855,7 @@ async function loadAll(){
 let reloadTimer = {};
 function subscribe(){
   sb.channel("ojk-all")
-    .on("postgres_changes", { event: "*", schema: "public" }, payload => {
+    .on("postgres_changes", { event: "*", schema: "rsp" }, payload => {
       const t = payload.table;
       if (!TABLES.includes(t)) return;
       if (t === "dm_games" && payload.eventType === "UPDATE" && payload.new && payload.new.id && payload.new.st){
