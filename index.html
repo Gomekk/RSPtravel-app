@@ -4735,7 +4735,7 @@ const SUPABASE_KEY = "sb_publishable__8N4VJyVjYEdzDjyA2Andg_ZSq41DFT";
 /* CPUのID（cpu1〜）は、データベースの winner / loser 列（uuid型）にそのまま入らないので、
    送るときは決まったuuidに置き換え、受け取るときにcpuNへ戻す（SQLの変更なしで動くように） */
 /* 画面のプログラムそのもののバージョン（sw.js の CACHE と同じ番号にそろえる） */
-const APP_VER = "v317";
+const APP_VER = "v318";
 const CPU_UUID_RE = /"(winner|loser)":"cpu(\d)"/g, UUID_CPU_RE = /"(winner|loser)":"00000000-0000-4000-8000-0000000000(\d\d)"/g;
 const cpuUuidIn = txt => txt.replace(UUID_CPU_RE, (_, k, n) => `"${k}":"cpu${Number(n)}"`);
 async function sbFetch(url, init){
@@ -5411,6 +5411,9 @@ function openSettings(){
     <button data-m="share">リンクの共有<span>仲間に送る</span></button>
   </div>`);
   s.querySelectorAll("[data-m]").forEach(b => b.onclick = () => ({ me: openMe, players: openPlayers, thr: openThreshold, rule: openRules, ntf: openNotify, share: shareLink })[b.dataset.m]());
+  // アプリのバージョン（更新できているかの確認用）
+  const vp = document.createElement("p"); vp.className = "note"; vp.style.cssText = "text-align:center;margin-top:12px;opacity:.7"; vp.textContent = `アプリのバージョン：${APP_VER}`; s.appendChild(vp);
+  (window.caches ? caches.keys() : Promise.resolve([])).then(ks => { const v = ks.filter(k => /^ojk-v\d+$/.test(k)).sort((x, y) => +x.slice(5) - +y.slice(5)).pop(); if (v && v.replace("ojk-", "") !== APP_VER) vp.textContent = `アプリのバージョン：${APP_VER}（更新途中：${v.replace("ojk-", "")}。アプリを閉じて開き直してください）`; }).catch(() => {});
 }
 
 function openPlayers(){
@@ -6817,7 +6820,15 @@ async function openNotify(){
   const on = (id, fn) => { const el = s.querySelector("#" + id); if (el) el.onclick = fn; };
   on("nOn", async () => { if (await subscribePush()) openNotify(); });
   on("nOff", async () => { await unsubscribePush(); openNotify(); });
-  on("nTest", () => { pushCall({ type: "test", player_id: me }); toast("テスト通知を送りました。数秒で届きます"); });
+  on("nTest", async () => {
+    toast("テスト通知を送っています…");
+    try {
+      const res = await fetch(SUPABASE_URL + "/functions/v1/ojk-push", { method: "POST", headers: { "Content-Type": "application/json", apikey: SUPABASE_KEY }, body: JSON.stringify({ type: "test", player_id: me }) });
+      const txt = await res.text(); let j = null; try { j = JSON.parse(txt); } catch (e) {}
+      if (res.ok && j && j.ok) toast(j.sent ? `テスト通知を送りました（${j.sent}件）。数秒で届きます` : "送り先が見つかりません。いったん通知をオフ→オンにしてください", 5000);
+      else toast(`送信に失敗：${res.status} ${(j && (j.error || j.message || j.msg)) || txt.slice(0, 120)}`, 8000);
+    } catch (e) { toast("送信に失敗：" + (e && e.message || e), 8000); }
+  });
   on("nSave", async () => {
     const v = {}; s.querySelectorAll("[data-nt]").forEach(i => v[i.dataset.nt] = i.value || NOTIFY_DEF[i.dataset.nt]);
     if (await putSetting("notify_times", v)){ await loadTable("app_settings"); closeSheet(); render(); toast("通知の時刻を保存しました"); }
@@ -12722,9 +12733,6 @@ function dmMenu(g){
   s.querySelector('[data-x="cards"]').onclick = () => openSheet("このゲームのカード", `<div class="dmcl">${[...g.st.kingdom, ...DM_BASE.filter(c => !g.st.supply || g.st.supply[c] != null)].map(c => dmBigCard(c)).join("")}</div>`);
   s.querySelector('[data-x="trash"]').onclick = () => { const tr = g.st.trash || []; openSheet("廃棄置き場", tr.length ? `<div class="kgpeek">${tr.map(c => dmCardHtml(c, "sm")).join("")}</div>` : `<p class="note">まだ何も廃棄されていません</p>`); };
   s.querySelector('[data-x="abort"]').onclick = async () => { if (!confirm("この対戦をやめますか？")) return; closeSheet(); await dmCommit(g.id, () => ({ status: { status: "aborted" } })); closeDm(); };
-  // アプリのバージョン（更新できているかの確認用）
-  const vp = document.createElement("p"); vp.className = "note"; vp.style.cssText = "text-align:center;margin-top:12px;opacity:.7"; vp.textContent = `アプリのバージョン：${APP_VER}`; s.appendChild(vp);
-  (window.caches ? caches.keys() : Promise.resolve([])).then(ks => { const v = ks.filter(k => /^ojk-v\d+$/.test(k)).sort((x, y) => +x.slice(5) - +y.slice(5)).pop(); if (v && v.replace("ojk-", "") !== APP_VER) vp.textContent = `アプリのバージョン：${APP_VER}（更新途中：${v.replace("ojk-", "")}。アプリを閉じて開き直してください）`; }).catch(() => {});
 }
 
 /* ---- 演出 ---- */
